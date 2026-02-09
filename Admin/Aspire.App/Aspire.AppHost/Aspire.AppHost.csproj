@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>e4e53202-1b00-4ab3-8bc8-cee2813ac924</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspirant.Hosting.Yarp" Version="0.0.4" />
+    <PackageReference Include="Aspire.Hosting" Version="9.5.0" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Backend\Bfs.Auth\Bfs.Auth.Api\Bfs.Auth.Api.csproj" />
+    <ProjectReference Include="..\..\..\Backend\Bfs.StockEx\Bfs.StockEx.Api\Bfs.StockEx.Api.csproj" />
+    <ProjectReference Include="..\..\..\Frontend\Auth\Bfs.Identity.Web\Bfs.Identity.Web.csproj" />
+    <ProjectReference Include="..\Aspire.Gateway\Aspire.Gateway.csproj" />
+  </ItemGroup>
+
+</Project>

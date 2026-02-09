@@ -1,0 +1,120 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgIcon } from '@ng-icons/core';
+import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
+import { IQueryResponse, ILookup, IUIMessage } from '@bfs/_shared/interfaces';
+
+//----------------------- System Specific -------------------------- 
+import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
+
+//---------------------- Component Specific ------------------------
+import { type I[ComponentNameCapital], type I[ComponentNameCapital]Request, init[ComponentNameCapital], [ComponentNameSmall]UntypedFormGroup } from './[ComponentFileName].shared';
+
+//Template_Start_Field_ChildrenList_1
+import {[CapitalFieldName]ListComponent} from "../[LookupFileName]/[LookupFileName].list.component"
+import {I[CapitalFieldName]Filter, I[CapitalFieldName]Request, init[CapitalFieldName]Request} from "../[LookupFileName]/[LookupFileName].shared"
+//Template_End_Field_ChildrenList_1
+
+//Template_Start_Field_ChildrenMatrix_1
+import {[MatrixNameCapital]MatrixComponent} from "./[MatrixFileName].matrix.component"
+import {I[MatrixNameCapital]Filter, I[MatrixNameCapital]Request, init[MatrixNameCapital]Request} from "../[MatrixFileName]/[MatrixFileName].shared"
+//Template_End_Field_ChildrenMatrix_1
+@Component({
+    selector: '[ComponentFileName]-form',
+    imports: [
+    //Template_Start_Field_ChildrenList_2
+    [CapitalFieldName]ListComponent,
+    //Template_End_Field_ChildrenList_2
+    //Template_Start_Field_ChildrenMatrix_2
+    [MatrixNameCapital]MatrixComponent,
+    //Template_End_Field_ChildrenMatrix_2
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    standalone: true,
+    templateUrl: './[ComponentFileName].form.component.html',
+})
+export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[ComponentNameCapital] > implements OnInit {
+
+    override apiUrl =  '/[ComponentNameCapital]/';
+    override apiService: [SystemNameCapital]Service = inject([SystemNameCapital]Service);
+    override componentName: string = '[ComponentNameCapital]'.toLowerCase();  // used to grab its related custom field definitions
+
+    // Children filters
+    //Template_Start_Field_ChildrenList_3
+    preset[CapitalFieldName]Filter: I[CapitalFieldName]Filter | undefined;
+    //Template_End_Field_ChildrenList_3
+    //Template_Start_Field_ChildrenMatrix_3
+    preset[MatrixNameCapital]Filter: I[ComponentNameCapital][CapitalFieldName]Filter | undefined;
+    //Template_End_Field_ChildrenMatrix_3
+    // Define look ups
+    //Template_Start_Field_Lookup_1
+    public [LookupNameCapital]Options: any[] = [];
+    //Template_End_Field_Lookup_1
+    //---------------------------------------------------------
+
+    constructor(activatedRoute: ActivatedRoute) {
+
+        super(activatedRoute);
+        this.validationForm = this.formBuilder.group([ComponentNameSmall]UntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+    }
+    //---------------------------------------------------------
+    override async ngOnInit(): Promise<void> {
+        this.setChildrenRequests();
+        await this.getCustomFieldDefinitions();
+        await this.getLookups();
+        await this.getObjectFieldLookups();
+
+        if (this.entity.id != '0') {
+            this.view();
+        }
+    }
+    //---------------------------------------------------------
+    override initEntity(): I[ComponentNameCapital]  {
+        return init[ComponentNameCapital] ();
+    }
+    //---------------------------------------------------------
+    override setChildrenRequests() {
+        //Template_Start_Field_ChildrenList_4
+        let preset[CapitalFieldName]Request: I[CapitalFieldName]Request = init[CapitalFieldName]Request();
+        this.preset[CapitalFieldName]Filter = preset[CapitalFieldName]Request.filter;
+        if (this.preset[CapitalFieldName]Filter) {
+            this.preset[CapitalFieldName]Filter.[ComponentNameCapital]Id = this.entity.id;
+        }
+        //Template_End_Field_ChildrenList_4
+        //Template_Start_Field_ChildrenMatrix_4
+        let preset[MatrixNameCapital]Request: I[MatrixNameCapital]Request = init[MatrixNameCapital]Request();
+        this.preset[MatrixNameCapital]Filter = preset[MatrixNameCapital]Request.filter;
+        if (this.preset[MatrixNameCapital]Filter) {
+            this.preset[MatrixNameCapital]Filter.[ComponentNameCapital]Id = this.entity.id;
+        }
+        //Template_End_Field_ChildrenMatrix_4
+    }
+    //---------------------------------------------------------
+    override async getLookups(): Promise<void> {
+        this.messages = [];
+        this.isLoading = true;
+        let target = '';
+        //Template_Start_Field_Lookup_2
+        target = "/[LookupNameCapital]/list";
+        (await this.apiService.post(target,  {pageSize:30})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.[LookupNameCapital]Options = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.isLoading = false;
+                var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+        //Template_End_Field_Lookup_2
+    }
+    //---------------------------------------------------------
+
+}

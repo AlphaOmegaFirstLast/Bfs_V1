@@ -1,0 +1,1 @@
+ public DbSet<[ComponentNameCapital]Entity> [ComponentNameCapital]s { get; set; }

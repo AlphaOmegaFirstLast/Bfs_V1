@@ -1,0 +1,10 @@
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital]Item>> [ComponentNameCapital]ReportAsync(Bfs.Core.Contracts.QueryRequest<[ComponentNameCapital]Filter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<[ComponentNameCapital]Filter>, Bfs.Core.Data.QueryRequest<Data.[ComponentNameCapital]Filter>>(contractRequest);
+
+            var entityResult = await _[ComponentNameSmall]Report.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.[ComponentNameCapital]Item>, Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital]Item>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital]Item> { Items = new List<[ComponentNameCapital]Item>(), TotalItems = 0, TotalPages = 0 };
+        }

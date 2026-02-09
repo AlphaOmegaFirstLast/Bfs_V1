@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Component Name</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.ComponentId" name="componentId">
+          <ng-container *ngFor="let option of ComponentOptions">
+            <option [value]="option.id">{{ option.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Business Action</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.BusinessActionId" name="businessActionId">
+          <ng-container *ngFor="let option of BusinessActionOptions">
+            <option [value]="option.id">{{ option.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Menu Action</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.ActionLocationId" name="actionLocationId">
+          <ng-container *ngFor="let option of ActionLocationOptions">
+            <option [value]="option.id">{{ option.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>

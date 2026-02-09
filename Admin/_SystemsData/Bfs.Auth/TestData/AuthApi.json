@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "displayName": "Broker",
+    "name": "broker"
+  },
+  {
+    "id": 2,
+    "displayName": "Investor",
+    "name": "investor"
+  },
+  {
+    "id": 3,
+    "displayName": "Stock Share",
+    "name": "StockShare"
+  },
+  {
+    "id": 4,
+    "displayName": "Stock Share Portfolio",
+    "name": "SsPortfolio"
+  },
+  {
+    "id": 5,
+    "displayName": "Stock Share Split",
+    "name": "SspSplit"
+  }
+]

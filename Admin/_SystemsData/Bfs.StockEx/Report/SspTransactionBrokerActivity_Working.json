@@ -1,0 +1,62 @@
+[
+  {
+    "AggrigateFunction": "Sum",
+    "Field": "SumQuantity",
+    "DisplayName": "Total Quantity",
+    "IsEntityChildren": false,
+    "BackendFieldType": "decimal",
+    "FrontendFieldType": "number",
+    "IsLookup": false,
+    "QueryFilter": "RangeAggrigateFilter",
+    "IsQueryColumn": true,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "Sum",
+    "Field": "SumPrice",
+    "DisplayName": "Total Price",
+    "IsEntityChildren": false,
+    "BackendFieldType": "decimal",
+    "FrontendFieldType": "number",
+    "IsLookup": false,
+    "QueryFilter": "RangeAggrigateFilter",
+    "IsQueryColumn": true,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "TransactionTypeId",
+    "DisplayName": "Transaction Type",
+    "IsEntityChildren": false,
+    "BackendFieldType": "long",
+    "FrontendFieldType": "string",
+    "IsLookup": true,
+    "QueryFilter": "LookupFilter",
+    "IsQueryColumn": true,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "SsPortfolioId",
+    "DisplayName": "Portfolio",
+    "IsEntityChildren": false,
+    "BackendFieldType": "long",
+    "FrontendFieldType": "string",
+    "IsLookup": true,
+    "QueryFilter": "LookupFilter",
+    "IsQueryColumn": false,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "BrokerId",
+    "DisplayName": "Broker",
+    "IsEntityChildren": false,
+    "BackendFieldType": "long",
+    "FrontendFieldType": "string",
+    "IsLookup": true,
+    "QueryFilter": "LookupFilter",
+    "IsQueryColumn": true,
+    "ParentTable": "SsPortfolio"
+  }
+]

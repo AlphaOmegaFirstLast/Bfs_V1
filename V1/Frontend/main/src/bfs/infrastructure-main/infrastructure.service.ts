@@ -1,0 +1,12 @@
+import { Injectable } from '@angular/core';
+import { HttpService } from '@bfs/_shared/services/http.service'; // Update the path as needed
+import { environment } from '@/environment/environment';
+
+@Injectable({ providedIn: 'root' })  // Ensure the service is a singleton and available application-wide, in app.config
+export class InfrastructureService extends HttpService {
+
+  constructor() { 
+    super();
+    this.origin = environment.InfrastructureApiUrl;
+  }
+}

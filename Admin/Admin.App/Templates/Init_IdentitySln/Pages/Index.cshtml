@@ -1,0 +1,59 @@
+﻿@page
+@model IndexModel
+@using [TemplateSln].Web.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AuthUser> SignInManager
+@inject UserManager<AuthUser> UserManager
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1>Welcome to Best Fit Solutions</h1>
+</div>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <style>
+        .home-td {
+            width: 200px;
+            text-align: center;
+        }
+    </style>
+    <div style="padding-top:170px; width:100%;">
+        <table style="margin: 0 auto;">
+            <tr>
+                @foreach (var app in Model.AvailableApplications)
+                {
+                    <td class="home-td" onclick="redirectToSpa('@app.Name')">
+                        <div style="display:block;">
+                            <img src="~/images/@app.System/@app.Image" width="170px" />
+                        </div>
+                        <div>
+                            @app.DisplayName
+                        </div>
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <a href="~/Identity/Account/Register">Register</a>
+        <span>Or</span>
+        <a href="~/Identity/Account/Login">Login</a>
+    </div>
+}
+
+<script language="javascript">
+    function redirectToSpa(currentApp)
+    {
+     sessionStorage.setItem("current-app", currentApp);
+     sessionStorage.setItem("system-applications", "@Model.SystemApplicationsJson");
+     sessionStorage.setItem("token-parsed", "@Model.ClaimsJson");
+     window.location.href = window.origin +'/home';
+    }
+</script>

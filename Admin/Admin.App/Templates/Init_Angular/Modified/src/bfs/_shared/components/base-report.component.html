@@ -1,0 +1,144 @@
+<div class="container-fluid">
+    <div class="pb-2"></div>
+    <div class="card fs-6">
+        <div class="card-header justify-content-between align-items-center">
+            <div class="btn-group btn-sm" [style.visibility]="isButton.addNew || isButton.chart? 'visible' : 'hidden'">
+                <a *ngIf="isButton.addNew" [routerLink]="[addNewRecordLink.route]" class="btn btn-sm btn-outline-primary me-2">{{addNewRecordLink.displayText}}</a>
+                <button *ngIf="isButton.chart" class="btn btn-sm btn-outline-primary me-2" (click)="viewChart()">Chart</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-outline-primary me-2" *ngIf="isButton.description" (click)="viewDescription()">
+                    <ng-icon name="tablerEye" *ngIf="isSection.description" />
+                    <ng-icon name="tablerEye-off" *ngIf="!isSection.description" />
+                </button>
+                <button class="btn btn-sm btn-outline-primary me-2" *ngIf="isButton.columns" (click)="openColumns()">Columns</button>
+                <button class="btn btn-sm btn-outline-primary me-2" *ngIf="isButton.filter" (click)="openFilter()">Filter</button>
+                <button class="btn btn-sm btn-outline-primary me-2" *ngIf="isButton.sort" (click)="openSort()">Sort</button>
+                <button class="btn btn-sm btn-outline-primary me-2" *ngIf="isButton.group" (click)="openGroup()">Group</button>
+                <select class="form-select" name="pageSize" [value]="pagination.pageSize" (change)="onPageSizeChange($event)"
+                        style="width: auto; display: inline-block; margin-right: 10px;">
+                    <option *ngFor="let option of pageSizes" [value]="option">
+                        {{ option }}
+                    </option>
+                </select>
+                <div ngbDropdown>
+                    <button class="btn btn-sm btn-primary" type="button" ngbDropdownToggle> Actions </button>
+                    <div ngbDropdownMenu>
+                        <div *ngFor="let link of getReportActions()">
+                            <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me)">{{link.displayText}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!----------------------------------------- View Report Settings -------------------------------------->
+            <div class="row" *ngIf="isSection.description">
+                <div class="alert alert-info" role="alert">
+                    <div class="col-12">
+                        <div class="col-12 d-flex justify-content-between align-items-center">
+                            <strong>Report Settings:</strong>
+                        </div>
+                        <ul>
+                            <li>Order by: {{ queryRequest.sortOption?.sortBy }}{{ queryRequest.sortOption?.direction === 'desc' ? ' (Descending)' : ' (Ascending)' }}</li>
+                            <li *ngIf="filterArray.length == 0">No Filters are set.</li>
+                            <li *ngIf="filterArray.length > 0">Filters are set:</li>
+                            <ng-container *ngIf="filterArray.length > 0">
+                                <li *ngFor="let filter of filterArray">{{ filter }}</li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------ Export component ----------------------------------->
+            <bfs-export [apiService]='apiService' [getApiUrl]="getApiUrl" [downloadFileName]="downloadFileName" #exportExcel />
+            <!----------------------------------------- Messages -------------------------------------->
+            <div *ngFor="let msg of messages">
+                <div *ngIf="msg.text">
+                    <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                        <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+                    </ngb-alert>
+                </div>
+            </div>
+            <!----------------------------------------- Chart -------------------------------------->
+            <div class="row" *ngIf="isSection.chart">
+                <div echarts [options]="chartOptions" [autoResize]="true" [ngStyle]="{ minHeight: 300, width: 300 }">
+                </div>
+            </div>
+            <!----------------------------------------- Table -------------------------------------->
+            <div class="row" *ngIf="isSection.table">
+
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <ng-container *ngFor="let column of queryRequest.columns">
+                            <th width="{{ column.width }}" *ngIf="column.isVisible">
+                                {{ column.displayName }}
+                            </th>
+                        </ng-container>
+                        <th width="100px"></th>
+                    </tr>
+                    <tr *ngFor="let record of list">
+                        <ng-container *ngFor="let column of queryRequest.columns">
+                            <td *ngIf="column.isVisible"> {{ render(record, column) }} </td>
+                        </ng-container>
+                        <td>
+                            <div ngbDropdown class="flex-shrink-0 text-muted" style="text-align: right;">
+                                <a href="javascript:void(0)" ngbDropdownToggle class="drop-arrow-none fs-xxl link-reset p-0">
+                                    <ng-icon name="tablerDotsVertical" />
+                                </a>
+                                <div ngbDropdownMenu class="dropdown-menu-end">
+                                    <div *ngFor="let link of getRecordLinks(record)">
+                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                    </div>
+                                    <div *ngFor="let link of getListRecordActions(record)">
+                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, record, link.data)">{{link.displayText}}</a>
+                                    </div>
+                                    <div *ngFor="let link of getRecordBusinessActions(record)">
+                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, record, link.data)">{{link.displayText}}</a>
+                                    </div>
+                                    <div *ngFor="let link of getRecordLookupLinks(record)">
+                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>Go to {{link.displayText}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!----------------------------------------- Pagination -------------------------------------->
+
+                <div class="card-header justify-content-between align-items-center">
+                    <div>{{ pagination.description }}</div> 
+                    
+                    <ngb-pagination class="pagination-boxed pagination-primary" size="sm"
+                        [collectionSize]="pagination.totalItems" [(page)]="pagination.currentPage" [pageSize]="pagination.pageSize" [maxSize]="4" [boundaryLinks]="true" [directionLinks]="true" (pageChange)="onPageChange($event)">
+
+                        <ng-template ngbPaginationFirst>
+                            <ng-icon name="tablerChevronsLeft" />
+                        </ng-template>
+
+                        <ng-template ngbPaginationPrevious>
+                            <ng-icon name="tablerChevronLeft" />
+                        </ng-template>
+
+                        <ng-template ngbPaginationNext>
+                            <ng-icon name="tablerChevronRight" />
+                        </ng-template>
+
+                        <ng-template ngbPaginationLast>
+                            <ng-icon name="tablerChevronsRight" />
+                        </ng-template>
+                    </ngb-pagination>
+                </div>
+            </div>
+        </div>
+        <!----------------------------------------- Reloading overlay -------------------------------------->
+
+        @if (isLoading) {
+        <div class="card-overlay d-flex">
+            <div class="spinner-border text-primary"></div>
+        </div>
+        }
+
+    </div>
+</div>

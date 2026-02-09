@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="pb-2"></div>
+    <div class="card fs-6">
+        <div class="card-header justify-content-between align-items-center">
+            <div class="btn-group btn-sm" [style.visibility]="isButton.saveMatrix? 'visible' : 'hidden'">
+                <a *ngIf="isButton.saveMatrix"  href="javascript:void(0)" (click)="saveLink.action(me)" class="btn btn-sm btn-outline-primary me-2">{{saveLink.displayText}}</a> 
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-outline-primary me-2" *ngIf="isButton.description" (click)="viewDescription()">
+                    <ng-icon name="tablerEye" *ngIf="isSection.description" />
+                    <ng-icon name="tablerEye-off" *ngIf="!isSection.description" />
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!----------------------------------------- View Report Settings -------------------------------------->
+            <div class="row" *ngIf="isSection.description">
+                <div class="alert alert-info" role="alert">
+                    <div class="col-12">
+                        <div class="col-12 d-flex justify-content-between align-items-center">
+                            <strong>Report Settings:</strong>
+                        </div>
+                        <ul>
+                            <li>Order by: {{ queryRequest.sortOption?.sortBy }}{{ queryRequest.sortOption?.direction === 'desc' ? ' (Descending)' : ' (Ascending)' }}</li>
+                            <li *ngIf="filterArray.length == 0">No Filters are set.</li>
+                            <li *ngIf="filterArray.length > 0">Filters are set:</li>
+                            <ng-container *ngIf="filterArray.length > 0">
+                                <li *ngFor="let filter of filterArray">{{ filter }}</li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!----------------------------------------- Messages -------------------------------------->
+            <div *ngFor="let msg of messages">
+                <div *ngIf="msg.text">
+                    <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                        <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+                    </ngb-alert>
+                </div>
+            </div>
+
+            <!----------------------------------------- Table -------------------------------------->
+            <div class="row" *ngIf="isSection.table">
+
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th width="200px">{{title}}</th>
+                        <ng-container *ngFor="let column of verticalList">
+                            <th width="auto">
+                                {{ column.name }}
+                            </th>
+                        </ng-container>
+                    </tr>
+
+                    <tr *ngFor="let record of horizontalList">
+                        <td>{{record.name}}</td>
+                        <ng-container *ngFor="let column of verticalList">
+                            <td> <input  *ngIf="isVisible(me, record, column)" type="checkbox" [checked]="isChecked(me, record, column)" (click)="onCheckboxClick(me, record, column);"> </td>
+                        </ng-container>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!----------------------------------------- Reloading overlay -------------------------------------->
+
+        @if (isLoading.main || isLoading.matrixVertical || isLoading.matrixHorizontal) {
+        <div class="card-overlay d-flex">
+            <div class="spinner-border text-primary"></div>
+        </div>
+        }
+
+    </div>
+</div>

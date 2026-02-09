@@ -1,0 +1,25 @@
+using Bfs.[SystemNameCapital].Data.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Bfs.[SystemNameCapital].Data.Configuration
+{
+    public class [ComponentNameCapital]EntityConfiguration : IEntityTypeConfiguration<[ComponentNameCapital]Entity>
+    {
+        public static readonly string TableNameCapital = "[ComponentNameCapital]";
+
+        public void Configure(EntityTypeBuilder<[ComponentNameCapital]Entity> builder)
+        {
+            builder.ToTable(TableNameCapital);
+            builder.HasKey(e => e.Id);
+
+            // Explicitly disable identity generation
+            builder.Property(e => e.Id).ValueGeneratedNever();
+
+        	//Template_Start_Field_Primitive_1
+			//   builder.Property(e => e.[CapitalFieldName]).HasMaxLength([FieldLength]).IsRequired(); 
+			//Template_End_Field_Primitive_1     
+        }
+    }
+}

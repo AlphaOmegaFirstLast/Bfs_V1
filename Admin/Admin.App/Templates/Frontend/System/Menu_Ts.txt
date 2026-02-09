@@ -1,0 +1,97 @@
+import { MenuItemType } from '@/app/types/layout';
+
+//------------------------------------------------------------
+// Application specific menu items
+export const [SystemNameCapital]MenuItems: MenuItemType[] = [
+    {label: '[SystemNameCapital]', 
+     isTitle: true,
+     data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameCapital]'],
+            role: ['admin']
+        },
+    },
+    {
+        label: 'BestFit Basic',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Basic
+        ]
+    },
+
+    {
+        label: 'Reports',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Reports
+        ]
+    },
+
+    {
+        label: 'Deployment',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Deployment
+        ]
+    },
+
+    {
+        label: 'Custom',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Custom
+        ]
+    },
+
+    {
+        label: 'System',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_System
+        ]
+    },
+
+    {
+        label: 'Seed Data',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['bestfit.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Seed
+        ]
+    },
+];

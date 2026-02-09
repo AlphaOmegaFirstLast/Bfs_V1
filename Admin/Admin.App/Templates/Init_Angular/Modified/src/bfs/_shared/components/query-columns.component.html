@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title">Columns to View</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+
+<!-- Column Template -->
+<div *ngFor="let column of result" class="form-check mb-2">
+    <input type="checkbox" [id]="'ck' + column.fieldName" [(ngModel)]="column.isVisible" class="form-check-input"/>
+    <label [for]="'ck' + column.fieldName" class="form-check-label">{{ column.displayName }}</label>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+  <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+</div>

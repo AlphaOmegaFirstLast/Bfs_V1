@@ -1,0 +1,15 @@
+using Bfs.Core.Contracts;
+using Bfs.Core.ObjectFields;
+
+namespace Bfs.Infrastructure.Contracts
+{
+    public class BfsComponentListFilter
+    {
+
+        public string? Name { get; set; }
+
+        public long? BfsSystemId { get; set; }
+public int? DataTypeId { get; set; }
+
+    }
+}

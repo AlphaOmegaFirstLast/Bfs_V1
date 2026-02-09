@@ -1,0 +1,157 @@
+
+import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+//------------------------ Operation Business Specific ---------------------------------
+import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+
+//Template_Start_Field_Object_4
+import { I[CapitalFieldName], init[CapitalFieldName], [SmallFieldName]UntypedFormGroup } from "@bfs/_shared/objectFields";
+//Template_End_Field_Object_4
+//Template_Start_Field_CustomFieldList_4
+import { ICustomField, initCustomFields } from "@bfs/_shared/customFields";
+//Template_End_Field_CustomFieldList_4
+import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
+
+// Output Columns of a Query  [used in entity Query]
+export const [ComponentNameCapital]Columns = [
+    //Template_Start_ReportField_QueryColumn_1
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsQueryColumn] },
+    //Template_End_ReportField_QueryColumn_1
+    //Template_Start_ReportField_Aggregate_1
+    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsQueryColumn] },
+    //Template_End_ReportField_Aggregate_1
+];
+//---------------------------------------------------------
+export interface I[ComponentNameCapital] {
+    //Template_Start_Field_Primitive_1
+    [SmallFieldName]?: [FrontendFieldType];
+    //Template_End_Field_Primitive_1 
+    //Template_Start_Field_Lookup_1
+    [SmallFieldName]?: [FrontendFieldType];
+    //Template_End_Field_Lookup_1 
+    //Template_Start_Field_Object_1
+    [SmallFieldName]?: I[CapitalFieldName];
+    //Template_End_Field_Object_1 
+    //Template_Start_Field_CustomFieldList_1
+    [SmallFieldName]?: ICustomField[];
+    //Template_End_Field_CustomFieldList_1 
+}
+//---------------------------------------------------------
+export function init[ComponentNameCapital](): I[ComponentNameCapital] {
+    let entity: I[ComponentNameCapital] = {
+        //Template_Start_Field_Primitive_2
+        [SmallFieldName]: [FrontendDefaultValue],
+        //Template_End_Field_Primitive_2
+        //Template_Start_Field_Lookup_2
+        [SmallFieldName]: [FrontendDefaultValue],
+        //Template_End_Field_Lookup_2
+        //Template_Start_Field_Object_2
+        [SmallFieldName]: init[CapitalFieldName](),
+        //Template_End_Field_Object_2
+        //Template_Start_Field_CustomFieldList_2
+        [SmallFieldName]: initCustomFields(),
+        //Template_End_Field_CustomFieldList_2
+    };
+    return JSON.parse(JSON.stringify(entity));
+}
+//---------------------------------------------------------
+
+// Fields of an Entity [used in Entity form]
+export function [ComponentNameSmall]UntypedFormGroup(formBuilder: FormBuilder): any {
+    return {
+    //Template_Start_Field_Primitive_3
+    [SmallFieldName]: [[FrontendDefaultValue]],
+    //Template_End_Field_Primitive_3
+    //Template_Start_Field_Lookup_3
+    [SmallFieldName]: [[FrontendDefaultValue]],
+    //Template_End_Field_Lookup_3
+    //Template_Start_Field_Object_3
+        [SmallFieldName]: [SmallFieldName]UntypedFormGroup(formBuilder),
+    //Template_End_Field_Object_3
+    //Template_Start_Field_CustomFieldList_3
+        [SmallFieldName]: formBuilder.array([]),
+    //Template_End_Field_CustomFieldList_3
+    };
+} 
+//---------------------------------------------------------
+export interface I[ComponentNameCapital]WithLookup extends I[ComponentNameCapital]{
+
+    //Template_Start_Field_Lookup_4
+      [LookupNameSmall]Name?: string;
+    //Template_End_Field_Lookup_4
+}
+//---------------------------------------------------------
+export interface I[ComponentNameCapital]Request extends IEntityRequest<I[ComponentNameCapital]Filter> {}
+
+//---------------------------------------------------------
+export interface I[ComponentNameCapital]Filter {
+    [key: string]: any;
+    //Template_Start_FilterField_ValueNumber_1
+    [FilterValueName]?: [FrontendFieldType];
+    //Template_End_FilterField_ValueNumber_1
+
+    //Template_Start_FilterField_ValueString_1
+    [FilterValueName]?: [FrontendFieldType];
+    //Template_End_FilterField_ValueString_1
+
+    //Template_Start_FilterField_Lookup_1
+    [FilterLookupName]?: [FrontendFieldType];
+    //Template_End_FilterField_Lookup_1
+
+    //Template_Start_FilterField_Range_1
+    [FilterRangeName]?: { from?: [FrontendFieldType] ; to?: [FrontendFieldType]} ;
+    //Template_End_FilterField_Range_1
+
+    //Template_Start_FilterField_AggregateRange_1
+    [FilterRangeName]?: { from?: [FrontendFieldType] ; to?: [FrontendFieldType]} ;
+    //Template_End_FilterField_AggregateRange_1
+}
+//---------------------------------------------------------
+export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Request {
+    let request: I[ComponentNameCapital]Request = {
+        pageIndex: 1,
+        pageSize: 5,
+        columns: [ComponentNameCapital]Columns.map(column => ({ ...column })),
+        group: '',
+        sortOption: {
+            sortBy: 'id',
+            direction: 'asc'
+            },
+        filter: {
+            //Template_Start_FilterField_ValueNumber_2
+            [FilterValueName]: undefined ,
+            //Template_End_FilterField_ValueNumber_2
+
+            //Template_Start_FilterField_ValueString_2
+            [FilterValueName]: undefined ,
+            //Template_End_FilterField_ValueString_2
+
+            //Template_Start_FilterField_Lookup_2
+            [FilterLookupName]: undefined ,
+            //Template_End_FilterField_Lookup_2
+
+            //Template_Start_FilterField_Range_2
+            [FilterRangeName]: { from: undefined , to: undefined} ,
+            //Template_End_FilterField_Range_2
+
+            //Template_Start_FilterField_AggregateRange_2
+            [FilterRangeName]: { from: undefined , to: undefined} ,
+            //Template_End_FilterField_AggregateRange_2
+            }
+    };
+
+    return JSON.parse(JSON.stringify(request));
+}
+//---------------------------------------------------------
+
+export function get[ComponentNameCapital]Actions(record: IQueryColumn): IAction[] {
+        let links: IAction[] = [];
+
+           //Template_Action_FrontendLink
+           //Template_Action_FrontendFunction
+
+        return links;
+    }
+    //---------------------------------------------------------
+
+
+

@@ -1,0 +1,140 @@
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Bfs.Core.Config;
+using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
+using Bfs.Core.Middleware;
+using Bfs.Core.Services.Auth;
+using Bfs.[SystemNameCapital].Api.Validators;
+using Bfs.[SystemNameCapital].Contracts;
+using Bfs.[SystemNameCapital].Data;
+using Bfs.[SystemNameCapital].Data.Interfaces;
+using Bfs.[SystemNameCapital].Data.Lists;
+using Bfs.[SystemNameCapital].Data.Reports;
+using Bfs.[SystemNameCapital].Data.Repositories;
+using Bfs.[SystemNameCapital].Domain.Interfaces;
+using Bfs.[SystemNameCapital].Domain.Services;
+
+namespace Bfs.[SystemNameCapital].Api;
+
+public static class BuilderExtensions
+{
+    public static void RegisterSecurity(this WebApplicationBuilder builder, BfsSettings? settings)
+    {
+        if (settings != null && settings.IsSecurityEnabled)
+        {
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = TokenService.TokenValidationParameters(settings.JwtSettings);
+            });
+        }
+        else
+        {
+            builder.Services.AddAuthentication(options =>
+            {
+                // Optionally set your custom scheme as the default
+                options.DefaultAuthenticateScheme = "NoSecurityScheme";
+            })
+            // Register the CustomScheme (using the handler and options defined above)
+            .AddScheme<NoSecuritySchemeOptions, NoSecuritySchemeHandler>("NoSecurityScheme", options =>
+            {
+                // Configuration options can go here
+            });
+        }
+
+        // Register Authorization handlers and policy provider. that can handle dynamic policies.
+        builder.Services.AddSingleton<IAuthorizationHandler, MultiClaimRequirementHandler>();
+        builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
+    }
+
+
+    public static void RegisterCrossOrigin(this WebApplicationBuilder builder, BfsSettings? settings)
+    {
+
+        if ((settings?.AllowedOrigins == null) || (settings?.AllowedOrigins == ""))
+        {
+            builder.Services.AddCors(o => o.AddPolicy("CrossOriginPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+        }
+        else
+        {
+            var allowedOrigins = settings?.AllowedOrigins.Split(";");
+            allowedOrigins = allowedOrigins?.Select(x => x.Trim()).ToArray();
+            builder.Services.AddCors(o => o.AddPolicy("CrossOriginPolicy", builder =>
+            {
+                builder.WithOrigins(allowedOrigins)
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+        }
+    }
+
+    public static void RegisterScopeData(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IScopeData, ScopeData>();
+    }
+
+    public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
+    {
+        if (settings != null && settings.DbConnections != null)
+        {
+            builder.Services.AddDbContext< [SystemNameCapital]DbContext >(options => options.UseSqlServer(settings.DbConnections.[SystemNameCapital]Connection,
+            sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
+        );
+        }
+    }
+
+
+    public static void RegisterValidators(this WebApplicationBuilder builder)
+    {
+//Template_Component_RegisterValidator
+    }
+
+    public static void RegisterRepositories(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//Template_Component_RegisterRepository
+    }
+
+    public static void RegisterServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IReportsService, ReportsService>();
+        builder.Services.AddScoped<IOperationsService,OperationsService>();
+//Template_Component_RegisterService
+    }
+
+    public static void RegisterLists(this WebApplicationBuilder builder, BfsSettings? settings)
+    {
+        if (settings != null && settings.DbConnections != null)
+        {
+            var dbConnection = settings.DbConnections.[SystemNameCapital]Connection;
+//Template_Component_RegisterList
+        }
+    }
+
+    public static void RegisterReports(this WebApplicationBuilder builder, BfsSettings? settings)
+    {
+        if (settings != null && settings.DbConnections != null)
+        {
+            var dbConnection = settings.DbConnections.[SystemNameCapital]Connection;
+//Template_Component_RegisterReport
+        }
+    }
+
+    public static void RegisterClients(this WebApplicationBuilder builder, BfsSettings? settings)
+    {
+//Template_Component_RegisterHttpClient
+    }
+}

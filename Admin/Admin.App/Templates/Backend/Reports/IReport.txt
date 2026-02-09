@@ -1,0 +1,10 @@
+using Bfs.Core.Data;
+using Bfs.[SystemNameCapital].Data;
+
+namespace Bfs.[SystemNameCapital].Data.Interfaces
+{
+    public interface I[ComponentNameCapital]Report
+    {
+        Task<QueryResponse<[ComponentNameCapital]Item>> GetAsync(QueryRequest<[ComponentNameCapital]Filter> request);
+    }
+}

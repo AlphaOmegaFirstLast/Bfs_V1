@@ -1,0 +1,37 @@
+using Bfs.Core.Interfaces;
+using Bfs.Core.Contracts;
+using Bfs.Core.ObjectFields;
+
+namespace Bfs.[SystemNameCapital].Contracts
+{
+    public class [ComponentNameCapital] : IIdentifiable
+    {
+        //Template_Start_Field_Primitive_1
+        ///<Summary>
+        /// [ComponentNameCapital] [DisplayName].
+        ///</Summary>
+        public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
+        //Template_End_Field_Primitive_1
+
+        //Template_Start_Field_Lookup_1
+        ///<Summary>
+        /// [ComponentNameCapital] [DisplayName].
+        ///</Summary>
+        public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
+        //Template_End_Field_Lookup_1
+
+        //Template_Start_Field_Object_1
+        ///<Summary>
+        /// [ComponentNameCapital] [DisplayName].
+        ///</Summary>
+        public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
+        //Template_End_Field_Object_1
+
+        //Template_Start_Field_CustomFieldList_1
+        ///<Summary>
+        /// [ComponentNameCapital] [DisplayName].
+        ///</Summary>
+        public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
+        //Template_End_Field_CustomFieldList_1
+    }
+}

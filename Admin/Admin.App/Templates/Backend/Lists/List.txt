@@ -1,0 +1,155 @@
+﻿using Bfs.Core.Data;
+using Bfs.Core.ObjectFields;
+
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Bfs.[SystemNameCapital].Data.Interfaces;
+using Bfs.[SystemNameCapital].Data;
+using System.Text;
+
+namespace Bfs.[SystemNameCapital].Data.Lists
+{
+    public class [ComponentNameCapital][ReportTypeCapital]: QueryBase<[ComponentNameCapital][ReportTypeCapital]Filter>,  I[ComponentNameCapital][ReportTypeCapital]
+    {
+        public [ComponentNameCapital][ReportTypeCapital](string connectionString)
+        {
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+        }
+
+        private readonly string _connectionString;
+
+        public async Task<QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>> GetAsync(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> request)
+        {
+            var response = new QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>();
+
+            SetUp(request);
+
+            using var db = new SqlConnection(_connectionString);
+            {
+                // Run Report
+                var mainQuery = GetMainSqlStatement();
+                var items = await db.QueryAsync<[ComponentNameCapital][ReportTypeCapital]Item>(mainQuery.sql, mainQuery.parameters);
+                response.Items = (List<[ComponentNameCapital][ReportTypeCapital]Item>)items;
+
+                // Run Count
+                var countQuery = GetCountSqlStatement();
+                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
+            }
+
+            return response;
+        }
+
+        protected override void SetupFields()
+        {
+            //base fields
+            //Template_Start_ReportField_QueryColumn_1
+            _fieldList.Add(new QueryField() { DbName = "[ParentTable].[CapitalFieldName]", QueryName = "[ReportFieldNameCapital]", IsAggregare = false });
+            //Template_End_ReportField_QueryColumn_1
+                   
+            //lookups
+            //Template_Start_Field_Lookup_1
+             _fieldList.Add(new QueryField() { DbName = "[LookupNameCapital].Name", QueryName = "[LookupNameCapital]Name", IsAggregare = false });
+            //Template_End_Field_Lookup_1
+
+           //Aggregates
+           //Template_Start_ReportField_Aggregate_1
+            _fieldList.Add(new QueryField() { DbName = "[AggregateFunction]([QueryBaseTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true });
+           //Template_End_ReportField_Aggregate_1
+        }
+
+        protected override string GetFromJoinStatement()
+        {
+           var sql = new StringBuilder();  
+           sql.AppendLine(" From [QueryBaseTable] ");
+
+           //Template_Start_ReportField_Join_1
+           sql.AppendLine($"   Left Join [JoinName] on [ParentTable].[JoinName]Id = [JoinName].Id");
+           //Template_End_ReportField_Join_1
+
+           //Template_Start_Field_Lookup_3
+           sql.AppendLine($"   Left Join [JoinName] on [ParentTable].[JoinName]Id = [JoinName].Id");
+           //Template_End_Field_Lookup_3
+
+           return sql.ToString();
+        }
+        
+        protected override string GetWhereConditions(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> request, DynamicParameters parameters)
+        {
+            var sql = new StringBuilder() ;
+            sql.AppendLine(" [QueryBaseTable].isDeleted=0 ");
+
+                         var filter = request.Filter;
+            if (filter != null)
+            {
+            //Template_Start_FilterField_ValueNumber_1
+                if ((filter.[FilterValueName].HasValue) && (filter.[FilterValueName]>0))
+                {
+                    sql.AppendLine(" AND [ParentTable].[CapitalFieldName] = @[FilterValueName]");
+                    parameters.Add("@[FilterValueName]", filter.[FilterValueName]);
+                }
+                //Template_End_FilterField_ValueNumber_1
+
+                //Template_Start_FilterField_ValueString_1
+                if (!string.IsNullOrEmpty(filter.[FilterValueName]))
+                {
+                    sql.AppendLine("[ParentTable].[CapitalFieldName] like '%'+@[FilterValueName]+'%' ");
+                    parameters.Add("@[FilterValueName]", filter.[FilterValueName]);
+                }
+                //Template_End_FilterField_ValueString_1
+               
+                //Template_Start_FilterField_Lookup_1
+                if (filter.[FilterLookupName].HasValue)
+                {
+                    sql.AppendLine("[ParentTable].[LookupNameCapital]Id = @[FilterLookupName]");
+                    parameters.Add("@[FilterLookupName]", filter.[FilterLookupName].Value);
+                }
+                //Template_End_FilterField_Lookup_1           
+
+                //Template_Start_FilterField_Range_1
+                if (filter.[FilterRangeName]?.From.HasValue == true)
+                {
+                    sql.AppendLine("[ParentTable].[FilterRangeName] >= @[FilterRangeName]From");
+                    parameters.Add("@[FilterRangeName]From", filter.[FilterRangeName].From.Value);
+                }
+                if (filter.[FilterRangeName]?.To.HasValue == true)
+                {
+                    sql.AppendLine("[ParentTable].[FilterRangeName] <= @[FilterRangeName]To");
+                    parameters.Add("@[FilterRangeName]To", filter.[FilterRangeName].To.Value);
+                }
+                //Template_End_FilterField_Range_1
+            }
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+        }
+       
+        protected override string GetHavingConditions(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> request, DynamicParameters parameters)
+        {
+            var filter = request.Filter;
+            if (filter == null)
+            {
+                return "";
+            }
+
+            var sql = new StringBuilder();
+
+            //Template_Start_FilterField_AggregateRange_1
+            if (filter.[FilterRangeName]?.From.HasValue == true)
+            {
+                sql.AppendLine("[AggregateFunction]([ParentTable].[CapitalFieldName]) >= @[AggregateName]From");
+                parameters.Add("@[AggregateName]From", filter.[FilterRangeName].From.Value);
+            }
+            if (filter.[FilterRangeName]?.To.HasValue == true)
+            {
+                sql.AppendLine("[AggregateFunction]([ParentTable].[CapitalFieldName]) <= @[AggregateName]To");
+                parameters.Add("@[AggregateName]To", filter.[FilterRangeName].To.Value);
+            }
+            //Template_End_FilterField_AggregateRange_1
+            
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+       }       
+    }
+}

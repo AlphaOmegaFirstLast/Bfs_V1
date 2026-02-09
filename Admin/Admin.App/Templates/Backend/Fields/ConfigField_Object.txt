@@ -1,0 +1,10 @@
+        //Configure object Field [CapitalFieldName] as an owned entity, instruct EF Core to store it as JSON in the database.
+        builder.Entity<[ComponentNameCapital]Entity>(entity =>
+        {
+            entity.OwnsOne(e => e.[CapitalFieldName], owned =>
+            {
+                owned.ToJson();  // EF Core 7.0+ for the .ToJson() method. usually handles nullability correctly by default.
+            });
+
+            // Note: If you have other properties/configurations for the Entity, they would also go inside this lambda.
+        });

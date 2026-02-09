@@ -1,0 +1,5 @@
+    {
+        path: '',
+        component: MainLayoutComponent,
+        loadChildren: () => import('../bfs/[SystemNameSmall]-main/[SystemNameSmall].route').then((mod) => mod.[SystemNameCapital]_ROUTES)
+    },

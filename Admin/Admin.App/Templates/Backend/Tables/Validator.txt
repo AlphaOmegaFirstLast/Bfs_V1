@@ -1,0 +1,14 @@
+using FluentValidation;
+using Bfs.[SystemNameCapital].Contracts;
+using Bfs.[SystemNameCapital].Domain;
+
+namespace Bfs.[SystemNameCapital].Api.Validators
+{
+    public class [ComponentNameCapital]Validator : AbstractValidator<[ComponentNameCapital]>
+    {
+        public [ComponentNameCapital]Validator()
+        {
+        //Template_FieldSet_Validators
+        }
+    }
+}

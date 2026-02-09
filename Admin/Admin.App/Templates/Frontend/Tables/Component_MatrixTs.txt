@@ -1,0 +1,60 @@
+﻿//Template_Start_Field_ChildrenMatrix_1
+
+//---------------- angular ----------------------------------
+import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+//---------------- Ng Bootstrap ------------------------------
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgIcon } from '@ng-icons/core'
+//---------------- bfs shared -------------------------------------
+import { TokenService } from '@bfs/_shared/services/token.service';
+import { BaseMatrixComponent } from '@bfs/_shared/components/base-matrix';
+//--------------- component specific ------------------------------
+import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
+import { [MatrixNameCapital]FilterComponent } from '../[MatrixFileName]/[MatrixFileName].filter.component'; 
+import { type I[MatrixNameCapital]WithLookup, type I[MatrixNameCapital]Request, type I[MatrixNameCapital]Filter, init[MatrixNameCapital]Request } from '../[MatrixFileName]/[MatrixFileName].shared';
+
+@Component({
+    selector: '[MatrixFileName]-matrix',      
+    imports: [CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,NgbAlertModule, NgbProgressbarModule],
+    standalone: true,
+    templateUrl: '../../_shared/components/base-matrix.component.html',
+})
+export class [MatrixNameCapital]MatrixComponent extends BaseMatrixComponent <I[MatrixNameCapital]WithLookup, I[MatrixNameCapital]Filter> {
+
+    override apiService: [SystemNameCapital]Service = inject([SystemNameCapital]Service);
+    override tokenService: TokenService = inject(TokenService);
+    override queryRequest = {} as I[MatrixNameCapital]Request;
+    override list: I[MatrixNameCapital]WithLookup[] = [];
+
+    override title: string = '[VerticalApiName] ⌄ | [HorizontalApiName] >' ; // to be set from outside    
+
+    override parentId: string =  "[ComponentNameSmall]Id"; 
+    override horizontalId:string = '[HorizontalApiNameSmall]Id';
+    override verticalId:string = '[VerticalApiNameSmall]Id';
+    //------------------------------------------------------
+    
+    constructor(modalService: NgbModal, router: Router, activatedRoute: ActivatedRoute) {
+        // Initialize queryRequest with default values
+        super(modalService, router, activatedRoute);
+
+        this.getApiUrl = '/[MatrixNameCapital]/list';
+        this.saveApiUrl = '/Operations/[MatrixNameCapital]/matrix';
+
+        this.getHorizontalApiUrl = '/[HorizontalApiName]/list';
+        this.getVerticalApiUrl = '/[VerticalApiName]/list';
+
+        this.isButton.chart = false;
+        this.isButton.addNew = false;
+        this.filterComponent = [MatrixNameCapital]FilterComponent;
+        this.queryRequest = init[MatrixNameCapital]Request();
+    }
+    //---------------------------------------------------------
+}
+
+//Template_End_Field_ChildrenMatrix_1

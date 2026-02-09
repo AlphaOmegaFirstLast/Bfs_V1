@@ -1,0 +1,11 @@
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>[DisplayName]</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="[FilterRangeName]From">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="[FilterRangeName]To">
+      </div>
+    </div>
+  </div>

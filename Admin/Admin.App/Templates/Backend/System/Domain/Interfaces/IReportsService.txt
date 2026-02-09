@@ -1,0 +1,10 @@
+using Bfs.Core.Contracts;
+using Bfs.[SystemNameCapital].Contracts;
+
+namespace Bfs.[SystemNameCapital].Domain.Interfaces
+{
+    public interface IReportsService
+    {
+//Template_Component_AddIServiceEntry
+  }
+}

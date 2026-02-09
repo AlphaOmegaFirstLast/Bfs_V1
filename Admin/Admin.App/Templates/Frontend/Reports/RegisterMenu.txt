@@ -1,0 +1,10 @@
+    {
+        label: '[ComponentMenuName]',
+        icon: 'tablerLayoutSidebar',
+        url: '/[SystemPrefixSmall]-report/[ComponentFileName]/0',
+        data: {
+            app: ['stkex.b.ofc'],
+            api: ['[SystemNameSmall]'],
+            role: ['admin', 'investor','broker']
+        }
+    },

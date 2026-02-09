@@ -1,0 +1,1 @@
+  , [SystemNameCapital]ApiUrl: 'https://[LocalOrigin]/api'

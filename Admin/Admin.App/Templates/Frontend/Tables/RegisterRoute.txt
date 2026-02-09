@@ -1,0 +1,4 @@
+    {
+        path: '',
+        loadChildren: () => import('./[ComponentFileName]/[ComponentFileName].route').then((mod) => mod.[ComponentNameCapital]_ROUTES),
+    },

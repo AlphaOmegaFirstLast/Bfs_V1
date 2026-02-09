@@ -1,0 +1,10 @@
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>[DisplayName]</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.[FilterValueName]" value="{{result.[FilterValueName]}}" placeholder="[DisplayName]" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>

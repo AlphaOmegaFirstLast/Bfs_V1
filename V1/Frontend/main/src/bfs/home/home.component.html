@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <article class="card card-out-of-container border-top-0">
+        <div class="position-relative card-side-img overflow-hidden"
+          style="height: 250px; background-image: url({{imgUrl}});">
+          <div
+            class="p-4 card-img-overlay rounded-start-0 auth-overlay d-flex align-items-center justify-content-center">
+            <section class="text-white text-center py-4">
+              <h3 class="mb-2 fst-italic">"Stock Exchange Market"</h3>
+              <h4 class="fst-italic">Real-time data, insights, and trends from different financial hubs</h4>
+            </section>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="row" *ngIf="currentSystemApp" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
+      <img src="{{imgUrl}}" width="50%" alt="Stock Exchange Backoffice" class="img-fluid" />
+    </div>
+    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
+      <h3>Welcome to {{currentSystemApp.displayName}}</h3>
+    </div>
+    <div class="col-4"></div>
+  </div>
+  <div class="row" *ngIf="!currentSystemApp" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
+    </div>
+    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
+      <h3>Login is required to access the application.</h3>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>

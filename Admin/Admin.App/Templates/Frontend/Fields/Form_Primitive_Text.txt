@@ -1,0 +1,11 @@
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="[SmallFieldName]" class="form-label fs-6">[DisplayName]</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="[ToolTip]" [isToolTipVisible] />
+
+        <input class="form-control" type="text" id="[SmallFieldName]" formControlName="[SmallFieldName]"
+            [class]="submit && !form['[SmallFieldName]'].errors ? 'is-valid': submit && form['[SmallFieldName]'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid [DisplayName].</div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+using Bfs.Core.Data;
+using Bfs.Core.Interfaces;
+using Bfs.[SystemNameCapital].Data.Interfaces;
+using Bfs.[SystemNameCapital].Data.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bfs.[SystemNameCapital].Data.Repositories
+{
+    public class [ComponentNameCapital]Repository : SqlRepository<[ComponentNameCapital]Entity, [SystemNameCapital]DbContext>, I[ComponentNameCapital]Repository
+    {
+        private readonly [SystemNameCapital]DbContext _context;
+        public [ComponentNameCapital]Repository([SystemNameCapital]DbContext dbContext, IScopeData scopeData) : base(dbContext, scopeData)
+        {
+            _context = dbContext;
+        }
+
+        //Template_Start_DontOverwrite_1
+        //Template_End_DontOverwrite_1
+    }
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Morgan",
+    "dateOfBirth": "1984-03-11T00:00:00.000Z",
+    "email": "alice.morgan@example.com",
+    "password": "P@ssw0rd1",
+    "sex": 1,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 2,
+    "name": "Karim El-Sayed",
+    "dateOfBirth": "1978-07-22T00:00:00.000Z",
+    "email": "karim.elsayed@example.com",
+    "password": "S3cur3K@rim!",
+    "sex": 0,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 3,
+    "name": "Fatima Hassan",
+    "dateOfBirth": "1991-02-28T00:00:00.000Z",
+    "email": "fatima.hassan@example.com",
+    "password": "F@tima123",
+    "sex": 1,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 4,
+    "name": "John Lee",
+    "dateOfBirth": "1955-05-14T00:00:00.000Z",
+    "email": "john.lee@example.com",
+    "password": "JLee!1955",
+    "sex": 0,
+    "paymentMethod": 0,
+    "isRetired": true
+  },
+  {
+    "id": 5,
+    "name": "Lina Osman",
+    "dateOfBirth": "1960-11-09T00:00:00.000Z",
+    "email": "lina.osman@example.com",
+    "password": "OsmanSecure#9",
+    "sex": 1,
+    "paymentMethod": 1,
+    "isRetired": true
+  },
+  {
+    "id": 6,
+    "name": "Mohamed Nabil",
+    "dateOfBirth": "1989-08-30T00:00:00.000Z",
+    "email": "mohamed.nabil@example.com",
+    "password": "Moh@med89",
+    "sex": 0,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 7,
+    "name": "Emily Clark",
+    "dateOfBirth": "1994-06-17T00:00:00.000Z",
+    "email": "emily.clark@example.com",
+    "password": "Clarky!94",
+    "sex": 1,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 8,
+    "name": "Ahmed Sherif",
+    "dateOfBirth": "1982-04-12T00:00:00.000Z",
+    "email": "ahmed.sherif@example.com",
+    "password": "A$herif82",
+    "sex": 0,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 9,
+    "name": "Yasmin Tawfik",
+    "dateOfBirth": "1975-09-26T00:00:00.000Z",
+    "email": "yasmin.tawfik@example.com",
+    "password": "YT@1975!",
+    "sex": 1,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 10,
+    "name": "George Ibrahim",
+    "dateOfBirth": "1990-01-05T00:00:00.000Z",
+    "email": "george.ibrahim@example.com",
+    "password": "GeoIbra@90",
+    "sex": 0,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 11,
+    "name": "Rania Salem",
+    "dateOfBirth": "1987-12-11T00:00:00.000Z",
+    "email": "rania.salem@example.com",
+    "password": "RSalem#87",
+    "sex": 1,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 12,
+    "name": "Adam Smith",
+    "dateOfBirth": "1965-10-19T00:00:00.000Z",
+    "email": "adam.smith@example.com",
+    "password": "AdamS@1965",
+    "sex": 0,
+    "paymentMethod": 1,
+    "isRetired": true
+  },
+  {
+    "id": 13,
+    "name": "Noha Ezzat",
+    "dateOfBirth": "1993-03-03T00:00:00.000Z",
+    "email": "noha.ezzat@example.com",
+    "password": "Noha!Ezz93",
+    "sex": 1,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 14,
+    "name": "Tom Holland",
+    "dateOfBirth": "1980-12-01T00:00:00.000Z",
+    "email": "tom.holland@example.com",
+    "password": "THolland*80",
+    "sex": 0,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 15,
+    "name": "Salma Fadel",
+    "dateOfBirth": "1970-06-06T00:00:00.000Z",
+    "email": "salma.fadel@example.com",
+    "password": "Fadel#70",
+    "sex": 1,
+    "paymentMethod": 0,
+    "isRetired": true
+  },
+  {
+    "id": 16,
+    "name": "Omar Khalid",
+    "dateOfBirth": "1983-08-18T00:00:00.000Z",
+    "email": "omar.khalid@example.com",
+    "password": "OKhalid@83",
+    "sex": 0,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 17,
+    "name": "Julia Roberts",
+    "dateOfBirth": "1996-04-07T00:00:00.000Z",
+    "email": "julia.roberts@example.com",
+    "password": "JRoberts96*",
+    "sex": 1,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 18,
+    "name": "Sherif Gamal",
+    "dateOfBirth": "1979-11-23T00:00:00.000Z",
+    "email": "sherif.gamal@example.com",
+    "password": "SGamal@79",
+    "sex": 0,
+    "paymentMethod": 0,
+    "isRetired": false
+  },
+  {
+    "id": 19,
+    "name": "Nour Morsi",
+    "dateOfBirth": "2000-02-02T00:00:00.000Z",
+    "email": "nour.morsi@example.com",
+    "password": "NourM2000!",
+    "sex": 1,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 20,
+    "name": "Bilal Fathy",
+    "dateOfBirth": "1999-06-15T00:00:00.000Z",
+    "email": "bilal.fathy@example.com",
+    "password": "BFathy99#",
+    "sex": 0,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 21,
+    "name": "Linda Rashad",
+    "dateOfBirth": "1986-09-27T00:00:00.000Z",
+    "email": "linda.rashad@example.com",
+    "password": "LindaR@86",
+    "sex": 1,
+    "paymentMethod": 1,
+    "isRetired": false
+  },
+  {
+    "id": 22,
+    "name": "Hossam Youssef",
+    "dateOfBirth": "1959-01-16T00:00:00.000Z",
+    "email": "hossam.youssef@example.com",
+    "password": "HY1959!",
+    "sex": 0,
+    "paymentMethod": 0,
+    "isRetired": true
+  }
+  ]

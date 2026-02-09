@@ -1,0 +1,16 @@
+[
+  { "id": 1, "fund": 4872, "fundDate": "2021-07-05T12:17:19.670Z", "investorId": 5, "brokerId": 3 },
+  { "id": 2, "fund": 23987, "fundDate": "2021-07-07T12:17:19.670Z", "investorId": 6, "brokerId": 1 },
+  { "id": 3, "fund": 16321, "fundDate": "2023-07-11T12:17:19.670Z", "investorId": 7, "brokerId": 4 },
+  { "id": 4, "fund": 18995, "fundDate": "2021-08-11T12:17:19.670Z", "investorId": 8, "brokerId": 2 },
+  { "id": 5, "fund": 13450, "fundDate": "2021-07-11T12:17:19.670Z", "investorId": 9, "brokerId": 5 },
+  { "id": 6, "fund": 28761, "fundDate": "2021-07-24T12:17:19.670Z", "investorId": 10, "brokerId": 1 },
+  { "id": 7, "fund": 14678, "fundDate": "2021-09-11T12:17:19.670Z", "investorId": 11, "brokerId": 2 },
+  { "id": 8, "fund": 22103, "fundDate": "2022-05-11T12:17:19.670Z", "investorId": 12, "brokerId": 3 },
+  { "id": 9, "fund": 12789, "fundDate": "2021-07-11T12:17:19.670Z", "investorId": 13, "brokerId": 4 },
+  { "id": 11, "fund": 19384, "fundDate": "2020-02-11T12:17:19.670Z", "investorId": 15, "brokerId": 2 },
+  { "id": 12, "fund": 25000, "fundDate": "2020-01-11T12:17:19.670Z", "investorId": 5, "brokerId": 1 },
+  { "id": 13, "fund": 15890, "fundDate": "2021-07-06T12:17:19.670Z", "investorId": 6, "brokerId": 3 },
+  { "id": 14, "fund": 17200, "fundDate": "2021-03-01T12:17:19.670Z", "investorId": 7, "brokerId": 5 },
+  { "id": 15, "fund": 28950, "fundDate": "2021-11-05T12:17:19.670Z", "investorId": 8, "brokerId": 4 }
+]

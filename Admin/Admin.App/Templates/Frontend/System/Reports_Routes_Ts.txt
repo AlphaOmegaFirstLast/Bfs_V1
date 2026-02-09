@@ -1,0 +1,8 @@
+import { Routes } from '@angular/router';
+import { RouteGuardService } from "@bfs/_shared/security/route-guard.service";
+//Template_Component_AddDeclareEntry
+
+
+export const REPORTS_ROUTES: Routes = [
+//Template_Component_RegisterRoute
+]

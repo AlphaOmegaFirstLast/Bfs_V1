@@ -1,0 +1,651 @@
+[
+  {
+    "Id": "100",
+    "TemplateElementType": "Table",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "101",
+        "TemplateFile": "Backend\\Tables\\Controller.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\[DataType]\\[ComponentNameCapital]Controller.cs"
+      },
+      {
+        "Id": "102",
+        "TemplateFile": "Backend\\Tables\\Contract.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\[DataType]\\[ComponentNameCapital].cs"
+      },
+      {
+        "Id": "103",
+        "TemplateFile": "Backend\\Tables\\IService.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Interfaces\\[DataType]\\I[ComponentNameCapital]Service.cs"
+      },
+      {
+        "Id": "104",
+        "TemplateFile": "Backend\\Tables\\Service.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\[DataType]\\[ComponentNameCapital]Service.cs"
+      },
+      {
+        "Id": "105",
+        "TemplateFile": "Backend\\Tables\\Mapper.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Mapper\\[DataType]\\[ComponentNameCapital]Mapper.cs"
+      },
+      {
+        "Id": "106",
+        "TemplateFile": "Backend\\Tables\\Model.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Models\\[DataType]\\[ComponentNameCapital]Entity.cs"
+      },
+      {
+        "Id": "107",
+        "TemplateFile": "Backend\\Tables\\Configuration.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Configuration\\[DataType]\\[ComponentNameCapital]EntityConfiguration.cs"
+      },
+      {
+        "Id": "108",
+        "TemplateFile": "Backend\\Tables\\IRepository.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Interfaces\\[DataType]\\I[ComponentNameCapital]Repository.cs"
+      },
+      {
+        "Id": "109",
+        "TemplateFile": "Backend\\Tables\\Repository.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Repositories\\[DataType]\\[ComponentNameCapital]Repository.cs"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "110",
+        "TemplateFile": "Backend\\Tables\\RegisterDbSet.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\[SystemNameCapital]DbContext.cs"
+      },
+      {
+        "Id": "111",
+        "TemplateFile": "Backend\\Fields\\ConfigField_Object.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\[SystemNameCapital]DbContext.cs"
+      },
+      {
+        "Id": "112",
+        "TemplateFile": "Backend\\Fields\\ConfigField_CustomFieldList.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\[SystemNameCapital]DbContext.cs"
+      },
+      {
+        "Id": "113",
+        "TemplateFile": "Backend\\Tables\\RegisterRepositories.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\BuilderExtensions.cs"
+      },
+      {
+        "Id": "114",
+        "TemplateFile": "Backend\\Tables\\RegisterServices.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\BuilderExtensions.cs"
+      }
+    ]
+  },
+  {
+    "Id": "200",
+    "TemplateElementType": "List",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "201",
+        "TemplateFile": "Backend\\Lists\\IList.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Interfaces\\[DataType]\\I[ComponentNameCapital]List.cs"
+      },
+      {
+        "Id": "202",
+        "TemplateFile": "Backend\\Lists\\List.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Lists\\[DataType]\\[ComponentNameCapital]List.cs"
+      },
+      {
+        "Id": "203",
+        "TemplateFile": "Backend\\Lists\\ListEntityItem.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Responses\\[DataType]\\[ComponentNameCapital]ListItem.cs"
+      },
+      {
+        "Id": "204",
+        "TemplateFile": "Backend\\Lists\\ListEntityFilter.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Requests\\[DataType]\\[ComponentNameCapital]ListFilter.cs"
+      },
+      {
+        "Id": "205",
+        "TemplateFile": "Backend\\Lists\\ListContractItem.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Responses\\[DataType]\\[ComponentNameCapital]ListItem.cs"
+      },
+      {
+        "Id": "206",
+        "TemplateFile": "Backend\\Lists\\ListContractFilter.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Requests\\[DataType]\\[ComponentNameCapital]ListFilter.cs"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "207",
+        "TemplateFile": "Backend\\Lists\\RegisterLists.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\BuilderExtensions.cs"
+      }
+    ]
+  },
+  {
+    "Id": "300",
+    "TemplateElementType": "Matrix",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [],
+    "ModifierTemplateList": [
+      {
+        "Id": "301",
+        "TemplateFile": "Backend\\Matrix\\AddControllerEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\OperationsController.cs"
+      },
+      {
+        "Id": "302",
+        "TemplateFile": "Backend\\Matrix\\AddIUnitOfWorkEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\IUnitOfWork.cs"
+      },
+      {
+        "Id": "303",
+        "TemplateFile": "Backend\\Matrix\\AddUnitOfWorkEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\UnitOfWork.cs"
+      },
+      {
+        "Id": "306",
+        "TemplateFile": "Backend\\Matrix\\AddParameterEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\UnitOfWork.cs"
+      },
+      {
+        "Id": "307",
+        "TemplateFile": "Backend\\Matrix\\AddDeclareEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\UnitOfWork.cs"
+      },
+      {
+        "Id": "308",
+        "TemplateFile": "Backend\\Matrix\\AddInitEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\UnitOfWork.cs"
+      },
+      {
+        "Id": "304",
+        "TemplateFile": "Backend\\Matrix\\AddIServiceEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Interfaces\\IOperationsService.cs"
+      },
+      {
+        "Id": "305",
+        "TemplateFile": "Backend\\Matrix\\AddServiceEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\OperationsService.cs"
+      }
+    ]
+  },
+  {
+    "Id": "400",
+    "TemplateElementType": "Report",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "401",
+        "TemplateFile": "Backend\\Reports\\IReport.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Interfaces\\[DataType]\\I[ComponentNameCapital]Report.cs"
+      },
+      {
+        "Id": "402",
+        "TemplateFile": "Backend\\Reports\\Report.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Reports\\[DataType]\\[ComponentNameCapital]Report.cs"
+      },
+      {
+        "Id": "403",
+        "TemplateFile": "Backend\\Reports\\ReportEntityItem.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Responses\\[DataType]\\[ComponentNameCapital]Item.cs"
+      },
+      {
+        "Id": "404",
+        "TemplateFile": "Backend\\Reports\\ReportEntityFilter.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Requests\\[DataType]\\[ComponentNameCapital]Filter.cs"
+      },
+      {
+        "Id": "405",
+        "TemplateFile": "Backend\\Reports\\ReportContractItem.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Responses\\[DataType]\\[ComponentNameCapital]Item.cs"
+      },
+      {
+        "Id": "406",
+        "TemplateFile": "Backend\\Reports\\ReportContractFilter.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Requests\\[DataType]\\[ComponentNameCapital]Filter.cs"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "407",
+        "TemplateFile": "Backend\\Reports\\RegisterReports.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\BuilderExtensions.cs"
+      },
+      {
+        "Id": "408",
+        "TemplateFile": "Backend\\Reports\\AddControllerEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\ReportsController.cs"
+      },
+      {
+        "Id": "409",
+        "TemplateFile": "Backend\\Reports\\AddIServiceEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Interfaces\\IReportsService.cs"
+      },
+      {
+        "Id": "410",
+        "TemplateFile": "Backend\\Reports\\AddServiceEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\ReportsService.cs"
+      },
+      {
+        "Id": "411",
+        "TemplateFile": "Backend\\Reports\\AddInitEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\ReportsService.cs"
+      },
+      {
+        "Id": "412",
+        "TemplateFile": "Backend\\Reports\\AddDeclareEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\ReportsService.cs"
+      },
+      {
+        "Id": "413",
+        "TemplateFile": "Backend\\Reports\\AddParameterEntry.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\ReportsService.cs"
+      }
+    ]
+  },
+  {
+    "Id": "500",
+    "TemplateElementType": "Validator",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "501",
+        "TemplateFile": "Backend\\Tables\\Validator.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Validators\\[DataType]\\[ComponentNameCapital]Validator.cs"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "502",
+        "TemplateFile": "",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\ErrorCodes.cs"
+      },
+      {
+        "Id": "503",
+        "TemplateFile": "Backend\\Tables\\RegisterValidators.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\BuilderExtensions.cs"
+      }
+    ]
+  },
+  {
+    "Id": "600",
+    "TemplateElementType": "Table",
+    "CodeType": "Frontend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "601",
+        "TemplateFile": "Frontend\\Tables\\Class_Shared.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].shared.ts"
+      },
+      {
+        "Id": "602",
+        "TemplateFile": "Frontend\\Tables\\Class_Routes.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].route.ts"
+      },
+      {
+        "Id": "603",
+        "TemplateFile": "Frontend\\Tables\\Component_ListTs.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].list.component.ts"
+      },
+      {
+        "Id": "604",
+        "TemplateFile": "Frontend\\Tables\\Component_FormTs.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].form.component.ts"
+      },
+      {
+        "Id": "605",
+        "TemplateFile": "Frontend\\Tables\\Component_FormHtml.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].form.component.html"
+      },
+      {
+        "Id": "606",
+        "TemplateFile": "Frontend\\Tables\\Component_FilterTs.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.ts"
+      },
+      {
+        "Id": "607",
+        "TemplateFile": "Frontend\\Tables\\Component_FilterHtml.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.html"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "608",
+        "TemplateFile": "Frontend\\Tables\\RegisterRoute.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[DataType].route.ts"
+      },
+      {
+        "Id": "609",
+        "TemplateFile": "Frontend\\Tables\\RegisterMenu.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].menu.ts"
+      }
+    ]
+  },
+  {
+    "Id": "700",
+    "TemplateElementType": "Matrix",
+    "CodeType": "Frontend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "701",
+        "TemplateFile": "Frontend\\Tables\\Component_MatrixTs.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[WriterFileName].matrix.component.ts",
+        "SaveGeneratedCode": "PerWriter"
+      }
+    ],
+    "ModifierTemplateList": []
+  },
+  {
+    "Id": "800",
+    "TemplateElementType": "Report",
+    "CodeType": "Frontend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "801",
+        "TemplateFile": "Frontend\\Reports\\Class_ReportShared.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].shared.ts"
+      },
+      {
+        "Id": "802",
+        "TemplateFile": "Frontend\\Reports\\Component_ReportTs.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].report.component.ts"
+      },
+      {
+        "Id": "803",
+        "TemplateFile": "Frontend\\Reports\\Component_ReportFilterTs.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.ts"
+      },
+      {
+        "Id": "804",
+        "TemplateFile": "Frontend\\Reports\\Component_ReportFilterHtml.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.html"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "805",
+        "TemplateFile": "Frontend\\Reports\\RegisterRoute.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[DataType].route.ts"
+      },
+      {
+        "Id": "806",
+        "TemplateFile": "Frontend\\Reports\\AddDeclareEntry.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[DataType].route.ts"
+      },
+      {
+        "Id": "807",
+        "TemplateFile": "Frontend\\Reports\\RegisterMenu.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].menu.ts"
+      }
+    ]
+  },
+  {
+    "Id": "900",
+    "TemplateElementType": "Api_Project",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "901",
+        "TemplateFile": "Backend\\System\\Api\\Api_csproj.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Bfs.[SystemNameCapital].Api.csproj"
+      },
+      {
+        "Id": "902",
+        "TemplateFile": "Backend\\System\\Api\\Program.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Program.cs"
+      },
+      {
+        "Id": "903",
+        "TemplateFile": "Backend\\System\\Api\\BuilderExtensions.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\BuilderExtensions.cs"
+      },
+      {
+        "Id": "904",
+        "TemplateFile": "Backend\\System\\Api\\Properties\\launchSettings.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Properties\\launchSettings.json"
+      },
+      {
+        "Id": "905",
+        "TemplateFile": "Backend\\System\\Api\\Controllers\\OperationsController.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\OperationsController.cs"
+      },
+      {
+        "Id": "906",
+        "TemplateFile": "Backend\\System\\Api\\Controllers\\ReportsController.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\ReportsController.cs"
+      },
+      {
+        "Id": "907",
+        "TemplateFile": "Backend\\System\\Api\\appsettings.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\appsettings.json"
+      },
+      {
+        "Id": "908",
+        "TemplateFile": "Backend\\System\\Api\\appsettings_Development.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\appsettings.Development.json"
+      },
+      {
+        "Id": "909",
+        "TemplateFile": "Backend\\System\\Api\\appsettings_Staging.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\appsettings.Staging.json"
+      },
+      {
+        "Id": "910",
+        "TemplateFile": "Backend\\System\\Api\\appsettings_Production.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\appsettings.Production.json"
+      },
+      {
+        "Id": "911",
+        "TemplateFile": "Backend\\System\\sln.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].sln"
+      }
+    ],
+    "ModifierTemplateList": []
+  },
+  {
+    "Id": "1000",
+    "TemplateElementType": "Data_Project",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "1001",
+        "TemplateFile": "Backend\\System\\Data\\Data_csproj.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Bfs.[SystemNameCapital].Data.csproj"
+      },
+      {
+        "Id": "1002",
+        "TemplateFile": "Backend\\System\\Data\\DbContext.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\[SystemNameCapital]DbContext.cs"
+      },
+      {
+        "Id": "1003",
+        "TemplateFile": "Backend\\System\\Data\\IUnitOfWork.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\IUnitOfWork.cs"
+      },
+      {
+        "Id": "1004",
+        "TemplateFile": "Backend\\System\\Data\\UnitOfWork.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\UnitOfWork.cs"
+      }
+    ],
+    "ModifierTemplateList": []
+  },
+  {
+    "Id": "1100",
+    "TemplateElementType": "Contracts_Project",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "1101",
+        "TemplateFile": "Backend\\System\\Contracts\\Contracts_csproj.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Bfs.[SystemNameCapital].Contracts.csproj"
+      }
+    ],
+    "ModifierTemplateList": []
+  },
+  {
+    "Id": "1200",
+    "TemplateElementType": "Domain_Project",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "1201",
+        "TemplateFile": "Backend\\System\\Domain\\Domain_csproj.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Bfs.[SystemNameCapital].Domain.csproj"
+      },
+      {
+        "Id": "1202",
+        "TemplateFile": "Backend\\System\\Domain\\ErrorCodes.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\ErrorCodes.cs"
+      },
+      {
+        "Id": "1203",
+        "TemplateFile": "Backend\\System\\Domain\\Interfaces\\IOperationsService.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Interfaces\\IOperationsService.cs"
+      },
+      {
+        "Id": "1204",
+        "TemplateFile": "Backend\\System\\Domain\\Services\\OperationsService.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\OperationsService.cs"
+      },
+      {
+        "Id": "1205",
+        "TemplateFile": "Backend\\System\\Domain\\Interfaces\\IReportsService.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Interfaces\\IReportsService.cs"
+      },
+      {
+        "Id": "1206",
+        "TemplateFile": "Backend\\System\\Domain\\Services\\ReportsService.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Domain\\Services\\ReportsService.cs"
+      }
+    ],
+    "ModifierTemplateList": []
+  },
+  {
+    "Id": "1300",
+    "TemplateElementType": "Client_Project",
+    "CodeType": "Backend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "1301",
+        "TemplateFile": "Backend\\System\\Client\\Client_csproj.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Client\\Bfs.[SystemNameCapital].Client.csproj"
+      },
+      {
+        "Id": "1302",
+        "TemplateFile": "Backend\\System\\Client\\Client.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Client\\[SystemNameCapital].Client.cs"
+      }
+    ],
+    "ModifierTemplateList": []
+  },
+  {
+    "Id": "1400",
+    "TemplateElementType": "System",
+    "CodeType": "Frontend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "1401",
+        "TemplateFile": "Frontend\\System\\System_Routes_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].route.ts"
+      },
+      {
+        "Id": "1402",
+        "TemplateFile": "Frontend\\System\\Menu_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].menu.ts"
+      },
+      {
+        "Id": "1403",
+        "TemplateFile": "Frontend\\System\\Operations_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].operations.ts"
+      },
+      {
+        "Id": "1404",
+        "TemplateFile": "Frontend\\System\\Service_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].service.ts"
+      },
+      {
+        "Id": "1405",
+        "TemplateFile": "Frontend\\System\\Seed_Routes_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-seed\\seed.route.ts"
+      },
+      {
+        "Id": "1406",
+        "TemplateFile": "Frontend\\System\\Tables_Routes_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-tables\\tables.route.ts"
+      },
+      {
+        "Id": "1407",
+        "TemplateFile": "Frontend\\System\\Reports_Routes_Ts.txt",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-reports\\reports.route.ts"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "1408",
+        "TemplateFile": "Frontend\\System\\AddRouteEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\app\\app.routes.ts"
+      },
+      {
+        "Id": "1409",
+        "TemplateFile": "Frontend\\System\\DeclareProviderEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\app\\app.config.ts"
+      },
+      {
+        "Id": "1410",
+        "TemplateFile": "Frontend\\System\\AddProviderEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\app\\app.config.ts"
+      },
+      {
+        "Id": "1411",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\environment\\environment.ts"
+      },
+      {
+        "Id": "1412",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentLocalEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\environment\\environment.local.ts"
+      },
+      {
+        "Id": "1413",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentStagingEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\environment\\environment.staging.ts"
+      },
+      {
+        "Id": "1414",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentProductionEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\environment\\environment.production.ts"
+      },
+      {
+        "Id": "1415",
+        "TemplateFile": "Frontend\\System\\System_AddMenuDeclare.txt",
+        "OutputFile": "[AppDir]\\Src\\bfs\\_shared\\security\\menu-guard.service.ts"
+      },
+      {
+        "Id": "1416",
+        "TemplateFile": "Frontend\\System\\System_AddMenuEntry.txt",
+        "OutputFile": "[AppDir]\\Src\\bfs\\_shared\\security\\menu-guard.service.ts"
+      }
+    ]
+  },
+  {
+    "Id": "1500",
+    "TemplateElementType": "AngularFramework",
+    "CodeType": "Frontend",
+    "GeneratorTemplateList": [
+      {
+        "Id": "1501",
+        "TemplateFile": "Init_Angular\\Original\\*.*",
+        "OutputFile": "[AppDir]\\"
+      }
+    ],
+    "ModifierTemplateList": [
+      {
+        "Id": "1502",
+        "TemplateFile": "Init_Angular\\Modified\\*.*",
+        "OutputFile": "[AppDir]\\"
+      }
+    ]
+  }
+]

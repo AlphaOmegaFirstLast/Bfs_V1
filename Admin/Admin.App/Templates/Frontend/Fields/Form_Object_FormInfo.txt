@@ -1,0 +1,32 @@
+                                        <div class="col-12" style="padding:4px; margin-bottom:4px; border: 2px solid #A7E8E9;" formGroupName="formInfo">
+
+                                            <label class="form-label fs-4">Form Control Info</label>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="formControlTypeId" class="form-label fs-6">Form Control Type</label>
+                                                    <select class="form-select" id="formControlTypeId" formControlName="formControlTypeId"
+                                                        [class]="submit && !validationForm.get('formInfo.formControlTypeId')?.errors ? 'is-valid': submit && validationForm.get('formInfo.formControlTypeId')?.errors ? 'is-invalid' : ''" >
+                                                        <ng-container *ngFor="let option of FormControlTypeOptions">
+                                                        <option [value]="option.id">{{ option.name }}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a valid Form Control Type.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-6">
+                                                    <label for="column" class="form-label fs-6">UI Control Column (on Form)</label>
+                                                    <input class="form-control" type="text" id="column" formControlName="column"
+                                                        [class]="submit && !validationForm.get('formInfo.column')?.errors ? 'is-valid': submit && validationForm.get('formInfo.column')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid UI Control Column.</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="row" class="form-label fs-6">UI Control Row (on Form)</label>
+                                                    <input class="form-control" type="text" id="row" formControlName="row"
+                                                        [class]="submit && !validationForm.get('formInfo.row')?.errors ? 'is-valid': submit && validationForm.get('formInfo.row')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid UI Control Row.</div>
+                                                </div>
+                                             </div>
+                                         </div>

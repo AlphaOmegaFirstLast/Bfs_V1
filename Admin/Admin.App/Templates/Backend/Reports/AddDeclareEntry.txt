@@ -1,0 +1,2 @@
+        private readonly I[ComponentNameCapital]Report _[ComponentNameSmall]Report;
+

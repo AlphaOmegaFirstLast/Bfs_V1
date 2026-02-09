@@ -1,0 +1,80 @@
+[
+  {
+    "AggrigateFunction": "Sum",
+    "Field": "SumQuantity",
+    "DisplayName": "Total Quantity",
+    "IsEntityChildren": false,
+    "BackendFieldType": "decimal",
+    "FrontendFieldType": "number",
+    "IsLookup": false,
+    "QueryFilter": "RangeAggrigateFilter",
+    "IsQueryColumn": true,
+    "IsJoinField": false,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "Sum",
+    "Field": "SumPrice",
+    "DisplayName": "Total Price",
+    "IsEntityChildren": false,
+    "BackendFieldType": "decimal",
+    "FrontendFieldType": "number",
+    "IsLookup": false,
+    "QueryFilter": "RangeAggrigateFilter",
+    "IsQueryColumn": true,
+    "IsJoinField": false,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "TransactionTypeId",
+    "DisplayName": "Transaction Type",
+    "IsEntityChildren": false,
+    "BackendFieldType": "long",
+    "FrontendFieldType": "string",
+    "IsLookup": true,
+    "QueryFilter": "LookupFilter",
+    "IsQueryColumn": true,
+    "IsJoinField": false,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "SsPortfolioId",
+    "DisplayName": "Portfolio",
+    "IsEntityChildren": false,
+    "BackendFieldType": "long",
+    "FrontendFieldType": "string",
+    "IsLookup": false,
+    "QueryFilter": null,
+    "IsQueryColumn": false,
+    "IsJoinField": true,
+    "ParentTable": "SspTransaction"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "InvestorId",
+    "DisplayName": "Investor",
+    "IsEntityChildren": false,
+    "BackendFieldType": "long",
+    "FrontendFieldType": "string",
+    "IsLookup": true,
+    "QueryFilter": "LookupFilter",
+    "IsQueryColumn": true,
+    "IsJoinField": false,
+    "ParentTable": "SsPortfolio"
+  },
+  {
+    "AggrigateFunction": "",
+    "Field": "TransactionDate",
+    "DisplayName": "Transaction Date",
+    "IsEntityChildren": false,
+    "BackendFieldType": "string",
+    "FrontendFieldType": "string",
+    "IsLookup": false,
+    "QueryFilter": "RangeDateFilter",
+    "IsQueryColumn": false,
+    "IsJoinField": false,
+    "ParentTable": "SspTransaction"
+  }
+]

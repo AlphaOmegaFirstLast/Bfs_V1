@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Buy","DisplayName": "Buy" , "quantityEffect": "add" , "costEffect": "average" },
+  { "id": 2, "name": "Sell","DisplayName": "Sell" , "quantityEffect": "sub" , "costEffect": "none" },
+  { "id": 3, "name": "TransferTo","DisplayName": "Transfer To" , "quantityEffect": "add" , "costEffect": "average" },
+  { "id": 4, "name": "TransferFrom","DisplayName": "Transfer From" , "quantityEffect": "sub" , "costEffect": "none" },
+  { "id": 5, "name": "Reset","DisplayName": "Start Balance" , "quantityEffect": "set" , "costEffect": "set" },
+  { "id": 6, "name": "Split","DisplayName": "Split Shares" , "quantityEffect": "set" , "costEffect": "set" },
+  { "id": 7, "name": "Merge","DisplayName": "Merge Shares" , "quantityEffect": "set" , "costEffect": "set" }
+]

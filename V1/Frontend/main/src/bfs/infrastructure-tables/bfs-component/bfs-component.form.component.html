@@ -1,0 +1,214 @@
+<div class="container-fluid">
+    <div class="pb-2"></div>
+    <div class="card">
+        <div class="card-body">
+
+            <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
+                <li [ngbNavItem]="1">
+                    <a href="javascript:void(0)" ngbNavLink> BestFit Component </a>
+                    <!----------------------------------------- Tab1 Contents -------------------------------------->
+                    <ng-template ngbNavContent>
+                        <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
+                            <div class="card fs-6">
+                                <!-----------------------------------------Header Buttons -------------------------------------->
+
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                             <a [routerLink]="['/bfs/bfs-component/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/bfs/bfs-component/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div ngbDropdown>
+                                                <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
+                                                <div ngbDropdownMenu>
+                                                    <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
+                                                    <a ngbDropdownItem [routerLink]="['/bfs/bfs-component/list']">Go to List</a>
+                                                    <a ngbDropdownItem href="javascript:void(0)">Activate</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <!----------------------------------------- Messages -------------------------------------->
+                                    <div *ngFor="let msg of messages">
+                                        <div *ngIf="msg.text">
+                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+                                            </ngb-alert>
+                                        </div>
+                                    </div>
+                                    <!----------------------------------------- Form Controls -------------------------------------->
+                                    <div class="row">
+                                    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="id" class="form-label fs-6">ID</label>
+        <input class="form-control" type="text" id="id" formControlName="id"
+            [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid ID.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="bfsSystemId" class="form-label fs-6">BestFit System</label>
+        <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId"
+            [class]="submit && !form['bfsSystemId'].errors ? 'is-valid': submit && form['bfsSystemId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of BfsSystemOptions">
+            <option [value]="option['bfsSystemId']">{{ option['bfsSystemName'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid BestFit System.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="isSoftDelete" formControlName="isSoftDelete" />
+            <label class="form-check-label" for="isSoftDelete">Is Soft Delete</label>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="name" class="form-label fs-6">Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is the Name of the field in the database"  />
+
+        <input class="form-control" type="text" id="name" formControlName="name"
+            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="displayName" class="form-label fs-6">DisplayName</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is name of the table\report that will be displayed to BestFit Admin"  />
+
+        <input class="form-control" type="text" id="displayName" formControlName="displayName"
+            [class]="submit && !form['displayName'].errors ? 'is-valid': submit && form['displayName'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid DisplayName.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="dataTypeId" class="form-label fs-6">Data Type</label>
+        <select class="form-select" id="dataTypeId" formControlName="dataTypeId"
+            [class]="submit && !form['dataTypeId'].errors ? 'is-valid': submit && form['dataTypeId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of DataTypeOptions">
+            <option [value]="option['dataTypeId']">{{ option['dataTypeName'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Data Type.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="menuName" class="form-label fs-6">MenuName</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="That is info that will be displayed in the side menu"  />
+
+        <input class="form-control" type="text" id="menuName" formControlName="menuName"
+            [class]="submit && !form['menuName'].errors ? 'is-valid': submit && form['menuName'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid MenuName.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="menuPlaceHolder" class="form-label fs-6">MenuPlaceHolder</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="menuPlaceHolder" formControlName="menuPlaceHolder"
+            [class]="submit && !form['menuPlaceHolder'].errors ? 'is-valid': submit && form['menuPlaceHolder'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid MenuPlaceHolder.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="notes" class="form-label fs-6">Notes</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="notes" formControlName="notes"
+            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Notes.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="queryBaseTable" class="form-label fs-6">QueryBaseTable</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="queryBaseTable" formControlName="queryBaseTable"
+            [class]="submit && !form['queryBaseTable'].errors ? 'is-valid': submit && form['queryBaseTable'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid QueryBaseTable.</div>
+    </div>
+</div>
+
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!----------------------------------------- End Form -------------------------------------->
+
+                    </ng-template>
+                </li>
+
+                <!----------------------------------------------------- Tabs -------------------------------------->
+                <!----------------------------------------- Tab Contents BfsField -------------------------------------->
+
+<li [ngbNavItem]="2">
+    <a href="javascript:void(0)" ngbNavLink>
+        Structure \ Fields
+    </a>
+
+    <ng-template ngbNavContent>
+        <bfs-field-list [presetFilter]="presetBfsFieldFilter"/>
+    </ng-template>
+</li>
+
+                <!----------------------------------------- Tab Contents BfsComponentSystemAction -------------------------------------->
+
+<li [ngbNavItem]="3">
+    <a href="javascript:void(0)" ngbNavLink>
+        System Actions
+    </a>
+
+    <ng-template ngbNavContent>
+        <bfs-component-system-action-matrix [entityId]="entity.id" [presetFilter]="presetBfsComponentSystemActionFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents BfsComponentBusinessAction -------------------------------------->
+
+<li [ngbNavItem]="4">
+    <a href="javascript:void(0)" ngbNavLink>
+        Business Actions
+    </a>
+
+    <ng-template ngbNavContent>
+        <bfs-component-business-action-matrix [entityId]="entity.id" [presetFilter]="presetBfsComponentBusinessActionFilter"/>
+    </ng-template>
+</li>
+
+            </ul>
+
+            <div class="tab-content" [ngbNavOutlet]="nav">
+            </div>
+        </div>
+    </div>
+</div>

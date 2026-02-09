@@ -1,0 +1,8 @@
+﻿using Bfs.[SystemNameCapital].Data.Models;
+
+namespace Bfs.[SystemNameCapital].Data.Repositories;
+
+public interface IUnitOfWork
+{
+    //Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
+}

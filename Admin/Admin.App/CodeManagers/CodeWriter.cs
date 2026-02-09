@@ -1,0 +1,43 @@
+﻿using Admin.App.Constants;
+using Admin.App;
+using Admin.App.CodeWriters;
+
+namespace Admin.App
+{
+    public class CodeWriter
+    {
+        public WriterType? writerType { get; set; } = null;
+        public BestFitSystem? system { get; set; } = null;
+        public BestFitComponent? component { get; set; } = null;
+        public BestFitFieldSet? fieldSet { get; set; } = null;
+        public BestFitField? field { get; set; } = null;
+        public List<BestFitAction> actionList { get; set; } = new List<BestFitAction>();
+
+        // return list of code writers based on WriterInfo, Each PlaceHolder maps to one type of writer.
+        public IEnumerable<ICodeWriter> GetWriterList(WriterType writerType)
+        {
+            var list = Enumerable.Empty<ICodeWriter>();
+            switch (writerType)
+            {
+                case WriterType.System:
+                     list = system != null ? new List<ICodeWriter>() { system } : Enumerable.Empty<ICodeWriter>();
+                    break;
+                case WriterType.Component:
+                    list = component != null ? new List<ICodeWriter>() { component } : Enumerable.Empty<ICodeWriter>();
+                    break;
+                case WriterType.FieldSet:
+                    var currentFieldSet = component != null ? new BestFitFieldSet(component.FieldList) : null;
+                    list = currentFieldSet != null ? new List<ICodeWriter>() { currentFieldSet } : Enumerable.Empty<ICodeWriter>();
+                    break;
+                case WriterType.Field:
+                    list = component != null ? component.FieldList : Enumerable.Empty<ICodeWriter>();
+                    break;
+                case WriterType.Action:
+                    list = new List<ICodeWriter>() { new BestFitAction() };  
+                    break;
+            }
+
+            return list;
+        }
+    }
+}

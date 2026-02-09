@@ -1,0 +1,98 @@
+import { IEntityRequest } from "@bfs/_shared/interfaces";
+
+// Output Columns of a Query  [used in entity Query]
+export const [ComponentNameCapital]Columns = [
+    //Template_Start_ReportField_QueryColumn_1
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsQueryColumn] },
+    //Template_End_ReportField_QueryColumn_1
+    //Template_Start_ReportField_Aggregate_1
+    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsQueryColumn] },
+    //Template_End_ReportField_Aggregate_1
+];
+
+//---------------------------------------------------------
+
+export interface I[ComponentNameCapital] {
+    //Template_Start_ReportField_QueryColumn_2
+    [ReportFieldNameSmall]?: [FrontendFieldType];
+    //Template_End_ReportField_QueryColumn_2
+    //Template_Start_Field_Object_1
+    [ReportFieldNameSmall]?: [FrontendFieldType];
+    //Template_End_Field_Object_1  
+    //Template_Start_Field_CustomFieldList_1
+    [ReportFieldNameSmall]?: [FrontendFieldType];
+    //Template_End_Field_CustomFieldList_1   
+}
+//---------------------------------------------------------
+export interface I[ComponentNameCapital]WithLookup extends I[ComponentNameCapital]{
+
+    //Template_Start_Field_Lookup_1
+    [LookupNameSmall]Name?: string;    
+    //Template_End_Field_Lookup_1
+    //Template_Start_ReportField_Aggregate_2
+    [AggregateName]?:number;
+    //Template_End_ReportField_Aggregate_2
+}
+//---------------------------------------------------------
+export interface I[ComponentNameCapital]Filter {
+    [key: string]: any;
+    //Template_Start_FilterField_ValueNumber_1
+    [FilterValueName]?: [FrontendFieldType];
+    //Template_End_FilterField_ValueNumber_1
+
+    //Template_Start_FilterField_ValueString_1
+    [FilterValueName]?: [FrontendFieldType];
+    //Template_End_FilterField_ValueString_1
+
+    //Template_Start_FilterField_Lookup_1
+    [FilterLookupName]?: [FrontendFieldType];
+    //Template_End_FilterField_Lookup_1
+
+    //Template_Start_FilterField_Range_1
+    [FilterRangeName]?: { from?: [FrontendFieldType] ; to?: [FrontendFieldType]} ;
+    //Template_End_FilterField_Range_1
+
+    //Template_Start_FilterField_AggregateRange_1
+    [FilterRangeName]?: { from?: [FrontendFieldType] ; to?: [FrontendFieldType]} ;
+    //Template_End_FilterField_AggregateRange_1
+}
+//---------------------------------------------------------
+
+export interface I[ComponentNameCapital]Request extends IEntityRequest<I[ComponentNameCapital]Filter> {}
+
+//---------------------------------------------------------
+export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Request {
+    let request: I[ComponentNameCapital]Request = {
+        pageIndex: 1,
+        pageSize: 5,
+        columns: [ComponentNameCapital]Columns.map(column => ({ ...column })),
+        group: '',
+        sortOption: {},
+        filter: {
+            //Template_Start_FilterField_ValueNumber_2
+            [FilterValueName]: undefined ,
+            //Template_End_FilterField_ValueNumber_2
+
+            //Template_Start_FilterField_ValueString_2
+            [FilterValueName]: undefined ,
+            //Template_End_FilterField_ValueString_2
+
+            //Template_Start_FilterField_Lookup_2
+            [FilterLookupName]: undefined ,
+            //Template_End_FilterField_Lookup_2
+
+            //Template_Start_FilterField_Range_2
+            [FilterRangeName]: { from: undefined , to: undefined} ,
+            //Template_End_FilterField_Range_2
+
+            //Template_Start_FilterField_AggregateRange_2
+            [FilterRangeName]: { from: undefined , to: undefined} ,
+            //Template_End_FilterField_AggregateRange_2
+            }
+    };
+    return JSON.parse(JSON.stringify(request));
+}
+//---------------------------------------------------------
+
+
+

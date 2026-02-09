@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+    //Template_HtmlFilter_ValueNumber
+
+    //Template_HtmlFilter_ValueString
+
+    //Template_HtmlFilter_Lookup
+
+    //Template_HtmlFilter_Range
+
+    //Template_HtmlFilter_AggregateRange
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>

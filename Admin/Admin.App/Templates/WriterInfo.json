@@ -1,0 +1,482 @@
+[
+  {
+    "WriterType": "None",
+    "PlaceHolderInfoList": [
+      {
+        "ParentId": [ "xxxx" ],
+        "Name": "Code_DontOverwrite",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": true,
+        "Notes": "Any code that was manually added between tags is resereved and kept from overwriting."
+      }
+    ]
+  },
+  {
+    "WriterType": "System",
+    "PlaceHolderInfoList": [
+      {
+        "ParentId": [ "1408" ],
+        "Name": "System_AddRouteEntry",
+        "TemplateFile": "Frontend\\System\\AddRouteEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system route entry in the app.routes"
+      },
+      {
+        "ParentId": [ "1409" ],
+        "Name": "System_DeclareProviderEntry",
+        "TemplateFile": "Frontend\\System\\DeclareProviderEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system decalration in the app.config"
+      },
+      {
+        "ParentId": [ "1410" ],
+        "Name": "System_AddProviderEntry",
+        "TemplateFile": "Frontend\\System\\AddProviderEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system provider entry in the app.config"
+      },
+      {
+        "ParentId": [ "1411" ],
+        "Name": "System_AddEnvironmentEntry",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system entry in environment.ts"
+      },
+      {
+        "ParentId": [ "1412" ],
+        "Name": "System_AddEnvironmentEntry",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentLocalEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system entry in environment.local.ts"
+      },
+      {
+        "ParentId": [ "1413" ],
+        "Name": "System_AddEnvironmentEntry",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentStagingEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system entry in environment.staging.ts"
+      },
+      {
+        "ParentId": [ "1414" ],
+        "Name": "System_AddEnvironmentEntry",
+        "TemplateFile": "Frontend\\System\\AddEnvironmentProductionEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It adds system entry in environment.production.ts"
+      }
+    ]
+  },
+  {
+    "WriterType": "Component",
+    "PlaceHolderInfoList": [
+      {
+        "ParentId": [ "100" ],
+        "Name": "Component_RegisterHttpClient",
+        "TemplateFile": "Backend\\Tables\\RegisterHttpClients.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Dependency Injection Entry of a Http-Client in BuilderExtension. It is done manually using the template provided here."
+      },
+      {
+        "ParentId": [ "110" ],
+        "Name": "Component_RegisterDbSet",
+        "TemplateFile": "Backend\\Tables\\RegisterDbSet.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add DBSet in DB Context"
+      },
+      {
+        "ParentId": [ "113" ],
+        "Name": "Component_RegisterRepository",
+        "TemplateFile": "Backend\\Tables\\RegisterRepositories.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Dependency Injection Entry of a Component Repository in BuilderExtension"
+      },
+      {
+        "ParentId": [ "114" ],
+        "Name": "Component_RegisterService",
+        "TemplateFile": "Backend\\Tables\\RegisterServices.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Dependency Injection Entry of a Component Service in BuilderExtension"
+      },
+      {
+        "ParentId": [ "608" ],
+        "Name": "Component_RegisterRoute",
+        "TemplateFile": "Frontend\\Tables\\RegisterRoute.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Route Entry of the Component, in its corresponding .route.ts"
+      },
+      {
+        "ParentId": [ "600" ],
+        "Name": "Component_AddDeclareEntry",
+        "TemplateFile": "Frontend\\Tables\\AddDeclareEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Route Entry of the Component, in its corresponding .route.ts"
+      },
+      {
+        "ParentId": [ "609" ],
+        "Name": "Component_Menu_[MenuPlaceHolder]",
+        "TemplateFile": "Frontend\\Tables\\RegisterMenu.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Menu Entry of the Component"
+      },
+      {
+        "ParentId": [ "207" ],
+        "Name": "Component_RegisterList",
+        "TemplateFile": "Backend\\Lists\\RegisterLists.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Dependency Injection Entry of a Component List in BuilderExtension"
+      },
+      {
+        "ParentId": [ "503" ],
+        "Name": "Component_RegisterValidator",
+        "TemplateFile": "Backend\\Tables\\RegisterValidators.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Dependency Injection Entry of a Component Validator in BuilderExtension"
+      },
+      {
+        "ParentId": [ "407" ],
+        "Name": "Component_RegisterReport",
+        "TemplateFile": "Backend\\Reports\\RegisterReports.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Dependency Injection Entry of a Report in BuilderExtension.cs"
+      },
+      {
+        "ParentId": [ "408" ],
+        "Name": "Component_AddControllerEntry",
+        "TemplateFile": "Backend\\Reports\\AddControllerEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Report Entry in ReportsController.Cs"
+      },
+      {
+        "ParentId": [ "409" ],
+        "Name": "Component_AddIServiceEntry",
+        "TemplateFile": "Backend\\Reports\\AddIServiceEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Report Entry in the interface IReportsService.cs"
+      },
+      {
+        "ParentId": [ "412" ],
+        "Name": "Component_AddDeclareEntry",
+        "TemplateFile": "Backend\\Reports\\AddDeclareEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Report Declare Entry. in ReportsService.cs"
+      },
+      {
+        "ParentId": [ "413" ],
+        "Name": "Component_AddParameterEntry",
+        "TemplateFile": "Backend\\Reports\\AddParameterEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Report Parameter in constructor. in ReportsService.cs"
+      },
+      {
+        "ParentId": [ "411" ],
+        "Name": "Component_AddInitEntry",
+        "TemplateFile": "Backend\\Reports\\AddInitEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Report Init line constructor. in ReportsService.cs"
+      },
+      {
+        "ParentId": [ "410" ],
+        "Name": "Component_AddServiceEntry",
+        "TemplateFile": "Backend\\Reports\\AddServiceEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Report Method Entry. in ReportsService.cs"
+      },
+      {
+        "ParentId": [ "603", "802" ],
+        "Name": "Component_[ComponentType]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "To set (Report & List) related templates of a Component. currently is called only for Reports. report.ts"
+      },
+      {
+        "ParentId": [ "805" ],
+        "Name": "Component_RegisterRoute",
+        "TemplateFile": "Frontend\\Reports\\RegisterRoute.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Route Entry of the Component, in its corresponding .route.ts"
+      },
+      {
+        "ParentId": [ "806" ],
+        "Name": "Component_AddDeclareEntry",
+        "TemplateFile": "Frontend\\Reports\\AddDeclareEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Declare Component Entry of the Component, in its corresponding .route.ts"
+      },
+      {
+        "ParentId": [ "800" ],
+        "Name": "Component_AddDeclareEntry",
+        "TemplateFile": "Frontend\\Reports\\AddDeclareEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Route Entry of the Component, in its corresponding .route.ts"
+      },
+      {
+        "ParentId": [ "807" ],
+        "Name": "Component_Menu_[MenuPlaceHolder]",
+        "TemplateFile": "Frontend\\Reports\\RegisterMenu.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Menu Entry of the Component"
+      }
+    ]
+  },
+  {
+    "WriterType": "FieldSet",
+    "PlaceHolderInfoList": [
+      {
+        "ParentId": [ "501" ],
+        "Name": "FieldSet_Validators",
+        "TemplateFile": "Backend\\Tables\\Validator.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "WriterProperty",
+        "KeepPlaceHolder": false,
+        "Notes": "Code writes all fields validation of a component. in Validator.cs"
+      },
+      {
+        "ParentId": [ "502" ],
+        "Name": "FieldSet_ErrorCodes",
+        "TemplateFile": "",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "WriterProperty",
+        "KeepPlaceHolder": true,
+        "Notes": "Code changes ErrorCodes File as well. This is done internally as part of generating the validator code."
+      },
+      {
+        "ParentId": [ "605" ],
+        "Name": "FieldSet_HtmlFormControls",
+        "TemplateFile": "Frontend\\Fields\\Form_[FieldDefinition]_[UIFormControl].txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "WriterProperty",
+        "KeepPlaceHolder": false,
+        "Notes": "Used in building Form UI, in fom.html. all the fields in a field set generated by 1 function and the outcome is one snippet of code."
+      }
+    ]
+  },
+  {
+    "WriterType": "Field",
+    "PlaceHolderInfoList": [
+      {
+        "ParentId": [ "102", "105", "106", "107", "201", "202", "203", "303", "204", "205", "206", "402", "403", "404", "405", "406", "601", "603", "604", "606", "801", "802", "803" ],
+        "Name": "Field_[FieldDefinition]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Used by a Field"
+      },
+      {
+        "ParentId": [ "202", "204", "206", "402", "403", "404", "405", "406", "601", "605", "606", "607", "801", "802", "803" ],
+        "Name": "FilterField_[FilterDefinition]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Used by a Field"
+      },
+      {
+        "ParentId": [ "202", "203", "204", "205", "206", "402", "403", "404", "405", "406", "601", "606", "801", "802", "803" ],
+        "Name": "ReportField_[ReportDefinition]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Used by a Field"
+      },
+      {
+        "ParentId": [ "301" ],
+        "Name": "Field_[FieldDefinition]_AddControllerEntry",
+        "TemplateFile": "Backend\\Matrix\\AddControllerEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Entry in OperationsController.Cs"
+      },
+      {
+        "ParentId": [ "302" ],
+        "Name": "Field_[FieldDefinition]_AddIUnitOfWorkEntry",
+        "TemplateFile": "Backend\\Matrix\\AddIUnitOfWorkEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Entry in the interface in IUnitOfWork.cs"
+      },
+      {
+        "ParentId": [ "303" ],
+        "Name": "Field_[FieldDefinition]_AddUnitOfWorkEntry",
+        "TemplateFile": "Backend\\Matrix\\AddUnitOfWorkEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Method Entry. in UnitOfWork.cs"
+      },
+      {
+        "ParentId": [ "307" ],
+        "Name": "Field_[FieldDefinition]_AddDeclareEntry",
+        "TemplateFile": "Backend\\Matrix\\AddDeclareEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Declare Entry. in UnitOfWork.cs"
+      },
+      {
+        "ParentId": [ "306" ],
+        "Name": "Field_[FieldDefinition]_AddParameterEntry",
+        "TemplateFile": "Backend\\Matrix\\AddParameterEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Parameter in constructor. in UnitOfWork.cs"
+      },
+      {
+        "ParentId": [ "308" ],
+        "Name": "Field_[FieldDefinition]_AddInitEntry",
+        "TemplateFile": "Backend\\Matrix\\AddInitEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Init line constructor. in UnitOfWork.cs"
+      },
+      {
+        "ParentId": [ "304" ],
+        "Name": "Field_[FieldDefinition]_AddIServiceEntry",
+        "TemplateFile": "Backend\\Matrix\\AddIServiceEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Entry in the interface IOperationsService.cs"
+      },
+      {
+        "ParentId": [ "305" ],
+        "Name": "Field_[FieldDefinition]_AddServiceEntry",
+        "TemplateFile": "Backend\\Matrix\\AddServiceEntry.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add Matrix Method Entry. in OperationsService.cs"
+      },
+      {
+        "ParentId": [ "701" ],
+        "Name": "Field_[FieldDefinition]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Used by a Field"
+      },
+      {
+        "ParentId": [ "111", "112" ],
+        "Name": "ConfigField_[FieldDefinition]",
+        "TemplateFile": "Backend\\Fields\\ConfigField_[FieldDefinition].txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Register object json field && CustomFieldList json field in DB context"
+      },
+      {
+        "ParentId": [ "605" ],
+        "Name": "Field_HtmlChildrenTab_[FieldDefinition]",
+        "TemplateFile": "Frontend\\Fields\\Form_[FieldDefinition]_Tab.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": false,
+        "Notes": "Creates html tag for a children Tab. in form.html"
+      },
+      {
+        "ParentId": [ "607", "804" ],
+        "Name": "HtmlFilter_[FilterDefinition]",
+        "TemplateFile": "Frontend\\Fields\\Filter_[FilterDefinition]_[UIFormControl].txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": false,
+        "Notes": "Creates Html code for [Report | List] Filter UI of a Field. in filter.html"
+      },
+      {
+        "ParentId": [ "802" ],
+        "Name": "ChartField_[ChartDefinition]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Used by a Field"
+      }
+    ]
+  },
+  {
+    "WriterType": "Action",
+    "PlaceHolderInfoList": [
+      {
+        "ParentId": [ "601" , "801" ],
+        "Name": "Action_FrontendLink",
+        "TemplateFile": "",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "WriterProperty",
+        "KeepPlaceHolder": false,
+        "Notes": "Code writes System Actions and Business Actions associated with a component. in frontend component_shared.ts"
+      },
+      {
+        "ParentId": [ "601" ],
+        "Name": "Action_FrontendFunction",
+        "TemplateFile": "",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "WriterProperty",
+        "KeepPlaceHolder": false,
+        "Notes": "Code writes System Actions and Business Actions associated with a component. in frontend component_shared.ts"
+      }
+    ]
+  }
+]

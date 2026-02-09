@@ -1,0 +1,1 @@
+import { [ComponentNameCapital]ReportComponent } from './[ComponentFileName]/[ComponentFileName].component';

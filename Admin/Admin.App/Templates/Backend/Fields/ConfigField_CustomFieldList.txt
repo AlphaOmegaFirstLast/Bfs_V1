@@ -1,0 +1,8 @@
+
+        builder.Entity<[ComponentNameCapital]Entity>(entity =>
+        {
+            entity.OwnsMany(e => e.[CapitalFieldName], owned =>
+            {
+                owned.ToJson();   // store the collection as JSON
+            });
+        });

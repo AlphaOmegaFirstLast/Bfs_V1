@@ -1,0 +1,92 @@
+﻿
+/*
+ [ApiController]
+[Route("api/[controller]")]
+public class AuthController : ControllerBase
+{
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly TokenService _tokenService;
+    private readonly IConfiguration _config;
+
+    public AuthController(UserManager<ApplicationUser> userManager, TokenService tokenService, IConfiguration config)
+    {
+        _userManager = userManager;
+        _tokenService = tokenService;
+        _config = config;
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
+            return Unauthorized();
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Email, user.Email)
+        };
+
+        var roles = await _userManager.GetRolesAsync(user);
+        claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+
+        var accessToken = _tokenService.CreateAccessToken(claims);
+        var refreshToken = _tokenService.CreateRefreshToken();
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(int.Parse(_config["JwtSettings:RefreshTokenExpirationDays"]));
+        await _userManager.UpdateAsync(user);
+
+        return Ok(new TokenResponse
+        {
+            AccessToken = accessToken,
+            RefreshToken = refreshToken
+        });
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh([FromBody] TokenResponse tokenModel)
+    {
+        var principal = GetPrincipalFromExpiredToken(tokenModel.AccessToken);
+        var userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null || user.RefreshToken != tokenModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            return Unauthorized();
+
+        var newAccessToken = _tokenService.CreateAccessToken(principal.Claims);
+        var newRefreshToken = _tokenService.CreateRefreshToken();
+
+        user.RefreshToken = newRefreshToken;
+        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(int.Parse(_config["JwtSettings:RefreshTokenExpirationDays"]));
+        await _userManager.UpdateAsync(user);
+
+        return Ok(new TokenResponse
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken
+        });
+    }
+
+    private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = false, // Ignore expiration
+            ValidIssuer = _config["JwtSettings:Issuer"],
+            ValidAudience = _config["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Secret"]))
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+        return principal;
+    }
+}
+ 
+ 
+ */

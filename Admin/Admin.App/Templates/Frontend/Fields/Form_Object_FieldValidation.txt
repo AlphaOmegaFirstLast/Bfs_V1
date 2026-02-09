@@ -1,0 +1,68 @@
+                                        <div class="col-12" formGroupName="fieldValidation">
+                                            <label class="form-label fs-4">Field Validation</label>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="isRequired" formControlName="isRequired" />
+                                                        <label class="form-check-label" for="isRequired">Required</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="minLength" class="form-label fs-6">Min Length</label>
+                                                    <input class="form-control" type="text" id="minLength" formControlName="minLength"
+                                                        [class]="submit && !validationForm.get('fieldValidation.minLength')?.errors ? 'is-valid': submit && validationForm.get('fieldValidation.minLength')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Min Length.</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="maxLength" class="form-label fs-6">Max Length</label>
+                                                    <input class="form-control" type="text" id="maxLength" formControlName="maxLength"
+                                                        [class]="submit && !validationForm.get('fieldValidation.maxLength')?.errors ? 'is-valid': submit && validationForm.get('fieldValidation.maxLength')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Max Length.</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="minValue" class="form-label fs-6">Min Value</label>
+                                                    <input class="form-control" type="text" id="minValue" formControlName="minValue"
+                                                        [class]="submit && !validationForm.get('fieldValidation.minValue')?.errors ? 'is-valid': submit && validationForm.get('fieldValidation.minValue')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Min Value.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="maxValue" class="form-label fs-6">Max Value</label>     
+                                                    <input class="form-control" type="text" id="maxValue" formControlName="maxValue"
+                                                        [class]="submit && !validationForm.get('fieldValidation.maxValue')?.errors ? 'is-valid': submit && validationForm.get('fieldValidation.maxValue')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Max Value.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="maxValue" class="form-label fs-6">Regular Expression</label>     
+                                                    <input class="form-control" type="text" id="regexPattern" formControlName="regexPattern"
+                                                        [class]="submit && !validationForm.get('fieldValidation.regexPattern')?.errors ? 'is-valid': submit && validationForm.get('fieldValidation.regexPattern')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Regex Pattern.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="maxValue" class="form-label fs-6">Allowed Values</label>     
+                                                    <input class="form-control" type="text" id="allowedValues" formControlName="allowedValues"
+                                                        [class]="submit && !validationForm.get('fieldValidation.allowedValues')?.errors ? 'is-valid': submit && validationForm.get('fieldValidation.allowedValues')?.errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Regex Pattern.</div>
+                                                </div>
+                                            </div>
+                                        </div>

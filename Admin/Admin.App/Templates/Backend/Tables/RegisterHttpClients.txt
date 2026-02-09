@@ -1,0 +1,11 @@
+
+        // Add HttpClient for [ClientName] API
+        var clientConfig = new Action<HttpClient>(client =>
+        {
+            client.BaseAddress = new Uri([ClientBaseUrl]); // Client API base URL
+            client.Timeout = TimeSpan.FromSeconds(30);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
+
+        services.AddHttpClient<[ClientName]Client>("[ClientName]Api", clientConfig); // search httpClient wrapper
+

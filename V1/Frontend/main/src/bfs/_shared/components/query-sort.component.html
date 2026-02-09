@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">Sort</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+
+  <div class="form-control">
+    <div>
+      <label>Sort By Column</label>
+    </div>
+    <select class="form-select" [(ngModel)]="result.sortBy" name="sortBy">
+      <option *ngFor="let column of itemColumns" [value]="column.sortName">{{ column.displayName }}
+      </option>
+    </select>
+  </div>
+  
+  <hr />
+
+  <div class="form-control">
+    <div>
+      <label>Sort Direction</label>
+    </div>
+    <!-- convert to radio buttons -->
+    <div *ngFor="let direction of ['asc', 'desc']">
+      <div class="form-check mb-2">
+        <input type="radio" id="rd{{direction}}" value="{{ direction }}" [(ngModel)]="result.direction"
+          name="direction" class="form-check-input" />
+        <label for="rd{{direction}}" class="form-check-label">{{ direction }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>

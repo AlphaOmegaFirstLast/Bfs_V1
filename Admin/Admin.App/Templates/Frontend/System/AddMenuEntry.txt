@@ -1,0 +1,1 @@
+    appItems = appItems.concat(await this.processItems(currentApp , [SystemNameCapital]MenuItems));

@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "United States Dollar",
+    "shortName": "USD"
+  },
+  {
+    "id": 2,
+    "name": "Euro",
+    "shortName": "EUR"
+  },
+  {
+    "id": 3,
+    "name": "Japanese Yen",
+    "shortName": "JPY"
+  },
+  {
+    "id": 4,
+    "name": "British Pound Sterling",
+    "shortName": "GBP"
+  },
+  {
+    "id": 5,
+    "name": "Canadian Dollar",
+    "shortName": "CAD"
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "isDeleted": false,
+    "id": 1,
+    "name": "Default",
+    "notes": "No DataType is set."
+  },
+  {
+    "isDeleted": false,
+    "id": 2,
+    "name": "DT_string",
+    "notes": "Backend DataType is string, Frontend DataType string"
+  },
+  {
+    "isDeleted": false,
+    "id": 3,
+    "name": "DT_bool",
+    "notes": "Backend DataType is bool, Frontend DataType boolean"
+  },
+  {
+    "isDeleted": false,
+    "id": 4,
+    "name": "DT_long",
+    "notes": "Backend DataType is long (mainly for ID fields), Frontend DataType string"
+  },
+  {
+    "isDeleted": false,
+    "id": 5,
+    "name": "DT_int",
+    "notes": "Backend DataType is int, Frontend DataType number"
+  },
+  {
+    "isDeleted": false,
+    "id": 6,
+    "name": "DT_decimal",
+    "notes": "Backend DataType is decimal, Frontend DataType number"
+  },
+  {
+    "isDeleted": false,
+    "id": 7,
+    "name": "DT_DateTime",
+    "notes": "Backend DataType is DateTime, Frontend DataType date"
+  },
+  {
+    "isDeleted": false,
+    "id": 8,
+    "name": "DT_Lookup",
+    "notes": "The field is an id of another table. [forign key]"
+  },
+  {
+    "isDeleted": false,
+    "id": 9,
+    "name": "DT_SeedLookup",
+    "notes": "The field is an id of another table. [forign key]"
+  },
+  {
+    "isDeleted": false,
+    "id": 10,
+    "name": "DT_TabList",
+    "notes": "Backend DataType is List, Frontend DataType [], displayed as Tab list."
+  },
+  {
+    "isDeleted": false,
+    "id": 11,
+    "name": "DT_TabMatrix",
+    "notes": "Backend DataType is List, Frontend DataType [], displayed as Tab of matrix of checkboxes"
+  },
+  {
+    "isDeleted": false,
+    "id": 12,
+    "name": "DT_CustomFieldList",
+    "notes": "Backend DataType is a List of Custom Field, Frontend will show custom fields at the main tab, in the right column"
+  },
+  {
+    "isDeleted": false,
+    "id": 13,
+    "name": "DT_FieldValidation",
+    "notes": "Backend DataType is an Object, Frontend DataType Object, saved in database as string, EF does serialization"
+  },
+  {
+    "isDeleted": false,
+    "id": 14,
+    "name": "DT_ToolTip",
+    "notes": "Backend DataType is an Object, Frontend DataType Object, saved in database as string, EF does serialization"
+  },
+  {
+    "isDeleted": false,
+    "id": 15,
+    "name": "DT_FormInfo",
+    "notes": "Backend DataType is an Object, Frontend DataType Object, saved in database as string, EF does serialization"
+  },
+  {
+    "isDeleted": false,
+    "id": 16,
+    "name": "DT_ReportInfo",
+    "notes": "Backend DataType is an Object, Frontend DataType Object, saved in database as string, EF does serialization"
+  },
+  {
+    "isDeleted": false,
+    "id": 17,
+    "name": "DT_MatrixInfo",
+    "notes": "Backend DataType is an Object, Frontend DataType Object, saved in database as string, EF does serialization"
+  }
+]

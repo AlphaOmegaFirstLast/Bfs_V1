@@ -1,0 +1,8 @@
+﻿using Bfs.[SystemNameCapital].Contracts;
+
+namespace Bfs.[SystemNameCapital].Domain.Interfaces;
+
+public interface IOperationsService
+{
+//Template_Field_ChildrenMatrix_AddIServiceEntry
+}

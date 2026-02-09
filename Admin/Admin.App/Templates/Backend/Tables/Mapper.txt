@@ -1,0 +1,66 @@
+using Bfs.Core.ObjectFields;
+using Bfs.[SystemNameCapital].Contracts;
+using Bfs.[SystemNameCapital].Data.Models;
+
+namespace Bfs.[SystemNameCapital].Domain.Mapper
+{
+    public static class [ComponentNameCapital]Mapper
+    {
+        public static [ComponentNameCapital] ToContract(this [ComponentNameCapital]Entity entity)
+        {
+            var contract = new [ComponentNameCapital]()
+            {
+               //Template_Start_Field_Primitive_1
+               [CapitalFieldName]= entity.[CapitalFieldName],
+               //Template_End_Field_Primitive_1
+
+               //Template_Start_Field_Lookup_1
+               [CapitalFieldName]= entity.[CapitalFieldName],
+               //Template_End_Field_Lookup_1
+
+               //Template_Start_Field_Object_1
+               [CapitalFieldName]= entity.[CapitalFieldName].ToContract(),
+               //Template_End_Field_Object_1
+
+               //Template_Start_Field_CustomFieldList_1
+               [CapitalFieldName]= entity.[CapitalFieldName].ToContract(),
+               //Template_End_Field_CustomFieldList_1
+            };
+
+            return contract;
+        }
+
+        public static List<[ComponentNameCapital]> ToContract(this IEnumerable<[ComponentNameCapital]Entity> [ComponentNameCapital]s)
+        {
+            return [ComponentNameCapital]s.Select(x => x.ToContract()).ToList();
+        }
+        
+        public static List<[ComponentNameCapital]Entity> ToEntity(this IEnumerable<[ComponentNameCapital]> [ComponentNameCapital]s)
+        {
+            return [ComponentNameCapital]s.Select(x => x.ToEntity()).ToList();
+        }
+        
+        public static [ComponentNameCapital]Entity ToEntity(this [ComponentNameCapital] contract, [ComponentNameCapital]Entity entity = null)
+        {
+            var [ComponentNameCapital]Entity = entity ?? new();
+
+            //Template_Start_Field_Primitive_2
+            [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName];
+            //Template_End_Field_Primitive_2
+
+            //Template_Start_Field_Lookup_2
+            [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName];
+            //Template_End_Field_Lookup_2
+
+            //Template_Start_Field_Object_2
+            [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName].ToEntity();
+            //Template_End_Field_Object_2
+
+            //Template_Start_Field_CustomFieldList_2
+            [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName].ToEntity();
+            //Template_End_Field_CustomFieldList_2
+
+            return [ComponentNameCapital]Entity;
+        }     
+    }
+}

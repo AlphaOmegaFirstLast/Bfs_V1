@@ -1,0 +1,18 @@
+                                            <label class="form-label fs-6">Custom Fields</label>
+
+                                            <div formArrayName="customFields">
+                                                <div *ngFor="let customField of customFieldFormControlList; let i=index" [formGroupName]="i">
+
+                                                    <div class="row mb-2">
+                                                        <div class="col-12">
+                                                            <label class="form-label fs-6">{{ customField.get('name')?.value }}</label>
+                                                            <input class="form-control" type="text" formControlName="value"
+                                                                [class]="submit && !customField.get('value')?.errors ? 'is-valid' :
+                                                            submit && customField.get('value')?.errors ? 'is-invalid' : ''" />
+
+                                                            <div class="valid-feedback">Looks good!</div>
+                                                            <div class="invalid-feedback">Invalid {{ customField.get('name')?.value }}.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                           </div>

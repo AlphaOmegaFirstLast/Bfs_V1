@@ -1,0 +1,90 @@
+[
+  {
+    "Id": 1,
+    "code": "1237Q",
+    "firstName": "Liam",
+    "lastName": "Hughes",
+    "email": "liam.hughes@example.com",
+    "tradingRoomId": 5
+  },
+  {
+    "Id": 2,
+    "code": "9911",
+    "firstName": "Sophia",
+    "lastName": "Morris",
+    "email": "sophia.morris@example.com",
+    "tradingRoomId": 1
+  },
+  {
+    "Id": 3,
+    "code": "WXE654",
+    "firstName": "Noah",
+    "lastName": "Reed",
+    "email": "noah.reed@example.com",
+    "tradingRoomId": 3
+  },
+  {
+    "Id": 4,
+    "code": "4R5TU8",
+    "firstName": "Ava",
+    "lastName": "Foster",
+    "email": "ava.foster@example.com",
+    "tradingRoomId": 4
+  },
+  {
+    "Id": 5,
+    "code": "TYU567",
+    "firstName": "Ethan",
+    "lastName": "Coleman",
+    "email": "ethan.coleman@example.com",
+    "tradingRoomId": 2
+  },
+  {
+    "Id": 6,
+    "code": "PP981",
+    "firstName": "Isabella",
+    "lastName": "Wells",
+    "email": "isabella.wells@example.com",
+    "tradingRoomId": 1
+  },
+  {
+    "Id": 7,
+    "code": "ZZ456",
+    "firstName": "James",
+    "lastName": "Bennett",
+    "email": "james.bennett@example.com",
+    "tradingRoomId": 5
+  },
+  {
+    "Id": 8,
+    "code": "UI3478",
+    "firstName": "Mia",
+    "lastName": "Griffin",
+    "email": "mia.griffin@example.com",
+    "tradingRoomId": 3
+  },
+  {
+    "Id": 9,
+    "code": "678RR",
+    "firstName": "Alexander",
+    "lastName": "Hayes",
+    "email": "alexander.hayes@example.com",
+    "tradingRoomId": 4
+  },
+  {
+    "Id": 10,
+    "code": "1X667",
+    "firstName": "Charlotte",
+    "lastName": "Perry",
+    "email": "charlotte.perry@example.com",
+    "tradingRoomId": 2
+  },
+  {
+    "Id": 11,
+    "code": "1GH7Q",
+    "firstName": "Benjamin",
+    "lastName": "Knight",
+    "email": "benjamin.knight@example.com",
+    "tradingRoomId": 1
+  }
+]

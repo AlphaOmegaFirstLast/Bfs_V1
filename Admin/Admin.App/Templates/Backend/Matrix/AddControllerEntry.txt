@@ -1,0 +1,8 @@
+
+    [HttpPut("[MatrixNameCapital]/matrix/{parentId}")]
+    [CustomAuthorize("method=o.[MatrixNameCapital]")]
+    public async Task<Results<Ok<List<[MatrixNameCapital]>>, BadRequest<ProblemDetails>>> Update[MatrixNameCapital]MatrixAsync([FromRoute] long parentId, [FromBody] List<[MatrixNameCapital]> matrix)
+    {
+        var result = await _operationsService.Update[MatrixNameCapital]MatrixAsync(parentId, matrix).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }

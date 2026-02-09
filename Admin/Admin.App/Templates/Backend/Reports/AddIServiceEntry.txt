@@ -1,0 +1,2 @@
+
+        Task<QueryResponse<[ComponentNameCapital]Item>> [ComponentNameCapital]ReportAsync(QueryRequest<[ComponentNameCapital]Filter> contractRequest);

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "displayName": "Add",
+    "name": "a"
+  },
+  {
+    "id": 2,
+    "displayName": "Update",
+    "name": "u"
+  },
+  {
+    "id": 3,
+    "displayName": "Delete",
+    "name": "d"
+  },
+  {
+    "id": 4,
+    "displayName": "View",
+    "name": "v"
+  },
+  {
+    "id": 5,
+    "displayName": "Transfer",
+    "name": "t"
+  },
+  {
+    "id": 6,
+    "displayName": "Split",
+    "name": "s"
+  },
+  {
+    "id": 7,
+    "displayName": "Merge",
+    "name": "m"
+  }
+]

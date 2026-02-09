@@ -1,0 +1,6 @@
+    public async Task<List<[MatrixNameCapital]>> Update[MatrixNameCapital]MatrixAsync(long parentId, List<[MatrixNameCapital]> matrix)
+    {
+        var matrixEntity = matrix.ToEntity();
+        var entityList = await _unitOfwork.Update[MatrixNameCapital]MatrixAsync(parentId, matrixEntity);
+        return entityList.ToContract();
+    }

@@ -1,0 +1,14 @@
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>[DisplayName]</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.[FilterLookupName]" name="[SmallFieldName]">
+          <ng-container *ngFor="let option of [LookupNameCapital]Options">
+            <option [value]="option['[LookupNameSmall]Id']">{{ option['[LookupNameSmall]Name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>

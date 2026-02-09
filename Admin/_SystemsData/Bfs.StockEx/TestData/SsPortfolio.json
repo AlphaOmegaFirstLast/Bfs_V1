@@ -1,0 +1,17 @@
+[
+  { "id": 1, "name": "Tech Growth Fund", "investorId": 5, "brokerId": 2 },
+  { "id": 2, "name": "Global Equity Portfolio", "investorId": 6, "brokerId": 3 },
+  { "id": 3, "name": "Balanced Strategy", "investorId": 7, "brokerId": 1 },
+  { "id": 4, "name": "Emerging Markets Basket", "investorId": 8, "brokerId": 4 },
+  { "id": 5, "name": "Dividend Focus Portfolio", "investorId": 9, "brokerId": 5 },
+  { "id": 6, "name": "Short-Term Bonds", "investorId": 10, "brokerId": 3 },
+  { "id": 7, "name": "Real Estate Holdings", "investorId": 11, "brokerId": 2 },
+  { "id": 8, "name": "High-Risk Ventures", "investorId": 12, "brokerId": 4 },
+  { "id": 9, "name": "Green Energy Mix", "investorId": 13, "brokerId": 1 },
+  { "id": 10, "name": "Healthcare Innovators", "investorId": 14, "brokerId": 5 },
+  { "id": 11, "name": "Digital Assets Portfolio", "investorId": 15, "brokerId": 2 },
+  { "id": 12, "name": "Infrastructure Investments", "investorId": 5, "brokerId": 3 },
+  { "id": 13, "name": "Consumer Goods Exposure", "investorId": 6, "brokerId": 4 },
+  { "id": 14, "name": "Small Cap Stocks", "investorId": 7, "brokerId": 1 },
+  { "id": 15, "name": "Luxury Brand Holdings", "investorId": 8, "brokerId": 5 }
+]

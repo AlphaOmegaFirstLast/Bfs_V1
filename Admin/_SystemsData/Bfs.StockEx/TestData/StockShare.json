@@ -1,0 +1,17 @@
+[
+  { "id": 1, "name": "AlphaTech Inc","currencyId":1,  "tradingRoomId": 3 },
+  { "id": 2, "name": "Global Pharma Ltd","currencyId":1,  "tradingRoomId": 1 },
+  { "id": 3, "name": "SolarWave Energy","currencyId":2,  "tradingRoomId": 5 },
+  { "id": 4, "name": "Neptune Retail","currencyId":1,  "tradingRoomId": 2 },
+  { "id": 5, "name": "AeroSpace Dynamics","currencyId":1,  "tradingRoomId": 4 },
+  { "id": 6, "name": "GreenFuture Systems","currencyId":3,  "tradingRoomId": 2 },
+  { "id": 7, "name": "Velocity Motors","currencyId":1,  "tradingRoomId": 1 },
+  { "id": 8, "name": "Quantum Finance","currencyId":2,  "tradingRoomId": 5 },
+  { "id": 9, "name": "Harvest Foods","currencyId":1,  "tradingRoomId": 3 },
+  { "id": 10, "name": "Ignite Technologies","currencyId":1,  "tradingRoomId": 2 },
+  { "id": 11, "name": "Oceanic Networks","currencyId":2,  "tradingRoomId": 4 },
+  { "id": 12, "name": "Nova Healthcare","currencyId":1,  "tradingRoomId": 1 },
+  { "id": 13, "name": "Titan Mining Corp","currencyId":1,  "tradingRoomId": 3 },
+  { "id": 14, "name": "Glider Airlines","currencyId":1,  "tradingRoomId": 4 },
+  { "id": 15, "name": "SmartBuild Infra","currencyId":1,  "tradingRoomId": 5 }
+]

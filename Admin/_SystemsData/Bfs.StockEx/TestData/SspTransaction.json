@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "source": "FileName1",
+    "sourceDate": "2025-01-12T10:22:45.123Z",
+    "transactionDate": "2025-01-12T10:22:45.123Z",
+    "quantity": 10,
+    "price": 153.74,
+    "transactionTypeId": 2,
+    "stockShareId": 5,
+    "ssPortfolioId": 3
+  },
+  {
+    "id": 2,
+    "source": "FileName2",
+    "sourceDate": "2025-02-23T14:11:30.000Z",
+    "transactionDate": "2025-02-23T14:11:30.000Z",
+    "quantity": 10,
+    "price": 87.32,
+    "transactionTypeId": 1,
+    "stockShareId": 3,
+    "ssPortfolioId": 2
+  },
+  {
+    "id": 3,
+    "source": "FileName3",
+    "sourceDate": "2025-03-05T09:00:00.000Z",
+    "transactionDate": "2025-03-05T09:00:00.000Z",
+    "quantity": 10,
+    "price": 213.56,
+    "transactionTypeId": 1,
+    "stockShareId": 1,
+    "ssPortfolioId": 1
+  },
+  {
+    "id": 4,
+    "source": "FileName4",
+    "sourceDate": "2025-04-18T12:45:18.000Z",
+    "transactionDate": "2025-04-18T12:45:18.000Z",
+    "quantity": 7,
+    "price": 99.99,
+    "transactionTypeId": 2,
+    "stockShareId": 4,
+    "ssPortfolioId": 5
+  },
+  {
+    "id": 5,
+    "source": "FileName5",
+    "sourceDate": "2025-05-03T07:30:00.000Z",
+    "transactionDate": "2025-05-03T07:30:00.000Z",
+    "quantity": 60,
+    "price": 184.75,
+    "transactionTypeId": 2,
+    "stockShareId": 2,
+    "ssPortfolioId": 4
+  },
+  {
+    "id": 6,
+    "source": "FileName6",
+    "sourceDate": "2025-06-27T20:15:00.000Z",
+    "transactionDate": "2025-06-27T20:15:00.000Z",
+    "quantity": 5,
+    "price": 120.00,
+    "transactionTypeId": 2,
+    "stockShareId": 5,
+    "ssPortfolioId": 3
+  },
+  {
+    "id": 7,
+    "source": "FileName7",
+    "sourceDate": "2025-07-14T16:05:00.000Z",
+    "transactionDate": "2025-07-14T16:05:00.000Z",
+    "quantity": 3,
+    "price": 75.88,
+    "transactionTypeId": 1,
+    "stockShareId": 2,
+    "ssPortfolioId": 4
+  },
+  {
+    "id": 8,
+    "source": "FileName8",
+    "sourceDate": "2025-08-22T11:11:11.111Z",
+    "transactionDate": "2025-08-22T11:11:11.111Z",
+    "quantity": 1,
+    "price": 101.01,
+    "transactionTypeId": 2,
+    "stockShareId": 3,
+    "ssPortfolioId": 1
+  },
+  {
+    "id": 9,
+    "source": "FileName9",
+    "sourceDate": "2025-09-09T13:59:59.000Z",
+    "transactionDate": "2025-09-09T13:59:59.000Z",
+    "quantity": 10,
+    "price": 142.42,
+    "transactionTypeId": 1,
+    "stockShareId": 1,
+    "ssPortfolioId": 5
+  },
+  {
+    "id": 10,
+    "source": "FileName10",
+    "sourceDate": "2025-10-31T08:08:08.000Z",
+    "transactionDate": "2025-10-31T08:08:08.000Z",
+    "quantity": 10,
+    "price": 165.00,
+    "transactionTypeId": 2,
+    "stockShareId": 4,
+    "ssPortfolioId": 2
+  },
+  {
+    "id": 11,
+    "source": "FileName11",
+    "sourceDate": "2025-11-15T09:30:00.000Z",
+    "transactionDate": "2025-11-15T09:30:00.000Z",
+    "quantity": 100,
+    "price": 134.87,
+    "transactionTypeId": 1,
+    "stockShareId": 5,
+    "ssPortfolioId": 1
+  },
+  {
+    "id": 12,
+    "source": "FileName12",
+    "sourceDate": "2025-12-01T14:00:00.000Z",
+    "transactionDate": "2025-12-01T14:00:00.000Z",
+    "quantity": 10,
+    "price": 88.25,
+    "transactionTypeId": 1,
+    "stockShareId": 2,
+    "ssPortfolioId": 4
+  },
+  {
+    "id": 13,
+    "source": "FileName13",
+    "sourceDate": "2025-01-19T12:00:00.000Z",
+    "transactionDate": "2025-01-19T12:00:00.000Z",
+    "quantity": 6,
+    "price": 145.32,
+    "transactionTypeId":2,
+    "stockShareId": 4,
+    "ssPortfolioId": 5
+  },
+  {
+    "id": 14,
+    "source": "FileName14",
+    "sourceDate": "2025-02-05T15:15:15.000Z",
+    "transactionDate": "2025-02-05T15:15:15.000Z",
+    "quantity": 10,
+    "price": 79.99,
+    "transactionTypeId": 1,
+    "stockShareId": 3,
+    "ssPortfolioId": 2
+  },
+  {
+    "id": 15,
+    "source": "FileName15",
+    "sourceDate": "2025-03-11T18:18:18.000Z",
+    "transactionDate": "2025-03-11T18:18:18.000Z",
+    "quantity": 22,
+    "price": 132.45,
+    "transactionTypeId": 1,
+    "stockShareId": 1,
+    "ssPortfolioId": 3
+  },
+  {
+    "id": 16,
+    "source": "FileName16",
+    "sourceDate": "2025-04-29T07:07:07.000Z",
+    "transactionDate": "2025-04-29T07:07:07.000Z",
+    "quantity": 56,
+    "price": 160.80,
+    "transactionTypeId": 2,
+    "stockShareId": 5,
+    "ssPortfolioId": 1
+  },
+  {
+    "id": 17,
+    "source": "FileName17",
+    "sourceDate": "2025-05-30T13:13:13.000Z",
+    "transactionDate": "2025-05-30T13:13:13.000Z",
+    "quantity": 10,
+    "price": 111.11,
+    "transactionTypeId": 1,
+    "stockShareId": 2,
+    "ssPortfolioId": 4
+  },
+  {
+    "id": 18,
+    "source": "FileName18",
+    "sourceDate": "2025-06-12T22:22:22.000Z",
+    "transactionDate": "2025-06-12T22:22:22.000Z",
+    "quantity": 10,
+    "price": 172.99,
+    "transactionTypeId": 2,
+    "stockShareId": 3,
+    "ssPortfolioId": 5
+  },
+  {
+    "id": 19,
+    "source": "FileName19",
+    "sourceDate": "2025-07-04T05:05:05.000Z",
+    "transactionDate": "2025-07-04T05:05:05.000Z",
+    "quantity": 160,
+    "price": 199.90,
+    "transactionTypeId": 1,
+    "stockShareId": 4,
+    "ssPortfolioId": 2
+  },
+  {
+    "id": 20,
+    "source": "FileName20",
+    "sourceDate": "2025-08-16T21:21:21.000Z",
+    "transactionDate": "2025-08-16T21:21:21.000Z",
+    "quantity": 123,
+    "price": 146.67,
+    "transactionTypeId": 1,
+    "stockShareId": 1,
+    "ssPortfolioId": 3
+  }
+  ]

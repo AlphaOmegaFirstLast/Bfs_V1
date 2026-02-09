@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.id" value="{{result.id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.name" value="{{result.name}}" placeholder="Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>CreatedBy</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.createdBy" value="{{result.createdBy}}" placeholder="CreatedBy" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Base Report</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.baseReport" value="{{result.baseReport}}" placeholder="Base Report" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+
+
+    
+
+    
+
+    
+
+    
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>

@@ -1,0 +1,44 @@
+import { Routes } from '@angular/router';
+import { RouteGuardService } from "@bfs/_shared/security/route-guard.service";
+import { [ComponentNameCapital]ListComponent } from './[ComponentFileName].list.component';
+import { [ComponentNameCapital]FormComponent } from './[ComponentFileName].form.component';
+
+// Example role, api, and app
+export const [ComponentNameCapital]_ROUTES: Routes = [
+    {
+        path: '[SystemPrefixSmall]/[ComponentFileName]/list', 
+        component: [ComponentNameCapital]ListComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+    },
+    {
+        path: '[SystemPrefixSmall]/[ComponentFileName]/list/:id', 
+        component: [ComponentNameCapital]ListComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+    },
+    {
+        path: '[SystemPrefixSmall]/[ComponentFileName]/add/0', 
+        component: [ComponentNameCapital]FormComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+    },
+    {
+        path: '[SystemPrefixSmall]/[ComponentFileName]/view/:id', 
+        component: [ComponentNameCapital]FormComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin', 'investor','broker'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+    },
+    {
+        path: '[SystemPrefixSmall]/[ComponentFileName]/edit/:id',
+        component: [ComponentNameCapital]FormComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+    },
+    {
+        path: '[SystemPrefixSmall]/[ComponentFileName]/delete/:id', 
+        component: [ComponentNameCapital]FormComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+    }
+]

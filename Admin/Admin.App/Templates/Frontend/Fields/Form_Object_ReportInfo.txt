@@ -1,0 +1,28 @@
+                                        <div class="col-12"  style="padding:4px; margin-bottom:4px; border: 2px solid #A7E8E9;" formGroupName="reportInfo">
+
+                                            <label class="form-label fs-4">Report Info</label>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="aggregateTypeId" class="form-label fs-6">Aggregate Type</label>
+                                                    <select class="form-select" id="aggregateTypeId" formControlName="aggregateTypeId"
+                                                        [class]="submit && !validationForm.get('reportInfo.aggregateTypeId')?.errors ? 'is-valid': submit && validationForm.get('reportInfo.aggregateTypeId')?.errors ? 'is-invalid' : ''" >
+                                                        <ng-container *ngFor="let option of AggregateTypeOptions">
+                                                        <option [value]="option.id">{{ option.name }}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a valid Aggregate Type.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="chartElementId" class="form-label fs-6">Chart Element</label>
+                                                    <select class="form-select" id="chartElementId" formControlName="chartElementId"
+                                                        [class]="submit && !validationForm.get('reportInfo.chartElementId')?.errors ? 'is-valid': submit && validationForm.get('reportInfo.chartElementId')?.errors ? 'is-invalid' : ''" >
+                                                        <ng-container *ngFor="let option of ChartElementOptions">
+                                                        <option [value]="option.id">{{ option.name }}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a valid Chart Element.</div>
+                                                </div>
+                                            </div>
+                                         </div>

@@ -1,0 +1,2 @@
+              _[ComponentNameSmall]Report = [ComponentNameSmall]Report;
+

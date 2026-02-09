@@ -1,0 +1,27 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Settings": {
+    "AllowedOrigins": "*",
+    "IsSecurityEnabled": "true",
+    "DbConnections": {
+      "[SystemNameCapital]Connection": "Server=localhost;Database=[SystemNameCapital];Trusted_Connection=True;TrustServerCertificate=True"
+    },
+    "ApiBaseUrls": {
+      "AuthApi": "https://localhost:6100",
+      "StockExApi": "https://localhost:7100"
+    },
+    "JwtSettings": {
+      "Issuer": "Bfs",
+      "Audience": "BfsFrontend",
+      "AccessTokenExpireInMin": 60,
+      "RefreshTokenExpireInDay": 2,
+      "Secret": "a-string-secret-at-least-256-bits-long"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<!----------------------------------------- Tab Contents [CapitalFieldName] -------------------------------------->
+
+<li [ngbNavItem]="[TabIndex]">
+    <a href="javascript:void(0)" ngbNavLink>
+        [DisplayName]
+    </a>
+
+    <ng-template ngbNavContent>
+        <[LookupFileName]-list [presetFilter]="preset[CapitalFieldName]Filter"/>
+    </ng-template>
+</li>

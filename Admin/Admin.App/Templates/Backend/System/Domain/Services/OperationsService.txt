@@ -1,0 +1,22 @@
+﻿using Bfs.Core.Helpers;
+using Bfs.[SystemNameCapital].Data.Interfaces;
+using Bfs.[SystemNameCapital].Data.Repositories;
+using Bfs.[SystemNameCapital].Domain.Interfaces;
+using Bfs.[SystemNameCapital].Contracts;
+using Bfs.[SystemNameCapital].Domain.Mapper;
+
+
+namespace Bfs.[SystemNameCapital].Domain.Services;
+
+public class OperationsService : IOperationsService
+{
+    private readonly IUnitOfWork _unitOfwork;
+
+    public OperationsService(IUnitOfWork unitOfwork)
+    {
+        _unitOfwork = unitOfwork;       
+    }
+
+//Template_Field_ChildrenMatrix_AddServiceEntry    
+}
+

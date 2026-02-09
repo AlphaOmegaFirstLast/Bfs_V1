@@ -1,0 +1,20 @@
+[
+   {
+    "isDeleted": false,
+    "id": 611267900783914,
+    "name": "Duplicate Record",
+    "notes": "",
+    "actionTypeId": 3,
+    "actionLocationId": 3,
+    "actionDefinitionId": 2
+  },
+  {
+    "isDeleted": false,
+    "id": 611268017095242,
+    "name": "Duplicate Tree",
+    "notes": "",
+    "actionTypeId": 3,
+    "actionLocationId": 3,
+    "actionDefinitionId": 2
+  }
+]

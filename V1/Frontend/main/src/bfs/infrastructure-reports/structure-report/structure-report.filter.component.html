@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Component Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.DisplayName" value="{{result.DisplayName}}" placeholder="Component Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Data Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.DataTypeId" name="dataTypeId">
+          <ng-container *ngFor="let option of DataTypeOptions">
+            <option [value]="option['dataTypeId']">{{ option['dataTypeName'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Fields Count Per Component</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="countIdFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="countIdTo">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>
