@@ -6,7 +6,7 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.[FilterLookupName]" name="[SmallFieldName]">
           <ng-container *ngFor="let option of [LookupNameCapital]Options">
-            <option [value]="option['[LookupNameSmall]Id']">{{ option['[LookupNameSmall]Name'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
       </div>

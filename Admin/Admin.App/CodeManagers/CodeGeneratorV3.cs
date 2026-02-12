@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Admin.App
 {
-    public class CodeGeneratorV3 : CodeBase
+    public class CodeGeneratorV3 : CodeGeneratorBase
     {
 
         public override void ReadDbEntities()

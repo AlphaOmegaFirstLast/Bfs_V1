@@ -37,13 +37,13 @@ namespace Admin.App
             }
         }
 
-        public string SetRelated(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             input =  codeInfo.CurrentSystem?.ToContent(codeInfo, input, placeHolder)?? input;
             return codeInfo.CurrentComponent?.ToContent(codeInfo, input, placeHolder) ?? input;
         }
 
-        public virtual string ToContent(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             input = input.Replace("[HtmlFormControls]", SetHtmlFormFields(codeInfo, placeHolder));
             input = input.Replace("[Validators]", SetValidatorFieldSet(codeInfo, placeHolder));
@@ -52,7 +52,7 @@ namespace Admin.App
             return input;
         }
 
-        public string SetHtmlFormFields(CodeBase codeInfo, PlaceHolderInfo placeHolder)
+        public string SetHtmlFormFields(CodeGeneratorBase codeInfo, PlaceHolderInfo placeHolder)
         {
             var generatedFieldList = new StringBuilder();
 
@@ -85,7 +85,7 @@ namespace Admin.App
             return generatedFieldList.ToString();
         }
 
-        public string SetActions(CodeBase codeInfo, PlaceHolderInfo placeHolder)
+        public string SetActions(CodeGeneratorBase codeInfo, PlaceHolderInfo placeHolder)
         {
             var generatedActionList = new StringBuilder();
 
@@ -122,7 +122,7 @@ namespace Admin.App
             return generatedActionList.ToString();
         }
 
-        public string SetValidatorFieldSet(CodeBase codeInfo, PlaceHolderInfo placeHolder )
+        public string SetValidatorFieldSet(CodeGeneratorBase codeInfo, PlaceHolderInfo placeHolder )
         {
             var fieldListContent = new StringBuilder();
             if (placeHolder.Name.Contains("Validators"))
@@ -144,7 +144,7 @@ namespace Admin.App
             return fieldListContent.ToString();
         }
 
-        public static void ModifyErrorFile(CodeBase codeInfo, BestFitField fieldInfo, TemplateInfo modifierTemplate)
+        public static void ModifyErrorFile(CodeGeneratorBase codeInfo, BestFitField fieldInfo, TemplateInfo modifierTemplate)
         {
             var functionName = "Invalid" + $@"{fieldInfo.fieldCapitalName}";
             var generatedCode = $"public const string {functionName} = \"{functionName}\";";

@@ -58,7 +58,7 @@ export class [ComponentNameCapital][ReportTypeCapital]Component
 
         //Template_Start_Component_Report_1
         this.isButton.addNew = false;
-        this.getApiUrl = '/[SystemPrefixSmall]/reports/[ComponentNameCapital][ReportTypeCapital]';  
+        this.getApiUrl = '/reports/[ComponentNameCapital][ReportTypeCapital]';  
         //Template_End_Component_Report_1
 
         //Template_Start_Component_Table_1
@@ -75,7 +75,7 @@ export class [ComponentNameCapital][ReportTypeCapital]Component
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             //Template_Start_Field_Lookup_1
-            case '[ParentTableSmall][CapitalFieldName]':
+            case '[ReportFieldNameSmall]':
                 return record['[LookupNameSmall]Name']?.toString();
             //Template_End_Field_Lookup_1
             //Template_Start_ReportField_Aggregate_1

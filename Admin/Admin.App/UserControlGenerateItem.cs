@@ -7,11 +7,11 @@ namespace CodeAdmin
     public partial class UserControlGenerateItem : UserControl
     {
         private readonly TemplateInfo _generatorTemplate;
-        private Action<CodeBase, TemplateInfo> _methodName;
-        private Action<CodeBase, TemplateInfo> _rollBackMethodName;
-        private CodeBase _codeInfo ;
+        private Action<CodeGeneratorBase, TemplateInfo> _methodName;
+        private Action<CodeGeneratorBase, TemplateInfo> _rollBackMethodName;
+        private CodeGeneratorBase _codeInfo ;
         private string _outputFile;
-        public UserControlGenerateItem(TemplateInfo generatorTemplate, Action<CodeBase, TemplateInfo> method, Action<CodeBase, TemplateInfo> rollBackMethodName)
+        public UserControlGenerateItem(TemplateInfo generatorTemplate, Action<CodeGeneratorBase, TemplateInfo> method, Action<CodeGeneratorBase, TemplateInfo> rollBackMethodName)
         {
             InitializeComponent();
 
@@ -20,7 +20,7 @@ namespace CodeAdmin
             _rollBackMethodName = rollBackMethodName;
         }
 
-        public void SetUp(CodeBase codeInfo)
+        public void SetUp(CodeGeneratorBase codeInfo)
         {
             _codeInfo = codeInfo;
             btnExecuteItem.Text = _methodName.Method.Name;

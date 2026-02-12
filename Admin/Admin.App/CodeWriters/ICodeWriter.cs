@@ -8,7 +8,7 @@ namespace Admin.App.CodeWriters
     public interface ICodeWriter
     {
         public string Name { get; set; }
-        string ToContent(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder);
-        string SetRelated(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder);
+        string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder);
+        string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder);
     }
 }

@@ -262,7 +262,7 @@ namespace CodeAdmin
             panelItems.Refresh();
         }
 
-        public void Generate(CodeBase codeInfo, TemplateInfo generatorTemplate)
+        public void Generate(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
             try
             {
@@ -283,7 +283,7 @@ namespace CodeAdmin
             SetMessage("Done. ");
         }
 
-        public void Modify(CodeBase codeInfo, TemplateInfo modifierTemplate)
+        public void Modify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
         {
             try
             {
@@ -303,7 +303,7 @@ namespace CodeAdmin
             SetMessage("Done. ");
         }
 
-        public void RollbackGenerate(CodeBase codeInfo, TemplateInfo generatorTemplate)
+        public void RollbackGenerate(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
             try
             {
@@ -323,7 +323,7 @@ namespace CodeAdmin
             }
         }
 
-        public void RollbackModify(CodeBase codeInfo, TemplateInfo modifierTemplate)
+        public void RollbackModify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
         {
             try
             {
@@ -349,7 +349,7 @@ namespace CodeAdmin
             txtMessage.ForeColor = message.Contains("Error") ? Color.Red : Color.Blue;
         }
 
-        private static string GetControlsKey(CodeBase _codeInfo, string key)
+        private static string GetControlsKey(CodeGeneratorBase _codeInfo, string key)
         {
             if (_codeInfo.CurrentTemplate != null)
             {

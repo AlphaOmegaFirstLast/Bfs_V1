@@ -19,7 +19,7 @@ namespace Admin.App
 
         public SaveGeneratedCode SaveGeneratedCode { get; set; } = SaveGeneratedCode.PerAllWriters;
 
-        public string GetOutputFilePath(CodeBase codeInfo)
+        public string GetOutputFilePath(CodeGeneratorBase codeInfo)
         {
             var dataType = codeInfo.CurrentComponent?.DataType;
             dataType = dataType.HasValue ? (DataType)dataType.Value : DataType.None;

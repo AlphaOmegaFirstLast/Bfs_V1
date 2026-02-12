@@ -51,7 +51,7 @@ namespace Admin.App
             this.QueryBaseTable = source.QueryBaseTable; //todo add field to ComponentEntity // source.QueryBaseTable;
             this.Notes = source.Notes;
 
-            var result = CodeBase.GetNames(Name);
+            var result = CodeGeneratorBase.GetNames(Name);
             NameCapital = result.Item1;
             NameSmall = result.Item2;
             FileName = result.Item3;
@@ -63,7 +63,7 @@ namespace Admin.App
             SetFieldList(allFieldList);
         }
 
-        public string SetRelated(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             input = codeInfo.CurrentSystem?.ToContent(codeInfo, input, placeHolder) ?? input;
             input = ToContent(codeInfo, input, placeHolder);
@@ -77,7 +77,7 @@ namespace Admin.App
             var tabIndex = 1;
             foreach (var field in FieldList)
             {
-                field.SetInternalFields(NameCapital,QueryBaseTable);
+                field.SetInternalFields(ComponentType, NameCapital,QueryBaseTable);
 
                 //set tab index only for ChildrenList and ChildrenMatrix fields
                 if (field.FieldDefinition == FieldDefinition.ChildrenList || field.FieldDefinition == FieldDefinition.ChildrenMatrix)
@@ -88,7 +88,7 @@ namespace Admin.App
             }
         }
 
-        public virtual string ToContent(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var outputContent = input.Replace("[ComponentNameCapital]", NameCapital.Trim());
             outputContent = outputContent.Replace("[ComponentNameSmall]", NameSmall.Trim());

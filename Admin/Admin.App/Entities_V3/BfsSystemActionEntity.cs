@@ -54,7 +54,7 @@ namespace Admin.App
                 ActionSource = ActionSource.System,
                 MatchProperty = "[ComponentType]",
                 MatchValues = "Table".Split(','),
-                ActionTemplate = "recordId: record['[ComponentNameSmall]Id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/view', displayText: 'View...' " ,
+                ActionTemplate = "recordId: record['id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/view', displayText: 'View...' " ,
                 Notes = "Redirect user to the form in view mode."
             },
              new BfsSystemActionEntity
@@ -70,7 +70,7 @@ namespace Admin.App
                 ActionSource = ActionSource.System,
                 MatchProperty = "[ComponentType]",
                 MatchValues = "Table".Split(','),
-                ActionTemplate = "recordId: record['[ComponentNameSmall]Id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/edit', displayText: 'Edit...' " ,
+                ActionTemplate = "recordId: record['id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/edit', displayText: 'Edit...' " ,
                 Notes = "Redirect user to the form in edit mode."
             },
              new BfsSystemActionEntity
@@ -86,7 +86,7 @@ namespace Admin.App
                 ActionSource = ActionSource.System,
                 MatchProperty = "[ComponentType]",
                 MatchValues = "Table".Split(','),
-                ActionTemplate = "recordId: record['[ComponentNameSmall]Id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/delete', displayText: 'Delete...' " ,
+                ActionTemplate = "recordId: record['id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/delete', displayText: 'Delete...' " ,
                 Notes = "Redirect user to the form in delete mode."
             },
              new BfsSystemActionEntity
@@ -118,7 +118,7 @@ namespace Admin.App
                 ActionSource = ActionSource.System,
                 MatchProperty = "[ComponentType]",
                 MatchValues = "Table".Split(','),
-                ActionTemplate = "recordId: record['[ComponentNameSmall]Id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['[ComponentNameSmall]Id'], postUrl: '/[ComponentNameCapital]', onSuccessMethodName: 'getReport' } " ,
+                ActionTemplate = "recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/[ComponentNameCapital]', onSuccessMethodName: 'getReport' } " ,
                 Notes = "Execute frontend function 'duplicateRecord' which uses the data arguments to post data and refresh list."
             },
              new BfsSystemActionEntity
@@ -134,7 +134,7 @@ namespace Admin.App
                 ActionSource = ActionSource.System,
                 MatchProperty = "[ComponentType]",
                 MatchValues = "Table".Split(','),
-                ActionTemplate = "recordId: record['[ComponentNameSmall]Id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['[ComponentNameSmall]Id'], postUrl: '/Operations/[ComponentNameCapital]/DuplicateTree', onSuccessMethodName: 'getReport' } " ,
+                ActionTemplate = "recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/[ComponentNameCapital]/DuplicateTree', onSuccessMethodName: 'getReport' } " ,
                 Notes = "Execute frontend function 'duplicateTree' to duplicate the record and its children. it uses the data arguments to post data and refresh list."
             },
              new BfsSystemActionEntity
@@ -149,7 +149,7 @@ namespace Admin.App
                 ActionSource = ActionSource.System,
                 MatchProperty = "[ComponentType]",
                 MatchValues = "Table".Split(','),
-                ActionTemplate = "recordId: record['[ComponentNameSmall]Id'], action: deleteTree, displayText: 'Delete Tree', data: { recordId: record['[ComponentNameSmall]Id'], postUrl: '/Operations/[ComponentNameCapital]/DeleteTree', onSuccessMethodName: 'getReport' } " ,
+                ActionTemplate = "recordId: record['id'], action: deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/[ComponentNameCapital]/DeleteTree', onSuccessMethodName: 'getReport' } " ,
                 Notes = "Execute frontend function 'deleteTree' to delete the record and its children. it uses the data arguments to post data and refresh list."
             },
 

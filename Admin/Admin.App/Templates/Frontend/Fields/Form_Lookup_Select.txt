@@ -4,7 +4,7 @@
         <select class="form-select" id="[SmallFieldName]" formControlName="[SmallFieldName]"
             [class]="submit && !form['[SmallFieldName]'].errors ? 'is-valid': submit && form['[SmallFieldName]'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of [LookupNameCapital]Options">
-            <option [value]="option['[LookupNameSmall]Id']">{{ option['[LookupNameSmall]Name'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid [DisplayName].</div>

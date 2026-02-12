@@ -21,12 +21,12 @@ namespace Admin.App
             this.DbPrefix = source.DbPrefix;
         }
 
-        public string SetRelated(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             return ToContent(codeInfo, input, placeHolder);
         }
 
-        public virtual string ToContent(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var outputContent = input.Replace("[SystemPrefixSmall]", DbPrefix.Trim().ToLower());
             outputContent = outputContent.Replace("[SystemNameCapital]", Name.Trim());
@@ -35,7 +35,7 @@ namespace Admin.App
             return outputContent;
         }
 
-        public virtual string ToDestination(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual string ToDestination(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var sourceProperty = Name.Trim();
             var destinationProperty = sourceProperty;

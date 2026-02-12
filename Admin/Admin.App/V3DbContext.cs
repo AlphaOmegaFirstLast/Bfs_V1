@@ -10,13 +10,13 @@ namespace Admin.App
     public class V3DbContext : DbContext
     {
         // A DbSet<TEntity> corresponds to a table in the database
-        public DbSet<BestFitSystemEntity> BfsSystem { get; set; }
-        public DbSet<BestFitComponentEntity> BfsComponent { get; set; }
-        public DbSet<BestFitFieldEntity> BfsField { get; set; }
+        public DbSet<BfsSystemEntity> BfsSystem { get; set; }
+        public DbSet<BfsComponentEntity> BfsComponent { get; set; }
+        public DbSet<BfsFieldEntity> BfsField { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var BestFitConnection = "Server=localhost;Database=BestFit_V3;Trusted_Connection=True;TrustServerCertificate=True";
+            var BestFitConnection = "Server=localhost;Database=BestFit_V4;Trusted_Connection=True;TrustServerCertificate=True";
             optionsBuilder.UseSqlServer(BestFitConnection);
        
         /* The line below was added to suppress a warning that EF raises whentrying to add-migration for CustomFields.

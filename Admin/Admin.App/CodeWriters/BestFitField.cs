@@ -110,7 +110,7 @@ namespace Admin.App
             }
         }
 
-        public string SetRelated(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             input = codeInfo.CurrentSystem?.ToContent(codeInfo, input, placeHolder) ?? input;
             input = codeInfo.CurrentComponent?.ToContent(codeInfo, input, placeHolder) ?? input;
@@ -119,7 +119,7 @@ namespace Admin.App
         }
 
 
-        public virtual string ToContent(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var fieldTemplate = input;
 
@@ -183,9 +183,9 @@ namespace Admin.App
             return fieldTemplate;
         }
 
-        public virtual void SetInternalFields(string tableCapitalName, string QueryBaseTable)
+        public virtual void SetInternalFields(ComponentType componentType, string componentNameCapital, string QueryBaseTable)
         {
-            var result = CodeBase.GetNames(Field);
+            var result = CodeGeneratorBase.GetNames(Field);
             fieldCapitalName = result.Item1;
             fieldSmallName = result.Item2;
             fieldFileName = result.Item3;
@@ -198,7 +198,7 @@ namespace Admin.App
             joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital : fieldCapitalName;
 
             ParentTable = string.IsNullOrEmpty(ParentTable)? QueryBaseTable : ParentTable;
-            ParentTable = string.IsNullOrEmpty(ParentTable) ? tableCapitalName : ParentTable;
+            ParentTable = string.IsNullOrEmpty(ParentTable) ? componentNameCapital : ParentTable;
             parentTableSmall = MakeFirstLetterSmall(ParentTable);
 
             // Set Data Types
@@ -211,7 +211,7 @@ namespace Admin.App
 
             uiFormControl = GetUIFormControl(BackendDataTypeId, FormControlTypeId);
 
-            SetReportInfo();
+            SetReportInfo(componentType);
 
             SetFilters(BackendDataTypeId, isAggregate);
 
@@ -255,7 +255,7 @@ namespace Admin.App
             filterValueName = fieldCapitalName;
         }
 
-        public void SetReportInfo()
+        public void SetReportInfo(ComponentType componentType)
         {
             var aggregateType = ReportInfo.AggregateTypeId == null ? AggregateType.None : (AggregateType)ReportInfo.AggregateTypeId;
             isAggregate = aggregateType != AggregateType.None;
@@ -263,8 +263,18 @@ namespace Admin.App
             if (isAggregate)
                 aggregateName = MakeFirstLetterSmall($"{aggregateFunction}{fieldCapitalName}");
 
-            reportFieldNameCapital = $"{ParentTable}{fieldCapitalName}";
-            reportFieldNameSmall = $"{parentTableSmall}{fieldCapitalName}";
+            if (componentType == ComponentType.Report)
+            {
+                //if Report, use tableName as suffix to avoid field name conflict between tables in join scenario. if not,like in case of list or matrix, use field name only.
+                reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
+                reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
+            }
+            else
+            {
+                reportFieldNameCapital = fieldCapitalName;
+                reportFieldNameSmall = fieldSmallName;
+            }
+
             var chartElement = ReportInfo.ChartElementId == null ? ChartElement.None : (ChartElement)ReportInfo.ChartElementId;
             isChartHorizontalField = chartElement == ChartElement.HorizontalField;
             isChartVerticalField = chartElement == ChartElement.VerticalField;
@@ -285,7 +295,7 @@ namespace Admin.App
 
             if (!string.IsNullOrEmpty(matrixInfo.ParentApi))
             {
-                var result = CodeBase.GetNames(matrixInfo.ParentApi);
+                var result = CodeGeneratorBase.GetNames(matrixInfo.ParentApi);
                 matrixNameCapital = result.Item1;
                 matrixNameSmall = result.Item2;
                 matrixFileName = result.Item3;

@@ -44,20 +44,20 @@ namespace Admin.App
             this.Notes = source.Notes;
         }
 
-        public string SetRelated(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             input = codeInfo.CurrentSystem?.ToContent(codeInfo, input, placeHolder) ?? input;
             input = codeInfo.CurrentComponent?.ToContent(codeInfo, input, placeHolder) ?? input;
             return input;
         }
 
-        public virtual bool IsMatch(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual bool IsMatch(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var subsititute = input.Replace("[ActionType]", this.ActionTypeId.ToString());
             return placeHolder.Name == subsititute;
         }
 
-        public virtual string ToContent(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder)
+        public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var output = input;
             output = output.Replace("[FrontendLink]", GetActionList(codeInfo, output, placeHolder, ActionType.FrontendLink));
@@ -65,7 +65,7 @@ namespace Admin.App
             return output;
         }
 
-        public string GetActionList(CodeBase codeInfo, string input, PlaceHolderInfo? placeHolder, ActionType actionType)
+        public string GetActionList(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder, ActionType actionType)
         {
             var outputContent = new StringBuilder();
             var actionList = codeInfo.SystemActionList.Where(a => a.ActionTypeId == actionType);

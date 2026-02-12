@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace Admin.App
 {
-    public class CodeBase
+    public class CodeGeneratorBase
     {
-        public string BfsRootDir { get; set; } = @"C:\Bfs\V1";
+        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V1";
         public string TemplateRootDir { get; set; } = @".\Templates";
         private string TemplateInfoFile { get; set; } = @".\Templates\ComponentTemplateInfo.json";  // the compiler copies it to the output foldr
         private string PlaceHolderInfoFile { get; set; } = @".\Templates\WriterInfo.json";  // the compiler copies it to the output foldr
@@ -41,7 +41,7 @@ namespace Admin.App
         public List<BestFitAction> SystemActionList { get; set; } = new List<BestFitAction>();
         public List<BestFitAction> BusinessActionList { get; set; } = new List<BestFitAction>();
 
-        public CodeBase()
+        public CodeGeneratorBase()
         {
             // populate Template Lists
             TemplateList = BestFitTemplate.GetList(TemplateInfoFile);

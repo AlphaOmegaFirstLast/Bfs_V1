@@ -162,7 +162,7 @@ namespace Admin.App
             return match.Success ? $"[{(match.Groups[1].Value).Trim()}]" : string.Empty;
         }
 
-        public string GetTemplateContentType(CodeBase codeInfo, ICodeWriter? writer, string input, int i)
+        public string GetTemplateContentType(CodeGeneratorBase codeInfo, ICodeWriter? writer, string input, int i)
         {
             var templateFilePath = placeHolder.TemplateFile;
             switch (placeHolder.TemplateContentType)

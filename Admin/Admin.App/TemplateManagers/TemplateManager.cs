@@ -15,7 +15,7 @@ namespace Admin.App
 {
     public class TemplateManager
     {
-        public static void InitFrameWork(CodeBase codeInfo, TemplateInfo generatorTemplate)
+        public static void InitFrameWork(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
             var templateFile = generatorTemplate.TemplateFile.Replace("*.*", "");
             var sourceDir = TemplateHelper.GetTemplateFilePath(codeInfo.TemplateRootDir, templateFile);
@@ -23,7 +23,7 @@ namespace Admin.App
             FileHelper.CopyDirectory(sourceDir, destinationDir);
         }
 
-        public static string Generate(CodeBase codeInfo, TemplateInfo generatorTemplate)
+        public static string Generate(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
             // Get the template content of a component. replace System, Component, and Field-related terms in the template.
             var input = TemplateHelper.GetTemplateFileContent(codeInfo.TemplateRootDir, generatorTemplate.TemplateFile);
@@ -56,7 +56,7 @@ namespace Admin.App
             return string.Empty;
         }
 
-        public static string Modify(CodeBase codeInfo, TemplateInfo modifierTemplate)
+        public static string Modify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
         {
             var fileToModifyFilePath = modifierTemplate.GetOutputFilePath(codeInfo);
             var input = FileHelper.ReadFile(fileToModifyFilePath);
@@ -72,7 +72,7 @@ namespace Admin.App
             return TemplateManager.SaveFile(codeInfo, modifierTemplate, generatedCode, true); // dont save file if generatedCode is empty
         }
 
-        public static void RollBackModify(CodeBase codeInfo, TemplateInfo modifierTemplate)
+        public static void RollBackModify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
         {
             var fileToModifyFilePath = modifierTemplate.GetOutputFilePath(codeInfo);
             var input = FileHelper.ReadFile(fileToModifyFilePath);
@@ -93,7 +93,7 @@ namespace Admin.App
             TemplateManager.SaveFile(codeInfo, modifierTemplate, generatedCode, true); // dont save file if generatedCode is empty
         }
 
-        public static void ApplyTemplates(CodeBase codeInfo, TemplateInfo templateInfo, string? generatedCode = "")
+        public static void ApplyTemplates(CodeGeneratorBase codeInfo, TemplateInfo templateInfo, string? generatedCode = "")
         {
             // Track code-changes
             codeInfo.CodeTracker = new CodeTracker();
@@ -121,7 +121,7 @@ namespace Admin.App
             codeInfo.CodeTracker.CreateEntry(generatedCode);
         }
 
-        public static void ApplyPlaceHolder(CodeBase codeInfo, string source, PlaceHolderInfo placeHolder, IEnumerable<ICodeWriter> writerList, bool allowDuplicateLines)
+        public static void ApplyPlaceHolder(CodeGeneratorBase codeInfo, string source, PlaceHolderInfo placeHolder, IEnumerable<ICodeWriter> writerList, bool allowDuplicateLines)
         {
             var codeChangeEntry = codeInfo.CodeTracker.CreateEntry(source);
 
@@ -161,7 +161,7 @@ namespace Admin.App
             }
         }
 
-        public static string ClearPlaceHolders(CodeBase codeInfo, string input)
+        public static string ClearPlaceHolders(CodeGeneratorBase codeInfo, string input)
         {
             //Clear Replacable PlaceHolders
             input = ClearPlaceHolder(codeInfo, input, "[ComponentType]", Enum.GetNames(typeof(ComponentType)).ToList());
@@ -182,7 +182,7 @@ namespace Admin.App
             return input;
         }
 
-        public static string ClearPlaceHolder(CodeBase codeInfo, string input, string placeHolderMark, List<string> enumNameList)
+        public static string ClearPlaceHolder(CodeGeneratorBase codeInfo, string input, string placeHolderMark, List<string> enumNameList)
         {
             var placeHolderList = codeInfo.FlatPlaceHolderList.Where(x => x.Name.Contains(placeHolderMark)).ToList();
 
@@ -223,7 +223,7 @@ namespace Admin.App
             return result;
         }
 
-        public static void KeepExisitingSnipts(CodeBase codeInfo, string outputFilePath, string generatedCode)
+        public static void KeepExisitingSnipts(CodeGeneratorBase codeInfo, string outputFilePath, string generatedCode)
         {
             var input = FileHelper.ReadFile(outputFilePath);
 
@@ -255,7 +255,7 @@ namespace Admin.App
             FileHelper.SaveFile(outputFilePath, output.ToString());
         }
 
-        public static string SaveFile(CodeBase codeInfo, TemplateInfo templateInfo, string generatedCode, bool saveEmpty = true)
+        public static string SaveFile(CodeGeneratorBase codeInfo, TemplateInfo templateInfo, string generatedCode, bool saveEmpty = true)
         {
             var outputFilePath = templateInfo.GetOutputFilePath(codeInfo);
             // We need to keep code if new file to be generated to protect existing code from being overwritten.
@@ -273,7 +273,7 @@ namespace Admin.App
             return outputFilePath;
         }
 
-        public static string DeleteFile(CodeBase codeInfo, TemplateInfo generatorTemplate)
+        public static string DeleteFile(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
             var outputFilePath = generatorTemplate.GetOutputFilePath(codeInfo);
             FileHelper.DeleteFile(outputFilePath);
