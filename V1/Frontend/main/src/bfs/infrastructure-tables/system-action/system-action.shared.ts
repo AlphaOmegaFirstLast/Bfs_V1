@@ -7,10 +7,14 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const SystemActionColumns = [
-    { fieldName: 'systemActionId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'systemActionName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'systemActionNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
-{ fieldName: 'systemActionActionTypeId', displayName: 'Action Type', sortName: 'ActionType', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionType', width: '50px', isVisible:true },
+{ fieldName: 'writerTypeId', displayName: 'Writer Type', sortName: 'WriterType', width: '50px', isVisible:true },
+{ fieldName: 'matchProprty', displayName: 'Writer Matching Property', sortName: 'MatchProprty', width: '50px', isVisible:true },
+{ fieldName: 'matchValues', displayName: 'Writer Matching Values', sortName: 'MatchValues', width: '50px', isVisible:true },
+{ fieldName: 'actionTemplate', displayName: 'Action Template', sortName: 'ActionTemplate', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -19,8 +23,12 @@ export interface ISystemAction {
 id?: string;
 name?: string;
 notes?: string;
+matchProprty?: string;
+matchValues?: string;
+actionTemplate?: string;
 
     actionTypeId?: number;
+writerTypeId?: number;
 
 }
 //---------------------------------------------------------
@@ -30,8 +38,12 @@ export function initSystemAction(): ISystemAction {
 id: '0',
 name: '',
 notes: '',
+matchProprty: '',
+matchValues: '',
+actionTemplate: '',
 
         actionTypeId: 0,
+writerTypeId: 0,
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -45,8 +57,12 @@ export function systemActionUntypedFormGroup(formBuilder: FormBuilder): any {
 id: ['0'],
 name: [''],
 notes: [''],
+matchProprty: [''],
+matchValues: [''],
+actionTemplate: [''],
 
     actionTypeId: [0],
+writerTypeId: [0],
 
     };
 } 
@@ -54,6 +70,7 @@ notes: [''],
 export interface ISystemActionWithLookup extends ISystemAction{
 
     actionTypeName?: string;
+writerTypeName?: string;
 
 }
 //---------------------------------------------------------
@@ -64,8 +81,11 @@ export interface ISystemActionFilter {
     [key: string]: any;
 
     Name?: string;
+MatchProprty?: string;
+MatchValues?: string;
 
     ActionTypeId?: number;
+WriterTypeId?: number;
 
 }
 //---------------------------------------------------------
@@ -82,8 +102,11 @@ export function initSystemActionRequest(): ISystemActionRequest {
         filter: {
 
             Name: undefined ,
+MatchProprty: undefined ,
+MatchValues: undefined ,
 
             ActionTypeId: undefined ,
+WriterTypeId: undefined ,
 
             }
     };
@@ -99,23 +122,26 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/system-action/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemActionId'], route:'/bfs/system-action/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-action/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemActionId'], route:'/bfs/system-action/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-action/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemActionId'], route:'/bfs/system-action/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-action/delete', displayText: 'Delete...' 
 });
 links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['actionTypeId'], route:'/bfs/action-type/view', displayText:'Go to ActionType' 
 });
+links.push({
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['writerTypeId'], route:'/bfs/writer-type/view', displayText:'Go to WriterType' 
+});
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['systemActionId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/SystemAction', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/SystemAction', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['systemActionId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/SystemAction/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/SystemAction/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

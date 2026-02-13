@@ -7,9 +7,9 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const ActionLocationColumns = [
-    { fieldName: 'actionLocationId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'actionLocationName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'actionLocationNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -86,20 +86,20 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/action-location/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['actionLocationId'], route:'/bfs/action-location/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/action-location/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['actionLocationId'], route:'/bfs/action-location/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/action-location/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['actionLocationId'], route:'/bfs/action-location/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/action-location/delete', displayText: 'Delete...' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['actionLocationId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/ActionLocation', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/ActionLocation', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['actionLocationId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/ActionLocation/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/ActionLocation/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

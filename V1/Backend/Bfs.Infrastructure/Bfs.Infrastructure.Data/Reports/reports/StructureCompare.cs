@@ -7,18 +7,18 @@ using System.Text;
 
 namespace Bfs.Infrastructure.Data.Reports
 {
-    public class StructureReportReport :QueryBase<StructureReportFilter>,  IStructureReportReport
+    public class StructureCompare :QueryBase<StructureCompareFilter>,  IStructureCompare
     {
-        public StructureReportReport(string connectionString)
+        public StructureCompare(string connectionString)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
         private readonly string _connectionString;
 
-        public async Task<QueryResponse<StructureReportItem>> GetAsync(QueryRequest<StructureReportFilter> request)
+        public async Task<QueryResponse<StructureCompareItem>> GetAsync(QueryRequest<StructureCompareFilter> request)
         {
-            var response = new QueryResponse<StructureReportItem>();
+            var response = new QueryResponse<StructureCompareItem>();
 
             SetUp(request);
 
@@ -26,8 +26,8 @@ namespace Bfs.Infrastructure.Data.Reports
             {
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
-                var items = await db.QueryAsync<StructureReportItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<StructureReportItem>)items;
+                var items = await db.QueryAsync<StructureCompareItem>(mainQuery.sql, mainQuery.parameters);
+                response.Items = (List<StructureCompareItem>)items;
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -41,8 +41,8 @@ namespace Bfs.Infrastructure.Data.Reports
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsComponent.DataTypeId", QueryName = "BfsComponentDataTypeId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName = "BfsComponentDisplayName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BfsComponent.DataTypeId", QueryName = "BfsComponent_DataTypeId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName = "BfsComponent_DisplayName", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "DataType.Name", QueryName = "DataTypeName", IsAggregare = false });
@@ -64,7 +64,7 @@ _fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName
            return sql.ToString();
         }
 
-        protected override string GetWhereConditions(QueryRequest<StructureReportFilter> request, DynamicParameters parameters)
+        protected override string GetWhereConditions(QueryRequest<StructureCompareFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
             sql.AppendLine(" BfsField.isDeleted=0 ");
@@ -91,7 +91,7 @@ _fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName
                                  .Select(s => s.Trim()));        
         }
 
-        protected override string GetHavingConditions(QueryRequest<StructureReportFilter> request, DynamicParameters parameters)
+        protected override string GetHavingConditions(QueryRequest<StructureCompareFilter> request, DynamicParameters parameters)
         {
             var filter = request.Filter;
             if (filter == null)

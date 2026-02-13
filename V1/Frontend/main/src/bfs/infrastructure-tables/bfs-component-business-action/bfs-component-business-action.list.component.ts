@@ -67,11 +67,11 @@ export class BfsComponentBusinessActionListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsComponentBusinessActionBfsComponentId':
+            case 'bfsComponentId':
                 return record['bfsComponentName']?.toString();
-case 'bfsComponentBusinessActionBusinessActionId':
+case 'businessActionId':
                 return record['businessActionName']?.toString();
-case 'bfsComponentBusinessActionActionLocationId':
+case 'actionLocationId':
                 return record['actionLocationName']?.toString();
 
             default:

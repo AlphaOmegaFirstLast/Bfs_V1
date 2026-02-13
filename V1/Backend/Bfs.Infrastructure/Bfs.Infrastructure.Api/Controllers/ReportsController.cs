@@ -24,11 +24,11 @@ public class ReportsController
         _reportsService = reportsService;
     }
 
-    [HttpPost("StructureReportReport")]
-    [CustomAuthorize("method=q.structureReport")]
-    public async Task<Results<Ok<QueryResponse<StructureReportItem>>, BadRequest<ProblemDetails>>> StructureReportReport([FromBody] QueryRequest<StructureReportFilter> ReportRequest)
+    [HttpPost("StructureCompare")]
+    [CustomAuthorize("method=q.structureCompare")]
+    public async Task<Results<Ok<QueryResponse<StructureCompareItem>>, BadRequest<ProblemDetails>>> StructureCompare([FromBody] QueryRequest<StructureCompareFilter> ReportRequest)
     {
-        var result = await _reportsService.StructureReportReportAsync(ReportRequest).ConfigureAwait(false);
+        var result = await _reportsService.StructureCompareAsync(ReportRequest).ConfigureAwait(false);
         return TypedResults.Ok(result);
     }
 

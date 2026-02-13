@@ -1,5 +1,5 @@
-            builder.Services.AddScoped<I[ComponentNameCapital]Report>(provider =>
+            builder.Services.AddScoped<I[ReportNameCapital]>(provider =>
             {
-                return new [ComponentNameCapital]Report(dbConnection);
+                return new [ReportNameCapital](dbConnection);
             });
             

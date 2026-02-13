@@ -3,7 +3,7 @@ using Bfs.Core.ObjectFields;
 
 namespace Bfs.[SystemNameCapital].Contracts
 {
-    public class [ComponentNameCapital][ReportTypeCapital]Filter
+    public class [ReportNameCapital]Filter
     {
         //Template_Start_FilterField_ValueNumber_1
         public [BackendFieldType]? [FilterValueName] { get; set; }

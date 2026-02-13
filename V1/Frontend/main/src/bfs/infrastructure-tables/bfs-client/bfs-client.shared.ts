@@ -9,11 +9,11 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsClientColumns = [
-    { fieldName: 'bfsClientDbConnection', displayName: 'Database Connection', sortName: 'DbConnection', width: '50px', isVisible:true },
-{ fieldName: 'bfsClientId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'bfsClientName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'bfsClientNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
-{ fieldName: 'bfsClientCustomFields', displayName: 'Custom Fields', sortName: 'CustomFields', width: '50px', isVisible:true },
+    { fieldName: 'dbConnection', displayName: 'Database Connection', sortName: 'DbConnection', width: '50px', isVisible:true },
+{ fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'customFields', displayName: 'Custom Fields', sortName: 'CustomFields', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -99,20 +99,20 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-client/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsClientId'], route:'/bfs/bfs-client/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsClientId'], route:'/bfs/bfs-client/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsClientId'], route:'/bfs/bfs-client/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/delete', displayText: 'Delete...' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsClientId'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['bfsClientId'], postUrl: '/BfsClient', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BfsClient', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsClientId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['bfsClientId'], postUrl: '/Operations/BfsClient/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsClient/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

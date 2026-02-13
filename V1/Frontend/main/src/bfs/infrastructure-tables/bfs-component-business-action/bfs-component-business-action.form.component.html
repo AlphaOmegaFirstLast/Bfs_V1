@@ -59,7 +59,7 @@
         <select class="form-select" id="bfsComponentId" formControlName="bfsComponentId"
             [class]="submit && !form['bfsComponentId'].errors ? 'is-valid': submit && form['bfsComponentId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BfsComponentOptions">
-            <option [value]="option['bfsComponentId']">{{ option['bfsComponentName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Component Name.</div>
@@ -71,7 +71,7 @@
         <select class="form-select" id="businessActionId" formControlName="businessActionId"
             [class]="submit && !form['businessActionId'].errors ? 'is-valid': submit && form['businessActionId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BusinessActionOptions">
-            <option [value]="option['businessActionId']">{{ option['businessActionName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Business Action.</div>
@@ -83,7 +83,7 @@
         <select class="form-select" id="actionLocationId" formControlName="actionLocationId"
             [class]="submit && !form['actionLocationId'].errors ? 'is-valid': submit && form['actionLocationId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of ActionLocationOptions">
-            <option [value]="option['actionLocationId']">{{ option['actionLocationName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Menu Action.</div>

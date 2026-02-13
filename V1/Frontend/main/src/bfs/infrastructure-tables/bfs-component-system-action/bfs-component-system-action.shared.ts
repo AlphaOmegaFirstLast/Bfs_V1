@@ -7,10 +7,10 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsComponentSystemActionColumns = [
-    { fieldName: 'bfsComponentSystemActionId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentSystemActionBfsComponentId', displayName: 'Component Name', sortName: 'BfsComponent', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentSystemActionSystemActionId', displayName: 'Menu Action', sortName: 'SystemAction', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentSystemActionActionLocationId', displayName: 'Menu Action', sortName: 'ActionLocation', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'bfsComponentId', displayName: 'Component Name', sortName: 'BfsComponent', width: '50px', isVisible:true },
+{ fieldName: 'systemActionId', displayName: 'Menu Action', sortName: 'SystemAction', width: '50px', isVisible:true },
+{ fieldName: 'actionLocationId', displayName: 'Menu Action', sortName: 'ActionLocation', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -101,13 +101,13 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-component-system-action/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentSystemActionId'], route:'/bfs/bfs-component-system-action/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentSystemActionId'], route:'/bfs/bfs-component-system-action/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentSystemActionId'], route:'/bfs/bfs-component-system-action/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/delete', displayText: 'Delete...' 
 });
 links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText:'Go to BfsComponent' 
@@ -120,10 +120,10 @@ actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsComponentSystemActionId'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['bfsComponentSystemActionId'], postUrl: '/BfsComponentSystemAction', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BfsComponentSystemAction', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsComponentSystemActionId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['bfsComponentSystemActionId'], postUrl: '/Operations/BfsComponentSystemAction/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponentSystemAction/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

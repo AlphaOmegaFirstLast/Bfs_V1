@@ -23,14 +23,6 @@ namespace Bfs.Infrastructure.Contracts
         ///</Summary>
         public string DisplayName {get; set;} = string.Empty ;
 ///<Summary>
-        /// BfsField IsQueryColumn.
-        ///</Summary>
-        public bool IsQueryColumn {get; set;} = false ;
-///<Summary>
-        /// BfsField IsJoinField.
-        ///</Summary>
-        public bool IsJoinField {get; set;} = false ;
-///<Summary>
         /// BfsField ParentTable.
         ///</Summary>
         public string ParentTable {get; set;} = string.Empty ;

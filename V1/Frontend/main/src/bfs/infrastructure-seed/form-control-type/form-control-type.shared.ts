@@ -7,9 +7,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const FormControlTypeColumns = [
-    { fieldName: 'formControlTypeId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'formControlTypeName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'formControlTypeNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -86,20 +85,20 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/form-control-type/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['formControlTypeId'], route:'/bfs/form-control-type/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/form-control-type/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['formControlTypeId'], route:'/bfs/form-control-type/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/form-control-type/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['formControlTypeId'], route:'/bfs/form-control-type/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/form-control-type/delete', displayText: 'Delete...' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['formControlTypeId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/FormControlType', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/FormControlType', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['formControlTypeId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/FormControlType/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/FormControlType/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

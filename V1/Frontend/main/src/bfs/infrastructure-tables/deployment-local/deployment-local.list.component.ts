@@ -67,7 +67,7 @@ export class DeploymentLocalListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'deploymentLocalBfsSystemId':
+            case 'bfsSystemId':
                 return record['bfsSystemName']?.toString();
 
             default:

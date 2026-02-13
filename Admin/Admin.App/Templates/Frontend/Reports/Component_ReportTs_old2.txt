@@ -41,7 +41,7 @@ import { [ComponentNameCapital]FilterComponent } from './[ComponentFileName].fil
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class [ComponentNameCapital][ReportTypeCapital]Component         
+export class [ReportNameCapital]Component         
 
     extends BaseReportComponent<I[ComponentNameCapital]Filter, I[ComponentNameCapital]WithLookup> {
     override apiService: [SystemNameCapital]Service = inject([SystemNameCapital]Service);
@@ -58,7 +58,7 @@ export class [ComponentNameCapital][ReportTypeCapital]Component
 
         //Template_Start_Component_Report_1
         this.isButton.addNew = false;
-        this.getApiUrl = '/[SystemPrefixSmall]/reports/[ComponentNameCapital][ReportTypeCapital]';  
+        this.getApiUrl = '/[SystemPrefixSmall]/reports/[ReportNameCapital]';  
         //Template_End_Component_Report_1
 
         //Template_Start_Component_Table_1

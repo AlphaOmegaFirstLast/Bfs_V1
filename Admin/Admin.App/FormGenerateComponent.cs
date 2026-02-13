@@ -14,7 +14,7 @@ namespace CodeAdmin
 {
     public partial class FormGenerateComponent : Form
     {
-        private CodeGeneratorV1 _codeInfo = new CodeGeneratorV1();
+        private CodeGeneratorBlue _codeInfo = new CodeGeneratorBlue();
         private string lastControlsKey = "";
         private bool isGenerateSystemClicked = false;
         private List<CheckBox> checkboxList = new List<CheckBox>();
@@ -362,11 +362,11 @@ namespace CodeAdmin
         {
             if (_codeInfo.CurrentComponent != null)
             {
-                SetMessage($@"{operation} {_codeInfo.CurrentComponent.NameCapital}...");
+                SetMessage($@"{operation} {_codeInfo.CurrentComponent.ComponentNameCapital}...");
 
-                txtNameCapital.Text = _codeInfo.CurrentComponent.NameCapital;
-                txtNameSmall.Text = _codeInfo.CurrentComponent.NameSmall;
-                txtFileName.Text = _codeInfo.CurrentComponent.FileName; ;
+                txtNameCapital.Text = _codeInfo.CurrentComponent.ComponentNameCapital;
+                txtNameSmall.Text = _codeInfo.CurrentComponent.ComponentNameSmall;
+                txtFileName.Text = _codeInfo.CurrentComponent.ComponentFileName; ;
                 txtMenuName.Text = _codeInfo.CurrentComponent.MenuName;
             }
             else
@@ -401,7 +401,7 @@ namespace CodeAdmin
 
         private void btnRollBackGenerateComponent_Click(object sender, EventArgs e)
         {
-            SetUIControls("Deleteing generated files ", _codeInfo.CurrentComponent?.NameCapital);
+            SetUIControls("Deleteing generated files ", _codeInfo.CurrentComponent?.ComponentNameCapital);
 
             foreach (var componentTemplate in _codeInfo.SelectedTemplateList)
             {
@@ -427,7 +427,7 @@ namespace CodeAdmin
 
         private void btnRollBackModifyComponent_Click(object sender, EventArgs e)
         {
-            SetUIControls("Remove Entry ", _codeInfo.CurrentComponent.NameCapital);
+            SetUIControls("Remove Entry ", _codeInfo.CurrentComponent.ComponentNameCapital);
             foreach (var componentTemplate in _codeInfo.SelectedTemplateList)
             {
                 _codeInfo.CurrentTemplate = componentTemplate;
@@ -452,7 +452,7 @@ namespace CodeAdmin
 
         private void btnGenerateComponent_Click(object sender, EventArgs e)
         {
-            SetUIControls("Generating ", _codeInfo.CurrentComponent?.NameCapital);
+            SetUIControls("Generating ", _codeInfo.CurrentComponent?.ComponentNameCapital);
             foreach (var componentTemplate in _codeInfo.SelectedTemplateList)
             {
                 _codeInfo.CurrentTemplate = componentTemplate;
@@ -477,7 +477,7 @@ namespace CodeAdmin
 
         private void btnModifyComponent_Click(object sender, EventArgs e)
         {
-            SetUIControls("Modifying ", _codeInfo?.CurrentComponent?.NameCapital);
+            SetUIControls("Modifying ", _codeInfo?.CurrentComponent?.ComponentNameCapital);
 
             foreach (var componentTemplate in _codeInfo.SelectedTemplateList)
             {

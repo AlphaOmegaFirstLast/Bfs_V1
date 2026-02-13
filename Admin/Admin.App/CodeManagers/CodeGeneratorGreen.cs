@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Admin.App
 {
-    public class CodeGeneratorV3 : CodeGeneratorBase
+    public class CodeGeneratorGreen : CodeGeneratorBase
     {
 
         public override void ReadDbEntities()
@@ -15,7 +15,7 @@ namespace Admin.App
             SystemActionList = z; //.Select( x=> (IBestFitAction)x).ToList();
 
             // populate database objects
-            using (var context = new V3DbContext())
+            using (var context = new V4DbContext())
             {
                 try
                 {

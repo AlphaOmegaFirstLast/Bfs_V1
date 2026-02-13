@@ -2,10 +2,10 @@ using Bfs.Core.Data;
 
 namespace Bfs.Infrastructure.Data
 {
-    public class StructureReportItem
+    public class StructureCompareItem
     {
-        public int BfsComponentDataTypeId { get; set; }
-public string BfsComponentDisplayName { get; set; }
+        public string? BfsComponent_DataTypeId { get; set; }
+public string? BfsComponent_DisplayName { get; set; }
 
         public string? DataTypeName { get; set; }
 

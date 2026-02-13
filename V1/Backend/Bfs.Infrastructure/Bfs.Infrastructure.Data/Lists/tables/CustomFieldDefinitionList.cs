@@ -43,12 +43,12 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.Id", QueryName = "CustomFieldDefinitionId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.Name", QueryName = "CustomFieldDefinitionName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.Notes", QueryName = "CustomFieldDefinitionNotes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.FieldValidation", QueryName = "CustomFieldDefinitionFieldValidation", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.DisplayName", QueryName = "CustomFieldDefinitionDisplayName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.BfsComponentId", QueryName = "CustomFieldDefinitionBfsComponentId", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.Notes", QueryName = "Notes", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.FieldValidation", QueryName = "FieldValidation", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.DisplayName", QueryName = "DisplayName", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomFieldDefinition.BfsComponentId", QueryName = "BfsComponentId", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });

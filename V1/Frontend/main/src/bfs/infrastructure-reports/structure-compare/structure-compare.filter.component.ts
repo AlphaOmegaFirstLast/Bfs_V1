@@ -4,17 +4,17 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
-import { IStructureReportFilter } from './structure-report.shared';
+import { IStructureCompareFilter } from './structure-compare.shared';
 
 @Component({
-    selector: 'app-structure-report-report-filter',
+    selector: 'app-structure-compare-report-filter',
     imports: [FormsModule, CommonModule],
-    templateUrl: './structure-report.filter.component.html'
+    templateUrl: './structure-compare.filter.component.html'
     //styles: ``
 })
-export class StructureReportFilterComponent implements OnInit {
+export class StructureCompareFilterComponent implements OnInit {
 
-    public result = {} as IStructureReportFilter;
+    public result = {} as IStructureCompareFilter;
 
     // Define look ups
     public DataTypeOptions:  any[] = [];

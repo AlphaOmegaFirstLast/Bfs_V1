@@ -14,8 +14,6 @@ namespace Bfs.Infrastructure.Domain.Mapper
 Id= entity.Id,
 Field= entity.Field,
 DisplayName= entity.DisplayName,
-IsQueryColumn= entity.IsQueryColumn,
-IsJoinField= entity.IsJoinField,
 ParentTable= entity.ParentTable,
 
                BfsComponentId= entity.BfsComponentId,
@@ -51,8 +49,6 @@ FormInfo= entity.FormInfo.ToContract(),
 BfsFieldEntity.Id= contract.Id;
 BfsFieldEntity.Field= contract.Field;
 BfsFieldEntity.DisplayName= contract.DisplayName;
-BfsFieldEntity.IsQueryColumn= contract.IsQueryColumn;
-BfsFieldEntity.IsJoinField= contract.IsJoinField;
 BfsFieldEntity.ParentTable= contract.ParentTable;
 
             BfsFieldEntity.BfsComponentId= contract.BfsComponentId;

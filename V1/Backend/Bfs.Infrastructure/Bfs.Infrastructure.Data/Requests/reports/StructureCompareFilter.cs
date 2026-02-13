@@ -1,8 +1,8 @@
-using Bfs.Core.Contracts;
+using Bfs.Core.Data;
 
-namespace Bfs.Infrastructure.Contracts
+namespace Bfs.Infrastructure.Data
 {
-    public class StructureReportFilter
+    public class StructureCompareFilter
     {
 
         public string? DisplayName { get; set; }

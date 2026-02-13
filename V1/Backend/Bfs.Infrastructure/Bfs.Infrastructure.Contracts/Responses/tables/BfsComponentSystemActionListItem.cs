@@ -4,10 +4,10 @@ namespace Bfs.Infrastructure.Contracts
 {
     public class BfsComponentSystemActionListItem
     {      
-        public string? BfsComponentSystemActionId { get; set; }
-public string? BfsComponentSystemActionBfsComponentId { get; set; }
-public string? BfsComponentSystemActionSystemActionId { get; set; }
-public string? BfsComponentSystemActionActionLocationId { get; set; }
+        public string? Id { get; set; }
+public string? BfsComponentId { get; set; }
+public string? SystemActionId { get; set; }
+public string? ActionLocationId { get; set; }
 
         public string? BfsComponentName { get; set; }
 public string? SystemActionName { get; set; }

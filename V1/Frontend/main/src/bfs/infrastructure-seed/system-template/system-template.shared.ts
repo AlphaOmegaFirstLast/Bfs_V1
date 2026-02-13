@@ -7,13 +7,13 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const SystemTemplateColumns = [
-    { fieldName: 'systemTemplateId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'systemTemplateName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'systemTemplateNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
-{ fieldName: 'systemTemplateProjectType', displayName: 'Project Type', sortName: 'ProjectType', width: '50px', isVisible:true },
-{ fieldName: 'systemTemplateOutputDirectory', displayName: 'Output Directory', sortName: 'OutputDirectory', width: '50px', isVisible:true },
-{ fieldName: 'systemTemplateSolutionDirectory', displayName: 'Solution Directory', sortName: 'SolutionDirectory', width: '50px', isVisible:true },
-{ fieldName: 'systemTemplateTemplate', displayName: 'Template', sortName: 'Template', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'projectType', displayName: 'Project Type', sortName: 'ProjectType', width: '50px', isVisible:true },
+{ fieldName: 'outputDirectory', displayName: 'Output Directory', sortName: 'OutputDirectory', width: '50px', isVisible:true },
+{ fieldName: 'solutionDirectory', displayName: 'Solution Directory', sortName: 'SolutionDirectory', width: '50px', isVisible:true },
+{ fieldName: 'template', displayName: 'Template', sortName: 'Template', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -102,20 +102,20 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/system-template/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemTemplateId'], route:'/bfs/system-template/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-template/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemTemplateId'], route:'/bfs/system-template/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-template/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemTemplateId'], route:'/bfs/system-template/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-template/delete', displayText: 'Delete...' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['systemTemplateId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/SystemTemplate', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/SystemTemplate', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['systemTemplateId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/SystemTemplate/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/SystemTemplate/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

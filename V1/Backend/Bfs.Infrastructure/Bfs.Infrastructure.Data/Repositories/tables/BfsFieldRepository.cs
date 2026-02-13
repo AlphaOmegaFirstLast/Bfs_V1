@@ -15,6 +15,19 @@ namespace Bfs.Infrastructure.Data.Repositories
         }
 
         //Template_Start_DontOverwrite_1
+        public async Task<List<BfsFieldEntity>> GetByComponentIdAsync(long componentId)
+        {
+            return await DbSet.Where(e => e.BfsComponentId == componentId).ToListAsync().ConfigureAwait(false);
+        }
+
+        public async Task DeleteByComponentIdAsync(long componentId)
+        {
+            // Remove existing actions for this component
+            var existingList = DbSet.Where(x => x.BfsComponentId == componentId);
+
+            DbSet.RemoveRange(existingList);
+        }
         //Template_End_DontOverwrite_1
     }
 }
+

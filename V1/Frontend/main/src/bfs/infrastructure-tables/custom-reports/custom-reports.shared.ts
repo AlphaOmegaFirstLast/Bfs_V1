@@ -7,13 +7,13 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const CustomReportsColumns = [
-    { fieldName: 'customReportsId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'customReportsName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'customReportsRequest', displayName: 'Request', sortName: 'Request', width: '50px', isVisible:true },
-{ fieldName: 'customReportsBaseReport', displayName: 'Base Report', sortName: 'BaseReport', width: '50px', isVisible:true },
-{ fieldName: 'customReportsIsPrivate', displayName: 'Private', sortName: 'IsPrivate', width: '50px', isVisible:true },
-{ fieldName: 'customReportsCreatedBy', displayName: 'Created By', sortName: 'CreatedBy', width: '50px', isVisible:true },
-{ fieldName: 'customReportsUrl', displayName: 'Base Report Url', sortName: 'Url', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'request', displayName: 'Request', sortName: 'Request', width: '50px', isVisible:true },
+{ fieldName: 'baseReport', displayName: 'Base Report', sortName: 'BaseReport', width: '50px', isVisible:true },
+{ fieldName: 'isPrivate', displayName: 'Private', sortName: 'IsPrivate', width: '50px', isVisible:true },
+{ fieldName: 'createdBy', displayName: 'Created By', sortName: 'CreatedBy', width: '50px', isVisible:true },
+{ fieldName: 'url', displayName: 'Base Report Url', sortName: 'Url', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -102,20 +102,20 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/custom-reports/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['customReportsId'], route:'/bfs/custom-reports/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['customReportsId'], route:'/bfs/custom-reports/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['customReportsId'], route:'/bfs/custom-reports/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/delete', displayText: 'Delete...' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['customReportsId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/CustomReports', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/CustomReports', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['customReportsId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/CustomReports/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/CustomReports/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

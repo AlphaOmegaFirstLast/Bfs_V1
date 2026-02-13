@@ -7,8 +7,11 @@ namespace Bfs.Infrastructure.Contracts
     {
 
         public string? Name { get; set; }
+public string? MatchProprty { get; set; }
+public string? MatchValues { get; set; }
 
         public int? ActionTypeId { get; set; }
+public int? WriterTypeId { get; set; }
 
     }
 }

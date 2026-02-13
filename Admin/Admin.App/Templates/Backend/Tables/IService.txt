@@ -13,7 +13,7 @@ namespace Bfs.[SystemNameCapital].Domain.Interfaces
         Task DeleteAsync(long id);
         Task<[ComponentNameCapital]> UploadAsync([ComponentNameCapital] contract);
 
-        Task<QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>> ListAsync(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> contractRequest);
+        Task<QueryResponse<[ReportNameCapital]Item>> ListAsync(QueryRequest<[ReportNameCapital]Filter> contractRequest);
 
         //Template_Start_Code_[DontOverwrite]_1
         //Template_End_Code_[DontOverwrite]_1   

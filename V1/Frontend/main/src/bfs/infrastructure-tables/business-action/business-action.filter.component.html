@@ -24,7 +24,7 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.ActionTypeId" name="actionTypeId">
           <ng-container *ngFor="let option of ActionTypeOptions">
-            <option [value]="option['actionTypeId']">{{ option['actionTypeName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
       </div>

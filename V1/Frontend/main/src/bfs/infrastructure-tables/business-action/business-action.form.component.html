@@ -83,7 +83,7 @@
         <select class="form-select" id="actionTypeId" formControlName="actionTypeId"
             [class]="submit && !form['actionTypeId'].errors ? 'is-valid': submit && form['actionTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of ActionTypeOptions">
-            <option [value]="option['actionTypeId']">{{ option['actionTypeName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Action Type.</div>

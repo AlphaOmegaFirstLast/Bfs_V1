@@ -4,19 +4,19 @@ namespace Bfs.Infrastructure.Contracts
 {
     public class DeploymentAzureListItem
     {      
-        public string? DeploymentAzureProject { get; set; }
-public string? DeploymentAzureId { get; set; }
-public string? DeploymentAzureScriptFile { get; set; }
-public string? DeploymentAzureBfsSystemId { get; set; }
-public string? DeploymentAzureSourceProject { get; set; }
-public string? DeploymentAzureSourcePath { get; set; }
-public string? DeploymentAzurePublishPath { get; set; }
-public string? DeploymentAzureConfig { get; set; }
-public string? DeploymentAzureEnvironmentValue { get; set; }
-public string? DeploymentAzureTargetVirtualFolder { get; set; }
-public string? DeploymentAzurePublishProfilePath { get; set; }
-public string? DeploymentAzureAppService { get; set; }
-public string? DeploymentAzureResourceGroup { get; set; }
+        public string? Project { get; set; }
+public string? Id { get; set; }
+public string? ScriptFile { get; set; }
+public string? BfsSystemId { get; set; }
+public string? SourceProject { get; set; }
+public string? SourcePath { get; set; }
+public string? PublishPath { get; set; }
+public string? Config { get; set; }
+public string? EnvironmentValue { get; set; }
+public string? TargetVirtualFolder { get; set; }
+public string? PublishProfilePath { get; set; }
+public string? AppService { get; set; }
+public string? ResourceGroup { get; set; }
 
         public string? BfsSystemName { get; set; }
 

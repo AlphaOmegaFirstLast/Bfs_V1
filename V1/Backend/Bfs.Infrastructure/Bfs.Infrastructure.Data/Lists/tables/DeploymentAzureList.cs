@@ -43,19 +43,19 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Project", QueryName = "DeploymentAzureProject", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Id", QueryName = "DeploymentAzureId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.ScriptFile", QueryName = "DeploymentAzureScriptFile", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.BfsSystemId", QueryName = "DeploymentAzureBfsSystemId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.SourceProject", QueryName = "DeploymentAzureSourceProject", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.SourcePath", QueryName = "DeploymentAzureSourcePath", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.PublishPath", QueryName = "DeploymentAzurePublishPath", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Config", QueryName = "DeploymentAzureConfig", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.EnvironmentValue", QueryName = "DeploymentAzureEnvironmentValue", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.TargetVirtualFolder", QueryName = "DeploymentAzureTargetVirtualFolder", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.PublishProfilePath", QueryName = "DeploymentAzurePublishProfilePath", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.AppService", QueryName = "DeploymentAzureAppService", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.ResourceGroup", QueryName = "DeploymentAzureResourceGroup", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Project", QueryName = "Project", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.ScriptFile", QueryName = "ScriptFile", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.SourceProject", QueryName = "SourceProject", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.SourcePath", QueryName = "SourcePath", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.PublishPath", QueryName = "PublishPath", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Config", QueryName = "Config", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.EnvironmentValue", QueryName = "EnvironmentValue", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.TargetVirtualFolder", QueryName = "TargetVirtualFolder", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.PublishProfilePath", QueryName = "PublishProfilePath", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.AppService", QueryName = "AppService", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.ResourceGroup", QueryName = "ResourceGroup", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });

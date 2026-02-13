@@ -67,8 +67,10 @@ export class SystemActionListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'systemActionActionTypeId':
+            case 'actionTypeId':
                 return record['actionTypeName']?.toString();
+case 'writerTypeId':
+                return record['writerTypeName']?.toString();
 
             default:
                 return value;

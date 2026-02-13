@@ -28,6 +28,7 @@ public class InfrastructureDbContext : DbContext
  public DbSet<ChartElementEntity> ChartElements { get; set; }
  public DbSet<DeploymentAzureEntity> DeploymentAzures { get; set; }
  public DbSet<SystemActionEntity> SystemActions { get; set; }
+ public DbSet<WriterTypeEntity> WriterTypes { get; set; }
 //Template_Component_RegisterDbSet
 
     public InfrastructureDbContext(DbContextOptions<InfrastructureDbContext> options) : base(options)

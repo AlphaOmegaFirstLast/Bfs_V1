@@ -4,20 +4,20 @@ namespace Bfs.Infrastructure.Data
 {
     public class DeploymentLocalListItem
     {      
-        public string? DeploymentLocalId { get; set; }
-public string? DeploymentLocalScriptFile { get; set; }
-public string? DeploymentLocalBfsSystemId { get; set; }
-public string? DeploymentLocalSourceProject { get; set; }
-public string? DeploymentLocalSourcePath { get; set; }
-public string? DeploymentLocalPublishPath { get; set; }
-public string? DeploymentLocalConfig { get; set; }
-public string? DeploymentLocalEnvironmentValue { get; set; }
-public string? DeploymentLocalTargetVirtualFolder { get; set; }
-public string? DeploymentLocalWebSite { get; set; }
-public string? DeploymentLocalAppPoolName { get; set; }
-public string? DeploymentLocalPort { get; set; }
-public string? DeploymentLocalHttpsRequired { get; set; }
-public string? DeploymentLocalProject { get; set; }
+        public string? Id { get; set; }
+public string? ScriptFile { get; set; }
+public string? BfsSystemId { get; set; }
+public string? SourceProject { get; set; }
+public string? SourcePath { get; set; }
+public string? PublishPath { get; set; }
+public string? Config { get; set; }
+public string? EnvironmentValue { get; set; }
+public string? TargetVirtualFolder { get; set; }
+public string? WebSite { get; set; }
+public string? AppPoolName { get; set; }
+public string? Port { get; set; }
+public string? HttpsRequired { get; set; }
+public string? Project { get; set; }
 
         public string? BfsSystemName { get; set; }
 

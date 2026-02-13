@@ -9,12 +9,12 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const CustomFieldDefinitionColumns = [
-    { fieldName: 'customFieldDefinitionId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'customFieldDefinitionName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'customFieldDefinitionNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
-{ fieldName: 'customFieldDefinitionFieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible:true },
-{ fieldName: 'customFieldDefinitionDisplayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
-{ fieldName: 'customFieldDefinitionBfsComponentId', displayName: 'Component', sortName: 'BfsComponent', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible:true },
+{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
+{ fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponent', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -112,23 +112,23 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/custom-field-definition/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['customFieldDefinitionId'], route:'/bfs/custom-field-definition/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['customFieldDefinitionId'], route:'/bfs/custom-field-definition/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['customFieldDefinitionId'], route:'/bfs/custom-field-definition/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/delete', displayText: 'Delete...' 
 });
 links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText:'Go to BfsComponent' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['customFieldDefinitionId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/CustomFieldDefinition', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/CustomFieldDefinition', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['customFieldDefinitionId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/CustomFieldDefinition/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/CustomFieldDefinition/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

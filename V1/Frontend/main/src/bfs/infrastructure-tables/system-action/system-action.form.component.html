@@ -67,6 +67,54 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="writerTypeId" class="form-label fs-6">Writer Type</label>
+        <select class="form-select" id="writerTypeId" formControlName="writerTypeId"
+            [class]="submit && !form['writerTypeId'].errors ? 'is-valid': submit && form['writerTypeId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of WriterTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Writer Type.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="matchProprty" class="form-label fs-6">Writer Matching Property</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="matchProprty" formControlName="matchProprty"
+            [class]="submit && !form['matchProprty'].errors ? 'is-valid': submit && form['matchProprty'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Writer Matching Property.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="matchValues" class="form-label fs-6">Writer Matching Values</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="matchValues" formControlName="matchValues"
+            [class]="submit && !form['matchValues'].errors ? 'is-valid': submit && form['matchValues'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Writer Matching Values.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="actionTemplate" class="form-label fs-6">Action Template</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="actionTemplate" formControlName="actionTemplate"
+            [class]="submit && !form['actionTemplate'].errors ? 'is-valid': submit && form['actionTemplate'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Action Template.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
@@ -83,7 +131,7 @@
         <select class="form-select" id="actionTypeId" formControlName="actionTypeId"
             [class]="submit && !form['actionTypeId'].errors ? 'is-valid': submit && form['actionTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of ActionTypeOptions">
-            <option [value]="option['actionTypeId']">{{ option['actionTypeName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Action Type.</div>

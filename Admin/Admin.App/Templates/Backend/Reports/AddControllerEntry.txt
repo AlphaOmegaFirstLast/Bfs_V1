@@ -1,9 +1,9 @@
 
-    [HttpPost("[ComponentNameCapital]Report")]
-    [CustomAuthorize("method=q.[ComponentNameSmall]")]
-    public async Task<Results<Ok<QueryResponse<[ComponentNameCapital]Item>>, BadRequest<ProblemDetails>>> [ComponentNameCapital]Report([FromBody] QueryRequest<[ComponentNameCapital]Filter> ReportRequest)
+    [HttpPost("[ReportNameCapital]")]
+    [CustomAuthorize("method=q.[ReportNameSmall]")]
+    public async Task<Results<Ok<QueryResponse<[ReportNameCapital]Item>>, BadRequest<ProblemDetails>>> [ReportNameCapital]([FromBody] QueryRequest<[ReportNameCapital]Filter> ReportRequest)
     {
-        var result = await _reportsService.[ComponentNameCapital]ReportAsync(ReportRequest).ConfigureAwait(false);
+        var result = await _reportsService.[ReportNameCapital]Async(ReportRequest).ConfigureAwait(false);
         return TypedResults.Ok(result);
     }
 

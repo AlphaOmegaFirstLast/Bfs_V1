@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { RouteGuardService } from "@bfs/_shared/security/route-guard.service";
-import { StructureReportCompareComponent } from './structure-report/structure-report.report.component';
+import { StructureCompareComponent } from './structure-compare/structure-compare.report.component';
 //Template_Component_AddDeclareEntry
 
 export const REPORTS_ROUTES: Routes = [
     {
-        path: 'bfs-report/structure-report/:id',
-        component: StructureReportCompareComponent,
+        path: 'bfs/report/structure-compare/:id',
+        component: StructureCompareComponent,
         canActivate: [RouteGuardService],
         data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
     },

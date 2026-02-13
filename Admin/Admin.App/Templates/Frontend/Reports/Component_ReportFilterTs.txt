@@ -4,17 +4,17 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
-import { I[ComponentNameCapital]Filter } from './[ComponentFileName].shared';
+import { I[ReportNameCapital]Filter } from './[ReportFileName].shared';
 
 @Component({
-    selector: 'app-[ComponentFileName]-report-filter',
+    selector: 'app-[ReportFileName]-report-filter',
     imports: [FormsModule, CommonModule],
-    templateUrl: './[ComponentFileName].filter.component.html'
+    templateUrl: './[ReportFileName].filter.component.html'
     //styles: ``
 })
-export class [ComponentNameCapital]FilterComponent implements OnInit {
+export class [ReportNameCapital]FilterComponent implements OnInit {
 
-    public result = {} as I[ComponentNameCapital]Filter;
+    public result = {} as I[ReportNameCapital]Filter;
     
     // Define look ups
     //Template_Start_Field_Lookup_1

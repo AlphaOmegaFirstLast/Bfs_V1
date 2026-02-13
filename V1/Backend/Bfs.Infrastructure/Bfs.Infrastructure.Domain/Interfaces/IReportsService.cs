@@ -5,8 +5,7 @@ namespace Bfs.Infrastructure.Domain.Interfaces
 {
     public interface IReportsService
     {
-
-        Task<QueryResponse<StructureReportItem>> StructureReportReportAsync(QueryRequest<StructureReportFilter> contractRequest);
+        Task<QueryResponse<StructureCompareItem>> StructureCompareAsync(QueryRequest<StructureCompareFilter> contractRequest);
 
 //Template_Component_AddIServiceEntry
   }

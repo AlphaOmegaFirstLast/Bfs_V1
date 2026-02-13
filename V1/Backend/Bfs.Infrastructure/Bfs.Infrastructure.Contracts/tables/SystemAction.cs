@@ -22,11 +22,27 @@ namespace Bfs.Infrastructure.Contracts
         /// SystemAction Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
+///<Summary>
+        /// SystemAction Writer Matching Property.
+        ///</Summary>
+        public string MatchProprty {get; set;} = string.Empty ;
+///<Summary>
+        /// SystemAction Writer Matching Values.
+        ///</Summary>
+        public string MatchValues {get; set;} = string.Empty ;
+///<Summary>
+        /// SystemAction Action Template.
+        ///</Summary>
+        public string ActionTemplate {get; set;} = string.Empty ;
 
         ///<Summary>
         /// SystemAction Action Type.
         ///</Summary>
         public int ActionTypeId {get; set;} = 0 ;
+///<Summary>
+        /// SystemAction Writer Type.
+        ///</Summary>
+        public int WriterTypeId {get; set;} = 0 ;
 
     }
 }

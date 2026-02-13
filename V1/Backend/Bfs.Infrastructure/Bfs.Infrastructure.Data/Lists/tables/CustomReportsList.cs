@@ -43,13 +43,13 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "CustomReports.Id", QueryName = "CustomReportsId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomReports.Name", QueryName = "CustomReportsName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomReports.Request", QueryName = "CustomReportsRequest", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomReports.BaseReport", QueryName = "CustomReportsBaseReport", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomReports.IsPrivate", QueryName = "CustomReportsIsPrivate", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomReports.CreatedBy", QueryName = "CustomReportsCreatedBy", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "CustomReports.Url", QueryName = "CustomReportsUrl", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "CustomReports.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomReports.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomReports.Request", QueryName = "Request", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomReports.BaseReport", QueryName = "BaseReport", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomReports.IsPrivate", QueryName = "IsPrivate", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomReports.CreatedBy", QueryName = "CreatedBy", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "CustomReports.Url", QueryName = "Url", IsAggregare = false });
 
             //lookups
 

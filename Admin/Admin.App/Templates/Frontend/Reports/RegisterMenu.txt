@@ -1,7 +1,7 @@
     {
         label: '[ComponentMenuName]',
         icon: 'tablerLayoutSidebar',
-        url: '/[SystemPrefixSmall]/report/[ComponentFileName]/0',
+        url: '/[SystemPrefixSmall]/report/[ReportFileName]/0',
         data: {
             app: ['stkex.b.ofc'],
             api: ['[SystemNameSmall]'],

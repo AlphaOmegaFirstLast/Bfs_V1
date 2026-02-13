@@ -30,9 +30,12 @@ namespace Admin.App
                               .Replace("[SystemNameCapital]", codeInfo.CurrentSystem?.Name)
                               .Replace("[SystemNameSmall]", codeInfo.CurrentSystem?.Name.ToLower())
 
-                              .Replace("[ComponentNameCapital]", codeInfo.CurrentComponent?.NameCapital)
-                              .Replace("[ComponentFileName]", codeInfo.CurrentComponent?.FileName)
-            
+                              .Replace("[ComponentNameCapital]", codeInfo.CurrentComponent?.ComponentNameCapital)
+                              .Replace("[ComponentFileName]", codeInfo.CurrentComponent?.ComponentFileName)
+
+                              .Replace("[ReportNameCapital]", codeInfo.CurrentComponent?.ReportNameCapital)
+                              .Replace("[ReportFileName]", codeInfo.CurrentComponent?.ReportFileName)
+
                               .Replace("[DataType]", dataType?.ToString().ToLower());
         }
     }

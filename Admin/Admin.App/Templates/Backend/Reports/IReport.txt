@@ -3,8 +3,8 @@ using Bfs.[SystemNameCapital].Data;
 
 namespace Bfs.[SystemNameCapital].Data.Interfaces
 {
-    public interface I[ComponentNameCapital]Report
+    public interface I[ReportNameCapital]
     {
-        Task<QueryResponse<[ComponentNameCapital]Item>> GetAsync(QueryRequest<[ComponentNameCapital]Filter> request);
+        Task<QueryResponse<[ReportNameCapital]Item>> GetAsync(QueryRequest<[ReportNameCapital]Filter> request);
     }
 }

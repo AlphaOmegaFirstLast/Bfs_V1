@@ -7,19 +7,19 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const DeploymentAzureColumns = [
-    { fieldName: 'deploymentAzureProject', displayName: 'Project', sortName: 'Project', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureScriptFile', displayName: 'ScriptFile', sortName: 'ScriptFile', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureBfsSystemId', displayName: 'System Info', sortName: 'BfsSystem', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureSourceProject', displayName: 'SourceProject', sortName: 'SourceProject', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureSourcePath', displayName: 'SourcePath', sortName: 'SourcePath', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzurePublishPath', displayName: 'PublishPath', sortName: 'PublishPath', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureConfig', displayName: 'Config', sortName: 'Config', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureEnvironmentValue', displayName: 'EnvironmentValue', sortName: 'EnvironmentValue', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureTargetVirtualFolder', displayName: 'TargetVirtualFolder', sortName: 'TargetVirtualFolder', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzurePublishProfilePath', displayName: 'PublishProfilePath', sortName: 'PublishProfilePath', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureAppService', displayName: 'AppService', sortName: 'AppService', width: '50px', isVisible:true },
-{ fieldName: 'deploymentAzureResourceGroup', displayName: 'ResourceGroup', sortName: 'ResourceGroup', width: '50px', isVisible:true },
+    { fieldName: 'project', displayName: 'Project', sortName: 'Project', width: '50px', isVisible:true },
+{ fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'scriptFile', displayName: 'ScriptFile', sortName: 'ScriptFile', width: '50px', isVisible:true },
+{ fieldName: 'bfsSystemId', displayName: 'System Info', sortName: 'BfsSystem', width: '50px', isVisible:true },
+{ fieldName: 'sourceProject', displayName: 'SourceProject', sortName: 'SourceProject', width: '50px', isVisible:true },
+{ fieldName: 'sourcePath', displayName: 'SourcePath', sortName: 'SourcePath', width: '50px', isVisible:true },
+{ fieldName: 'publishPath', displayName: 'PublishPath', sortName: 'PublishPath', width: '50px', isVisible:true },
+{ fieldName: 'config', displayName: 'Config', sortName: 'Config', width: '50px', isVisible:true },
+{ fieldName: 'environmentValue', displayName: 'EnvironmentValue', sortName: 'EnvironmentValue', width: '50px', isVisible:true },
+{ fieldName: 'targetVirtualFolder', displayName: 'TargetVirtualFolder', sortName: 'TargetVirtualFolder', width: '50px', isVisible:true },
+{ fieldName: 'publishProfilePath', displayName: 'PublishProfilePath', sortName: 'PublishProfilePath', width: '50px', isVisible:true },
+{ fieldName: 'appService', displayName: 'AppService', sortName: 'AppService', width: '50px', isVisible:true },
+{ fieldName: 'resourceGroup', displayName: 'ResourceGroup', sortName: 'ResourceGroup', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -131,23 +131,23 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/deployment-azure/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['deploymentAzureId'], route:'/bfs/deployment-azure/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/deployment-azure/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['deploymentAzureId'], route:'/bfs/deployment-azure/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/deployment-azure/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['deploymentAzureId'], route:'/bfs/deployment-azure/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/deployment-azure/delete', displayText: 'Delete...' 
 });
 links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText:'Go to BfsSystem' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['deploymentAzureId'], action: duplicateRecord, displayText: 'Duplicate Record', data: { postUrl: '/DeploymentAzure', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/DeploymentAzure', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['deploymentAzureId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { postUrl: '/Operations/DeploymentAzure/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/DeploymentAzure/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

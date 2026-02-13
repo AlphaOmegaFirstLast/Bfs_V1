@@ -13,7 +13,7 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.BfsComponentId" name="bfsComponentId">
           <ng-container *ngFor="let option of BfsComponentOptions">
-            <option [value]="option['bfsComponentId']">{{ option['bfsComponentName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
       </div>
@@ -27,7 +27,7 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.SystemActionId" name="systemActionId">
           <ng-container *ngFor="let option of SystemActionOptions">
-            <option [value]="option['systemActionId']">{{ option['systemActionName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
       </div>
@@ -41,7 +41,7 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.ActionLocationId" name="actionLocationId">
           <ng-container *ngFor="let option of ActionLocationOptions">
-            <option [value]="option['actionLocationId']">{{ option['actionLocationName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
       </div>

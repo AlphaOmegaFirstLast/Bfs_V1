@@ -1,6 +1,45 @@
                                         <div class="col-12"  style="padding:4px; margin-bottom:4px; border: 2px solid #A7E8E9;" formGroupName="reportInfo">
-
                                             <label class="form-label fs-4">Report Info</label>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <label for="parentTable" class="form-label fs-6">parentTable</label>
+                                                    <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="[ToolTip]" [isToolTipVisible] />
+
+                                                    <input class="form-control" type="text" id="parentTable" formControlName="parentTable"
+                                                        [class]="submit && !form['parentTable'].errors ? 'is-valid': submit && form['parentTable'].errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid parentTable.</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="isQueryColumn" formControlName="isQueryColumn" />
+                                                        <label class="form-check-label" for="isQueryColumn">isQueryColumn</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="isColumnVisible" formControlName="isColumnVisible" />
+                                                        <label class="form-check-label" for="isColumnVisible">isColumnVisible</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="isJoinField" formControlName="isJoinField" />
+                                                        <label class="form-check-label" for="isJoinField">isJoinField</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row mb-2">
                                                 <div class="col-12">
                                                     <label for="aggregateTypeId" class="form-label fs-6">Aggregate Type</label>
@@ -13,6 +52,7 @@
                                                     <div class="invalid-feedback">Please select a valid Aggregate Type.</div>
                                                 </div>
                                             </div>
+
                                             <div class="row mb-2">
                                                 <div class="col-12">
                                                     <label for="chartElementId" class="form-label fs-6">Chart Element</label>

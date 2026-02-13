@@ -28,12 +28,12 @@ import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
 
-import { type IStructureReportWithLookup, type IStructureReportRequest, type IStructureReportFilter } from './structure-report.shared';
-import { getStructureReportActions,  initStructureReportRequest } from './structure-report.shared';
-import { StructureReportFilterComponent } from './structure-report.filter.component'; 
+import { type IWriterTypeWithLookup, type IWriterTypeRequest, type IWriterTypeFilter } from './writer-type.shared';
+import { getWriterTypeActions,  initWriterTypeRequest } from './writer-type.shared';
+import { WriterTypeFilterComponent } from './writer-type.filter.component'; 
 
 @Component({
-    selector: 'structure-report-compare',     
+    selector: 'writer-type-list',     
     imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
                NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
                NgxEchartsDirective],
@@ -41,36 +41,32 @@ import { StructureReportFilterComponent } from './structure-report.filter.compon
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class StructureReportCompareComponent         
+export class WriterTypeListComponent         
 
-    extends BaseReportComponent<IStructureReportFilter, IStructureReportWithLookup> {
+    extends BaseReportComponent<IWriterTypeFilter, IWriterTypeWithLookup> {
     override apiService: InfrastructureService = inject(InfrastructureService);
     override tokenService: TokenService = inject(TokenService);
-    override queryRequest = {} as IStructureReportRequest;
-    override exportRequest = {} as IStructureReportRequest;
- //   override list: IQueryColumn ; //IStructureReportWithLookup[] = [];
-    override downloadFileName: string = "Structure Report";
+    override queryRequest = {} as IWriterTypeRequest;
+    override exportRequest = {} as IWriterTypeRequest;
+ //   override list: IQueryColumn ; //IWriterTypeWithLookup[] = [];
+    override downloadFileName: string = "Writer Types";
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
         super(modalService, router, excelService, activatedRoute);
 
-        this.isButton.addNew = false;
-        this.getApiUrl = '/bfs/reports/StructureReportCompare';
+        this.isButton.chart = false;
+        this.addNewRecordLink = { route: "/bfs/writer-type/add/0", displayText: "Add New Writer Types" };
+        this.getApiUrl = '/WriterType/List';
 
-        this.filterComponent = StructureReportFilterComponent;
-        this.queryRequest = initStructureReportRequest();
+        this.filterComponent = WriterTypeFilterComponent;
+        this.queryRequest = initWriterTypeRequest();
     }
     //---------------------------------------------------------
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsComponentDataTypeId':
-                return record['dataTypeName?'].toString();
-
-            case 'countId':
-                return record['countId?'].toString();
 
             default:
                 return value;
@@ -79,50 +75,31 @@ export class StructureReportCompareComponent
     }
     //---------------------------------------------------------
 
-//--------------------------------------------------------------
-override getChart(records: IStructureReportWithLookup[]): EChartsOption {
-        // return this.getDemoChart();
-        // reorder records in reverse order to show same order of table records.
-        let reversedRecords = records.reverse();
-        let baseChart = this.getBaseChart();
-        baseChart.yAxis = {
-        data: reversedRecords.map(x => x['bfsComponentDisplayName' as keyof IStructureReportWithLookup] ?? "unknown"),
+override getRecordLinks(record: IQueryColumn): ViewLink[] {
+        let actions = getWriterTypeActions(record);
+        let links: ViewLink[] = actions.filter(action => 
+               action.actionType == 'FrontendLink'
+            && action.actionLocation == 'ListRow'
+            ).map(action => {
+            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
+        });
 
-            type: 'category',
-            axisLine: {
-                lineStyle: {
-                    type: 'dashed', color: getColor('light')
-                }
-            },
-            axisLabel: {
-                show: true, color: getColor('body-color')
-            },
-            splitLine: {
-                lineStyle: {
-                    color: "rgba(133, 141, 152, 0.1)", type: 'dashed'
-                }
-            }
-        };
-
-        baseChart.series = [     
-        {
-            name: 'Fields Count Per Component',
-
-            type: 'bar',
-            barWidth: "10px",
-            barGap: "0.25",
-            z: 10,
-            itemStyle: {
-                borderRadius: [4, 4, 0, 0], color: getColor('info')
-            },
-            data: reversedRecords.map(x => x.countId),
-        }
-
-        ]
-        ;
-
-        return baseChart;
+        return links;
     }
+    //---------------------------------------------------------
+    override getRecordActions(record: IQueryColumn): ActionLink[] {
+        let actions = getWriterTypeActions(record);
+        let links: ActionLink[] = actions.filter(action => 
+               action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListRow'
+            ).map(action => {
+            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
+        });
+
+        return links;
+    }
+
+//--------------------------------------------------------------
 
 }
 

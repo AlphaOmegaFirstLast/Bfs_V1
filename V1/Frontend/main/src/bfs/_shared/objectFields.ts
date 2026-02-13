@@ -62,12 +62,20 @@ export function getFormControlValidation(fieldValidation?: IFieldValidation) {
 //---------------------------------------------------------
 
 export interface IReportInfo {
+    parentTable: string;
+    isQueryColumn: boolean;
+    isColumnVisible: boolean;
+    isJoinField: boolean;
     aggregateTypeId: string,
     chartElementId: string
 }
 //------------------------------------------------
 export function initReportInfo(): IReportInfo {
     return {
+        parentTable: '',
+        isQueryColumn: true,
+        isColumnVisible: true,
+        isJoinField: false,
         aggregateTypeId: '1',
         chartElementId: '1'
     }
@@ -76,6 +84,10 @@ export function initReportInfo(): IReportInfo {
 // Fields of an Entity [used in Entity form]
 export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormGroup {
     return formBuilder.group({
+        parentTable: [''],
+        isQueryColumn: [true],
+        isColumnVisible: [true],
+        isJoinField: [false],
         aggregateTypeId: ['1'],
         chartElementId: ['1']
     })

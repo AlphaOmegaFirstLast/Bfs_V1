@@ -4,13 +4,13 @@ namespace Bfs.Infrastructure.Contracts
 {
     public class CustomReportsListItem
     {      
-        public string? CustomReportsId { get; set; }
-public string? CustomReportsName { get; set; }
-public string? CustomReportsRequest { get; set; }
-public string? CustomReportsBaseReport { get; set; }
-public string? CustomReportsIsPrivate { get; set; }
-public string? CustomReportsCreatedBy { get; set; }
-public string? CustomReportsUrl { get; set; }
+        public string? Id { get; set; }
+public string? Name { get; set; }
+public string? Request { get; set; }
+public string? BaseReport { get; set; }
+public string? IsPrivate { get; set; }
+public string? CreatedBy { get; set; }
+public string? Url { get; set; }
 
 //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }

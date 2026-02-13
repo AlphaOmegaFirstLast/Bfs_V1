@@ -7,16 +7,16 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsComponentColumns = [
-    { fieldName: 'bfsComponentId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentBfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentIsSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDelete', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentDisplayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentDataTypeId', displayName: 'Data Type', sortName: 'DataType', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentMenuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentMenuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentQueryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem', width: '50px', isVisible:true },
+{ fieldName: 'isSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDelete', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
+{ fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataType', width: '50px', isVisible:true },
+{ fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:true },
+{ fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:true },
+{ fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -126,13 +126,13 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-component/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/delete', displayText: 'Delete...' 
 });
 links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText:'Go to BfsSystem' 
@@ -142,10 +142,10 @@ actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsComponentId'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['bfsComponentId'], postUrl: '/BfsComponent', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BfsComponent', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsComponentId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['bfsComponentId'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

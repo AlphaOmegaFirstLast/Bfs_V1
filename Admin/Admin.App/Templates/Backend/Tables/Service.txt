@@ -9,8 +9,8 @@ namespace Bfs.[SystemNameCapital].Domain.Services
     public class [ComponentNameCapital]Service : I[ComponentNameCapital]Service
     {
         private readonly I[ComponentNameCapital]Repository _repo;
-        private readonly I[ComponentNameCapital][ReportTypeCapital] _list;
-        public [ComponentNameCapital]Service(I[ComponentNameCapital]Repository repo, I[ComponentNameCapital][ReportTypeCapital] list)
+        private readonly I[ReportNameCapital] _list;
+        public [ComponentNameCapital]Service(I[ComponentNameCapital]Repository repo, I[ReportNameCapital] list)
         {
             _repo = repo;
             _list = list;
@@ -120,14 +120,14 @@ namespace Bfs.[SystemNameCapital].Domain.Services
             return result;
         }
 
-        public async Task<Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>> ListAsync(Bfs.Core.Contracts.QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> contractRequest)
+        public async Task<Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item>> ListAsync(Bfs.Core.Contracts.QueryRequest<[ReportNameCapital]Filter> contractRequest)
         {
-            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter>, Bfs.Core.Data.QueryRequest<Data.[ComponentNameCapital][ReportTypeCapital]Filter>>(contractRequest);
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<[ReportNameCapital]Filter>, Bfs.Core.Data.QueryRequest<Data.[ReportNameCapital]Filter>>(contractRequest);
 
             var entityResult = await _list.GetAsync(entityRequest).ConfigureAwait(false);
-            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.[ComponentNameCapital][ReportTypeCapital]Item>, Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>>(entityResult);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.[ReportNameCapital]Item>, Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item>>(entityResult);
 
-            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item> { Items = new List<[ComponentNameCapital][ReportTypeCapital]Item>(), TotalItems = 0, TotalPages = 0 };
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item> { Items = new List<[ReportNameCapital]Item>(), TotalItems = 0, TotalPages = 0 };
         }
 
         //Template_Start_DontOverwrite_1

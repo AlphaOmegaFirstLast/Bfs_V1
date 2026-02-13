@@ -14,9 +14,6 @@ namespace Admin.App
         public long BfsComponentId { get; set; }
         public string Field { get; set; } = string.Empty;
         public string DisplayName { get; set; } = string.Empty;
-        public bool IsQueryColumn { get; set; } = true;
-        public bool IsJoinField { get; set; } = false;
-        public string ParentTable { get; set; } = string.Empty;
         public FilterType FilterTypeId { get; set; } = FilterType.None;
         public BackendDataType BackendDataTypeId { get; set; } = BackendDataType.DT_Default;
 
@@ -28,6 +25,12 @@ namespace Admin.App
         public FormControlType FormControlTypeId { get; set; } = FormControlType.Default;
 
         //ICodeWriter implementation
+
+        public bool IsQueryColumn { get; set; } = true;
+        public bool IsColumnVisible { get; set; } = false;
+        public bool IsJoinField { get; set; } = false;
+        public string ParentTable { get; set; } = string.Empty;
+
         public string Name { get; set; } = string.Empty;
 
         // internal Base fields, dont get serialized
@@ -90,9 +93,14 @@ namespace Admin.App
                 this.Field = source.Field ?? string.Empty;
                 this.DisplayName = source.DisplayName ?? string.Empty;
 
-                this.IsQueryColumn = source.IsQueryColumn;
-                this.IsJoinField = source.IsJoinField;
-                this.ParentTable = source.ParentTable ?? string.Empty;
+                //this.IsQueryColumn = source.IsQueryColumn;
+                //this.IsJoinField = source.IsJoinField;
+                //this.ParentTable = source.ParentTable ?? string.Empty;
+
+                this.ParentTable = source.ReportInfo?.ParentTable ?? string.Empty;
+                this.IsQueryColumn = source.ReportInfo?.IsQueryColumn ?? true;
+                this.IsColumnVisible = source.ReportInfo?.IsColumnVisible ?? true;
+                this.IsJoinField = source.ReportInfo?.IsJoinField?? false;
 
                 this.BackendDataTypeId = source.BackendDataTypeId;
                 this.FilterTypeId = source.FilterTypeId;
@@ -132,7 +140,6 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[LookupNameSmall]", lookupNameSmall);
             fieldTemplate = fieldTemplate.Replace("[JoinName]", joinName);
             fieldTemplate = fieldTemplate.Replace("[SortName]", sortName);
-            fieldTemplate = fieldTemplate.Replace("[IsQueryColumn]", IsQueryColumn.ToString().ToLower());
 
             fieldTemplate = fieldTemplate.Replace("[FieldDefinition]", FieldDefinition.ToString());
             fieldTemplate = fieldTemplate.Replace("[ReportDefinition]", ReportDefinition.ToString());
@@ -141,8 +148,6 @@ namespace Admin.App
 
             fieldTemplate = fieldTemplate.Replace("[BackendFieldType]", backendDataType);
             fieldTemplate = fieldTemplate.Replace("[FrontendFieldType]", frontendDataType);
-            fieldTemplate = fieldTemplate.Replace("[ParentTable]", ParentTable);
-            fieldTemplate = fieldTemplate.Replace("[ParentTableSmall]", parentTableSmall);
 
             //Table specific
             fieldTemplate = fieldTemplate.Replace("[BackendDefaultValue]", backendDefaultValue);
@@ -153,6 +158,12 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[TabIndex]", tabIndex);
 
             //Report specific
+            fieldTemplate = fieldTemplate.Replace("[ParentTable]", ParentTable);
+            fieldTemplate = fieldTemplate.Replace("[ParentTableSmall]", parentTableSmall);
+            fieldTemplate = fieldTemplate.Replace("[IsQueryColumn]", IsQueryColumn.ToString().ToLower());
+            fieldTemplate = fieldTemplate.Replace("[IsColumnVisible]", IsColumnVisible.ToString().ToLower());
+            fieldTemplate = fieldTemplate.Replace("[IsJoinField]", IsJoinField.ToString().ToLower());
+
             fieldTemplate = fieldTemplate.Replace("[ReportFieldNameCapital]", reportFieldNameCapital);
             fieldTemplate = fieldTemplate.Replace("[ReportFieldNameSmall]", reportFieldNameSmall);
             fieldTemplate = fieldTemplate.Replace("[AggregateFunction]", aggregateFunction);

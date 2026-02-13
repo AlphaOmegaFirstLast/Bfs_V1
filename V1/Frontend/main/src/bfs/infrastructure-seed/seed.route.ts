@@ -47,5 +47,10 @@ export const Seed_ROUTES: Routes = [
         loadChildren: () => import('./chart-element/chart-element.route').then((mod) => mod.ChartElement_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./writer-type/writer-type.route').then((mod) => mod.WriterType_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]

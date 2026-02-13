@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Admin.App.CodeManagers
 {
-    public class CodeGeneratorV1: CodeGeneratorBase
+    public class CodeGeneratorBlue: CodeGeneratorBase
     {
 
         public override void ReadDbEntities()

@@ -4,16 +4,16 @@ namespace Bfs.Infrastructure.Data
 {
     public class BfsComponentListItem
     {      
-        public string? BfsComponentId { get; set; }
-public string? BfsComponentBfsSystemId { get; set; }
-public string? BfsComponentIsSoftDelete { get; set; }
-public string? BfsComponentName { get; set; }
-public string? BfsComponentDisplayName { get; set; }
-public string? BfsComponentDataTypeId { get; set; }
-public string? BfsComponentMenuName { get; set; }
-public string? BfsComponentMenuPlaceHolder { get; set; }
-public string? BfsComponentQueryBaseTable { get; set; }
-public string? BfsComponentNotes { get; set; }
+        public string? Id { get; set; }
+public string? BfsSystemId { get; set; }
+public string? IsSoftDelete { get; set; }
+public string? Name { get; set; }
+public string? DisplayName { get; set; }
+public string? DataTypeId { get; set; }
+public string? MenuName { get; set; }
+public string? MenuPlaceHolder { get; set; }
+public string? QueryBaseTable { get; set; }
+public string? Notes { get; set; }
 
         public string? BfsSystemName { get; set; }
 public string? DataTypeName { get; set; }

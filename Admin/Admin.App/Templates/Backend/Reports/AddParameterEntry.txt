@@ -1,2 +1,2 @@
-              ,I[ComponentNameCapital]Report [ComponentNameSmall]Report
+              ,I[ReportNameCapital] [ReportNameSmall]
 

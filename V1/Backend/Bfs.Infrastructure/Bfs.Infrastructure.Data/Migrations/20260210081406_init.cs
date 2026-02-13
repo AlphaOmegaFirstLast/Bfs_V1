@@ -99,8 +99,8 @@ namespace Bfs.Infrastructure.Data.Migrations
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MenuName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MenuPlaceHolder = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QueryBaseTable = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BfsSystemId = table.Column<long>(type: "bigint", nullable: false),
                     DataTypeId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -178,7 +178,7 @@ namespace Bfs.Infrastructure.Data.Migrations
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasePortNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DbPrefix = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientId = table.Column<long>(type: "bigint", nullable: false),
+                    BfsClientId = table.Column<long>(type: "bigint", nullable: false),
                     SystemTemplateId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -359,7 +359,11 @@ namespace Bfs.Infrastructure.Data.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ActionTypeId = table.Column<int>(type: "int", nullable: false)
+                    MatchProprty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MatchValues = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActionTemplate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActionTypeId = table.Column<int>(type: "int", nullable: false),
+                    WriterTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

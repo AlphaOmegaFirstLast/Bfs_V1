@@ -4,10 +4,10 @@ namespace Bfs.Infrastructure.Contracts
 {
     public class BusinessActionListItem
     {      
-        public string? BusinessActionId { get; set; }
-public string? BusinessActionName { get; set; }
-public string? BusinessActionNotes { get; set; }
-public string? BusinessActionActionTypeId { get; set; }
+        public string? Id { get; set; }
+public string? Name { get; set; }
+public string? Notes { get; set; }
+public string? ActionTypeId { get; set; }
 
         public string? ActionTypeName { get; set; }
 

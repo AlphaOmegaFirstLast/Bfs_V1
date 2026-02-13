@@ -34,7 +34,6 @@ export async function deleteTree(me: IUserInterface, record: IIdentifiable, data
 //---------------------------------------------------------
 
 export async function duplicateRecord(me: IUserInterface, record: IIdentifiable, data: any): Promise<void> {
-        debugger;
 
     if (!me.isLoading) {  // to prevent multiple requests
         me.messages = [];

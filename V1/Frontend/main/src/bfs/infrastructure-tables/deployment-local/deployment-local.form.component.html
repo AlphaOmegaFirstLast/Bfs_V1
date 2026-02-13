@@ -71,7 +71,7 @@
         <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId"
             [class]="submit && !form['bfsSystemId'].errors ? 'is-valid': submit && form['bfsSystemId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BfsSystemOptions">
-            <option [value]="option['bfsSystemId']">{{ option['bfsSystemName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid System Info.</div>

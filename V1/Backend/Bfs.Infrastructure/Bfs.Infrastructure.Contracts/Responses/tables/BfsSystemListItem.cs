@@ -4,13 +4,13 @@ namespace Bfs.Infrastructure.Contracts
 {
     public class BfsSystemListItem
     {      
-        public string? BfsSystemId { get; set; }
-public string? BfsSystemName { get; set; }
-public string? BfsSystemNotes { get; set; }
-public string? BfsSystemBfsClientId { get; set; }
-public string? BfsSystemSystemTemplateId { get; set; }
-public string? BfsSystemBasePortNumber { get; set; }
-public string? BfsSystemDbPrefix { get; set; }
+        public string? Id { get; set; }
+public string? Name { get; set; }
+public string? Notes { get; set; }
+public string? BfsClientId { get; set; }
+public string? SystemTemplateId { get; set; }
+public string? BasePortNumber { get; set; }
+public string? DbPrefix { get; set; }
 
         public string? BfsClientName { get; set; }
 public string? SystemTemplateName { get; set; }

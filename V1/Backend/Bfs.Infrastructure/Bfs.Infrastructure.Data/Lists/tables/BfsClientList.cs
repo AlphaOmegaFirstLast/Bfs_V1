@@ -43,11 +43,11 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsClient.DbConnection", QueryName = "BfsClientDbConnection", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsClient.Id", QueryName = "BfsClientId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsClient.Name", QueryName = "BfsClientName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsClient.Notes", QueryName = "BfsClientNotes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsClient.CustomFields", QueryName = "BfsClientCustomFields", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BfsClient.DbConnection", QueryName = "DbConnection", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsClient.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsClient.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsClient.Notes", QueryName = "Notes", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsClient.CustomFields", QueryName = "CustomFields", IsAggregare = false });
 
             //lookups
 

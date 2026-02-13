@@ -2,7 +2,7 @@
 
 namespace Bfs.[SystemNameCapital].Contracts
 {
-    public class [ComponentNameCapital][ReportTypeCapital]Item
+    public class [ReportNameCapital]Item
     {      
         //Template_Start_ReportField_QueryColumn_1
         public string? [ReportFieldNameCapital] { get; set; }

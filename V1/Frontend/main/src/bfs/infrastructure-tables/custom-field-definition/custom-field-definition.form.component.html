@@ -163,7 +163,7 @@
         <select class="form-select" id="bfsComponentId" formControlName="bfsComponentId"
             [class]="submit && !form['bfsComponentId'].errors ? 'is-valid': submit && form['bfsComponentId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BfsComponentOptions">
-            <option [value]="option['bfsComponentId']">{{ option['bfsComponentName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Component.</div>

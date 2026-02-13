@@ -9,28 +9,30 @@ namespace Bfs.Infrastructure.Domain.Services
 {
     public class ReportsService : IReportsService
     {
-        private readonly IStructureReportReport _structureReportReport;
+        private readonly IStructureCompare _structureCompare;
 
 //Template_Component_AddDeclareEntry
         public ReportsService(
-              IStructureReportReport structureReportReport
+
+              IStructureCompare structureCompare
 
 //Template_Component_AddParameterEntry
                             )
         {
-              _structureReportReport = structureReportReport;
+              _structureCompare = structureCompare;
 
 //Template_Component_AddInitEntry
         }
 
-        public async Task<Bfs.Core.Contracts.QueryResponse<StructureReportItem>> StructureReportReportAsync(Bfs.Core.Contracts.QueryRequest<StructureReportFilter> contractRequest)
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<StructureCompareItem>> StructureCompareAsync(Bfs.Core.Contracts.QueryRequest<StructureCompareFilter> contractRequest)
         {
-            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<StructureReportFilter>, Bfs.Core.Data.QueryRequest<Data.StructureReportFilter>>(contractRequest);
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<StructureCompareFilter>, Bfs.Core.Data.QueryRequest<Data.StructureCompareFilter>>(contractRequest);
 
-            var entityResult = await _structureReportReport.GetAsync(entityRequest).ConfigureAwait(false);
-            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.StructureReportItem>, Bfs.Core.Contracts.QueryResponse<StructureReportItem>>(entityResult);
+            var entityResult = await _structureCompare.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.StructureCompareItem>, Bfs.Core.Contracts.QueryResponse<StructureCompareItem>>(entityResult);
 
-            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StructureReportItem> { Items = new List<StructureReportItem>(), TotalItems = 0, TotalPages = 0 };
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StructureCompareItem> { Items = new List<StructureCompareItem>(), TotalItems = 0, TotalPages = 0 };
         }
 //Template_Component_AddServiceEntry
     }

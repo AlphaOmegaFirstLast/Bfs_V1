@@ -120,6 +120,7 @@ public static class BuilderExtensions
 
         builder.Services.AddScoped<IValidator<BusinessAction>, BusinessActionValidator>();
         builder.Services.AddScoped<IValidator<SystemAction>, SystemActionValidator>();
+            builder.Services.AddScoped<IValidator<WriterType>, WriterTypeValidator>();
 //Template_Component_RegisterValidator
     }
 
@@ -149,6 +150,7 @@ public static class BuilderExtensions
 
         builder.Services.AddScoped<IBusinessActionRepository, BusinessActionRepository>();
         builder.Services.AddScoped<ISystemActionRepository, SystemActionRepository>();
+            builder.Services.AddScoped<IWriterTypeRepository, WriterTypeRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -178,6 +180,7 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IDeploymentAzureService, DeploymentAzureService>();
         builder.Services.AddScoped<IBusinessActionService, BusinessActionService>();
         builder.Services.AddScoped<ISystemActionService, SystemActionService>();
+            builder.Services.AddScoped<IWriterTypeService, WriterTypeService>();
 //Template_Component_RegisterService
     }
 
@@ -291,6 +294,11 @@ public static class BuilderExtensions
                 return new SystemActionList(dbConnection);
             });
 
+            builder.Services.AddScoped<IWriterTypeList>(provider =>
+            {
+                return new WriterTypeList(dbConnection);
+            });
+
 //Template_Component_RegisterList
         }
     }
@@ -300,9 +308,10 @@ public static class BuilderExtensions
         if (settings != null && settings.DbConnections != null)
         {
             var dbConnection = settings.DbConnections.InfrastructureConnection;
-            builder.Services.AddScoped<IStructureReportReport>(provider =>
+
+            builder.Services.AddScoped<IStructureCompare>(provider =>
             {
-                return new StructureReportReport(dbConnection);
+                return new StructureCompare(dbConnection);
             });
 
 //Template_Component_RegisterReport

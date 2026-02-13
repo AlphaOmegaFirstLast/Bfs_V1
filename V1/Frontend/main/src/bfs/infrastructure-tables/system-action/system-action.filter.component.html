@@ -16,6 +16,28 @@
     </div>
   </div>
 
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Writer Matching Property</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.MatchProprty" value="{{result.MatchProprty}}" placeholder="Writer Matching Property" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Writer Matching Values</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.MatchValues" value="{{result.MatchValues}}" placeholder="Writer Matching Values" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
       <div class="form-control">
     <div class="row">
       <div class="col -4">
@@ -24,7 +46,21 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.ActionTypeId" name="actionTypeId">
           <ng-container *ngFor="let option of ActionTypeOptions">
-            <option [value]="option['actionTypeId']">{{ option['actionTypeName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Writer Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.WriterTypeId" name="writerTypeId">
+          <ng-container *ngFor="let option of WriterTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
       </div>

@@ -9,18 +9,18 @@ using System.Text;
 
 namespace Bfs.[SystemNameCapital].Data.Lists
 {
-    public class [ComponentNameCapital][ReportTypeCapital]: QueryBase<[ComponentNameCapital][ReportTypeCapital]Filter>,  I[ComponentNameCapital][ReportTypeCapital]
+    public class [ReportNameCapital]: QueryBase<[ReportNameCapital]Filter>,  I[ReportNameCapital]
     {
-        public [ComponentNameCapital][ReportTypeCapital](string connectionString)
+        public [ReportNameCapital](string connectionString)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
         private readonly string _connectionString;
 
-        public async Task<QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>> GetAsync(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> request)
+        public async Task<QueryResponse<[ReportNameCapital]Item>> GetAsync(QueryRequest<[ReportNameCapital]Filter> request)
         {
-            var response = new QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>();
+            var response = new QueryResponse<[ReportNameCapital]Item>();
 
             SetUp(request);
 
@@ -28,8 +28,8 @@ namespace Bfs.[SystemNameCapital].Data.Lists
             {
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
-                var items = await db.QueryAsync<[ComponentNameCapital][ReportTypeCapital]Item>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<[ComponentNameCapital][ReportTypeCapital]Item>)items;
+                var items = await db.QueryAsync<[ReportNameCapital]Item>(mainQuery.sql, mainQuery.parameters);
+                response.Items = (List<[ReportNameCapital]Item>)items;
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -74,7 +74,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
            return sql.ToString();
         }
         
-        protected override string GetWhereConditions(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> request, DynamicParameters parameters)
+        protected override string GetWhereConditions(QueryRequest<[ReportNameCapital]Filter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
             sql.AppendLine(" [QueryBaseTable].isDeleted=0 ");
@@ -124,7 +124,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                                  .Select(s => s.Trim()));        
         }
        
-        protected override string GetHavingConditions(QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> request, DynamicParameters parameters)
+        protected override string GetHavingConditions(QueryRequest<[ReportNameCapital]Filter> request, DynamicParameters parameters)
         {
             var filter = request.Filter;
             if (filter == null)

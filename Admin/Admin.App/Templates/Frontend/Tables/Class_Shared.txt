@@ -14,10 +14,10 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const [ComponentNameCapital]Columns = [
     //Template_Start_ReportField_QueryColumn_1
-    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsQueryColumn] },
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible] },
     //Template_End_ReportField_QueryColumn_1
     //Template_Start_ReportField_Aggregate_1
-    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsQueryColumn] },
+    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible] },
     //Template_End_ReportField_Aggregate_1
 ];
 //---------------------------------------------------------

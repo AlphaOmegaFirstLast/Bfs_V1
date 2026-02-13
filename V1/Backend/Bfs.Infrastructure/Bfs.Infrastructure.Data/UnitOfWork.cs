@@ -8,16 +8,28 @@ namespace Bfs.Infrastructure.Data.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly InfrastructureDbContext _context;
-private readonly IBfsComponentSystemActionRepository _bfsComponentSystemActionRepo;
+    public InfrastructureDbContext _context { get; set; }
 
+    //Template_Start_Code_DontOverwrite_1
+    public IBfsComponentRepository ComponentRepo { get; set; }
+    public IBfsFieldRepository FieldRepo { get; set; }
+    public IDeploymentAzureRepository DeploymentAzureRepo { get; set; }
+    //Template_End_Code_DontOverwrite_1
+
+    private readonly IBfsComponentSystemActionRepository _bfsComponentSystemActionRepo;
 private readonly IBfsComponentBusinessActionRepository _bfsComponentBusinessActionRepo;
 
 //Template_Field_ChildrenMatrix_AddDeclareEntry
 
-    public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
-        , IBfsComponentSystemActionRepository bfsComponentSystemActionRepo
+public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
 
+    //Template_Start_Code_DontOverwrite_2
+        , IBfsComponentRepository componentRepo
+        , IBfsFieldRepository fieldRepo
+        , IDeploymentAzureRepository deploymentAzureRepo
+    //Template_End_Code_DontOverwrite_2
+
+        , IBfsComponentSystemActionRepository bfsComponentSystemActionRepo
         , IBfsComponentBusinessActionRepository bfsComponentBusinessActionRepo
 
 //Template_Field_ChildrenMatrix_AddParameterEntry
@@ -25,9 +37,12 @@ private readonly IBfsComponentBusinessActionRepository _bfsComponentBusinessActi
     )
     {
         _context = dbContext;
- _bfsComponentSystemActionRepo = bfsComponentSystemActionRepo;
+        ComponentRepo = componentRepo;
+        FieldRepo = fieldRepo;
+        DeploymentAzureRepo = deploymentAzureRepo;
 
- _bfsComponentBusinessActionRepo = bfsComponentBusinessActionRepo;
+        _bfsComponentSystemActionRepo = bfsComponentSystemActionRepo;
+        _bfsComponentBusinessActionRepo = bfsComponentBusinessActionRepo;
 
 //Template_Field_ChildrenMatrix_AddInitEntry
     }
@@ -50,6 +65,7 @@ private readonly IBfsComponentBusinessActionRepository _bfsComponentBusinessActi
     // Return updated list
     return await _context.BfsComponentSystemActions.Where(x => x.BfsComponentId  == parentId).ToListAsync();
 }
+
 public async Task<List<BfsComponentBusinessActionEntity>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessActionEntity> matrix)
 {
     // Remove existing matrix entries for this parentId

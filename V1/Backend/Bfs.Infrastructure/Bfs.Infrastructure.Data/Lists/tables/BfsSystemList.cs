@@ -43,13 +43,13 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsSystem.Id", QueryName = "BfsSystemId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsSystem.Notes", QueryName = "BfsSystemNotes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsSystem.BfsClientId", QueryName = "BfsSystemBfsClientId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsSystem.SystemTemplateId", QueryName = "BfsSystemSystemTemplateId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsSystem.BasePortNumber", QueryName = "BfsSystemBasePortNumber", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsSystem.DbPrefix", QueryName = "BfsSystemDbPrefix", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BfsSystem.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsSystem.Notes", QueryName = "Notes", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsSystem.BfsClientId", QueryName = "BfsClientId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsSystem.SystemTemplateId", QueryName = "SystemTemplateId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsSystem.BasePortNumber", QueryName = "BasePortNumber", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsSystem.DbPrefix", QueryName = "DbPrefix", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsClient.Name", QueryName = "BfsClientName", IsAggregare = false });

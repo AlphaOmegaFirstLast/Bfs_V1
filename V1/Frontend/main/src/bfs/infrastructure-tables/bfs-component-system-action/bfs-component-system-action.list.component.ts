@@ -67,11 +67,11 @@ export class BfsComponentSystemActionListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsComponentSystemActionBfsComponentId':
+            case 'bfsComponentId':
                 return record['bfsComponentName']?.toString();
-case 'bfsComponentSystemActionSystemActionId':
+case 'systemActionId':
                 return record['systemActionName']?.toString();
-case 'bfsComponentSystemActionActionLocationId':
+case 'actionLocationId':
                 return record['actionLocationName']?.toString();
 
             default:

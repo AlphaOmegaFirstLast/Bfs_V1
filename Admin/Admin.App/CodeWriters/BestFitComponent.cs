@@ -19,6 +19,7 @@ namespace Admin.App
         public string Name { get; set; }            // component is table then it is table name in DB
         public string DisplayName { get; set; }
         public DataType DataType { get; set; }
+        public ReportType ReportType { get; set; }
 
         public string MenuName { get; set; }
         public string MenuPlaceHolder { get; set; }
@@ -26,13 +27,17 @@ namespace Admin.App
         public string Notes { get; set; }
 
         // Fields
-        public string NameCapital = string.Empty;
+        public string ComponentNameCapital = string.Empty;
 
-        public string NameSmall = string.Empty;
+        public string ComponentNameSmall = string.Empty;
 
-        public string FileName = string.Empty;
+        public string ComponentFileName = string.Empty;
 
-        public ReportType ReportType = ReportType.None;
+        public string ReportNameCapital = string.Empty;
+
+        public string ReportNameSmall = string.Empty;
+
+        public string ReportFileName = string.Empty;
 
         public ComponentType ComponentType = ComponentType.None;
 
@@ -52,13 +57,19 @@ namespace Admin.App
             this.Notes = source.Notes;
 
             var result = CodeGeneratorBase.GetNames(Name);
-            NameCapital = result.Item1;
-            NameSmall = result.Item2;
-            FileName = result.Item3;
+            ComponentNameCapital = result.Item1;
+            ComponentNameSmall = result.Item2;
+            ComponentFileName = result.Item3;
 
             ComponentType = this.DataType == DataType.Tables || this.DataType == DataType.Seed ? ComponentType.Table : ComponentType.Report;
             this.ReportType = ComponentType == ComponentType.Table? ReportType.List : ReportType.Compare;
-            QueryBaseTable = string.IsNullOrEmpty(QueryBaseTable) ? NameCapital : QueryBaseTable;
+            QueryBaseTable = string.IsNullOrEmpty(QueryBaseTable) ? ComponentNameCapital : QueryBaseTable;
+
+            var reportName = $"{ComponentNameCapital}{ReportType.ToString()}";
+            result = CodeGeneratorBase.GetNames(reportName);
+            ReportNameCapital = result.Item1;
+            ReportNameSmall = result.Item2;
+            ReportFileName = result.Item3;
 
             SetFieldList(allFieldList);
         }
@@ -77,7 +88,7 @@ namespace Admin.App
             var tabIndex = 1;
             foreach (var field in FieldList)
             {
-                field.SetInternalFields(ComponentType, NameCapital,QueryBaseTable);
+                field.SetInternalFields(ComponentType, ComponentNameCapital,QueryBaseTable);
 
                 //set tab index only for ChildrenList and ChildrenMatrix fields
                 if (field.FieldDefinition == FieldDefinition.ChildrenList || field.FieldDefinition == FieldDefinition.ChildrenMatrix)
@@ -90,15 +101,19 @@ namespace Admin.App
 
         public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
-            var outputContent = input.Replace("[ComponentNameCapital]", NameCapital.Trim());
-            outputContent = outputContent.Replace("[ComponentNameSmall]", NameSmall.Trim());
-            outputContent = outputContent.Replace("[ComponentFileName]", FileName.Trim());
+            var outputContent = input.Replace("[ComponentType]", ComponentType.ToString());
+
+            outputContent = outputContent.Replace("[ComponentNameCapital]", ComponentNameCapital.Trim());
+            outputContent = outputContent.Replace("[ComponentNameSmall]", ComponentNameSmall.Trim());
+            outputContent = outputContent.Replace("[ComponentFileName]", ComponentFileName.Trim());
+
             outputContent = outputContent.Replace("[ComponentMenuName]", MenuName.Trim());
             outputContent = outputContent.Replace("[MenuPlaceHolder]", MenuPlaceHolder.Trim());
             outputContent = outputContent.Replace("[QueryBaseTable]", QueryBaseTable);
-            outputContent = outputContent.Replace("[ComponentType]", ComponentType.ToString());
-            outputContent = outputContent.Replace("[ReportTypeCapital]", ReportType.ToString());
-            outputContent = outputContent.Replace("[ReportTypeSmall]", ReportType.ToString().ToLower());
+
+            outputContent = outputContent.Replace("[ReportNameCapital]", ReportNameCapital.Trim());
+            outputContent = outputContent.Replace("[ReportNameSmall]", ReportNameSmall.Trim());
+            outputContent = outputContent.Replace("[ReportFileName]", ReportFileName.Trim());
 
             return outputContent;
         }

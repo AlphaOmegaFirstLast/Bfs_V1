@@ -35,6 +35,7 @@ export class SystemActionFormComponent extends BaseFormComponent<ISystemAction >
 
     // Define look ups
     public ActionTypeOptions: any[] = [];
+public WriterTypeOptions: any[] = [];
 
     //---------------------------------------------------------
 
@@ -76,6 +77,18 @@ export class SystemActionFormComponent extends BaseFormComponent<ISystemAction >
                 error: (err: any) => {
                 this.isLoading = false;
                 var msg = err.message || 'An error occurred while fetching Action Type data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+target = "/WriterType/list";
+        (await this.apiService.post(target,  {pageSize:30})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.WriterTypeOptions = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.isLoading = false;
+                var msg = err.message || 'An error occurred while fetching Writer Type data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });

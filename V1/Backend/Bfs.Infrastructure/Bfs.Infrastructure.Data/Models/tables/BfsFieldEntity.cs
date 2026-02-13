@@ -14,8 +14,6 @@ namespace Bfs.Infrastructure.Data.Models
 public long Id {get; set;} = 0 ;
 public string Field {get; set;} = string.Empty ;
 public string DisplayName {get; set;} = string.Empty ;
-public bool IsQueryColumn {get; set;} = false ;
-public bool IsJoinField {get; set;} = false ;
 public string ParentTable {get; set;} = string.Empty ;
 
         public long BfsComponentId {get; set;} = 0 ;

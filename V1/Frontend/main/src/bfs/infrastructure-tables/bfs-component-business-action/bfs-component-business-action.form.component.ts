@@ -36,6 +36,7 @@ export class BfsComponentBusinessActionFormComponent extends BaseFormComponent<I
     // Define look ups
     public BfsComponentOptions: any[] = [];
 public BusinessActionOptions: any[] = [];
+public override ActionLocationOptions: any[] = [];
 
     //---------------------------------------------------------
 

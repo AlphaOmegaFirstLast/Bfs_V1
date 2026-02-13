@@ -14,8 +14,12 @@ namespace Bfs.Infrastructure.Domain.Mapper
 Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
+MatchProprty= entity.MatchProprty,
+MatchValues= entity.MatchValues,
+ActionTemplate= entity.ActionTemplate,
 
                ActionTypeId= entity.ActionTypeId,
+WriterTypeId= entity.WriterTypeId,
 
             };
 
@@ -40,8 +44,12 @@ Notes= entity.Notes,
 SystemActionEntity.Id= contract.Id;
 SystemActionEntity.Name= contract.Name;
 SystemActionEntity.Notes= contract.Notes;
+SystemActionEntity.MatchProprty= contract.MatchProprty;
+SystemActionEntity.MatchValues= contract.MatchValues;
+SystemActionEntity.ActionTemplate= contract.ActionTemplate;
 
             SystemActionEntity.ActionTypeId= contract.ActionTypeId;
+SystemActionEntity.WriterTypeId= contract.WriterTypeId;
 
             return SystemActionEntity;
         }     

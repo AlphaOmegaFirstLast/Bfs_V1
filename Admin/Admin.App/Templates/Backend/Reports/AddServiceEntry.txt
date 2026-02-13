@@ -1,10 +1,10 @@
 
-        public async Task<Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital]Item>> [ComponentNameCapital]ReportAsync(Bfs.Core.Contracts.QueryRequest<[ComponentNameCapital]Filter> contractRequest)
+        public async Task<Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item>> [ReportNameCapital]Async(Bfs.Core.Contracts.QueryRequest<[ReportNameCapital]Filter> contractRequest)
         {
-            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<[ComponentNameCapital]Filter>, Bfs.Core.Data.QueryRequest<Data.[ComponentNameCapital]Filter>>(contractRequest);
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<[ReportNameCapital]Filter>, Bfs.Core.Data.QueryRequest<Data.[ReportNameCapital]Filter>>(contractRequest);
 
-            var entityResult = await _[ComponentNameSmall]Report.GetAsync(entityRequest).ConfigureAwait(false);
-            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.[ComponentNameCapital]Item>, Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital]Item>>(entityResult);
+            var entityResult = await _[ReportNameSmall].GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.[ReportNameCapital]Item>, Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item>>(entityResult);
 
-            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<[ComponentNameCapital]Item> { Items = new List<[ComponentNameCapital]Item>(), TotalItems = 0, TotalPages = 0 };
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item> { Items = new List<[ReportNameCapital]Item>(), TotalItems = 0, TotalPages = 0 };
         }

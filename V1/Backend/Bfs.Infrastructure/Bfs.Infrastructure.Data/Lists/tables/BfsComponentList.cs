@@ -43,16 +43,16 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsComponent.Id", QueryName = "BfsComponentId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.BfsSystemId", QueryName = "BfsComponentBfsSystemId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.IsSoftDelete", QueryName = "BfsComponentIsSoftDelete", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName = "BfsComponentDisplayName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.DataTypeId", QueryName = "BfsComponentDataTypeId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuName", QueryName = "BfsComponentMenuName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuPlaceHolder", QueryName = "BfsComponentMenuPlaceHolder", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.QueryBaseTable", QueryName = "BfsComponentQueryBaseTable", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.Notes", QueryName = "BfsComponentNotes", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BfsComponent.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.IsSoftDelete", QueryName = "IsSoftDelete", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName = "DisplayName", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.DataTypeId", QueryName = "DataTypeId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuName", QueryName = "MenuName", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuPlaceHolder", QueryName = "MenuPlaceHolder", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.QueryBaseTable", QueryName = "QueryBaseTable", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.Notes", QueryName = "Notes", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });

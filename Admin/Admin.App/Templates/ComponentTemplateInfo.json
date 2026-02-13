@@ -178,32 +178,32 @@
       {
         "Id": "401",
         "TemplateFile": "Backend\\Reports\\IReport.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Interfaces\\[DataType]\\I[ComponentNameCapital]Report.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Interfaces\\[DataType]\\I[ReportNameCapital].cs"
       },
       {
         "Id": "402",
         "TemplateFile": "Backend\\Reports\\Report.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Reports\\[DataType]\\[ComponentNameCapital]Report.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Reports\\[DataType]\\[ReportNameCapital].cs"
       },
       {
         "Id": "403",
         "TemplateFile": "Backend\\Reports\\ReportEntityItem.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Responses\\[DataType]\\[ComponentNameCapital]Item.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Responses\\[DataType]\\[ReportNameCapital]Item.cs"
       },
       {
         "Id": "404",
         "TemplateFile": "Backend\\Reports\\ReportEntityFilter.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Requests\\[DataType]\\[ComponentNameCapital]Filter.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Data\\Requests\\[DataType]\\[ReportNameCapital]Filter.cs"
       },
       {
         "Id": "405",
         "TemplateFile": "Backend\\Reports\\ReportContractItem.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Responses\\[DataType]\\[ComponentNameCapital]Item.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Responses\\[DataType]\\[ReportNameCapital]Item.cs"
       },
       {
         "Id": "406",
         "TemplateFile": "Backend\\Reports\\ReportContractFilter.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Requests\\[DataType]\\[ComponentNameCapital]Filter.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Contracts\\Requests\\[DataType]\\[ReportNameCapital]Filter.cs"
       }
     ],
     "ModifierTemplateList": [
@@ -344,22 +344,22 @@
       {
         "Id": "801",
         "TemplateFile": "Frontend\\Reports\\Class_ReportShared.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].shared.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].shared.ts"
       },
       {
         "Id": "802",
         "TemplateFile": "Frontend\\Reports\\Component_ReportTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].report.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].report.component.ts"
       },
       {
         "Id": "803",
         "TemplateFile": "Frontend\\Reports\\Component_ReportFilterTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].filter.component.ts"
       },
       {
         "Id": "804",
         "TemplateFile": "Frontend\\Reports\\Component_ReportFilterHtml.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.html"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].filter.component.html"
       }
     ],
     "ModifierTemplateList": [

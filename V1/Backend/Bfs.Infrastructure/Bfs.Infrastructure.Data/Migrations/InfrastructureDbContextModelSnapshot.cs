@@ -296,7 +296,7 @@ namespace Bfs.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ClientId")
+                    b.Property<long>("BfsClientId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("DbPrefix")
@@ -652,11 +652,23 @@ namespace Bfs.Infrastructure.Data.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("ActionTemplate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ActionTypeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("MatchProprty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MatchValues")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -668,6 +680,9 @@ namespace Bfs.Infrastructure.Data.Migrations
 
                     b.Property<long>("TenantId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("WriterTypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -712,6 +727,30 @@ namespace Bfs.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemTemplate", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Infrastructure.Data.Models.WriterTypeEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WriterType", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BfsClientEntity", b =>
@@ -807,6 +846,12 @@ namespace Bfs.Infrastructure.Data.Migrations
 
                             b1.Property<int?>("ChartElementId")
                                 .HasColumnType("int");
+
+                            b1.Property<bool?>("IsJoinField")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("ParentTable")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("BfsFieldEntityId");
 

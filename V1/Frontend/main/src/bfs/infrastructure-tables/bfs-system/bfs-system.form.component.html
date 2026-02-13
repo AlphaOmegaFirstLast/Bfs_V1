@@ -95,7 +95,7 @@
         <select class="form-select" id="bfsClientId" formControlName="bfsClientId"
             [class]="submit && !form['bfsClientId'].errors ? 'is-valid': submit && form['bfsClientId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BfsClientOptions">
-            <option [value]="option['bfsClientId']">{{ option['bfsClientName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid BestFit Client.</div>
@@ -107,7 +107,7 @@
         <select class="form-select" id="systemTemplateId" formControlName="systemTemplateId"
             [class]="submit && !form['systemTemplateId'].errors ? 'is-valid': submit && form['systemTemplateId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of SystemTemplateOptions">
-            <option [value]="option['systemTemplateId']">{{ option['systemTemplateName'] }}</option>
+            <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Template.</div>

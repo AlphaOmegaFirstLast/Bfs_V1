@@ -1,18 +1,18 @@
 import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 
 // Output Columns of a Query  [used in entity Query]
-export const [ComponentNameCapital]Columns = [
+export const [ReportNameCapital]Columns = [
     //Template_Start_ReportField_QueryColumn_1
-    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsQueryColumn] },
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible] },
     //Template_End_ReportField_QueryColumn_1
     //Template_Start_ReportField_Aggregate_1
-    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsQueryColumn] },
+    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible] },
     //Template_End_ReportField_Aggregate_1
 ];
 
 //---------------------------------------------------------
 
-export interface I[ComponentNameCapital] {
+export interface I[ReportNameCapital] {
     //Template_Start_ReportField_QueryColumn_2
     [ReportFieldNameSmall]?: [FrontendFieldType];
     //Template_End_ReportField_QueryColumn_2
@@ -24,7 +24,7 @@ export interface I[ComponentNameCapital] {
     //Template_End_Field_CustomFieldList_1   
 }
 //---------------------------------------------------------
-export interface I[ComponentNameCapital]WithLookup extends I[ComponentNameCapital]{
+export interface I[ReportNameCapital]WithLookup extends I[ReportNameCapital]{
 
     //Template_Start_Field_Lookup_1
     [LookupNameSmall]Name?: string;    
@@ -34,7 +34,7 @@ export interface I[ComponentNameCapital]WithLookup extends I[ComponentNameCapita
     //Template_End_ReportField_Aggregate_2
 }
 //---------------------------------------------------------
-export interface I[ComponentNameCapital]Filter {
+export interface I[ReportNameCapital]Filter {
     [key: string]: any;
     //Template_Start_FilterField_ValueNumber_1
     [FilterValueName]?: [FrontendFieldType];
@@ -58,14 +58,14 @@ export interface I[ComponentNameCapital]Filter {
 }
 //---------------------------------------------------------
 
-export interface I[ComponentNameCapital]Request extends IEntityRequest<I[ComponentNameCapital]Filter> {}
+export interface I[ReportNameCapital]Request extends IEntityRequest<I[ReportNameCapital]Filter> {}
 
 //---------------------------------------------------------
-export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Request {
-    let request: I[ComponentNameCapital]Request = {
+export function init[ReportNameCapital]Request(): I[ReportNameCapital]Request {
+    let request: I[ReportNameCapital]Request = {
         pageIndex: 1,
         pageSize: 5,
-        columns: [ComponentNameCapital]Columns.map(column => ({ ...column })),
+        columns: [ReportNameCapital]Columns.map(column => ({ ...column })),
         group: '',
         sortOption: {},
         filter: {
@@ -93,7 +93,7 @@ export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Requ
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function get[ComponentNameCapital]Actions(record: IQueryColumn): IAction[] {
+export function get[ReportNameCapital]Actions(record: IQueryColumn): IAction[] {
         let links: IAction[] = [];
 
            //Template_Action_FrontendLink

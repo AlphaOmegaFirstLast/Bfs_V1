@@ -28,11 +28,12 @@ import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
 
-import { type IStructureReportWithLookup, type IStructureReportRequest, type IStructureReportFilter } from './structure-report.shared';
-import {  initStructureReportRequest } from './structure-report.shared';
-import { StructureReportFilterComponent } from './structure-report.filter.component'; 
+import { type IStructureCompareWithLookup, type IStructureCompareRequest, type IStructureCompareFilter } from './structure-compare.shared';
+import { getStructureCompareActions,  initStructureCompareRequest } from './structure-compare.shared';
+import { StructureCompareFilterComponent } from './structure-compare.filter.component'; 
+
 @Component({
-    selector: 'structure-report-compare',     
+    selector: 'structure-compare',     
     imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
                NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
                NgxEchartsDirective],
@@ -40,15 +41,15 @@ import { StructureReportFilterComponent } from './structure-report.filter.compon
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class StructureReportCompareComponent         
+export class StructureCompareComponent         
 
-    extends BaseReportComponent<IStructureReportFilter, IStructureReportWithLookup> {
+    extends BaseReportComponent<IStructureCompareFilter, IStructureCompareWithLookup> {
     override apiService: InfrastructureService = inject(InfrastructureService);
     override tokenService: TokenService = inject(TokenService);
-    override queryRequest = {} as IStructureReportRequest;
-    override exportRequest = {} as IStructureReportRequest;
- //   override list: IQueryColumn ; //IStructureReportWithLookup[] = [];
-    override downloadFileName: string = "Structure Report";
+    override queryRequest = {} as IStructureCompareRequest;
+    override exportRequest = {} as IStructureCompareRequest;
+ //   override list: IQueryColumn ; //IStructureCompareWithLookup[] = [];
+    override downloadFileName: string = "Structure Compare";
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -56,20 +57,20 @@ export class StructureReportCompareComponent
         super(modalService, router, excelService, activatedRoute);
 
         this.isButton.addNew = false;
-        this.getApiUrl = '/bfs/reports/StructureReportCompare';
+        this.getApiUrl = '/reports/StructureCompare';
 
-        this.filterComponent = StructureReportFilterComponent;
-        this.queryRequest = initStructureReportRequest();
+        this.filterComponent = StructureCompareFilterComponent;
+        this.queryRequest = initStructureCompareRequest();
     }
     //---------------------------------------------------------
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsComponentDataTypeId':
-                return record['dataTypeName?'].toString();
+            case 'bfsComponent_DataTypeId':
+                return record['dataTypeName']?.toString();
 
             case 'countId':
-                return record['countId?'].toString();
+                return record['countId']?.toString();
 
             default:
                 return value;
@@ -79,13 +80,13 @@ export class StructureReportCompareComponent
     //---------------------------------------------------------
 
 //--------------------------------------------------------------
-override getChart(records: IStructureReportWithLookup[]): EChartsOption {
+override getChart(records: IStructureCompareWithLookup[]): EChartsOption {
         // return this.getDemoChart();
         // reorder records in reverse order to show same order of table records.
         let reversedRecords = records.reverse();
         let baseChart = this.getBaseChart();
         baseChart.yAxis = {
-        data: reversedRecords.map(x => x['bfsComponentDisplayName' as keyof IStructureReportWithLookup] ?? "unknown"),
+        data: reversedRecords.map(x => x['bfsComponent_DisplayName' as keyof IStructureCompareWithLookup] ?? "unknown"),
 
             type: 'category',
             axisLine: {

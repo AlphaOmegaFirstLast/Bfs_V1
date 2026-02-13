@@ -1,5 +1,0 @@
-            builder.Services.AddScoped<I[ComponentNameCapital]List>(provider =>
-            {
-                return new [ComponentNameCapital]List(dbConnection);
-            });
-            

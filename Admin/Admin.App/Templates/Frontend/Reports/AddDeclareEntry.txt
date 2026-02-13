@@ -1,1 +1,1 @@
-import { [ComponentNameCapital]ReportComponent } from './[ComponentFileName]/[ComponentFileName].component';
+import { [ReportNameCapital]Component } from './[ReportFileName]/[ReportFileName].report.component';

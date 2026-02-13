@@ -106,7 +106,7 @@ public class [ComponentNameCapital]Controller
 
     [HttpPost("List")]
     [CustomAuthorize("method=q.[ComponentNameSmall]")]
-    public async Task<Results<Ok<QueryResponse<[ComponentNameCapital][ReportTypeCapital]Item>>, BadRequest<ProblemDetails>>> List([FromBody] QueryRequest<[ComponentNameCapital][ReportTypeCapital]Filter> listRequest)
+    public async Task<Results<Ok<QueryResponse<[ReportNameCapital]Item>>, BadRequest<ProblemDetails>>> List([FromBody] QueryRequest<[ReportNameCapital]Filter> listRequest)
     {
         var result = await _[ComponentNameSmall]Service.ListAsync(listRequest).ConfigureAwait(false);
         return TypedResults.Ok(result);

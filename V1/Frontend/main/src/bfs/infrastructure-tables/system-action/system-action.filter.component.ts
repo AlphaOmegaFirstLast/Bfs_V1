@@ -18,6 +18,7 @@ export class SystemActionFilterComponent implements OnInit {
 
     // Define look ups
     public ActionTypeOptions:  any[] = [];
+public WriterTypeOptions:  any[] = [];
 
     // Define range filters
 
@@ -47,6 +48,17 @@ export class SystemActionFilterComponent implements OnInit {
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Action Type data.';
+                this.isLoading = false;
+            }
+        });
+target = "/WriterType/list";
+        (await this.parent.apiService.post(target,  {pageSize:30})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.WriterTypeOptions = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Writer Type data.';
                 this.isLoading = false;
             }
         });

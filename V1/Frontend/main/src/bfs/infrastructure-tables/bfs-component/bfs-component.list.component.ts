@@ -67,9 +67,9 @@ export class BfsComponentListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsComponentBfsSystemId':
+            case 'bfsSystemId':
                 return record['bfsSystemName']?.toString();
-case 'bfsComponentDataTypeId':
+case 'dataTypeId':
                 return record['dataTypeName']?.toString();
 
             default:

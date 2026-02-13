@@ -7,13 +7,13 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsSystemColumns = [
-    { fieldName: 'bfsSystemId', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemName', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemNotes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemBfsClientId', displayName: 'BestFit Client', sortName: 'BfsClient', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemSystemTemplateId', displayName: 'Template', sortName: 'SystemTemplate', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemBasePortNumber', displayName: 'Base Port Number', sortName: 'BasePortNumber', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemDbPrefix', displayName: 'DB Prefix', sortName: 'DbPrefix', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'bfsClientId', displayName: 'BestFit Client', sortName: 'BfsClient', width: '50px', isVisible:true },
+{ fieldName: 'systemTemplateId', displayName: 'Template', sortName: 'SystemTemplate', width: '50px', isVisible:true },
+{ fieldName: 'basePortNumber', displayName: 'Base Port Number', sortName: 'BasePortNumber', width: '50px', isVisible:true },
+{ fieldName: 'dbPrefix', displayName: 'DB Prefix', sortName: 'DbPrefix', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -114,13 +114,13 @@ links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-system/add', displayText: 'Add New record' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText: 'View...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-system/view', displayText: 'View...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/edit', displayText: 'Edit...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-system/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/delete', displayText: 'Delete...' 
+actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-system/delete', displayText: 'Delete...' 
 });
 links.push({
 actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsClientId'], route:'/bfs/bfs-client/view', displayText:'Go to BfsClient' 
@@ -130,10 +130,10 @@ actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsSystemId'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['bfsSystemId'], postUrl: '/BfsSystem', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BfsSystem', onSuccessMethodName: 'getReport' } 
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['bfsSystemId'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['bfsSystemId'], postUrl: '/Operations/BfsSystem/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsSystem/DuplicateTree', onSuccessMethodName: 'getReport' } 
 });
 
         return links;

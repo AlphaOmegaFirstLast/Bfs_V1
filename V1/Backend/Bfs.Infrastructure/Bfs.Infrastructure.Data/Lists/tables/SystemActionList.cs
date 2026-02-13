@@ -43,13 +43,18 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "SystemAction.Id", QueryName = "SystemActionId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "SystemAction.Name", QueryName = "SystemActionName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "SystemAction.Notes", QueryName = "SystemActionNotes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTypeId", QueryName = "SystemActionActionTypeId", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "SystemAction.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.Notes", QueryName = "Notes", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTypeId", QueryName = "ActionTypeId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.WriterTypeId", QueryName = "WriterTypeId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.MatchProprty", QueryName = "MatchProprty", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.MatchValues", QueryName = "MatchValues", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTemplate", QueryName = "ActionTemplate", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "ActionType.Name", QueryName = "ActionTypeName", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "WriterType.Name", QueryName = "WriterTypeName", IsAggregare = false });
 
            //Aggregates
 
@@ -61,6 +66,7 @@ _fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTypeId", QueryNam
            sql.AppendLine(" From SystemAction ");
 
            sql.AppendLine($"   Left Join ActionType on SystemAction.ActionTypeId = ActionType.Id");
+sql.AppendLine($"   Left Join WriterType on SystemAction.WriterTypeId = WriterType.Id");
 
            return sql.ToString();
         }
@@ -79,11 +85,26 @@ _fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTypeId", QueryNam
                     sql.AppendLine("SystemAction.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
+if (!string.IsNullOrEmpty(filter.MatchProprty))
+                {
+                    sql.AppendLine("SystemAction.MatchProprty like '%'+@MatchProprty+'%' ");
+                    parameters.Add("@MatchProprty", filter.MatchProprty);
+                }
+if (!string.IsNullOrEmpty(filter.MatchValues))
+                {
+                    sql.AppendLine("SystemAction.MatchValues like '%'+@MatchValues+'%' ");
+                    parameters.Add("@MatchValues", filter.MatchValues);
+                }
 
                 if (filter.ActionTypeId.HasValue)
                 {
                     sql.AppendLine("SystemAction.ActionTypeId = @ActionTypeId");
                     parameters.Add("@ActionTypeId", filter.ActionTypeId.Value);
+                }
+if (filter.WriterTypeId.HasValue)
+                {
+                    sql.AppendLine("SystemAction.WriterTypeId = @WriterTypeId");
+                    parameters.Add("@WriterTypeId", filter.WriterTypeId.Value);
                 }
 
             }

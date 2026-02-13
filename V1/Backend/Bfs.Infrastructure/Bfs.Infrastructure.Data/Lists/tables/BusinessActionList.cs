@@ -43,10 +43,10 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BusinessAction.Id", QueryName = "BusinessActionId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BusinessAction.Name", QueryName = "BusinessActionName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BusinessAction.Notes", QueryName = "BusinessActionNotes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BusinessAction.ActionTypeId", QueryName = "BusinessActionActionTypeId", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BusinessAction.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BusinessAction.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BusinessAction.Notes", QueryName = "Notes", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BusinessAction.ActionTypeId", QueryName = "ActionTypeId", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "ActionType.Name", QueryName = "ActionTypeName", IsAggregare = false });

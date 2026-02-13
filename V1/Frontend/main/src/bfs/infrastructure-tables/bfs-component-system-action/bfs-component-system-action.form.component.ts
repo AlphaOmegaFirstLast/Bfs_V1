@@ -36,6 +36,7 @@ export class BfsComponentSystemActionFormComponent extends BaseFormComponent<IBf
     // Define look ups
     public BfsComponentOptions: any[] = [];
 public SystemActionOptions: any[] = [];
+public override ActionLocationOptions: any[] = [];
 
     //---------------------------------------------------------
 

@@ -43,10 +43,10 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.Id", QueryName = "BfsComponentBusinessActionId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.BfsComponentId", QueryName = "BfsComponentBusinessActionBfsComponentId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.BusinessActionId", QueryName = "BfsComponentBusinessActionBusinessActionId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.ActionLocationId", QueryName = "BfsComponentBusinessActionActionLocationId", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.Id", QueryName = "Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.BfsComponentId", QueryName = "BfsComponentId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.BusinessActionId", QueryName = "BusinessActionId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponentBusinessAction.ActionLocationId", QueryName = "ActionLocationId", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });

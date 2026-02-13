@@ -67,7 +67,7 @@ export class DeploymentAzureListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'deploymentAzureBfsSystemId':
+            case 'bfsSystemId':
                 return record['bfsSystemName']?.toString();
 
             default:

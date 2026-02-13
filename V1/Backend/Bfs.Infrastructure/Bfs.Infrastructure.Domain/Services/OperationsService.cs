@@ -1,8 +1,9 @@
 using Bfs.Core.Helpers;
+using Bfs.Core.Services.Deployment;
+using Bfs.Infrastructure.Contracts;
 using Bfs.Infrastructure.Data.Interfaces;
 using Bfs.Infrastructure.Data.Repositories;
 using Bfs.Infrastructure.Domain.Interfaces;
-using Bfs.Infrastructure.Contracts;
 using Bfs.Infrastructure.Domain.Mapper;
 
 namespace Bfs.Infrastructure.Domain.Services;
@@ -11,10 +12,74 @@ public class OperationsService : IOperationsService
 {
     private readonly IUnitOfWork _unitOfwork;
 
+    //Template_Start_Code_DontOverwrite_1
+    private readonly IBfsComponentRepository _componentRepo;
+    private readonly IBfsFieldRepository _fieldRepo;
+    private readonly IDeploymentAzureRepository _deploymentAzureStagingRepo;
+    //Template_Start_Code_DontOverwrite_1
+
     public OperationsService(IUnitOfWork unitOfwork)
     {
-        _unitOfwork = unitOfwork;       
+        _unitOfwork = unitOfwork;
+        //Template_Start_Code_DontOverwrite_2
+        _componentRepo = _unitOfwork.ComponentRepo;
+        _fieldRepo = _unitOfwork.FieldRepo;
+        _deploymentAzureStagingRepo = _unitOfwork.DeploymentAzureRepo;
+        //Template_Start_Code_DontOverwrite_2
+
     }
+
+    //Template_Start_Code_DontOverwrite_3
+
+    public async Task<long> DuplicateComponentTreeAsync(long componentId)
+    {
+        var component = await _componentRepo.GetAsync(componentId);
+        if (component == null)
+            throw new Exception($"Component with Id {componentId} not found.");
+
+        var newComponent = component.ToContract().ToEntity(); // create a copy
+        newComponent.Name = component.Name + " - Copy";
+
+        await _componentRepo.CreateAsync(newComponent); // give the new component a new Id
+
+        var tableFields = await _fieldRepo.GetByComponentIdAsync(componentId);
+        foreach (var tableField in tableFields)
+        {
+            var newTableField = tableField.ToContract().ToEntity();
+            await _fieldRepo.CreateAsync(newTableField);
+            newTableField.BfsComponentId = newComponent.Id;
+        }
+
+        await _unitOfwork._context.SaveChangesAsync();
+        return newComponent.Id;
+    }
+
+    public async Task DeleteComponentTreeAsync(long componentId)
+    {
+        var component = await _componentRepo.GetAsync(componentId);
+        if (component == null)
+            throw new Exception($"Component with Id {componentId} not found.");
+
+        await _fieldRepo.DeleteByComponentIdAsync(componentId);
+        await _componentRepo.DeleteAsync(component);
+        await _unitOfwork._context.SaveChangesAsync();
+    }
+
+    public async Task DeployToAzureStaging(long id)
+    {
+        var deployment = await _deploymentAzureStagingRepo.GetAsync(id);
+        if (deployment == null)
+        {
+            throw new ApplicationException($"Staging Deployment Settings not found for id ={id}");
+        }
+        else
+        {
+            var azureApiDeployment = new AzureApiDeployment(deployment);
+            azureApiDeployment.DoDeploy();
+        }
+    }
+
+    //Template_End_Code_DontOverwrite_3
 
     public async Task<List<BfsComponentSystemAction>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemAction> matrix)
     {
