@@ -14,12 +14,12 @@ public enum PlaceHolderType
 public enum WriterType
 {
     None = 0,
-    AngularFramework = 1,  // copy all Angular framework files
-    System = 2,          // Generate and modify files to set up a new system like Stores, StoreExchange
-    Component = 3,       // Generate and modify files to set up a new component like Entity CRUD or Report
+    System = 1,          // Generate and modify files to set up a new system like Stores, StoreExchange
+    Component = 2,       // Generate and modify files to set up a new component like Entity CRUD or Report
+    Field = 3,           // single field of a component, that uses a function to generate code snippet for the field. like form html input, or DB column.
     FieldSet = 4,        // subset of component fields, that uses a function to generate code snippet for the whole fieldset. like form html fieldset, or DB config.
-    Field = 5,           // single field of a component, that uses a function to generate code snippet for the field. like form html input, or DB column.
-    Action = 6,          // an entity that represent a function or link in frontend, that uses a function to generate code snippet for the action. like form button, or list action link.
+    Action = 5,          // an entity that represent a function or link in frontend, that uses a function to generate code snippet for the action. like form button, or list action link.
+    AngularFramework = 6,  // copy all Angular framework files
 }
 
 public enum SaveGeneratedCode //special setting for Sql Having clause

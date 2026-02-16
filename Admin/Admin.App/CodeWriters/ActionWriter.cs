@@ -12,7 +12,7 @@ using Admin.App.CodeWriters;
 
 namespace Admin.App
 {
-    public class BestFitAction : ICodeWriter
+    public class ActionWriter : ICodeWriter
     {
         // Properties
         public long Id { get; set; }
@@ -28,19 +28,19 @@ namespace Admin.App
         public string MatchProperty { get; set; }
         public string[] MatchValues { get; set; }
         public string Notes { get; set; }
-        public BestFitAction()
+        public ActionWriter()
         { }
-        public BestFitAction(IBestFitAction source)
+        public ActionWriter(IBestFitComponentAction source)
         {
             this.Id = source.Id;
             this.Name = source.Name;
             this.BfsComponentId = source.BfsComponentId;
+            this.ActionLocationId = source.ActionLocationId;
             this.ActionTemplate = source.ActionTemplate;
-            this.ActionTypeId = source.ActionType;
-            this.ActionLocationId = source.ActionLocation;
-            this.WriterTypeId = source.WriterType;
+            this.ActionTypeId = source.ActionTypeId;
+            this.WriterTypeId = source.WriterTypeId;
             this.MatchProperty = source.MatchProperty;
-            this.MatchValues = source.MatchValues;
+            this.MatchValues = source.MatchValues.Split(',');
             this.Notes = source.Notes;
         }
 
@@ -68,7 +68,7 @@ namespace Admin.App
         public string GetActionList(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder, ActionType actionType)
         {
             var outputContent = new StringBuilder();
-            var actionList = codeInfo.SystemActionList.Where(a => a.ActionTypeId == actionType);
+            var actionList = codeInfo.ComponentActionList.Where(a => a.ActionTypeId == actionType);
             outputContent.AppendLine();
 
             foreach (var action in actionList)

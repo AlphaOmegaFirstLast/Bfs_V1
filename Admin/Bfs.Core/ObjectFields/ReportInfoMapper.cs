@@ -7,6 +7,8 @@ namespace Bfs.Core.ObjectFields
             var contract = new ReportInfo()
             {
                 ParentTable = entity.ParentTable,
+                IsQueryColumn = entity.IsQueryColumn,
+                IsColumnVisible = entity.IsColumnVisible,
                 IsJoinField = entity.IsJoinField,
                 AggregateTypeId = entity.AggregateTypeId,
                 ChartElementId = entity.ChartElementId,
@@ -24,6 +26,8 @@ namespace Bfs.Core.ObjectFields
             var entity = new ReportInfo()
             {
                 ParentTable = contract.ParentTable,
+                IsQueryColumn = contract.IsQueryColumn,
+                IsColumnVisible = contract.IsColumnVisible,
                 IsJoinField = contract.IsJoinField,
                 AggregateTypeId = contract.AggregateTypeId,
                 ChartElementId = contract.ChartElementId,

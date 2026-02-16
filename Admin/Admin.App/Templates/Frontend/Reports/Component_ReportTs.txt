@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class [ReportNameCapital]Component
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as I[ReportNameCapital]Request;
     override exportRequest = {} as I[ReportNameCapital]Request;
- //   override list: IQueryColumn ; //I[ReportNameCapital]WithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "[ComponentMenuName]";
 
     //------------------------------------------------------
@@ -65,6 +66,7 @@ export class [ReportNameCapital]Component
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/[SystemPrefixSmall]/[ComponentFileName]/add/0", displayText: "Add New [ComponentMenuName]" };
         this.getApiUrl = '/[ComponentFileName]/[ReportTypeCapital]';
+        this.uploadApiUrl = '/[ComponentNameCapital]/upload';
         //Template_End_Component_Table_1
 
         this.filterComponent = [ReportNameCapital]FilterComponent;

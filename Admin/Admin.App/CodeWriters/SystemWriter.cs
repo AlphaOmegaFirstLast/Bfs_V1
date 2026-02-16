@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 
 namespace Admin.App
 {
-    public class BestFitSystem : ICodeWriter
+    public class SystemWriter : ICodeWriter
     {
         public long Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string BasePortNumber { get; set; } = string.Empty;
         public string DbPrefix { get; set; } = string.Empty;
 
-        public BestFitSystem(IBestFitSystem source)
+        public SystemWriter(IBestFitSystem source)
         {
             this.Id = source.Id;
             this.Name = source.Name;

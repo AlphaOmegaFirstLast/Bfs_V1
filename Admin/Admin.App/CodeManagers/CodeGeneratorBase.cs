@@ -31,15 +31,16 @@ namespace Admin.App
         public List<IBestFitComponent> SelectedComponentList { get; set; } = new List<IBestFitComponent>();
 
         public BestFitTemplate? CurrentTemplate { get; set; } = null;
-        public BestFitSystem? CurrentSystem { get; set; }
-        public BestFitComponent? CurrentComponent { get; set; }
+        public SystemWriter? CurrentSystem { get; set; }
+        public ComponentWriter? CurrentComponent { get; set; }
 
 
         public List<PlaceHolderInfo> FlatPlaceHolderList { get; set; } = new List<PlaceHolderInfo>();
 
         public List<IBestFitField> FieldList { get; set; } = new List<IBestFitField>();
-        public List<BestFitAction> SystemActionList { get; set; } = new List<BestFitAction>();
-        public List<BestFitAction> BusinessActionList { get; set; } = new List<BestFitAction>();
+        public List<IBestFitAction> SystemActionList { get; set; } = new List<IBestFitAction>();
+        public List<IBestFitAction> BusinessActionList { get; set; } = new List<IBestFitAction>();
+        public List<ActionWriter> ComponentActionList { get; set; } = new List<ActionWriter>();
 
         public CodeGeneratorBase()
         {
@@ -56,22 +57,7 @@ namespace Admin.App
 
         public virtual void ReadDbEntities()
         {
-            //Implemented in CodeGeneratorV3, can be override for different versions or implementations
-        //     SystemActionList = BfsSystemActionEntity.GenerateTestData().Select(x => (IBestFitAction)x).ToList();
-             // populate database objects
-            // using (var context = new V3DbContext())
-            // {
-            //     try
-            //     {
-            //         SystemList = context.BfsSystem.Select(x => (IBestFitSystem)x).ToList();
-            //         ComponentList = context.BfsComponent.Select(x => (IBestFitComponent)x).ToList();
-            //         FieldList = context.BfsField.Select(x => (IBestFitField)x).ToList();
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         MessageBox.Show($"Error: {ex.Message}");
-            //     }
-            //}
+            //overridden in descendant classes
         }
 
 
@@ -79,8 +65,8 @@ namespace Admin.App
         {
             try
             {
-                CodeWriter.system = new BestFitSystem(systemEntity);
-                this.CurrentSystem = new BestFitSystem(systemEntity);
+                CodeWriter.system = new SystemWriter(systemEntity);
+                this.CurrentSystem = new SystemWriter(systemEntity);
             }
             catch (Exception ex)
             {
@@ -99,10 +85,10 @@ namespace Admin.App
             {
                 if (componentEntity != null && componentEntity.Name.ToLower() != "all")
                 {
-                    CodeWriter.component = new BestFitComponent(componentEntity, CodeWriter?.system?.Name, FieldList);
-                    CodeWriter.actionList = SystemActionList.Where(x => x.BfsComponentId == CodeWriter.component.Id)
-                                            .Select(x=> (BestFitAction)x).ToList();
-                    this.CurrentComponent = new BestFitComponent(componentEntity, this.CurrentSystem?.Name, FieldList);
+                    CodeWriter.component = new ComponentWriter(componentEntity, CodeWriter?.system?.Name, FieldList);
+                    CodeWriter.actionList = ComponentActionList.Where(x => x.BfsComponentId == CodeWriter.component.Id)
+                                            .Select(x=> (ActionWriter)x).ToList();
+                    this.CurrentComponent = new ComponentWriter(componentEntity, this.CurrentSystem?.Name, FieldList);
                 }
             }
             catch (Exception ex)

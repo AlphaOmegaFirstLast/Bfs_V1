@@ -1,0 +1,96 @@
+[
+  {
+    "id": 1,
+    "name": "Add New Record",
+    "notes": "Redirects User to the record-form in new-record mode",
+    "actionTypeId": 2,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: 0, route:'/[SystemPrefixSmall]/[ComponentFileName]/add', displayText: 'Add New record'",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Component"
+  },
+  {
+    "id": 2,
+    "name": "View Record",
+    "notes": "Redirects User to the record-form in view mode",
+    "actionTypeId": 2,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: record['id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/view', displayText: 'View...'",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Component"
+  },
+  {
+    "id": 3,
+    "name": "Edit Record",
+    "notes": "Redirects User to the record-form in Edit mode",
+    "actionTypeId": 2,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: record['id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/edit', displayText: 'Edit...' ",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Component"
+  },
+  {
+    "id": 4,
+    "name": "Delete Record",
+    "notes": "Redirects User to the record-form in view mode to confirm deletion",
+    "actionTypeId": 2,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: record['id'], route:'/[SystemPrefixSmall]/[ComponentFileName]/delete', displayText: 'Delete...' ",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Component"
+  },
+  {
+    "id": 5,
+    "name": "Go to Lookup",
+    "notes": "Redirect user to the Lookup form in view mode",
+    "actionTypeId": 2,
+    "writerTypeId": 3,
+    "matchProperty": "[FieldDefinition]",
+    "matchValues": "Lookup",
+    "actionTemplate": "recordId: record['[LookupNameSmall]Id'], route:'/[SystemPrefixSmall]/[LookupFileName]/view', displayText:'Go to [LookupNameCapital]'",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Field"
+  },
+  {
+    "id": 6,
+    "name": "Duplicate Record",
+    "notes": "Execute frontend function 'duplicateRecord' which uses the data arguments to post data and refresh list.",
+    "actionTypeId": 3,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/[ComponentNameCapital]', onSuccessMethodName: 'getReport' }",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Component"
+  },
+  {
+    "id": 7,
+    "name": "Duplicate Tree",
+    "notes": "Execute frontend function 'duplicateRecord' which uses the data arguments to post data and refresh list.",
+    "actionTypeId": 3,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/[ComponentNameCapital]/DuplicateTree', onSuccessMethodName: 'getReport' }",
+    "actionTypeName": "FrontendLink",
+    "writerTypeName": "Component"
+  },
+  {
+    "id": 8,
+    "name": "Delete Tree",
+    "notes": "Execute frontend function 'duplicateRecord' which uses the data arguments to post data and refresh list.",
+    "actionTypeId": 3,
+    "writerTypeId": 2,
+    "matchProperty": "[ComponentType]",
+    "matchValues": "Table",
+    "actionTemplate": "recordId: record['id'], action: deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/[ComponentNameCapital]/DeleteTree', onSuccessMethodName: 'getReport' }"
+  }
+]

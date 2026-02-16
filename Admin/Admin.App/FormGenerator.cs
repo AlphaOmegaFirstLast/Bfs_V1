@@ -14,7 +14,7 @@ namespace CodeAdmin
 {
     public partial class FormGenerator : Form
     {
-        private CodeGeneratorGreen _codeGenerator = new CodeGeneratorGreen();
+        private CodeGeneratorV4 _codeGenerator = new CodeGeneratorV4();
         private string lastControlsKey = "";
         private bool isGenerateSystemClicked = false;
         private List<CheckBox> checkboxList = new List<CheckBox>();

@@ -11,9 +11,9 @@ namespace Admin.App
         public long BfsComponentId { get; set; }
         public string Field { get; set; }
         public string DisplayName { get; set; }
-        public bool IsQueryColumn { get; set; }
-        public bool IsJoinField { get; set; }
-        public string ParentTable { get; set; }
+        //public bool IsQueryColumn { get; set; }
+        //public bool IsJoinField { get; set; }
+        //public string ParentTable { get; set; }
         public FilterType FilterTypeId { get; set; }
         public BackendDataType BackendDataTypeId { get; set; }
         public FieldValidation FieldValidation { get; set; }

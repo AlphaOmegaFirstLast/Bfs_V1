@@ -12,11 +12,11 @@ using System.Text.RegularExpressions;
 
 namespace Admin.App
 {
-    public class BestFitFieldSet : ICodeWriter
+    public class FieldSetWriter : ICodeWriter
     {
         // Properties
         //public FieldSetDefinition FieldSetDefinition = FieldSetDefinition.Basic;
-        public List<BestFitField> FieldList { get; set; } = new List<BestFitField>();
+        public List<FieldWriter> FieldList { get; set; } = new List<FieldWriter>();
 
         //ICodeWriter implementation
         public string Name { get; set; } = string.Empty;
@@ -26,10 +26,10 @@ namespace Admin.App
         public string htmlFormFields = string.Empty;
         public string backendValidators = string.Empty;
 
-        public BestFitFieldSet(List<BestFitField>? fieldList)
+        public FieldSetWriter(List<FieldWriter>? fieldList)
         {
             this.Name = "FieldSet";
-            FieldList = fieldList ?? new List<BestFitField>();
+            FieldList = fieldList ?? new List<FieldWriter>();
             foreach (var field in FieldList)
             {
                 //set row & column for Form controls
@@ -91,7 +91,7 @@ namespace Admin.App
 
             if (placeHolder.Name.Contains("FrontendLink"))
             {
-                var actionList = codeInfo.SystemActionList.Where(a => a.BfsComponentId == codeInfo.CurrentComponent?.Id
+                var actionList = codeInfo.ComponentActionList.Where(a => a.BfsComponentId == codeInfo.CurrentComponent?.Id
                                 && a.WriterTypeId == WriterType.FieldSet
                                 && a.ActionTypeId == ActionType.FrontendLink)
                                 .ToList();
@@ -106,7 +106,7 @@ namespace Admin.App
 
             if (placeHolder.Name.Contains("FrontendFunction"))
             {
-                var actionList = codeInfo.SystemActionList.Where(a => a.BfsComponentId == codeInfo.CurrentComponent?.Id
+                var actionList = codeInfo.ComponentActionList.Where(a => a.BfsComponentId == codeInfo.CurrentComponent?.Id
                                 && a.WriterTypeId == WriterType.FieldSet
                                 && a.ActionTypeId == ActionType.FrontendFunction)
                                 .ToList();
@@ -144,7 +144,7 @@ namespace Admin.App
             return fieldListContent.ToString();
         }
 
-        public static void ModifyErrorFile(CodeGeneratorBase codeInfo, BestFitField fieldInfo, TemplateInfo modifierTemplate)
+        public static void ModifyErrorFile(CodeGeneratorBase codeInfo, FieldWriter fieldInfo, TemplateInfo modifierTemplate)
         {
             var functionName = "Invalid" + $@"{fieldInfo.fieldCapitalName}";
             var generatedCode = $"public const string {functionName} = \"{functionName}\";";
@@ -162,7 +162,7 @@ namespace Admin.App
             }
         }
 
-        public static string GenerateValidatorLine(BestFitField fieldInfo)
+        public static string GenerateValidatorLine(FieldWriter fieldInfo)
         {
             var fieldRules = new StringBuilder();
             var i = 0;

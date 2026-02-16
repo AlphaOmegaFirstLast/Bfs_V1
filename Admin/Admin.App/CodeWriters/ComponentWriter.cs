@@ -12,7 +12,7 @@ using Admin.App.CodeWriters;
 
 namespace Admin.App
 {
-    public class BestFitComponent : ICodeWriter
+    public class ComponentWriter : ICodeWriter
     {
         // Properties
         public long Id { get; set; }
@@ -41,9 +41,9 @@ namespace Admin.App
 
         public ComponentType ComponentType = ComponentType.None;
 
-        public List<BestFitField> FieldList { get; set; } = new List<BestFitField>();
+        public List<FieldWriter> FieldList { get; set; } = new List<FieldWriter>();
 
-        public BestFitComponent(IBestFitComponent source, string systemName, List<IBestFitField> allFieldList)
+        public ComponentWriter(IBestFitComponent source, string systemName, List<IBestFitField> allFieldList)
         {
             this.Id = source.Id;
             this.Name = source.Name;
@@ -83,7 +83,7 @@ namespace Admin.App
 
         public void SetFieldList(List<IBestFitField> allFieldList)
         {
-            FieldList = allFieldList.Where(x => x.BfsComponentId == Id).Select(x => new BestFitField(x)).ToList();
+            FieldList = allFieldList.Where(x => x.BfsComponentId == Id).Select(x => new FieldWriter(x)).ToList();
 
             var tabIndex = 1;
             foreach (var field in FieldList)

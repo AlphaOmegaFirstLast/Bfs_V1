@@ -8,7 +8,7 @@ using OpenTelemetry.Resources;
 
 namespace Admin.App
 {
-    public class BestFitField : ICodeWriter , IBestFitField
+    public class FieldWriter : ICodeWriter , IBestFitField
     {
         public long Id { get; set; }
         public long BfsComponentId { get; set; }
@@ -50,7 +50,6 @@ namespace Admin.App
         public ReportDefinition ReportDefinition = ReportDefinition.None;
         public FilterDefinition FilterDefinition = FilterDefinition.None;
         public ChartDefinition ChartDefinition = ChartDefinition.None;
-       // public MatrixDefinition MatrixDefinition = MatrixDefinition.None;
 
         //Table internal fields
         public string backendDataType = "string";
@@ -85,22 +84,13 @@ namespace Admin.App
         public string matrixNameSmall = string.Empty;
         public string matrixFileName = string.Empty;
 
-        public BestFitField(IBestFitField source)
+        public FieldWriter(IBestFitField source)
         {
             if (source != null)
             {
                 this.Name = source.Field ?? string.Empty;
                 this.Field = source.Field ?? string.Empty;
                 this.DisplayName = source.DisplayName ?? string.Empty;
-
-                //this.IsQueryColumn = source.IsQueryColumn;
-                //this.IsJoinField = source.IsJoinField;
-                //this.ParentTable = source.ParentTable ?? string.Empty;
-
-                this.ParentTable = source.ReportInfo?.ParentTable ?? string.Empty;
-                this.IsQueryColumn = source.ReportInfo?.IsQueryColumn ?? true;
-                this.IsColumnVisible = source.ReportInfo?.IsColumnVisible ?? true;
-                this.IsJoinField = source.ReportInfo?.IsJoinField?? false;
 
                 this.BackendDataTypeId = source.BackendDataTypeId;
                 this.FilterTypeId = source.FilterTypeId;
@@ -111,6 +101,15 @@ namespace Admin.App
                 this.ReportInfo = source.ReportInfo ?? new ReportInfo();
                 this.MatrixInfo = source.MatrixInfo ?? new MatrixInfo();
                 this.ToolTipInfo = source.ToolTipInfo ?? new ToolTipInfo();
+
+                //this.IsQueryColumn = source.IsQueryColumn;
+                //this.IsJoinField = source.IsJoinField;
+                //this.ParentTable = source.ParentTable ?? string.Empty;
+
+                this.ParentTable = source.ReportInfo?.ParentTable ?? string.Empty;
+                this.IsQueryColumn = source.ReportInfo?.IsQueryColumn ?? true;
+                this.IsColumnVisible = source.ReportInfo?.IsColumnVisible ?? true;
+                this.IsJoinField = source.ReportInfo?.IsJoinField ?? false;
             }
             else
             {
