@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class SystemActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ISystemActionRequest;
     override exportRequest = {} as ISystemActionRequest;
- //   override list: IQueryColumn ; //ISystemActionWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "System Actions";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class SystemActionListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/system-action/add/0", displayText: "Add New System Actions" };
         this.getApiUrl = '/SystemAction/List';
+        this.uploadApiUrl = '/SystemAction/upload';
 
         this.filterComponent = SystemActionFilterComponent;
         this.queryRequest = initSystemActionRequest();

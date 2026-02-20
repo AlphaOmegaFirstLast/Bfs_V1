@@ -32,7 +32,13 @@ internal class Program
         // Add Aspire support for development. Bfs.Core.AspireExtensions
         builder.AddServiceDefaults();
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                // Allow reading numbers from strings globally
+                options.JsonSerializerOptions.NumberHandling =
+                    System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString;
+            }); 
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

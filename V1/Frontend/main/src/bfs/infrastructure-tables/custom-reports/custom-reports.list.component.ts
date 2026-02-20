@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class CustomReportsListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ICustomReportsRequest;
     override exportRequest = {} as ICustomReportsRequest;
- //   override list: IQueryColumn ; //ICustomReportsWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Custom Reports";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class CustomReportsListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/custom-reports/add/0", displayText: "Add New Custom Reports" };
         this.getApiUrl = '/CustomReports/List';
+        this.uploadApiUrl = '/CustomReports/upload';
 
         this.filterComponent = CustomReportsFilterComponent;
         this.queryRequest = initCustomReportsRequest();
@@ -76,7 +78,7 @@ export class CustomReportsListComponent
     //---------------------------------------------------------
 
 override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getCustomReportsActions(record);
+        let actions = getCustomReportsActions(this, record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -88,7 +90,7 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
     }
     //---------------------------------------------------------
     override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getCustomReportsActions(record);
+        let actions = getCustomReportsActions(this, record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'

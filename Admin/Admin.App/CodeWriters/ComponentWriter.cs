@@ -43,7 +43,7 @@ namespace Admin.App
 
         public List<FieldWriter> FieldList { get; set; } = new List<FieldWriter>();
 
-        public ComponentWriter(IBestFitComponent source, string systemName, List<IBestFitField> allFieldList)
+        public ComponentWriter(IComponentEntity source, string systemName, List<IFieldEntity> allFieldList)
         {
             this.Id = source.Id;
             this.Name = source.Name;
@@ -81,7 +81,7 @@ namespace Admin.App
             return input;
         }
 
-        public void SetFieldList(List<IBestFitField> allFieldList)
+        public void SetFieldList(List<IFieldEntity> allFieldList)
         {
             FieldList = allFieldList.Where(x => x.BfsComponentId == Id).Select(x => new FieldWriter(x)).ToList();
 

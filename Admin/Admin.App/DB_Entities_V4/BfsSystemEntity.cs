@@ -2,7 +2,7 @@ using Admin.App.Constants;
 
 namespace Admin.App
 {
-    public class BfsSystemEntity : IBestFitSystem
+    public class BfsSystemEntity : ISystemEntity
     {
         public long TenantId { get; set; }
         public bool IsDeleted { get; set; }

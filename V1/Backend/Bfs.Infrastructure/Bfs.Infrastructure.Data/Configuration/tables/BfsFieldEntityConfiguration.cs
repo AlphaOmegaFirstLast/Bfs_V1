@@ -21,7 +21,6 @@ namespace Bfs.Infrastructure.Data.Configuration
 //   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Field).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.DisplayName).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.ParentTable).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }

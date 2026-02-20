@@ -3,7 +3,7 @@ using Admin.App.Constants;
 
 namespace Admin.App
 {
-    public class BfsComponentEntity: IBestFitComponent
+    public class BfsComponentEntity: IComponentEntity
     {
         public long TenantId { get; set; }
         public bool IsDeleted { get; set; }

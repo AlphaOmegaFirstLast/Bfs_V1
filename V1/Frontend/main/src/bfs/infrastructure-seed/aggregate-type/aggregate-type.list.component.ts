@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class AggregateTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IAggregateTypeRequest;
     override exportRequest = {} as IAggregateTypeRequest;
- //   override list: IQueryColumn ; //IAggregateTypeWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Aggregate Types";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class AggregateTypeListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/aggregate-type/add/0", displayText: "Add New Aggregate Types" };
         this.getApiUrl = '/AggregateType/List';
+        this.uploadApiUrl = '/AggregateType/upload';
 
         this.filterComponent = AggregateTypeFilterComponent;
         this.queryRequest = initAggregateTypeRequest();

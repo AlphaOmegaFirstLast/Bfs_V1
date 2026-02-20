@@ -3,7 +3,7 @@ using Bfs.Core.ObjectFields;
 
 namespace Admin.App
 {
-    public class BfsFieldEntity: IBestFitField
+    public class BfsFieldEntity: IFieldEntity
     {
         public long TenantId { get; set; } = 0;
         public bool IsDeleted { get; set; } = false;

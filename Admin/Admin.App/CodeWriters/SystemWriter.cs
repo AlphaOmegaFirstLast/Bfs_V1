@@ -13,7 +13,7 @@ namespace Admin.App
         public string BasePortNumber { get; set; } = string.Empty;
         public string DbPrefix { get; set; } = string.Empty;
 
-        public SystemWriter(IBestFitSystem source)
+        public SystemWriter(ISystemEntity source)
         {
             this.Id = source.Id;
             this.Name = source.Name;

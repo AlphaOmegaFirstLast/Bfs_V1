@@ -3,6 +3,7 @@ using Bfs.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bfs.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InfrastructureDbContext))]
-    partial class InfrastructureDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260216074932_SystemActionIds")]
+    partial class SystemActionIds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

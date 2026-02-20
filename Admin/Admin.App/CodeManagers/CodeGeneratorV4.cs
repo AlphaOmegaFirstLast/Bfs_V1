@@ -19,13 +19,12 @@ namespace Admin.App
             {
                 try
                 {
-                    SystemList = context.BfsSystem.Select(x => (IBestFitSystem)x).ToList();
-                    ComponentList = context.BfsComponent.Select(x => (IBestFitComponent)x).ToList();
-                    FieldList = context.BfsField.Select(x => (IBestFitField)x).ToList();
-                    SystemActionList = context.SystemAction.Select(x => (IBestFitAction)x).ToList();
+                    SystemList = context.BfsSystem.Select(x => (ISystemEntity)x).ToList();
+                    ComponentList = context.BfsComponent.Select(x => (IComponentEntity)x).ToList();
+                    FieldList = context.BfsField.Select(x => (IFieldEntity)x).ToList();
+                    SystemActionList = context.SystemAction.Select(x => (IActionEntity)x).ToList();
                     componentSystemActionList = context.BfsComponentSystemAction.ToList();
-                    // fill ComponentActionList with properties of the object result of componentSystemActionList left join
-                    // SystemActionList on componentSystemActionList.SystemActionId == SystemActionList.Id
+
                     ComponentActionList = (from cs in componentSystemActionList
                                            join sa in SystemActionList on cs.SystemActionId equals sa.Id into gj
                                            from sa in gj.DefaultIfEmpty()

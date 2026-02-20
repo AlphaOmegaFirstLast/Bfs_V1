@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -29,26 +30,28 @@ import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
 
 import { type IBfsFieldWithLookup, type IBfsFieldRequest, type IBfsFieldFilter } from './bfs-field.shared';
-import { getBfsFieldActions, initBfsFieldRequest } from './bfs-field.shared';
-import { BfsFieldFilterComponent } from './bfs-field.filter.component';
+import { getBfsFieldActions,  initBfsFieldRequest } from './bfs-field.shared';
+import { BfsFieldFilterComponent } from './bfs-field.filter.component'; 
 
 @Component({
-    selector: 'bfs-field-list',
-    imports: [CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
-        NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
-        NgxEchartsDirective],
+    selector: 'bfs-field-list',     
+    imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
+               NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
+               NgxEchartsDirective],
     providers: [provideEchartsCore({ echarts })],
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class BfsFieldListComponent
+export class BfsFieldListComponent         
 
     extends BaseReportComponent<IBfsFieldFilter, IBfsFieldWithLookup> {
     override apiService: InfrastructureService = inject(InfrastructureService);
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsFieldRequest;
     override exportRequest = {} as IBfsFieldRequest;
-    //   override list: IQueryColumn ; //IBfsFieldWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
+
+ //   override list: IQueryColumn ; //IBfsFieldWithLookup[] = [];
     override downloadFileName: string = "BestFit Fields";
 
     //------------------------------------------------------
@@ -67,13 +70,23 @@ export class BfsFieldListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsFieldBfsComponentId':
+            case 'bfsComponentId':
                 return record['bfsComponentName']?.toString();
-            case 'bfsFieldFilterTypeId':
+case 'filterTypeId':
                 return record['filterTypeName']?.toString();
-            case 'bfsFieldBackendDataTypeId':
+case 'backendDataTypeId':
                 return record['backendDataTypeName']?.toString();
-
+            case 'reportInfo':
+                var obj = JSON.parse(record['reportInfo'] as string);
+                var result = 
+                  "<td class='pl-2'>ParentTable: " + (obj['ParentTable']?.toString() || '')+ "</td>"
+                + "<td class='pl-2'>isQueryColumn: " + obj['IsQueryColumn']?.toString() + "</td>"
+                + "<td class='pl-2'>isColumnVisible: " + obj['IsColumnVisible']?.toString() + "</td>"
+                + "<td class='pl-2'>aggregate: " + (obj['AggregateTypeId']?.toString() || '') + "</td>"
+                + "<td class='pl-2'>chart: " + (obj['ChartTypeId']?.toString() || '') + "</td>"
+                ;
+                var output = this.sanitizer.sanitize(1, result) || "";
+                return output;
             default:
                 return value;
         }
@@ -81,13 +94,13 @@ export class BfsFieldListComponent
     }
     //---------------------------------------------------------
 
-    override getRecordLinks(record: IQueryColumn): ViewLink[] {
+override getRecordLinks(record: IQueryColumn): ViewLink[] {
         let actions = getBfsFieldActions(record);
-        let links: ViewLink[] = actions.filter(action =>
-            action.actionType == 'FrontendLink'
+        let links: ViewLink[] = actions.filter(action => 
+               action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
-        ).map(action => {
-            return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
+            ).map(action => {
+            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
         });
 
         return links;
@@ -95,17 +108,17 @@ export class BfsFieldListComponent
     //---------------------------------------------------------
     override getRecordActions(record: IQueryColumn): ActionLink[] {
         let actions = getBfsFieldActions(record);
-        let links: ActionLink[] = actions.filter(action =>
-            action.actionType == 'FrontendFunction'
+        let links: ActionLink[] = actions.filter(action => 
+               action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
-        ).map(action => {
-            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+            ).map(action => {
+            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
         });
 
         return links;
     }
 
-    //--------------------------------------------------------------
+//--------------------------------------------------------------
 
 }
 

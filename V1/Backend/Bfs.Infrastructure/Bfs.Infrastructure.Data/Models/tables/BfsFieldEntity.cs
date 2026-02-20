@@ -14,7 +14,6 @@ namespace Bfs.Infrastructure.Data.Models
 public long Id {get; set;} = 0 ;
 public string Field {get; set;} = string.Empty ;
 public string DisplayName {get; set;} = string.Empty ;
-public string ParentTable {get; set;} = string.Empty ;
 
         public long BfsComponentId {get; set;} = 0 ;
 public int FilterTypeId {get; set;} = 0 ;

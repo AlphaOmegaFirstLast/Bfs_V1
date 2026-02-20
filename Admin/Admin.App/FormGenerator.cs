@@ -6,7 +6,6 @@ using Admin.App;
 using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
-using Admin.App.CodeManagers;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 
@@ -185,7 +184,7 @@ namespace CodeAdmin
 
         private void cbSystemInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var systemEntity = cbSystemInfo.SelectedItem == null ? null : (IBestFitSystem)cbSystemInfo.SelectedItem;
+            var systemEntity = cbSystemInfo.SelectedItem == null ? null : (ISystemEntity)cbSystemInfo.SelectedItem;
             _codeGenerator.SetSystem(systemEntity);
 
             // Fill Tables Grid
@@ -221,7 +220,7 @@ namespace CodeAdmin
             if (dataGridView?.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
                 dataGridView.Rows[e.RowIndex].Selected = true;
-                var component = (IBestFitComponent?)(dataGridView?.Rows[e.RowIndex].DataBoundItem);
+                var component = (IComponentEntity?)(dataGridView?.Rows[e.RowIndex].DataBoundItem);
                 if (component != null)
                 {
                     isGenerateSystemClicked = false;

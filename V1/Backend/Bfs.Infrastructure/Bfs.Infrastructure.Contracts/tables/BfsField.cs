@@ -22,10 +22,6 @@ namespace Bfs.Infrastructure.Contracts
         /// BfsField DisplayName.
         ///</Summary>
         public string DisplayName {get; set;} = string.Empty ;
-///<Summary>
-        /// BfsField ParentTable.
-        ///</Summary>
-        public string ParentTable {get; set;} = string.Empty ;
 
         ///<Summary>
         /// BfsField Component.

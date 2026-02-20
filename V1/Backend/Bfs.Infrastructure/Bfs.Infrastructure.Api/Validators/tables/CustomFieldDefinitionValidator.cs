@@ -14,7 +14,7 @@ namespace Bfs.Infrastructure.Api.Validators
 .MaximumLength(50)
 ;
 RuleFor(x => x.Notes)
-.MaximumLength(50)
+.MaximumLength(1000)
 ;
 
         }

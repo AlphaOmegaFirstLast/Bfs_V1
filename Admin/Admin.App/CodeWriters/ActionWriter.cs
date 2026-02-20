@@ -30,7 +30,7 @@ namespace Admin.App
         public string Notes { get; set; }
         public ActionWriter()
         { }
-        public ActionWriter(IBestFitComponentAction source)
+        public ActionWriter(IComponentActionEntity source)
         {
             this.Id = source.Id;
             this.Name = source.Name;

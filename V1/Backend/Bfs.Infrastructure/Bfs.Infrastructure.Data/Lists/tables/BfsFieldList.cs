@@ -43,13 +43,17 @@ namespace Bfs.Infrastructure.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsField.Id", QueryName = "Id", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BfsField.FieldValidation", QueryName = "FieldValidation", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsField.Id", QueryName = "Id", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsField.BfsComponentId", QueryName = "BfsComponentId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsField.Field", QueryName = "Field", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsField.DisplayName", QueryName = "DisplayName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsField.ParentTable", QueryName = "ParentTable", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsField.FilterTypeId", QueryName = "FilterTypeId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsField.BackendDataTypeId", QueryName = "BackendDataTypeId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsField.ReportInfo", QueryName = "ReportInfo", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsField.MatrixInfo", QueryName = "MatrixInfo", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsField.ToolTipInfo", QueryName = "ToolTipInfo", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsField.FormInfo", QueryName = "FormInfo", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });

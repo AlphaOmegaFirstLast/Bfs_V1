@@ -19,7 +19,7 @@ export interface IBfsComponentSystemAction {
 id?: string;
 
     bfsComponentId?: string;
-systemActionId?: number;
+systemActionId?: string;
 actionLocationId?: number;
 
 }
@@ -30,7 +30,7 @@ export function initBfsComponentSystemAction(): IBfsComponentSystemAction {
 id: '0',
 
         bfsComponentId: '0',
-systemActionId: 0,
+systemActionId: '0',
 actionLocationId: 0,
 
     };
@@ -45,7 +45,7 @@ export function bfsComponentSystemActionUntypedFormGroup(formBuilder: FormBuilde
 id: ['0'],
 
     bfsComponentId: ['0'],
-systemActionId: [0],
+systemActionId: ['0'],
 actionLocationId: [0],
 
     };
@@ -66,7 +66,7 @@ export interface IBfsComponentSystemActionFilter {
     [key: string]: any;
 
     BfsComponentId?: string;
-SystemActionId?: number;
+SystemActionId?: string;
 ActionLocationId?: number;
 
 }
@@ -96,35 +96,6 @@ ActionLocationId: undefined ,
 
 export function getBfsComponentSystemActionActions(record: IQueryColumn): IAction[] {
         let links: IAction[] = [];
-
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-component-system-action/add', displayText: 'Add New record' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/view', displayText: 'View...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/delete', displayText: 'Delete...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText:'Go to BfsComponent' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemActionId'], route:'/bfs/system-action/view', displayText:'Go to SystemAction' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['actionLocationId'], route:'/bfs/action-location/view', displayText:'Go to ActionLocation' 
-});
-
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BfsComponentSystemAction', onSuccessMethodName: 'getReport' } 
-});
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponentSystemAction/DuplicateTree', onSuccessMethodName: 'getReport' } 
-});
 
         return links;
     }

@@ -9,7 +9,7 @@ public string? Name { get; set; }
 public string? Notes { get; set; }
 public string? ActionTypeId { get; set; }
 public string? WriterTypeId { get; set; }
-public string? MatchProprty { get; set; }
+public string? MatchProperty { get; set; }
 public string? MatchValues { get; set; }
 public string? ActionTemplate { get; set; }
 

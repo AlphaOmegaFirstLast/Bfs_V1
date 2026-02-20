@@ -9,7 +9,7 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 export const CustomReportsColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'request', displayName: 'Request', sortName: 'Request', width: '50px', isVisible:true },
+{ fieldName: 'request', displayName: 'Request', sortName: 'Request', width: '50px', isVisible:false },
 { fieldName: 'baseReport', displayName: 'Base Report', sortName: 'BaseReport', width: '50px', isVisible:true },
 { fieldName: 'isPrivate', displayName: 'Private', sortName: 'IsPrivate', width: '50px', isVisible:true },
 { fieldName: 'createdBy', displayName: 'Created By', sortName: 'CreatedBy', width: '50px', isVisible:true },
@@ -95,27 +95,20 @@ export function initCustomReportsRequest(): ICustomReportsRequest {
 }
 //---------------------------------------------------------
 
-export function getCustomReportsActions(record: IQueryColumn): IAction[] {
+export function getCustomReportsActions(component: any, record: IQueryColumn): IAction[] {
         let links: IAction[] = [];
-
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/custom-reports/add', displayText: 'Add New record' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/view', displayText: 'View...'
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/view', displayText: 'View...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/delete', displayText: 'Delete...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/delete', displayText: 'Delete...' 
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/CustomReports', onSuccessMethodName: 'getReport' } 
-});
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/CustomReports/DuplicateTree', onSuccessMethodName: 'getReport' } 
+    actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: component.goToCustomReport, displayText: 'Go To Custom Report', data: {'record':record}
 });
 
         return links;

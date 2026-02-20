@@ -3,6 +3,7 @@ using Bfs.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bfs.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(InfrastructureDbContext))]
-    partial class InfrastructureDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260213013423_bfsFieldRemoveFields")]
+    partial class bfsFieldRemoveFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,8 +236,8 @@ namespace Bfs.Infrastructure.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<long>("SystemActionId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("SystemActionId")
+                        .HasColumnType("int");
 
                     b.Property<long>("TenantId")
                         .HasColumnType("bigint");
@@ -652,7 +655,7 @@ namespace Bfs.Infrastructure.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MatchProperty")
+                    b.Property<string>("MatchProprty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

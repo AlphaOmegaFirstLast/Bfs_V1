@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class BfsClientListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsClientRequest;
     override exportRequest = {} as IBfsClientRequest;
- //   override list: IQueryColumn ; //IBfsClientWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "BestFit Clients";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class BfsClientListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/bfs-client/add/0", displayText: "Add New BestFit Clients" };
         this.getApiUrl = '/BfsClient/List';
+        this.uploadApiUrl = '/BfsClient/upload';
 
         this.filterComponent = BfsClientFilterComponent;
         this.queryRequest = initBfsClientRequest();

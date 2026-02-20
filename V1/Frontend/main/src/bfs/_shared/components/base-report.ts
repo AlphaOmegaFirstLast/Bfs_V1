@@ -230,17 +230,18 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         let route = this.activatedRoute;
         // customReportId either in this format: "/report/structure-report/0"  or in this format:   "/client/list/0"
         // invalid format /component/edit/15 when the component has "tab list" EntityChildren. CustomReportId is not expected in that format and should not block data retrieval 
-        if (route.snapshot.url.length == 3) {
+        if (route.snapshot.url.length == 4) {
+            let segment0 = route.snapshot.url[route.snapshot.url.length - 4].path;
             let segment1 = route.snapshot.url[route.snapshot.url.length - 3].path;
             let segment2 = route.snapshot.url[route.snapshot.url.length - 2].path;
             let segment3 = route.snapshot.url[route.snapshot.url.length - 1].path;
             if (segment1 == 'report') {
-                this.customReportInfo.url = `${segment1}/${segment2}/`;
+                this.customReportInfo.url = `${segment0}/${segment1}/${segment2}/`;
                 this.customReportInfo.name = segment2;
                 this.customReportInfo.id = segment3;
             }
             if (segment2 == 'list') {
-                this.customReportInfo.url = `${segment1}/${segment2}/`;
+                this.customReportInfo.url = `${segment0}/${segment1}/${segment2}/`;
                 this.customReportInfo.name = segment1;
                 this.customReportInfo.id = segment3;
             }
@@ -248,25 +249,27 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     }
     //---------------------------------------------------------
     goToCustomReport(me: IUserInterface, record: any, data: any){
-        let url = record?.url || "";
-        me.router.navigate([`${url}/${record.id}`]);
+        let customReportrecord = data?.record || record;
+        let url = customReportrecord?.url || "";
+        me.router.navigate([`${url}/${customReportrecord.id}`]);
     }
     //---------------------------------------------------------
     getCustomReportUrl(): string {
         let route = this.activatedRoute;
-        if (route.snapshot.url.length >= 2) {
-            let segment1 = route.snapshot.url[0].path;
-            let segment2 = route.snapshot.url[1].path;
-            return `${segment1}/${segment2}/`;
+        if (route.snapshot.url.length >= 3) {
+            let segment0 = route.snapshot.url[0].path;     // system prefix segment, e.g. "bfs"
+            let segment1 = route.snapshot.url[1].path;     // entity/list segment, e.g. "report" or "client"
+            let segment2 = route.snapshot.url[2].path;     // repoty/entity name segment, e.g. "structure-report" or "list"
+            return `${segment0}/${segment1}/${segment2}/`;
         }
         return '';
     }
     //---------------------------------------------------------
     getCustomReportBaseReport(): string {
         let route = this.activatedRoute;
-        if (route.snapshot.url.length >= 2) {
-            let segment1 = route.snapshot.url[0].path;
-            let segment2 = route.snapshot.url[1].path;
+        if (route.snapshot.url.length >= 3) {
+            let segment1 = route.snapshot.url[1].path;
+            let segment2 = route.snapshot.url[2].path;
             return (segment1 == 'report') ? segment2 : (segment2 == 'list') ? segment1 : '';
         }
         return '';

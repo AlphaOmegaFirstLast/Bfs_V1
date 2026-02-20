@@ -14,17 +14,17 @@ namespace Bfs.Infrastructure.Api.Validators
 .MaximumLength(50)
 ;
 RuleFor(x => x.Notes)
-.MaximumLength(50)
+.MaximumLength(1000)
 ;
-RuleFor(x => x.MatchProprty)
-.NotEmpty().WithErrorCode(ErrorCodes.InvalidMatchProprty)
+RuleFor(x => x.MatchProperty)
+.NotEmpty().WithErrorCode(ErrorCodes.InvalidMatchProperty)
 .MinimumLength(3)
-.MaximumLength(50)
+.MaximumLength(1000)
 ;
 RuleFor(x => x.MatchValues)
 .NotEmpty().WithErrorCode(ErrorCodes.InvalidMatchValues)
 .MinimumLength(3)
-.MaximumLength(50)
+.MaximumLength(1000)
 ;
 
         }

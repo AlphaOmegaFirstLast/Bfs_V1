@@ -3,7 +3,7 @@ using Admin.App.Constants;
 
 namespace Admin.App
 {
-    public interface IBestFitComponent
+    public interface IComponentEntity
     {
         public long TenantId { get; set; }
         public bool IsDeleted { get; set; }

@@ -14,7 +14,7 @@ namespace Bfs.Infrastructure.Data.Models
 public long Id {get; set;} = 0 ;
 
         public long BfsComponentId {get; set;} = 0 ;
-public int SystemActionId {get; set;} = 0 ;
+public long SystemActionId {get; set;} = 0 ;
 public int ActionLocationId {get; set;} = 0 ;
 
     }

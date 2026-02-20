@@ -22,7 +22,7 @@ namespace Bfs.Infrastructure.Contracts
 ///<Summary>
         /// BfsComponentSystemAction Menu Action.
         ///</Summary>
-        public int SystemActionId {get; set;} = 0 ;
+        public long SystemActionId {get; set;} = 0 ;
 ///<Summary>
         /// BfsComponentSystemAction Menu Action.
         ///</Summary>

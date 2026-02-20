@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class BfsComponentSystemActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsComponentSystemActionRequest;
     override exportRequest = {} as IBfsComponentSystemActionRequest;
- //   override list: IQueryColumn ; //IBfsComponentSystemActionWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Component - System Actions";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class BfsComponentSystemActionListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/bfs-component-system-action/add/0", displayText: "Add New Component - System Actions" };
         this.getApiUrl = '/BfsComponentSystemAction/List';
+        this.uploadApiUrl = '/BfsComponentSystemAction/upload';
 
         this.filterComponent = BfsComponentSystemActionFilterComponent;
         this.queryRequest = initBfsComponentSystemActionRequest();

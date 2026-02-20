@@ -8,7 +8,7 @@ using OpenTelemetry.Resources;
 
 namespace Admin.App
 {
-    public class FieldWriter : ICodeWriter , IBestFitField
+    public class FieldWriter : ICodeWriter , IFieldEntity
     {
         public long Id { get; set; }
         public long BfsComponentId { get; set; }
@@ -84,7 +84,7 @@ namespace Admin.App
         public string matrixNameSmall = string.Empty;
         public string matrixFileName = string.Empty;
 
-        public FieldWriter(IBestFitField source)
+        public FieldWriter(IFieldEntity source)
         {
             if (source != null)
             {

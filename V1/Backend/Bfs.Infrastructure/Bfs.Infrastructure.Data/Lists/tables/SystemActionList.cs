@@ -48,7 +48,7 @@ _fieldList.Add(new QueryField() { DbName = "SystemAction.Name", QueryName = "Nam
 _fieldList.Add(new QueryField() { DbName = "SystemAction.Notes", QueryName = "Notes", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTypeId", QueryName = "ActionTypeId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.WriterTypeId", QueryName = "WriterTypeId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "SystemAction.MatchProprty", QueryName = "MatchProprty", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.MatchProperty", QueryName = "MatchProperty", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.MatchValues", QueryName = "MatchValues", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTemplate", QueryName = "ActionTemplate", IsAggregare = false });
 
@@ -85,10 +85,10 @@ sql.AppendLine($"   Left Join WriterType on SystemAction.WriterTypeId = WriterTy
                     sql.AppendLine("SystemAction.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
-if (!string.IsNullOrEmpty(filter.MatchProprty))
+if (!string.IsNullOrEmpty(filter.MatchProperty))
                 {
-                    sql.AppendLine("SystemAction.MatchProprty like '%'+@MatchProprty+'%' ");
-                    parameters.Add("@MatchProprty", filter.MatchProprty);
+                    sql.AppendLine("SystemAction.MatchProperty like '%'+@MatchProperty+'%' ");
+                    parameters.Add("@MatchProperty", filter.MatchProperty);
                 }
 if (!string.IsNullOrEmpty(filter.MatchValues))
                 {

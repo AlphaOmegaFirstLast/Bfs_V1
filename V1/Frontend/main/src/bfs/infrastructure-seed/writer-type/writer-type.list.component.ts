@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class WriterTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IWriterTypeRequest;
     override exportRequest = {} as IWriterTypeRequest;
- //   override list: IQueryColumn ; //IWriterTypeWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Writer Types";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class WriterTypeListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/writer-type/add/0", displayText: "Add New Writer Types" };
         this.getApiUrl = '/WriterType/List';
+        this.uploadApiUrl = '/WriterType/upload';
 
         this.filterComponent = WriterTypeFilterComponent;
         this.queryRequest = initWriterTypeRequest();

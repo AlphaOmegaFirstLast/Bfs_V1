@@ -25,7 +25,7 @@ namespace Bfs.Infrastructure.Contracts
 ///<Summary>
         /// SystemAction Writer Matching Property.
         ///</Summary>
-        public string MatchProprty {get; set;} = string.Empty ;
+        public string MatchProperty {get; set;} = string.Empty ;
 ///<Summary>
         /// SystemAction Writer Matching Values.
         ///</Summary>

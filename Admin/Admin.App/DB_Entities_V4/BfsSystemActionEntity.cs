@@ -3,7 +3,7 @@ using System;
 
 namespace Admin.App
 {
-    public class BfsSystemActionEntity: IBestFitAction
+    public class BfsSystemActionEntity: IActionEntity
     {
         public long TenantId { get; set; }
         public bool IsDeleted { get; set; }

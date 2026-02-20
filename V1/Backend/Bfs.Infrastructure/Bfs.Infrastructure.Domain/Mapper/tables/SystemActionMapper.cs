@@ -14,7 +14,7 @@ namespace Bfs.Infrastructure.Domain.Mapper
 Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
-MatchProprty= entity.MatchProprty,
+MatchProperty= entity.MatchProperty,
 MatchValues= entity.MatchValues,
 ActionTemplate= entity.ActionTemplate,
 
@@ -44,7 +44,7 @@ WriterTypeId= entity.WriterTypeId,
 SystemActionEntity.Id= contract.Id;
 SystemActionEntity.Name= contract.Name;
 SystemActionEntity.Notes= contract.Notes;
-SystemActionEntity.MatchProprty= contract.MatchProprty;
+SystemActionEntity.MatchProperty= contract.MatchProperty;
 SystemActionEntity.MatchValues= contract.MatchValues;
 SystemActionEntity.ActionTemplate= contract.ActionTemplate;
 

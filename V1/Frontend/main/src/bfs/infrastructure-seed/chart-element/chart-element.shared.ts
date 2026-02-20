@@ -9,7 +9,7 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 export const ChartElementColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------

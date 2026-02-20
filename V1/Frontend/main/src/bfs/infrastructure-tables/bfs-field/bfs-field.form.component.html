@@ -91,18 +91,6 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="parentTable" class="form-label fs-6">ParentTable</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="parentTable" formControlName="parentTable"
-            [class]="submit && !form['parentTable'].errors ? 'is-valid': submit && form['parentTable'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid ParentTable.</div>
-    </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-12">
         <label for="filterTypeId" class="form-label fs-6">Filter Type</label>
         <select class="form-select" id="filterTypeId" formControlName="filterTypeId"
             [class]="submit && !form['filterTypeId'].errors ? 'is-valid': submit && form['filterTypeId'].errors ? 'is-invalid' : ''">
@@ -162,7 +150,7 @@
                                                 <div class="col-12">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" id="isJoinField" formControlName="isJoinField" />
-                                                        <label class="form-check-label" for="isJoinField">Report Info</label>
+                                                        <label class="form-check-label" for="isJoinField">isJoinField</label>
                                                     </div>
                                                 </div>
                                             </div>

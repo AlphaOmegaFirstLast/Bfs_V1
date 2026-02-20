@@ -69,8 +69,14 @@ export class BfsFieldListComponent
     override render(record: IQueryColumn, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'id':
-                return this.sanitizer.sanitize(1, "<td>" + record['id']?.toString() + "</td>"+ "<td> hello </td>") || "";
+            case 'reportInfo':
+                return this.sanitizer.sanitize(1, 
+                "<td>" + record['ParentTable']?.toString() + "</td>"
+                + "<td>isQueryColumn" + record['isQueryColumn']?.toString() + "</td>"
+                + "<td>isColumnVisible" + record['isColumnVisible']?.toString() + "</td>"
+                + "<td>aggregate" + record['aggregateTypeId']?.toString() + "</td>"
+                + "<td>chart" + record['chartTypeId']?.toString() + "</td>"
+                ) || "";
             case 'bfsComponentId':
                 return record['bfsComponentName']?.toString();
 case 'filterTypeId':

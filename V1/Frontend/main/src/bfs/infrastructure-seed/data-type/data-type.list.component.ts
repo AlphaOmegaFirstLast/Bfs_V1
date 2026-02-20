@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class DataTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IDataTypeRequest;
     override exportRequest = {} as IDataTypeRequest;
- //   override list: IQueryColumn ; //IDataTypeWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Data Types";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class DataTypeListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/data-type/add/0", displayText: "Add New Data Types" };
         this.getApiUrl = '/DataType/List';
+        this.uploadApiUrl = '/DataType/upload';
 
         this.filterComponent = DataTypeFilterComponent;
         this.queryRequest = initDataTypeRequest();

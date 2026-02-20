@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class BackendDataTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBackendDataTypeRequest;
     override exportRequest = {} as IBackendDataTypeRequest;
- //   override list: IQueryColumn ; //IBackendDataTypeWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Backend Data Types";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class BackendDataTypeListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/backend-data-type/add/0", displayText: "Add New Backend Data Types" };
         this.getApiUrl = '/BackendDataType/List';
+        this.uploadApiUrl = '/BackendDataType/upload';
 
         this.filterComponent = BackendDataTypeFilterComponent;
         this.queryRequest = initBackendDataTypeRequest();

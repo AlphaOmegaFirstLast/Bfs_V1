@@ -13,13 +13,17 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsFieldColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+    { fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible:false },
+{ fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
 { fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponent', width: '50px', isVisible:true },
 { fieldName: 'field', displayName: 'Field', sortName: 'Field', width: '50px', isVisible:true },
 { fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
-{ fieldName: 'parentTable', displayName: 'ParentTable', sortName: 'ParentTable', width: '50px', isVisible:true },
 { fieldName: 'filterTypeId', displayName: 'Filter Type', sortName: 'FilterType', width: '50px', isVisible:true },
 { fieldName: 'backendDataTypeId', displayName: 'Backend Type', sortName: 'BackendDataType', width: '50px', isVisible:true },
+{ fieldName: 'reportInfo', displayName: 'Report Info', sortName: 'ReportInfo', width: '50px', isVisible:false },
+{ fieldName: 'matrixInfo', displayName: 'Matrix Info', sortName: 'MatrixInfo', width: '50px', isVisible:false },
+{ fieldName: 'toolTipInfo', displayName: 'ToolTip Info', sortName: 'ToolTipInfo', width: '50px', isVisible:false },
+{ fieldName: 'formInfo', displayName: 'Form Info', sortName: 'FormInfo', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -28,7 +32,6 @@ export interface IBfsField {
 id?: string;
 field?: string;
 displayName?: string;
-parentTable?: string;
 
     bfsComponentId?: string;
 filterTypeId?: number;
@@ -48,7 +51,6 @@ export function initBfsField(): IBfsField {
 id: '0',
 field: '',
 displayName: '',
-parentTable: '',
 
         bfsComponentId: '0',
 filterTypeId: 0,
@@ -72,7 +74,6 @@ export function bfsFieldUntypedFormGroup(formBuilder: FormBuilder): any {
 id: ['0'],
 field: [''],
 displayName: [''],
-parentTable: [''],
 
     bfsComponentId: ['0'],
 filterTypeId: [0],

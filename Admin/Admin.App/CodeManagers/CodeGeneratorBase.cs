@@ -24,11 +24,11 @@ namespace Admin.App
 
         // Lists are public for user interaction in the UI
         public List<BestFitTemplate> TemplateList { get; set; } = new List<BestFitTemplate>();
-        public List<IBestFitSystem> SystemList { get; set; } = new List<IBestFitSystem>();
-        public List<IBestFitComponent> ComponentList { get; set; } = new List<IBestFitComponent>();
+        public List<ISystemEntity> SystemList { get; set; } = new List<ISystemEntity>();
+        public List<IComponentEntity> ComponentList { get; set; } = new List<IComponentEntity>();
 
         public List<BestFitTemplate> SelectedTemplateList { get; set; } = new List<BestFitTemplate>();
-        public List<IBestFitComponent> SelectedComponentList { get; set; } = new List<IBestFitComponent>();
+        public List<IComponentEntity> SelectedComponentList { get; set; } = new List<IComponentEntity>();
 
         public BestFitTemplate? CurrentTemplate { get; set; } = null;
         public SystemWriter? CurrentSystem { get; set; }
@@ -37,9 +37,9 @@ namespace Admin.App
 
         public List<PlaceHolderInfo> FlatPlaceHolderList { get; set; } = new List<PlaceHolderInfo>();
 
-        public List<IBestFitField> FieldList { get; set; } = new List<IBestFitField>();
-        public List<IBestFitAction> SystemActionList { get; set; } = new List<IBestFitAction>();
-        public List<IBestFitAction> BusinessActionList { get; set; } = new List<IBestFitAction>();
+        public List<IFieldEntity> FieldList { get; set; } = new List<IFieldEntity>();
+        public List<IActionEntity> SystemActionList { get; set; } = new List<IActionEntity>();
+        public List<IActionEntity> BusinessActionList { get; set; } = new List<IActionEntity>();
         public List<ActionWriter> ComponentActionList { get; set; } = new List<ActionWriter>();
 
         public CodeGeneratorBase()
@@ -61,7 +61,7 @@ namespace Admin.App
         }
 
 
-        public void SetSystem(IBestFitSystem systemEntity)
+        public void SetSystem(ISystemEntity systemEntity)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace Admin.App
             }
         }
 
-        public void SetComponent(IBestFitComponent componentEntity)
+        public void SetComponent(IComponentEntity componentEntity)
         {
             if (componentEntity !=null && !SelectedComponentList.Any(x => x.Id == componentEntity.Id))
             {

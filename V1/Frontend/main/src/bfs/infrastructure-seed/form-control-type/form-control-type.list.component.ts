@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class FormControlTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IFormControlTypeRequest;
     override exportRequest = {} as IFormControlTypeRequest;
- //   override list: IQueryColumn ; //IFormControlTypeWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Form Control Types";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class FormControlTypeListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/form-control-type/add/0", displayText: "Add New Form Control Types" };
         this.getApiUrl = '/FormControlType/List';
+        this.uploadApiUrl = '/FormControlType/upload';
 
         this.filterComponent = FormControlTypeFilterComponent;
         this.queryRequest = initFormControlTypeRequest();

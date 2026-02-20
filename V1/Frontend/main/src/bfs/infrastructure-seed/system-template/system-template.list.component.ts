@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class SystemTemplateListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ISystemTemplateRequest;
     override exportRequest = {} as ISystemTemplateRequest;
- //   override list: IQueryColumn ; //ISystemTemplateWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "System Templates";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class SystemTemplateListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/system-template/add/0", displayText: "Add New System Templates" };
         this.getApiUrl = '/SystemTemplate/List';
+        this.uploadApiUrl = '/SystemTemplate/upload';
 
         this.filterComponent = SystemTemplateFilterComponent;
         this.queryRequest = initSystemTemplateRequest();

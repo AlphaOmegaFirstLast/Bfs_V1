@@ -20,8 +20,6 @@ namespace Admin.App
                 foreach (var placeHolder in bestFitPlaceHolder.PlaceHolderInfoList)
                 {
                     placeHolder.WriterType = bestFitPlaceHolder.WriterType;
-                    //placeHolder.TemplateElementType = bestFitPlaceHolder.TemplateElementType;
-                    //placeHolder.CodeType = bestFitPlaceHolder.CodeType;
                 }
             }
             return list;

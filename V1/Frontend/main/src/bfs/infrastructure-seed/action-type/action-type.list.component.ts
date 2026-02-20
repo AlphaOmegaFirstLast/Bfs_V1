@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class ActionTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IActionTypeRequest;
     override exportRequest = {} as IActionTypeRequest;
- //   override list: IQueryColumn ; //IActionTypeWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Action Types";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class ActionTypeListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/action-type/add/0", displayText: "Add New Action Types" };
         this.getApiUrl = '/ActionType/List';
+        this.uploadApiUrl = '/ActionType/upload';
 
         this.filterComponent = ActionTypeFilterComponent;
         this.queryRequest = initActionTypeRequest();

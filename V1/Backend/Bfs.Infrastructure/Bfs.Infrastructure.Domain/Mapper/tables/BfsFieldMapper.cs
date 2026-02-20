@@ -14,7 +14,6 @@ namespace Bfs.Infrastructure.Domain.Mapper
 Id= entity.Id,
 Field= entity.Field,
 DisplayName= entity.DisplayName,
-ParentTable= entity.ParentTable,
 
                BfsComponentId= entity.BfsComponentId,
 FilterTypeId= entity.FilterTypeId,
@@ -49,7 +48,6 @@ FormInfo= entity.FormInfo.ToContract(),
 BfsFieldEntity.Id= contract.Id;
 BfsFieldEntity.Field= contract.Field;
 BfsFieldEntity.DisplayName= contract.DisplayName;
-BfsFieldEntity.ParentTable= contract.ParentTable;
 
             BfsFieldEntity.BfsComponentId= contract.BfsComponentId;
 BfsFieldEntity.FilterTypeId= contract.FilterTypeId;

@@ -13,6 +13,15 @@ namespace Bfs.Infrastructure.Api.Validators
 .MinimumLength(3)
 .MaximumLength(50)
 ;
+RuleFor(x => x.BaseReport)
+.MaximumLength(1000)
+;
+RuleFor(x => x.CreatedBy)
+.MaximumLength(1000)
+;
+RuleFor(x => x.Url)
+.MaximumLength(1000)
+;
 
         }
     }

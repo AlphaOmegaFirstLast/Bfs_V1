@@ -7,7 +7,7 @@ namespace Bfs.Infrastructure.Data
     {
 
         public long? BfsComponentId { get; set; }
-public int? SystemActionId { get; set; }
+public long? SystemActionId { get; set; }
 public int? ActionLocationId { get; set; }
 
     }
