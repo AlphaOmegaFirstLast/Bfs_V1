@@ -93,7 +93,7 @@ export class [ReportNameCapital]Component
 
 //Template_Start_Component_Table_2
     override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = get[ComponentFileName]Actions(record);
+        let actions = get[ComponentFileName]Actions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -105,7 +105,7 @@ export class [ReportNameCapital]Component
     }
     //---------------------------------------------------------
     override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = get[ComponentFileName]Actions(record);
+        let actions = get[ComponentFileName]Actions(this, record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'

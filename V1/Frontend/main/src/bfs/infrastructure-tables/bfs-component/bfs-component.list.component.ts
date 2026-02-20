@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ export class BfsComponentListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsComponentRequest;
     override exportRequest = {} as IBfsComponentRequest;
- //   override list: IQueryColumn ; //IBfsComponentWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "BestFit Component";
 
     //------------------------------------------------------
@@ -59,6 +60,7 @@ export class BfsComponentListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/bfs-component/add/0", displayText: "Add New BestFit Component" };
         this.getApiUrl = '/BfsComponent/List';
+        this.uploadApiUrl = '/BfsComponent/upload';
 
         this.filterComponent = BfsComponentFilterComponent;
         this.queryRequest = initBfsComponentRequest();
@@ -80,7 +82,7 @@ case 'dataTypeId':
     //---------------------------------------------------------
 
 override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getBfsComponentActions(record);
+        let actions = getBfsComponentActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -92,7 +94,7 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
     }
     //---------------------------------------------------------
     override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getBfsComponentActions(record);
+        let actions = getBfsComponentActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'

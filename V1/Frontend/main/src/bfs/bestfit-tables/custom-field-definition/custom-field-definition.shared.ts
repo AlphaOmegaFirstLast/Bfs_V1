@@ -49,7 +49,7 @@ displayName?: string;
 //---------------------------------------------------------
 export interface ICustomFieldDefinitionWithLookup extends ICustomFieldDefinition{
 
-    component?: string;
+    bfsComponentName?: string;
 
 }
 //---------------------------------------------------------

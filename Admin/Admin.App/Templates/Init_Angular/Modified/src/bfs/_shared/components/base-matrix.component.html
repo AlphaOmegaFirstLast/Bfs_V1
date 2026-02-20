@@ -47,16 +47,16 @@
                 <table class="table table-striped table-bordered table-hover">
                     <tr>
                         <th width="200px">{{title}}</th>
-                        <ng-container *ngFor="let column of verticalList">
+                        <ng-container *ngFor="let record of horizontalList">
                             <th width="auto">
-                                {{ column.name }}
+                                {{ record.name }}
                             </th>
                         </ng-container>
                     </tr>
 
-                    <tr *ngFor="let record of horizontalList">
-                        <td>{{record.name}}</td>
-                        <ng-container *ngFor="let column of verticalList">
+                    <tr *ngFor="let column of verticalList">
+                        <td>{{column.name}}</td>
+                        <ng-container *ngFor="let record of horizontalList">
                             <td> <input  *ngIf="isVisible(me, record, column)" type="checkbox" [checked]="isChecked(me, record, column)" (click)="onCheckboxClick(me, record, column);"> </td>
                         </ng-container>
                     </tr>

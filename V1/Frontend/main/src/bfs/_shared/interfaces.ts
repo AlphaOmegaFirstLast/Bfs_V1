@@ -96,7 +96,16 @@ export interface IEntity {
     customFields?: ICustomField[];
 }
 //------------------------------------------------
-
+export interface ICustomFieldDefinitionRecord
+{
+    id?: string;
+    name?: string;
+    displayName?: string;
+    bfsComponentId?: string;
+    fieldValidation?: string;
+    bfsComponentName?: string;
+}
+//------------------------------------------------
 export function formatFilter(filter?: FilterObject): string[] {
     const result: string[] = [];
     if (filter) {

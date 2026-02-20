@@ -30,8 +30,6 @@ namespace CodeAdmin
         private void FormGenerator_Load(object sender, EventArgs e)
         {
             // init UI controls
-            //tabInfo.SizeMode = TabSizeMode.Fixed;
-            //tabInfo.ItemSize = new Size(120, 35);
             foreach (var control in this.Controls)
             {
                 if (control is Button button)
@@ -204,8 +202,8 @@ namespace CodeAdmin
 
             foreach (DataGridViewColumn column in dataGridView.Columns)
             {
-                column.Visible = (column.Name == "Name" || column.Name == "DisplayName");
-                column.Width = column.Visible ? 250 : 0;
+                column.Visible = (column.Name == "Name");
+                column.Width = column.Visible ? 350 : 0;
             }
 
             var selectButton = new DataGridViewButtonColumn() { Name = "ActionColumn", HeaderText = "Action", Text = "select", Width = 90 };

@@ -78,7 +78,7 @@ export class BfsClientListComponent
     //---------------------------------------------------------
 
 override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getBfsClientActions(record);
+        let actions = getBfsClientActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -90,7 +90,7 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
     }
     //---------------------------------------------------------
     override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getBfsClientActions(record);
+        let actions = getBfsClientActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'

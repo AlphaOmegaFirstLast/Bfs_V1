@@ -137,7 +137,7 @@
 <div class="row mb-2">
     <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="it holds info about the component represented by this record"  />
 
         <input class="form-control" type="text" id="notes" formControlName="notes"
             [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />

@@ -130,7 +130,7 @@
             Controls.Add(label1);
             Controls.Add(txtTemplate);
             Name = "UserControlGenerateItem";
-            Size = new Size(1140, 79);
+            Size = new Size(1240, 79);
             ResumeLayout(false);
             PerformLayout();
         }

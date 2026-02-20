@@ -9,21 +9,21 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const CustomFieldDefinitionColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
-{ fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible:true },
-{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponent', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible: true },
+    { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible: true },
+    { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible: true },
+    { fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible: true },
+    { fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible: true },
+    { fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponent', width: '50px', isVisible: true },
 
 ];
 //---------------------------------------------------------
 export interface ICustomFieldDefinition {
     isDeleted?: boolean;
-id?: string;
-name?: string;
-notes?: string;
-displayName?: string;
+    id?: string;
+    name?: string;
+    notes?: string;
+    displayName?: string;
 
     bfsComponentId?: string;
 
@@ -34,10 +34,10 @@ displayName?: string;
 export function initCustomFieldDefinition(): ICustomFieldDefinition {
     let entity: ICustomFieldDefinition = {
         isDeleted: false,
-id: '0',
-name: '',
-notes: '',
-displayName: '',
+        id: '0',
+        name: '',
+        notes: '',
+        displayName: '',
 
         bfsComponentId: '0',
 
@@ -51,26 +51,26 @@ displayName: '',
 // Fields of an Entity [used in Entity form]
 export function customFieldDefinitionUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false],
-id: ['0'],
-name: [''],
-notes: [''],
-displayName: [''],
+        isDeleted: [false],
+        id: ['0'],
+        name: [''],
+        notes: [''],
+        displayName: [''],
 
-    bfsComponentId: ['0'],
+        bfsComponentId: ['0'],
 
-    fieldValidation: fieldValidationUntypedFormGroup(formBuilder),
+        fieldValidation: fieldValidationUntypedFormGroup(formBuilder),
 
     };
-} 
+}
 //---------------------------------------------------------
-export interface ICustomFieldDefinitionWithLookup extends ICustomFieldDefinition{
+export interface ICustomFieldDefinitionWithLookup extends ICustomFieldDefinition {
 
     bfsComponentName?: string;
 
 }
 //---------------------------------------------------------
-export interface ICustomFieldDefinitionRequest extends IEntityRequest<ICustomFieldDefinitionFilter> {}
+export interface ICustomFieldDefinitionRequest extends IEntityRequest<ICustomFieldDefinitionFilter> { }
 
 //---------------------------------------------------------
 export interface ICustomFieldDefinitionFilter {
@@ -91,14 +91,14 @@ export function initCustomFieldDefinitionRequest(): ICustomFieldDefinitionReques
         sortOption: {
             sortBy: 'id',
             direction: 'asc'
-            },
+        },
         filter: {
 
-            Name: undefined ,
+            Name: undefined,
 
-            BfsComponentId: undefined ,
+            BfsComponentId: undefined,
 
-            }
+        }
     };
 
     return JSON.parse(JSON.stringify(request));
@@ -106,32 +106,32 @@ export function initCustomFieldDefinitionRequest(): ICustomFieldDefinitionReques
 //---------------------------------------------------------
 
 export function getCustomFieldDefinitionActions(record: IQueryColumn): IAction[] {
-        let links: IAction[] = [];
+    let links: IAction[] = [];
 
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/custom-field-definition/add', displayText: 'Add New record' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/view', displayText: 'View...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/delete', displayText: 'Delete...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText:'Go to BfsComponent' 
-});
+    links.push({
+        actionSource: '0', actionType: 'FrontendLink', actionLocation: 'ListHeader', recordId: 0, route: '/bfs/custom-field-definition/add', displayText: 'Add New record'
+    });
+    links.push({
+        actionSource: '0', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/bfs/custom-field-definition/view', displayText: 'View...'
+    });
+    links.push({
+        actionSource: '0', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/bfs/custom-field-definition/edit', displayText: 'Edit...'
+    });
+    links.push({
+        actionSource: '0', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/bfs/custom-field-definition/delete', displayText: 'Delete...'
+    });
+    links.push({
+        actionSource: '0', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['bfsComponentId'], route: '/bfs/bfs-component/view', displayText: 'Go to BfsComponent'
+    });
 
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/CustomFieldDefinition', onSuccessMethodName: 'getReport' } 
-});
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/CustomFieldDefinition/DuplicateTree', onSuccessMethodName: 'getReport' } 
-});
+    links.push({
+        actionSource: '0', actionType: 'FrontendFunction', actionLocation: 'ListRow', recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: { recordId: record['id'], postUrl: '/CustomFieldDefinition', onSuccessMethodName: 'getReport' }
+    });
+    links.push({
+        actionSource: '0', actionType: 'FrontendFunction', actionLocation: 'ListRow', recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/CustomFieldDefinition/DuplicateTree', onSuccessMethodName: 'getReport' }
+    });
 
-        return links;
-    }
-    //---------------------------------------------------------
+    return links;
+}
+//---------------------------------------------------------
 

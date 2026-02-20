@@ -13,10 +13,13 @@ export const BfsComponentColumns = [
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 { fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
 { fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataType', width: '50px', isVisible:true },
-{ fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:true },
-{ fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:true },
+{ fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:false },
+{ fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:false },
 { fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'bfsField', displayName: 'Structure \ Fields', sortName: 'BfsField', width: '50px', isVisible:false },
+{ fieldName: 'systemAction', displayName: 'System Actions', sortName: 'SystemAction', width: '50px', isVisible:false },
+{ fieldName: 'businessAction', displayName: 'Business Actions', sortName: 'BusinessAction', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -119,33 +122,60 @@ DataTypeId: undefined ,
 }
 //---------------------------------------------------------
 
-export function getBfsComponentActions(record: IQueryColumn): IAction[] {
+export function getBfsComponentActions(component: any, record: IQueryColumn): IAction[] {
         let links: IAction[] = [];
 
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-component/add', displayText: 'Add New record' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/view', displayText: 'View...'
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/view', displayText: 'View...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/edit', displayText: 'Edit...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/edit', displayText: 'Edit...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/delete', displayText: 'Delete...' 
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/delete', displayText: 'Delete...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-component/add', displayText: 'Add New record'
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText:'Go to BfsSystem' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/view', displayText: 'View...'
 });
 links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['dataTypeId'], route:'/bfs/data-type/view', displayText:'Go to DataType' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/edit', displayText: 'Edit...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/delete', displayText: 'Delete...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-component/add', displayText: 'Add New record'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/view', displayText: 'View...'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/edit', displayText: 'Edit...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component/delete', displayText: 'Delete...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText:'Go to BfsSystem'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['dataTypeId'], route:'/bfs/data-type/view', displayText:'Go to DataType'
 });
 
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BfsComponent', onSuccessMethodName: 'getReport' } 
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: component.goToCustomReport, displayText: 'Go To Custom Report', data: {'record':record}
 });
 links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' } 
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsComponent', onSuccessMethodName: 'getReport' }
+});
+links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' }
+});
+links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
 });
 
         return links;

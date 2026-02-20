@@ -143,7 +143,7 @@ export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Requ
 }
 //---------------------------------------------------------
 
-export function get[ComponentNameCapital]Actions(record: IQueryColumn): IAction[] {
+export function get[ComponentNameCapital]Actions(component: any, record: IQueryColumn): IAction[] {
         let links: IAction[] = [];
 
            //Template_Action_FrontendLink

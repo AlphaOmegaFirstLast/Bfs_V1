@@ -11,7 +11,7 @@
                                                             submit && customField.get('value')?.errors ? 'is-invalid' : ''" />
 
                                                             <div class="valid-feedback">Looks good!</div>
-                                                            <div class="invalid-feedback">Invalid {{ customField.get('name')?.value }}.</div>
+                                                            <div class="invalid-feedback">{{ getValidationErrorMessage(customField.get('name')?.value, customField.get('value')) }}</div>
                                                         </div>
                                                     </div>
                                                 </div>

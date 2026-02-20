@@ -91,14 +91,8 @@
                                     <div *ngFor="let link of getRecordLinks(record)">
                                         <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
                                     </div>
-                                    <div *ngFor="let link of getListRecordActions(record)">
+                                    <div *ngFor="let link of getRecordActions(record)">
                                         <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, record, link.data)">{{link.displayText}}</a>
-                                    </div>
-                                    <div *ngFor="let link of getRecordBusinessActions(record)">
-                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, record, link.data)">{{link.displayText}}</a>
-                                    </div>
-                                    <div *ngFor="let link of getRecordLookupLinks(record)">
-                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>Go to {{link.displayText}}</a>
                                     </div>
                                 </div>
                             </div>

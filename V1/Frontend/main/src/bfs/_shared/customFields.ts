@@ -1,4 +1,6 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
+import { ICustomFieldDefinition } from "@bfs/bestfit-tables/custom-field-definition/custom-field-definition.shared";
+import { ICustomFieldDefinitionRecord } from "./interfaces";
 
 export interface ICustomField {
     customFieldDefinitionId?: string;
@@ -6,11 +8,11 @@ export interface ICustomField {
     value?: string;
 }
 //------------------------------------------------
-export function initCustomField(): ICustomField {
+export function initCustomField(definition: ICustomFieldDefinitionRecord, customField?: ICustomField ): ICustomField {
     return {
-        customFieldDefinitionId: '0',
-        name: '',
-        value: ''
+        customFieldDefinitionId: definition.id,
+        name: definition.displayName,
+        value: customField? customField.value : ''
     }
 }
 //---------------------------------------------------------

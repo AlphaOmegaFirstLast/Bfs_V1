@@ -114,7 +114,7 @@
             tabInfo.Name = "tabInfo";
             tabInfo.Padding = new Point(60, 10);
             tabInfo.SelectedIndex = 0;
-            tabInfo.Size = new Size(691, 678);
+            tabInfo.Size = new Size(565, 700);
             tabInfo.TabIndex = 9;
             // 
             // tabTables
@@ -125,7 +125,7 @@
             tabTables.Location = new Point(4, 48);
             tabTables.Name = "tabTables";
             tabTables.Padding = new Padding(3);
-            tabTables.Size = new Size(683, 626);
+            tabTables.Size = new Size(557, 648);
             tabTables.TabIndex = 0;
             tabTables.Text = "Tables";
             tabTables.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@
             dataGridTables.Location = new Point(10, 40);
             dataGridTables.Name = "dataGridTables";
             dataGridTables.RowHeadersWidth = 62;
-            dataGridTables.Size = new Size(665, 635);
+            dataGridTables.Size = new Size(530, 600);
             dataGridTables.TabIndex = 0;
             // 
             // tabReports
@@ -158,7 +158,7 @@
             tabReports.Location = new Point(4, 48);
             tabReports.Name = "tabReports";
             tabReports.Padding = new Padding(3);
-            tabReports.Size = new Size(683, 626);
+            tabReports.Size = new Size(557, 648);
             tabReports.TabIndex = 1;
             tabReports.Text = "Reports";
             tabReports.UseVisualStyleBackColor = true;
@@ -180,7 +180,7 @@
             dataGridReports.Location = new Point(10, 40);
             dataGridReports.Name = "dataGridReports";
             dataGridReports.RowHeadersWidth = 62;
-            dataGridReports.Size = new Size(665, 635);
+            dataGridReports.Size = new Size(530, 600);
             dataGridReports.TabIndex = 1;
             // 
             // tabSeeds
@@ -190,7 +190,7 @@
             tabSeeds.ForeColor = SystemColors.ActiveCaptionText;
             tabSeeds.Location = new Point(4, 48);
             tabSeeds.Name = "tabSeeds";
-            tabSeeds.Size = new Size(683, 626);
+            tabSeeds.Size = new Size(557, 648);
             tabSeeds.TabIndex = 2;
             tabSeeds.Text = "Seeds";
             tabSeeds.UseVisualStyleBackColor = true;
@@ -212,7 +212,7 @@
             dataGridSeeds.Location = new Point(10, 40);
             dataGridSeeds.Name = "dataGridSeeds";
             dataGridSeeds.RowHeadersWidth = 62;
-            dataGridSeeds.Size = new Size(665, 635);
+            dataGridSeeds.Size = new Size(530, 600);
             dataGridSeeds.TabIndex = 1;
             // 
             // label1
@@ -236,7 +236,7 @@
             // 
             // btnGenerateAll
             // 
-            btnGenerateAll.Location = new Point(704, 256);
+            btnGenerateAll.Location = new Point(618, 254);
             btnGenerateAll.Name = "btnGenerateAll";
             btnGenerateAll.Size = new Size(230, 35);
             btnGenerateAll.TabIndex = 12;
@@ -246,7 +246,7 @@
             // 
             // btnModifyAll
             // 
-            btnModifyAll.Location = new Point(704, 297);
+            btnModifyAll.Location = new Point(618, 295);
             btnModifyAll.Name = "btnModifyAll";
             btnModifyAll.Size = new Size(230, 35);
             btnModifyAll.TabIndex = 13;
@@ -256,7 +256,7 @@
             // 
             // btnModifyComponent
             // 
-            btnModifyComponent.Location = new Point(950, 297);
+            btnModifyComponent.Location = new Point(864, 295);
             btnModifyComponent.Name = "btnModifyComponent";
             btnModifyComponent.Size = new Size(230, 35);
             btnModifyComponent.TabIndex = 15;
@@ -266,7 +266,7 @@
             // 
             // btnGenerateComponent
             // 
-            btnGenerateComponent.Location = new Point(950, 256);
+            btnGenerateComponent.Location = new Point(864, 254);
             btnGenerateComponent.Name = "btnGenerateComponent";
             btnGenerateComponent.Size = new Size(230, 35);
             btnGenerateComponent.TabIndex = 14;
@@ -276,7 +276,7 @@
             // 
             // btnShowModify
             // 
-            btnShowModify.Location = new Point(1196, 297);
+            btnShowModify.Location = new Point(1110, 295);
             btnShowModify.Name = "btnShowModify";
             btnShowModify.Size = new Size(230, 35);
             btnShowModify.TabIndex = 17;
@@ -286,7 +286,7 @@
             // 
             // btnShowGenerate
             // 
-            btnShowGenerate.Location = new Point(1196, 256);
+            btnShowGenerate.Location = new Point(1110, 254);
             btnShowGenerate.Name = "btnShowGenerate";
             btnShowGenerate.Size = new Size(230, 35);
             btnShowGenerate.TabIndex = 16;
@@ -296,7 +296,7 @@
             // 
             // btnRollBackModifyComponent
             // 
-            btnRollBackModifyComponent.Location = new Point(1442, 297);
+            btnRollBackModifyComponent.Location = new Point(1356, 295);
             btnRollBackModifyComponent.Name = "btnRollBackModifyComponent";
             btnRollBackModifyComponent.Size = new Size(230, 35);
             btnRollBackModifyComponent.TabIndex = 19;
@@ -306,7 +306,7 @@
             // 
             // btnRollBackGenerateComponent
             // 
-            btnRollBackGenerateComponent.Location = new Point(1442, 256);
+            btnRollBackGenerateComponent.Location = new Point(1356, 254);
             btnRollBackGenerateComponent.Name = "btnRollBackGenerateComponent";
             btnRollBackGenerateComponent.Size = new Size(230, 35);
             btnRollBackGenerateComponent.TabIndex = 18;
@@ -317,7 +317,7 @@
             // txtNameCapital
             // 
             txtNameCapital.ForeColor = SystemColors.HotTrack;
-            txtNameCapital.Location = new Point(701, 216);
+            txtNameCapital.Location = new Point(615, 214);
             txtNameCapital.Name = "txtNameCapital";
             txtNameCapital.Size = new Size(230, 31);
             txtNameCapital.TabIndex = 20;
@@ -325,7 +325,7 @@
             // txtNameSmall
             // 
             txtNameSmall.ForeColor = SystemColors.HotTrack;
-            txtNameSmall.Location = new Point(950, 216);
+            txtNameSmall.Location = new Point(864, 214);
             txtNameSmall.Name = "txtNameSmall";
             txtNameSmall.Size = new Size(230, 31);
             txtNameSmall.TabIndex = 21;
@@ -333,7 +333,7 @@
             // txtMenuName
             // 
             txtMenuName.ForeColor = SystemColors.HotTrack;
-            txtMenuName.Location = new Point(1196, 216);
+            txtMenuName.Location = new Point(1110, 214);
             txtMenuName.Name = "txtMenuName";
             txtMenuName.Size = new Size(230, 31);
             txtMenuName.TabIndex = 22;
@@ -341,7 +341,7 @@
             // txtFileName
             // 
             txtFileName.ForeColor = SystemColors.HotTrack;
-            txtFileName.Location = new Point(1442, 216);
+            txtFileName.Location = new Point(1356, 214);
             txtFileName.Name = "txtFileName";
             txtFileName.Size = new Size(230, 31);
             txtFileName.TabIndex = 23;
@@ -350,7 +350,7 @@
             // 
             label2.AutoSize = true;
             label2.ForeColor = Color.Red;
-            label2.Location = new Point(704, 188);
+            label2.Location = new Point(618, 186);
             label2.Name = "label2";
             label2.Size = new Size(118, 25);
             label2.TabIndex = 24;
@@ -360,7 +360,7 @@
             // 
             label3.AutoSize = true;
             label3.ForeColor = Color.Red;
-            label3.Location = new Point(1436, 188);
+            label3.Location = new Point(1350, 186);
             label3.Name = "label3";
             label3.Size = new Size(167, 25);
             label3.TabIndex = 25;
@@ -370,7 +370,7 @@
             // 
             label4.AutoSize = true;
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(1192, 188);
+            label4.Location = new Point(1106, 186);
             label4.Name = "label4";
             label4.Size = new Size(175, 25);
             label4.TabIndex = 26;
@@ -380,7 +380,7 @@
             // 
             label5.AutoSize = true;
             label5.ForeColor = Color.Red;
-            label5.Location = new Point(948, 188);
+            label5.Location = new Point(862, 186);
             label5.Name = "label5";
             label5.Size = new Size(107, 25);
             label5.TabIndex = 27;
@@ -389,25 +389,25 @@
             // panelItems
             // 
             panelItems.AutoScroll = true;
-            panelItems.Location = new Point(704, 339);
+            panelItems.Location = new Point(618, 337);
             panelItems.Name = "panelItems";
-            panelItems.Size = new Size(1210, 632);
+            panelItems.Size = new Size(1270, 632);
             panelItems.TabIndex = 28;
             // 
             // txtMessage
             // 
-            txtMessage.Location = new Point(16, 881);
+            txtMessage.Location = new Point(16, 876);
             txtMessage.Multiline = true;
             txtMessage.Name = "txtMessage";
             txtMessage.ScrollBars = ScrollBars.Both;
-            txtMessage.Size = new Size(687, 90);
+            txtMessage.Size = new Size(557, 90);
             txtMessage.TabIndex = 29;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(12, 846);
+            label6.Location = new Point(12, 841);
             label6.Name = "label6";
             label6.Size = new Size(64, 28);
             label6.TabIndex = 30;
@@ -421,7 +421,7 @@
             panel1.Controls.Add(ckKeepExistingCode);
             panel1.Controls.Add(panelBackend);
             panel1.Controls.Add(panelFrontend);
-            panel1.Location = new Point(703, 2);
+            panel1.Location = new Point(617, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(965, 183);
             panel1.TabIndex = 31;
@@ -450,7 +450,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(12, 19);
+            label7.Location = new Point(17, 19);
             label7.Name = "label7";
             label7.Size = new Size(115, 28);
             label7.TabIndex = 32;
@@ -466,9 +466,9 @@
             // 
             // btnGenerateSystem
             // 
-            btnGenerateSystem.Location = new Point(397, 60);
+            btnGenerateSystem.Location = new Point(388, 60);
             btnGenerateSystem.Name = "btnGenerateSystem";
-            btnGenerateSystem.Size = new Size(288, 33);
+            btnGenerateSystem.Size = new Size(185, 33);
             btnGenerateSystem.TabIndex = 34;
             btnGenerateSystem.Text = "Select System";
             btnGenerateSystem.UseVisualStyleBackColor = true;
@@ -478,11 +478,11 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.Location = new Point(397, 12);
+            label8.Location = new Point(388, 7);
             label8.Name = "label8";
-            label8.Size = new Size(224, 28);
+            label8.Size = new Size(193, 28);
             label8.TabIndex = 35;
-            label8.Text = "Set Dir manually in code";
+            label8.Text = "Set manually in code";
             // 
             // FormGenerator
             // 

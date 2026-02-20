@@ -6,12 +6,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormArray, type UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { ClipboardService } from '@core/services/clipboard.service';
 
-import { IQueryResponse, ILookup, IUIMessage, IEntity } from '@bfs/_shared/interfaces';
+import { IQueryResponse, ILookup, IUIMessage, IEntity , ICustomFieldDefinitionRecord} from '@bfs/_shared/interfaces';
 import { getFormControlValidation, getFormInfoLookups } from '@bfs/_shared/objectFields';
 import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } from '@bfs/_shared/objectFields';
 
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
-import { ICustomFieldDefinition, ICustomFieldDefinitionWithLookup } from '@bfs/bestfit-tables/custom-field-definition/custom-field-definition.shared';
 //------------------------------------------- Component Specific ------------------------------------------------
 
 @Directive()
@@ -32,20 +31,19 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     public currentOperation: string = '';
     public parent: any;
     public messages: IUIMessage[] = [];
-    public customFieldDefinitionList: ICustomFieldDefinition[] = [];
 
     entity: Entity;
     //-----------------------Object Fields Lookups----------------------------------
-    public ChartElementOptions: { id: number, name: string }[] = [];
-    public AggregateTypeOptions: { id: number, name: string }[] = [];
-    public FormControlTypeOptions: { id: number, name: string }[] = [];
-    public ActionLocationOptions: { id: number, name: string }[] = [];
+    public ChartElementOptions: any[] = []; //{ id: number, name: string }[] = [];
+    public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
+    public FormControlTypeOptions: any[] = [];//{ id: number, name: string }[] = [];
+    public ActionLocationOptions: any[] = [];
 
     constructor(public activatedRoute: ActivatedRoute) {
 
         let entityId = '0';
         this.route = activatedRoute;
-        if (this.route.snapshot.url.length == 3) {
+        if (this.route.snapshot.url.length == 4) {
             this.currentOperation = this.route.snapshot.url[this.route.snapshot.url.length - 2].path;
             entityId = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
         }
@@ -87,70 +85,120 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
 
     // Example: populate customFields from an existing entity
     //fb.group({...}) creates a new UntypedFormGroup with three controls: customFieldDefinitionId, name, and value.
-    setCustomFieldsValidation(validationForm: UntypedFormGroup, customFieldDefinitionList: ICustomFieldDefinition[], customFields?: ICustomField[]): AbstractControl<any, any>[] {
-        let controls = validationForm.controls;
+    // setCustomFieldsValidation(validationForm: UntypedFormGroup, customFieldDefinitionList: ICustomFieldDefinition[], customFields?: ICustomField[]): AbstractControl<any, any>[] {
+    //     let controls = validationForm.controls;
+    //     let customFieldsFormArray = controls['customFields'] as UntypedFormArray;
+
+    //     if (customFieldsFormArray && customFieldDefinitionList) {
+    //         for (var definition of customFieldDefinitionList) {
+    //             var fieldValidators = getFormControlValidation(definition?.fieldValidation);
+
+    //             var customField = customFields ? customFields.find(x => definition.id == x.customFieldDefinitionId) : null;
+    //             let fieldName = customField ? `${customField.name}` : definition.displayName;
+    //             let fieldValue = customField ? customField.value : '';
+
+    //             var formGroup = this.formBuilder.group({
+    //                 customFieldDefinitionId: [definition.id],
+    //                 name: [fieldName],
+    //                 value: [fieldValue, fieldValidators]
+    //             });
+
+    //             // adds this new FormGroup into the FormArray.
+    //             customFieldsFormArray.push(formGroup);
+    //         }
+    //     }
+
+    //     this.customFieldFormControlList = customFieldsFormArray?.controls;
+    //     return (customFieldsFormArray?.controls) || [];
+    // }
+    //---------------------------------------------------------
+    // initCustomFields(customFieldDefinitionList?: ICustomFieldDefinitionWithLookup[], customFields?: ICustomField[]): ICustomField[] {
+
+    //     let definitionList = customFieldDefinitionList || [];
+    //     definitionList = definitionList.filter(x => x.component?.toLowerCase() == this.componentName);
+    //     customFields = customFields || [];
+
+    //     // filter out any customFields entry that is not the Definition
+    //     customFields = customFields.filter(y => definitionList.some(x => x.displayName == y.name));
+
+    //     for (var definition of definitionList) {
+    //         let foundCustomField = customFields.find(x => x.name == definition.displayName);
+
+    //         if (!foundCustomField) {
+    //             var customField = initCustomField();
+    //             customField.customFieldDefinitionId = definition.id;
+    //             customField.name = definition.displayName;
+    //             customField.value = "";
+    //             customFields.push(customField);
+    //         }
+    //         else {
+    //             foundCustomField.customFieldDefinitionId = definition.id;
+    //             foundCustomField.name = definition.displayName;
+    //         }
+    //     }
+
+    //     return customFields;
+    // }
+    //---------------------------------------------------------
+    getValidationErrorMessage(fieldName: string, control: any): string {
+        if (!control || !control.errors || !control.touched) return '';
+
+        // Find the first error key (e.g., 'required')
+        const firstErrorKey = Object.keys(control.errors)[0];
+
+        if (firstErrorKey.includes('required')) return `${fieldName} is required.`;
+        else if (firstErrorKey.includes('email')) return `${fieldName} is not a valid email address.`;
+        else if (firstErrorKey.includes('minlength')) return `${fieldName} must be at least ${control.errors?.['minlength'].requiredLength} characters long.`;
+        else if (firstErrorKey.includes('maxlength')) return `${fieldName} cannot be more than ${control.errors?.['maxlength'].requiredLength} characters long.`;
+        else if (firstErrorKey.includes('minvalue')) return `${fieldName} must be at least ${control.errors?.['minvalue'].minValue} characters long.`;
+        else if (firstErrorKey.includes('maxvalue')) return `${fieldName} must be at most ${control.errors?.['maxvalue'].maxValue} characters long.`;
+        else if (firstErrorKey.includes('pattern')) return `${fieldName} has an invalid format.`;
+
+        return `Invalid ${fieldName}.`;
+    }
+    //---------------------------------------------------------
+    // Example: populate customFields from an existing entity
+    //fb.group({...}) creates a new UntypedFormGroup with three controls: customFieldDefinitionId, name, and value.
+
+    setCustomFieldControls(customFieldDefinitionList?: ICustomFieldDefinitionRecord[]) {
+
+        let newCustomFields = []
+        let controls = this.validationForm.controls;
         let customFieldsFormArray = controls['customFields'] as UntypedFormArray;
+        let customFields = this.entity.customFields || [];
+        let definitionList = customFieldDefinitionList || [];
+        definitionList = definitionList.filter(x => x.bfsComponentName?.toLowerCase() == this.componentName);
 
-        if (customFields) {
-            for (var customField of customFields) {
 
-                var definition = customFieldDefinitionList.find(x => x.id == customField.customFieldDefinitionId);
-                var fieldValidators = getFormControlValidation(definition?.fieldValidation);
+        for (var definition of definitionList) {
+            let foundCustomField = customFields.find(x => x.customFieldDefinitionId == definition.id);
+            var customField = initCustomField(definition, foundCustomField);
+            newCustomFields.push(customField);
 
-                // Build a FormGroup controls for current customField
-                var formGroup = this.formBuilder.group({
-                    customFieldDefinitionId: [customField.customFieldDefinitionId || ''],
-                    name: [`${customField.name}`],
-                    value: [customField.value, fieldValidators]
-                });
+            // Build a FormGroup controls for current customField
+            var fieldValidators = getFormControlValidation(definition?.fieldValidation);
+            var formGroup = this.formBuilder.group({
+                customFieldDefinitionId: [customField.customFieldDefinitionId],
+                name: [customField.name],
+                value: [customField.value, fieldValidators]
+            });
 
-                // adds this new FormGroup into the FormArray.
-                customFieldsFormArray.push(formGroup);
-            }
+            // adds this new FormGroup into the FormArray.
+            customFieldsFormArray.push(formGroup);
         }
 
-        this.customFieldFormControlList = customFieldsFormArray?.controls;
-        return (customFieldsFormArray?.controls) || [];
+        this.entity.customFields = newCustomFields;
+        this.customFieldFormControlList = customFieldsFormArray?.controls || [];
     }
     //---------------------------------------------------------
-    initCustomFields(customFieldDefinitionList?: ICustomFieldDefinitionWithLookup[], customFields?: ICustomField[]): ICustomField[] {
 
-        customFieldDefinitionList = customFieldDefinitionList || [];
-        customFieldDefinitionList = customFieldDefinitionList.filter(x => x.component?.toLowerCase() == this.componentName);
-        customFields = customFields || [];
-
-        // filter out any customFields entry that is not the Definition
-        customFields = customFields.filter(y => customFieldDefinitionList.some(x => x.displayName == y.name));
-
-        for (var definition of customFieldDefinitionList) {
-            let foundCustomField = customFields.find(x => x.name == definition.displayName);
-
-            if (!foundCustomField) {
-                var customField = initCustomField();
-                customField.customFieldDefinitionId = definition.id;
-                customField.name = definition.displayName;
-                customField.value = "";
-                customFields.push(customField);
-            }
-            else {
-                foundCustomField.customFieldDefinitionId = definition.id;
-                foundCustomField.name = definition.displayName;
-            }
-        }
-
-        return customFields;
-    }
-    //---------------------------------------------------------
     async getCustomFieldDefinitions(): Promise<void> {
         let target = '';
         target = '/CustomFieldDefinition/list';
-
         (await this.apiService.post(target, { pageSize: 30 })).subscribe({
             next: (response: IQueryResponse) => {
-                this.customFieldDefinitionList = response.items;
-                this.entity.customFields = this.initCustomFields(this.customFieldDefinitionList, this.entity.customFields);
-                this.customFieldFormControlList = this.setCustomFieldsValidation(this.validationForm, this.customFieldDefinitionList, this.entity.customFields);
                 this.isLoading = false;
+                this.setCustomFieldControls(response.items);
             },
             error: (err: any) => {
                 this.isLoading = false;
