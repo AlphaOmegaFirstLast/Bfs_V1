@@ -17,15 +17,15 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/[SystemPrefixSmall]/custom-reports/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/[SystemPrefixSmall]/custom-reports/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/custom-reports/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/custom-reports/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
                                                 <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
                                                 <div ngbDropdownMenu>
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
-                                                    <a ngbDropdownItem [routerLink]="['/[SystemPrefixSmall]/custom-reports/list']">Go to List</a>
+                                                    <a ngbDropdownItem [routerLink]="['/custom-reports/list']">Go to List</a>
                                                     <a ngbDropdownItem href="javascript:void(0)">Activate</a>
                                                 </div>
                                             </div>

@@ -256,7 +256,7 @@
             // 
             // btnModifyComponent
             // 
-            btnModifyComponent.Location = new Point(864, 295);
+            btnModifyComponent.Location = new Point(895, 295);
             btnModifyComponent.Name = "btnModifyComponent";
             btnModifyComponent.Size = new Size(230, 35);
             btnModifyComponent.TabIndex = 15;
@@ -266,7 +266,7 @@
             // 
             // btnGenerateComponent
             // 
-            btnGenerateComponent.Location = new Point(864, 254);
+            btnGenerateComponent.Location = new Point(895, 254);
             btnGenerateComponent.Name = "btnGenerateComponent";
             btnGenerateComponent.Size = new Size(230, 35);
             btnGenerateComponent.TabIndex = 14;
@@ -276,7 +276,7 @@
             // 
             // btnShowModify
             // 
-            btnShowModify.Location = new Point(1110, 295);
+            btnShowModify.Location = new Point(1172, 295);
             btnShowModify.Name = "btnShowModify";
             btnShowModify.Size = new Size(230, 35);
             btnShowModify.TabIndex = 17;
@@ -286,7 +286,7 @@
             // 
             // btnShowGenerate
             // 
-            btnShowGenerate.Location = new Point(1110, 254);
+            btnShowGenerate.Location = new Point(1172, 254);
             btnShowGenerate.Name = "btnShowGenerate";
             btnShowGenerate.Size = new Size(230, 35);
             btnShowGenerate.TabIndex = 16;
@@ -296,7 +296,7 @@
             // 
             // btnRollBackModifyComponent
             // 
-            btnRollBackModifyComponent.Location = new Point(1356, 295);
+            btnRollBackModifyComponent.Location = new Point(1449, 295);
             btnRollBackModifyComponent.Name = "btnRollBackModifyComponent";
             btnRollBackModifyComponent.Size = new Size(230, 35);
             btnRollBackModifyComponent.TabIndex = 19;
@@ -306,7 +306,7 @@
             // 
             // btnRollBackGenerateComponent
             // 
-            btnRollBackGenerateComponent.Location = new Point(1356, 254);
+            btnRollBackGenerateComponent.Location = new Point(1449, 254);
             btnRollBackGenerateComponent.Name = "btnRollBackGenerateComponent";
             btnRollBackGenerateComponent.Size = new Size(230, 35);
             btnRollBackGenerateComponent.TabIndex = 18;
@@ -325,7 +325,7 @@
             // txtNameSmall
             // 
             txtNameSmall.ForeColor = SystemColors.HotTrack;
-            txtNameSmall.Location = new Point(864, 214);
+            txtNameSmall.Location = new Point(893, 214);
             txtNameSmall.Name = "txtNameSmall";
             txtNameSmall.Size = new Size(230, 31);
             txtNameSmall.TabIndex = 21;
@@ -333,7 +333,7 @@
             // txtMenuName
             // 
             txtMenuName.ForeColor = SystemColors.HotTrack;
-            txtMenuName.Location = new Point(1110, 214);
+            txtMenuName.Location = new Point(1171, 214);
             txtMenuName.Name = "txtMenuName";
             txtMenuName.Size = new Size(230, 31);
             txtMenuName.TabIndex = 22;
@@ -341,7 +341,7 @@
             // txtFileName
             // 
             txtFileName.ForeColor = SystemColors.HotTrack;
-            txtFileName.Location = new Point(1356, 214);
+            txtFileName.Location = new Point(1449, 214);
             txtFileName.Name = "txtFileName";
             txtFileName.Size = new Size(230, 31);
             txtFileName.TabIndex = 23;
@@ -350,7 +350,7 @@
             // 
             label2.AutoSize = true;
             label2.ForeColor = Color.Red;
-            label2.Location = new Point(618, 186);
+            label2.Location = new Point(614, 186);
             label2.Name = "label2";
             label2.Size = new Size(118, 25);
             label2.TabIndex = 24;
@@ -360,7 +360,7 @@
             // 
             label3.AutoSize = true;
             label3.ForeColor = Color.Red;
-            label3.Location = new Point(1350, 186);
+            label3.Location = new Point(1445, 186);
             label3.Name = "label3";
             label3.Size = new Size(167, 25);
             label3.TabIndex = 25;
@@ -370,7 +370,7 @@
             // 
             label4.AutoSize = true;
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(1106, 186);
+            label4.Location = new Point(1167, 186);
             label4.Name = "label4";
             label4.Size = new Size(175, 25);
             label4.TabIndex = 26;
@@ -380,7 +380,7 @@
             // 
             label5.AutoSize = true;
             label5.ForeColor = Color.Red;
-            label5.Location = new Point(862, 186);
+            label5.Location = new Point(890, 186);
             label5.Name = "label5";
             label5.Size = new Size(107, 25);
             label5.TabIndex = 27;
@@ -389,7 +389,7 @@
             // panelItems
             // 
             panelItems.AutoScroll = true;
-            panelItems.Location = new Point(618, 337);
+            panelItems.Location = new Point(617, 337);
             panelItems.Name = "panelItems";
             panelItems.Size = new Size(1270, 632);
             panelItems.TabIndex = 28;
@@ -421,9 +421,9 @@
             panel1.Controls.Add(ckKeepExistingCode);
             panel1.Controls.Add(panelBackend);
             panel1.Controls.Add(panelFrontend);
-            panel1.Location = new Point(617, 0);
+            panel1.Location = new Point(618, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(965, 183);
+            panel1.Size = new Size(1061, 183);
             panel1.TabIndex = 31;
             // 
             // ckDisableSecurity

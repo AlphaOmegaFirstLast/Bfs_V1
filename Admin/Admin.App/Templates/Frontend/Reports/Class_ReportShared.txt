@@ -1,4 +1,5 @@
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const [ReportNameCapital]Columns = [
@@ -93,7 +94,7 @@ export function init[ReportNameCapital]Request(): I[ReportNameCapital]Request {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function get[ReportNameCapital]Actions(record: IQueryColumn): IAction[] {
+export function get[ReportNameCapital]Actions(component:any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
            //Template_Action_FrontendLink

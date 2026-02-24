@@ -38,7 +38,7 @@ export async function duplicateRecord(me: IUserInterface, record: IIdentifiable,
     if (!me.isLoading) {  // to prevent multiple requests
         me.messages = [];
         me.isLoading = true;
-        var target = `${data.postUrl}/${record.id}`;
+        var target = `${data.postUrl}/${data.recordId}`;
         (await me.apiService.get(target)).subscribe({
             next: async (res: any) => {
                 me.isLoading = false;
@@ -80,3 +80,17 @@ export async function postDuplicateRecord(me: IUserInterface, record: any, data:
     }
 }
 //---------------------------------------------------------
+
+export async function deploy(me: IUserInterface, record: IIdentifiable, data: any) {
+    var target = data.putUrl;
+    (await me.apiService.put(`${target}/${record.id}`)).subscribe({
+        next: (res: any) => {
+            me.messages.push({ text: 'Deployment is a success.', msgType: "info" });
+        },
+        error: (err: any) => {
+            var msg = err.message || 'An error occurred while deploying process.';
+            me.messages.push({ text: msg, msgType: "danger" });
+        }
+    });
+}
+//--------------------------------------------------------

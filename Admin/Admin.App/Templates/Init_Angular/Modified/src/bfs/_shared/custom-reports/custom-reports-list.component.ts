@@ -16,7 +16,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, ViewLink, ActionLink, IQueryColumn } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -40,7 +40,6 @@ export class CustomReportsListComponent      //ToDoReport CustomReportsReportCom
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ICustomReportsRequest;
     override exportRequest = {} as ICustomReportsRequest;
-    override list: ICustomReportsWithLookup[] = [];
     override downloadFileName: string = "Custom Reports";
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,8 +56,8 @@ export class CustomReportsListComponent      //ToDoReport CustomReportsReportCom
         this.queryRequest = initCustomReportsRequest();
     }
     //---------------------------------------------------------
-    override render(record: ICustomReportsWithLookup, column: IColumns): any {
-        const value = record[column.fieldName as keyof ICustomReportsWithLookup];
+    override render(record: IQueryColumn, column: IColumns): any {
+        const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             
             default:
@@ -67,30 +66,7 @@ export class CustomReportsListComponent      //ToDoReport CustomReportsReportCom
         return value;
     }
     //---------------------------------------------------------
-    override getRecordLinks(record: ICustomReportsWithLookup): ViewLink[] {
-        let recordLinks: ViewLink[] = [
-            { recordId: record.id, route: "/custom-reports/view", displayText: "View..." },
-            { recordId: record.id, route: "/custom-reports/edit", displayText: "Edit..." },
-            { recordId: record.id, route: "/custom-reports/delete", displayText: "Delete..." },
-        ];
-        return recordLinks;
-    }
-     //---------------------------------------------------------
-     override getRecordLookupLinks(record: ICustomReportsWithLookup): ViewLink[] {
-        let viewLinks: ViewLink[] = [
-         
-        ];
-        return viewLinks;
-    }
-     //---------------------------------------------------------
-    override getListRecordActions(record: ICustomReportsWithLookup): ActionLink[] {
-        let actionLinks: ActionLink[] = [
-            { recordId: record.id, action: this.duplicateRecord, displayText: "Duplicate Record", data: { postUrl: "/CustomReports" } },
-        ];
-        return actionLinks;
-    }
-    //---------------------------------------------------------
-    override getRecordBusinessActions(record: ICustomReportsWithLookup): ActionLink[] {
+    getRecordBusinessActions(record: ICustomReportsWithLookup): ActionLink[] {
         let actionLinks: ActionLink[] = [
             { recordId: record.id, action: this.duplicateTree, displayText: "Duplicate Tree", data: { postUrl: "/Operations/CustomReports/duplicateTree" } },
             { recordId: record.id, action: this.goToCustomReport, displayText: "Go To Custom Report", data: { postUrl: "/Operations/CustomReports/duplicateTree" } },

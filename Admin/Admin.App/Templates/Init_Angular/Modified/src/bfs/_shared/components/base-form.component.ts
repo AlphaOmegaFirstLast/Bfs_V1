@@ -82,64 +82,6 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
         await getFormInfoLookups(this);
     }
     //---------------------------------------------------------
-
-    // Example: populate customFields from an existing entity
-    //fb.group({...}) creates a new UntypedFormGroup with three controls: customFieldDefinitionId, name, and value.
-    // setCustomFieldsValidation(validationForm: UntypedFormGroup, customFieldDefinitionList: ICustomFieldDefinition[], customFields?: ICustomField[]): AbstractControl<any, any>[] {
-    //     let controls = validationForm.controls;
-    //     let customFieldsFormArray = controls['customFields'] as UntypedFormArray;
-
-    //     if (customFieldsFormArray && customFieldDefinitionList) {
-    //         for (var definition of customFieldDefinitionList) {
-    //             var fieldValidators = getFormControlValidation(definition?.fieldValidation);
-
-    //             var customField = customFields ? customFields.find(x => definition.id == x.customFieldDefinitionId) : null;
-    //             let fieldName = customField ? `${customField.name}` : definition.displayName;
-    //             let fieldValue = customField ? customField.value : '';
-
-    //             var formGroup = this.formBuilder.group({
-    //                 customFieldDefinitionId: [definition.id],
-    //                 name: [fieldName],
-    //                 value: [fieldValue, fieldValidators]
-    //             });
-
-    //             // adds this new FormGroup into the FormArray.
-    //             customFieldsFormArray.push(formGroup);
-    //         }
-    //     }
-
-    //     this.customFieldFormControlList = customFieldsFormArray?.controls;
-    //     return (customFieldsFormArray?.controls) || [];
-    // }
-    //---------------------------------------------------------
-    // initCustomFields(customFieldDefinitionList?: ICustomFieldDefinitionWithLookup[], customFields?: ICustomField[]): ICustomField[] {
-
-    //     let definitionList = customFieldDefinitionList || [];
-    //     definitionList = definitionList.filter(x => x.component?.toLowerCase() == this.componentName);
-    //     customFields = customFields || [];
-
-    //     // filter out any customFields entry that is not the Definition
-    //     customFields = customFields.filter(y => definitionList.some(x => x.displayName == y.name));
-
-    //     for (var definition of definitionList) {
-    //         let foundCustomField = customFields.find(x => x.name == definition.displayName);
-
-    //         if (!foundCustomField) {
-    //             var customField = initCustomField();
-    //             customField.customFieldDefinitionId = definition.id;
-    //             customField.name = definition.displayName;
-    //             customField.value = "";
-    //             customFields.push(customField);
-    //         }
-    //         else {
-    //             foundCustomField.customFieldDefinitionId = definition.id;
-    //             foundCustomField.name = definition.displayName;
-    //         }
-    //     }
-
-    //     return customFields;
-    // }
-    //---------------------------------------------------------
     getValidationErrorMessage(fieldName: string, control: any): string {
         if (!control || !control.errors || !control.touched) return '';
 
@@ -153,6 +95,7 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
         else if (firstErrorKey.includes('minvalue')) return `${fieldName} must be at least ${control.errors?.['minvalue'].minValue} characters long.`;
         else if (firstErrorKey.includes('maxvalue')) return `${fieldName} must be at most ${control.errors?.['maxvalue'].maxValue} characters long.`;
         else if (firstErrorKey.includes('pattern')) return `${fieldName} has an invalid format.`;
+        else if (firstErrorKey.includes('notallowed')) return `${fieldName} has an unallowed value.`;
 
         return `Invalid ${fieldName}.`;
     }

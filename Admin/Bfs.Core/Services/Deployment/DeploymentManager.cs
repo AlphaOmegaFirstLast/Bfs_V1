@@ -4,63 +4,61 @@ namespace Bfs.Core.Services.Deployment
 {
     public class DeploymentManager
     {
-        public static void DeployLocalApi(DeploymentLocalEntity vars)
+        public static void PublishToLocal(IDeploymantInfoBase info)
         {
+            var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 
-            var args = $" -ExecutionPolicy Bypass -File \"{vars.ScriptFile.Trim()}\" ";
+            args += $" -SourceProject  \"{info.SourceProject}\" ";
+            args += $" -SourcePath \"{info.SourcePath}\" ";
+            args += $" -PublishPath \"{info.PublishPath}\" ";
+            args += $" -TargetVirtualDir \"{info.TargetVirtualDir}\" ";  // required in publishing angular
 
-            args += $" -ProjectType {vars.ProjectType} ";
-            args += $" -SourceProject {vars.SourceProject.Trim()} ";
-            args += $" -SourcePath {vars.SourcePath.Trim()} ";
-            args += $" -PublishPath {vars.PublishPath.Trim()} ";
+            args += $" -Config \"{info.Config}\" ";
+            args += $" -EnvironmentValue \"{info.EnvironmentValue}\" ";
 
-            args += $" -Config {vars.Config.Trim()} ";
-            args += $" -EnvironmentValue {vars.EnvironmentValue.Trim()} ";
-            args += $" -TargetDeployVirtualFolder {vars.TargetVirtualFolder.Trim()} ";
-
-            args += $" -Project {vars.Project.Trim()} ";
-            args += $" -WebSite {vars.WebSite.Trim()} ";
-            args += $" -AppPoolName {vars.AppPoolName.Trim()} ";
-            args += $" -Port {vars.Port} ";
-            args += $" -isHttpsRequired {vars.IsHttpsRequired.Trim()} ";
-
-            var psi = new ProcessStartInfo
-            {
-                FileName = @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe ",
-
-                Arguments = args,
-                UseShellExecute = true,
-                RedirectStandardOutput = false,
-                RedirectStandardError = false,
-                CreateNoWindow = false,
-                Verb = "runas",
-                WindowStyle = ProcessWindowStyle.Normal
-            };
-            Process.Start(psi);
+            RunPowershell(args);
         }
 
-        public static void DeployAzureApi(AzureAcount azureAcount, DeploymentAzureEntity vars)
+        public static void DeployToLocal(IDeploymantInfoLocal info)
         {
-            var args = $" -ExecutionPolicy Bypass -File \"{vars.ScriptFile}\" ";
+            var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 
+            args += $" -PublishPath \"{info.PublishPath}\" ";
+            args += $" -IsHttpsRequired  \"{info.IsHttpsRequired}\" ";
+            args += $" -WebSite \"{info.WebSite}\" ";
+            args += $" -AppPoolName \"{info.AppPoolName}\" ";
+            args += $" -TargetDeployVirtualFolder \"{info.TargetVirtualDir}\" ";
+
+            RunPowershell(args);
+        }
+
+        public static void DeployToAzure(IDeploymantInfoAzure info)
+        {
+            var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
+
+            args += $" -PublishPath \"{info.PublishPath}\" ";
+            args += $" -PublishProfilePath \"{info.PublishProfilePath}\" ";
+            args += $" -ResourceGroup \"{info.ResourceGroup}\" ";
+            args += $" -AppService \"{info.AppService}\" ";
+            args += $" -TargetDeployVirtualFolder \"{info.TargetVirtualDir}\" ";
+
+            args = SetAzureKeys(args, new AzureAcount());
+
+            RunPowershell(args);
+        }
+
+        public static string SetAzureKeys(string args, AzureAcount azureAcount)
+        {
             args += $" -AzureAccountName \"{azureAcount.azureAccountName.Trim()}\" ";
             args += $" -AzureAccountPassword \"{azureAcount.azureAccountPassword.Trim()}\" ";
             args += $" -TenantId \"{azureAcount.tenantId.Trim()}\" ";
             args += $" -SubscriptionId \"{azureAcount.subscriptionId.Trim()}\" ";
 
-            args += $" -ProjectType {vars.ProjectType} ";
-            args += $" -SourceProject  \"{vars.SourceProject}\" ";
-            args += $" -SourcePath \"{vars.SourcePath}\" ";
-            args += $" -PublishPath \"{vars.PublishPath}\" ";
+            return args;
+        }
 
-            args += $" -Config \"{vars.Config}\" ";
-            args += $" -EnvironmentValue \"{vars.EnvironmentValue}\" ";
-            args += $" -TargetDeployVirtualFolder \"{vars.TargetDeployApiVirtualFolder}\" ";
-
-            args += $" -PublishProfilePath \"{vars.PublishProfilePath}\" ";
-            args += $" -AppService \"{vars.AppService}\" ";
-            args += $" -ResourceGroup \"{vars.ResourceGroup}\" ";
-
+        public static void RunPowershell(string args)
+        {
             var psi = new ProcessStartInfo
             {
                 FileName = @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe ",
@@ -73,6 +71,7 @@ namespace Bfs.Core.Services.Deployment
                 Verb = "runas",
                 WindowStyle = ProcessWindowStyle.Normal
             };
+
             Process.Start(psi);
         }
     }

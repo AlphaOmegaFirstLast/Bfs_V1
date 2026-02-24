@@ -19,6 +19,17 @@ export interface IUIMessage {
     msgType: 'info' | 'warning' | 'danger';
 }
 //------------------------------------------------
+export interface IAction {
+    recordId?: string | number;
+    displayText: string;
+    route?: string;
+    action?: any;
+    data?: any;
+    actionType: string;
+    actionLocation: string;
+    actionSource: string;
+}
+//------------------------------------------------
 export interface ViewLink {
     recordId?: string | number;
     displayText: string;
@@ -62,6 +73,15 @@ export interface IQueryResponse {
     totalPages: number;
 }
 //------------------------------------------------
+export interface IQueryColumn {
+    [key: string]: any; // Allow additional properties
+    fieldName: string;
+    displayName: string;
+    sortName: string;
+    width: string;
+    isVisible: boolean;
+}
+//------------------------------------------------
 export interface ILookup {
     id: number;
     name: string;
@@ -76,7 +96,16 @@ export interface IEntity {
     customFields?: ICustomField[];
 }
 //------------------------------------------------
-
+export interface ICustomFieldDefinitionRecord
+{
+    id?: string;
+    name?: string;
+    displayName?: string;
+    bfsComponentId?: string;
+    fieldValidation?: string;
+    bfsComponentName?: string;
+}
+//------------------------------------------------
 export function formatFilter(filter?: FilterObject): string[] {
     const result: string[] = [];
     if (filter) {

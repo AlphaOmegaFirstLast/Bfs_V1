@@ -17,7 +17,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -73,7 +73,7 @@ export class [ReportNameCapital]Component
         this.queryRequest = init[ComponentNameCapital]Request();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
+    override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             //Template_Start_Field_Lookup_1
@@ -91,8 +91,7 @@ export class [ReportNameCapital]Component
     }
     //---------------------------------------------------------
 
-//Template_Start_Component_Table_2
-    override getRecordLinks(record: IQueryColumn): ViewLink[] {
+    override getRecordLinks(record: IEntity): ViewLink[] {
         let actions = get[ComponentNameCapital]Actions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
@@ -104,7 +103,7 @@ export class [ReportNameCapital]Component
         return links;
     }
     //---------------------------------------------------------
-    override getRecordActions(record: IQueryColumn): ActionLink[] {
+    override getRecordActions(record: IEntity): ActionLink[] {
         let actions = get[ComponentNameCapital]Actions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
@@ -115,7 +114,6 @@ export class [ReportNameCapital]Component
 
         return links;
     }
-//Template_End_Component_Table_2
 //--------------------------------------------------------------
 //Template_Start_Component_Report_2
     override getChart(records: I[ComponentNameCapital]WithLookup[]): EChartsOption {

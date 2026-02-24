@@ -46,28 +46,38 @@ export function allowedValuesValidator(allowed: string[]) {
     };
 }
 //------------------------------------------------
-export function getFormControlValidation(fieldValidation?: IFieldValidation) {
+export function getFormControlValidation(sFieldValidation?: string) {
     let validatorsArray = [];
+    // a list of fieldValidation is returened through Dapper, as list of strings not objects
+    let fieldValidation = sFieldValidation? JSON.parse(sFieldValidation): null;
     if (fieldValidation) {
-        if (fieldValidation.isRequired) validatorsArray.push(Validators.required);
-        if (fieldValidation.minLength > 0) validatorsArray.push(Validators.minLength(fieldValidation.minLength));
-        if (fieldValidation.maxLength > 0) validatorsArray.push(Validators.maxLength(Number(fieldValidation.maxLength)));
-        if (fieldValidation.minValue) validatorsArray.push(Validators.min(+(fieldValidation.minValue)));
-        if (fieldValidation.maxValue) validatorsArray.push(Validators.max(parseInt(fieldValidation.maxValue)));
-        if (fieldValidation.regexPattern) validatorsArray.push(Validators.pattern(fieldValidation.regexPattern));
-        if (fieldValidation.allowedValues) validatorsArray.push(allowedValuesValidator(fieldValidation.allowedValues.split(';')));
+        if (fieldValidation.IsRequired) validatorsArray.push(Validators.required);
+        if (fieldValidation.MinLength > 0) validatorsArray.push(Validators.minLength(fieldValidation.MinLength));
+        if (fieldValidation.MaxLength > 0) validatorsArray.push(Validators.maxLength(Number(fieldValidation.MaxLength)));
+        if (fieldValidation.MinValue) validatorsArray.push(Validators.min(+(fieldValidation.MinValue)));
+        if (fieldValidation.MaxValue) validatorsArray.push(Validators.max(parseInt(fieldValidation.MaxValue)));
+        if (fieldValidation.RegexPattern) validatorsArray.push(Validators.pattern(fieldValidation.RegexPattern));
+        if (fieldValidation.AllowedValues) validatorsArray.push(allowedValuesValidator(fieldValidation.AllowedValues.split(';')));
     }
     return validatorsArray;
 }
 //---------------------------------------------------------
 
 export interface IReportInfo {
+    parentTable: string;
+    isQueryColumn: boolean;
+    isColumnVisible: boolean;
+    isJoinField: boolean;
     aggregateTypeId: string,
     chartElementId: string
 }
 //------------------------------------------------
 export function initReportInfo(): IReportInfo {
     return {
+        parentTable: '',
+        isQueryColumn: true,
+        isColumnVisible: true,
+        isJoinField: false,
         aggregateTypeId: '1',
         chartElementId: '1'
     }
@@ -76,6 +86,10 @@ export function initReportInfo(): IReportInfo {
 // Fields of an Entity [used in Entity form]
 export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormGroup {
     return formBuilder.group({
+        parentTable: [''],
+        isQueryColumn: [true],
+        isColumnVisible: [true],
+        isJoinField: [false],
         aggregateTypeId: ['1'],
         chartElementId: ['1']
     })

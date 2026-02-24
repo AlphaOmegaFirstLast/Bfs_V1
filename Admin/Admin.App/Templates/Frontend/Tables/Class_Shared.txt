@@ -1,7 +1,7 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 //Template_Start_Field_Object_4
 import { I[CapitalFieldName], init[CapitalFieldName], [SmallFieldName]UntypedFormGroup } from "@bfs/_shared/objectFields";
@@ -143,7 +143,7 @@ export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Requ
 }
 //---------------------------------------------------------
 
-export function get[ComponentNameCapital]Actions(component: any, record: IQueryColumn): IAction[] {
+export function get[ComponentNameCapital]Actions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
            //Template_Action_FrontendLink

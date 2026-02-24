@@ -68,7 +68,7 @@ namespace Admin.App
         public string GetActionList(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder, ActionType actionType)
         {
             var outputContent = new StringBuilder();
-            var actionList = codeInfo.ComponentActionList.Where(a => a.ActionTypeId == actionType);
+            var actionList = codeInfo.CodeWriter.actionList.Where(a => a.ActionTypeId == actionType);
             outputContent.AppendLine();
 
             foreach (var action in actionList)
