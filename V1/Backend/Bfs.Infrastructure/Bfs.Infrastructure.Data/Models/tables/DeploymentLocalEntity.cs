@@ -3,10 +3,11 @@ using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
 
 using System.Collections.Generic;
+using Bfs.Core.Services.Deployment;
 
 namespace Bfs.Infrastructure.Data.Models
 {
-    public class DeploymentLocalEntity : IIdentifiable, ITenanted
+    public class DeploymentLocalEntity : IIdentifiable, ITenanted, IDeploymantInfoLocal
     {
        public long TenantId { get; set; }
 
@@ -18,12 +19,11 @@ public string SourcePath {get; set;} = string.Empty ;
 public string PublishPath {get; set;} = string.Empty ;
 public string Config {get; set;} = string.Empty ;
 public string EnvironmentValue {get; set;} = string.Empty ;
-public string TargetVirtualFolder {get; set;} = string.Empty ;
+public string TargetVirtualDir {get; set;} = string.Empty ;
 public string WebSite {get; set;} = string.Empty ;
 public string AppPoolName {get; set;} = string.Empty ;
 public string Port {get; set;} = string.Empty ;
-public bool HttpsRequired {get; set;} = false ;
-public string Project {get; set;} = string.Empty ;
+public bool IsHttpsRequired {get; set;} = false ;
 
         public long BfsSystemId {get; set;} = 0 ;
 

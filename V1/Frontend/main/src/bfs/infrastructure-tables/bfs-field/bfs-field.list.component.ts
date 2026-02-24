@@ -17,7 +17,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -50,8 +50,6 @@ export class BfsFieldListComponent
     override queryRequest = {} as IBfsFieldRequest;
     override exportRequest = {} as IBfsFieldRequest;
     private sanitizer: DomSanitizer = inject(DomSanitizer);
-
- //   override list: IQueryColumn ; //IBfsFieldWithLookup[] = [];
     override downloadFileName: string = "BestFit Fields";
 
     //------------------------------------------------------
@@ -62,12 +60,13 @@ export class BfsFieldListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/bfs-field/add/0", displayText: "Add New BestFit Fields" };
         this.getApiUrl = '/BfsField/List';
+        this.uploadApiUrl = '/BfsField/upload';
 
         this.filterComponent = BfsFieldFilterComponent;
         this.queryRequest = initBfsFieldRequest();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
+    override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             case 'bfsComponentId':
@@ -76,17 +75,7 @@ case 'filterTypeId':
                 return record['filterTypeName']?.toString();
 case 'backendDataTypeId':
                 return record['backendDataTypeName']?.toString();
-            case 'reportInfo':
-                var obj = JSON.parse(record['reportInfo'] as string);
-                var result = 
-                  "<td class='pl-2'>ParentTable: " + (obj['ParentTable']?.toString() || '')+ "</td>"
-                + "<td class='pl-2'>isQueryColumn: " + obj['IsQueryColumn']?.toString() + "</td>"
-                + "<td class='pl-2'>isColumnVisible: " + obj['IsColumnVisible']?.toString() + "</td>"
-                + "<td class='pl-2'>aggregate: " + (obj['AggregateTypeId']?.toString() || '') + "</td>"
-                + "<td class='pl-2'>chart: " + (obj['ChartTypeId']?.toString() || '') + "</td>"
-                ;
-                var output = this.sanitizer.sanitize(1, result) || "";
-                return output;
+
             default:
                 return value;
         }
@@ -94,8 +83,8 @@ case 'backendDataTypeId':
     }
     //---------------------------------------------------------
 
-override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getBfsFieldActions(record);
+    override getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getBfsFieldActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -106,8 +95,8 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
         return links;
     }
     //---------------------------------------------------------
-    override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getBfsFieldActions(record);
+    override getRecordActions(record: IEntity): ActionLink[] {
+        let actions = getBfsFieldActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
@@ -117,7 +106,6 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
 
         return links;
     }
-
 //--------------------------------------------------------------
 
 }

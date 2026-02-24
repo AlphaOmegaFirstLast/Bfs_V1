@@ -17,8 +17,8 @@ import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 //---------------- bfs shared -------------------------------------
-import { IAction, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
-import { type IColumns, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IAction, IEntity, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
+import { type IColumns, ICustomReports, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { QuerySortComponent } from '@bfs/_shared/components/query-sort.component';
 import { QueryColumnsComponent } from '@bfs/_shared/components/query-columns.component';
 import { QueryGroupComponent } from '@bfs/_shared/components/query-group.component';
@@ -28,7 +28,6 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
-import { ICustomReports } from '@bfs/_shared/custom-reports/custom-reports.shared';
 
 @Component({
     selector: 'app-base-report',
@@ -39,7 +38,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     @Input() presetFilter: IFilter | undefined;
     filter!: IFilter;
     lookup!: IWithLookup;
-    public list: IQueryColumn[] = [];
+    public list: IEntity[] = [];
     public customReportInfo = { id: '0', name: 'NamePlaceHolder', url: 'UrlPlaceHolder' };
     public apiCustomReportsUrl = "/CustomReports/";
 
@@ -445,8 +444,8 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return request;
     }
     //---------------------------------------------------------
-    render(record: IQueryColumn, column: IColumns): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
+    render(record: IEntity, column: IColumns): any {
+        const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
             default:
                 return value;
@@ -454,12 +453,12 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return value;
     }
     //---------------------------------------------------------
-    getRecordLinks(record: IQueryColumn): ViewLink[] {
+    getRecordLinks(record: IEntity): ViewLink[] {
         //to be overridden in descendant classes to provide record level links
         return [];
     }
     //---------------------------------------------------------
-    getRecordActions(record: IQueryColumn): ActionLink[] {
+    getRecordActions(record: IEntity): ActionLink[] {
         //to be overridden in descendant classes to provide record level links
         return [];
     }

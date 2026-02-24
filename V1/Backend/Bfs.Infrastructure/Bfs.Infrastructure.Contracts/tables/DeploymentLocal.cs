@@ -39,9 +39,9 @@ namespace Bfs.Infrastructure.Contracts
         ///</Summary>
         public string EnvironmentValue {get; set;} = string.Empty ;
 ///<Summary>
-        /// DeploymentLocal TargetVirtualFolder.
+        /// DeploymentLocal TargetVirtualDir.
         ///</Summary>
-        public string TargetVirtualFolder {get; set;} = string.Empty ;
+        public string TargetVirtualDir {get; set;} = string.Empty ;
 ///<Summary>
         /// DeploymentLocal WebSite.
         ///</Summary>
@@ -55,13 +55,9 @@ namespace Bfs.Infrastructure.Contracts
         ///</Summary>
         public string Port {get; set;} = string.Empty ;
 ///<Summary>
-        /// DeploymentLocal isHttpsRequired.
+        /// DeploymentLocal IsHttpsRequired.
         ///</Summary>
-        public bool HttpsRequired {get; set;} = false ;
-///<Summary>
-        /// DeploymentLocal Project.
-        ///</Summary>
-        public string Project {get; set;} = string.Empty ;
+        public bool IsHttpsRequired {get; set;} = false ;
 
         ///<Summary>
         /// DeploymentLocal System Info.

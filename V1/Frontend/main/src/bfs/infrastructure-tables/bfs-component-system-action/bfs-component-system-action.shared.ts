@@ -1,5 +1,5 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
 import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
 
@@ -9,8 +9,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 export const BfsComponentSystemActionColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
 { fieldName: 'bfsComponentId', displayName: 'Component Name', sortName: 'BfsComponent', width: '50px', isVisible:true },
-{ fieldName: 'systemActionId', displayName: 'Menu Action', sortName: 'SystemAction', width: '50px', isVisible:true },
-{ fieldName: 'actionLocationId', displayName: 'Menu Action', sortName: 'ActionLocation', width: '50px', isVisible:true },
+{ fieldName: 'systemActionId', displayName: 'System Action', sortName: 'SystemAction', width: '50px', isVisible:true },
+{ fieldName: 'actionLocationId', displayName: 'Action Location', sortName: 'ActionLocation', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -94,8 +94,27 @@ ActionLocationId: undefined ,
 }
 //---------------------------------------------------------
 
-export function getBfsComponentSystemActionActions(record: IQueryColumn): IAction[] {
+export function getBfsComponentSystemActionActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/view', displayText: 'View...'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/edit', displayText: 'Edit...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-component-system-action/delete', displayText: 'Delete...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText:'Go to BfsComponent'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['systemActionId'], route:'/bfs/system-action/view', displayText:'Go to SystemAction'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['actionLocationId'], route:'/bfs/action-location/view', displayText:'Go to ActionLocation'
+});
 
         return links;
     }

@@ -46,7 +46,7 @@ export class DeploymentAzureFilterComponent implements OnInit {
                 this.isLoading = false;
             },
                 error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching System Info data.';
+                this.errorMessage = err.message || 'An error occurred while fetching BestFit System data.';
                 this.isLoading = false;
             }
         });

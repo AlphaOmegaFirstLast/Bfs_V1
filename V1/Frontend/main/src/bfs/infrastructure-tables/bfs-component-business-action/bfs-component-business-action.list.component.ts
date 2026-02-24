@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +17,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -48,7 +49,7 @@ export class BfsComponentBusinessActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsComponentBusinessActionRequest;
     override exportRequest = {} as IBfsComponentBusinessActionRequest;
- //   override list: IQueryColumn ; //IBfsComponentBusinessActionWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Component - Business Actions";
 
     //------------------------------------------------------
@@ -59,12 +60,13 @@ export class BfsComponentBusinessActionListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/bfs-component-business-action/add/0", displayText: "Add New Component - Business Actions" };
         this.getApiUrl = '/BfsComponentBusinessAction/List';
+        this.uploadApiUrl = '/BfsComponentBusinessAction/upload';
 
         this.filterComponent = BfsComponentBusinessActionFilterComponent;
         this.queryRequest = initBfsComponentBusinessActionRequest();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
+    override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             case 'bfsComponentId':
@@ -81,8 +83,8 @@ case 'actionLocationId':
     }
     //---------------------------------------------------------
 
-override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getBfsComponentBusinessActionActions(record);
+    override getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getBfsComponentBusinessActionActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -93,8 +95,8 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
         return links;
     }
     //---------------------------------------------------------
-    override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getBfsComponentBusinessActionActions(record);
+    override getRecordActions(record: IEntity): ActionLink[] {
+        let actions = getBfsComponentBusinessActionActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
@@ -104,7 +106,6 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
 
         return links;
     }
-
 //--------------------------------------------------------------
 
 }

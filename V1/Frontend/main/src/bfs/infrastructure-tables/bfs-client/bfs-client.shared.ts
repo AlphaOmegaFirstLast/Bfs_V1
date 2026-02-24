@@ -1,5 +1,5 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
 import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
 
@@ -92,31 +92,10 @@ export function initBfsClientRequest(): IBfsClientRequest {
 }
 //---------------------------------------------------------
 
-export function getBfsClientActions(component: any, record: IQueryColumn): IAction[] {
+export function getBfsClientActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
 links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/view', displayText: 'View...'
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/delete', displayText: 'Delete...' 
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-client/add', displayText: 'Add New record'
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/view', displayText: 'View...'
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-client/delete', displayText: 'Delete...' 
-});
-links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-client/add', displayText: 'Add New record'
 });
 links.push({
@@ -130,16 +109,7 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 });
 
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: component.goToCustomReport, displayText: 'Go To Custom Report', data: {'record':record}
-});
-links.push({
 actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsClient', onSuccessMethodName: 'getReport' }
-});
-links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsClient/DuplicateTree', onSuccessMethodName: 'getReport' }
-});
-links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsClient/DeleteTree', onSuccessMethodName: 'getReport' }
 });
 
         return links;

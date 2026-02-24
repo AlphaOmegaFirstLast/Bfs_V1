@@ -1,5 +1,5 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
 import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
 
@@ -79,28 +79,8 @@ export function initBackendDataTypeRequest(): IBackendDataTypeRequest {
 }
 //---------------------------------------------------------
 
-export function getBackendDataTypeActions(record: IQueryColumn): IAction[] {
+export function getBackendDataTypeActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
-
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/backend-data-type/add', displayText: 'Add New record' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/backend-data-type/view', displayText: 'View...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/backend-data-type/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/backend-data-type/delete', displayText: 'Delete...' 
-});
-
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/BackendDataType', onSuccessMethodName: 'getReport' } 
-});
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BackendDataType/DuplicateTree', onSuccessMethodName: 'getReport' } 
-});
 
         return links;
     }

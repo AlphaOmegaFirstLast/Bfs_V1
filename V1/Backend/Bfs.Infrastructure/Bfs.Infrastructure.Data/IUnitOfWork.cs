@@ -11,10 +11,11 @@ public interface IUnitOfWork
     IBfsComponentRepository ComponentRepo { get; set; }
     IBfsFieldRepository FieldRepo { get; set; }
     IDeploymentAzureRepository DeploymentAzureRepo { get; set; }
+    IDeploymentLocalRepository DeploymentLocalRepo { get; set; }
 
     //Template_End_Code_DontOverwrite_1
 
     Task<List<BfsComponentSystemActionEntity>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemActionEntity> matrix);
-Task<List<BfsComponentBusinessActionEntity>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessActionEntity> matrix);
-//Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
+    Task<List<BfsComponentBusinessActionEntity>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessActionEntity> matrix);
+    //Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
 }

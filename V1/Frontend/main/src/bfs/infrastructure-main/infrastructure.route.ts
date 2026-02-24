@@ -11,10 +11,6 @@ export const Infrastructure_ROUTES: Routes = [
     },
     {
         path: '',
-        loadChildren: () => import('../_shared/custom-reports/custom-reports.route').then((mod) => mod.CustomReportsList_ROUTES),
-    }, 
-    {
-        path: '',
         loadChildren: () => import('../infrastructure-tables/tables.route').then((mod) => mod.TABLES_ROUTES),
     },
     {

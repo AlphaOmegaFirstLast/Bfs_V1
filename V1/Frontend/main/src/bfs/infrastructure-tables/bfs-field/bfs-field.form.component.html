@@ -24,6 +24,13 @@
                                             <div ngbDropdown>
                                                 <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
                                                 <div ngbDropdownMenu>
+                                    <div *ngFor="let link of getRecordLinks(me)">
+                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                    </div>
+                                    <div *ngFor="let link of getRecordActions(me)">
+                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me, link.data)">{{link.displayText}}</a>
+                                    </div>
+
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
                                                     <a ngbDropdownItem [routerLink]="['/bfs/bfs-field/list']">Go to List</a>
                                                     <a ngbDropdownItem href="javascript:void(0)">Activate</a>

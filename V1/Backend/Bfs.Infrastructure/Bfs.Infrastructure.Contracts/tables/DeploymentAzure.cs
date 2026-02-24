@@ -43,9 +43,9 @@ namespace Bfs.Infrastructure.Contracts
         ///</Summary>
         public string EnvironmentValue {get; set;} = string.Empty ;
 ///<Summary>
-        /// DeploymentAzure TargetVirtualFolder.
+        /// DeploymentAzure TargetVirtualDir.
         ///</Summary>
-        public string TargetVirtualFolder {get; set;} = string.Empty ;
+        public string TargetVirtualDir {get; set;} = string.Empty ;
 ///<Summary>
         /// DeploymentAzure PublishProfilePath.
         ///</Summary>
@@ -60,7 +60,7 @@ namespace Bfs.Infrastructure.Contracts
         public string ResourceGroup {get; set;} = string.Empty ;
 
         ///<Summary>
-        /// DeploymentAzure System Info.
+        /// DeploymentAzure BestFit System.
         ///</Summary>
         public long BfsSystemId {get; set;} = 0 ;
 

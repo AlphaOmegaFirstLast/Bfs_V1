@@ -1,5 +1,5 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
 import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
 
@@ -95,8 +95,9 @@ export function initCustomReportsRequest(): ICustomReportsRequest {
 }
 //---------------------------------------------------------
 
-export function getCustomReportsActions(component: any, record: IQueryColumn): IAction[] {
+export function getCustomReportsActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
 links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-reports/view', displayText: 'View...'
 });
@@ -108,7 +109,7 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 });
 
 links.push({
-    actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: component.goToCustomReport, displayText: 'Go To Custom Report', data: {'record':record}
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: component.goToCustomReport, displayText: 'Go To Custom Report', data: {'record':record}
 });
 
         return links;

@@ -18,12 +18,11 @@ SourcePath= entity.SourcePath,
 PublishPath= entity.PublishPath,
 Config= entity.Config,
 EnvironmentValue= entity.EnvironmentValue,
-TargetVirtualFolder= entity.TargetVirtualFolder,
+TargetVirtualDir= entity.TargetVirtualDir,
 WebSite= entity.WebSite,
 AppPoolName= entity.AppPoolName,
 Port= entity.Port,
-HttpsRequired= entity.HttpsRequired,
-Project= entity.Project,
+IsHttpsRequired= entity.IsHttpsRequired,
 
                BfsSystemId= entity.BfsSystemId,
 
@@ -54,12 +53,11 @@ DeploymentLocalEntity.SourcePath= contract.SourcePath;
 DeploymentLocalEntity.PublishPath= contract.PublishPath;
 DeploymentLocalEntity.Config= contract.Config;
 DeploymentLocalEntity.EnvironmentValue= contract.EnvironmentValue;
-DeploymentLocalEntity.TargetVirtualFolder= contract.TargetVirtualFolder;
+DeploymentLocalEntity.TargetVirtualDir= contract.TargetVirtualDir;
 DeploymentLocalEntity.WebSite= contract.WebSite;
 DeploymentLocalEntity.AppPoolName= contract.AppPoolName;
 DeploymentLocalEntity.Port= contract.Port;
-DeploymentLocalEntity.HttpsRequired= contract.HttpsRequired;
-DeploymentLocalEntity.Project= contract.Project;
+DeploymentLocalEntity.IsHttpsRequired= contract.IsHttpsRequired;
 
             DeploymentLocalEntity.BfsSystemId= contract.BfsSystemId;
 

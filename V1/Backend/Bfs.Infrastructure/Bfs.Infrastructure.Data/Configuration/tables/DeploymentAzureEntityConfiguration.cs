@@ -26,7 +26,7 @@ namespace Bfs.Infrastructure.Data.Configuration
 //   builder.Property(e => e.PublishPath).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Config).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.EnvironmentValue).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.TargetVirtualFolder).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.TargetVirtualDir).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.PublishProfilePath).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.AppService).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.ResourceGroup).HasMaxLength([FieldLength]).IsRequired();

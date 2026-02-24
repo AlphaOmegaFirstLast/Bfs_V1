@@ -1,9 +1,9 @@
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 
 // Output Columns of a Query  [used in entity Query]
 export const StructureCompareColumns = [
-    { fieldName: 'bfsComponent_DataTypeId', displayName: 'Data Type', sortName: 'DataType', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponent_DisplayName', displayName: 'Component Name', sortName: 'DisplayName', width: '50px', isVisible:true },
+    { fieldName: 'bfsField_DataTypeId', displayName: 'Data Type', sortName: 'DataType', width: '50px', isVisible:true },
+{ fieldName: 'bfsField_DisplayName', displayName: 'Component Name', sortName: 'DisplayName', width: '50px', isVisible:true },
 
     { fieldName: 'countId', displayName: 'Fields Count Per Component', sortName: 'countId', width: '50px', isVisible:true },
 
@@ -12,8 +12,8 @@ export const StructureCompareColumns = [
 //---------------------------------------------------------
 
 export interface IStructureCompare {
-    bfsComponent_DataTypeId?: number;
-bfsComponent_DisplayName?: string;
+    bfsField_DataTypeId?: number;
+bfsField_DisplayName?: string;
 
 }
 //---------------------------------------------------------
@@ -60,12 +60,8 @@ export function initStructureCompareRequest(): IStructureCompareRequest {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function getStructureCompareActions(record: IQueryColumn): IAction[] {
+export function getStructureCompareActions(component:any, record: IEntity): IAction[] {
         let links: IAction[] = [];
-
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['dataTypeId'], route:'/bfs/data-type/view', displayText:'Go to DataType' 
-});
 
         return links;
     }

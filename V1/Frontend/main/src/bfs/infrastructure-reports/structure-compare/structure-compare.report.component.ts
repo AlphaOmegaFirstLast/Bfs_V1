@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +17,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn,IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -48,7 +49,7 @@ export class StructureCompareComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IStructureCompareRequest;
     override exportRequest = {} as IStructureCompareRequest;
- //   override list: IQueryColumn ; //IStructureCompareWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Structure Compare";
 
     //------------------------------------------------------
@@ -63,10 +64,10 @@ export class StructureCompareComponent
         this.queryRequest = initStructureCompareRequest();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
+    override render(record: IEntity, column: IColumns): any {
+        const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
-            case 'bfsComponent_DataTypeId':
+            case 'bfsField_DataTypeId':
                 return record['dataTypeName']?.toString();
 
             case 'countId':
@@ -79,14 +80,38 @@ export class StructureCompareComponent
     }
     //---------------------------------------------------------
 
+   override getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getStructureCompareActions(this,record);
+        let links: ViewLink[] = actions.filter(action => 
+               action.actionType == 'FrontendLink'
+            && action.actionLocation == 'ListRow'
+            ).map(action => {
+            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+    override getRecordActions(record: IEntity): ActionLink[] {
+        let actions = getStructureCompareActions(this, record);
+        let links: ActionLink[] = actions.filter(action => 
+               action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListRow'
+            ).map(action => {
+            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
+        });
+
+        return links;
+    }
 //--------------------------------------------------------------
+
 override getChart(records: IStructureCompareWithLookup[]): EChartsOption {
         // return this.getDemoChart();
         // reorder records in reverse order to show same order of table records.
         let reversedRecords = records.reverse();
         let baseChart = this.getBaseChart();
         baseChart.yAxis = {
-        data: reversedRecords.map(x => x['bfsComponent_DisplayName' as keyof IStructureCompareWithLookup] ?? "unknown"),
+        data: reversedRecords.map(x => x['bfsField_DisplayName' as keyof IStructureCompareWithLookup] ?? "unknown"),
 
             type: 'category',
             axisLine: {

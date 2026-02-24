@@ -2,6 +2,7 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +17,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -48,7 +49,7 @@ export class DeploymentLocalListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IDeploymentLocalRequest;
     override exportRequest = {} as IDeploymentLocalRequest;
- //   override list: IQueryColumn ; //IDeploymentLocalWithLookup[] = [];
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Local Deployment";
 
     //------------------------------------------------------
@@ -59,12 +60,13 @@ export class DeploymentLocalListComponent
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/bfs/deployment-local/add/0", displayText: "Add New Local Deployment" };
         this.getApiUrl = '/DeploymentLocal/List';
+        this.uploadApiUrl = '/DeploymentLocal/upload';
 
         this.filterComponent = DeploymentLocalFilterComponent;
         this.queryRequest = initDeploymentLocalRequest();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
+    override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             case 'bfsSystemId':
@@ -77,8 +79,8 @@ export class DeploymentLocalListComponent
     }
     //---------------------------------------------------------
 
-override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getDeploymentLocalActions(record);
+    override getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getDeploymentLocalActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -89,8 +91,8 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
         return links;
     }
     //---------------------------------------------------------
-    override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getDeploymentLocalActions(record);
+    override getRecordActions(record: IEntity): ActionLink[] {
+        let actions = getDeploymentLocalActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
@@ -100,7 +102,6 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
 
         return links;
     }
-
 //--------------------------------------------------------------
 
 }

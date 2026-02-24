@@ -9,13 +9,14 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
-import { IQueryResponse, ILookup, IUIMessage } from '@bfs/_shared/interfaces';
+import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
 
 //---------------------- Component Specific ------------------------
 import { type IDataType, type IDataTypeRequest, initDataType, dataTypeUntypedFormGroup } from './data-type.shared';
+import { getDataTypeActions,  initDataTypeRequest } from './data-type.shared';
 
 @Component({
     selector: 'data-type-form',
@@ -69,5 +70,29 @@ export class DataTypeFormComponent extends BaseFormComponent<IDataType > impleme
 
     }
     //---------------------------------------------------------
+    getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getDataTypeActions(this,record);
+        let links: ViewLink[] = actions.filter(action => 
+               action.actionType == 'FrontendLink'
+            && action.actionLocation == 'FormHeader'
+            ).map(action => {
+            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+    getRecordActions(record: IEntity): ActionLink[] {
+        let actions = getDataTypeActions(this,record);
+        let links: ActionLink[] = actions.filter(action => 
+               action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'FormHeader'
+            ).map(action => {
+            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
+        });
+
+        return links;
+    }
+   //--------------------------------------------------------------
 
 }

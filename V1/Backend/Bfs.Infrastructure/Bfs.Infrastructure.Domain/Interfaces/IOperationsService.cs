@@ -8,7 +8,10 @@ public interface IOperationsService
 
     Task<long> DuplicateComponentTreeAsync(long componentId);
     Task DeleteComponentTreeAsync(long componentId);
-    Task DeployToAzureStaging(long id);
+
+    Task PublishToLocal(long id);
+    Task DeployToAzure(long id);
+    Task DeployToLocal(long id);
 
     //Template_End_Code_DontOverwrite_1
 

@@ -14,6 +14,8 @@ public class UnitOfWork : IUnitOfWork
     public IBfsComponentRepository ComponentRepo { get; set; }
     public IBfsFieldRepository FieldRepo { get; set; }
     public IDeploymentAzureRepository DeploymentAzureRepo { get; set; }
+    public IDeploymentLocalRepository DeploymentLocalRepo { get; set; }
+
     //Template_End_Code_DontOverwrite_1
 
     private readonly IBfsComponentSystemActionRepository _bfsComponentSystemActionRepo;
@@ -27,6 +29,7 @@ public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
         , IBfsComponentRepository componentRepo
         , IBfsFieldRepository fieldRepo
         , IDeploymentAzureRepository deploymentAzureRepo
+        , IDeploymentLocalRepository deploymentLocalRepo
     //Template_End_Code_DontOverwrite_2
 
         , IBfsComponentSystemActionRepository bfsComponentSystemActionRepo
@@ -40,6 +43,7 @@ public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
         ComponentRepo = componentRepo;
         FieldRepo = fieldRepo;
         DeploymentAzureRepo = deploymentAzureRepo;
+        DeploymentLocalRepo = deploymentLocalRepo;
 
         _bfsComponentSystemActionRepo = bfsComponentSystemActionRepo;
         _bfsComponentBusinessActionRepo = bfsComponentBusinessActionRepo;

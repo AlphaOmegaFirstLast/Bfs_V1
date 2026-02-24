@@ -29,7 +29,7 @@ RuleFor(x => x.Config)
 RuleFor(x => x.EnvironmentValue)
 .MaximumLength(1000)
 ;
-RuleFor(x => x.TargetVirtualFolder)
+RuleFor(x => x.TargetVirtualDir)
 .MaximumLength(1000)
 ;
 RuleFor(x => x.PublishProfilePath)

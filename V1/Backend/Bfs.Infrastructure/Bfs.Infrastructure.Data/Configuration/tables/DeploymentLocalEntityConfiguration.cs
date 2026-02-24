@@ -25,12 +25,11 @@ namespace Bfs.Infrastructure.Data.Configuration
 //   builder.Property(e => e.PublishPath).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Config).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.EnvironmentValue).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.TargetVirtualFolder).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.TargetVirtualDir).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.WebSite).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.AppPoolName).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Port).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.HttpsRequired).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.Project).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.IsHttpsRequired).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }

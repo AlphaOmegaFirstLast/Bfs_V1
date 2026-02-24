@@ -15,7 +15,8 @@ public class OperationsService : IOperationsService
     //Template_Start_Code_DontOverwrite_1
     private readonly IBfsComponentRepository _componentRepo;
     private readonly IBfsFieldRepository _fieldRepo;
-    private readonly IDeploymentAzureRepository _deploymentAzureStagingRepo;
+    private readonly IDeploymentAzureRepository _deploymentAzureRepo;
+    private readonly IDeploymentLocalRepository _deploymentLocalRepo;
     //Template_Start_Code_DontOverwrite_1
 
     public OperationsService(IUnitOfWork unitOfwork)
@@ -24,7 +25,8 @@ public class OperationsService : IOperationsService
         //Template_Start_Code_DontOverwrite_2
         _componentRepo = _unitOfwork.ComponentRepo;
         _fieldRepo = _unitOfwork.FieldRepo;
-        _deploymentAzureStagingRepo = _unitOfwork.DeploymentAzureRepo;
+        _deploymentAzureRepo = _unitOfwork.DeploymentAzureRepo;
+        _deploymentLocalRepo = _unitOfwork.DeploymentLocalRepo;
         //Template_Start_Code_DontOverwrite_2
 
     }
@@ -65,20 +67,44 @@ public class OperationsService : IOperationsService
         await _unitOfwork._context.SaveChangesAsync();
     }
 
-    public async Task DeployToAzureStaging(long id)
+    public async Task PublishToLocal(long id)
     {
-        var deployment = await _deploymentAzureStagingRepo.GetAsync(id);
-        if (deployment == null)
+        var deploymentEntity = await _deploymentLocalRepo.GetAsync(id);
+        if (deploymentEntity == null)
         {
-            throw new ApplicationException($"Staging Deployment Settings not found for id ={id}");
+            throw new ApplicationException($"Local Deployment Settings not found for id ={id}");
         }
         else
         {
-            var azureApiDeployment = new AzureApiDeployment(deployment);
-            azureApiDeployment.DoDeploy();
+            DeploymentManager.PublishToLocal(deploymentEntity);
         }
     }
 
+    public async Task DeployToLocal(long id)
+    {
+        var deploymentEntity = await _deploymentLocalRepo.GetAsync(id);
+        if (deploymentEntity == null)
+        {
+            throw new ApplicationException($"Local Deployment Settings not found for id ={id}");
+        }
+        else
+        {
+            DeploymentManager.DeployToLocal(deploymentEntity);
+        }
+    }
+
+    public async Task DeployToAzure(long id)
+    {
+        var deploymentEntity = await _deploymentAzureRepo.GetAsync(id);
+        if (deploymentEntity == null)
+        {
+            throw new ApplicationException($"Local Deployment Settings not found for id ={id}");
+        }
+        else
+        {
+            DeploymentManager.DeployToAzure(deploymentEntity);
+        }
+    }
     //Template_End_Code_DontOverwrite_3
 
     public async Task<List<BfsComponentSystemAction>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemAction> matrix)

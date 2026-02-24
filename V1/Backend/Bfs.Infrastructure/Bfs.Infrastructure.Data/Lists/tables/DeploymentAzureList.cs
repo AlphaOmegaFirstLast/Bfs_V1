@@ -52,7 +52,7 @@ _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.SourcePath", QueryNa
 _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.PublishPath", QueryName = "PublishPath", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.Config", QueryName = "Config", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.EnvironmentValue", QueryName = "EnvironmentValue", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.TargetVirtualFolder", QueryName = "TargetVirtualFolder", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentAzure.TargetVirtualDir", QueryName = "TargetVirtualDir", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.PublishProfilePath", QueryName = "PublishProfilePath", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.AppService", QueryName = "AppService", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentAzure.ResourceGroup", QueryName = "ResourceGroup", IsAggregare = false });

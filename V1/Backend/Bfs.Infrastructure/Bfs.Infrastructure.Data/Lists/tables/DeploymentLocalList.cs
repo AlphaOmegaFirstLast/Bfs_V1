@@ -51,12 +51,11 @@ _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.SourcePath", QueryNa
 _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.PublishPath", QueryName = "PublishPath", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.Config", QueryName = "Config", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.EnvironmentValue", QueryName = "EnvironmentValue", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentLocal.TargetVirtualFolder", QueryName = "TargetVirtualFolder", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentLocal.TargetVirtualDir", QueryName = "TargetVirtualDir", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.WebSite", QueryName = "WebSite", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.AppPoolName", QueryName = "AppPoolName", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "DeploymentLocal.Port", QueryName = "Port", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentLocal.HttpsRequired", QueryName = "HttpsRequired", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DeploymentLocal.Project", QueryName = "Project", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "DeploymentLocal.IsHttpsRequired", QueryName = "IsHttpsRequired", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });

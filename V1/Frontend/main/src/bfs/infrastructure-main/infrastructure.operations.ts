@@ -80,3 +80,45 @@ export async function postDuplicateRecord(me: IUserInterface, record: any, data:
     }
 }
 //---------------------------------------------------------
+
+export async function deploy(me: IUserInterface, record: IIdentifiable, data: any) {
+    var target = data.putUrl;
+    (await me.apiService.put(`${target}/${record.id}`)).subscribe({
+        next: (res: any) => {
+            me.messages.push({ text: 'Deployment is a success.', msgType: "info" });
+        },
+        error: (err: any) => {
+            var msg = err.message || 'An error occurred while deploying process.';
+            me.messages.push({ text: msg, msgType: "danger" });
+        }
+    });
+}
+//--------------------------------------------------------
+
+export async function publish(me: IUserInterface, record: IIdentifiable, data: any) {
+    var target = data.putUrl;
+    (await me.apiService.put(`${target}/${record.id}`)).subscribe({
+        next: (res: any) => {
+            me.messages.push({ text: 'Publish is a success.', msgType: "info" });
+        },
+        error: (err: any) => {
+            var msg = err.message || 'An error occurred while publishing process.';
+            me.messages.push({ text: msg, msgType: "danger" });
+        }
+    });
+}
+//--------------------------------------------------------
+
+export async function generateTestData(me: IUserInterface, record: IIdentifiable, data: any) {
+    var target = data.getUrl;
+    (await me.apiService.put(`${target}/${record.id}`)).subscribe({
+        next: (res: any) => {
+            me.messages.push({ text: 'Generate Test Data is a success.', msgType: "info" });
+        },
+        error: (err: any) => {
+            var msg = err.message || 'An error occurred while generating test data.';
+            me.messages.push({ text: msg, msgType: "danger" });
+        }
+    });
+}
+//--------------------------------------------------------

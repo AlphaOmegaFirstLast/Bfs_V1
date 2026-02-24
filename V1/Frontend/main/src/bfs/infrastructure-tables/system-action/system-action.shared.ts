@@ -1,5 +1,5 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
 import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
 
@@ -115,18 +115,9 @@ WriterTypeId: undefined ,
 }
 //---------------------------------------------------------
 
-export function getSystemActionActions(record: IQueryColumn): IAction[] {
+export function getSystemActionActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-action/view', displayText: 'View...'
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-action/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/system-action/delete', displayText: 'Delete...' 
-});
 links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/system-action/add', displayText: 'Add New record'
 });
@@ -141,7 +132,7 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 });
 
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: 'this.goToCustomReport', displayText: 'Go To Custom Report', data: {'record':record}
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/SystemAction', onSuccessMethodName: 'getReport' }
 });
 
         return links;

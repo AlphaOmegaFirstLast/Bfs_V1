@@ -61,13 +61,43 @@ public class OperationsController
         return TypedResults.Ok();
     }
 
-    [HttpPut("BfsSystem/Deploy/Staging/{id}")]
-    [CustomAuthorize("method=o.SystemDeployStaging")]
-    public async Task<Results<Ok<string>, InternalServerError<ProblemDetails>>> DeployToAzureStaging(long id)
+    [HttpPut("BfsSystem/Publish/Local/{id}")]
+    [CustomAuthorize("method=o.publish")]
+    public async Task<Results<Ok<string>, InternalServerError<ProblemDetails>>> Publish(long id)
     {
         try
         {
-            await _operationsService.DeployToAzureStaging(id).ConfigureAwait(false);
+            await _operationsService.PublishToLocal(id).ConfigureAwait(false);
+            return TypedResults.Ok("Done");
+        }
+        catch (Exception ex)
+        {
+            return TypedResults.InternalServerError(new ProblemDetails() { Detail = ex.Message });
+        }
+    }
+
+    [HttpPut("BfsSystem/Deploy/Azure/{id}")]
+    [CustomAuthorize("method=o.DeployAzure")]
+    public async Task<Results<Ok<string>, InternalServerError<ProblemDetails>>> DeployToAzure(long id)
+    {
+        try
+        {
+            await _operationsService.DeployToAzure(id).ConfigureAwait(false);
+            return TypedResults.Ok("Done");
+        }
+        catch (Exception ex)
+        {
+            return TypedResults.InternalServerError(new ProblemDetails() { Detail = ex.Message });
+        }
+    }
+
+    [HttpPut("BfsSystem/Deploy/Local/{id}")]
+    [CustomAuthorize("method=o.DeployLocal")]
+    public async Task<Results<Ok<string>, InternalServerError<ProblemDetails>>> DeployToLocal(long id)
+    {
+        try
+        {
+            await _operationsService.DeployToLocal(id).ConfigureAwait(false);
             return TypedResults.Ok("Done");
         }
         catch (Exception ex)

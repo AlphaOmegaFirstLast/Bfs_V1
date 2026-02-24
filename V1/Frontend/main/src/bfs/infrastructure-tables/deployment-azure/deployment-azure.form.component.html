@@ -24,6 +24,13 @@
                                             <div ngbDropdown>
                                                 <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
                                                 <div ngbDropdownMenu>
+                                    <div *ngFor="let link of getRecordLinks(me)">
+                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                    </div>
+                                    <div *ngFor="let link of getRecordActions(me)">
+                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
+                                    </div>
+
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
                                                     <a ngbDropdownItem [routerLink]="['/bfs/deployment-azure/list']">Go to List</a>
                                                     <a ngbDropdownItem href="javascript:void(0)">Activate</a>
@@ -79,14 +86,14 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="bfsSystemId" class="form-label fs-6">System Info</label>
+        <label for="bfsSystemId" class="form-label fs-6">BestFit System</label>
         <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId"
             [class]="submit && !form['bfsSystemId'].errors ? 'is-valid': submit && form['bfsSystemId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BfsSystemOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
-        <div class="invalid-feedback">Please select a valid System Info.</div>
+        <div class="invalid-feedback">Please select a valid BestFit System.</div>
     </div>
 </div>
 <div class="row mb-2">
@@ -151,13 +158,13 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="targetVirtualFolder" class="form-label fs-6">TargetVirtualFolder</label>
+        <label for="targetVirtualDir" class="form-label fs-6">TargetVirtualDir</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="targetVirtualFolder" formControlName="targetVirtualFolder"
-            [class]="submit && !form['targetVirtualFolder'].errors ? 'is-valid': submit && form['targetVirtualFolder'].errors ? 'is-invalid' : ''" />
+        <input class="form-control" type="text" id="targetVirtualDir" formControlName="targetVirtualDir"
+            [class]="submit && !form['targetVirtualDir'].errors ? 'is-valid': submit && form['targetVirtualDir'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid TargetVirtualFolder.</div>
+        <div class="invalid-feedback">Invalid TargetVirtualDir.</div>
     </div>
 </div>
 

@@ -13,7 +13,7 @@ public string? SourcePath { get; set; }
 public string? PublishPath { get; set; }
 public string? Config { get; set; }
 public string? EnvironmentValue { get; set; }
-public string? TargetVirtualFolder { get; set; }
+public string? TargetVirtualDir { get; set; }
 public string? PublishProfilePath { get; set; }
 public string? AppService { get; set; }
 public string? ResourceGroup { get; set; }

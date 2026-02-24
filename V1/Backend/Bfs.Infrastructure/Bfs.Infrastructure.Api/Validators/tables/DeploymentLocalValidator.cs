@@ -8,7 +8,7 @@ namespace Bfs.Infrastructure.Api.Validators
     {
         public DeploymentLocalValidator()
         {
-RuleFor(x => x.ScriptFile)
+        RuleFor(x => x.ScriptFile)
 .MaximumLength(1000)
 ;
 RuleFor(x => x.SourceProject)
@@ -26,7 +26,7 @@ RuleFor(x => x.Config)
 RuleFor(x => x.EnvironmentValue)
 .MaximumLength(1000)
 ;
-RuleFor(x => x.TargetVirtualFolder)
+RuleFor(x => x.TargetVirtualDir)
 .MaximumLength(1000)
 ;
 RuleFor(x => x.WebSite)
@@ -36,9 +36,6 @@ RuleFor(x => x.AppPoolName)
 .MaximumLength(1000)
 ;
 RuleFor(x => x.Port)
-.MaximumLength(1000)
-;
-RuleFor(x => x.Project)
 .MaximumLength(1000)
 ;
 

@@ -70,7 +70,7 @@ target = "/ActionLocation/list";
                 this.isLoading = false;
             },
                 error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching Menu Action data.';
+                this.errorMessage = err.message || 'An error occurred while fetching Action Location data.';
                 this.isLoading = false;
             }
         });

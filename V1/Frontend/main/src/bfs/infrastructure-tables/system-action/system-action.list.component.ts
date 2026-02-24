@@ -17,7 +17,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -66,7 +66,7 @@ export class SystemActionListComponent
         this.queryRequest = initSystemActionRequest();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
+    override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             case 'actionTypeId':
@@ -81,8 +81,8 @@ case 'writerTypeId':
     }
     //---------------------------------------------------------
 
-override getRecordLinks(record: IQueryColumn): ViewLink[] {
-        let actions = getSystemActionActions(record);
+    override getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getSystemActionActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -93,8 +93,8 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
         return links;
     }
     //---------------------------------------------------------
-    override getRecordActions(record: IQueryColumn): ActionLink[] {
-        let actions = getSystemActionActions(record);
+    override getRecordActions(record: IEntity): ActionLink[] {
+        let actions = getSystemActionActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
@@ -104,7 +104,6 @@ override getRecordLinks(record: IQueryColumn): ViewLink[] {
 
         return links;
     }
-
 //--------------------------------------------------------------
 
 }

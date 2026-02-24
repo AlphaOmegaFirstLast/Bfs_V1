@@ -1,7 +1,7 @@
 
-import { IEntityRequest, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import { deleteTree, duplicateRecord, duplicateTree , deploy } from '@bfs/infrastructure-main/infrastructure.operations';
 
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
 
@@ -15,12 +15,11 @@ export const DeploymentLocalColumns = [
 { fieldName: 'publishPath', displayName: 'PublishPath', sortName: 'PublishPath', width: '50px', isVisible:true },
 { fieldName: 'config', displayName: 'Config', sortName: 'Config', width: '50px', isVisible:true },
 { fieldName: 'environmentValue', displayName: 'EnvironmentValue', sortName: 'EnvironmentValue', width: '50px', isVisible:true },
-{ fieldName: 'targetVirtualFolder', displayName: 'TargetVirtualFolder', sortName: 'TargetVirtualFolder', width: '50px', isVisible:true },
+{ fieldName: 'targetVirtualDir', displayName: 'TargetVirtualDir', sortName: 'TargetVirtualDir', width: '50px', isVisible:true },
 { fieldName: 'webSite', displayName: 'WebSite', sortName: 'WebSite', width: '50px', isVisible:true },
 { fieldName: 'appPoolName', displayName: 'AppPoolName', sortName: 'AppPoolName', width: '50px', isVisible:true },
 { fieldName: 'port', displayName: 'Port', sortName: 'Port', width: '50px', isVisible:true },
-{ fieldName: 'httpsRequired', displayName: 'isHttpsRequired', sortName: 'HttpsRequired', width: '50px', isVisible:true },
-{ fieldName: 'project', displayName: 'Project', sortName: 'Project', width: '50px', isVisible:true },
+{ fieldName: 'isHttpsRequired', displayName: 'IsHttpsRequired', sortName: 'IsHttpsRequired', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -33,12 +32,11 @@ sourcePath?: string;
 publishPath?: string;
 config?: string;
 environmentValue?: string;
-targetVirtualFolder?: string;
+targetVirtualDir?: string;
 webSite?: string;
 appPoolName?: string;
 port?: string;
-httpsRequired?: boolean;
-project?: string;
+isHttpsRequired?: boolean;
 
     bfsSystemId?: string;
 
@@ -54,12 +52,11 @@ sourcePath: '',
 publishPath: '',
 config: '',
 environmentValue: '',
-targetVirtualFolder: '',
+targetVirtualDir: '',
 webSite: '',
 appPoolName: '',
 port: '',
-httpsRequired: false,
-project: '',
+isHttpsRequired: false,
 
         bfsSystemId: '0',
 
@@ -79,12 +76,11 @@ sourcePath: [''],
 publishPath: [''],
 config: [''],
 environmentValue: [''],
-targetVirtualFolder: [''],
+targetVirtualDir: [''],
 webSite: [''],
 appPoolName: [''],
 port: [''],
-httpsRequired: [false],
-project: [''],
+isHttpsRequired: [false],
 
     bfsSystemId: ['0'],
 
@@ -128,31 +124,8 @@ export function initDeploymentLocalRequest(): IDeploymentLocalRequest {
 }
 //---------------------------------------------------------
 
-export function getDeploymentLocalActions(record: IQueryColumn): IAction[] {
+export function getDeploymentLocalActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
-
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/deployment-local/add', displayText: 'Add New record' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/deployment-local/view', displayText: 'View...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/deployment-local/edit', displayText: 'Edit...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/deployment-local/delete', displayText: 'Delete...' 
-});
-links.push({
-actionSource:'0', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText:'Go to BfsSystem' 
-});
-
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl: '/DeploymentLocal', onSuccessMethodName: 'getReport' } 
-});
-links.push({
-actionSource:'0', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/DeploymentLocal/DuplicateTree', onSuccessMethodName: 'getReport' } 
-});
 
         return links;
     }
