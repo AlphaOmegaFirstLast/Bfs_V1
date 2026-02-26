@@ -119,6 +119,18 @@ public class OperationsService : IOperationsService
         var entityList = await _unitOfwork.UpdateBfsComponentBusinessActionMatrixAsync(parentId, matrixEntity);
         return entityList.ToContract();
     }
+    public async Task<List<BfsClientSystem>> UpdateBfsClientSystemMatrixAsync(long parentId, List<BfsClientSystem> matrix)
+    {
+        var matrixEntity = matrix.ToEntity();
+        var entityList = await _unitOfwork.UpdateBfsClientSystemMatrixAsync(parentId, matrixEntity);
+        return entityList.ToContract();
+    }
+    public async Task<List<BfsTenantSystem>> UpdateBfsTenantSystemMatrixAsync(long parentId, List<BfsTenantSystem> matrix)
+    {
+        var matrixEntity = matrix.ToEntity();
+        var entityList = await _unitOfwork.UpdateBfsTenantSystemMatrixAsync(parentId, matrixEntity);
+        return entityList.ToContract();
+    }
 //Template_Field_ChildrenMatrix_AddServiceEntry    
 }
 

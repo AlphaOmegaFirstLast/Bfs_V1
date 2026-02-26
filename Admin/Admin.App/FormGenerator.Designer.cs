@@ -68,6 +68,7 @@
             txtBfsRootDir = new TextBox();
             btnGenerateSystem = new Button();
             label8 = new Label();
+            btnRefreshDb = new Button();
             tabInfo.SuspendLayout();
             tabTables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridTables).BeginInit();
@@ -110,7 +111,7 @@
             tabInfo.Controls.Add(tabReports);
             tabInfo.Controls.Add(tabSeeds);
             tabInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            tabInfo.Location = new Point(12, 133);
+            tabInfo.Location = new Point(12, 136);
             tabInfo.Name = "tabInfo";
             tabInfo.Padding = new Point(60, 10);
             tabInfo.SelectedIndex = 0;
@@ -219,7 +220,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(17, 62);
+            label1.Location = new Point(17, 54);
             label1.Name = "label1";
             label1.Size = new Size(131, 28);
             label1.TabIndex = 8;
@@ -228,7 +229,7 @@
             // cbSystemInfo
             // 
             cbSystemInfo.FormattingEnabled = true;
-            cbSystemInfo.Location = new Point(154, 60);
+            cbSystemInfo.Location = new Point(154, 52);
             cbSystemInfo.Name = "cbSystemInfo";
             cbSystemInfo.Size = new Size(228, 33);
             cbSystemInfo.TabIndex = 7;
@@ -439,6 +440,8 @@
             // ckKeepExistingCode
             // 
             ckKeepExistingCode.AutoSize = true;
+            ckKeepExistingCode.Checked = true;
+            ckKeepExistingCode.CheckState = CheckState.Checked;
             ckKeepExistingCode.Location = new Point(674, 11);
             ckKeepExistingCode.Name = "ckKeepExistingCode";
             ckKeepExistingCode.Size = new Size(189, 29);
@@ -466,7 +469,7 @@
             // 
             // btnGenerateSystem
             // 
-            btnGenerateSystem.Location = new Point(388, 60);
+            btnGenerateSystem.Location = new Point(388, 52);
             btnGenerateSystem.Name = "btnGenerateSystem";
             btnGenerateSystem.Size = new Size(185, 33);
             btnGenerateSystem.TabIndex = 34;
@@ -484,11 +487,22 @@
             label8.TabIndex = 35;
             label8.Text = "Set manually in code";
             // 
+            // btnRefreshDb
+            // 
+            btnRefreshDb.Location = new Point(388, 97);
+            btnRefreshDb.Name = "btnRefreshDb";
+            btnRefreshDb.Size = new Size(185, 33);
+            btnRefreshDb.TabIndex = 36;
+            btnRefreshDb.Text = "Refresh Database";
+            btnRefreshDb.UseVisualStyleBackColor = true;
+            btnRefreshDb.Click += btnRefreshDb_Click;
+            // 
             // FormGenerator
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1050);
+            Controls.Add(btnRefreshDb);
             Controls.Add(label8);
             Controls.Add(btnGenerateSystem);
             Controls.Add(txtBfsRootDir);
@@ -578,5 +592,6 @@
         private Label label8;
         private CheckBox ckDisableSecurity;
         private CheckBox ckKeepExistingCode;
+        private Button btnRefreshDb;
     }
 }

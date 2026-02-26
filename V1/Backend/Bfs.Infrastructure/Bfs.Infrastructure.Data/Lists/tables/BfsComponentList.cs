@@ -53,6 +53,7 @@ _fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuName", QueryName = 
 _fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuPlaceHolder", QueryName = "MenuPlaceHolder", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsComponent.QueryBaseTable", QueryName = "QueryBaseTable", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsComponent.Notes", QueryName = "Notes", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsComponent.InterfaceRequired", QueryName = "InterfaceRequired", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
@@ -86,6 +87,11 @@ sql.AppendLine($"   Left Join DataType on BfsComponent.DataTypeId = DataType.Id"
                 {
                     sql.AppendLine("BfsComponent.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
+                }
+if (!string.IsNullOrEmpty(filter.InterfaceRequired))
+                {
+                    sql.AppendLine("BfsComponent.InterfaceRequired like '%'+@InterfaceRequired+'%' ");
+                    parameters.Add("@InterfaceRequired", filter.InterfaceRequired);
                 }
 
                 if (filter.BfsSystemId.HasValue)

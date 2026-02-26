@@ -24,16 +24,15 @@
                                             <div ngbDropdown>
                                                 <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
                                                 <div ngbDropdownMenu>
-                                    <div *ngFor="let link of getRecordLinks(me)">
-                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
-                                    </div>
-                                    <div *ngFor="let link of getRecordActions(me)">
-                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me, link.data)">{{link.displayText}}</a>
-                                    </div>
-
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
-                                                    <a ngbDropdownItem [routerLink]="['/bfs/bfs-component/list']">Go to List</a>
-                                                    <a ngbDropdownItem href="javascript:void(0)">Activate</a>
+
+                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                                    </div>
+                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -90,6 +89,18 @@
             [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="interfaceRequired" class="form-label fs-6">Interface to Implement</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="The Interface that the component needs to implement, it will be added to the class definition in Entity & Contract."  />
+
+        <input class="form-control" type="text" id="interfaceRequired" formControlName="interfaceRequired"
+            [class]="submit && !form['interfaceRequired'].errors ? 'is-valid': submit && form['interfaceRequired'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Interface to Implement.</div>
     </div>
 </div>
 

@@ -24,6 +24,7 @@ namespace Admin.App
         public string MenuName { get; set; }
         public string MenuPlaceHolder { get; set; }
         public string QueryBaseTable { get; set; } // used in defining Report component
+        public string InterfaceRequired { get; set; }
         public string Notes { get; set; }
 
         // Fields
@@ -55,6 +56,7 @@ namespace Admin.App
 
             this.QueryBaseTable = source.QueryBaseTable; //todo add field to ComponentEntity // source.QueryBaseTable;
             this.Notes = source.Notes;
+            this.InterfaceRequired = source.InterfaceRequired;
 
             var result = CodeGeneratorBase.GetNames(Name);
             ComponentNameCapital = result.Item1;
@@ -110,6 +112,7 @@ namespace Admin.App
             outputContent = outputContent.Replace("[ComponentMenuName]", MenuName.Trim());
             outputContent = outputContent.Replace("[MenuPlaceHolder]", MenuPlaceHolder.Trim());
             outputContent = outputContent.Replace("[QueryBaseTable]", QueryBaseTable);
+            outputContent = outputContent.Replace("[InterfaceRequired]", string.IsNullOrEmpty(InterfaceRequired)?"":$",{InterfaceRequired}" );
 
             outputContent = outputContent.Replace("[ReportNameCapital]", ReportNameCapital.Trim());
             outputContent = outputContent.Replace("[ReportNameSmall]", ReportNameSmall.Trim());

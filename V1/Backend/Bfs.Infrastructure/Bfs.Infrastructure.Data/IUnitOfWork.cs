@@ -17,5 +17,7 @@ public interface IUnitOfWork
 
     Task<List<BfsComponentSystemActionEntity>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemActionEntity> matrix);
     Task<List<BfsComponentBusinessActionEntity>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessActionEntity> matrix);
-    //Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
+    Task<List<BfsClientSystemEntity>> UpdateBfsClientSystemMatrixAsync(long parentId, List<BfsClientSystemEntity> matrix);
+Task<List<BfsTenantSystemEntity>> UpdateBfsTenantSystemMatrixAsync(long parentId, List<BfsTenantSystemEntity> matrix);
+//Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
 }

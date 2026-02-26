@@ -49,7 +49,6 @@ export class DeploymentLocalListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IDeploymentLocalRequest;
     override exportRequest = {} as IDeploymentLocalRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Local Deployment";
 
     //------------------------------------------------------

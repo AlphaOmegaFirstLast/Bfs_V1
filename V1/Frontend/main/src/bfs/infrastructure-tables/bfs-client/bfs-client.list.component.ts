@@ -49,7 +49,6 @@ export class BfsClientListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsClientRequest;
     override exportRequest = {} as IBfsClientRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "BestFit Clients";
 
     //------------------------------------------------------
@@ -103,4 +102,14 @@ export class BfsClientListComponent
 //--------------------------------------------------------------
 
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+
+//Template_End_Code_DontOverwrite_3
 

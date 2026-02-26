@@ -47,7 +47,6 @@ export class BfsFieldListComponent
     extends BaseReportComponent<IBfsFieldFilter, IBfsFieldWithLookup> {
     override apiService: InfrastructureService = inject(InfrastructureService);
     override tokenService: TokenService = inject(TokenService);
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override queryRequest = {} as IBfsFieldRequest;
     override exportRequest = {} as IBfsFieldRequest;
  //   override list: IQueryColumn ; //IBfsFieldWithLookup[] = [];

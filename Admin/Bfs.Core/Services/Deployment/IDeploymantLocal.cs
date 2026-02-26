@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bfs.Core.Services.Deployment
+namespace Bfs.Core.Interfaces
 {
-    public interface IDeploymantInfoLocal : IDeploymantInfoBase
+    public interface IDeploymantLocal : IDeploymantBase
     {
         // Local Specific
         public bool IsHttpsRequired { get; set; }

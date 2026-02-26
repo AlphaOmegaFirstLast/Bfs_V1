@@ -37,6 +37,7 @@ namespace CodeAdmin
             }
 
             btnGenerateSystem.Enabled = true;
+            btnRefreshDb.Enabled = true;
 
             txtBfsRootDir.Text = _codeGenerator.BfsRootDir;
             LoadSystemInfo();
@@ -183,6 +184,10 @@ namespace CodeAdmin
         private void cbSystemInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
             var systemEntity = cbSystemInfo.SelectedItem == null ? null : (ISystemEntity)cbSystemInfo.SelectedItem;
+            if (systemEntity == null)
+            {
+                return;
+            }
             _codeGenerator.SetSystem(systemEntity);
 
             // Fill Tables Grid
@@ -569,6 +574,11 @@ namespace CodeAdmin
                     }
                 }
             }
+        }
+
+        private void btnRefreshDb_Click(object sender, EventArgs e)
+        {
+            _codeGenerator = new CodeGeneratorV4();
         }
     }
 }

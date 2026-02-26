@@ -21,6 +21,10 @@ public class UnitOfWork : IUnitOfWork
     private readonly IBfsComponentSystemActionRepository _bfsComponentSystemActionRepo;
 private readonly IBfsComponentBusinessActionRepository _bfsComponentBusinessActionRepo;
 
+private readonly IBfsClientSystemRepository _bfsClientSystemRepo;
+
+private readonly IBfsTenantSystemRepository _bfsTenantSystemRepo;
+
 //Template_Field_ChildrenMatrix_AddDeclareEntry
 
 public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
@@ -35,6 +39,10 @@ public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
         , IBfsComponentSystemActionRepository bfsComponentSystemActionRepo
         , IBfsComponentBusinessActionRepository bfsComponentBusinessActionRepo
 
+        , IBfsClientSystemRepository bfsClientSystemRepo
+
+        , IBfsTenantSystemRepository bfsTenantSystemRepo
+
 //Template_Field_ChildrenMatrix_AddParameterEntry
 
     )
@@ -47,6 +55,10 @@ public UnitOfWork(InfrastructureDbContext dbContext, IScopeData scopeData
 
         _bfsComponentSystemActionRepo = bfsComponentSystemActionRepo;
         _bfsComponentBusinessActionRepo = bfsComponentBusinessActionRepo;
+
+ _bfsClientSystemRepo = bfsClientSystemRepo;
+
+ _bfsTenantSystemRepo = bfsTenantSystemRepo;
 
 //Template_Field_ChildrenMatrix_AddInitEntry
     }
@@ -87,6 +99,42 @@ public async Task<List<BfsComponentBusinessActionEntity>> UpdateBfsComponentBusi
 
     // Return updated list
     return await _context.BfsComponentBusinessActions.Where(x => x.BfsComponentId  == parentId).ToListAsync();
+}
+public async Task<List<BfsClientSystemEntity>> UpdateBfsClientSystemMatrixAsync(long parentId, List<BfsClientSystemEntity> matrix)
+{
+    // Remove existing matrix entries for this parentId
+    var existingEntries = _context.BfsClientSystems.Where(x => x.BfsClientId == parentId);
+
+    _context.BfsClientSystems.RemoveRange(existingEntries);
+
+    // Add new Entries
+    foreach (var matrixEntity in matrix)
+    {
+        await _bfsClientSystemRepo.CreateAsync(matrixEntity);  // it sets id & tenantId and add entity to the DbSet
+    }
+
+    await _context.SaveChangesAsync();
+
+    // Return updated list
+    return await _context.BfsClientSystems.Where(x => x.BfsClientId  == parentId).ToListAsync();
+}
+public async Task<List<BfsTenantSystemEntity>> UpdateBfsTenantSystemMatrixAsync(long parentId, List<BfsTenantSystemEntity> matrix)
+{
+    // Remove existing matrix entries for this parentId
+    var existingEntries = _context.BfsTenantSystems.Where(x => x.BfsTenantId == parentId);
+
+    _context.BfsTenantSystems.RemoveRange(existingEntries);
+
+    // Add new Entries
+    foreach (var matrixEntity in matrix)
+    {
+        await _bfsTenantSystemRepo.CreateAsync(matrixEntity);  // it sets id & tenantId and add entity to the DbSet
+    }
+
+    await _context.SaveChangesAsync();
+
+    // Return updated list
+    return await _context.BfsTenantSystems.Where(x => x.BfsTenantId  == parentId).ToListAsync();
 }
 //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
 

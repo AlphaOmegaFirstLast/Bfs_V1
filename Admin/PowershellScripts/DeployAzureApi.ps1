@@ -5,8 +5,13 @@
     [string]$TenantId,
     [string]$SubscriptionId,
 	
+    [string]$SourceProject,
+    [string]$SourcePath,
     [string]$PublishPath,
-    [string]$TargetDeployVirtualFolder
+    [string]$TargetDeployVirtualFolder,
+	
+    [string]$Config,
+    [string]$EnvironmentValue ,
 	
     [string]$PublishProfilePath,
     [string]$AppService ,
@@ -19,8 +24,13 @@ $ArgumentArray = @(
     $TenantId,
     $SubscriptionId,
 	
+    $SourceProject,
+    $SourcePath,
     $PublishPath ,
     [string]$TargetDeployVirtualFolder
+	
+    $Config,
+    $EnvironmentValue,
 	
     $PublishProfilePath,
     $AppService,

@@ -52,7 +52,7 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
     preset[CapitalFieldName]Filter: I[CapitalFieldName]Filter | undefined;
     //Template_End_Field_ChildrenList_3
     //Template_Start_Field_ChildrenMatrix_3
-    preset[MatrixNameCapital]Filter: I[ComponentNameCapital][CapitalFieldName]Filter | undefined;
+    preset[MatrixNameCapital]Filter: I[MatrixNameCapital]Filter | undefined;
     //Template_End_Field_ChildrenMatrix_3
     // Define look ups
     //Template_Start_Field_Lookup_1

@@ -49,7 +49,6 @@ export class WriterTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IWriterTypeRequest;
     override exportRequest = {} as IWriterTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Writer Types";
 
     //------------------------------------------------------

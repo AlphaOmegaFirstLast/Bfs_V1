@@ -14,6 +14,7 @@ public string? MenuName { get; set; }
 public string? MenuPlaceHolder { get; set; }
 public string? QueryBaseTable { get; set; }
 public string? Notes { get; set; }
+public string? InterfaceRequired { get; set; }
 
         public string? BfsSystemName { get; set; }
 public string? DataTypeName { get; set; }

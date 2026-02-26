@@ -62,5 +62,20 @@ export const TABLES_ROUTES: Routes = [
         loadChildren: () => import('./deployment-azure/deployment-azure.route').then((mod) => mod.DeploymentAzure_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./bfs-client-system/bfs-client-system.route').then((mod) => mod.BfsClientSystem_ROUTES),
+    },
+
+    {
+        path: '',
+        loadChildren: () => import('./bfs-tenant/bfs-tenant.route').then((mod) => mod.BfsTenant_ROUTES),
+    },
+
+    {
+        path: '',
+        loadChildren: () => import('./bfs-tenant-system/bfs-tenant-system.route').then((mod) => mod.BfsTenantSystem_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]

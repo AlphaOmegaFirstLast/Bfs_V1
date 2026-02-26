@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Bfs.[SystemNameCapital].Data.Models
 {
-    public class [ComponentNameCapital]Entity : IIdentifiable, ITenanted
+    public class [ComponentNameCapital]Entity : IIdentifiable, ITenanted [InterfaceRequired]
     {
        public long TenantId { get; set; }
 

@@ -49,7 +49,6 @@ export class BackendDataTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBackendDataTypeRequest;
     override exportRequest = {} as IBackendDataTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Backend Data Types";
 
     //------------------------------------------------------

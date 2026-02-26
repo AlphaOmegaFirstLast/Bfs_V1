@@ -1,7 +1,7 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
 
@@ -17,9 +17,7 @@ export const BfsComponentColumns = [
 { fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:false },
 { fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
-{ fieldName: 'bfsField', displayName: 'Structure \ Fields', sortName: 'BfsField', width: '50px', isVisible:false },
-{ fieldName: 'systemAction', displayName: 'System Actions', sortName: 'SystemAction', width: '50px', isVisible:false },
-{ fieldName: 'businessAction', displayName: 'Business Actions', sortName: 'BusinessAction', width: '50px', isVisible:false },
+{ fieldName: 'interfaceRequired', displayName: 'Interface to Implement', sortName: 'InterfaceRequired', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -33,6 +31,7 @@ menuName?: string;
 menuPlaceHolder?: string;
 queryBaseTable?: string;
 notes?: string;
+interfaceRequired?: string;
 
     bfsSystemId?: string;
 dataTypeId?: number;
@@ -50,6 +49,7 @@ menuName: '',
 menuPlaceHolder: '',
 queryBaseTable: '',
 notes: '',
+interfaceRequired: '',
 
         bfsSystemId: '0',
 dataTypeId: 0,
@@ -71,6 +71,7 @@ menuName: [''],
 menuPlaceHolder: [''],
 queryBaseTable: [''],
 notes: [''],
+interfaceRequired: [''],
 
     bfsSystemId: ['0'],
 dataTypeId: [0],
@@ -92,6 +93,7 @@ export interface IBfsComponentFilter {
     [key: string]: any;
 
     Name?: string;
+InterfaceRequired?: string;
 
     BfsSystemId?: string;
 DataTypeId?: number;
@@ -111,6 +113,7 @@ export function initBfsComponentRequest(): IBfsComponentRequest {
         filter: {
 
             Name: undefined ,
+InterfaceRequired: undefined ,
 
             BfsSystemId: undefined ,
 DataTypeId: undefined ,
@@ -145,13 +148,16 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 });
 
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsComponent', onSuccessMethodName: 'getReport' }
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsComponent', onSuccessMethodName: 'getReport' }
 });
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' }
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' }
 });
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
+});
+links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.generateTestData, displayText: 'Deploy Azure', data: { recordId: record['id'], getUrl: '/Operations/bfsComponent/TestData' }
 });
 
         return links;

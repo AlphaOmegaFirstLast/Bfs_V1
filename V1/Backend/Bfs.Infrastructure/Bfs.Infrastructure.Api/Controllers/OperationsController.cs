@@ -115,6 +115,20 @@ public class OperationsController
     }
     //Template_End_Code_DontOverwrite_1
 
+    [HttpPut("BfsClientSystem/matrix/{parentId}")]
+    [CustomAuthorize("method=o.BfsClientSystem")]
+    public async Task<Results<Ok<List<BfsClientSystem>>, BadRequest<ProblemDetails>>> UpdateBfsClientSystemMatrixAsync([FromRoute] long parentId, [FromBody] List<BfsClientSystem> matrix)
+    {
+        var result = await _operationsService.UpdateBfsClientSystemMatrixAsync(parentId, matrix).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
 
-    //Template_Field_ChildrenMatrix_AddControllerEntry
+    [HttpPut("BfsTenantSystem/matrix/{parentId}")]
+    [CustomAuthorize("method=o.BfsTenantSystem")]
+    public async Task<Results<Ok<List<BfsTenantSystem>>, BadRequest<ProblemDetails>>> UpdateBfsTenantSystemMatrixAsync([FromRoute] long parentId, [FromBody] List<BfsTenantSystem> matrix)
+    {
+        var result = await _operationsService.UpdateBfsTenantSystemMatrixAsync(parentId, matrix).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+//Template_Field_ChildrenMatrix_AddControllerEntry
 }

@@ -49,7 +49,6 @@ export class BfsComponentBusinessActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsComponentBusinessActionRequest;
     override exportRequest = {} as IBfsComponentBusinessActionRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Component - Business Actions";
 
     //------------------------------------------------------

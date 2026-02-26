@@ -16,6 +16,7 @@ namespace Admin.App
         public string MenuName { get; set; }
         public string MenuPlaceHolder { get; set; }
         public string Notes { get; set; }
+        public string InterfaceRequired { get; set; }
         public string QueryBaseTable { get; set; }
         //    public ReportType ReportTypeId { get; set; } = 0;  //ToDo add this property to the interface if needed, but for now it's only used in some components like reports, so we can keep it in the entity for now.
     }

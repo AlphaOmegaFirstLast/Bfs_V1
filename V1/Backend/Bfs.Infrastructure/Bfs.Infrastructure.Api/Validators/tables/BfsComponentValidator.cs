@@ -16,7 +16,16 @@ namespace Bfs.Infrastructure.Api.Validators
 RuleFor(x => x.Notes)
 .MaximumLength(500)
 ;
+RuleFor(x => x.InterfaceRequired)
+.MinimumLength(0)
+.MaximumLength(100)
+;
 
         }
     }
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

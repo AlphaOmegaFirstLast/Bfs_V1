@@ -49,7 +49,6 @@ export class CustomFieldDefinitionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ICustomFieldDefinitionRequest;
     override exportRequest = {} as ICustomFieldDefinitionRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Custom Field Definitions";
 
     //------------------------------------------------------

@@ -1,7 +1,7 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 import { ICustomField, initCustomFields } from "@bfs/_shared/customFields";
 
@@ -9,7 +9,7 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsClientColumns = [
-    { fieldName: 'dbConnection', displayName: 'Database Connection', sortName: 'DbConnection', width: '50px', isVisible:true },
+    { fieldName: 'dbConnection', displayName: 'Database Connection', sortName: 'DbConnection', width: '50px', isVisible:false },
 { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
@@ -109,10 +109,20 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 });
 
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsClient', onSuccessMethodName: 'getReport' }
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsClient', onSuccessMethodName: 'getReport' }
 });
 
         return links;
     }
     //---------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+
+//Template_End_Code_DontOverwrite_3
 

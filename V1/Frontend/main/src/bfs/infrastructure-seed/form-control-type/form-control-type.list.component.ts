@@ -49,7 +49,6 @@ export class FormControlTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IFormControlTypeRequest;
     override exportRequest = {} as IFormControlTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Form Control Types";
 
     //------------------------------------------------------

@@ -42,3 +42,13 @@ export const BfsClient_ROUTES: Routes = [
         data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
     }
 ]
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+
+//Template_End_Code_DontOverwrite_3
+

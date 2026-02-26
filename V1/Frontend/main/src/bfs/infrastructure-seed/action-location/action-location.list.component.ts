@@ -49,7 +49,6 @@ export class ActionLocationListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IActionLocationRequest;
     override exportRequest = {} as IActionLocationRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Action Locations";
 
     //------------------------------------------------------

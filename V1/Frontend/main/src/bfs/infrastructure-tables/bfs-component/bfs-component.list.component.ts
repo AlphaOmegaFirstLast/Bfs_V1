@@ -49,7 +49,6 @@ export class BfsComponentListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsComponentRequest;
     override exportRequest = {} as IBfsComponentRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "BestFit Component";
 
     //------------------------------------------------------

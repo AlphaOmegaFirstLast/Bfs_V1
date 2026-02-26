@@ -121,6 +121,9 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IValidator<BusinessAction>, BusinessActionValidator>();
         builder.Services.AddScoped<IValidator<SystemAction>, SystemActionValidator>();
             builder.Services.AddScoped<IValidator<WriterType>, WriterTypeValidator>();
+            builder.Services.AddScoped<IValidator<BfsClientSystem>, BfsClientSystemValidator>();
+            builder.Services.AddScoped<IValidator<BfsTenant>, BfsTenantValidator>();
+            builder.Services.AddScoped<IValidator<BfsTenantSystem>, BfsTenantSystemValidator>();
 //Template_Component_RegisterValidator
     }
 
@@ -151,6 +154,9 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IBusinessActionRepository, BusinessActionRepository>();
         builder.Services.AddScoped<ISystemActionRepository, SystemActionRepository>();
             builder.Services.AddScoped<IWriterTypeRepository, WriterTypeRepository>();
+            builder.Services.AddScoped<IBfsClientSystemRepository, BfsClientSystemRepository>();
+            builder.Services.AddScoped<IBfsTenantRepository, BfsTenantRepository>();
+            builder.Services.AddScoped<IBfsTenantSystemRepository, BfsTenantSystemRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -181,6 +187,9 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IBusinessActionService, BusinessActionService>();
         builder.Services.AddScoped<ISystemActionService, SystemActionService>();
             builder.Services.AddScoped<IWriterTypeService, WriterTypeService>();
+            builder.Services.AddScoped<IBfsClientSystemService, BfsClientSystemService>();
+            builder.Services.AddScoped<IBfsTenantService, BfsTenantService>();
+            builder.Services.AddScoped<IBfsTenantSystemService, BfsTenantSystemService>();
 //Template_Component_RegisterService
     }
 
@@ -297,6 +306,21 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IWriterTypeList>(provider =>
             {
                 return new WriterTypeList(dbConnection);
+            });
+
+            builder.Services.AddScoped<IBfsClientSystemList>(provider =>
+            {
+                return new BfsClientSystemList(dbConnection);
+            });
+
+            builder.Services.AddScoped<IBfsTenantList>(provider =>
+            {
+                return new BfsTenantList(dbConnection);
+            });
+
+            builder.Services.AddScoped<IBfsTenantSystemList>(provider =>
+            {
+                return new BfsTenantSystemList(dbConnection);
             });
 
 //Template_Component_RegisterList

@@ -145,6 +145,28 @@ namespace Bfs.Infrastructure.Data.Migrations
                     b.ToTable("BfsClient", (string)null);
                 });
 
+            modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BfsClientSystemEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsClientId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsSystemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BfsClientSystem", (string)null);
+                });
+
             modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BfsComponentBusinessActionEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -182,6 +204,10 @@ namespace Bfs.Infrastructure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InterfaceRequired")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -313,6 +339,56 @@ namespace Bfs.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BfsSystem", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BfsTenantEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DbConnection")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BfsTenant", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BfsTenantSystemEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsSystemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsTenantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BfsTenantSystem", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BusinessActionEntity", b =>
@@ -929,6 +1005,39 @@ namespace Bfs.Infrastructure.Data.Migrations
 
                     b.Navigation("ToolTipInfo")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Bfs.Infrastructure.Data.Models.BfsTenantEntity", b =>
+                {
+                    b.OwnsMany("Bfs.Core.ObjectFields.CustomField", "CustomFields", b1 =>
+                        {
+                            b1.Property<long>("BfsTenantEntityId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            b1.Property<long?>("CustomFieldDefinitionId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Value")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("BfsTenantEntityId", "__synthesizedOrdinal");
+
+                            b1.ToTable("BfsTenant");
+
+                            b1.ToJson("CustomFields");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BfsTenantEntityId");
+                        });
+
+                    b.Navigation("CustomFields");
                 });
 
             modelBuilder.Entity("Bfs.Infrastructure.Data.Models.CustomFieldDefinitionEntity", b =>

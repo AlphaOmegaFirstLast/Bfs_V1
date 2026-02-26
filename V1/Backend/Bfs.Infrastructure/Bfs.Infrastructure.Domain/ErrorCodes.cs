@@ -35,5 +35,6 @@ public const string InvalidSolutionDirectory = "InvalidSolutionDirectory";
 public const string InvalidTemplate = "InvalidTemplate";
 public const string InvalidMatchProperty = "InvalidMatchProperty";
 public const string InvalidTargetVirtualDir = "InvalidTargetVirtualDir";
+public const string InvalidInterfaceRequired = "InvalidInterfaceRequired";
 //Template_FieldSet_ErrorCodes
 }

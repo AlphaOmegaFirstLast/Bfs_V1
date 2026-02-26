@@ -49,7 +49,6 @@ export class ChartElementListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IChartElementRequest;
     override exportRequest = {} as IChartElementRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Chart Elements";
 
     //------------------------------------------------------

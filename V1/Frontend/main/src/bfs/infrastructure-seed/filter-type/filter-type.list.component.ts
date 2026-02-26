@@ -49,7 +49,6 @@ export class FilterTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IFilterTypeRequest;
     override exportRequest = {} as IFilterTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Filter Types";
 
     //------------------------------------------------------

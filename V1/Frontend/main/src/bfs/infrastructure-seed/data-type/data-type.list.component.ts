@@ -49,7 +49,6 @@ export class DataTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IDataTypeRequest;
     override exportRequest = {} as IDataTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Data Types";
 
     //------------------------------------------------------

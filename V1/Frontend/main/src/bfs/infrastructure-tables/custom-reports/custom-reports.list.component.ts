@@ -49,7 +49,6 @@ export class CustomReportsListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ICustomReportsRequest;
     override exportRequest = {} as ICustomReportsRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Custom Reports";
 
     //------------------------------------------------------

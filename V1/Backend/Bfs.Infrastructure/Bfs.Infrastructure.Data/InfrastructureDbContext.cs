@@ -29,6 +29,9 @@ public class InfrastructureDbContext : DbContext
  public DbSet<DeploymentAzureEntity> DeploymentAzures { get; set; }
  public DbSet<SystemActionEntity> SystemActions { get; set; }
  public DbSet<WriterTypeEntity> WriterTypes { get; set; }
+ public DbSet<BfsClientSystemEntity> BfsClientSystems { get; set; }
+ public DbSet<BfsTenantEntity> BfsTenants { get; set; }
+ public DbSet<BfsTenantSystemEntity> BfsTenantSystems { get; set; }
 //Template_Component_RegisterDbSet
 
     public InfrastructureDbContext(DbContextOptions<InfrastructureDbContext> options) : base(options)
@@ -53,6 +56,14 @@ public class InfrastructureDbContext : DbContext
         builder.ApplyConfigurationsFromAssembly(typeof(InfrastructureDbContext).Assembly);
 
         builder.Entity<BfsClientEntity>(entity =>
+        {
+            entity.OwnsMany(e => e.CustomFields, owned =>
+            {
+                owned.ToJson();   // store the collection as JSON
+            });
+        });
+
+        builder.Entity<BfsTenantEntity>(entity =>
         {
             entity.OwnsMany(e => e.CustomFields, owned =>
             {

@@ -18,9 +18,14 @@ import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.s
 import { type IBfsClient, type IBfsClientRequest, initBfsClient, bfsClientUntypedFormGroup } from './bfs-client.shared';
 import { getBfsClientActions,  initBfsClientRequest } from './bfs-client.shared';
 
+import {BfsClientSystemMatrixComponent} from "./bfs-client-system.matrix.component"
+import {IBfsClientSystemFilter, IBfsClientSystemRequest, initBfsClientSystemRequest} from "../bfs-client-system/bfs-client-system.shared"
+
 @Component({
     selector: 'bfs-client-form',
     imports: [
+
+    BfsClientSystemMatrixComponent,
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
     standalone: true,
@@ -33,6 +38,8 @@ export class BfsClientFormComponent extends BaseFormComponent<IBfsClient > imple
     override componentName: string = 'BfsClient'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
+
+    presetBfsClientSystemFilter: IBfsClientSystemFilter | undefined;
 
     // Define look ups
 
@@ -60,6 +67,12 @@ export class BfsClientFormComponent extends BaseFormComponent<IBfsClient > imple
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
+
+        let presetBfsClientSystemRequest: IBfsClientSystemRequest = initBfsClientSystemRequest();
+        this.presetBfsClientSystemFilter = presetBfsClientSystemRequest.filter;
+        if (this.presetBfsClientSystemFilter) {
+            this.presetBfsClientSystemFilter.BfsClientId = this.entity.id;
+        }
 
     }
     //---------------------------------------------------------
@@ -96,3 +109,14 @@ export class BfsClientFormComponent extends BaseFormComponent<IBfsClient > imple
    //--------------------------------------------------------------
 
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+
+//Template_End_Code_DontOverwrite_3
+

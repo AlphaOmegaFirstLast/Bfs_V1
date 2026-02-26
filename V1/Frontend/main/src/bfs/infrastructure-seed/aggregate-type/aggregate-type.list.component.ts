@@ -49,7 +49,6 @@ export class AggregateTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IAggregateTypeRequest;
     override exportRequest = {} as IAggregateTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Aggregate Types";
 
     //------------------------------------------------------

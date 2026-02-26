@@ -49,7 +49,6 @@ export class SystemActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ISystemActionRequest;
     override exportRequest = {} as ISystemActionRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "System Actions";
 
     //------------------------------------------------------

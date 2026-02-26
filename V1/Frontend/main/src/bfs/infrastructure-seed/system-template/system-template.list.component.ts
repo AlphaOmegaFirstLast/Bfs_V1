@@ -49,7 +49,6 @@ export class SystemTemplateListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as ISystemTemplateRequest;
     override exportRequest = {} as ISystemTemplateRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "System Templates";
 
     //------------------------------------------------------

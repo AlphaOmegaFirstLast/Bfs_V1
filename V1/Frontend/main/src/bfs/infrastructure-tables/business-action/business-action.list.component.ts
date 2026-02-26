@@ -49,7 +49,6 @@ export class BusinessActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBusinessActionRequest;
     override exportRequest = {} as IBusinessActionRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Business Actions";
 
     //------------------------------------------------------

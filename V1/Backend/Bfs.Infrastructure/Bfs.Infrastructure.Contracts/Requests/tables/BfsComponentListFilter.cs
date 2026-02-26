@@ -7,6 +7,7 @@ namespace Bfs.Infrastructure.Contracts
     {
 
         public string? Name { get; set; }
+public string? InterfaceRequired { get; set; }
 
         public long? BfsSystemId { get; set; }
 public int? DataTypeId { get; set; }

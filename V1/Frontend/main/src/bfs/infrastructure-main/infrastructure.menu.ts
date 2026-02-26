@@ -80,7 +80,37 @@ export const InfrastructureMenuItems: MenuItemType[] = [
             api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
-    }
+    },
+    {
+        label: 'Client - System',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/bfs-client-system/list',
+        data: {
+            app: ['stkex.b.ofc'],
+            api: ['infrastructure'],
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'BestFit Tenants',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/bfs-tenant/list',
+        data: {
+            app: ['stkex.b.ofc'],
+            api: ['infrastructure'],
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Tenant - System',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/bfs-tenant-system/list',
+        data: {
+            app: ['stkex.b.ofc'],
+            api: ['infrastructure'],
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Basic
         ]
     },

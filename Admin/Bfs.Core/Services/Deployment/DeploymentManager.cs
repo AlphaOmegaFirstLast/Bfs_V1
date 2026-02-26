@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
+using Bfs.Core.Interfaces;
 
 namespace Bfs.Core.Services.Deployment
 {
     public class DeploymentManager
     {
-        public static void PublishToLocal(IDeploymantInfoBase info)
+        public static void PublishToLocal(IDeploymantBase info)
         {
             var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 
@@ -19,7 +20,7 @@ namespace Bfs.Core.Services.Deployment
             RunPowershell(args);
         }
 
-        public static void DeployToLocal(IDeploymantInfoLocal info)
+        public static void DeployToLocal(IDeploymantLocal info)
         {
             var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 
@@ -32,7 +33,7 @@ namespace Bfs.Core.Services.Deployment
             RunPowershell(args);
         }
 
-        public static void DeployToAzure(IDeploymantInfoAzure info)
+        public static void DeployToAzure(IDeploymantAzure info)
         {
             var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 

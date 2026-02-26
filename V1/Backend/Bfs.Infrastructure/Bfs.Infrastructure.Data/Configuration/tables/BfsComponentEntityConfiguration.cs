@@ -26,6 +26,7 @@ namespace Bfs.Infrastructure.Data.Configuration
 //   builder.Property(e => e.MenuPlaceHolder).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.QueryBaseTable).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.InterfaceRequired).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }

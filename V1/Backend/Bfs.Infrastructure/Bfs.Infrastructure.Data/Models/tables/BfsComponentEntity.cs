@@ -19,6 +19,7 @@ public string MenuName {get; set;} = string.Empty ;
 public string MenuPlaceHolder {get; set;} = string.Empty ;
 public string QueryBaseTable {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
+public string InterfaceRequired {get; set;} = string.Empty ;
 
         public long BfsSystemId {get; set;} = 0 ;
 public int DataTypeId {get; set;} = 0 ;

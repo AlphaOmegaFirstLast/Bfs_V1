@@ -19,6 +19,7 @@ MenuName= entity.MenuName,
 MenuPlaceHolder= entity.MenuPlaceHolder,
 QueryBaseTable= entity.QueryBaseTable,
 Notes= entity.Notes,
+InterfaceRequired= entity.InterfaceRequired,
 
                BfsSystemId= entity.BfsSystemId,
 DataTypeId= entity.DataTypeId,
@@ -51,6 +52,7 @@ BfsComponentEntity.MenuName= contract.MenuName;
 BfsComponentEntity.MenuPlaceHolder= contract.MenuPlaceHolder;
 BfsComponentEntity.QueryBaseTable= contract.QueryBaseTable;
 BfsComponentEntity.Notes= contract.Notes;
+BfsComponentEntity.InterfaceRequired= contract.InterfaceRequired;
 
             BfsComponentEntity.BfsSystemId= contract.BfsSystemId;
 BfsComponentEntity.DataTypeId= contract.DataTypeId;

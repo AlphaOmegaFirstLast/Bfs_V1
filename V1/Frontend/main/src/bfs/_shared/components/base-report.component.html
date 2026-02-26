@@ -72,15 +72,15 @@
                 <table class="table table-striped table-bordered table-hover">
                     <tr>
                         <ng-container *ngFor="let column of queryRequest.columns">
-                            <th width="{{ column.width }}" *ngIf="column.isVisible">
-                                {{ column.displayName }}
-                            </th>
+                           <th width="{{ column.width }}" *ngIf="column.isVisible && isObjectField(column.fieldName)"><div [innerHTML]="objectFieldHeaders(column.fieldName)"></div></th>
+                           <th width="{{ column.width }}" *ngIf="column.isVisible && !isObjectField(column.fieldName)">{{column.displayName }}</th>
                         </ng-container>
                         <th width="100px"></th>
                     </tr>
                     <tr *ngFor="let record of list">
                         <ng-container *ngFor="let column of queryRequest.columns">
-                            <td *ngIf="column.isVisible"> {{ render(record, column) }} </td>
+                            <td *ngIf="column.isVisible && isObjectField(column.fieldName)"><div [innerHTML]="objectFieldData(record, column.fieldName)"></div></td>
+                            <td *ngIf="column.isVisible && !isObjectField(column.fieldName)"> {{ render(record, column) }} </td>
                         </ng-container>
                         <td>
                             <div ngbDropdown class="flex-shrink-0 text-muted" style="text-align: right;">

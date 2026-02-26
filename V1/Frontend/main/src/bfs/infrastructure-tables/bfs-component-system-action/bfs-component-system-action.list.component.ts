@@ -49,7 +49,6 @@ export class BfsComponentSystemActionListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IBfsComponentSystemActionRequest;
     override exportRequest = {} as IBfsComponentSystemActionRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Component - System Actions";
 
     //------------------------------------------------------

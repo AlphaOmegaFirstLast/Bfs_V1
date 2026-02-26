@@ -3,6 +3,7 @@ import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -28,6 +29,7 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
+import { getReportInfoData, getReportInfoHeaders } from '../objectFields';
 
 @Component({
     selector: 'app-base-report',
@@ -70,6 +72,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     public pagination: any = { currentPage: 1, pageSize: this.pageSizes[0], pageCount: 0, totalItems: 1, description: '' };
     //------------------------------------------------------
     public me = this;
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
 
     constructor(public modalService: NgbModal, public router: Router, public excelService: ExcelExportService, public activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
@@ -93,6 +96,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         this.setAccessible();
     }
     //---------------------------------------------------------
+
     async getReport(): Promise<void> {
 
         if (!this.isLoading) {  // to prevent multiple requests
@@ -181,7 +185,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         this.isSection.chart = !this.isSection.chart;
     }
     //---------------------------------------------------------
-    
+
     getReportActions(): ActionLink[] {
 
         let actionLinks: ActionLink[] = [
@@ -225,6 +229,38 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         modalRef.componentInstance.uploadUrl = me.apiService.origin + me.uploadApiUrl;
     }
     //---------------------------------------------------------
+    isObjectField(field: string): boolean {
+        field = field.toLowerCase();
+        return field.includes('fieldvalidation') || field.includes('reportinfo');
+    }
+    //---------------------------------------------------------        
+    objectFieldHeaders(field: string): SafeHtml {
+        var result = '';
+        switch (field.toLowerCase()) {
+            case 'reportinfo':
+                result = getReportInfoHeaders();
+                break;
+            default:
+                result = '';
+        }
+
+        return this.sanitizer.bypassSecurityTrustHtml(result) || '';
+    }
+    //---------------------------------------------------------
+    objectFieldData(record: any, field: string): SafeHtml {
+        var result = '';
+
+        switch (field.toLowerCase()) {
+            case 'reportinfo':
+                result = getReportInfoData(record[field] as string);
+                break;
+            default:
+                result = '';
+        }
+        
+        return this.sanitizer.bypassSecurityTrustHtml(result) || '';
+    }
+    //---------------------------------------------------------
     readCustomReportIdParameter() {
         let route = this.activatedRoute;
         // customReportId either in this format: "/report/structure-report/0"  or in this format:   "/client/list/0"
@@ -247,7 +283,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         }
     }
     //---------------------------------------------------------
-    goToCustomReport(me: IUserInterface, record: any, data: any){
+    goToCustomReport(me: IUserInterface, record: any, data: any) {
         let customReportrecord = data?.record || record;
         let url = customReportrecord?.url || "";
         me.router.navigate([`${url}/${customReportrecord.id}`]);
@@ -463,7 +499,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return [];
     }
     //---------------------------------------------------------
-   
+
     isAccessible(linkOrAction: ViewLink | ActionLink): boolean {
         return true;
     }

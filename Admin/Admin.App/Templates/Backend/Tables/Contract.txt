@@ -4,7 +4,7 @@ using Bfs.Core.ObjectFields;
 
 namespace Bfs.[SystemNameCapital].Contracts
 {
-    public class [ComponentNameCapital] : IIdentifiable
+    public class [ComponentNameCapital] : IIdentifiable [InterfaceRequired]
     {
         //Template_Start_Field_Primitive_1
         ///<Summary>

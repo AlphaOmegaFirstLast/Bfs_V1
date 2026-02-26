@@ -42,6 +42,10 @@ namespace Bfs.Infrastructure.Contracts
         /// BfsComponent Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
+///<Summary>
+        /// BfsComponent Interface to Implement.
+        ///</Summary>
+        public string InterfaceRequired {get; set;} = string.Empty ;
 
         ///<Summary>
         /// BfsComponent BestFit System.

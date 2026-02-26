@@ -49,7 +49,6 @@ export class ActionTypeListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IActionTypeRequest;
     override exportRequest = {} as IActionTypeRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Action Types";
 
     //------------------------------------------------------

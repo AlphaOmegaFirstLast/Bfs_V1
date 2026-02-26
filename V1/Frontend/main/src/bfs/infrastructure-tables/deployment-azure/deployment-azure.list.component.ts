@@ -49,7 +49,6 @@ export class DeploymentAzureListComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IDeploymentAzureRequest;
     override exportRequest = {} as IDeploymentAzureRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Azure Deployment";
 
     //------------------------------------------------------

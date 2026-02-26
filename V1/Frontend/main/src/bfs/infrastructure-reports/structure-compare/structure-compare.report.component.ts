@@ -49,7 +49,6 @@ export class StructureCompareComponent
     override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IStructureCompareRequest;
     override exportRequest = {} as IStructureCompareRequest;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
     override downloadFileName: string = "Structure Compare";
 
     //------------------------------------------------------
@@ -67,7 +66,7 @@ export class StructureCompareComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
-            case 'bfsField_DataTypeId':
+            case 'bfsComponent_DataTypeId':
                 return record['dataTypeName']?.toString();
 
             case 'countId':
@@ -111,7 +110,7 @@ override getChart(records: IStructureCompareWithLookup[]): EChartsOption {
         let reversedRecords = records.reverse();
         let baseChart = this.getBaseChart();
         baseChart.yAxis = {
-        data: reversedRecords.map(x => x['bfsField_DisplayName' as keyof IStructureCompareWithLookup] ?? "unknown"),
+        data: reversedRecords.map(x => x['bfsComponent_DisplayName' as keyof IStructureCompareWithLookup] ?? "unknown"),
 
             type: 'category',
             axisLine: {
@@ -150,4 +149,14 @@ override getChart(records: IStructureCompareWithLookup[]): EChartsOption {
     }
 
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+
+//Template_End_Code_DontOverwrite_3
 

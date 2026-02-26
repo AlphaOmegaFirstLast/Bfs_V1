@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bfs.Core.Services.Deployment
+namespace Bfs.Core.Interfaces
 {
-    public interface IDeploymantInfoBase
+    public interface IDeploymantBase
     {
         public string ScriptFile { get; set; }
         public string SourceProject { get; set; }
