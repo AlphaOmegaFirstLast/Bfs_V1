@@ -3,8 +3,6 @@
         icon: 'tablerLayoutSidebar',
         url: '/[SystemPrefixSmall]/report/[ReportFileName]/0',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin', 'investor','broker']
+            role: ['admin']
         }
     },

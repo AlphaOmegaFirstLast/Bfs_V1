@@ -6,19 +6,16 @@ export const [SystemNameCapital]MenuItems: MenuItemType[] = [
     {label: '[SystemNameCapital]', 
      isTitle: true,
      data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameCapital]'],
             role: ['admin']
         },
     },
     {
-        label: 'BestFit Basic',
+        label: 'Basic',
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
 //Template_Component_Menu_Basic
@@ -30,9 +27,8 @@ export const [SystemNameCapital]MenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
 //Template_Component_Menu_Reports
@@ -44,9 +40,8 @@ export const [SystemNameCapital]MenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
 //Template_Component_Menu_Deployment
@@ -58,9 +53,8 @@ export const [SystemNameCapital]MenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
 //Template_Component_Menu_Custom
@@ -72,9 +66,8 @@ export const [SystemNameCapital]MenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
 //Template_Component_Menu_System
@@ -86,9 +79,8 @@ export const [SystemNameCapital]MenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['[SystemNameSmall]'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
 //Template_Component_Menu_Seed

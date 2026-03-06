@@ -2,5 +2,5 @@
         path: '[SystemPrefixSmall]/report/[ReportFileName]/:id',
         component: [ReportNameCapital]Component,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     },

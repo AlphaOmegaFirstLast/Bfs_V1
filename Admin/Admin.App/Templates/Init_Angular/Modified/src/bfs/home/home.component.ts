@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     if (systemApplicationsDecoded) {
       var systemApplications = JSON.parse(systemApplicationsDecoded) ?? [];
 
-      var currentApp = sessionStorage.getItem('current-app') || 'stkex.b.ofc'; //default app is b.office
+      var currentApp = sessionStorage.getItem('current-app') || 'b.ofc'; //default app is b.office
       this.currentSystemApp = systemApplications.find((x: { name: string; }) => x.name === currentApp);
       this.imgUrl = 'assets/images/' + this.currentSystemApp?.system + '/' + this.currentSystemApp?.image;
     }

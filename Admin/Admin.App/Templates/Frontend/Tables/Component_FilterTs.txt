@@ -50,7 +50,7 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
         let target = '';
         //Template_Start_Field_Lookup_2
         target = "/[LookupNameCapital]/list";
-        (await this.parent.apiService.post(target,  {pageSize:30})).subscribe({
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.[LookupNameCapital]Options = response.items;
                 this.isLoading = false;

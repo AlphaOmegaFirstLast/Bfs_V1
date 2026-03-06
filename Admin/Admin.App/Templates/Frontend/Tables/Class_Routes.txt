@@ -9,36 +9,36 @@ export const [ComponentNameCapital]_ROUTES: Routes = [
         path: '[SystemPrefixSmall]/[ComponentFileName]/list', 
         component: [ComponentNameCapital]ListComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     },
     {
         path: '[SystemPrefixSmall]/[ComponentFileName]/list/:id', 
         component: [ComponentNameCapital]ListComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     },
     {
         path: '[SystemPrefixSmall]/[ComponentFileName]/add/0', 
         component: [ComponentNameCapital]FormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     },
     {
         path: '[SystemPrefixSmall]/[ComponentFileName]/view/:id', 
         component: [ComponentNameCapital]FormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin', 'investor','broker'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin', 'investor','broker'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     },
     {
         path: '[SystemPrefixSmall]/[ComponentFileName]/edit/:id',
         component: [ComponentNameCapital]FormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     },
     {
         path: '[SystemPrefixSmall]/[ComponentFileName]/delete/:id', 
         component: [ComponentNameCapital]FormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['[SystemNameSmall]'], app: ['b.ofc'] } 
     }
 ]
