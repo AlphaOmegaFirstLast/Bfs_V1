@@ -90,7 +90,33 @@ BfsSystemId: undefined ,
 export function getBfsTenantSystemActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant-system/view', displayText: 'View...'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant-system/edit', displayText: 'Edit...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant-system/delete', displayText: 'Delete...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-tenant-system/add', displayText: 'Add New record'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsTenantId'], route:'/bfs/bfs-tenant/view', displayText:'Go to BfsTenant'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/bfs/bfs-system/view', displayText:'Go to BfsSystem'
+});
+
         return links;
     }
     //---------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
 

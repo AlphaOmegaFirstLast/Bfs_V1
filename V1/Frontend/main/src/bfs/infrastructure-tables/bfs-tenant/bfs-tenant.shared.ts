@@ -95,7 +95,30 @@ export function initBfsTenantRequest(): IBfsTenantRequest {
 export function getBfsTenantActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-tenant/add', displayText: 'Add New record'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant/view', displayText: 'View...'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant/edit', displayText: 'Edit...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant/delete', displayText: 'Delete...' 
+});
+
         return links;
     }
     //---------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+
+//Template_End_Code_DontOverwrite_3
 

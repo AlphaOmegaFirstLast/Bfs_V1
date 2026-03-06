@@ -42,7 +42,7 @@ public BackendDataTypeOptions:  any[] = [];
     async getLookups(): Promise<void> {
         let target = '';
         target = "/BfsComponent/list";
-        (await this.parent.apiService.post(target,  {pageSize:30})).subscribe({
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsComponentOptions = response.items;
                 this.isLoading = false;

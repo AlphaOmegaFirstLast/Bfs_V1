@@ -6,18 +6,16 @@ export const InfrastructureMenuItems: MenuItemType[] = [
     {label: 'Infrastructure', 
      isTitle: true,
      data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
+            app: ['b.ofc'],
             role: ['admin']
         },
     },
     {
-        label: 'BestFit Basic',
+        label: 'Basic',
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
+            app: ['b.ofc'],
             role: ['admin']
         },
         children: [
@@ -26,8 +24,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-component/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -36,8 +32,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-field/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -46,8 +40,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-system/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -56,38 +48,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-client/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Component - System Actions',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/bfs-component-system-action/list',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Component - Business Actions',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/bfs-component-business-action/list',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Client - System',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/bfs-client-system/list',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -96,8 +56,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-tenant/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -106,8 +64,30 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-tenant-system/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Component - System Actions',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/bfs-component-system-action/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Component - Business Actions',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/bfs-component-business-action/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Client - System',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/bfs-client-system/list',
+        data: {
             role: ['admin', 'investor','broker']
         }
     },
@@ -120,22 +100,21 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
+            app: ['b.ofc'],
             role: ['admin']
         },
         children: [
-    {
-        label: 'Structure Compare',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/report/structure-compare/0',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
-//Template_Component_Menu_Reports
+            {
+                label: 'Structure Compare',
+                icon: 'tablerLayoutSidebar',
+                url: '/bfs/report/structure-compare/0',
+                data: {
+                    app: ['stkex.b.ofc'],
+                    api: ['infrastructure'],
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Reports
         ]
     },
 
@@ -144,29 +123,23 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin']
+           app: ['b.ofc'],
+           role: ['admin']
         },
         children: [
-
-    {
-        label: 'Local Deployment',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/deployment-local/list',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
     {
         label: 'Azure Deployment',
         icon: 'tablerLayoutSidebar',
         url: '/bfs/deployment-azure/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Local Deployment',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/deployment-local/list',
+        data: {
             role: ['admin', 'investor','broker']
         }
     },
@@ -179,8 +152,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
+            app: ['b.ofc'],
             role: ['admin']
         },
         children: [
@@ -189,8 +161,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/custom-reports/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -199,8 +169,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/custom-field-definition/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -213,31 +181,25 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin']
         },
         children: [
-    {
-        label: 'Business Actions',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/business-action/list',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
     {
         label: 'System Actions',
         icon: 'tablerLayoutSidebar',
         url: '/bfs/system-action/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
-    }
+    },
+    {
+        label: 'Business Actions',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/business-action/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_System
         ]
     },
@@ -247,28 +209,22 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['bestfit.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin']
         },
         children: [
-    {
-        label: 'Data Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/data-type/list',
-        data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
-            role: ['admin', 'investor','broker']
-        }
-    },
     {
         label: 'System Templates',
         icon: 'tablerLayoutSidebar',
         url: '/bfs/system-template/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Data Types',
+        icon: 'tablerLayoutSidebar',
+        url: '/bfs/data-type/list',
+        data: {
             role: ['admin', 'investor','broker']
         }
     },
@@ -277,8 +233,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/filter-type/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -287,8 +241,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/form-control-type/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -297,8 +249,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/backend-data-type/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -307,8 +257,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/action-type/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -317,8 +265,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/aggregate-type/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -327,8 +273,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/action-location/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -337,8 +281,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/chart-element/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },
@@ -347,8 +289,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/writer-type/list',
         data: {
-            app: ['stkex.b.ofc'],
-            api: ['infrastructure'],
             role: ['admin', 'investor','broker']
         }
     },

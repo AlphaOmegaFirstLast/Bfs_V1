@@ -1,7 +1,7 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 import { IFieldValidation, initFieldValidation, fieldValidationUntypedFormGroup } from "@bfs/_shared/objectFields";
 
@@ -108,7 +108,27 @@ export function initCustomFieldDefinitionRequest(): ICustomFieldDefinitionReques
 export function getCustomFieldDefinitionActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/custom-field-definition/add', displayText: 'Add New record'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/view', displayText: 'View...'
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/edit', displayText: 'Edit...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/custom-field-definition/delete', displayText: 'Delete...' 
+});
+links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsComponentId'], route:'/bfs/bfs-component/view', displayText:'Go to BfsComponent'
+});
+
         return links;
     }
     //---------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
 

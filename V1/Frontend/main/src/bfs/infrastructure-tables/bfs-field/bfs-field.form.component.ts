@@ -71,7 +71,7 @@ public BackendDataTypeOptions: any[] = [];
         this.isLoading = true;
         let target = '';
         target = "/BfsComponent/list";
-        (await this.apiService.post(target,  {pageSize:30})).subscribe({
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsComponentOptions = response.items;
                 this.isLoading = false;

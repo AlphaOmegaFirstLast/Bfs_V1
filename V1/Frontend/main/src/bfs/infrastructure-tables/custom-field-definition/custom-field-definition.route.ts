@@ -9,36 +9,40 @@ export const CustomFieldDefinition_ROUTES: Routes = [
         path: 'bfs/custom-field-definition/list', 
         component: CustomFieldDefinitionListComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/custom-field-definition/list/:id', 
         component: CustomFieldDefinitionListComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/custom-field-definition/add/0', 
         component: CustomFieldDefinitionFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/custom-field-definition/view/:id', 
         component: CustomFieldDefinitionFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin', 'investor','broker'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin', 'investor','broker'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/custom-field-definition/edit/:id',
         component: CustomFieldDefinitionFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/custom-field-definition/delete/:id', 
         component: CustomFieldDefinitionFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     }
 ]
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

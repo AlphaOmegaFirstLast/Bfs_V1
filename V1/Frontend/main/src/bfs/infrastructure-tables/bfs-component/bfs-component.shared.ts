@@ -154,7 +154,13 @@ links.push({
 actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' }
 });
 links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], deleteUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
+});
+links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.setComponentDefaultActions, displayText: 'Set Component Default Actions', data: { recordId: record['id'], putUrl: '/Operations/BfsComponentSystemAction/matrix' }
+});
+links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.setComponentDefaultActions, displayText: 'Set Component Default Actions', data: { recordId: record['id'], putUrl: '/Operations/BfsComponentSystemAction/matrix' }
 });
 links.push({
 actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.generateTestData, displayText: 'Deploy Azure', data: { recordId: record['id'], getUrl: '/Operations/bfsComponent/TestData' }

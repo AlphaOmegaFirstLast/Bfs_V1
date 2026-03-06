@@ -122,3 +122,32 @@ export async function generateTestData(me: IUserInterface, record: IIdentifiable
     });
 }
 //--------------------------------------------------------
+export async function setComponentDefaultActions(me: any, record: IIdentifiable, data: any): Promise<void> {
+    let entityId = record.id;
+    if (!me.isLoading.save) {  // to prevent multiple requests
+        me.messages = [];
+        me.isLoading = true;
+        var target = `/Operations/BfsComponentSystemAction/matrix/${entityId}`;
+
+        var childrenList: any[] = [
+            { "bfsComponentId": entityId, "actionLocationId": "1", "systemActionId": "1" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "2" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "3" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "4" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "5" }
+        ];
+
+        (await me.apiService.put(target, childrenList)).subscribe({
+            next: (res: any) => {
+                me.isLoading.save = false;
+                me.list = res.items;
+            },
+            error: (err: any) => {
+                me.isLoading = false;
+                var msg = err.message || 'An error occurred while saving matrix data.';
+                me.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+    }
+}
+//---------------------------------------------------------
