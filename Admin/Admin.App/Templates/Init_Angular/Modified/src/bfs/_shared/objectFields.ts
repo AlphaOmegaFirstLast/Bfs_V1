@@ -1,4 +1,5 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
+import { DomSanitizer } from "@angular/platform-browser";
 import { IQueryResponse } from "./interfaces";
 
 export interface IFieldValidation {
@@ -49,7 +50,7 @@ export function allowedValuesValidator(allowed: string[]) {
 export function getFormControlValidation(sFieldValidation?: string) {
     let validatorsArray = [];
     // a list of fieldValidation is returened through Dapper, as list of strings not objects
-    let fieldValidation = sFieldValidation? JSON.parse(sFieldValidation): null;
+    let fieldValidation = sFieldValidation ? JSON.parse(sFieldValidation) : null;
     if (fieldValidation) {
         if (fieldValidation.IsRequired) validatorsArray.push(Validators.required);
         if (fieldValidation.MinLength > 0) validatorsArray.push(Validators.minLength(fieldValidation.MinLength));
@@ -80,6 +81,41 @@ export function initReportInfo(): IReportInfo {
         isJoinField: false,
         aggregateTypeId: '1',
         chartElementId: '1'
+    }
+}
+//-------------------------------------------------
+export function getReportInfoHeaders(this: any): string {
+    var result = `<table class="table table-bordered table-sm">
+                <tr><th colspan="6" class="text-center">Report Info</th></tr>
+                <tr>
+                    <th width="150px">Parent Table</th>
+                    <th width="150px">Is Query Column</th>
+                    <th width="150px">Is Column Visible</th>
+                    <th width="150px">Is Join Field</th>
+                    <th width="150px">Aggregate Type Id</th>
+                    <th width="150px">Chart Element Id</th>
+                </tr>
+                </table>`;
+    return result;
+}
+//-------------------------------------------------
+export function getReportInfoData(reportInfoString: string): string {
+    if (!reportInfoString) return '';
+    try {
+        const reportInfo: IReportInfo = JSON.parse(reportInfoString);
+        var result = `<table class="table table-bordered table-sm">
+                   <tr>    
+                        <td width="150px"> ${reportInfo.parentTable}</td>
+                        <td width="150px"> ${reportInfo.isQueryColumn ? 'true' : 'false'}</td>
+                        <td width="150px"> ${reportInfo.isColumnVisible ? 'true' : 'false'}</td>
+                        <td width="150px"> ${reportInfo.isJoinField ? 'true' : 'false'}</td>
+                        <td width="150px"> ${reportInfo.aggregateTypeId}</td>
+                        <td width="150px"> ${reportInfo.chartElementId}</td>
+                    </tr>
+                </table>`;
+        return (result);
+    } catch (e) {
+        return '';
     }
 }
 //---------------------------------------------------------
@@ -128,9 +164,9 @@ export async function getReportInfoLookups(me: any): Promise<void> {
 
 
 export interface IToolTipInfo {
-        actionLocationId: string,
-        note: string,
-        icon: string,
+    actionLocationId: string,
+    note: string,
+    icon: string,
 }
 //------------------------------------------------
 export function initToolTipInfo(): IToolTipInfo {
@@ -179,7 +215,7 @@ export function initMatrixInfo(): IMatrixInfo {
     return {
         parentApi: '',
         verticalApi: '',
-        horizontalApi: ''   
+        horizontalApi: ''
     }
 }
 //---------------------------------------------------------
@@ -198,9 +234,9 @@ export async function getMatrixInfoLookups(me: any): Promise<void> {
 
 
 export interface IFormInfo {
-        formControlTypeId: string,
-        column: string,
-        row: string,
+    formControlTypeId: string,
+    column: string,
+    row: string,
 }
 //------------------------------------------------
 export function initFormInfo(): IFormInfo {

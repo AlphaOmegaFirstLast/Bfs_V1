@@ -51,6 +51,15 @@ export interface IColumns {
     isVisible: boolean;
 }
 //------------------------------------------------
+export interface IQueryColumn {
+    [key: string]: any; // Allow additional properties
+    fieldName: string;
+    displayName: string;
+    sortName: string;
+    width: string;
+    isVisible: boolean;
+}
+//------------------------------------------------
 export interface ISort {
     sortBy?: string;
     direction?: 'asc' | 'desc';
@@ -73,15 +82,6 @@ export interface IQueryResponse {
     totalPages: number;
 }
 //------------------------------------------------
-export interface IQueryColumn {
-    [key: string]: any; // Allow additional properties
-    fieldName: string;
-    displayName: string;
-    sortName: string;
-    width: string;
-    isVisible: boolean;
-}
-//------------------------------------------------
 export interface ILookup {
     id: number;
     name: string;
@@ -92,10 +92,25 @@ export interface IIdentifiable {
 }
 //------------------------------------------------
 export interface IEntity {
+    [key: string]: any; // Allow additional properties
     id?: string;
     customFields?: ICustomField[];
 }
 //------------------------------------------------
+
+export interface ICustomReports {
+    id?: string;
+name?: string;
+request?: string;
+baseReport?: string;
+isPrivate?: boolean;
+isDeleted?: boolean;
+createdBy?: string;
+url?: string;
+
+}
+//------------------------------------------------
+
 export interface ICustomFieldDefinitionRecord
 {
     id?: string;

@@ -6,7 +6,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormArray, type UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { ClipboardService } from '@core/services/clipboard.service';
 
-import { IQueryResponse, ILookup, IUIMessage, IEntity , ICustomFieldDefinitionRecord} from '@bfs/_shared/interfaces';
+import { IQueryResponse, ILookup, IUIMessage, IEntity , ICustomFieldDefinitionRecord, ViewLink, ActionLink} from '@bfs/_shared/interfaces';
 import { getFormControlValidation, getFormInfoLookups } from '@bfs/_shared/objectFields';
 import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } from '@bfs/_shared/objectFields';
 
@@ -33,6 +33,7 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     public messages: IUIMessage[] = [];
 
     entity: Entity;
+    me: any = this;
     //-----------------------Object Fields Lookups----------------------------------
     public ChartElementOptions: any[] = []; //{ id: number, name: string }[] = [];
     public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
@@ -138,7 +139,7 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     async getCustomFieldDefinitions(): Promise<void> {
         let target = '';
         target = '/CustomFieldDefinition/list';
-        (await this.apiService.post(target, { pageSize: 30 })).subscribe({
+        (await this.apiService.post(target, { pageSize: 50 })).subscribe({
             next: (response: IQueryResponse) => {
                 this.isLoading = false;
                 this.setCustomFieldControls(response.items);
@@ -260,6 +261,11 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
         }
     }
     //---------------------------------------------------------
+      
+    isAccessible(linkOrAction: ViewLink | ActionLink): boolean {
+           return true;
+    }
+    //--------------------------------------------------------- 
     get form() {
         return this.validationForm.controls
     }
@@ -270,5 +276,6 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
         this.validationForm.patchValue(this.entity);
     }
     //---------------------------------------------------------
+    
 }
 

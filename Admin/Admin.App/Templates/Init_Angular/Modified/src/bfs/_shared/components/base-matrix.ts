@@ -17,7 +17,7 @@ import { TokenService } from '@bfs/_shared/services/token.service';
 
 @Component({
     selector: 'app-base-matrix',
-    template: '' 
+    template: ''
 })
 export class BaseMatrixComponent<IMatrix, IFilter> {
     @Input() presetFilter: IFilter | undefined;
@@ -41,12 +41,12 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
     public saveLink: ActionLink = { recordId: '', action: this.saveMatrix.bind(this), displayText: "Save" }; // top left button of 'Add' functionality. it gets overriden in derived classes
     //---------------------------------------------------------
 
-    public title: string = '' ;  // to be set from outside
-    public parentId:string = '';
-    public horizontalId:string = '';
-    public verticalId:string = '';
-    public horizontalList:ILookup[] = [];   // Records. up to 100 record
-    public verticalList:ILookup [] = [];      // Columns. supposed to be finite. ideally not more than 10
+    public title: string = '';  // to be set from outside
+    public parentId: string = '';
+    public horizontalId: string = '';
+    public verticalId: string = '';
+    public horizontalList: ILookup[] = [];   // Records. up to 100 record
+    public verticalList: ILookup[] = [];      // Columns. supposed to be finite. ideally not more than 10
 
     public filterArray: string[] = [];
     public isLoading = { main: false, matrixVertical: false, matrixHorizontal: false, save: false };
@@ -101,6 +101,11 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
                 next: (res: any) => {
                     this.isLoading.matrixHorizontal = false;
                     this.horizontalList = res.items;
+
+                    // special case of matrix that is of 1 dimention instead of 2.
+                    if (this.parentId == this.horizontalId) {
+                        this.horizontalList = this.horizontalList.filter(h => h.id.toString() == this.entityId);
+                    }
                 },
                 error: (err: any) => {
                     this.isLoading.matrixHorizontal = false;
@@ -117,6 +122,11 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
                 next: (res: any) => {
                     this.isLoading.matrixVertical = false;
                     this.verticalList = res.items;
+
+                    // special case of matrix that is of 1 dimention instead of 2.
+                    if (this.parentId == this.verticalId) {
+                        this.verticalList = this.verticalList.filter(v => v.id.toString() == this.entityId);
+                    }
                 },
                 error: (err: any) => {
                     this.isLoading.matrixVertical = false;
@@ -140,28 +150,28 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
     //---------------------------------------------------------  
     isChecked(me: any, record: ILookup, column: ILookup): string {
         // check item exists in parent list 
-        var matrixItem = me.list.find((item: ILookup) => item 
-                                                          && item[this.horizontalId as keyof ILookup] == record['id' as keyof ILookup] 
-                                                          && item[this.verticalId   as keyof ILookup] == column['id' as keyof ILookup]
-                                     ) ;
+        var matrixItem = me.list.find((item: ILookup) => item
+            && item[this.horizontalId as keyof ILookup] == record['id' as keyof ILookup]
+            && item[this.verticalId as keyof ILookup] == column['id' as keyof ILookup]
+        );
 
         return matrixItem ? 'checked' : '';
     }
     //---------------------------------------------------------       
     onCheckboxClick(me: any, record: any, column: any): void {
         // check item exists in parent list
-        var matrixItem = me.list.find((item: ILookup) => item 
-                                                          && item[this.horizontalId as keyof ILookup] == record['id' as keyof ILookup] 
-                                                          && item[this.verticalId   as keyof ILookup] == column['id' as keyof ILookup]
-                                     ) ;
+        var matrixItem = me.list.find((item: ILookup) => item
+            && item[this.horizontalId as keyof ILookup] == record['id' as keyof ILookup]
+            && item[this.verticalId as keyof ILookup] == column['id' as keyof ILookup]
+        );
 
         if (matrixItem) {
             // Remove existing item from parent list
             me.list = me.list.filter((item: ILookup) => !(
-                                                               item[this.horizontalId as keyof ILookup] == record['id' as keyof ILookup] 
-                                                            && item[this.verticalId   as keyof ILookup] == column['id' as keyof ILookup] 
-                                                             )
-                                    );
+                item[this.horizontalId as keyof ILookup] == record['id' as keyof ILookup]
+                && item[this.verticalId as keyof ILookup] == column['id' as keyof ILookup]
+            )
+            );
         } else {
             // Add new item to the parent list
             var newItem: any = {};
@@ -184,8 +194,8 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
                     [this.horizontalId]: (item[this.horizontalId as keyof IMatrix] as string | number),
                     [this.verticalId]: (item[this.verticalId as keyof IMatrix] as string | number)
                 }
-            ));
-          
+                ));
+
             (await me.apiService.put(target, childrenList)).subscribe({
                 next: (res: any) => {
                     me.isLoading.save = false;

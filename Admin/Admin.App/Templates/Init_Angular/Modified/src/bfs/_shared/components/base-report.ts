@@ -3,6 +3,7 @@ import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,8 +18,8 @@ import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 //---------------- bfs shared -------------------------------------
-import { IAction, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
-import { type IColumns, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IAction, IEntity, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
+import { type IColumns, ICustomReports, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { QuerySortComponent } from '@bfs/_shared/components/query-sort.component';
 import { QueryColumnsComponent } from '@bfs/_shared/components/query-columns.component';
 import { QueryGroupComponent } from '@bfs/_shared/components/query-group.component';
@@ -28,7 +29,7 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
-import { ICustomReports } from '@bfs/_shared/custom-reports/custom-reports.shared';
+import { getReportInfoData, getReportInfoHeaders } from '../objectFields';
 
 @Component({
     selector: 'app-base-report',
@@ -39,7 +40,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     @Input() presetFilter: IFilter | undefined;
     filter!: IFilter;
     lookup!: IWithLookup;
-    public list: IQueryColumn[] = [];
+    public list: IEntity[] = [];
     public customReportInfo = { id: '0', name: 'NamePlaceHolder', url: 'UrlPlaceHolder' };
     public apiCustomReportsUrl = "/CustomReports/";
 
@@ -71,6 +72,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     public pagination: any = { currentPage: 1, pageSize: this.pageSizes[0], pageCount: 0, totalItems: 1, description: '' };
     //------------------------------------------------------
     public me = this;
+    private sanitizer: DomSanitizer = inject(DomSanitizer);
 
     constructor(public modalService: NgbModal, public router: Router, public excelService: ExcelExportService, public activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
@@ -94,6 +96,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         this.setAccessible();
     }
     //---------------------------------------------------------
+
     async getReport(): Promise<void> {
 
         if (!this.isLoading) {  // to prevent multiple requests
@@ -182,7 +185,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         this.isSection.chart = !this.isSection.chart;
     }
     //---------------------------------------------------------
-    
+
     getReportActions(): ActionLink[] {
 
         let actionLinks: ActionLink[] = [
@@ -226,6 +229,38 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         modalRef.componentInstance.uploadUrl = me.apiService.origin + me.uploadApiUrl;
     }
     //---------------------------------------------------------
+    isObjectField(field: string): boolean {
+        field = field.toLowerCase();
+        return field.includes('fieldvalidation') || field.includes('reportinfo');
+    }
+    //---------------------------------------------------------        
+    objectFieldHeaders(field: string): SafeHtml {
+        var result = '';
+        switch (field.toLowerCase()) {
+            case 'reportinfo':
+                result = getReportInfoHeaders();
+                break;
+            default:
+                result = '';
+        }
+
+        return this.sanitizer.bypassSecurityTrustHtml(result) || '';
+    }
+    //---------------------------------------------------------
+    objectFieldData(record: any, field: string): SafeHtml {
+        var result = '';
+
+        switch (field.toLowerCase()) {
+            case 'reportinfo':
+                result = getReportInfoData(record[field] as string);
+                break;
+            default:
+                result = '';
+        }
+        
+        return this.sanitizer.bypassSecurityTrustHtml(result) || '';
+    }
+    //---------------------------------------------------------
     readCustomReportIdParameter() {
         let route = this.activatedRoute;
         // customReportId either in this format: "/report/structure-report/0"  or in this format:   "/client/list/0"
@@ -248,7 +283,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         }
     }
     //---------------------------------------------------------
-    goToCustomReport(me: IUserInterface, record: any, data: any){
+    goToCustomReport(me: IUserInterface, record: any, data: any) {
         let customReportrecord = data?.record || record;
         let url = customReportrecord?.url || "";
         me.router.navigate([`${url}/${customReportrecord.id}`]);
@@ -445,8 +480,8 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return request;
     }
     //---------------------------------------------------------
-    render(record: IQueryColumn, column: IColumns): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
+    render(record: IEntity, column: IColumns): any {
+        const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
             default:
                 return value;
@@ -454,17 +489,17 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return value;
     }
     //---------------------------------------------------------
-    getRecordLinks(record: IQueryColumn): ViewLink[] {
+    getRecordLinks(record: IEntity): ViewLink[] {
         //to be overridden in descendant classes to provide record level links
         return [];
     }
     //---------------------------------------------------------
-    getRecordActions(record: IQueryColumn): ActionLink[] {
+    getRecordActions(record: IEntity): ActionLink[] {
         //to be overridden in descendant classes to provide record level links
         return [];
     }
     //---------------------------------------------------------
-   
+
     isAccessible(linkOrAction: ViewLink | ActionLink): boolean {
         return true;
     }
