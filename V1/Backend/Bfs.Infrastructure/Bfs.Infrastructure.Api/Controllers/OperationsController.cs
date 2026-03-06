@@ -53,7 +53,7 @@ public class OperationsController
         return TypedResults.Ok(result);
     }
 
-    [HttpDelete("BfsComponent/FieldList/{componentId}")]
+    [HttpDelete("BfsComponent/DeleteTree/{componentId}")]
     [CustomAuthorize("method=o.DeleteComponentTree")]
     public async Task<Results<Ok, BadRequest<ProblemDetails>>> DeleteComponentTreeAsync([FromRoute] long componentId)
     {
