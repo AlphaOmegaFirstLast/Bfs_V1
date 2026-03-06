@@ -139,7 +139,7 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     async getCustomFieldDefinitions(): Promise<void> {
         let target = '';
         target = '/CustomFieldDefinition/list';
-        (await this.apiService.post(target, { pageSize: 30 })).subscribe({
+        (await this.apiService.post(target, { pageSize: 50 })).subscribe({
             next: (response: IQueryResponse) => {
                 this.isLoading = false;
                 this.setCustomFieldControls(response.items);
