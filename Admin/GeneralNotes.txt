@@ -1,0 +1,21 @@
+When create a new system 
+-within the frontend, before creating tables, modify the menu to reflect the system design (e.g. Basic, Transactions, Reports, Custom, Seed)
+-Custom-reports and one report at least must be defined in the system components.
+
+- User login (Identity User), accesstoken returns tenants stored in user claims. 
+- He selects a tenant to login to the tenant systems. => (Tenant User) each Tenant User must have a IdentityUserId
+- request a jwt token from Auth
+
+
+IIS Setup:
+- Make sure AspNet Core Hosting Module (ANCM) is installed
+- Auth is a virtual application
+- Main is a virtual directory
+
+SQL
+- Scripts to reset the password of the Global user SA (the master user that is already created by SQL)
+- Create a user login for each tenant database. this user login will be used in sql connection string to connect to the tenant database.
+- Run script to link this login to the database users and assign roles to the login.
+
+Same SQL idea above of creating a login in the master database then assign the login to a user within the target database,
+Same idea will be used in BestFit Systems.  The user logs in Auth, Creates a login (AspnetUser). then a tenant will pick the login up and link it to a AuthUser.

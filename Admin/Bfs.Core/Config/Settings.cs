@@ -15,6 +15,7 @@ public class DbConnections
     public string InfrastructureConnection { get; set; } = string.Empty;
     public string AuthConnection { get; set; } = string.Empty;
     public string StockExConnection { get; set; } = string.Empty;
+    public string StoresConnection { get; set; } = string.Empty;
 }
 
 public class ApiBaseUrls
