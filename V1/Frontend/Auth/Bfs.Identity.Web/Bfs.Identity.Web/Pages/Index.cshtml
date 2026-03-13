@@ -1,0 +1,68 @@
+﻿@page
+@model IndexModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Home page";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <style>
+        .no-tenant {
+            display:block;
+            padding: 200px;  
+            margin: auto;
+            text-align: center;
+            font-size:large;
+            color: darkred;
+        }
+
+        .home-td {
+            width: 200px;
+            text-align: center;
+        }
+
+        .btn-td {
+            border-style:none;
+        }
+    </style>
+    @if (Model.UserTenantList.Count == 0)
+    {
+        <div class="no-tenant">You are not attached to any of our tenants. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
+    }
+    else
+    {
+        <form method="post" asp-page-handler="SelectTenant">
+            <div style="padding-top:170px; width:100%;">
+                <table style="margin: 0 auto;">
+                    <tr>
+                        @foreach (var tenant in Model.UserTenantList)
+                        {
+                            <td>
+                                <button type="submit" class="btn-td" class="home-td" name="tenantOrder" value="@tenant.order">
+                                    <div style="display:block;">
+                                        <img src="~/images/logo/@tenant.Logo" width="170px" />
+                                    </div>
+                                    <div>
+                                        @tenant.Name
+                                    </div>
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </table>
+            </div>
+        </form>
+    }
+}
+else
+{
+    <div class="text-center">
+        <a href="~/Identity/Account/Register">Register</a>
+        <span>Or</span>
+        <a href="~/Identity/Account/Login">Login</a>
+    </div>
+}
+
+

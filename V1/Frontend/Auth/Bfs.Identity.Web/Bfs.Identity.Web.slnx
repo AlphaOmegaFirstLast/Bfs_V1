@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../../../../Admin/Bfs.Core/Bfs.Core.csproj" />
+  <Project Path="Bfs.Identity.Web/Bfs.Identity.Web.csproj" />
+</Solution>
