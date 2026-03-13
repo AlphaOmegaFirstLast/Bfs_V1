@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf , NgFor} from '@angular/common';
 import { safeHtmlDecode } from '@bfs/_shared/helpers/html.helper';
 import { TokenService } from '@bfs/_shared/services/token.service';
+import { appConfig } from '@/app/app.config';
 
 @Component({
   selector: 'app-home-page',
-  imports: [NgIf],
+  imports: [NgIf, NgFor],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   imgUrl!: string;
   isLoading: boolean = false;
   tokenService: TokenService = inject(TokenService);
+  tempSystems = [{ name: 'infrastructure', app: 'b.ofc' }, { name: 'stores', app: 'b.ofc' }, { name: 'auth', app: 'b.ofc' }]; // for testing only, can be removed after system selection page is implemented
 
   //--------------------------------------------------------------------------------------------
 
@@ -35,5 +37,11 @@ export class HomeComponent implements OnInit {
     }
   }
   //--------------------------------------------------------------------------------------------
-
+  
+  setCurrentSystem(system: string, app: string): void {
+    sessionStorage.setItem('current-system', system);
+    sessionStorage.setItem('current-app', app);
+    window.location.reload();
+  }
+  //--------------------------------------------------------------------------------------------
 }

@@ -100,9 +100,9 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
     //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
-        this.isLoading = true;
         let target = '';
         //Template_Start_Field_Lookup_2
+        this.isLoading = true;
         target = "/[LookupNameCapital]/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {

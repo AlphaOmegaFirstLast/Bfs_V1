@@ -168,7 +168,9 @@ namespace CodeAdmin
                 : ckAllReports.Checked ? DataType.Reports
                 : DataType.None;
 
-            _codeGenerator.SelectedComponentList = _codeGenerator.ComponentList.Where(x => (DataType)x.DataTypeId == dataType).ToList();
+            _codeGenerator.SelectedComponentList = _codeGenerator.ComponentList.Where(x => 
+                           x.BfsSystemId == _codeGenerator.CurrentSystem?.Id 
+                        && (DataType)x.DataTypeId == dataType).ToList();
             _codeGenerator.CurrentComponent = null;
 
             //If only one component is selected, set it as current component. so that SetUIControls() logic enables the right buttons.

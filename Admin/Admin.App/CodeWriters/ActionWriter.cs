@@ -17,6 +17,7 @@ namespace Admin.App
         // Properties
         public long Id { get; set; }
         public string Name { get; set; }
+        public string ShortName { get; set; }
         public long BfsComponentId { get; set; }
         public string ActionTemplate { get; set; }
 
@@ -34,6 +35,7 @@ namespace Admin.App
         {
             this.Id = source.Id;
             this.Name = source.Name;
+            this.ShortName = source.ShortName;
             this.BfsComponentId = source.BfsComponentId;
             this.ActionLocationId = source.ActionLocationId;
             this.ActionTemplate = source.ActionTemplate;
@@ -69,6 +71,11 @@ namespace Admin.App
         {
             var outputContent = new StringBuilder();
             var actionList = codeInfo.CodeWriter.actionList.Where(a => a.ActionTypeId == actionType);
+         
+            var system = codeInfo.CurrentSystem;
+            var component = codeInfo.CurrentComponent;
+            var fieldList = codeInfo.CurrentComponent?.FieldList;
+
             outputContent.AppendLine();
 
             foreach (var action in actionList)
@@ -76,39 +83,44 @@ namespace Admin.App
                 switch (action.WriterTypeId)
                 {
                     case WriterType.System:
-                        var system = codeInfo.CurrentSystem;
                         if (system != null)
                         {
                             var propertyValue = system.ToContent(codeInfo, action.MatchProperty, null);
                             if (action.MatchValues.Contains(propertyValue))
                             {
+                                var x = $"if (component.tokenService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))"
+                                outputContent.AppendLine(component?.SetRelated(codeInfo, x, null));
+                                outputContent.Append("{");
                                 outputContent.AppendLine("links.push({");
                                 outputContent.Append($"actionSource:'{action.ActionSourceId.ToString()}', actionType:'{action.ActionTypeId.ToString()}', actionLocation:'{action.ActionLocationId.ToString()}'");
                                 outputContent.Append(",");
                                 outputContent.Append(system.SetRelated(codeInfo, action.ActionTemplate, placeHolder));
                                 outputContent.AppendLine("});");
+                                outputContent.AppendLine("}");
                             }
                         }
                         break;
 
                     case WriterType.Component:
-                        var component = codeInfo.CurrentComponent;
                         if (component != null)
                         {
                             var propertyValue = component.ToContent(codeInfo, action.MatchProperty, null);
                             if (action.MatchValues.Contains(propertyValue))
                             {
+                                var x = $"if (component.tokenService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))"
+                                outputContent.AppendLine(component.SetRelated(codeInfo, x, null));
+                                outputContent.Append("{");
                                 outputContent.AppendLine("links.push({");
                                 outputContent.Append($"actionSource:'{action.ActionSourceId.ToString()}', actionType:'{action.ActionTypeId.ToString()}', actionLocation:'{action.ActionLocationId.ToString()}'");
                                 outputContent.Append(",");
                                 outputContent.AppendLine(component.SetRelated(codeInfo, action.ActionTemplate, placeHolder));
                                 outputContent.AppendLine("});");
+                                outputContent.AppendLine("}");
                             }
                         }
                         break;
 
                     case WriterType.Field:
-                        var fieldList = codeInfo.CurrentComponent?.FieldList;
                         if (fieldList != null)
                         {
                             foreach (ICodeWriter field in fieldList)
@@ -116,11 +128,15 @@ namespace Admin.App
                                 var propertyValue = field.ToContent(codeInfo, action.MatchProperty, null);
                                 if (action.MatchValues.Contains(propertyValue))
                                 {
+                                    var x = $"if (component.tokenService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))"
+                                    outputContent.AppendLine(field.SetRelated(codeInfo, x, null ));
+                                    outputContent.Append("{");
                                     outputContent.AppendLine("links.push({");
                                     outputContent.Append($"actionSource:'{action.ActionSourceId.ToString()}', actionType:'{action.ActionTypeId.ToString()}', actionLocation:'{action.ActionLocationId.ToString()}'");
                                     outputContent.Append(",");
                                     outputContent.AppendLine(field.SetRelated(codeInfo, action.ActionTemplate, placeHolder));
                                     outputContent.AppendLine("});");
+                                    outputContent.AppendLine("}");
                                 }
                             }
                         }

@@ -78,6 +78,24 @@
         "TemplateContentType": "ExternalFile",
         "KeepPlaceHolder": true,
         "Notes": "Add a new system to UI. It adds system entry in environment.production.ts"
+      },
+      {
+        "ParentId": [ "1415" ],
+        "Name": "System_AddMenuDeclare",
+        "TemplateFile": "Frontend\\System\\AddMenuDeclare.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It declare menu entry in menu-guard.service.ts"
+      },
+      {
+        "ParentId": [ "1416" ],
+        "Name": "System_AddMenuEntry",
+        "TemplateFile": "Frontend\\System\\AddMenuEntry.txt",
+        "PlaceHolderType": "Marker",
+        "TemplateContentType": "ExternalFile",
+        "KeepPlaceHolder": true,
+        "Notes": "Add a new system to UI. It declare menu entry in menu-guard.service.ts"
       }
     ]
   },
