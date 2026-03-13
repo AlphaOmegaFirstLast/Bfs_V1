@@ -1,0 +1,27 @@
+VS environment options to run Web App:
+| Option                | Environment         | Protocol | Use Case                                     | |-----------------------|--------------------|----------|-----------------------------------------------| 
+| http / https          | Local (Kestrel)    | HTTP/S   | Local dev, secure/insecure endpoints          | 
+| WSL                   | Linux (via WSL)    | HTTP/S   | Test on Linux from Windows                    | 
+| IIS Express           | Windows (IIS)      | HTTP/S   | Simulate IIS hosting                          | 
+| Container (Docker)    | Docker container   | HTTP/S   | Test containerization, cloud readiness        |
+
+Visual Studio options when running or debugging an ASP.NET Core project:
+1. http / https
+•	http: Runs your application using the HTTP protocol (no encryption). The app will be accessible at a URL like http://localhost:port.
+•	https: Runs your application using the HTTPS protocol (encrypted). The app will be accessible at a URL like https://localhost:port.
+•	Use case: Choose https for secure, encrypted communication (recommended for most web APIs and apps). http is sometimes used for local development or testing when encryption is not needed.
+
+2. WSL
+•	WSL stands for Windows Subsystem for Linux.
+•	What it does: Runs your application inside your default WSL Linux distribution (e.g., Ubuntu), simulating a Linux environment.
+•	Use case: Useful for testing how your app behaves on Linux, which is common for production deployments.
+
+3. IIS Express
+•	IIS Express is a lightweight, self-contained version of Internet Information Services (IIS) for development.
+•	What it does: Hosts your application using IIS Express, simulating a production-like web server environment on Windows.
+•	Use case: Good for testing features that depend on IIS or for simulating a Windows server environment.
+
+4. Container (Docker file)
+•	Container runs your application inside a Docker container, using the provided Dockerfile.
+•	What it does: Builds a Docker image and runs your app in an isolated containerized environment.
+•	Use case: Useful for testing containerization, ensuring your app works as expected in Docker, and preparing for cloud or container-based deployments.

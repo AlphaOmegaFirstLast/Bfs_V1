@@ -1,0 +1,13 @@
+- Create Visual Studio project ASP.NET Core (Razor Pages) C# (Bfs.Identity.Web) as shown in images
+- Run CodeGen "New System", click "Generate" => it will modify the (Bfs.Identity.Web) files.
+- in VS\ solution explorer\ select (Bfs.Identity.Web) as a start up project (instead of AspireHost.app)
+- in the package manager console, select (Bfs.Identity.Web) and run (add-migration init) command.
+- Re-generate migrations
+- make sure if the DB exists in sql server and clean (no _imigrationHistory table or aspnet tables)
+- update-database
+- Bfs.Identity.Web creates its aspnet identity tables in the Auth database, shared with auth api database.
+add-migration
+update-database 
+
+-Replace [CompanyName] with company or system name
+- images must have their extentions in small letter (*.png) Not (*.PNG)

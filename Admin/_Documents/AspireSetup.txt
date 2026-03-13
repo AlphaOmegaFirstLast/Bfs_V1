@@ -1,0 +1,24 @@
+Add Aspire support to an existing solution from VS
+------------------------------------------------------------
+when you select the action, VS will install 2 projects [Aspire.AppHost.csproj (Console App), Aspire.ServiceDefaults.csproj (library)] in your solution
+and runs a service discovery and registers Aspire support to your Api.csproj and reference your Api projects in the Aspire project.
+
+Adding a project to an existing Aspire solution
+------------------------------------------------------------
+add a reference to the project in Aspire project, and add a line in its program.cs. 
+convert every dot (.) in the project name to underscore (_) =>Projects.Bfs_StockEx_Api
+
+
+1-Aspire.csproj
+        builder.AddProject<Projects.Bfs_StockEx_Api>("bfs-stockex-api");
+
+2- Add the 2 lines below to your Api project's program.cs
+    Bfs.StockEx.Api.csproj
+
+        // Add Aspire support for development
+        builder.AddServiceDefaults();
+
+        // Add Aspire support for development
+        app.MapDefaultEndpoints();
+
+Note: the above lines I moved them from Aspire.ServiceDefaults.csproj to Bfe.Core, so we dont have to have an extra project in the solution.

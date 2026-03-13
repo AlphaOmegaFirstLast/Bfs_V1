@@ -1,0 +1,19 @@
+How to publish local on iis.
+1- right click on your application ex (Stockex.api )and choose publish.
+2- in pubish choices  choose folder.
+3- in publish form choose the folder for your app to be published in.
+4- choose debug option.
+5- open folderprofile.pubxml and add this line <EnvironmentName>Development</EnvironmentName> in  <PropertyGroup> </PropertyGroup>.
+6- open stockexapi and add this line <EnvironmentName>Development</EnvironmentName>in  <PropertyGroup> </PropertyGroup>.
+7- click publish
+
+8 - from control panel add/remove program download iis manager .
+9- - Install the ASP.NET Core Hosting Bundle.
+
+
+10- open iis manager .
+11- click add new website
+12 site name "stockextest.localhost" write the same in hostname
+13- choose the physical path of publish folder. then press Ok
+14- from browser write stockextest.localhost/swagger/index.html.
+

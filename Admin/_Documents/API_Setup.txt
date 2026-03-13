@@ -1,0 +1,22 @@
+- run Code-Gen
+- select Form "New System"
+- select Api solution: [Auth, StockEx, ..]
+- Generate the system
+- Go to form Backend select the api solution
+- select generate all tables
+- go to visual studio, open the *Api* solution
+- open package manager console, 
+  ** set the Api.csproj as start up project and select the data.csproj in the package manager console.
+  run the following commands
+    add-migration init
+	update-database
+Or
+
+- go to visual studio, open the *Aspire* solution
+- open package manager console, 
+  ** set the Api.csproj as start up project and select the data.csproj in the package manager console.
+  run the following commands
+    add-migration init
+	update-database
+
+- Check AppSettings.development 

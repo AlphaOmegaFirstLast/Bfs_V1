@@ -1,0 +1,16 @@
+1- go to portal.azure.com
+2- sign in with microsoft account (suzette.antony@hotmail.com) password(Bluewater@1)
+3- create new resource group
+4- in this group create new App Service (Web App) called for ex (StockExApi2)
+5- create new Empty SQL database StgStockExBackendApiDatabase 
+6- from sql management studio write in server the server name from azure (stgstockexsqlserver.database.windows.net)
+7- sql authentication : user StgStockExSqlServer from azure password BestFit@1
+8- from visual studio right click on stockex.api and click publish - azure - .
+9- in the publish profile write <EnvironmentName>Staging</EnvironmentName> if not added error 503 will be shown
+10- then click publish
+11- be sure in program.cs that there is no if condition before calling swagger . if not removed error 404 will be shown
+      //  if (app.Environment.IsStaging())
+        //{
+            app.UseSwagger();
+            app.UseSwaggerUI();
+       //}

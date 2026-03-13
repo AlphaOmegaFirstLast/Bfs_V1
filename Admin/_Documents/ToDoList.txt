@@ -1,0 +1,72 @@
+Randa: Azure deployment, iis deployment, writing code, Cors,Json,app.settings, environment, migration, update-database, testing frontend F12,git
+
+1- Setup environment
+   a- SQL Server for Developers
+   b- Visual Studio 2022 community 17.4.4
+   c- Slack
+
+2- Backend Net9.0 startup (Must be easy to generate "Re-Construct")
+   
+   a- Which database
+   b- Which host
+   c- OpenApi
+   d- Environment Settings
+   e- Logging
+   f- Exceptions
+   h- Validations
+   i- Authentication & Authorization (JWT tokens) 
+      login, logout, refreshToken, sync expiry, set the token according to DB, [401, 403] handling, test multi-tab
+
+
+   
+ 3- Explore CICD
+   a- Github Workflows
+   b- Cloud deployments
+   c- Docker Containers
+   
+ 4- Setup frontend   
+   a- Templates
+   b- Charts
+   c- Security
+   d- Key Vault
+   
+ 5- Engines
+  a- Rules Engine
+  b- Report Engine
+  c- SQLHelper \ Dapper
+  d- Handling concurrency
+
+  
+ 6- Core 
+  a- Entity Framework Core
+  c- Custom fields
+  d- Communication (Emails, messages)
+  e- Upload \ Download files  
+  f- Messaging
+  g- Hangfire (schedueling)
+  h- AI Integration  
+  i- SignalR
+  j- Workflows
+  k- Webhooks
+  l- Tests ####
+  
+  ************************************************************
+  Fix code generation : DbSet in dbcontext,  add filter "Name", isDeleted, query like %, frontend validations
+  Dropdowns ,   Id generation, set filters nulls in backend, generate test data using AI request (number of records, business context)
+  Cross Origin, Authorization, CodeCleanup.exe,
+  Logging, Error handling, Health check from win app
+  Cascading in Database
+  in frontend prevent buttons from being clicked more than once during operations
+  Transactions
+  ************************************************************
+  
+ 4- Admin apps (Bestfit Admin, Customer Admin)
+  a- Create\Update\Delete Database 
+  b- add up & down migration
+  c- apply permissions per app
+  d- apply permission for apps \ Clients
+ -----------------------------------------------------------
+ - Choices:
+ - Controller_Based Api vs minimal Apis
+ to get more control : request response pipeline,  model binding, security, validations 
+     

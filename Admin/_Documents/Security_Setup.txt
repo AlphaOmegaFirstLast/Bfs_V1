@@ -1,0 +1,61 @@
+Authentication
+===================
+
+- is done using built-in Microsoft.AspNetCore.Identity
+- New AspNetCore RazorPages application, Authentication Type: "Individual Accounts"
+- Add Scaffolding to the project "Identity"
+- Replace IdentityUser by AuthUser in the whole project. => this step will result in the project cannot compile
+- Delete Migrations
+- Copy BFS changes from Templates\NewSystem\Identity
+- Add Migrations
+
+Login
+==================
+identity sets:
+- its own cookies .AspNetCore.Identity.Application (when user is signed in)
+- index.cshtml store data in sessionItems: "token-parsed" & "current-app", "systems-applications"
+main does the following:
+- reads sessionItems 
+- calls Identity.TokenController to get accessToken & refreshToken of the currently signed user, 
+it saves the returned tokens as follow:
+     a-  access token in memory 
+     b-	 refreshToken saved in a cookie (httpOnly, secure, cookie)
+	 
+- for StockEx Api requests, accessToken is sent in the authorization Header Bearer, which is a typical Jwt authentication
+the request is sent with (credentials=false, means no cookies are sent)
+- if StockEx Api requests comes back as unauthenticated, that means the accessToken is invalid or expired
+the code will try to get another token by sending a token request with (credentials=true means the refreshtoken is sent)
+this request is sent to identity.Tocken Controller
+
+-
+Authorization
+==================
+
+- When Authentication is a success, Bfs.Identity.Web send UserId requesting a token from Bfs.Auth.Api
+- the token is read and parsed for 2 reasons:
+	- display applications the user is authorized to.
+	- set a session Item "token-parsed" for frontend-main, to improve performance of routes and menu items initialization.
+	- after reading the session "token=parsed", it should keep it in memory and delete the session item.
+	
+- When the frontend is starting it reads the session item, if iti is not there, it requests a token and keeps in memory.	
+
+Token claims are read by:
+MenuGuard service, it checks menu items required permissions against user permissions
+RouteGuard service, it checks route required permissions against user permissions
+List Component, it checks for add, update, delete, query permissions that user has
+
+Logout
+==================
+When click logout from frontend\main:
+- A call to token controller in identity.web. to :
+1- sign the user out 
+2- invalidate the refresh-token cookie
+3- Needs to call Auth.Api and invalidate refresh token
+4- the main clears session => - Delete session items
+
+
+When click logout from Identity\logout button:
+1- sign the user out 
+2- invalidate the refresh-token cookie
+3- Needs to call Auth.Api and invalidate refresh token
+4- the main clears session => - Delete session items
