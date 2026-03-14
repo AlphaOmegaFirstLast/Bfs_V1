@@ -30,6 +30,15 @@
     <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
       <h3>Login is required to access the application.</h3>
     </div>
-    <div class="col-4"></div>
+    <div class="col-4">
+      <div *ngFor="let system of tempSystems">
+        <input type="button" class="btn btn-primary m-2" value="{{system.name}} - {{system.app}}" (click)="setCurrentSystem(system.name, system.app)" />
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-12">
+        <input type="button" class="btn btn-primary m-2" value="Get Token" (click)="getToken()" />
+    </div>
   </div>
 </div>

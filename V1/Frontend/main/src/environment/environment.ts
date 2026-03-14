@@ -10,15 +10,18 @@
   which will be the same like the angular domain but with different subdomains [/auth , /main]
 */
 export const environment = {
-    config: 'Dev'
-    , isAspire: false
-    , isSecurityEnabled: false
-    , loginUrl: 'http://localhost:5043/auth/Identity/Account/Login'
-    , logoutUrl: 'http://localhost:5043/auth/Identity/Account/Logout'
-    , tokenUrl: 'http://localhost:5043/auth/api'
-      , BestFitApiUrl: 'http://localhost:2101/api'
+  config: 'Dev'
+  , isSecurityEnabled: true
+  , isAspire: false
+  , loginUrl: 'https://localhost:7131/Identity/Account/Login'
+  , logoutUrl: 'https://localhost:7131/Identity/Account/Logout'
+  , tokenUrl: 'http://localhost:4200/api'
+
+  , BestFitApiUrl: 'http://localhost:2101/api'
   , InfrastructureApiUrl: 'http://localhost:3101/api'
-//Template_System_AddEnvironmentEntry
+  , StoresApiUrl: 'http://localhost:8101/api'
+  , AuthApiUrl: 'http://localhost:6101/api'
+  //Template_System_AddEnvironmentEntry
 };
 //ToDo set other environments,
 //ToDo check login & logout urls with RouteGuardService and proxy settings 

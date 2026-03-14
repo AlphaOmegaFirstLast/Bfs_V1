@@ -12,6 +12,8 @@ import { MenuGuardService } from '@bfs/_shared/security/menu-guard.service';
 
 import { BestFitService } from '@bfs/bestfit-main/bestfit.service';
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
+import { StoresService } from '@bfs/stores-main/stores.service';
+import { AuthService } from '@bfs/auth-main/auth.service';
 //Template_System_DeclareProviderEntry
 
 // configure the providers for the application which will be used for dependency injection
@@ -21,6 +23,8 @@ export const appConfig: ApplicationConfig = {
       provideHttpClient(),
       BestFitService,
 InfrastructureService,
+StoresService,
+AuthService,
 //Template_System_AddProviderEntry
       HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.
       TokenService,

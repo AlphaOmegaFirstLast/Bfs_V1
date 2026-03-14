@@ -215,6 +215,28 @@ export class TokenService {
   }
   //------------------------------------------------------------
 
+  public isActionAllowed(component:string, action: string): boolean { 
+    // if (environment.isSecurityEnabled === false) {
+    //   return true; // Allow access if security is disabled
+    // }
+    let permissions = [
+      {action:"view", component:"StrStore"},
+      {action:"edit", component:"StrStore"},
+      {action:"add", component:"StrProduct"},
+      {action:"view", component:"StrProduct"},
+     // {action:"edit", component:"StrProduct"},
+     // {action:"delete", component:"StrProduct"},
+   ];
+    return (
+        this.getUserRoles().some(role => role.toLowerCase() === 'bfs.admin') || // BfsAdmin has access to everything
+        (
+        permissions.some(x => x.component.toLowerCase() === component.toLowerCase() 
+                           && x.action.toLowerCase() === action.toLowerCase())
+        )
+    ); // Check if the user has access to the action/method
+   }
+  //------------------------------------------------------------
+
   isAccessible(data: any): boolean {
     if (environment.isSecurityEnabled === false) {
       return true; // Allow access if security is disabled

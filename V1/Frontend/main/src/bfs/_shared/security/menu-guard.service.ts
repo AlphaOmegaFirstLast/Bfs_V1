@@ -4,6 +4,10 @@ import { TokenService } from '../services/token.service'; // Assume this service
 import { environment } from '@/environment/environment'; // Assume this service exists
 import { BestFitMenuItems } from '../../bestfit-main/bestfit.menu'; // Assume this service exists
 import { InfrastructureMenuItems } from '@bfs/infrastructure-main/infrastructure.menu';
+import { StoresMenuItems } from '@bfs/stores-main/stores.menu';
+
+import { AuthMenuItems } from '@bfs/auth-main/auth.menu';
+
 //Template_System_AddMenuDeclare
 
 @Injectable({
@@ -23,10 +27,16 @@ export class MenuGuardService {
     // can be enhanced to show multiple app menu if needed in future, by adding a loop here to loop through all apps in session storage and load menu for each app.
     switch (currentSystem) {
       case 'bestfit':
-        appItems = appItems.concat(await this.processItems(currentApp , BestFitMenuItems));
+        appItems = appItems.concat(await this.processItems(currentApp, BestFitMenuItems));
         break;
       case 'infrastructure':
-        appItems = appItems.concat(await this.processItems(currentApp , InfrastructureMenuItems));
+        appItems = appItems.concat(await this.processItems(currentApp, InfrastructureMenuItems));
+        break;
+      case 'stores':
+        appItems = appItems.concat(await this.processItems(currentApp, StoresMenuItems));
+        break;
+      case 'auth':
+        appItems = appItems.concat(await this.processItems(currentApp, AuthMenuItems));
         break;
       //Template_System_AddMenuEntry
       default:
@@ -37,7 +47,7 @@ export class MenuGuardService {
   }
 
   //-------------------------------------------------------------
-  async processItems(currentApp: string, appItems:MenuItemType[]): Promise<MenuItemType[]> {
+  async processItems(currentApp: string, appItems: MenuItemType[]): Promise<MenuItemType[]> {
 
     // if no app defined in menu item, or app list includes current app, then show this menu item    
     appItems = appItems.filter(x => (!x.data?.app) || (x.data?.app || []).includes(currentApp));
@@ -61,7 +71,7 @@ export class MenuGuardService {
         item.children = item.children.filter(child => this.tokenService.isAccessible(child.data));
       }
     });
-    
+
     return appItems;
   }
 }

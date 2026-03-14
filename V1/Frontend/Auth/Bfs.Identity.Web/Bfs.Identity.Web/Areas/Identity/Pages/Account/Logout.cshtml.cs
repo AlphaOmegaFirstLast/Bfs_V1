@@ -27,7 +27,7 @@ namespace Bfs.Identity.Web.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            Response.Cookies.Delete("Constants.RefreshTokenCookieName");
+            Response.Cookies.Delete(Constants.RefreshTokenCookieName);
 
             if (returnUrl != null)
             {

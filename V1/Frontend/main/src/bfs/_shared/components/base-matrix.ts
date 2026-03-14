@@ -31,7 +31,10 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
     public getHorizontalApiUrl = '';
     public getVerticalApiUrl = '';
+
     public apiService!: any;
+    public apiHorizontalService!: any;
+    public apiVerticalService!: any;
     public tokenService: TokenService = inject(TokenService);
 
     public queryRequest = {} as IEntityRequest<IFilter>;
@@ -60,6 +63,10 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {
+
+        if (this.apiHorizontalService == undefined) this.apiHorizontalService = this.apiService;
+        if (this.apiVerticalService == undefined) this.apiVerticalService = this.apiService;
+
         if (this.presetFilter) {
             this.queryRequest.filter = this.presetFilter;
         }
@@ -97,7 +104,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
             this.messages = [];
             this.isLoading.matrixHorizontal = true;
             var target = this.getHorizontalApiUrl;
-            (await this.apiService.post(target, this.matrixRequest)).subscribe({
+            (await this.apiHorizontalService.post(target, this.matrixRequest)).subscribe({
                 next: (res: any) => {
                     this.isLoading.matrixHorizontal = false;
                     this.horizontalList = res.items;
@@ -118,7 +125,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
             this.isLoading.matrixVertical = true;
             var target = this.getVerticalApiUrl;
-            (await this.apiService.post(target, this.matrixRequest)).subscribe({
+            (await this.apiVerticalService.post(target, this.matrixRequest)).subscribe({
                 next: (res: any) => {
                     this.isLoading.matrixVertical = false;
                     this.verticalList = res.items;
@@ -185,7 +192,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
     async saveMatrix(me: any): Promise<void> {
         if (!me.isLoading.save) {  // to prevent multiple requests
             me.messages = [];
-            me.isLoading = true;
+            me.isLoading.save = true;
             var target = me.saveApiUrl + `/${this.entityId}`;
 
             var childrenList: IMatrix[] = me.list
@@ -202,7 +209,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
                     me.list = res.items;
                 },
                 error: (err: any) => {
-                    me.isLoading = false;
+                    me.isLoading.save = false;
                     var msg = err.message || 'An error occurred while saving matrix data.';
                     me.messages.push({ text: msg, msgType: "danger" });
                 }

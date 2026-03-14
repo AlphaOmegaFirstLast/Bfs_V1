@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf , NgFor} from '@angular/common';
 import { safeHtmlDecode } from '@bfs/_shared/helpers/html.helper';
 import { TokenService } from '@bfs/_shared/services/token.service';
+import { appConfig } from '@/app/app.config';
 
 @Component({
   selector: 'app-home-page',
-  imports: [NgIf],
+  imports: [NgIf, NgFor],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
@@ -17,23 +18,41 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   tokenService: TokenService = inject(TokenService);
 
+  tempSystems = [{ name: 'infrastructure', app: 'b.ofc' }, { name: 'stores', app: 'b.ofc' }, { name: 'auth', app: 'b.ofc' }]; // for testing only, can be removed after system selection page is implemented
+
   //--------------------------------------------------------------------------------------------
 
   ngOnInit(): void {
-    var systemApplicationsEncoded = sessionStorage.getItem('system-applications');
-    var systemApplicationsDecoded = safeHtmlDecode(systemApplicationsEncoded);
+    // var systemApplicationsEncoded = sessionStorage.getItem('system-applications');
+    // var systemApplicationsDecoded = safeHtmlDecode(systemApplicationsEncoded);
 
-    if (systemApplicationsDecoded) {
-      var systemApplications = JSON.parse(systemApplicationsDecoded) ?? [];
+    // if (systemApplicationsDecoded) {
+    //   var systemApplications = JSON.parse(systemApplicationsDecoded) ?? [];
 
-      var currentApp = sessionStorage.getItem('current-app') || 'stkex.b.ofc'; //default app is b.office
-      this.currentSystemApp = systemApplications.find((x: { name: string; }) => x.name === currentApp);
-      this.imgUrl = 'assets/images/' + this.currentSystemApp?.system + '/' + this.currentSystemApp?.image;
-    }
-    else{
-      this.tokenService.logout();
-    }
+    //   var currentApp = sessionStorage.getItem('current-app') || 'stkex.b.ofc'; //default app is b.office
+    //   this.currentSystemApp = systemApplications.find((x: { name: string; }) => x.name === currentApp);
+    //   this.imgUrl = 'assets/images/' + this.currentSystemApp?.system + '/' + this.currentSystemApp?.image;
+    // }
+    // else{
+    //   this.tokenService.logout();
+    // }
   }
   //--------------------------------------------------------------------------------------------
-
+  
+  async getToken(): Promise<void> { 
+    var token =  await this.tokenService.getAccessToken();
+    alert(token);
+}
+  //--------------------------------------------------------------------------------------------
+  
+  setCurrentSystem(system: string, app: string): void {
+    sessionStorage.setItem('current-system', system);
+    sessionStorage.setItem('current-app', app);
+    sessionStorage.setItem('current-userId', '688959610011559');
+    sessionStorage.setItem('current-RoleId', '688903058823310');
+    sessionStorage.setItem('current-permissions', '{"permissions": ["read", "write", "delete"]}');
+    
+    window.location.reload();
+  }
+  //--------------------------------------------------------------------------------------------
 }

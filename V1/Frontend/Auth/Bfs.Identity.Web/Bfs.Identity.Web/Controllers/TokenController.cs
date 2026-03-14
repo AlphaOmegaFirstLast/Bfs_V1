@@ -25,7 +25,7 @@ public class TokenController : ControllerBase
         _userManager = userManager;
     }
 
-    [HttpGet]
+    [HttpGet("old")]
     public async Task<IActionResult> GetToken()
     {
         if (_signInManager.IsSignedIn(User))
@@ -47,6 +47,19 @@ public class TokenController : ControllerBase
         }
 
         return Unauthorized();
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> GetJwtToken()
+    {
+        var refreshToken = Request.Cookies[Constants.RefreshTokenCookieName];
+        var ids = refreshToken?.Split('|');
+        var jwtToken = await _tokenService.CreateJwtTokensAsync(ids[0], ids[1]);
+        if (jwtToken == null)
+            return Unauthorized(); //todo unauthenticated
+
+        return Ok(jwtToken);
     }
 
     [HttpGet("refresh")]

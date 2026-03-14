@@ -6,11 +6,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormArray, type UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { ClipboardService } from '@core/services/clipboard.service';
 
-import { IQueryResponse, ILookup, IUIMessage, IEntity , ICustomFieldDefinitionRecord, ViewLink, ActionLink} from '@bfs/_shared/interfaces';
+import { IQueryResponse, ILookup, IUIMessage, IEntity, ICustomFieldDefinitionRecord, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { getFormControlValidation, getFormInfoLookups } from '@bfs/_shared/objectFields';
 import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } from '@bfs/_shared/objectFields';
 
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
+import { TokenService } from '../services/token.service';
 //------------------------------------------- Component Specific ------------------------------------------------
 
 @Directive()
@@ -21,8 +22,9 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     public entityDisplayName: string = '';
     public componentName: string = '';
 
-    private clipboard = inject(ClipboardService);
-    public formBuilder = inject(UntypedFormBuilder);
+    public clipboard = inject(ClipboardService);
+    public tokenService: TokenService = inject(TokenService);
+     public formBuilder = inject(UntypedFormBuilder);
     public validationForm!: UntypedFormGroup;
     public customFieldFormControlList!: UntypedFormArray['controls'];
     public route: ActivatedRoute;
@@ -77,10 +79,13 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     }
     //---------------------------------------------------------
     async getObjectFieldLookups() {
-        await getReportInfoLookups(this);
-        await getMatrixInfoLookups(this);
-        await getToolTipInfoLookups(this);
-        await getFormInfoLookups(this);
+        let currentSystem = sessionStorage.getItem('current-system') || '';
+        if (currentSystem.toLowerCase() == 'infrustructure') {
+            await getReportInfoLookups(this);
+            await getMatrixInfoLookups(this);
+            await getToolTipInfoLookups(this);
+            await getFormInfoLookups(this);
+        }
     }
     //---------------------------------------------------------
     getValidationErrorMessage(fieldName: string, control: any): string {
@@ -137,6 +142,9 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     //---------------------------------------------------------
 
     async getCustomFieldDefinitions(): Promise<void> {
+        if (!('customFields' in this.entity)) {
+            return;
+        }
         let target = '';
         target = '/CustomFieldDefinition/list';
         (await this.apiService.post(target, { pageSize: 50 })).subscribe({
@@ -261,9 +269,9 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
         }
     }
     //---------------------------------------------------------
-      
+
     isAccessible(linkOrAction: ViewLink | ActionLink): boolean {
-           return true;
+        return true;
     }
     //--------------------------------------------------------- 
     get form() {
@@ -276,6 +284,6 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
         this.validationForm.patchValue(this.entity);
     }
     //---------------------------------------------------------
-    
+
 }
 

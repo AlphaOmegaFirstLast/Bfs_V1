@@ -1,4 +1,5 @@
 using Bfs.Core.Interfaces;
+using Bfs.Core.Services.Auth;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +18,16 @@ namespace Bfs.Identity.Web.Pages
         public List<Tenant> TenantList { get; set; } = new List<Tenant>();
         public List<Tenant> UserTenantList { get; set; } = new List<Tenant>();
 
+        private readonly ITokenService _tokenService;
         private readonly ILogger<IndexModel> _logger;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public IndexModel(ILogger<IndexModel> logger,
+        public IndexModel(ITokenService tokenService, ILogger<IndexModel> logger,
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager
             )
         {
+            _tokenService = tokenService;
             _logger = logger;
             _signInManager = signInManager;
             _userManager = userManager;
@@ -48,13 +51,6 @@ namespace Bfs.Identity.Web.Pages
             }
         }
 
-        // Mocking your service that gets the token
-        private async Task<string> GetUserTenantTokenAsync(string tenantId)
-        {
-            await Task.Delay(1); // Simulate async work
-            return "secure_token_abc123";
-        }
-
         public async Task<IActionResult> OnPostSelectTenantAsync(string tenantOrder)
         {
             if (string.IsNullOrEmpty(tenantOrder)) return Page();
@@ -62,28 +58,13 @@ namespace Bfs.Identity.Web.Pages
             var tenant = TenantList.FirstOrDefault(t => t.order.ToString() == tenantOrder);
             var aspNetUserId = _userManager.GetUserId(User);
 
-            var authUserId = await Tenant.GetTenantUser(tenant, aspNetUserId);
+            if (tenant== null || aspNetUserId==null) return Page();
 
-            // 1. Call the function to get the token
+            _tokenService.AttachRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenant.Id, aspNetUserId);
 
-            // string token = await GetUserTenantTokenAsync(tenantId);
-
-            // 2. Store in a cookie
-            // 'HttpOnly' prevents JS access, 'SameSite.Lax' allows it across your domain
-            CookieOptions options = new CookieOptions
-            {
-                Expires = DateTime.Now.AddHours(8),
-                HttpOnly = true, // Set to true if the SPA doesn't need to read it via JS
-                Secure = true,
-                SameSite = SameSiteMode.Lax,
-                Path = "/" // Important for sharing across the domain
-            };
-
-            Response.Cookies.Append(Constants.RefreshTokenCookieName, $"'tenantId':{tenant.Id}-'aspNetUserId':{aspNetUserId}", options);
-
-            // 3. Redirect to the SPA (assuming it's at /spa or a similar path)
-            return Redirect("/main");
-            // return Redirect("http://bfsfrontend.localhost/main/");
+            // return Redirect("/main");
+            return Redirect("http://localhost:4200/");
+            //return Redirect("http://bfsfrontend.localhost/main/");
         }
     }
 
@@ -95,16 +76,6 @@ namespace Bfs.Identity.Web.Pages
         public string CompanyName { get; set; }
         public string Logo { get; set; }
         public string DbConnection { get; set; }
-
-        //public static List<Tenant> Get()
-        //{
-        //    var x = "Server=localhost;Database=Tenant10; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
-        //    var apps = new List<Tenant>();
-        //    apps.Add(new Tenant() {order=1,  Id = 686190962443871, Name = "Best Fit", Logo = "stockexbackoffice.svg", DbConnection = x});
-        //    apps.Add(new Tenant() {order=2,  Id = 686348794702758, Name = "Ahmed Sami", Logo = "stockexfrontoffice.svg", DbConnection = x });
-        //    apps.Add(new Tenant() {order=3,  Id = 686358956320974, Name = "Hani Ayad", Logo = "stockexadmin.svg", DbConnection = x });
-        //    return apps;
-        //}
 
         public static async Task<List<Tenant>> GetTenants()
         {
@@ -127,26 +98,5 @@ namespace Bfs.Identity.Web.Pages
             return tenantList;
         }
 
-        public static async Task<long> GetTenantUser(Tenant tenant, string aspNetUserId)
-        {
-            var bfsDbConnection = "Server=localhost;Database=Tenant10; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
-         //   var dbConnection = tenant.DbConnection;
-
-            var sqlSelect = "select * from AuthUser where AspNetUserId = @AspNetUserId";
-            var sqlStatement = sqlSelect.ToString();
-            var parameters = new { AspNetUserId = aspNetUserId };
-
-            using var db = new SqlConnection(bfsDbConnection);
-            var items = await db.QueryAsync<Tenant>(sqlSelect.ToString(), parameters);
-
-            var firstItem = items.FirstOrDefault();
-            if (firstItem == null)
-            {
-                throw new InvalidOperationException("No AuthUser found for the given AspNetUserId.");
-            }
-
-            long id = firstItem.Id;
-            return id; 
-        }
     }
 }
