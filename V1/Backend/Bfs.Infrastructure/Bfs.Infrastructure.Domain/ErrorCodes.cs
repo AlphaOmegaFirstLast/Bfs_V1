@@ -36,5 +36,8 @@ public const string InvalidTemplate = "InvalidTemplate";
 public const string InvalidMatchProperty = "InvalidMatchProperty";
 public const string InvalidTargetVirtualDir = "InvalidTargetVirtualDir";
 public const string InvalidInterfaceRequired = "InvalidInterfaceRequired";
+public const string InvalidShortName = "InvalidShortName";
+public const string InvalidLogo = "InvalidLogo";
+public const string InvalidCompanyName = "InvalidCompanyName";
 //Template_FieldSet_ErrorCodes
 }

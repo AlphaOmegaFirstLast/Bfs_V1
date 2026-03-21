@@ -45,9 +45,11 @@ namespace Bfs.Infrastructure.Data.Lists
             //base fields
             _fieldList.Add(new QueryField() { DbName = "BfsTenant.DbConnection", QueryName = "DbConnection", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsTenant.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsTenant.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsTenant.Logo", QueryName = "Logo", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsTenant.Notes", QueryName = "Notes", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BfsTenant.CustomFields", QueryName = "CustomFields", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsTenant.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BfsTenant.CompanyName", QueryName = "CompanyName", IsAggregare = false });
 
             //lookups
 
@@ -72,10 +74,20 @@ _fieldList.Add(new QueryField() { DbName = "BfsTenant.CustomFields", QueryName =
             if (filter != null)
             {
 
-                if (!string.IsNullOrEmpty(filter.Name))
+                if (!string.IsNullOrEmpty(filter.Logo))
+                {
+                    sql.AppendLine("BfsTenant.Logo like '%'+@Logo+'%' ");
+                    parameters.Add("@Logo", filter.Logo);
+                }
+if (!string.IsNullOrEmpty(filter.Name))
                 {
                     sql.AppendLine("BfsTenant.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
+                }
+if (!string.IsNullOrEmpty(filter.CompanyName))
+                {
+                    sql.AppendLine("BfsTenant.CompanyName like '%'+@CompanyName+'%' ");
+                    parameters.Add("@CompanyName", filter.CompanyName);
                 }
 
             }
@@ -100,3 +112,10 @@ _fieldList.Add(new QueryField() { DbName = "BfsTenant.CustomFields", QueryName =
        }       
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+

@@ -4,7 +4,7 @@ using Bfs.Core.ObjectFields;
 
 namespace Bfs.Infrastructure.Contracts
 {
-    public class SystemAction : IIdentifiable
+    public class SystemAction : IIdentifiable 
     {
         ///<Summary>
         /// SystemAction IsDeleted.
@@ -15,9 +15,9 @@ namespace Bfs.Infrastructure.Contracts
         ///</Summary>
         public long Id {get; set;} = 0 ;
 ///<Summary>
-        /// SystemAction Name.
+        /// SystemAction Short Name.
         ///</Summary>
-        public string Name {get; set;} = string.Empty ;
+        public string ShortName {get; set;} = string.Empty ;
 ///<Summary>
         /// SystemAction Notes.
         ///</Summary>
@@ -34,6 +34,10 @@ namespace Bfs.Infrastructure.Contracts
         /// SystemAction Action Template.
         ///</Summary>
         public string ActionTemplate {get; set;} = string.Empty ;
+///<Summary>
+        /// SystemAction Name.
+        ///</Summary>
+        public string Name {get; set;} = string.Empty ;
 
         ///<Summary>
         /// SystemAction Action Type.
@@ -46,3 +50,7 @@ namespace Bfs.Infrastructure.Contracts
 
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

@@ -47,6 +47,7 @@ namespace Bfs.Infrastructure.Data.Lists
 _fieldList.Add(new QueryField() { DbName = "BusinessAction.Name", QueryName = "Name", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BusinessAction.Notes", QueryName = "Notes", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "BusinessAction.ActionTypeId", QueryName = "ActionTypeId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BusinessAction.ShortName", QueryName = "ShortName", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "ActionType.Name", QueryName = "ActionTypeName", IsAggregare = false });
@@ -79,6 +80,11 @@ _fieldList.Add(new QueryField() { DbName = "BusinessAction.ActionTypeId", QueryN
                     sql.AppendLine("BusinessAction.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
+if (!string.IsNullOrEmpty(filter.ShortName))
+                {
+                    sql.AppendLine("BusinessAction.ShortName like '%'+@ShortName+'%' ");
+                    parameters.Add("@ShortName", filter.ShortName);
+                }
 
                 if (filter.ActionTypeId.HasValue)
                 {
@@ -108,3 +114,7 @@ _fieldList.Add(new QueryField() { DbName = "BusinessAction.ActionTypeId", QueryN
        }       
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

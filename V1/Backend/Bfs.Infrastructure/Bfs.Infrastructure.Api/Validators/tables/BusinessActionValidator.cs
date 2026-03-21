@@ -16,7 +16,17 @@ namespace Bfs.Infrastructure.Api.Validators
 RuleFor(x => x.Notes)
 .MaximumLength(1000)
 ;
+RuleFor(x => x.ShortName)
+.NotEmpty().WithErrorCode(ErrorCodes.InvalidShortName)
+.MinimumLength(1)
+.MaximumLength(3)
+;
 
         }
     }
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

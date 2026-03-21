@@ -14,6 +14,7 @@ namespace Bfs.Infrastructure.Domain.Mapper
 Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
+ShortName= entity.ShortName,
 
                ActionTypeId= entity.ActionTypeId,
 
@@ -40,6 +41,7 @@ Notes= entity.Notes,
 BusinessActionEntity.Id= contract.Id;
 BusinessActionEntity.Name= contract.Name;
 BusinessActionEntity.Notes= contract.Notes;
+BusinessActionEntity.ShortName= contract.ShortName;
 
             BusinessActionEntity.ActionTypeId= contract.ActionTypeId;
 
@@ -47,3 +49,8 @@ BusinessActionEntity.Notes= contract.Notes;
         }     
     }
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

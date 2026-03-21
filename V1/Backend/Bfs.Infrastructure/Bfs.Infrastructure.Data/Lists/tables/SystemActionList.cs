@@ -44,13 +44,14 @@ namespace Bfs.Infrastructure.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() { DbName = "SystemAction.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "SystemAction.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.ShortName", QueryName = "ShortName", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.Notes", QueryName = "Notes", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTypeId", QueryName = "ActionTypeId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.WriterTypeId", QueryName = "WriterTypeId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.MatchProperty", QueryName = "MatchProperty", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.MatchValues", QueryName = "MatchValues", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "SystemAction.ActionTemplate", QueryName = "ActionTemplate", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "SystemAction.Name", QueryName = "Name", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "ActionType.Name", QueryName = "ActionTypeName", IsAggregare = false });
@@ -80,10 +81,10 @@ sql.AppendLine($"   Left Join WriterType on SystemAction.WriterTypeId = WriterTy
             if (filter != null)
             {
 
-                if (!string.IsNullOrEmpty(filter.Name))
+                if (!string.IsNullOrEmpty(filter.ShortName))
                 {
-                    sql.AppendLine("SystemAction.Name like '%'+@Name+'%' ");
-                    parameters.Add("@Name", filter.Name);
+                    sql.AppendLine("SystemAction.ShortName like '%'+@ShortName+'%' ");
+                    parameters.Add("@ShortName", filter.ShortName);
                 }
 if (!string.IsNullOrEmpty(filter.MatchProperty))
                 {
@@ -94,6 +95,11 @@ if (!string.IsNullOrEmpty(filter.MatchValues))
                 {
                     sql.AppendLine("SystemAction.MatchValues like '%'+@MatchValues+'%' ");
                     parameters.Add("@MatchValues", filter.MatchValues);
+                }
+if (!string.IsNullOrEmpty(filter.Name))
+                {
+                    sql.AppendLine("SystemAction.Name like '%'+@Name+'%' ");
+                    parameters.Add("@Name", filter.Name);
                 }
 
                 if (filter.ActionTypeId.HasValue)
@@ -129,3 +135,7 @@ if (filter.WriterTypeId.HasValue)
        }       
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

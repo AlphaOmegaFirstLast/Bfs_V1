@@ -13,8 +13,10 @@ namespace Bfs.Infrastructure.Domain.Mapper
                DbConnection= entity.DbConnection,
 IsDeleted= entity.IsDeleted,
 Id= entity.Id,
-Name= entity.Name,
+Logo= entity.Logo,
 Notes= entity.Notes,
+Name= entity.Name,
+CompanyName= entity.CompanyName,
 
                CustomFields= entity.CustomFields.ToContract(),
 
@@ -40,8 +42,10 @@ Notes= entity.Notes,
             BfsTenantEntity.DbConnection= contract.DbConnection;
 BfsTenantEntity.IsDeleted= contract.IsDeleted;
 BfsTenantEntity.Id= contract.Id;
-BfsTenantEntity.Name= contract.Name;
+BfsTenantEntity.Logo= contract.Logo;
 BfsTenantEntity.Notes= contract.Notes;
+BfsTenantEntity.Name= contract.Name;
+BfsTenantEntity.CompanyName= contract.CompanyName;
 
             BfsTenantEntity.CustomFields= contract.CustomFields.ToEntity();
 
@@ -49,3 +53,11 @@ BfsTenantEntity.Notes= contract.Notes;
         }     
     }
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Bfs.Infrastructure.Data.Models
 {
-    public class BusinessActionEntity : IIdentifiable, ITenanted
+    public class BusinessActionEntity : IIdentifiable, ITenanted 
     {
        public long TenantId { get; set; }
 
@@ -14,8 +14,13 @@ namespace Bfs.Infrastructure.Data.Models
 public long Id {get; set;} = 0 ;
 public string Name {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
+public string ShortName {get; set;} = string.Empty ;
 
         public int ActionTypeId {get; set;} = 0 ;
 
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

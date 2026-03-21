@@ -4,7 +4,7 @@ using Bfs.Core.ObjectFields;
 
 namespace Bfs.Infrastructure.Contracts
 {
-    public class BusinessAction : IIdentifiable
+    public class BusinessAction : IIdentifiable 
     {
         ///<Summary>
         /// BusinessAction IsDeleted.
@@ -22,6 +22,10 @@ namespace Bfs.Infrastructure.Contracts
         /// BusinessAction Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
+///<Summary>
+        /// BusinessAction Short Name.
+        ///</Summary>
+        public string ShortName {get; set;} = string.Empty ;
 
         ///<Summary>
         /// BusinessAction Action Type.
@@ -30,3 +34,7 @@ namespace Bfs.Infrastructure.Contracts
 
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

@@ -12,11 +12,12 @@ namespace Bfs.Infrastructure.Domain.Mapper
             {
                IsDeleted= entity.IsDeleted,
 Id= entity.Id,
-Name= entity.Name,
+ShortName= entity.ShortName,
 Notes= entity.Notes,
 MatchProperty= entity.MatchProperty,
 MatchValues= entity.MatchValues,
 ActionTemplate= entity.ActionTemplate,
+Name= entity.Name,
 
                ActionTypeId= entity.ActionTypeId,
 WriterTypeId= entity.WriterTypeId,
@@ -42,11 +43,12 @@ WriterTypeId= entity.WriterTypeId,
 
             SystemActionEntity.IsDeleted= contract.IsDeleted;
 SystemActionEntity.Id= contract.Id;
-SystemActionEntity.Name= contract.Name;
+SystemActionEntity.ShortName= contract.ShortName;
 SystemActionEntity.Notes= contract.Notes;
 SystemActionEntity.MatchProperty= contract.MatchProperty;
 SystemActionEntity.MatchValues= contract.MatchValues;
 SystemActionEntity.ActionTemplate= contract.ActionTemplate;
+SystemActionEntity.Name= contract.Name;
 
             SystemActionEntity.ActionTypeId= contract.ActionTypeId;
 SystemActionEntity.WriterTypeId= contract.WriterTypeId;
@@ -55,3 +57,8 @@ SystemActionEntity.WriterTypeId= contract.WriterTypeId;
         }     
     }
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+
