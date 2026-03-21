@@ -76,14 +76,12 @@ namespace Bfs.Core.Data
         public QueryParams GetCountSqlStatement()
         {
             // Build Count SQL Statement, before Pagination applied
-            var countSql = new StringBuilder();
-          //  countSql = countSql.AppendLine(sqlStatement.ToString());
-            countSql.AppendLine($"Select Count(*) From ({sqlStatement} ) q ");
+            var countSql = $"Select Count(*) From ({sqlStatement.ToString()} ) q ";
 
             var countParameters = new DynamicParameters();
             countParameters.AddDynamicParams(sqlParameters);
 
-            return new QueryParams() { sql = countSql.ToString(), parameters = countParameters };
+            return new QueryParams() { sql = countSql, parameters = countParameters };
         }
 
         protected virtual void SetupFields()
@@ -99,8 +97,13 @@ namespace Bfs.Core.Data
 
         private string GetGroupStatement()
         {
-            var groupFields = _fieldList.Where(f => !f.IsAggregare).Select(f => f.DbName);
-            return groupFields.Count() > 0 ? $" Group By {string.Join(", ", groupFields)} " : string.Empty;
+            if (_fieldList.Any(f => f.IsAggregare))
+            {
+                var groupFields = _fieldList.Where(f => !f.IsAggregare).Select(f => f.DbName);
+                return groupFields.Count() > 0 ? $" Group By {string.Join(", ", groupFields)} " : string.Empty;
+            }
+
+            return string.Empty;
         }
 
         private List<string> GetAllowedSortFields()

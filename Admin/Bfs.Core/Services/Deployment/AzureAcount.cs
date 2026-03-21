@@ -11,7 +11,7 @@ public class AzureAcount
     //data from azure account using servicePrinciple for login
 
     public string azureAccountName = "accName";
-    public string azureAccountPassword = "password";
+    public string azureAccountPassword = "dummyPassword";
     public string tenantId = "tenantId";
     public string subscriptionId = "subscriptionId";
 }

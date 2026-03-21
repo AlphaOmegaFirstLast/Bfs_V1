@@ -1,12 +1,21 @@
-﻿using System.Security.Claims;
-using Bfs.Core.Contracts.Auth;
+﻿using Bfs.Core.Contracts.Auth;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Bfs.Core.Services.Auth;
 
 public interface ITokenService
 {
-    Task<TokenResponse> CreateTokensAsync(TokenRequest request);
-    Task<TokenResponse> RefreshTokensAsync(RefreshTokenRequest request);
+    // Refresh token cookie format: {tenantId}|{aspnetUserId}. set by Identity.Web when user select tenant, used by frontend to get access token for API calls.
+    void GetRefreshTokenCookie(HttpResponse Response, string cookieName, long tenantId, string aspnetUserId);
+
+    // Create JWT token for API calls, called by Main frontend to get its roles and permissions for the selected tenant.
+    // The tenantId and aspnetUserId are extracted from the refresh token cookie by frontend and passed to this method.
+    Task<string> CreateTokenAsync(string tenantId, string aspnetUserId);
+
+//    Task<TokenResponse> RefreshTokensAsync(RefreshTokenRequest request);
+
+    //Task<TokenResponse> CreateTokensAsync(TokenRequest request);
     ClaimsPrincipal ReadToken(string token);
     string TokenClaimsToJson(string token);
 }

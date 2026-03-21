@@ -1,11 +1,15 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Dapper;
+using Bfs.Core.Config;
+using Bfs.Core.Contracts.Auth;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Data.SqlClient;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
-using Bfs.Core.Config;
-using Bfs.Core.Contracts.Auth;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Bfs.Core.Services.Auth;
 
@@ -18,22 +22,75 @@ public class TokenService : ITokenService
         _settings = options.Value;
     }
 
-    public async Task<TokenResponse> CreateTokensAsync(TokenRequest request)
+    // This method is called by frontend to get JWT token for API calls after user select tenant.
+    // the tenantId and aspnetUserId are extracted from the refresh token cookie by frontend and passed to this method to generate JWT token.
+    // It returns the JWT token which contains the roles for the user in the selected tenant, frontend will use this JWT token to call APIs.
+    public async Task<string> CreateTokenAsync(string tenantId, string aspnetUserId)
     {
-        var tokenResponse = new TokenResponse();
-        tokenResponse.AccessToken = await CreateAccessToken(request.UserId);
-        tokenResponse.RefreshToken = "Refresh1";
-        return tokenResponse;
+        var tenantList = await GetTenants();
+        var tenant = tenantList.FirstOrDefault(t => t.Id.ToString() == tenantId);
+        var UserRolelist = await GetAuthUserRoles(tenant, aspnetUserId);
+        var claims = GetClaims(UserRolelist);
+        var jwtToken = CreateJwtToken(claims);
+        return jwtToken;
     }
 
-    public async Task<TokenResponse> RefreshTokensAsync(RefreshTokenRequest request)
+    // this method is called when user select tenant, the refresh token cookie is set for the selected tenant and user,
+    // frontend will use it to get JWT token for API calls. The cookie value format is {tenantId}|{aspnetUserId},
+    // frontend will extract tenantId and aspnetUserId from the cookie and pass to GetTokenAsync to get JWT token.
+    // this method is NOT called from the Token controller. it is called only in index.cshtml page.
+    // the OnPostSelectTenantAsync method in the Index.cshtml.cs when user select tenant, so the tenantId and aspnetUserId can be passed to this method to generate the refresh token cookie.
+    public void GetRefreshTokenCookie(HttpResponse Response, string cookieName, long tenantId, string aspnetUserId)
     {
-        // var userId = getUserIdFromRefreshToken;
-        var userId = 1;
-        var tokenResponse = new TokenResponse();
-        tokenResponse.AccessToken = await CreateAccessToken(userId);
-        tokenResponse.RefreshToken = "Refresh2";
-        return tokenResponse;
+        var cookieValue = $"{tenantId}|{aspnetUserId}";
+        var options = new CookieOptions
+        {
+            Expires = DateTime.Now.AddHours(8),
+            HttpOnly = true, // Set to true if the SPA doesn't need to read it via JS
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Path = "/" // Important for sharing across the domain
+        };
+
+        // Cookie set up
+        Response.Cookies.Append(cookieName, cookieValue, options);
+    }
+
+    public static async Task<List<Tenant>> GetTenants()
+    {
+        var bfsDbConnection = "Server=localhost;Database=BestFit_V4; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
+        using var db = new SqlConnection(bfsDbConnection);
+        var sqlSelect = "select * from bfsTenant";
+        var sqlStatement = sqlSelect.ToString();
+        var items = await db.QueryAsync<Tenant>(sqlSelect.ToString(), null);
+
+        var i = 0;
+        var tenantList = new List<Tenant>();
+        foreach (var item in items)
+        {
+            i++;
+            tenantList.Add(new Tenant() { order = i.ToString(), Id = item.Id, Name = item.Name, Logo = item.Logo, DbConnection = item.DbConnection });
+        }
+
+        return tenantList;
+    }
+
+    public static async Task<List<AuthRoleUser>> GetAuthUserRoles(Tenant tenant, string aspNetUserId)
+    {
+        // var bfsDbConnection = "Server=localhost;Database=Tenant10; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
+        var dbConnection = tenant.DbConnection;
+        using var db = new SqlConnection(dbConnection);
+
+        var sqlSelect = "select u.id as UserId, ru.AuthRoleId as RoleId " +
+            "from AuthUser u " +
+            "left join AuthRoleUser ru on ru.AuthUserId=u.id " +
+            "where u.AspNetUserId =@AspNetUserId";
+
+        var sqlStatement = sqlSelect.ToString();
+        var parameters = new { AspNetUserId = aspNetUserId };
+
+        var items = await db.QueryAsync<AuthRoleUser>(sqlSelect.ToString(), parameters);
+        return items.ToList();
     }
 
     // Reads a JWT token without validation and returns the ClaimsPrincipal
@@ -85,6 +142,24 @@ public class TokenService : ITokenService
         return tokenParsedJson;
     }
 
+    public List<Claim> GetClaims(List<AuthRoleUser> list)
+    {
+        var addOnce = true;
+        var claims = new List<Claim>();
+        foreach (var userRole in list)
+        {
+            if (addOnce)
+            {
+                claims.Add(new Claim("userId", userRole.UserId.ToString()));
+                addOnce = false;
+            }
+
+            claims.Add(new Claim("role", userRole.RoleId.ToString()));
+        };
+
+        return claims;
+    }
+
     public async Task<List<Claim>> GetClaimsAsync(long userId)
     {
         var claims = new List<Claim>
@@ -107,10 +182,9 @@ public class TokenService : ITokenService
         return claims;
     }
 
-    public async Task<string> CreateAccessToken(long userId)
+    public string CreateJwtToken(List<Claim> claims)
     {
         var jwtSettings = _settings.JwtSettings;
-        var claims = await GetClaimsAsync(userId);
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
 
         var token = new JwtSecurityToken(
@@ -123,6 +197,23 @@ public class TokenService : ITokenService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    //public async Task<string> CreateAccessToken(long userId)
+    //{
+    //    var jwtSettings = _settings.JwtSettings;
+    //    var claims = await GetClaimsAsync(userId);
+    //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
+
+    //    var token = new JwtSecurityToken(
+    //        jwtSettings.Issuer,
+    //        jwtSettings.Audience,
+    //        expires: DateTime.UtcNow.AddMinutes(jwtSettings.AccessTokenExpireInMin),
+    //        claims: claims,
+    //        signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+    //    );
+
+    //    return new JwtSecurityTokenHandler().WriteToken(token);
+    //}
 
     public static TokenValidationParameters TokenValidationParameters(JwtSettings jwtSettings,
         bool isValidateLifeTime = true)
@@ -141,6 +232,23 @@ public class TokenService : ITokenService
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
         };
     }
+}
+
+public class Tenant
+{
+    public string order { get; set; } // UI selection, so the tenant id is not exposed to the user
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public string CompanyName { get; set; }
+    public string Logo { get; set; }
+    public string DbConnection { get; set; }
+
+}
+
+public class AuthRoleUser
+{
+    public long UserId { get; set; }
+    public long RoleId { get; set; }
 }
 
 /*
