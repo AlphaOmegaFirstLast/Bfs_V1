@@ -1,5 +1,7 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { signal, computed } from '@angular/core';
+
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
@@ -10,10 +12,12 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const BfsTenantColumns = [
     { fieldName: 'dbConnection', displayName: 'Database Connection', sortName: 'DbConnection', width: '50px', isVisible:false },
-{ fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
+{ fieldName: 'logo', displayName: 'Logo', sortName: 'Logo', width: '50px', isVisible:false },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 { fieldName: 'customFields', displayName: 'Custom Fields', sortName: 'CustomFields', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'companyName', displayName: 'Company Name', sortName: 'CompanyName', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -21,8 +25,10 @@ export interface IBfsTenant {
     dbConnection?: string;
 isDeleted?: boolean;
 id?: string;
-name?: string;
+logo?: string;
 notes?: string;
+name?: string;
+companyName?: string;
 
     customFields?: ICustomField[];
 
@@ -33,8 +39,10 @@ export function initBfsTenant(): IBfsTenant {
         dbConnection: '',
 isDeleted: false,
 id: '0',
-name: '',
+logo: '',
 notes: '',
+name: '',
+companyName: '',
 
         customFields: initCustomFields(),
 
@@ -49,8 +57,10 @@ export function bfsTenantUntypedFormGroup(formBuilder: FormBuilder): any {
     dbConnection: [''],
 isDeleted: [false],
 id: ['0'],
-name: [''],
+logo: [''],
 notes: [''],
+name: [signal('')],
+companyName: ['computed(() => `Hello ${this.name()}`)'],
 
     customFields: formBuilder.array([]),
 
@@ -67,7 +77,9 @@ export interface IBfsTenantRequest extends IEntityRequest<IBfsTenantFilter> {}
 export interface IBfsTenantFilter {
     [key: string]: any;
 
-    Name?: string;
+    Logo?: string;
+Name?: string;
+CompanyName?: string;
 
 }
 //---------------------------------------------------------
@@ -83,7 +95,9 @@ export function initBfsTenantRequest(): IBfsTenantRequest {
             },
         filter: {
 
-            Name: undefined ,
+            Logo: undefined ,
+Name: undefined ,
+CompanyName: undefined ,
 
             }
     };
@@ -95,18 +109,26 @@ export function initBfsTenantRequest(): IBfsTenantRequest {
 export function getBfsTenantActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
-links.push({
+if (component.accessService.isActionAllowed('bfsTenant', ''))
+{links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/bfs-tenant/add', displayText: 'Add New record'
 });
-links.push({
+}
+if (component.accessService.isActionAllowed('bfsTenant', ''))
+{links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant/view', displayText: 'View...'
 });
-links.push({
+}
+if (component.accessService.isActionAllowed('bfsTenant', ''))
+{links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant/edit', displayText: 'Edit...' 
 });
-links.push({
+}
+if (component.accessService.isActionAllowed('bfsTenant', ''))
+{links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/bfs-tenant/delete', displayText: 'Delete...' 
 });
+}
 
         return links;
     }
@@ -121,4 +143,10 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 //Template_Start_Code_DontOverwrite_3
 
 //Template_End_Code_DontOverwrite_3
+//Template_Start_Code_DontOverwrite_4
+
+//Template_End_Code_DontOverwrite_4
+//Template_Start_Code_DontOverwrite_5
+
+//Template_End_Code_DontOverwrite_5
 

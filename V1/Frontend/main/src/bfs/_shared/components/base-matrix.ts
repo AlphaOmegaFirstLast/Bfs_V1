@@ -12,7 +12,7 @@ import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core'
 
 import { IIdentifiable, ILookup, IEntityRequest, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { AccessService } from '@bfs/_shared/security/access.service';
 
 
 @Component({
@@ -25,6 +25,8 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
     filter!: IFilter;
     public list: IMatrix[] = [];
+    public accessService!: AccessService;
+    public tokenService!: any;
 
     public getApiUrl = '';
     public saveApiUrl = '';
@@ -35,8 +37,6 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
     public apiService!: any;
     public apiHorizontalService!: any;
     public apiVerticalService!: any;
-    public tokenService: TokenService = inject(TokenService);
-
     public queryRequest = {} as IEntityRequest<IFilter>;
     public matrixRequest = { pageIndex: 1, pageSize: 100, filter: {} as any };
 
@@ -60,6 +60,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
     public me = this;
     constructor(public modalService: NgbModal, public router: Router, public activatedRoute: ActivatedRoute) {
+        this.accessService = inject(AccessService);
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {

@@ -65,7 +65,6 @@ export class DataTypeFormComponent extends BaseFormComponent<IDataType > impleme
     //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
-        this.isLoading = true;
         let target = '';
 
     }
@@ -96,3 +95,8 @@ export class DataTypeFormComponent extends BaseFormComponent<IDataType > impleme
    //--------------------------------------------------------------
 
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

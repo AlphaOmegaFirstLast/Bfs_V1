@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core'
 //---------------- bfs shared -------------------------------------
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { TokenService } from '@bfs/_shared/security/token.service';
 import { BaseMatrixComponent } from '@bfs/_shared/components/base-matrix';
 //--------------- component specific ------------------------------
 import { BestFitService } from '@bfs/bestfit-main/bestfit.service';

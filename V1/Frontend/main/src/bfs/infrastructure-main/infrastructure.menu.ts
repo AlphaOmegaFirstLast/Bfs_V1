@@ -24,7 +24,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-component/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -32,7 +32,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-field/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -40,7 +40,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-system/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -48,7 +48,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-client/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -56,7 +56,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-tenant/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -64,7 +64,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-tenant-system/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -72,7 +72,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-component-system-action/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -80,7 +80,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-component-business-action/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -88,7 +88,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/bfs-client-system/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
 //Template_Component_Menu_Basic
@@ -132,7 +132,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/deployment-azure/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -140,7 +140,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/deployment-local/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
 //Template_Component_Menu_Deployment
@@ -161,7 +161,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/custom-reports/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
     {
@@ -169,7 +169,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/custom-field-definition/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc']
         }
     },
 //Template_Component_Menu_Custom
@@ -189,7 +189,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/system-action/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc', 'f.ofc']
         }
     },
     {
@@ -197,7 +197,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/business-action/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app: ['b.ofc', 'f.ofc']
         }
     },
 //Template_Component_Menu_System
@@ -209,6 +209,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
+            app: ['b.ofc', 'f.ofc'],
             role: ['admin']
         },
         children: [
@@ -217,7 +218,7 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/system-template/list',
         data: {
-            role: ['admin', 'investor','broker']
+            app:['b.ofc', 'f.ofc']
         }
     },
     {
@@ -225,7 +226,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/data-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -233,7 +233,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/filter-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -241,7 +240,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/form-control-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -249,7 +247,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/backend-data-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -257,7 +254,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/action-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -265,7 +261,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/aggregate-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -273,7 +268,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/action-location/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -281,7 +275,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/chart-element/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
     {
@@ -289,7 +282,6 @@ export const InfrastructureMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/writer-type/list',
         data: {
-            role: ['admin', 'investor','broker']
         }
     },
 //Template_Component_Menu_Seed

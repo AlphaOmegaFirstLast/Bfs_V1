@@ -6,7 +6,7 @@ import { DecimalPipe } from '@angular/common'
 import { provideDaterangepickerLocale} from 'ngx-daterangepicker-bootstrap';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpService } from '@bfs/_shared/services/http.service';
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { TokenService } from '@bfs/_shared/security/token.service';
 import { RouteGuardService } from '@bfs/_shared/security/route-guard.service';
 import { MenuGuardService } from '@bfs/_shared/security/menu-guard.service';
 
@@ -14,6 +14,7 @@ import { BestFitService } from '@bfs/bestfit-main/bestfit.service';
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
 import { StoresService } from '@bfs/stores-main/stores.service';
 import { AuthService } from '@bfs/auth-main/auth.service';
+import { AccessService } from '@bfs/_shared/security/access.service';
 //Template_System_DeclareProviderEntry
 
 // configure the providers for the application which will be used for dependency injection
@@ -21,13 +22,14 @@ export const appConfig: ApplicationConfig = {
   providers: [
       DecimalPipe,
       provideHttpClient(),
+      HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.
+      TokenService,
+      AccessService,
       BestFitService,
 InfrastructureService,
 StoresService,
 AuthService,
 //Template_System_AddProviderEntry
-      HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.
-      TokenService,
       RouteGuardService,
       MenuGuardService,
       provideZoneChangeDetection({ eventCoalescing: true }),

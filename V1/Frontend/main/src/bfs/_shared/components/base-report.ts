@@ -27,7 +27,7 @@ import { SaveReportComponent } from '@bfs/_shared/components/save-report.compone
 import { UploadFileComponent } from '@bfs/_shared/components/upload-file.component';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { AccessService } from '@bfs/_shared/security/access.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { getReportInfoData, getReportInfoHeaders } from '../objectFields';
 
@@ -44,11 +44,13 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     public customReportInfo = { id: '0', name: 'NamePlaceHolder', url: 'UrlPlaceHolder' };
     public apiCustomReportsUrl = "/CustomReports/";
 
+public tokenService!: any;
+
     public getApiUrl = '';
     public getByIdApiUrl = '';
     public uploadApiUrl = '';
     public apiService!: any;
-    public tokenService: TokenService = inject(TokenService);
+    public accessService!: AccessService;
     public queryRequest = {} as IEntityRequest<IFilter>;
     public exportRequest = {} as IEntityRequest<IFilter>;
     public filterComponent: any;
@@ -78,6 +80,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         // Initialize queryRequest with default values
         this.readCustomReportIdParameter();
         this.queryRequest = this.setRequestType();
+        this.accessService = inject(AccessService);
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {

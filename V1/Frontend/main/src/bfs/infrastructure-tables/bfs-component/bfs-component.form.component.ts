@@ -101,30 +101,49 @@ let presetBfsComponentBusinessActionRequest: IBfsComponentBusinessActionRequest 
         this.messages = [];
         this.isLoading = true;
         let target = '';
-        target = "/BfsSystem/list";
-        (await this.apiService.post(target,  {pageSize:30})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.BfsSystemOptions = response.items;
-                this.isLoading = false;
-            },
-                error: (err: any) => {
-                this.isLoading = false;
-                var msg = err.message || 'An error occurred while fetching BestFit System data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
-target = "/DataType/list";
-        (await this.apiService.post(target,  {pageSize:30})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.DataTypeOptions = response.items;
-                this.isLoading = false;
-            },
-                error: (err: any) => {
-                this.isLoading = false;
-                var msg = err.message || 'An error occurred while fetching Data Type data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
+        this.isLoading = true;
+        try{
+        const [
+            BfsSystemList, 
+            DataTypeList,
+        ] = await Promise.all
+        ([
+            this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 300 }),
+            this.apiService.getItems<IQueryResponse>("/DataType/list", { pageSize: 300 }),
+        ]);
+        this.BfsSystemOptions = BfsSystemList.items;
+        this.DataTypeOptions = DataTypeList.items;
+} catch (err: any) {
+  const msg = err?.message || "An error occurred while loading data.";
+  this.messages.push({ text: msg, msgType: "danger" });
+} finally {
+  this.isLoading = false;
+}
+
+//         target = "/BfsSystem/list";
+//         (await this.apiService.post(target,  {pageSize:30})).subscribe({
+//             next: (response: IQueryResponse) => {
+//                 this.BfsSystemOptions = response.items;
+//                 this.isLoading = false;
+//             },
+//                 error: (err: any) => {
+//                 this.isLoading = false;
+//                 var msg = err.message || 'An error occurred while fetching BestFit System data.';
+//                 this.messages.push({ text: msg, msgType: "danger" });
+//             }
+//         });
+// target = "/DataType/list";
+//         (await this.apiService.post(target,  {pageSize:30})).subscribe({
+//             next: (response: IQueryResponse) => {
+//                 this.DataTypeOptions = response.items;
+//                 this.isLoading = false;
+//             },
+//                 error: (err: any) => {
+//                 this.isLoading = false;
+//                 var msg = err.message || 'An error occurred while fetching Data Type data.';
+//                 this.messages.push({ text: msg, msgType: "danger" });
+//             }
+//         });
 
     }
     //---------------------------------------------------------

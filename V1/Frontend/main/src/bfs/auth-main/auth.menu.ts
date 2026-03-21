@@ -23,7 +23,8 @@ export const AuthMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/auth-role/list',
         data: {
-            role: ['admin', 'investor','broker']
+           app: ['b.ofc'],
+           role: ['admin']
         }
     },
     {
@@ -31,7 +32,8 @@ export const AuthMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/auth-user/list',
         data: {
-            role: ['admin', 'investor','broker']
+           app: ['b.ofc'],
+           role: ['admin']
         }
     },
     {
@@ -47,7 +49,8 @@ export const AuthMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/auth-role-component-system-action/list',
         data: {
-            role: ['admin', 'investor','broker']
+           app: ['b.ofc'],
+           role: ['admin']
         }
     },
     {
@@ -55,7 +58,8 @@ export const AuthMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/auth-role-app/list',
         data: {
-            role: ['admin', 'investor','broker']
+           app: ['b.ofc'],
+           role: ['admin']
         }
     },
     {
@@ -63,8 +67,9 @@ export const AuthMenuItems: MenuItemType[] = [
         icon: 'tablerLayoutSidebar',
         url: '/bfs/auth-role-user/list',
         data: {
-            role: ['admin', 'investor','broker']
-        }
+           app: ['b.ofc'],
+           role: ['admin'] 
+       }
     },
 //Template_Component_Menu_Basic
         ]

@@ -15,30 +15,26 @@
       </article>
     </div>
   </div>
-  <div class="row" *ngIf="currentSystemApp" style="margin-top: 20px; margin-bottom: 20px;">
-    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
-      <img src="{{imgUrl}}" width="50%" alt="Stock Exchange Backoffice" class="img-fluid" />
-    </div>
-    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
-      <h3>Welcome to {{currentSystemApp.displayName}}</h3>
-    </div>
-    <div class="col-4"></div>
-  </div>
-  <div class="row" *ngIf="!currentSystemApp" style="margin-top: 20px; margin-bottom: 20px;">
-    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
-    </div>
-    <div class="col-4" style="padding:auto; display: flex; align-items: center; justify-content: center;">
-      <h3>Login is required to access the application.</h3>
-    </div>
-    <div class="col-4">
-      <div *ngFor="let system of tempSystems">
-        <input type="button" class="btn btn-primary m-2" value="{{system.name}} - {{system.app}}" (click)="setCurrentSystem(system.name, system.app)" />
-      </div>
-    </div>
-  </div>
+
   <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-    <div class="col-12">
-        <input type="button" class="btn btn-primary m-2" value="Get Token" (click)="getToken()" />
+    <div class="col-12" style="padding:auto; display: flex; align-items: center; justify-content: center;">
+      <h3 *ngIf="currentSystemApp">Welcome to {{currentSystemApp.displayName}}</h3>
+      <h3 *ngIf="!currentSystemApp">Login is required to access the application.</h3>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-4" *ngFor="let item of userApps">
+      <input type="button" class="btn btn-primary m-2" value="{{item}}" (click)="setCurrentSystem(item, item)" />
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-6">
+      <input type="button" class="btn btn-primary m-2" value="Get Token" (click)="getToken()" />
+    </div>
+    <div class="col-6">
+      <input type="button" class="btn btn-primary m-2" value="Get Access Data" (click)="getAccessData()" />
     </div>
   </div>
 </div>

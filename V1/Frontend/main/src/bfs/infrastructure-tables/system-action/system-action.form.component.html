@@ -24,16 +24,15 @@
                                             <div ngbDropdown>
                                                 <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
                                                 <div ngbDropdownMenu>
-                                    <div *ngFor="let link of getRecordLinks(me)">
-                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
-                                    </div>
-                                    <div *ngFor="let link of getRecordActions(me)">
-                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me, link.data)">{{link.displayText}}</a>
-                                    </div>
-
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
-                                                    <a ngbDropdownItem [routerLink]="['/bfs/system-action/list']">Go to List</a>
-                                                    <a ngbDropdownItem href="javascript:void(0)">Activate</a>
+
+                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                                    </div>
+                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -62,13 +61,13 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="name" class="form-label fs-6">Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+        <label for="shortName" class="form-label fs-6">Short Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="this field will be used in security permissions"  />
 
-        <input class="form-control" type="text" id="name" formControlName="name"
-            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <input class="form-control" type="text" id="shortName" formControlName="shortName"
+            [class]="submit && !form['shortName'].errors ? 'is-valid': submit && form['shortName'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Name.</div>
+        <div class="invalid-feedback">Invalid Short Name.</div>
     </div>
 </div>
 
@@ -122,6 +121,18 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="name" class="form-label fs-6">Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="name" formControlName="name"
+            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
@@ -164,3 +175,7 @@
         </div>
     </div>
 </div>
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

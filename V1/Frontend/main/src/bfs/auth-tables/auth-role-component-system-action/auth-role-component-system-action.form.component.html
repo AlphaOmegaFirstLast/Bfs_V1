@@ -1,0 +1,117 @@
+<div class="container-fluid">
+    <div class="pb-2"></div>
+    <div class="card">
+        <div class="card-body">
+
+            <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
+                <li [ngbNavItem]="1">
+                    <a href="javascript:void(0)" ngbNavLink> Role - System Actions </a>
+                    <!----------------------------------------- Tab1 Contents -------------------------------------->
+                    <ng-template ngbNavContent>
+                        <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
+                            <div class="card fs-6">
+                                <!-----------------------------------------Header Buttons -------------------------------------->
+
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                             <a [routerLink]="['/bfs/auth-role-component-system-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/bfs/auth-role-component-system-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div ngbDropdown>
+                                                <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
+                                                <div ngbDropdownMenu>
+                                                    <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
+
+                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                                    </div>
+                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <!----------------------------------------- Messages -------------------------------------->
+                                    <div *ngFor="let msg of messages">
+                                        <div *ngIf="msg.text">
+                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+                                            </ngb-alert>
+                                        </div>
+                                    </div>
+                                    <!----------------------------------------- Form Controls -------------------------------------->
+                                    <div class="row">
+                                    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="id" class="form-label fs-6">ID</label>
+        <input class="form-control" type="text" id="id" formControlName="id"
+            [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid ID.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="bfsComponentId" class="form-label fs-6">Component Name</label>
+        <select class="form-select" id="bfsComponentId" formControlName="bfsComponentId"
+            [class]="submit && !form['bfsComponentId'].errors ? 'is-valid': submit && form['bfsComponentId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of BfsComponentOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Component Name.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="systemActionId" class="form-label fs-6">System Action</label>
+        <select class="form-select" id="systemActionId" formControlName="systemActionId"
+            [class]="submit && !form['systemActionId'].errors ? 'is-valid': submit && form['systemActionId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of SystemActionOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid System Action.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="authRoleId" class="form-label fs-6">Role</label>
+        <select class="form-select" id="authRoleId" formControlName="authRoleId"
+            [class]="submit && !form['authRoleId'].errors ? 'is-valid': submit && form['authRoleId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of AuthRoleOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Role.</div>
+    </div>
+</div>
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!----------------------------------------- End Form -------------------------------------->
+
+                    </ng-template>
+                </li>
+
+                <!----------------------------------------------------- Tabs -------------------------------------->
+
+            </ul>
+
+            <div class="tab-content" [ngbNavOutlet]="nav">
+            </div>
+        </div>
+    </div>
+</div>

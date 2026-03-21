@@ -1,15 +1,15 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
 
 // Output Columns of a Query  [used in entity Query]
 export const DataTypeColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -82,7 +82,32 @@ export function initDataTypeRequest(): IDataTypeRequest {
 export function getDataTypeActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
+if (component.accessService.isActionAllowed('dataType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/bfs/data-type/add', displayText: 'Add New record'
+});
+}
+if (component.accessService.isActionAllowed('dataType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/data-type/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('dataType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/data-type/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('dataType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/bfs/data-type/delete', displayText: 'Delete...' 
+});
+}
+
         return links;
     }
     //---------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
 

@@ -1,8 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NgIf , NgFor} from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { safeHtmlDecode } from '@bfs/_shared/helpers/html.helper';
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { TokenService } from '@bfs/_shared/security/token.service';
 import { appConfig } from '@/app/app.config';
+import { AccessService } from '@bfs/_shared/security/access.service';
+import { IQueryResponse, TokenParsed } from '@bfs/_shared/interfaces';
 
 @Component({
   selector: 'app-home-page',
@@ -17,8 +19,9 @@ export class HomeComponent implements OnInit {
   imgUrl!: string;
   isLoading: boolean = false;
   tokenService: TokenService = inject(TokenService);
+  accessService: AccessService = inject(AccessService);
 
-  tempSystems = [{ name: 'infrastructure', app: 'b.ofc' }, { name: 'stores', app: 'b.ofc' }, { name: 'auth', app: 'b.ofc' }]; // for testing only, can be removed after system selection page is implemented
+  userApps: any[] = []; // = [{ name: 'infrastructure', app: 'b.ofc' }, { name: 'stores', app: 'b.ofc' }, { name: 'auth', app: 'b.ofc' }]; // for testing only, can be removed after system selection page is implemented
 
   //--------------------------------------------------------------------------------------------
 
@@ -38,20 +41,31 @@ export class HomeComponent implements OnInit {
     // }
   }
   //--------------------------------------------------------------------------------------------
-  
-  async getToken(): Promise<void> { 
-    var token =  await this.tokenService.getAccessToken();
+
+  async getToken(): Promise<void> {
+    var token = await this.tokenService.getToken();
     alert(token);
-}
+  }
   //--------------------------------------------------------------------------------------------
-  
-  setCurrentSystem(system: string, app: string): void {
+
+  async getAccessData(): Promise<void> {
+    let dataReady = await this.accessService.IsAccessServiceReady();
+    if (!dataReady) {
+      console.error('AccessService data is not ready');
+      return;   
+    }
+
+  this.userApps = await this.accessService.getUserApps();
+ //this.userApps = ['infrastructure - b.ofc','infrastructure - f.ofc', 'stores - b.ofc','stores - f.ofc', 'auth - b.ofc' ,'auth - f.ofc']; // for testing only, can be removed after system selection page is implemented
+  }
+  //--------------------------------------------------------------------------------------------
+
+  async setCurrentSystem(itemSystem: string, itemApp: string): Promise<void> {
+    let result = itemSystem.split("-");
+    let system = result[0].trim().toLocaleLowerCase();
+    let app = result[1].trim().toLocaleLowerCase();
     sessionStorage.setItem('current-system', system);
     sessionStorage.setItem('current-app', app);
-    sessionStorage.setItem('current-userId', '688959610011559');
-    sessionStorage.setItem('current-RoleId', '688903058823310');
-    sessionStorage.setItem('current-permissions', '{"permissions": ["read", "write", "delete"]}');
-    
     window.location.reload();
   }
   //--------------------------------------------------------------------------------------------

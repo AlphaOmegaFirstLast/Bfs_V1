@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -42,7 +42,6 @@ export class BfsTenantFormComponent extends BaseFormComponent<IBfsTenant > imple
     presetBfsTenantSystemFilter: IBfsTenantSystemFilter | undefined;
 
     // Define look ups
-
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
@@ -78,7 +77,6 @@ export class BfsTenantFormComponent extends BaseFormComponent<IBfsTenant > imple
     //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
-        this.isLoading = true;
         let target = '';
 
     }
@@ -109,3 +107,11 @@ export class BfsTenantFormComponent extends BaseFormComponent<IBfsTenant > imple
    //--------------------------------------------------------------
 
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_2
+
+//Template_End_Code_DontOverwrite_2
+

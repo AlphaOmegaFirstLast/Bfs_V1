@@ -9,36 +9,40 @@ export const DataType_ROUTES: Routes = [
         path: 'bfs/data-type/list', 
         component: DataTypeListComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/data-type/list/:id', 
         component: DataTypeListComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/data-type/add/0', 
         component: DataTypeFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/data-type/view/:id', 
         component: DataTypeFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin', 'investor','broker'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin', 'investor','broker'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/data-type/edit/:id',
         component: DataTypeFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     },
     {
         path: 'bfs/data-type/delete/:id', 
         component: DataTypeFormComponent,
         canActivate: [RouteGuardService],
-        data: { role: ['admin'], api: ['infrastructure'], app: ['stkex.b.ofc'] } 
+        data: { role: ['admin'], api: ['infrastructure'], app: ['b.ofc'] } 
     }
 ]
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

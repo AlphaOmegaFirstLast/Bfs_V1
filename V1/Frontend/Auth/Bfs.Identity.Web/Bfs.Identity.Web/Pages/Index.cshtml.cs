@@ -60,7 +60,8 @@ namespace Bfs.Identity.Web.Pages
 
             if (tenant== null || aspNetUserId==null) return Page();
 
-            _tokenService.AttachRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenant.Id, aspNetUserId);
+            // Generate the refresh token and set it in the cookie, Attach the cookie to the Response, so the frontend can use it to get access token and call APIs.
+            _tokenService.GetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenant.Id, aspNetUserId);
 
             // return Redirect("/main");
             return Redirect("http://localhost:4200/");

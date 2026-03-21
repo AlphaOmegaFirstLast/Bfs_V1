@@ -1,16 +1,17 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
 
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
 
 // Output Columns of a Query  [used in entity Query]
 export const BusinessActionColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 { fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionType', width: '50px', isVisible:true },
+{ fieldName: 'shortName', displayName: 'Short Name', sortName: 'ShortName', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -19,6 +20,7 @@ export interface IBusinessAction {
 id?: string;
 name?: string;
 notes?: string;
+shortName?: string;
 
     actionTypeId?: number;
 
@@ -30,6 +32,7 @@ export function initBusinessAction(): IBusinessAction {
 id: '0',
 name: '',
 notes: '',
+shortName: '',
 
         actionTypeId: 0,
 
@@ -45,6 +48,7 @@ export function businessActionUntypedFormGroup(formBuilder: FormBuilder): any {
 id: ['0'],
 name: [''],
 notes: [''],
+shortName: [''],
 
     actionTypeId: [0],
 
@@ -64,6 +68,7 @@ export interface IBusinessActionFilter {
     [key: string]: any;
 
     Name?: string;
+ShortName?: string;
 
     ActionTypeId?: number;
 
@@ -82,6 +87,7 @@ export function initBusinessActionRequest(): IBusinessActionRequest {
         filter: {
 
             Name: undefined ,
+ShortName: undefined ,
 
             ActionTypeId: undefined ,
 
@@ -98,4 +104,8 @@ export function getBusinessActionActions(component: any, record: IEntity): IActi
         return links;
     }
     //---------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
 

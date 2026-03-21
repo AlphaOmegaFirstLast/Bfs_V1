@@ -67,10 +67,10 @@ public WriterTypeOptions: any[] = [];
     //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
-        this.isLoading = true;
         let target = '';
+        this.isLoading = true;
         target = "/ActionType/list";
-        (await this.apiService.post(target,  {pageSize:30})).subscribe({
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.ActionTypeOptions = response.items;
                 this.isLoading = false;
@@ -81,8 +81,9 @@ public WriterTypeOptions: any[] = [];
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-target = "/WriterType/list";
-        (await this.apiService.post(target,  {pageSize:30})).subscribe({
+this.isLoading = true;
+        target = "/WriterType/list";
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.WriterTypeOptions = response.items;
                 this.isLoading = false;
@@ -122,3 +123,8 @@ target = "/WriterType/list";
    //--------------------------------------------------------------
 
 }
+
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

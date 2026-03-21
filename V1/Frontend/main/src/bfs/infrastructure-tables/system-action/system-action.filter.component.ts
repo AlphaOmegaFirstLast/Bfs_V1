@@ -41,7 +41,7 @@ public WriterTypeOptions:  any[] = [];
     async getLookups(): Promise<void> {
         let target = '';
         target = "/ActionType/list";
-        (await this.parent.apiService.post(target,  {pageSize:30})).subscribe({
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.ActionTypeOptions = response.items;
                 this.isLoading = false;
@@ -52,7 +52,7 @@ public WriterTypeOptions:  any[] = [];
             }
         });
 target = "/WriterType/list";
-        (await this.parent.apiService.post(target,  {pageSize:30})).subscribe({
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.WriterTypeOptions = response.items;
                 this.isLoading = false;
@@ -77,3 +77,7 @@ target = "/WriterType/list";
         this.parent.applyFilter(this.result);
     }
 }
+//Template_Start_Code_DontOverwrite_1
+
+//Template_End_Code_DontOverwrite_1
+

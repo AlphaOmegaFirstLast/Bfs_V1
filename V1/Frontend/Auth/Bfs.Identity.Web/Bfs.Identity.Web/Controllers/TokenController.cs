@@ -14,65 +14,32 @@ namespace Bfs.Identity.Web.Controllers;
 public class TokenController : ControllerBase
 {
     private readonly ITokenService _tokenService;
-    private readonly BfsSettings _settings;
     private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
 
     public TokenController(ITokenService tokenService, IOptions<BfsSettings> settings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
     {
-        _tokenService = tokenService; _settings = settings.Value;
+        _tokenService = tokenService; 
         _signInManager = signInManager;
-        _userManager = userManager;
     }
 
-    [HttpGet("old")]
-    public async Task<IActionResult> GetToken()
-    {
-        if (_signInManager.IsSignedIn(User))
-        {
-            var userIdString = _userManager.GetUserId(User);
-            if (string.IsNullOrEmpty(userIdString))
-            {
-                return Unauthorized();
-            }
-
-            var userId = long.Parse(userIdString);
-            var request = new TokenRequest() { UserId = userId };
-            var tokenResponse = await _tokenService.CreateTokensAsync(request);
-            if (tokenResponse == null)
-                return Unauthorized();
-
-            SetRefreshTokenCookie(tokenResponse);
-            return Ok(new { accessToken = tokenResponse.AccessToken });
-        }
-
-        return Unauthorized();
-    }
-
-
-    [HttpGet]
-    public async Task<IActionResult> GetJwtToken()
-    {
-        var refreshToken = Request.Cookies[Constants.RefreshTokenCookieName];
-        var ids = refreshToken?.Split('|');
-        var jwtToken = await _tokenService.CreateJwtTokensAsync(ids[0], ids[1]);
-        if (jwtToken == null)
-            return Unauthorized(); //todo unauthenticated
-
-        return Ok(jwtToken);
-    }
+    /// <summary>   
+    /// This method retrieves a new JWT token using the refresh token stored in the cookies. 
+    /// It checks for the presence of the refresh token, validates it, and if valid, generates a new JWT token. 
+    /// If the refresh token is missing or invalid, it returns an unauthorized response.
+    /// </summary>
 
     [HttpGet("refresh")]
     public async Task<IActionResult> RefreshToken()
     {
         var refreshToken = Request.Cookies[Constants.RefreshTokenCookieName];
-        var request = new RefreshTokenRequest() { RefreshToken = refreshToken };
-        var tokenResponse = await _tokenService.RefreshTokensAsync(request);
-        if (tokenResponse == null)
-            return Unauthorized();
+        if (refreshToken == null)
+            return Unauthorized(); //todo unauthenticated
+        var ids = refreshToken?.Split('|');
+        var jwtToken = await _tokenService.CreateTokenAsync(ids[0], ids[1]);
+        if (jwtToken == null)
+            return Unauthorized(); //todo unauthenticated
 
-        SetRefreshTokenCookie(tokenResponse);
-        return Ok(new { accessToken = tokenResponse.AccessToken });
+        return Ok(new { jwtToken = jwtToken });
     }
 
     [HttpGet("logout")]
@@ -81,17 +48,6 @@ public class TokenController : ControllerBase
         await _signInManager.SignOutAsync();
         Response.Cookies.Delete(Constants.RefreshTokenCookieName); // Ensure 'RefreshTokenCookieName' exists in the 'Constants' class
         return Ok();
-    }
-
-    private void SetRefreshTokenCookie(TokenResponse tokenResponse)
-    {
-        Response.Cookies.Append(Constants.RefreshTokenCookieName, tokenResponse.RefreshToken, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
-            Expires = DateTime.UtcNow.AddDays(_settings.JwtSettings.RefreshTokenExpireInDay)
-        });
     }
 }
 

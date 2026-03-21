@@ -18,7 +18,6 @@ import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
 import { type IColumns, formatFilter, IUIMessage, IQueryColumn,IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
-import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
@@ -46,7 +45,6 @@ export class StructureCompareComponent
 
     extends BaseReportComponent<IStructureCompareFilter, IStructureCompareWithLookup> {
     override apiService: InfrastructureService = inject(InfrastructureService);
-    override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IStructureCompareRequest;
     override exportRequest = {} as IStructureCompareRequest;
     override downloadFileName: string = "Structure Compare";
