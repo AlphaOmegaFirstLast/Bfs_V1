@@ -101,6 +101,25 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
+        this.isLoading = true;
+// Promise.all to improve performance. apply later
+//         try{
+//         const [
+//             BfsSystemList, 
+//             DataTypeList,
+//         ] = await Promise.all
+//         ([
+//             this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 300 }),
+//             this.apiService.getItems<IQueryResponse>("/DataType/list", { pageSize: 300 }),
+//         ]);
+//         this.BfsSystemOptions = BfsSystemList.items;
+//         this.DataTypeOptions = DataTypeList.items;
+// } catch (err: any) {
+//   const msg = err?.message || "An error occurred while loading data.";
+//   this.messages.push({ text: msg, msgType: "danger" });
+// } finally {
+//   this.isLoading = false;
+// }
         //Template_Start_Field_Lookup_2
         this.isLoading = true;
         target = "/[LookupNameCapital]/list";

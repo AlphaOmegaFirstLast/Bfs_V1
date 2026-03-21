@@ -11,6 +11,7 @@ import { getFormControlValidation, getFormInfoLookups } from '@bfs/_shared/objec
 import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } from '@bfs/_shared/objectFields';
 
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
+import { AccessService } from '@bfs/_shared/security/access.service';
 //------------------------------------------- Component Specific ------------------------------------------------
 
 @Directive()
@@ -21,7 +22,11 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     public entityDisplayName: string = '';
     public componentName: string = '';
 
-    private clipboard = inject(ClipboardService);
+public tokenService!: any;
+
+
+    public accessService!: AccessService;
+    public clipboard = inject(ClipboardService);
     public formBuilder = inject(UntypedFormBuilder);
     public validationForm!: UntypedFormGroup;
     public customFieldFormControlList!: UntypedFormArray['controls'];
@@ -41,6 +46,8 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     public ActionLocationOptions: any[] = [];
 
     constructor(public activatedRoute: ActivatedRoute) {
+
+        this.accessService = inject(AccessService);
 
         let entityId = '0';
         this.route = activatedRoute;

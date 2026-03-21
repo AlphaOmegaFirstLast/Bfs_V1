@@ -12,7 +12,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core'
 //---------------- bfs shared -------------------------------------
-import { TokenService } from '@bfs/_shared/services/token.service';
 import { BaseMatrixComponent } from '@bfs/_shared/components/base-matrix';
 //--------------- component specific ------------------------------
 import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
@@ -28,7 +27,6 @@ import { type I[MatrixNameCapital]WithLookup, type I[MatrixNameCapital]Request, 
 export class [MatrixNameCapital]MatrixComponent extends BaseMatrixComponent <I[MatrixNameCapital]WithLookup, I[MatrixNameCapital]Filter> {
 
     override apiService: [SystemNameCapital]Service = inject([SystemNameCapital]Service);
-    override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as I[MatrixNameCapital]Request;
     override list: I[MatrixNameCapital]WithLookup[] = [];
 

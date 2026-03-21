@@ -4,7 +4,20 @@ import { ICustomField } from '@bfs/_shared/customFields';
 type Primitive = string | number | boolean | Date;
 type Range = { from?: Primitive; to?: Primitive };
 type FilterObject = Record<string, Primitive | Range | undefined>;
-
+//------------------------------------------------
+export interface TokenParsed {
+  userId: string;
+  exp: number; // e.g. offsetSeconds from Date.now()/1000
+  role: string[];
+  app: string[];
+  method: string[];
+}
+//------------------------------------------------
+export interface TokenModel {
+  token: string | null;
+  tokenParsed: TokenParsed | null;
+}
+//------------------------------------------------
 export interface IUserInterface {
     isLoading?: boolean;
     apiService?: any;

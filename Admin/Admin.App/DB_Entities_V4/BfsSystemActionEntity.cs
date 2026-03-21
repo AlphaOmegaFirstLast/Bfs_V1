@@ -9,7 +9,7 @@ namespace Admin.App
         public bool IsDeleted { get; set; }
         public long Id { get; set; }
         public string Name { get; set; }
-        public string ShortName { get; set; };
+        public string ShortName { get; set; }
 
         public string ActionTemplate { get; set; }
 

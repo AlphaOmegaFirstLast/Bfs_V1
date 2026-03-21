@@ -88,7 +88,7 @@ namespace Admin.App
                             var propertyValue = system.ToContent(codeInfo, action.MatchProperty, null);
                             if (action.MatchValues.Contains(propertyValue))
                             {
-                                var x = $"if (component.tokenService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))"
+                                var x = $"if (component.accessService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))";
                                 outputContent.AppendLine(component?.SetRelated(codeInfo, x, null));
                                 outputContent.Append("{");
                                 outputContent.AppendLine("links.push({");
@@ -107,7 +107,7 @@ namespace Admin.App
                             var propertyValue = component.ToContent(codeInfo, action.MatchProperty, null);
                             if (action.MatchValues.Contains(propertyValue))
                             {
-                                var x = $"if (component.tokenService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))"
+                                var x = $"if (component.accessService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))";
                                 outputContent.AppendLine(component.SetRelated(codeInfo, x, null));
                                 outputContent.Append("{");
                                 outputContent.AppendLine("links.push({");
@@ -128,7 +128,7 @@ namespace Admin.App
                                 var propertyValue = field.ToContent(codeInfo, action.MatchProperty, null);
                                 if (action.MatchValues.Contains(propertyValue))
                                 {
-                                    var x = $"if (component.tokenService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))"
+                                    var x = $"if (component.accessService.isActionAllowed('[ComponentNameSmall]', '{action.ShortName}'))";
                                     outputContent.AppendLine(field.SetRelated(codeInfo, x, null ));
                                     outputContent.Append("{");
                                     outputContent.AppendLine("links.push({");

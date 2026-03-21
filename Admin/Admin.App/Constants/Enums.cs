@@ -230,5 +230,7 @@ public enum BackendDataType
     DT_FormInfo = 15,                   // An object that is saved in the database as JSON string
     DT_ReportInfo = 16,                 // An object that is saved in the database as JSON string
     DT_MatrixInfo = 17,                 // An object that is saved in the database as JSON string
+
+    DT_Computed = 18,                  // Computed field that is saved in the database but not edited by the user.
 }
 

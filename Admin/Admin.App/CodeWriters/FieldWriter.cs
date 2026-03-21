@@ -8,7 +8,7 @@ using OpenTelemetry.Resources;
 
 namespace Admin.App
 {
-    public class FieldWriter : ICodeWriter , IFieldEntity
+    public class FieldWriter : ICodeWriter, IFieldEntity
     {
         public long Id { get; set; }
         public long BfsComponentId { get; set; }
@@ -43,8 +43,6 @@ namespace Admin.App
         public string lookupNameCapital;
         public string lookupNameSmall;
         public string lookupFileName;
-        public string joinName;
-        public string sortName;
 
         public FieldDefinition FieldDefinition = FieldDefinition.Primitive;
         public ReportDefinition ReportDefinition = ReportDefinition.None;
@@ -68,6 +66,8 @@ namespace Admin.App
         public string aggregateName;
         public string reportFieldNameCapital;
         public string reportFieldNameSmall;
+        public string joinName;
+        public string sortName;
 
         public string filterValueName = string.Empty;
         public string filterLookupName = string.Empty;
@@ -204,10 +204,8 @@ namespace Admin.App
             lookupNameCapital = result.Item1.Replace("Id", "");
             lookupNameSmall = MakeFirstLetterSmall(lookupNameCapital);
             lookupFileName = result.Item3.Replace("-Id", "").Replace("-id", "");
-            sortName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital : fieldCapitalName;
-            joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital : fieldCapitalName;
 
-            ParentTable = string.IsNullOrEmpty(ParentTable)? QueryBaseTable : ParentTable;
+            ParentTable = string.IsNullOrEmpty(ParentTable) ? QueryBaseTable : ParentTable;
             ParentTable = string.IsNullOrEmpty(ParentTable) ? componentNameCapital : ParentTable;
             parentTableSmall = MakeFirstLetterSmall(ParentTable);
 
@@ -237,7 +235,7 @@ namespace Admin.App
         private void SetToolTipDefinition(ToolTipInfo toolTipInfo)
         {
             toolTipNote = ToolTipInfo?.Note ?? string.Empty;
-            toolTipVisibility = string.IsNullOrEmpty(toolTipNote)? "style='display:none'" :  string.Empty;
+            toolTipVisibility = string.IsNullOrEmpty(toolTipNote) ? "style='display:none'" : string.Empty;
         }
 
         public void SetFilters(BackendDataType BackendDataTypeId, bool isAggregate)
@@ -284,6 +282,11 @@ namespace Admin.App
                 reportFieldNameCapital = fieldCapitalName;
                 reportFieldNameSmall = fieldSmallName;
             }
+
+            joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital : fieldCapitalName;
+            sortName = isAggregate ? aggregateName
+                        : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}Name"
+                        : reportFieldNameCapital;
 
             var chartElement = ReportInfo.ChartElementId == null ? ChartElement.None : (ChartElement)ReportInfo.ChartElementId;
             isChartHorizontalField = chartElement == ChartElement.HorizontalField;
@@ -465,7 +468,7 @@ namespace Admin.App
                         case BackendDataType.DT_FormInfo:
                         case BackendDataType.DT_ReportInfo:
                         case BackendDataType.DT_MatrixInfo:
-                            return BackendDataTypeId.ToString().Replace("DT_","");
+                            return BackendDataTypeId.ToString().Replace("DT_", "");
                         default:
                             return "Text";
                     }

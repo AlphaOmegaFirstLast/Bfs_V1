@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, signal, inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { TokenService } from './token.service';
+import { firstValueFrom, from, Observable, throwError } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { TokenService } from '../security/token.service';
 
 @Injectable()
 export class HttpService {
@@ -71,6 +71,37 @@ export class HttpService {
     );
   }
   //-------------------------------------
+// getItems<T>(url: string, data: any, opts = {}): Observable<T> {
+//   const target = this.origin + url;
+
+//   return from(this.getHeaders()).pipe(
+//     switchMap(headers =>
+//       this.http.post<T>(target, data, headers).pipe(
+//         catchError((error: any) => {
+//           this.handleError(error);
+//           const bfsError = this.getMessage(error);
+//           return throwError(() => bfsError);
+//         })
+//       )
+//     )
+//   );
+// }
+//-------------------------------------
+async getItems<T>(url: string, data: any, opts = {}): Promise<T> {
+  const target = this.origin + url;
+  opts = await this.getHeaders();
+
+  try {
+    return await firstValueFrom(
+      this.http.post<T>(target, data, opts)
+    );
+  } catch (error: any) {
+    this.handleError(error);
+    throw this.getMessage(error);
+  }
+}
+  //-------------------------------------
+
 async downloadJson(url: string, data: any, opts = {}, fileName:string) {
   const target = this.origin + url;
   opts = await this.getHeaders();
@@ -152,7 +183,7 @@ async downloadJson(url: string, data: any, opts = {}, fileName:string) {
     var headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
 
-    const accessToken = await this.tokenService.getAccessToken();
+    const accessToken = await this.tokenService.getToken();
     if (accessToken) {
       headers = headers.set('Authorization', 'Bearer ' + accessToken);
     }

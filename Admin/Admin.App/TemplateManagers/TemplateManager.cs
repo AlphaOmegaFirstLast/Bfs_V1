@@ -241,9 +241,12 @@ namespace Admin.App
                     if (placeHolder.TemplateContentType == TemplateContentType.Embedded)
                     {
                         var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
-                        existingCodeList.AppendLine($@"//Template_Start_{placeHolderName}_{i}");
-                        existingCodeList.AppendLine(existingSnippet);
-                        existingCodeList.AppendLine($@"//Template_End_{placeHolderName}_{i}");
+                        if (!string.IsNullOrEmpty(existingSnippet))
+                        {
+                            existingCodeList.AppendLine($@"//Template_Start_{placeHolderName}_{i}");
+                            existingCodeList.AppendLine(existingSnippet);
+                            existingCodeList.AppendLine($@"//Template_End_{placeHolderName}_{i}");
+                        }
                     }
                 }
             }

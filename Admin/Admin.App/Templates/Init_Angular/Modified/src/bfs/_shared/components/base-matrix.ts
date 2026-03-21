@@ -12,7 +12,7 @@ import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core'
 
 import { IIdentifiable, ILookup, IEntityRequest, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { AccessService } from '@bfs/_shared/security/access.service';
 
 
 @Component({
@@ -25,15 +25,18 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
     filter!: IFilter;
     public list: IMatrix[] = [];
+    public accessService!: AccessService;
+    public tokenService!: any;
 
     public getApiUrl = '';
     public saveApiUrl = '';
 
     public getHorizontalApiUrl = '';
     public getVerticalApiUrl = '';
-    public apiService!: any;
-    public tokenService: TokenService = inject(TokenService);
 
+    public apiService!: any;
+    public apiHorizontalService!: any;
+    public apiVerticalService!: any;
     public queryRequest = {} as IEntityRequest<IFilter>;
     public matrixRequest = { pageIndex: 1, pageSize: 100, filter: {} as any };
 
@@ -57,9 +60,14 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
     public me = this;
     constructor(public modalService: NgbModal, public router: Router, public activatedRoute: ActivatedRoute) {
+        this.accessService = inject(AccessService);
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {
+
+        if (this.apiHorizontalService == undefined) this.apiHorizontalService = this.apiService;
+        if (this.apiVerticalService == undefined) this.apiVerticalService = this.apiService;
+
         if (this.presetFilter) {
             this.queryRequest.filter = this.presetFilter;
         }
@@ -97,7 +105,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
             this.messages = [];
             this.isLoading.matrixHorizontal = true;
             var target = this.getHorizontalApiUrl;
-            (await this.apiService.post(target, this.matrixRequest)).subscribe({
+            (await this.apiHorizontalService.post(target, this.matrixRequest)).subscribe({
                 next: (res: any) => {
                     this.isLoading.matrixHorizontal = false;
                     this.horizontalList = res.items;
@@ -118,7 +126,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
 
             this.isLoading.matrixVertical = true;
             var target = this.getVerticalApiUrl;
-            (await this.apiService.post(target, this.matrixRequest)).subscribe({
+            (await this.apiVerticalService.post(target, this.matrixRequest)).subscribe({
                 next: (res: any) => {
                     this.isLoading.matrixVertical = false;
                     this.verticalList = res.items;
@@ -185,7 +193,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
     async saveMatrix(me: any): Promise<void> {
         if (!me.isLoading.save) {  // to prevent multiple requests
             me.messages = [];
-            me.isLoading = true;
+            me.isLoading.save = true;
             var target = me.saveApiUrl + `/${this.entityId}`;
 
             var childrenList: IMatrix[] = me.list
@@ -202,7 +210,7 @@ export class BaseMatrixComponent<IMatrix, IFilter> {
                     me.list = res.items;
                 },
                 error: (err: any) => {
-                    me.isLoading = false;
+                    me.isLoading.save = false;
                     var msg = err.message || 'An error occurred while saving matrix data.';
                     me.messages.push({ text: msg, msgType: "danger" });
                 }
