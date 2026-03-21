@@ -1,0 +1,32 @@
+logos, missing fields in tenant, system, app  (logo field, abbreviation for any thing related to permissions system, app, action, component)
+
+computed field, as app name = system name - app name, bfsField add field computeFormula=`${systemName}-${name}`
+string computed fields
+lookups in one promise
+
+tables prefix
+Seed fields in one table
+
+Resource security
+Aspire (explore .ServiceDefaults instrumentations)
+Record validation
+Table validation
+
+fix "Code-dont-Delete" issue
+update databases (action per system)
+
+autocomplete
+link\unlink users
+
+activate the tenant-database when a request come to Api
+deals with secrets
+linear reports for stores
+uploads to a tenant blob
+
+AI Generate data
+
+After crud > ui [Back] button instead of cancel
+Back to previuos filtered list
+
+Deployment
+logging

@@ -22,3 +22,7 @@ convert every dot (.) in the project name to underscore (_) =>Projects.Bfs_Stock
         app.MapDefaultEndpoints();
 
 Note: the above lines I moved them from Aspire.ServiceDefaults.csproj to Bfe.Core, so we dont have to have an extra project in the solution.
+
+From scratch:
+Select new project: Aspire Host Empty. that is all what we need. Set prject name Aspire
+for easy start up. just edit the Aspire.slnx and Aspire.AppHost.csproj. as shown in other docs in this folder
