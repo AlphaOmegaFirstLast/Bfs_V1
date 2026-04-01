@@ -45,18 +45,18 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        // Uncomment the following line if you need to access HttpContext in your services
-        // builder.Services.AddHttpContextAccessor();
-
-        builder.RegisterSecurity(settings);
-        builder.RegisterCrossOrigin(settings);
         builder.RegisterScopeData();
+        builder.RegisterCrossOrigin(settings);
+        builder.RegisterSecurity(settings);
+        builder.RegisterTenentRelated();
         builder.RegisterDbContext(settings);
         builder.RegisterRepositories();
         builder.RegisterServices();
         builder.RegisterValidators();
         builder.RegisterLists(settings);
         builder.RegisterReports(settings);
+        // This is added specifically to force Aspire to wait until the application is ready before processing requests, ensuring that all services are properly initialized.
+        builder.Services.AddHealthChecks().AddCheck<ReadinessHealthCheck>("readiness");
 
         return builder;
     }
@@ -101,6 +101,8 @@ internal class Program
             c.DocExpansion(DocExpansion.None); // Collapses all nodes
         });
 
+        TenantManager.LoadTenants(app, settings?.DbConnections?.MasterConnection);
+        ReadinessHealthCheck.MarkReady();
         return app;
     }
 
