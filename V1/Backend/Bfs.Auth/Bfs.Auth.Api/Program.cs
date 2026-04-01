@@ -1,9 +1,12 @@
 //using Microsoft.ApplicationInsights.AspNetCore
+using Bfs.Auth.Api;
 using Bfs.Core.Config;
+using Bfs.Core.Services.Diagnosis;
+using Bfs.Core.TenantManagement;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Caching.Memory;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Threading.Tasks;
-using Bfs.Auth.Api;
 
 internal class Program
 {
@@ -44,19 +47,18 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        // Uncomment the following line if you need to access HttpContext in your services
-        // builder.Services.AddHttpContextAccessor();
-
-        builder.RegisterSecurity(settings);
-        builder.RegisterCrossOrigin(settings);
         builder.RegisterScopeData();
+        builder.RegisterCrossOrigin(settings);
+        builder.RegisterSecurity(settings);
+        builder.RegisterTenentRelated();
         builder.RegisterDbContext(settings);
         builder.RegisterRepositories();
         builder.RegisterServices();
         builder.RegisterValidators();
         builder.RegisterLists(settings);
         builder.RegisterReports(settings);
-
+        // This is added specifically to force Aspire to wait until the application is ready before processing requests, ensuring that all services are properly initialized.
+        builder.Services.AddHealthChecks().AddCheck<ReadinessHealthCheck>("readiness");
         return builder;
     }
 
@@ -93,6 +95,7 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        app.MapHealthChecks("/health/ready");
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
@@ -100,6 +103,8 @@ internal class Program
             c.DocExpansion(DocExpansion.None); // Collapses all nodes
         });
 
+        TenantManager.LoadTenants(app, settings?.DbConnections?.MasterConnection);
+        ReadinessHealthCheck.MarkReady();
         return app;
     }
 
