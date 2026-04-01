@@ -44,12 +44,10 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        // Uncomment the following line if you need to access HttpContext in your services
-        // builder.Services.AddHttpContextAccessor();
-
-        builder.RegisterSecurity(settings);
-        builder.RegisterCrossOrigin(settings);
         builder.RegisterScopeData();
+        builder.RegisterCrossOrigin(settings);
+        builder.RegisterSecurity(settings);
+        builder.RegisterTenentRelated();
         builder.RegisterDbContext(settings);
         builder.RegisterRepositories();
         builder.RegisterServices();

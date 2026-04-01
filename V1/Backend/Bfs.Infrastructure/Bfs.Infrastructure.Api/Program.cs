@@ -1,9 +1,11 @@
 //using Microsoft.ApplicationInsights.AspNetCore
 using Bfs.Core.Config;
+using Bfs.Core.TenantManagement;
+using Bfs.Infrastructure.Api;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Caching.Memory;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Threading.Tasks;
-using Bfs.Infrastructure.Api;
 
 internal class Program
 {
@@ -44,12 +46,10 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        // Uncomment the following line if you need to access HttpContext in your services
-        // builder.Services.AddHttpContextAccessor();
-
-        builder.RegisterSecurity(settings);
-        builder.RegisterCrossOrigin(settings);
         builder.RegisterScopeData();
+        builder.RegisterCrossOrigin(settings);
+        builder.RegisterSecurity(settings);
+        builder.RegisterTenentRelated();
         builder.RegisterDbContext(settings);
         builder.RegisterRepositories();
         builder.RegisterServices();
@@ -102,6 +102,8 @@ internal class Program
 
         return app;
     }
+
+
 
     private static async Task ApplicationErrorHandler(HttpContext context)
     {

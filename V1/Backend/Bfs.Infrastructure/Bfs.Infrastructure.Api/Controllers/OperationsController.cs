@@ -1,3 +1,4 @@
+using Azure;
 using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.Core.Services.AI;
@@ -6,6 +7,7 @@ using Bfs.Infrastructure.Domain.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OpenTelemetry.Metrics;
@@ -17,14 +19,22 @@ namespace Bfs.Infrastructure.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-
-public class OperationsController
+public class OperationsController : ControllerBase
 {
     private readonly IOperationsService _operationsService;
 
     public OperationsController(IOperationsService operationsService)
     {
         _operationsService = operationsService;
+    }
+
+
+    [HttpGet("TenantToken")]
+    public IResult SetTenantCookie([FromQuery] string subject)
+    {
+        // Append a cookie named "TenantToken". Use a safe default for null subject.
+        Response.Cookies.Append("Tenant-token", subject ?? string.Empty, new CookieOptions { HttpOnly = true, Secure = true });
+        return TypedResults.Ok();
     }
 
     [HttpPut("BfsComponentSystemAction/matrix/{parentId}")]
