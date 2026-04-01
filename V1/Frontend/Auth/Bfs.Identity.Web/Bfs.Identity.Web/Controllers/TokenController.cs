@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.IO.Enumeration;
 
 namespace Bfs.Identity.Web.Controllers;
 
@@ -15,11 +16,13 @@ public class TokenController : ControllerBase
 {
     private readonly ITokenService _tokenService;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly BfsSettings _settings;
 
     public TokenController(ITokenService tokenService, IOptions<BfsSettings> settings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
     {
         _tokenService = tokenService; 
         _signInManager = signInManager;
+        _settings = settings.Value;
     }
 
     /// <summary>   
@@ -35,7 +38,7 @@ public class TokenController : ControllerBase
         if (refreshToken == null)
             return Unauthorized(); //todo unauthenticated
         var ids = refreshToken?.Split('|');
-        var jwtToken = await _tokenService.CreateTokenAsync(ids[0], ids[1]);
+        var jwtToken = await _tokenService.CreateTokenAsync(_settings?.DbConnections?.MasterConnection, ids[0], ids[1]);
         if (jwtToken == null)
             return Unauthorized(); //todo unauthenticated
 

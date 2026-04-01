@@ -28,33 +28,72 @@
             border-style:none;
         }
     </style>
-    @if (Model.UserTenantList.Count == 0)
+
+    @if (Model.ShowTenants)
     {
-        <div class="no-tenant">You are not attached to any of our tenants. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
+        @if (Model.UserTenantList.Count == 0)
+        {
+            <div class="no-tenant">You are not attached to any of our tenants. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
+        }
+        else
+        {
+            <form method="post" asp-page-handler="SelectTenant">
+                <div style="padding-top:170px; width:100%;">
+                    <table style="margin: 0 auto;">
+                        <tr>
+                            @foreach (var tenant in Model.UserTenantList)
+                            {
+                                <td>
+                                    <button type="submit" class="btn-td" class="home-td" name="tenantOrder" value="@tenant.order">
+                                        <div style="display:block;">
+                                            <img src="~/images/logo/@tenant.Logo" width="170px" />
+                                        </div>
+                                        <div>
+                                            @tenant.Name
+                                        </div>
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        }
+
     }
-    else
+
+    @if (Model.ShowSystems)
     {
-        <form method="post" asp-page-handler="SelectTenant">
-            <div style="padding-top:170px; width:100%;">
-                <table style="margin: 0 auto;">
-                    <tr>
-                        @foreach (var tenant in Model.UserTenantList)
-                        {
-                            <td>
-                                <button type="submit" class="btn-td" class="home-td" name="tenantOrder" value="@tenant.order">
-                                    <div style="display:block;">
-                                        <img src="~/images/logo/@tenant.Logo" width="170px" />
-                                    </div>
-                                    <div>
-                                        @tenant.Name
-                                    </div>
-                                </button>
-                            </td>
-                        }
-                    </tr>
-                </table>
-            </div>
-        </form>
+        @if (Model.SystemList.Count == 0)
+        {
+            <div class="no-tenant">You are not attached to any system of this tenant. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
+        }
+        else
+        {
+            <form method="post" asp-page-handler="SelectSystem">
+                <div style="padding-top:170px; width:100%;">
+                    <table style="margin: 0 auto;">
+                        <tr>
+                            @foreach (var sys in Model.SystemList)
+                            {
+                                <td>
+                                    <button type="submit" class="btn-td" class="home-td" name="systemId" value="@sys.Id">
+                                        <div style="display:block;">
+                                            <img src="~/images/logo/@sys.Logo" width="170px" />
+                                        </div>
+                                        <div>
+                                            @sys.Name
+                                        </div>
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        }
+
+        
     }
 }
 else

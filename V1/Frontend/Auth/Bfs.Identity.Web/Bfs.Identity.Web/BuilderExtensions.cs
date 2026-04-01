@@ -13,7 +13,7 @@ public static class BuilderExtensions
     {
         if (settings != null && settings.DbConnections != null)
         {
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(settings.DbConnections.BestFitConnection));
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection));
         }
     }
 
