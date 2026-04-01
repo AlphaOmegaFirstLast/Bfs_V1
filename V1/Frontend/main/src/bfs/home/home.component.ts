@@ -44,7 +44,8 @@ export class HomeComponent implements OnInit {
 
   async getToken(): Promise<void> {
     var token = await this.tokenService.getToken();
-    alert(token);
+    // var infrastructureToken = await this.tokenService.getSystemToken('infrastructure');
+    // alert(token);
   }
   //--------------------------------------------------------------------------------------------
 

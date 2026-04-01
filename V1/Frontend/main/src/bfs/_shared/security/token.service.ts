@@ -55,6 +55,27 @@ export class TokenService {
     return jwtToken;
   }
   //------------------------------------------------------------
+  // getSystemToken(systemName: string) { 
+  //   const target = this.identityWebOrigin + "/token/TenantSystemCookie/";
+
+  //   var observable = this.http.get<string>(target).pipe(
+  //     map((response: any) => {
+  //       console.log('Infrastructure token response', response);
+  //       return response as string;
+  //     }),
+  //     // Map and error handling as in your original code
+  //     catchError((_error: any) => {
+  //       return throwError(() => 'logout error');
+  //     }),
+  //   );
+
+  //   observable.subscribe({
+  //     next: () => {
+  //       console.log('Infrastructure token obtainedsuccessfully');
+  //       }
+  //   });
+  // }
+  // //------------------------------------------------------------
   logout() {
 
     sessionStorage.clear(); // Clear session storage to remove any stored token information

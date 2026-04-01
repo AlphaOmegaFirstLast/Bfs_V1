@@ -15,6 +15,7 @@ import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.s
 import { StoresService } from '@bfs/stores-main/stores.service';
 import { AuthService } from '@bfs/auth-main/auth.service';
 import { AccessService } from '@bfs/_shared/security/access.service';
+import { MasterService } from '@bfs/master-main/master.service';
 //Template_System_DeclareProviderEntry
 
 // configure the providers for the application which will be used for dependency injection
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
 InfrastructureService,
 StoresService,
 AuthService,
+MasterService,
 //Template_System_AddProviderEntry
       RouteGuardService,
       MenuGuardService,

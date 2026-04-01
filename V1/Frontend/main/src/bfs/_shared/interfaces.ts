@@ -8,7 +8,7 @@ type FilterObject = Record<string, Primitive | Range | undefined>;
 export interface TokenParsed {
   userId: string;
   exp: number; // e.g. offsetSeconds from Date.now()/1000
-  role: string[];
+  roleId: string[];
   app: string[];
   method: string[];
 }

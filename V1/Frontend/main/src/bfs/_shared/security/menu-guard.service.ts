@@ -6,6 +6,8 @@ import { BestFitMenuItems } from '../../bestfit-main/bestfit.menu'; // Assume th
 import { InfrastructureMenuItems } from '@bfs/infrastructure-main/infrastructure.menu';
 import { StoresMenuItems } from '@bfs/stores-main/stores.menu';
 import { AuthMenuItems } from '@bfs/auth-main/auth.menu';
+import { MasterMenuItems } from '@bfs/master-main/master.menu';
+
 //Template_System_AddMenuDeclare
 
 @Injectable({
@@ -28,11 +30,10 @@ export class MenuGuardService {
       return [];
     }
 
-
     // Based on the current app, load the corresponding menu items
     // currently designed to show one app menu at a time.
     // can be enhanced to show multiple app menu if needed in future, by adding a loop here to loop through all apps in session storage and load menu for each app.
-  
+
   var appItems = [] as MenuItemType[];
   switch (currentSystem) {
       case 'bestfit':
@@ -47,7 +48,10 @@ export class MenuGuardService {
       case 'auth':
         appItems = appItems.concat(await this.processItems(currentApp, AuthMenuItems));
         break;
-      //Template_System_AddMenuEntry
+              case 'master':
+           appItems = appItems.concat(await this.processItems(currentApp , MasterMenuItems));
+        break;
+//Template_System_AddMenuEntry
       default:
         break;
     }

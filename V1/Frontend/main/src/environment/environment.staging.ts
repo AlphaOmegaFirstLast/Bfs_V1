@@ -8,5 +8,6 @@ export const environment = {
   , InfrastructureApiUrl: 'https://[StagingOrigin]/api'
   , StoresApiUrl: 'https://[StagingOrigin]/api'
   , AuthApiUrl: 'https://[StagingOrigin]/api'
+  , MasterApiUrl: 'https://[StagingOrigin]/api'
 //Template_System_AddEnvironmentEntry
 };

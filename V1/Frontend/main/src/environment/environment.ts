@@ -21,7 +21,8 @@ export const environment = {
   , InfrastructureApiUrl: 'http://localhost:3101/api'
   , StoresApiUrl: 'http://localhost:8101/api'
   , AuthApiUrl: 'http://localhost:6101/api'
-  //Template_System_AddEnvironmentEntry
+    , MasterApiUrl: 'http://localhost:3201/api'
+//Template_System_AddEnvironmentEntry
 };
 //ToDo set other environments,
 //ToDo check login & logout urls with RouteGuardService and proxy settings 

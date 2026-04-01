@@ -149,7 +149,7 @@ export class AccessService {
             this.setTokenParsed();
         }
 
-        return this.tokenParsed?.role?.includes(this.bfsAdminRoleId) || false;
+        return this.tokenParsed?.roleId?.includes(this.bfsAdminRoleId) || false;
     }
     //-----------------------------------------------------------------
     private setTokenParsed(): void {
@@ -161,7 +161,7 @@ export class AccessService {
         if (!this.tokenParsed) {
             this.setTokenParsed();
         }
-        let userRoleIds = this.tokenParsed?.role || [];
+        let userRoleIds = this.tokenParsed?.roleId || [];
         let roles = this.roles?.filter(x => userRoleIds.includes(x.id)).map(x => x.name) || [];
         return roles;
     }
@@ -173,7 +173,7 @@ export class AccessService {
             this.setTokenParsed();
         }
 
-        let userRoleIds = this.tokenParsed?.role || [];
+        let userRoleIds = this.tokenParsed?.roleId || [];
         let componentActionIds = this.rolesComponentSystemActions.filter(ra => userRoleIds.includes(ra.roleId));
         for (let ca of componentActionIds || []) {
             let actionNames = this.systemActions?.find(x => x.id === ca.systemActionId)?.name || [];
@@ -189,7 +189,7 @@ export class AccessService {
             return this.apps.map(a => a.name) || [];
         }
         else {
-            let userRoleIds = this.tokenParsed?.role || [];
+            let userRoleIds = this.tokenParsed?.roleId || [];
             let appIds = this.roleApp.filter(ra => userRoleIds.includes(ra.roleId)).map(ra => ra.appId);
             let apps = this.apps.filter(app => appIds?.includes(app.id)).map(a => a.name) || [];
             return apps;

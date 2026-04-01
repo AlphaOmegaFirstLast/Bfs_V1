@@ -34,6 +34,11 @@ const BFS_SYSTEMS_ROUTES: Routes = [
         component: MainLayoutComponent,
         loadChildren: () => import('../bfs/auth-main/auth.route').then((mod) => mod.Auth_ROUTES)
     },
+    {
+        path: '',
+        component: MainLayoutComponent,
+        loadChildren: () => import('../bfs/master-main/master.route').then((mod) => mod.Master_ROUTES)
+    },
 //Template_System_AddRouteEntry
 ];
 
