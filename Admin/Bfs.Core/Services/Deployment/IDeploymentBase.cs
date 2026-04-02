@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bfs.Core.Interfaces
 {
-    public interface IDeploymantBase
+    public interface IDeploymentBase
     {
         public string ScriptFile { get; set; }
         public string SourceProject { get; set; }

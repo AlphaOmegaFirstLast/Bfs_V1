@@ -5,7 +5,7 @@ namespace Bfs.Core.Services.Deployment
 {
     public class DeploymentManager
     {
-        public static void PublishToLocal(IDeploymantBase info)
+        public static void PublishToLocal(IDeploymentBase info)
         {
             var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 
@@ -20,7 +20,7 @@ namespace Bfs.Core.Services.Deployment
             RunPowershell(args);
         }
 
-        public static void DeployToLocal(IDeploymantLocal info)
+        public static void DeployToLocal(IDeploymentLocal info)
         {
             var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 
@@ -33,7 +33,7 @@ namespace Bfs.Core.Services.Deployment
             RunPowershell(args);
         }
 
-        public static void DeployToAzure(IDeploymantAzure info)
+        public static void DeployToAzure(IDeploymentAzure info)
         {
             var args = $" -ExecutionPolicy Bypass -File \"{info.ScriptFile}\" ";
 

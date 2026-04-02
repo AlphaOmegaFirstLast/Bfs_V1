@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Bfs.Core.TenantManagement;
 
-public class MasterDbContext : DbContext
+public class MasterBasicDbContext : DbContext
 {
     public DbSet<TenantEntity> BfsTenant { get; set; }
 
-    public MasterDbContext(DbContextOptions<MasterDbContext> options) : base(options)
+    public MasterBasicDbContext(DbContextOptions<MasterBasicDbContext> options) : base(options)
     {
     }
 }

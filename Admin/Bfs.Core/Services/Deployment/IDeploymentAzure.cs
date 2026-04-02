@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bfs.Core.Interfaces
 {
-    public interface IDeploymantAzure : IDeploymantBase
+    public interface IDeploymentAzure : IDeploymentBase
     {
         // Azure specific
         public string PublishProfilePath { get; set; }

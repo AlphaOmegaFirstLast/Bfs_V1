@@ -17,10 +17,10 @@ namespace Bfs.Core.TenantManagement
     {
         public static List<TenantEntity> GetAllTenants(string masterDbConnection)
         {
-           var options = new DbContextOptionsBuilder<MasterDbContext>()
+           var options = new DbContextOptionsBuilder<MasterBasicDbContext>()
                 .UseSqlServer(masterDbConnection) // Replace with your actual connection string
                 .Options;
-            using var db = new MasterDbContext(options);
+            using var db = new MasterBasicDbContext(options);
             return db.BfsTenant
                      .Select(t => new TenantEntity
                      {

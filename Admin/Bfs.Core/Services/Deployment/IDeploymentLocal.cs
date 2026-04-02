@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bfs.Core.Interfaces
 {
-    public interface IDeploymantLocal : IDeploymantBase
+    public interface IDeploymentLocal : IDeploymentBase
     {
         // Local Specific
         public bool IsHttpsRequired { get; set; }
