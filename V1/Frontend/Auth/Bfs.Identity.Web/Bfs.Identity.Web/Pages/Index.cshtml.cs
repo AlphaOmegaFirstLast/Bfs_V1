@@ -108,7 +108,7 @@ namespace Bfs.Identity.Web.Pages
             var sqlSelect = "select * from bfsTenant";
             var sqlStatement = sqlSelect.ToString();
 
-            var bfsDbConnection = "Server=localhost;Database=BestFit_V4; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
+            var bfsDbConnection = "Server=localhost;Database=BestFit_V5; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
 
             using var db = new SqlConnection(bfsDbConnection);
             var items = await db.QueryAsync<Tenant>(sqlSelect.ToString(), null);
@@ -133,7 +133,7 @@ namespace Bfs.Identity.Web.Pages
 
         public static async Task<List<TenantSystem>> GetTenantSystems(long tenantId)
         {
-            var bfsDbConnection = "Server=localhost;Database=BestFit_V4; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
+            var bfsDbConnection = "Server=localhost;Database=BestFit_V5; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
 
             var sqlSelect = "select  s.* from bfsSystem s inner join bfsTenantSystem ts on ts.bfsSystemId = s.id";
             sqlSelect = sqlSelect + " where ts.BfsTenantId = @TenantId";
