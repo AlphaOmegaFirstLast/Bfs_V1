@@ -9,6 +9,10 @@
   <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Contracts/Bfs.Infrastructure.Contracts.csproj" />
   <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Data/Bfs.Infrastructure.Data.csproj" />
   <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Domain/Bfs.Infrastructure.Domain.csproj" />
+  <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Api/Bfs.Master.Api.csproj" />
+  <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Contracts/Bfs.Master.Contracts.csproj" />
+  <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Data/Bfs.Master.Data.csproj" />
+  <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Domain/Bfs.Master.Domain.csproj" />
   <Project Path="../V1/Backend/Bfs.Stores/Bfs.Stores.Api/Bfs.Stores.Api.csproj" />
   <Project Path="../V1/Backend/Bfs.Stores/Bfs.Stores.Contracts/Bfs.Stores.Contracts.csproj" />
   <Project Path="../V1/Backend/Bfs.Stores/Bfs.Stores.Data/Bfs.Stores.Data.csproj" />

@@ -23,8 +23,8 @@ export class MenuGuardService {
       console.error('AccessService data is not ready');
       return [];
     }
-    var currentSystem = sessionStorage.getItem('current-system') ;
-    var currentApp = sessionStorage.getItem('current-app') ;
+    var currentSystem = sessionStorage.getItem('current-system');
+    var currentApp = sessionStorage.getItem('current-app');
     if (!currentSystem || !currentApp) {
       console.error('Current system or app is not set in session storage');
       return [];
@@ -34,8 +34,8 @@ export class MenuGuardService {
     // currently designed to show one app menu at a time.
     // can be enhanced to show multiple app menu if needed in future, by adding a loop here to loop through all apps in session storage and load menu for each app.
 
-  var appItems = [] as MenuItemType[];
-  switch (currentSystem) {
+    var appItems = [] as MenuItemType[];
+    switch (currentSystem) {
       case 'bestfit':
         appItems = appItems.concat(await this.processItems(currentApp, BestFitMenuItems));
         break;
@@ -48,10 +48,10 @@ export class MenuGuardService {
       case 'auth':
         appItems = appItems.concat(await this.processItems(currentApp, AuthMenuItems));
         break;
-              case 'master':
-           appItems = appItems.concat(await this.processItems(currentApp , MasterMenuItems));
+      case 'master':
+        appItems = appItems.concat(await this.processItems(currentApp, MasterMenuItems));
         break;
-//Template_System_AddMenuEntry
+      //Template_System_AddMenuEntry
       default:
         break;
     }
