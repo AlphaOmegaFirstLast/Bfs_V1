@@ -1,16 +1,14 @@
 import { inject, Injectable } from '@angular/core';
-import { forkJoin, Observable, of, tap } from 'rxjs';
 import { environment } from '@/environment/environment';
 import { safeHtmlDecode } from '../helpers/html.helper';
 import { AuthService } from '@bfs/auth-main/auth.service';
-import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
+import { MasterService } from '@bfs/master-main/master.service';
 import { IQueryResponse, TokenModel, TokenParsed } from '../interfaces';
-import { promises } from 'dns';
 
 @Injectable({ providedIn: 'root' })  // Ensure the service is a singleton and available application-wide
 export class AccessService {
     authService: AuthService;
-    bfsService: InfrastructureService;
+    bfsService: MasterService;
 
     tokenModel: TokenModel | null = null;
     tokenParsed: TokenParsed | null = null;
@@ -32,7 +30,7 @@ export class AccessService {
     //-----------------------------------------------------------------  
     constructor() {
         this.authService = inject(AuthService);
-        this.bfsService = inject(InfrastructureService);
+        this.bfsService = inject(MasterService);
     }
     //----------------------------------------------------------------- 
     async loadRoleData(): Promise<void> {
@@ -49,10 +47,10 @@ export class AccessService {
             this.bfsService.getItems<IQueryResponse>("/bfsComponent/list", { pageSize: 300 }),
             this.bfsService.getItems<IQueryResponse>("/SystemAction/list", { pageSize: 300 }),
 
-            this.authService.getItems<IQueryResponse>("/AuthRole/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/AuthApp/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/AuthRoleApp/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/AuthRoleComponentSystemAction/list", { pageSize: 300 })
+            this.authService.getItems<IQueryResponse>("/Role/list", { pageSize: 300 }),
+            this.authService.getItems<IQueryResponse>("/App/list", { pageSize: 300 }),
+            this.authService.getItems<IQueryResponse>("/RoleApp/list", { pageSize: 300 }),
+            this.authService.getItems<IQueryResponse>("/RoleComponentSystemAction/list", { pageSize: 300 })
 
         ]);
         //after you get the data, cache it in the service properties so that it can be used for subsequent calls without needing to fetch from the server again

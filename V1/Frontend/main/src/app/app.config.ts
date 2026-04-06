@@ -10,7 +10,6 @@ import { TokenService } from '@bfs/_shared/security/token.service';
 import { RouteGuardService } from '@bfs/_shared/security/route-guard.service';
 import { MenuGuardService } from '@bfs/_shared/security/menu-guard.service';
 
-import { BestFitService } from '@bfs/bestfit-main/bestfit.service';
 import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
 import { StoresService } from '@bfs/stores-main/stores.service';
 import { AuthService } from '@bfs/auth-main/auth.service';
@@ -26,7 +25,6 @@ export const appConfig: ApplicationConfig = {
       HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.
       TokenService,
       AccessService,
-      BestFitService,
 InfrastructureService,
 StoresService,
 AuthService,

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { MenuItemType } from '@/app/types/layout';
 import { AccessService } from './access.service'; // Assume this service exists
 
-import { BestFitMenuItems } from '../../bestfit-main/bestfit.menu'; // Assume this service exists
 import { InfrastructureMenuItems } from '@bfs/infrastructure-main/infrastructure.menu';
 import { StoresMenuItems } from '@bfs/stores-main/stores.menu';
 import { AuthMenuItems } from '@bfs/auth-main/auth.menu';
@@ -36,9 +35,6 @@ export class MenuGuardService {
 
     var appItems = [] as MenuItemType[];
     switch (currentSystem) {
-      case 'bestfit':
-        appItems = appItems.concat(await this.processItems(currentApp, BestFitMenuItems));
-        break;
       case 'infrastructure':
         appItems = appItems.concat(await this.processItems(currentApp, InfrastructureMenuItems));
         break;

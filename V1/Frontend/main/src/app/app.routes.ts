@@ -14,11 +14,16 @@ const BFS_SYSTEMS_ROUTES: Routes = [
         path: 'landing',
         component: HomeComponent,
     },
-    //     {
-    //     path: '',
-    //     component: MainLayoutComponent,
-    //     loadChildren: () => import('../bfs/bestfit-main/bestfit.route').then((mod) => mod.BestFit_ROUTES)
-    // },
+    {
+        path: '',
+        component: MainLayoutComponent,
+        loadChildren: () => import('../bfs/home/home.route').then((mod) => mod.Home_ROUTES),
+    },
+    {
+        path: '',
+        component: MainLayoutComponent,
+        loadChildren: () => import('../bfs/error/error.route').then((mod) => mod.ERROR_PAGES_ROUTES)
+    },
     {
         path: '',
         component: MainLayoutComponent,
