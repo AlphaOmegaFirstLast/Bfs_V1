@@ -1,32 +1,76 @@
 logos, missing fields in tenant, system, app  (logo field, abbreviation for any thing related to permissions system, app, action, component)
 
-computed field, as app name = system name - app name, bfsField add field computeFormula=`${systemName}-${name}`
-string computed fields
+fix "Code-dont-Delete" issue
 lookups in one promise
-
-tables prefix
-Seed fields in one table
-
-Resource security
 Aspire (explore .ServiceDefaults instrumentations)
+
+
+update databases (action per system) *** Migration need to be genertated first. set flag IsMigration = true
+activate the tenant-database when a request come to Api
+
+tables prefix!!
+Seed fields in one table (category / subcategory)
+Soft Delete
+
+Resource security=> where conditions on table query \ report query. investorId=
+AI Generate data
+string computed field, as app name = system name - app name, bfsField add field computeFormula=`${systemName}-${name}`
+
 Record validation
 Table validation
-
-fix "Code-dont-Delete" issue
-update databases (action per system)
 
 autocomplete
 link\unlink users
 
-activate the tenant-database when a request come to Api
 deals with secrets
 linear reports for stores
 uploads to a tenant blob
 
-AI Generate data
+bugs:
 
+Improvements
 After crud > ui [Back] button instead of cancel
 Back to previuos filtered list
 
+Important!!
 Deployment
 logging
+
+http://localhost:2400/
+
+
+You’re building multi-tenant, permission-based, JWT-backed API. 
+
+Flow here is end-to-end:
+------------------------------
+- lifetimes (scoped vs singleton)
+- permission caching
+- tenant resolution
+- JWT + authorization handler integration
+1. High-level design
+---------------------
+Per request (scoped):
+- Resolve tenant (ITenantProvider)
+- Use IPermissionProvider to get permissions for that tenant
+- Authorization handler (MultiClaimRequirementHandler) checks if the current user is allowed to call the endpoint
+
+App-wide (singleton):
+-Cache permissions per tenant in memory (IMemoryCache or ConcurrentDictionary)
+----------------------------------------------
+- DI + middleware
+- Tenant resolution
+- Permission caching (singleton)
+- Authorization requirement + handler
+- Dynamic policy usage
+
+--------------------------
+Link a user to a tenant.
+link a user to a tenant-system
+link a user to a tenant (system-app) 
+
+- first user registers and logs in  (Master , AspNet User)
+- select a tenant and send a request to join, request is created in the tenant database table AspNetUserRequests
+- in tenant database AspNetUserRequest (AspNetUserId, Date requested, Status) status: waiting, accepted, rejected
+ tenant if accept: 
+ operation in tenant, in tenant database: create AuthUser, Close request, assign Roles
+ operation in tenant, in master database: add claim AspnetUserClaim with the tenantId
