@@ -1,7 +1,7 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 //------------------------ Operation Business Specific ---------------------------------
-import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].operations';
 
 //Template_Start_Field_Object_4
 import { I[CapitalFieldName], init[CapitalFieldName], [SmallFieldName]UntypedFormGroup } from "@bfs/_shared/objectFields";

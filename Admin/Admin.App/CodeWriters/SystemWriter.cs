@@ -13,12 +13,15 @@ namespace Admin.App
         public string BasePortNumber { get; set; } = string.Empty;
         public string DbPrefix { get; set; } = string.Empty;
 
+        public bool IsMaster { get; set; } = false;
+
         public SystemWriter(ISystemEntity source)
         {
             this.Id = source.Id;
             this.Name = source.Name;
             this.BasePortNumber = source.BasePortNumber;
             this.DbPrefix = source.DbPrefix;
+            this.IsMaster = source.IsMaster;
         }
 
         public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)

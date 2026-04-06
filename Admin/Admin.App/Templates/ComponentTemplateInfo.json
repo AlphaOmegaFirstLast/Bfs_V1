@@ -416,6 +416,11 @@
         "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\ReportsController.cs"
       },
       {
+        "Id": "912",
+        "TemplateFile": "Backend\\System\\Api\\Controllers\\AdminController.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\Controllers\\AdminController.cs"
+      },
+      {
         "Id": "907",
         "TemplateFile": "Backend\\System\\Api\\appsettings.txt",
         "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Api\\appsettings.json"

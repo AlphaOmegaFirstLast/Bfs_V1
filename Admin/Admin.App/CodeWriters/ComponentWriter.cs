@@ -28,6 +28,8 @@ namespace Admin.App
         public string Notes { get; set; }
 
         // Fields
+        public string DbComponentName = string.Empty;
+
         public string ComponentNameCapital = string.Empty;
 
         public string ComponentNameSmall = string.Empty;
@@ -103,8 +105,12 @@ namespace Admin.App
 
         public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
+            //table names in the database have prefixes to uniqulely identify which system they belong to, so we need to add the prefix to the parent table name when generating code related to database.
+            DbComponentName = codeInfo.CurrentSystem.IsMaster ? ComponentNameCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{ComponentNameCapital}";
+
             var outputContent = input.Replace("[ComponentType]", ComponentType.ToString());
 
+            outputContent = outputContent.Replace("[DbComponentName]", DbComponentName.Trim());
             outputContent = outputContent.Replace("[ComponentNameCapital]", ComponentNameCapital.Trim());
             outputContent = outputContent.Replace("[ComponentNameSmall]", ComponentNameSmall.Trim());
             outputContent = outputContent.Replace("[ComponentFileName]", ComponentFileName.Trim());

@@ -44,31 +44,31 @@ namespace Bfs.[SystemNameCapital].Data.Lists
         {
             //base fields
             //Template_Start_ReportField_QueryColumn_1
-            _fieldList.Add(new QueryField() { DbName = "[ParentTable].[CapitalFieldName]", QueryName = "[ReportFieldNameCapital]", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "[DbParentTable].[CapitalFieldName]", QueryName = "[ReportFieldNameCapital]", IsAggregare = false });
             //Template_End_ReportField_QueryColumn_1
                    
             //lookups
             //Template_Start_Field_Lookup_1
-             _fieldList.Add(new QueryField() { DbName = "[LookupNameCapital].Name", QueryName = "[LookupNameCapital]Name", IsAggregare = false });
+             _fieldList.Add(new QueryField() { DbName = "[DbLookupTable].Name", QueryName = "[LookupNameCapital]Name", IsAggregare = false });
             //Template_End_Field_Lookup_1
 
            //Aggregates
            //Template_Start_ReportField_Aggregate_1
-            _fieldList.Add(new QueryField() { DbName = "[AggregateFunction]([QueryBaseTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true });
+            _fieldList.Add(new QueryField() { DbName = "[AggregateFunction]([DbParentTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true });
            //Template_End_ReportField_Aggregate_1
         }
 
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From [QueryBaseTable] ");
+           sql.AppendLine(" From [DbParentTable] ");
 
            //Template_Start_ReportField_Join_1
-           sql.AppendLine($"   Left Join [JoinName] on [ParentTable].[JoinName]Id = [JoinName].Id");
+           sql.AppendLine($"   Left Join [JoinName] on [DbParentTable].[JoinName]Id = [JoinName].Id");
            //Template_End_ReportField_Join_1
 
            //Template_Start_Field_Lookup_3
-           sql.AppendLine($"   Left Join [JoinName] on [ParentTable].[JoinName]Id = [JoinName].Id");
+           sql.AppendLine($"   Left Join [JoinName] on [DbParentTable].[JoinName]Id = [JoinName].Id");
            //Template_End_Field_Lookup_3
 
            return sql.ToString();
@@ -77,7 +77,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
         protected override string GetWhereConditions(QueryRequest<[ReportNameCapital]Filter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" [QueryBaseTable].isDeleted=0 ");
+            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
@@ -85,7 +85,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
             //Template_Start_FilterField_ValueNumber_1
                 if ((filter.[FilterValueName].HasValue) && (filter.[FilterValueName]>0))
                 {
-                    sql.AppendLine(" AND [ParentTable].[CapitalFieldName] = @[FilterValueName]");
+                    sql.AppendLine(" AND [DbParentTable].[CapitalFieldName] = @[FilterValueName]");
                     parameters.Add("@[FilterValueName]", filter.[FilterValueName]);
                 }
                 //Template_End_FilterField_ValueNumber_1
@@ -93,7 +93,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                 //Template_Start_FilterField_ValueString_1
                 if (!string.IsNullOrEmpty(filter.[FilterValueName]))
                 {
-                    sql.AppendLine("[ParentTable].[CapitalFieldName] like '%'+@[FilterValueName]+'%' ");
+                    sql.AppendLine("[DbParentTable].[CapitalFieldName] like '%'+@[FilterValueName]+'%' ");
                     parameters.Add("@[FilterValueName]", filter.[FilterValueName]);
                 }
                 //Template_End_FilterField_ValueString_1
@@ -101,7 +101,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                 //Template_Start_FilterField_Lookup_1
                 if (filter.[FilterLookupName].HasValue)
                 {
-                    sql.AppendLine("[ParentTable].[LookupNameCapital]Id = @[FilterLookupName]");
+                    sql.AppendLine("[DbParentTable].[LookupNameCapital]Id = @[FilterLookupName]");
                     parameters.Add("@[FilterLookupName]", filter.[FilterLookupName].Value);
                 }
                 //Template_End_FilterField_Lookup_1           
@@ -109,12 +109,12 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                 //Template_Start_FilterField_Range_1
                 if (filter.[FilterRangeName]?.From.HasValue == true)
                 {
-                    sql.AppendLine("[ParentTable].[FilterRangeName] >= @[FilterRangeName]From");
+                    sql.AppendLine("[DbParentTable].[FilterRangeName] >= @[FilterRangeName]From");
                     parameters.Add("@[FilterRangeName]From", filter.[FilterRangeName].From.Value);
                 }
                 if (filter.[FilterRangeName]?.To.HasValue == true)
                 {
-                    sql.AppendLine("[ParentTable].[FilterRangeName] <= @[FilterRangeName]To");
+                    sql.AppendLine("[DbParentTable].[FilterRangeName] <= @[FilterRangeName]To");
                     parameters.Add("@[FilterRangeName]To", filter.[FilterRangeName].To.Value);
                 }
                 //Template_End_FilterField_Range_1
@@ -137,12 +137,12 @@ namespace Bfs.[SystemNameCapital].Data.Lists
             //Template_Start_FilterField_AggregateRange_1
             if (filter.[FilterRangeName]?.From.HasValue == true)
             {
-                sql.AppendLine("[AggregateFunction]([ParentTable].[CapitalFieldName]) >= @[AggregateName]From");
+                sql.AppendLine("[AggregateFunction]([DbParentTable].[CapitalFieldName]) >= @[AggregateName]From");
                 parameters.Add("@[AggregateName]From", filter.[FilterRangeName].From.Value);
             }
             if (filter.[FilterRangeName]?.To.HasValue == true)
             {
-                sql.AppendLine("[AggregateFunction]([ParentTable].[CapitalFieldName]) <= @[AggregateName]To");
+                sql.AppendLine("[AggregateFunction]([DbParentTable].[CapitalFieldName]) <= @[AggregateName]To");
                 parameters.Add("@[AggregateName]To", filter.[FilterRangeName].To.Value);
             }
             //Template_End_FilterField_AggregateRange_1

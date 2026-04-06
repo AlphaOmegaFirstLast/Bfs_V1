@@ -30,6 +30,8 @@ namespace Admin.App
         public bool IsColumnVisible { get; set; } = false;
         public bool IsJoinField { get; set; } = false;
         public string ParentTable { get; set; } = string.Empty;
+        public string DbParentTable { get; set; } = string.Empty;
+        public string DbLookupTable { get; set; } = string.Empty;
 
         public string Name { get; set; } = string.Empty;
 
@@ -102,10 +104,6 @@ namespace Admin.App
                 this.MatrixInfo = source.MatrixInfo ?? new MatrixInfo();
                 this.ToolTipInfo = source.ToolTipInfo ?? new ToolTipInfo();
 
-                //this.IsQueryColumn = source.IsQueryColumn;
-                //this.IsJoinField = source.IsJoinField;
-                //this.ParentTable = source.ParentTable ?? string.Empty;
-
                 this.ParentTable = source.ReportInfo?.ParentTable ?? string.Empty;
                 this.IsQueryColumn = source.ReportInfo?.IsQueryColumn ?? true;
                 this.IsColumnVisible = source.ReportInfo?.IsColumnVisible ?? true;
@@ -129,11 +127,15 @@ namespace Admin.App
         public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             var fieldTemplate = input;
+            //table names in the database have prefixes to uniqulely identify which system they belong to, so we need to add the prefix to the parent table name when generating code related to database.
+            DbParentTable = codeInfo.CurrentSystem.IsMaster ? ParentTable : $"{codeInfo?.CurrentSystem?.DbPrefix}{ParentTable}";
+            DbLookupTable = codeInfo.CurrentSystem.IsMaster ? lookupNameCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{lookupNameCapital}";
 
             fieldTemplate = fieldTemplate.Replace("[CapitalFieldName]", fieldCapitalName);
             fieldTemplate = fieldTemplate.Replace("[SmallFieldName]", fieldSmallName);
             fieldTemplate = fieldTemplate.Replace("[DisplayName]", DisplayName);
 
+            fieldTemplate = fieldTemplate.Replace("[DbLookupTable]", DbLookupTable);
             fieldTemplate = fieldTemplate.Replace("[LookupNameCapital]", lookupNameCapital);
             fieldTemplate = fieldTemplate.Replace("[LookupFileName]", lookupFileName);
             fieldTemplate = fieldTemplate.Replace("[LookupNameSmall]", lookupNameSmall);
@@ -157,6 +159,7 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[TabIndex]", tabIndex);
 
             //Report specific
+            fieldTemplate = fieldTemplate.Replace("[DbParentTable]", DbParentTable);
             fieldTemplate = fieldTemplate.Replace("[ParentTable]", ParentTable);
             fieldTemplate = fieldTemplate.Replace("[ParentTableSmall]", parentTableSmall);
             fieldTemplate = fieldTemplate.Replace("[IsQueryColumn]", IsQueryColumn.ToString().ToLower());
@@ -300,12 +303,6 @@ namespace Admin.App
 
         private void SetMatrixDefinition(MatrixInfo matrixInfo)
         {
-            //this.MatrixDefinition = (!string.IsNullOrEmpty(matrixInfo.ParentApi)
-            //                && !string.IsNullOrEmpty(matrixInfo.ParentApi)
-            //                && !string.IsNullOrEmpty(matrixInfo.ParentApi)) ?
-            //                  MatrixDefinition.Default
-            //                : MatrixDefinition.None;
-
             if (!string.IsNullOrEmpty(matrixInfo.ParentApi))
             {
                 var result = CodeGeneratorBase.GetNames(matrixInfo.ParentApi);
@@ -356,7 +353,7 @@ namespace Admin.App
                     backendDefaultValue = "0";
                     break;
                 case BackendDataType.DT_decimal:
-                    backendDefaultValue = "0.0";
+                    backendDefaultValue = "0";
                     break;
                 case BackendDataType.DT_bool:
                     backendDefaultValue = "false";

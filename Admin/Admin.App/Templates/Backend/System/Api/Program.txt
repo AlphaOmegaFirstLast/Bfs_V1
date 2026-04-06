@@ -1,10 +1,11 @@
 ﻿//using Microsoft.ApplicationInsights.AspNetCore
 using Bfs.Core.Config;
+using Bfs.Core.Services.Diagnosis;
+using Bfs.Core.TenantManagement;
 using Microsoft.AspNetCore.Diagnostics;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Threading.Tasks;
 using Bfs.[SystemNameCapital].Api;
-
 
 internal class Program
 {

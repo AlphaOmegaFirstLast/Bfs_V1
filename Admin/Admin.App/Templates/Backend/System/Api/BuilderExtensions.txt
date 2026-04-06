@@ -114,12 +114,17 @@ public static class BuilderExtensions
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
     {
         // if the system is the master system, we can register the MasterDbContext with a fixed connection string. This is because the master system is responsible for managing tenants and their connection strings, so it needs to have a stable connection to the master database. 
+   
         //if (settings != null && settings.DbConnections != null)
         //{
-        //    builder.Services.AddDbContext<MasterDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterDbConnection,
+        //    builder.Services.AddDbContext<Bfs.Master.Data.MasterDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection,
+        //    sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
+        //    );
+        //    builder.Services.AddDbContext<[SystemNameCapital]DbContext>(options => options.UseSqlServer(settings.DbConnections.TestTenantConnection,
         //    sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
         //    );
         //}
+
         //This is the standard multi‑tenant pattern for database-per-tenant.
         // DbContext with dynamic connection string based on the current tenant
 

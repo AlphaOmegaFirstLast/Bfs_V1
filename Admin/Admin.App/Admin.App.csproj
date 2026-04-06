@@ -15,10 +15,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Templates\Backend\System\Api\" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Remove="Properties\**" />
     <Compile Remove="Templates\**\*.*" />

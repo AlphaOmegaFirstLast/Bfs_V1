@@ -52,7 +52,7 @@ export class AccessService {
             this.authService.getItems<IQueryResponse>("/AuthRole/list", { pageSize: 300 }),
             this.authService.getItems<IQueryResponse>("/AuthApp/list", { pageSize: 300 }),
             this.authService.getItems<IQueryResponse>("/AuthRoleApp/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/AuthRoleComponentSystemAction/list", { pageSize: 300 })
+            this.authService.getItems<IQueryResponse>("/RoleComponentSystemAction/list", { pageSize: 300 })
 
         ]);
         //after you get the data, cache it in the service properties so that it can be used for subsequent calls without needing to fetch from the server again

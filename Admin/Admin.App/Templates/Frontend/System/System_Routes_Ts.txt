@@ -3,18 +3,6 @@ import {Routes} from '@angular/router';
 export const [SystemNameCapital]_ROUTES: Routes = [
     {
         path: '',
-        loadChildren: () => import('../home/home.route').then((mod) => mod.Home_ROUTES),
-    },
-    {
-        path: '',
-        loadChildren: () => import('../error/error.route').then((mod) => mod.ERROR_PAGES_ROUTES)
-    },
-    {
-        path: '',
-        loadChildren: () => import('../_shared/custom-reports/custom-reports.route').then((mod) => mod.CustomReportsList_ROUTES),
-    }, 
-    {
-        path: '',
         loadChildren: () => import('../[SystemNameSmall]-tables/tables.route').then((mod) => mod.TABLES_ROUTES),
     },
     {

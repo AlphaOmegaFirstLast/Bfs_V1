@@ -7,7 +7,7 @@ namespace Bfs.[SystemNameCapital].Data.Configuration
 {
     public class [ComponentNameCapital]EntityConfiguration : IEntityTypeConfiguration<[ComponentNameCapital]Entity>
     {
-        public static readonly string TableNameCapital = "[ComponentNameCapital]";
+        public static readonly string TableNameCapital = "[DbComponentName]";
 
         public void Configure(EntityTypeBuilder<[ComponentNameCapital]Entity> builder)
         {
