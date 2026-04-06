@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+using Bfs.Core.Config;
 using Bfs.Core.Interfaces;
 using Bfs.Core.Services.Auth;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
@@ -10,6 +11,7 @@ using System.Data.Common;
 using System.Runtime;
 using System.Security.Claims;
 using System.Text.Json;
+using static Dapper.SqlMapper;
 
 namespace Bfs.Identity.Web.Pages
 {
@@ -22,22 +24,28 @@ namespace Bfs.Identity.Web.Pages
         public bool ShowTenants = false;
         public bool ShowSystems = false;
 
+        private readonly string _masterConnection;
+        private readonly BfsSettings _settings;
         private readonly ITokenService _tokenService;
         private readonly ILogger<IndexModel> _logger;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public IndexModel(ITokenService tokenService, ILogger<IndexModel> logger,
+        public IndexModel(
+            IOptions<BfsSettings> settings,
+            ITokenService tokenService, ILogger<IndexModel> logger,
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager
             )
         {
+            _settings = settings.Value;
             _tokenService = tokenService;
             _logger = logger;
             _signInManager = signInManager;
             _userManager = userManager;
 
+            _masterConnection = _settings?.DbConnections?.MasterConnection;
             //Get Tenants from DB, //ToDo Get tenants from Cache.
-            TenantList = Tenant.GetTenants().Result;
+            TenantList = Tenant.GetTenants(_masterConnection).Result;
         }
 
 
@@ -58,7 +66,7 @@ namespace Bfs.Identity.Web.Pages
         public async Task<IActionResult> OnPostSelectTenantAsync(string tenantOrder)
         {
             var tenant = TenantList.FirstOrDefault(t => t.order.ToString() == tenantOrder);
-            SystemList = await TenantSystem.GetTenantSystems(tenant.Id); //Todo use the tenant systems to show the system selection page if there are more than 1 system for the tenant, otherwise directly call the GetTenantSystemCookie and redirect to the system.
+            SystemList = await TenantSystem.GetTenantSystems(_masterConnection, tenant.Id); //Todo use the tenant systems to show the system selection page if there are more than 1 system for the tenant, otherwise directly call the GetTenantSystemCookie and redirect to the system.
             ShowTenants = false;
             ShowSystems = true;
 
@@ -103,14 +111,12 @@ namespace Bfs.Identity.Web.Pages
         public string Logo { get; set; }
         public string DbConnection { get; set; }
 
-        public static async Task<List<Tenant>> GetTenants()
+        public static async Task<List<Tenant>> GetTenants(string masterConnection)
         {
             var sqlSelect = "select * from bfsTenant";
             var sqlStatement = sqlSelect.ToString();
 
-            var bfsDbConnection = "Server=localhost;Database=BestFit_V5; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
-
-            using var db = new SqlConnection(bfsDbConnection);
+            using var db = new SqlConnection(masterConnection);
             var items = await db.QueryAsync<Tenant>(sqlSelect.ToString(), null);
 
             var i = 0;
@@ -131,10 +137,8 @@ namespace Bfs.Identity.Web.Pages
         public string Name { get; set; }
         public string Logo { get; set; }
 
-        public static async Task<List<TenantSystem>> GetTenantSystems(long tenantId)
+        public static async Task<List<TenantSystem>> GetTenantSystems(string masterConnection, long tenantId)
         {
-            var bfsDbConnection = "Server=localhost;Database=BestFit_V5; User Id=sa;Password=12Remember!; TrustServerCertificate=True";
-
             var sqlSelect = "select  s.* from bfsSystem s inner join bfsTenantSystem ts on ts.bfsSystemId = s.id";
             sqlSelect = sqlSelect + " where ts.BfsTenantId = @TenantId";
             var sqlStatement = sqlSelect.ToString();
@@ -142,7 +146,7 @@ namespace Bfs.Identity.Web.Pages
             var sqlParameters = new DynamicParameters();
             sqlParameters.Add("@TenantId", tenantId); 
 
-            using var db = new SqlConnection(bfsDbConnection);
+            using var db = new SqlConnection(masterConnection);
             var items = await db.QueryAsync<Tenant>(sqlSelect.ToString(), sqlParameters);
 
             var i = 0;
