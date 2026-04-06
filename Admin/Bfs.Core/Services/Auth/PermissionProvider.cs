@@ -56,8 +56,8 @@ namespace Bfs.Core.Auth
             var methodsList = methods.ToList();
 
             using var tenantDb = new SqlConnection(tenantConnection);
-            var sqlSelect = "Select r.authRoleId roleId, r.bfsComponentId, r.SystemActionId " +
-                " from AuthRoleComponentSystemAction r ";
+            var sqlSelect = "Select r.RoleId roleId, r.bfsComponentId, r.SystemActionId " +
+                " from athRoleComponentSystemAction r ";
             var roleActions = await tenantDb.QueryAsync(sqlSelect.ToString(), null);
             var roleActionlist = roleActions.ToList();
 

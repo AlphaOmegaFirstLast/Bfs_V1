@@ -12,5 +12,5 @@ public interface ITokenService
 
     // Create JWT token for API calls, called by Main frontend to get its roles and permissions for the selected tenant.
     // The tenantId and aspnetUserId are extracted from the refresh token cookie by frontend and passed to this method.
-    Task<string> CreateTokenAsync(string masterDbConnection, string tenantId, string aspnetUserId);
+    Task<string> CreateTokenAsync(string masterConnection, string tenantId, string aspnetUserId);
 }

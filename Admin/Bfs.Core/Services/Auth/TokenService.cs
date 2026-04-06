@@ -26,9 +26,10 @@ public class TokenService : ITokenService
     // This method is called by frontend to get JWT token for API calls after user select tenant.
     // the tenantId and aspnetUserId are extracted from the refresh token cookie by frontend and passed to this method to generate JWT token.
     // It returns the JWT token which contains the roles for the user in the selected tenant, frontend will use this JWT token to call APIs.
-    public async Task<string> CreateTokenAsync(string masterDbConnection, string tenantId, string aspnetUserId)
+    public async Task<string> CreateTokenAsync(string masterConnection, string tenantId, string aspnetUserId)
     {
-        var tenantList = TenantManager.GetAllTenants(masterDbConnection);
+
+        var tenantList = TenantManager.GetAllTenants(masterConnection);
         var tenant = tenantList.FirstOrDefault(t => t.Id.ToString() == tenantId);
         var UserRolelist = await GetAuthUserRoles(tenant.DbConnection, aspnetUserId);
         var claims = GetClaims(tenantId, UserRolelist);
@@ -88,7 +89,8 @@ public class TokenService : ITokenService
             }
 
             claims.Add(new Claim("roleId", userRole.RoleId.ToString()));
-        };
+        }
+        ;
 
         return claims;
     }

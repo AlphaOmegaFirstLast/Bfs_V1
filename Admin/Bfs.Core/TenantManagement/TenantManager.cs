@@ -15,10 +15,10 @@ namespace Bfs.Core.TenantManagement
 {
     public class TenantManager
     {
-        public static List<TenantEntity> GetAllTenants(string masterDbConnection)
+        public static List<TenantEntity> GetAllTenants(string masterConnection)
         {
            var options = new DbContextOptionsBuilder<MasterBasicDbContext>()
-                .UseSqlServer(masterDbConnection) // Replace with your actual connection string
+                .UseSqlServer(masterConnection) // Replace with your actual connection string
                 .Options;
             using var db = new MasterBasicDbContext(options);
             return db.BfsTenant
@@ -31,7 +31,28 @@ namespace Bfs.Core.TenantManagement
                      .ToList();
         }
 
-        public static void LoadTenants(WebApplication app, string masterDbConnection)
+        public static async Task<List<TenantEntity>> GetTenantsOfSystem(string masterConnection, string systemName)
+        {
+            var options = new DbContextOptionsBuilder<MasterBasicDbContext>()
+                 .UseSqlServer(masterConnection) // Replace with your actual connection string
+                 .Options;
+
+            // combine the three tables to get tenants of the specified system, combine in one query to avoid multiple database calls
+            using var db = new MasterBasicDbContext(options);
+            var query = from s in db.BfsSystem
+                        join ts in db.BfsTenantSystem on s.Id equals ts.BfsSystemId
+                        join t in db.BfsTenant on ts.BfsTenantId equals t.Id
+                        where s.Name == systemName
+                        select new TenantEntity
+                        {
+                            Id = t.Id,
+                            TenantId = t.Id,
+                            DbConnection = t.DbConnection
+                        };
+            return await query.ToListAsync();
+        }
+
+        public static void LoadTenants(WebApplication app, string masterConnection)
         {
             // preload tenant connection strings
             using (var scope = app.Services.CreateScope())
@@ -39,7 +60,7 @@ namespace Bfs.Core.TenantManagement
                 var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
 
                 // load teanants from database and cache them
-                var allTenants = GetAllTenants(masterDbConnection);
+                var allTenants = GetAllTenants(masterConnection);
 
                 foreach (var tenant in allTenants)
                 {
@@ -49,24 +70,25 @@ namespace Bfs.Core.TenantManagement
             }
         }
 
-        public static void ApplyMigrations<T>(IServiceProvider services, string masterDbConnection) where T : DbContext
+        public static async Task ApplyMigrations<T>(string masterConnection, string systemName) where T : DbContext
         {
-            var tenants = GetAllTenants(masterDbConnection);
-            // returns: IEnumerable<(string TenantId, string ConnectionString)>
+            var tenants = await GetTenantsOfSystem(masterConnection, systemName);
 
             foreach (var tenant in tenants)
             {
-                Console.WriteLine($"Migrating tenant: {tenant.TenantId}");
+                try {
+                    var factory = new TenantDbFactory<T>(tenant.DbConnection);
 
-                var factory = new TenantDbFactory<T>(tenant.DbConnection);
+                    using var db = factory.Create();
+                    db.Database.Migrate();
 
-                using var db = factory.Create();
-                db.Database.Migrate();
-
-                Console.WriteLine($"Tenant {tenant.TenantId} migration complete");
+                    Console.WriteLine($"Tenant {tenant.TenantId} migration complete");
+                }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine($"Failed: Migrating tenant: {tenant.TenantId}");
+                }
             }
         }
-
-
     }
 }
