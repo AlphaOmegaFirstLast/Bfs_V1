@@ -9,12 +9,12 @@ namespace Bfs.Auth.Data.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AuthDbContext _context;
-private readonly IAuthRoleComponentSystemActionRepository _authRoleComponentSystemActionRepo;
+private readonly IRoleComponentSystemActionRepository _authRoleComponentSystemActionRepo;
 
 //Template_Field_ChildrenMatrix_AddDeclareEntry
 
     public UnitOfWork(AuthDbContext dbContext, IScopeData scopeData
-        , IAuthRoleComponentSystemActionRepository authRoleComponentSystemActionRepo
+        , IRoleComponentSystemActionRepository authRoleComponentSystemActionRepo
 
 //Template_Field_ChildrenMatrix_AddParameterEntry
 
@@ -26,12 +26,12 @@ private readonly IAuthRoleComponentSystemActionRepository _authRoleComponentSyst
 //Template_Field_ChildrenMatrix_AddInitEntry
     }
 
- public async Task<List<AuthRoleComponentSystemActionEntity>> UpdateAuthRoleComponentSystemActionMatrixAsync(long parentId, List<AuthRoleComponentSystemActionEntity> matrix)
+ public async Task<List<RoleComponentSystemActionEntity>> UpdateRoleComponentSystemActionMatrixAsync(long parentId, List<RoleComponentSystemActionEntity> matrix)
 {
     // Remove existing matrix entries for this parentId
-    var existingEntries = _context.AuthRoleComponentSystemActions.Where(x => x.AuthRoleId == parentId);
+    var existingEntries = _context.RoleComponentSystemActions.Where(x => x.RoleId == parentId);
 
-    _context.AuthRoleComponentSystemActions.RemoveRange(existingEntries);
+    _context.RoleComponentSystemActions.RemoveRange(existingEntries);
 
     // Add new Entries
     foreach (var matrixEntity in matrix)
@@ -42,7 +42,7 @@ private readonly IAuthRoleComponentSystemActionRepository _authRoleComponentSyst
     await _context.SaveChangesAsync();
 
     // Return updated list
-    return await _context.AuthRoleComponentSystemActions.Where(x => x.AuthRoleId  == parentId).ToListAsync();
+    return await _context.RoleComponentSystemActions.Where(x => x.RoleId  == parentId).ToListAsync();
 }
 //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
 

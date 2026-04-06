@@ -13,17 +13,20 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Interfaces;
 using Bfs.Core.Middleware;
 using Bfs.Core.Services.Auth;
+using Bfs.Core.Services.Auth;
 using Bfs.Core.TenantManagement;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using System.Data.Common;
 
 namespace Bfs.Auth.Api;
 
 public static class BuilderExtensions
 {
+    public record TenantSqlConfiguration(string ConnectionString);
+
     public static void RegisterScopeData(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IScopeData, ScopeData>();
@@ -88,13 +91,13 @@ public static class BuilderExtensions
         // Register Authorization handlers and policy provider. that can handle dynamic policies.
         // IAuthorizationHandler is scoped because it is dependent on the current user's claims, which are evaluated per request. The handler needs to access the HttpContext to retrieve these claims,
         // and since HttpContext is scoped to the request, the handler must also be scoped to ensure it operates within the correct context.
-       
+
         builder.Services.AddScoped<IAuthorizationHandler, MultiClaimRequirementHandler>();
 
         // The IAuthorizationPolicyProvider is registered as a singleton because it is responsible for providing authorization policies based on the current user's claims. It does not directly depend on the HttpContext or any per-request data,
         // but it needs to be available throughout the application's lifetime to evaluate policies for incoming requests. By registering it as a singleton,
         // we ensure that there is only one instance of the policy provider that can efficiently serve all requests without needing to be recreated for each one.
-       
+
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
     }
 
@@ -113,121 +116,155 @@ public static class BuilderExtensions
 
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
     {
+        // if the system is the master system, we can register the MasterDbContext with a fixed connection string. This is because the master system is responsible for managing tenants and their connection strings, so it needs to have a stable connection to the master database. 
+
+        //if (settings != null && settings.DbConnections != null)
+        //{
+        //    //builder.Services.AddDbContext<MasterBasicDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection,
+        //    //sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
+        //    //);
+
+        //    // uncomment when creating new migrations, when use add-migration select auth.Api at the build-toolbar and at the package-console bar, the auth.data project is selected.
+        //    // make sure the connection string in appsettings.Development.json is correct, then run add-migration command, after migration is created, comment it back to avoid accidentally running migrations on the tenant databases.
+        //    builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(settings.DbConnections.TestTenantConnection,
+        //    sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
+        //    );
+        //}
+
         //This is the standard multi‑tenant pattern for database-per-tenant.
         // DbContext with dynamic connection string based on the current tenant
+
         builder.Services.AddDbContext<AuthDbContext>((serviceProvider, options) =>
         {
             var tenantProvider = serviceProvider.GetRequiredService<ITenantProvider>();
             var connectionString = tenantProvider.GetCurrentTenantDbConnection();
-            options.UseSqlServer(connectionString, sql => { sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);});
+
+            options.UseSqlServer(connectionString, sql =>
+            {
+                sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            });
         });
     }
 
     public static void RegisterValidators(this WebApplicationBuilder builder)
     {
-            builder.Services.AddScoped<IValidator<AuthRoleComponentSystemAction>, AuthRoleComponentSystemActionValidator>();
-            builder.Services.AddScoped<IValidator<AuthUser>, AuthUserValidator>();
-            builder.Services.AddScoped<IValidator<AuthApp>, AuthAppValidator>();
-            builder.Services.AddScoped<IValidator<AuthRole>, AuthRoleValidator>();
-            builder.Services.AddScoped<IValidator<AuthRoleApp>, AuthRoleAppValidator>();
-            builder.Services.AddScoped<IValidator<Contracts.AuthRoleUser>, AuthRoleUserValidator>();
-//Template_Component_RegisterValidator
+        builder.Services.AddScoped<IValidator<RoleComponentSystemAction>, RoleComponentSystemActionValidator>();
+        builder.Services.AddScoped<IValidator<User>, UserValidator>();
+        builder.Services.AddScoped<IValidator<App>, AppValidator>();
+        builder.Services.AddScoped<IValidator<Role>, RoleValidator>();
+        builder.Services.AddScoped<IValidator<RoleApp>, RoleAppValidator>();
+        builder.Services.AddScoped<IValidator<RoleUser>, RoleUserValidator>();
+        builder.Services.AddScoped<IValidator<UserRequest>, UserRequestValidator>();
+        //Template_Component_RegisterValidator
     }
 
     public static void RegisterRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IAuthRoleComponentSystemActionRepository, AuthRoleComponentSystemActionRepository>();
-            builder.Services.AddScoped<IAuthUserRepository, AuthUserRepository>();
-            builder.Services.AddScoped<IAuthAppRepository, AuthAppRepository>();
-            builder.Services.AddScoped<IAuthRoleRepository, AuthRoleRepository>();
-            builder.Services.AddScoped<IAuthRoleAppRepository, AuthRoleAppRepository>();
-            builder.Services.AddScoped<IAuthRoleUserRepository, AuthRoleUserRepository>();
-//Template_Component_RegisterRepository
+        builder.Services.AddScoped<IRoleComponentSystemActionRepository, RoleComponentSystemActionRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IAppRepository, AppRepository>();
+        builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+        builder.Services.AddScoped<IRoleAppRepository, RoleAppRepository>();
+        builder.Services.AddScoped<IRoleUserRepository, RoleUserRepository>();
+        builder.Services.AddScoped<IUserRequestRepository, UserRequestRepository>();
+        //Template_Component_RegisterRepository
     }
 
     public static void RegisterServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IReportsService, ReportsService>();
-        builder.Services.AddScoped<IOperationsService,OperationsService>();
-            builder.Services.AddScoped<IAuthRoleComponentSystemActionService, AuthRoleComponentSystemActionService>();
-            builder.Services.AddScoped<IAuthUserService, AuthUserService>();
-            builder.Services.AddScoped<IAuthAppService, AuthAppService>();
-            builder.Services.AddScoped<IAuthRoleService, AuthRoleService>();
-            builder.Services.AddScoped<IAuthRoleAppService, AuthRoleAppService>();
-            builder.Services.AddScoped<IAuthRoleUserService, AuthRoleUserService>();
-//Template_Component_RegisterService
+        builder.Services.AddScoped<IOperationsService, OperationsService>();
+        builder.Services.AddScoped<IRoleComponentSystemActionService, RoleComponentSystemActionService>();
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IAppService, AppService>();
+        builder.Services.AddScoped<IRoleService, RoleService>();
+        builder.Services.AddScoped<IRoleAppService, RoleAppService>();
+        builder.Services.AddScoped<IRoleUserService, RoleUserService>();
+        builder.Services.AddScoped<IUserRequestService, UserRequestService>();
+        //Template_Component_RegisterService
     }
 
     public static void RegisterLists(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-        if (settings != null && settings.DbConnections != null)
+        // Get the current tenant's connection string from the TenantProvider and create a TenantSqlConfiguration that can be used by the lists to access the database.
+        // This allows the lists to be tenant-aware and operate on the correct database for each request.
+        // AddScoped is used here because the TenantProvider is scoped to the request, and we want to ensure that each list gets the correct connection string for the current tenant during that request. By registering TenantSqlConfiguration as scoped,
+        //  we can safely inject it into the lists without worrying about cross-tenant data access issues.
+        // ------------------------------------------------------------
+        builder.Services.AddScoped(sp =>
         {
-            var dbConnection = settings.DbConnections.AuthConnection;
-            builder.Services.AddScoped<IAuthRoleComponentSystemActionList>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new AuthRoleComponentSystemActionList(dbConnection);
-            });
+            var tenantProvider = sp.GetRequiredService<ITenantProvider>();
+            var connectionString = tenantProvider.GetCurrentTenantDbConnection();
+            return new TenantSqlConfiguration(connectionString);
+        });
+        // ------------------------------------------------------------
 
-            builder.Services.AddScoped<IAuthUserList>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new AuthUserList(dbConnection);
-            });
+        builder.Services.AddScoped<IRoleComponentSystemActionList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new RoleComponentSystemActionList(config.ConnectionString);
+        });
 
-            builder.Services.AddScoped<IAuthAppList>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new AuthAppList(dbConnection);
-            });
+        builder.Services.AddScoped<IUserList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new UserList(config.ConnectionString);
+        });
 
-            builder.Services.AddScoped<IAuthRoleList>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new AuthRoleList(dbConnection);
-            });
+        builder.Services.AddScoped<IAppList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new AppList(config.ConnectionString);
+        });
 
-            builder.Services.AddScoped<IAuthRoleAppList>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new AuthRoleAppList(dbConnection);
-            });
+        builder.Services.AddScoped<IRoleList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new RoleList(config.ConnectionString);
+        });
 
-            builder.Services.AddScoped<IAuthRoleUserList>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new AuthRoleUserList(dbConnection);
-            });
+        builder.Services.AddScoped<IRoleAppList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new RoleAppList(config.ConnectionString);
+        });
 
-//Template_Component_RegisterList
-        }
+        builder.Services.AddScoped<IRoleUserList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new RoleUserList(config.ConnectionString);
+        });
+
+        builder.Services.AddScoped<IUserRequestList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new UserRequestList(config.ConnectionString);
+        });
+
+        //Template_Component_RegisterList
     }
 
     public static void RegisterReports(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-        if (settings != null && settings.DbConnections != null)
+        builder.Services.AddScoped(sp =>
         {
-            var dbConnection = settings.DbConnections.AuthConnection;
-            builder.Services.AddScoped<IRoleRepCompare>(provider =>
-            {
-                var tenantProvider = provider.GetRequiredService<ITenantProvider>();
-                var dbConnection = tenantProvider.GetCurrentTenantDbConnection();
-                return new RoleRepCompare(dbConnection);
-            });
+            var tenantProvider = sp.GetRequiredService<ITenantProvider>();
+            var connectionString = tenantProvider.GetCurrentTenantDbConnection();
+            return new TenantSqlConfiguration(connectionString);
+        });
 
-//Template_Component_RegisterReport
-        }
+        builder.Services.AddScoped<IRoleRepCompare>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new RoleRepCompare(config.ConnectionString);
+        });
+
+        //Template_Component_RegisterReport
     }
 
     public static void RegisterClients(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-//Template_Component_RegisterHttpClient
+        //Template_Component_RegisterHttpClient
     }
 }

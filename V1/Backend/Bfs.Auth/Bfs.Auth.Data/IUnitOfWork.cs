@@ -4,6 +4,6 @@ namespace Bfs.Auth.Data.Repositories;
 
 public interface IUnitOfWork
 {
-    Task<List<AuthRoleComponentSystemActionEntity>> UpdateAuthRoleComponentSystemActionMatrixAsync(long parentId, List<AuthRoleComponentSystemActionEntity> matrix);
+    Task<List<RoleComponentSystemActionEntity>> UpdateRoleComponentSystemActionMatrixAsync(long parentId, List<RoleComponentSystemActionEntity> matrix);
 //Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
 }

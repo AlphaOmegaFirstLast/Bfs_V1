@@ -41,9 +41,9 @@ namespace Bfs.Auth.Data.Reports
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "AuthRole.Id", QueryName = "AuthRole_Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "AuthRole.Name", QueryName = "AuthRole_Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "AuthRole.Notes", QueryName = "AuthRole_Notes", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "athAuthRole.Id", QueryName = "AuthRole_Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athAuthRole.Name", QueryName = "AuthRole_Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "AuthRole_Notes", IsAggregare = false });
 
             //lookups
 
@@ -54,7 +54,7 @@ _fieldList.Add(new QueryField() { DbName = "AuthRole.Notes", QueryName = "AuthRo
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From AuthRole ");
+           sql.AppendLine(" From [DbParentTable] ");
 
            return sql.ToString();
         }
@@ -62,7 +62,7 @@ _fieldList.Add(new QueryField() { DbName = "AuthRole.Notes", QueryName = "AuthRo
         protected override string GetWhereConditions(QueryRequest<RoleRepCompareFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" AuthRole.isDeleted=0 ");
+            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
@@ -70,7 +70,7 @@ _fieldList.Add(new QueryField() { DbName = "AuthRole.Notes", QueryName = "AuthRo
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {
-                    sql.AppendLine("AuthRole.Name like '%'+@Name+'%' ");
+                    sql.AppendLine("athAuthRole.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
 
@@ -96,3 +96,4 @@ _fieldList.Add(new QueryField() { DbName = "AuthRole.Notes", QueryName = "AuthRo
        }       
     }
 }
+

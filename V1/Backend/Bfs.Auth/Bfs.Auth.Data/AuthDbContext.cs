@@ -6,12 +6,13 @@ namespace Bfs.Auth.Data;
 
 public class AuthDbContext : DbContext
 {
- public DbSet<AuthRoleComponentSystemActionEntity> AuthRoleComponentSystemActions { get; set; }
- public DbSet<AuthUserEntity> AuthUsers { get; set; }
- public DbSet<AuthAppEntity> AuthApps { get; set; }
- public DbSet<AuthRoleEntity> AuthRoles { get; set; }
- public DbSet<AuthRoleAppEntity> AuthRoleApps { get; set; }
- public DbSet<AuthRoleUserEntity> AuthRoleUsers { get; set; }
+ public DbSet<RoleComponentSystemActionEntity> RoleComponentSystemActions { get; set; }
+ public DbSet<UserEntity> Users { get; set; }
+ public DbSet<AppEntity> Apps { get; set; }
+ public DbSet<RoleEntity> Roles { get; set; }
+ public DbSet<RoleAppEntity> RoleApps { get; set; }
+ public DbSet<RoleUserEntity> RoleUsers { get; set; }
+ public DbSet<UserRequestEntity> UserRequests { get; set; }
 //Template_Component_RegisterDbSet
 
     public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)

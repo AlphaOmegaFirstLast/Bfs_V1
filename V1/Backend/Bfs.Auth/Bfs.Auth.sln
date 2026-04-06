@@ -1,16 +1,17 @@
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.2.11430.68 d18.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bfs.Auth.Api", "Bfs.Auth.Api\Bfs.Auth.Api.csproj", "{D3B606A6-2C03-45F0-A3A3-CA826964A8FB}"
+Project("{Guid1}") = "Bfs.Auth.Api", "Bfs.Auth.Api\Bfs.Auth.Api.csproj", "{Guid2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bfs.Auth.Contracts", "Bfs.Auth.Contracts\Bfs.Auth.Contracts.csproj", "{B666D5A3-6B77-4C26-BAAB-6552361E56A3}"
+Project("{Guid1}") = "Bfs.Auth.Contracts", "Bfs.Auth.Contracts\Bfs.Auth.Contracts.csproj", "{Guid3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bfs.Auth.Data", "Bfs.Auth.Data\Bfs.Auth.Data.csproj", "{EE76F9FD-6B3C-4E8F-88C4-474186393D6E}"
+Project("{Guid1}") = "Bfs.Auth.Data", "Bfs.Auth.Data\Bfs.Auth.Data.csproj", "{Guid4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bfs.Auth.Domain", "Bfs.Auth.Domain\Bfs.Auth.Domain.csproj", "{C4919AA9-80AB-4855-B128-688A0A0975F1}"
+Project("{Guid1}") = "Bfs.Auth.Domain", "Bfs.Auth.Domain\Bfs.Auth.Domain.csproj", "{Guid5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bfs.Core", "..\..\..\Admin\Bfs.Core\Bfs.Core.csproj", "{7C90D7EE-11FB-4DB5-804E-7CA177665561}"
+Project("{Guid1}") = "Bfs.Core", "..\..\..\Admin\Bfs.Core\Bfs.Core.csproj", "{Guid6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,26 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3B606A6-2C03-45F0-A3A3-CA826964A8FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3B606A6-2C03-45F0-A3A3-CA826964A8FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3B606A6-2C03-45F0-A3A3-CA826964A8FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3B606A6-2C03-45F0-A3A3-CA826964A8FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B666D5A3-6B77-4C26-BAAB-6552361E56A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B666D5A3-6B77-4C26-BAAB-6552361E56A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B666D5A3-6B77-4C26-BAAB-6552361E56A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B666D5A3-6B77-4C26-BAAB-6552361E56A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE76F9FD-6B3C-4E8F-88C4-474186393D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE76F9FD-6B3C-4E8F-88C4-474186393D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE76F9FD-6B3C-4E8F-88C4-474186393D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE76F9FD-6B3C-4E8F-88C4-474186393D6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4919AA9-80AB-4855-B128-688A0A0975F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4919AA9-80AB-4855-B128-688A0A0975F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4919AA9-80AB-4855-B128-688A0A0975F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4919AA9-80AB-4855-B128-688A0A0975F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C90D7EE-11FB-4DB5-804E-7CA177665561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C90D7EE-11FB-4DB5-804E-7CA177665561}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C90D7EE-11FB-4DB5-804E-7CA177665561}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C90D7EE-11FB-4DB5-804E-7CA177665561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{Guid2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Guid2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Guid2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Guid2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{Guid3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Guid3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Guid3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Guid3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{Guid4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Guid4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Guid4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Guid4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{Guid5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Guid5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Guid5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Guid5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{Guid6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Guid6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Guid6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Guid6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,7 +21,7 @@ namespace Bfs.Auth.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Bfs.Auth.Data.Models.AuthAppEntity", b =>
+            modelBuilder.Entity("Bfs.Auth.Data.Models.AppEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -32,6 +32,10 @@ namespace Bfs.Auth.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,37 +49,34 @@ namespace Bfs.Auth.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthApp", (string)null);
+                    b.ToTable("athApp", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Auth.Data.Models.AuthRoleAppEntity", b =>
+            modelBuilder.Entity("Bfs.Auth.Data.Models.RoleAppEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("AuthAppId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AuthRoleId")
+                    b.Property<long>("AppId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("TenantId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthRoleApp", (string)null);
+                    b.ToTable("athRoleApp", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Auth.Data.Models.AuthRoleComponentSystemActionEntity", b =>
+            modelBuilder.Entity("Bfs.Auth.Data.Models.RoleComponentSystemActionEntity", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AuthRoleId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("BfsComponentId")
@@ -83,6 +84,9 @@ namespace Bfs.Auth.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("SystemActionId")
                         .HasColumnType("bigint");
@@ -92,10 +96,10 @@ namespace Bfs.Auth.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthRoleComponentSystemAction", (string)null);
+                    b.ToTable("athRoleComponentSystemAction", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Auth.Data.Models.AuthRoleEntity", b =>
+            modelBuilder.Entity("Bfs.Auth.Data.Models.RoleEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -116,32 +120,32 @@ namespace Bfs.Auth.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthRole", (string)null);
+                    b.ToTable("athRole", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Auth.Data.Models.AuthRoleUserEntity", b =>
+            modelBuilder.Entity("Bfs.Auth.Data.Models.RoleUserEntity", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AuthRoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AuthUserId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthRoleUser", (string)null);
+                    b.ToTable("athRoleUser", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Auth.Data.Models.AuthUserEntity", b =>
+            modelBuilder.Entity("Bfs.Auth.Data.Models.UserEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -166,7 +170,39 @@ namespace Bfs.Auth.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuthUser", (string)null);
+                    b.ToTable("athUser", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Auth.Data.Models.UserRequestEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("AspNetUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("athUserRequest", (string)null);
                 });
 #pragma warning restore 612, 618
         }

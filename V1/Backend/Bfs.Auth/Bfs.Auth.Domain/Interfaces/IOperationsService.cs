@@ -4,6 +4,6 @@ namespace Bfs.Auth.Domain.Interfaces;
 
 public interface IOperationsService
 {
-Task<List<AuthRoleComponentSystemAction>> UpdateAuthRoleComponentSystemActionMatrixAsync(long parentId, List<AuthRoleComponentSystemAction> matrix);
+Task<List<RoleComponentSystemAction>> UpdateRoleComponentSystemActionMatrixAsync(long parentId, List<RoleComponentSystemAction> matrix);
 //Template_Field_ChildrenMatrix_AddIServiceEntry
 }

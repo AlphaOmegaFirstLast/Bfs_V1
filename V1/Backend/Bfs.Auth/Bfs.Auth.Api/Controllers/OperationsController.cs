@@ -26,11 +26,11 @@ public class OperationsController
         _operationsService = operationsService;
     }
 
-    [HttpPut("AuthRoleComponentSystemAction/matrix/{parentId}")]
-    [CustomAuthorize("method=o.AuthRoleComponentSystemAction")]
-    public async Task<Results<Ok<List<AuthRoleComponentSystemAction>>, BadRequest<ProblemDetails>>> UpdateAuthRoleComponentSystemActionMatrixAsync([FromRoute] long parentId, [FromBody] List<AuthRoleComponentSystemAction> matrix)
+    [HttpPut("RoleComponentSystemAction/matrix/{parentId}")]
+    [CustomAuthorize("method=o.RoleComponentSystemAction")]
+    public async Task<Results<Ok<List<RoleComponentSystemAction>>, BadRequest<ProblemDetails>>> UpdateRoleComponentSystemActionMatrixAsync([FromRoute] long parentId, [FromBody] List<RoleComponentSystemAction> matrix)
     {
-        var result = await _operationsService.UpdateAuthRoleComponentSystemActionMatrixAsync(parentId, matrix).ConfigureAwait(false);
+        var result = await _operationsService.UpdateRoleComponentSystemActionMatrixAsync(parentId, matrix).ConfigureAwait(false);
         return TypedResults.Ok(result);
     }
 //Template_Field_ChildrenMatrix_AddControllerEntry

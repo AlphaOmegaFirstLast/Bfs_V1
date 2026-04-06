@@ -8,3 +8,4 @@ namespace Bfs.Auth.Data.Interfaces
         Task<QueryResponse<RoleRepCompareItem>> GetAsync(QueryRequest<RoleRepCompareFilter> request);
     }
 }
+

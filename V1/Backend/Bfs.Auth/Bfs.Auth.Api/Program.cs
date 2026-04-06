@@ -1,12 +1,11 @@
 //using Microsoft.ApplicationInsights.AspNetCore
-using Bfs.Auth.Api;
 using Bfs.Core.Config;
 using Bfs.Core.Services.Diagnosis;
 using Bfs.Core.TenantManagement;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.Extensions.Caching.Memory;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Threading.Tasks;
+using Bfs.Auth.Api;
 
 internal class Program
 {
@@ -59,6 +58,7 @@ internal class Program
         builder.RegisterReports(settings);
         // This is added specifically to force Aspire to wait until the application is ready before processing requests, ensuring that all services are properly initialized.
         builder.Services.AddHealthChecks().AddCheck<ReadinessHealthCheck>("readiness");
+
         return builder;
     }
 
@@ -95,7 +95,6 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        app.MapHealthChecks("/health/ready");
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {

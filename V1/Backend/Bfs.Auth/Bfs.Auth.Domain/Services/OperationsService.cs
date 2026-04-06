@@ -16,10 +16,10 @@ public class OperationsService : IOperationsService
         _unitOfwork = unitOfwork;       
     }
 
-    public async Task<List<AuthRoleComponentSystemAction>> UpdateAuthRoleComponentSystemActionMatrixAsync(long parentId, List<AuthRoleComponentSystemAction> matrix)
+    public async Task<List<RoleComponentSystemAction>> UpdateRoleComponentSystemActionMatrixAsync(long parentId, List<RoleComponentSystemAction> matrix)
     {
         var matrixEntity = matrix.ToEntity();
-        var entityList = await _unitOfwork.UpdateAuthRoleComponentSystemActionMatrixAsync(parentId, matrixEntity);
+        var entityList = await _unitOfwork.UpdateRoleComponentSystemActionMatrixAsync(parentId, matrixEntity);
         return entityList.ToContract();
     }
 //Template_Field_ChildrenMatrix_AddServiceEntry    
