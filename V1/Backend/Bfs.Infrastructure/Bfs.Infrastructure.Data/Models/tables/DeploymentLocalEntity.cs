@@ -7,7 +7,7 @@ using Bfs.Core.Services.Deployment;
 
 namespace Bfs.Infrastructure.Data.Models
 {
-    public class DeploymentLocalEntity : IIdentifiable, ITenanted, IDeploymantLocal
+    public class DeploymentLocalEntity : IIdentifiable, ITenanted, IDeploymentLocal
     {
        public long TenantId { get; set; }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Bfs.Infrastructure.Data.Models
 {
-    public class DeploymentAzureEntity : IIdentifiable, ITenanted, IDeploymantAzure
+    public class DeploymentAzureEntity : IIdentifiable, ITenanted, IDeploymentAzure
     {
        public long TenantId { get; set; }
 

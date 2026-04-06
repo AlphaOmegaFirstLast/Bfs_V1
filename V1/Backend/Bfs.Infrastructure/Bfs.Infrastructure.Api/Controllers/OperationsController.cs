@@ -55,6 +55,14 @@ public class OperationsController : ControllerBase
 
     //Template_Start_Code_DontOverwrite_1
 
+    [HttpPut("BfsTenantSystem/matrix/{parentId}")]
+    [CustomAuthorize("method=o.BfsTenantSystem")]
+    public async Task<Results<Ok<List<BfsTenantSystem>>, BadRequest<ProblemDetails>>> UpdateBfsTenantSystemMatrixAsync([FromRoute] long parentId, [FromBody] List<BfsTenantSystem> matrix)
+    {
+        var result = await _operationsService.UpdateBfsTenantSystemMatrixAsync(parentId, matrix).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
     [HttpPost("BfsComponent/DuplicateTree")]
     [CustomAuthorize("method=o.DuplicateTree")]
     public async Task<Results<Ok<long>, BadRequest<ProblemDetails>>> DuplicateComponentTreeAsync([FromBody] long componentId)
@@ -133,12 +141,5 @@ public class OperationsController : ControllerBase
         return TypedResults.Ok(result);
     }
 
-    [HttpPut("BfsTenantSystem/matrix/{parentId}")]
-    [CustomAuthorize("method=o.BfsTenantSystem")]
-    public async Task<Results<Ok<List<BfsTenantSystem>>, BadRequest<ProblemDetails>>> UpdateBfsTenantSystemMatrixAsync([FromRoute] long parentId, [FromBody] List<BfsTenantSystem> matrix)
-    {
-        var result = await _operationsService.UpdateBfsTenantSystemMatrixAsync(parentId, matrix).ConfigureAwait(false);
-        return TypedResults.Ok(result);
-    }
 //Template_Field_ChildrenMatrix_AddControllerEntry
 }
