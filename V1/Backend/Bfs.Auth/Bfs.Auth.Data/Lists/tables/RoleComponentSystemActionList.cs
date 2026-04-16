@@ -33,7 +33,7 @@ namespace Bfs.Auth.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -49,8 +49,8 @@ _fieldList.Add(new QueryField() { DbName = "athRoleComponentSystemAction.SystemA
 _fieldList.Add(new QueryField() { DbName = "athRoleComponentSystemAction.RoleId", QueryName = "RoleId", IsAggregare = false });
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "athBfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athSystemAction.Name", QueryName = "SystemActionName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BestFit_V5.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "BestFit_V5.dbo.SystemAction.Name", QueryName = "SystemActionName", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false });
 
            //Aggregates
@@ -60,11 +60,11 @@ _fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From [DbParentTable] ");
+           sql.AppendLine(" From athRoleComponentSystemAction ");
 
-           sql.AppendLine($"   Left Join BfsComponent on athRoleComponentSystemAction.BfsComponentId = BfsComponent.Id");
-sql.AppendLine($"   Left Join SystemAction on athRoleComponentSystemAction.SystemActionId = SystemAction.Id");
-sql.AppendLine($"   Left Join Role on athRoleComponentSystemAction.RoleId = Role.Id");
+           sql.AppendLine($"   Left Join BestFit_V5.dbo.BfsComponent on athRoleComponentSystemAction.BfsComponentId = BestFit_V5.dbo.BfsComponent.Id");
+sql.AppendLine($"   Left Join BestFit_V5.dbo.SystemAction on athRoleComponentSystemAction.SystemActionId = BestFit_V5.dbo.SystemAction.Id");
+sql.AppendLine($"   Left Join athRole on athRoleComponentSystemAction.RoleId = athRole.Id");
 
            return sql.ToString();
         }
@@ -72,11 +72,16 @@ sql.AppendLine($"   Left Join Role on athRoleComponentSystemAction.RoleId = Role
         protected override string GetWhereConditions(QueryRequest<RoleComponentSystemActionListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
+            sql.AppendLine(" athRoleComponentSystemAction.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine(" AND athRoleComponentSystemAction.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (filter.BfsComponentId.HasValue)
                 {

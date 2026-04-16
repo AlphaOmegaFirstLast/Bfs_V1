@@ -19,10 +19,6 @@ namespace Bfs.Auth.Contracts
         /// RoleUser Role.
         ///</Summary>
         public long RoleId {get; set;} = 0 ;
-///<Summary>
-        /// RoleUser Users.
-        ///</Summary>
-        public long UserId {get; set;} = 0 ;
 
     }
 }

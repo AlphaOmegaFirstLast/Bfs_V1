@@ -33,7 +33,7 @@ namespace Bfs.Auth.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -56,7 +56,7 @@ _fieldList.Add(new QueryField() { DbName = "athRole.Notes", QueryName = "Notes",
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From [DbParentTable] ");
+           sql.AppendLine(" From athRole ");
 
            return sql.ToString();
         }
@@ -64,11 +64,16 @@ _fieldList.Add(new QueryField() { DbName = "athRole.Notes", QueryName = "Notes",
         protected override string GetWhereConditions(QueryRequest<RoleListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
+            sql.AppendLine(" athRole.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine(" AND athRole.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {

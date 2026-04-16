@@ -33,7 +33,7 @@ namespace Bfs.Auth.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -50,7 +50,9 @@ _fieldList.Add(new QueryField() { DbName = "athApp.BfsSystemId", QueryName = "Bf
 _fieldList.Add(new QueryField() { DbName = "athApp.Logo", QueryName = "Logo", IsAggregare = false });
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "athBfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "BestFit_V5.dbo.BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
+
+            //autoCompletes
 
            //Aggregates
 
@@ -59,9 +61,9 @@ _fieldList.Add(new QueryField() { DbName = "athApp.Logo", QueryName = "Logo", Is
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From [DbParentTable] ");
+           sql.AppendLine(" From athApp ");
 
-           sql.AppendLine($"   Left Join BfsSystem on athApp.BfsSystemId = BfsSystem.Id");
+           sql.AppendLine($"   Left Join BestFit_V5.dbo.BfsSystem on athApp.BfsSystemId = BestFit_V5.dbo.BfsSystem.Id");
 
            return sql.ToString();
         }
@@ -69,11 +71,16 @@ _fieldList.Add(new QueryField() { DbName = "athApp.Logo", QueryName = "Logo", Is
         protected override string GetWhereConditions(QueryRequest<AppListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
+            sql.AppendLine(" athApp.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("athApp.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {

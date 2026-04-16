@@ -33,7 +33,7 @@ namespace Bfs.Auth.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -49,7 +49,9 @@ _fieldList.Add(new QueryField() { DbName = "athRoleUser.UserId", QueryName = "Us
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "UserName", IsAggregare = false });
+
+            //autoCompletes
+            _fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "UserName", IsAggregare = false });
 
            //Aggregates
 
@@ -58,10 +60,11 @@ _fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "UserName
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From [DbParentTable] ");
+           sql.AppendLine(" From athRoleUser ");
 
-           sql.AppendLine($"   Left Join Role on athRoleUser.RoleId = Role.Id");
-sql.AppendLine($"   Left Join User on athRoleUser.UserId = User.Id");
+           sql.AppendLine($"   Left Join athRole on athRoleUser.RoleId = athRole.Id");
+
+           sql.AppendLine($"   Left Join athUser on athRoleUser.UserId = athUser.Id");
 
            return sql.ToString();
         }
@@ -69,18 +72,24 @@ sql.AppendLine($"   Left Join User on athRoleUser.UserId = User.Id");
         protected override string GetWhereConditions(QueryRequest<RoleUserListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
+            sql.AppendLine(" athRoleUser.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("athRoleUser.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (filter.RoleId.HasValue)
                 {
                     sql.AppendLine("athRoleUser.RoleId = @RoleId");
                     parameters.Add("@RoleId", filter.RoleId.Value);
                 }
-if (filter.UserId.HasValue)
+
+                if (filter.UserId.HasValue)
                 {
                     sql.AppendLine("athRoleUser.UserId = @UserId");
                     parameters.Add("@UserId", filter.UserId.Value);

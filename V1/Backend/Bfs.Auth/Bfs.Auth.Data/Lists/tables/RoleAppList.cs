@@ -33,7 +33,7 @@ namespace Bfs.Auth.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -58,10 +58,10 @@ _fieldList.Add(new QueryField() { DbName = "athApp.Name", QueryName = "AppName",
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From [DbParentTable] ");
+           sql.AppendLine(" From athRoleApp ");
 
-           sql.AppendLine($"   Left Join Role on athRoleApp.RoleId = Role.Id");
-sql.AppendLine($"   Left Join App on athRoleApp.AppId = App.Id");
+           sql.AppendLine($"   Left Join athRole on athRoleApp.RoleId = athRole.Id");
+sql.AppendLine($"   Left Join athApp on athRoleApp.AppId = athApp.Id");
 
            return sql.ToString();
         }
@@ -69,11 +69,16 @@ sql.AppendLine($"   Left Join App on athRoleApp.AppId = App.Id");
         protected override string GetWhereConditions(QueryRequest<RoleAppListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" [DbParentTable].isDeleted=0 ");
+            sql.AppendLine(" athRoleApp.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine(" AND athRoleApp.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (filter.RoleId.HasValue)
                 {
