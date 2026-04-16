@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { firstValueFrom, from, Observable, throwError } from 'rxjs';
+import { firstValueFrom,lastValueFrom, from, Observable, throwError } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TokenService } from '../security/token.service';
 
@@ -71,22 +71,28 @@ export class HttpService {
     );
   }
   //-------------------------------------
-// getItems<T>(url: string, data: any, opts = {}): Observable<T> {
-//   const target = this.origin + url;
 
-//   return from(this.getHeaders()).pipe(
-//     switchMap(headers =>
-//       this.http.post<T>(target, data, headers).pipe(
-//         catchError((error: any) => {
-//           this.handleError(error);
-//           const bfsError = this.getMessage(error);
-//           return throwError(() => bfsError);
-//         })
-//       )
-//     )
-//   );
-// }
+async postAutoComplete(url: string, data: any, opts = {}) {
+    const target = this.origin + url;
+    const headers = await this.getHeaders();
+    
+    // Combine your custom headers with any passed-in options
+    const finalOptions = { ...headers, ...opts };
+
+    // 1. Create the observable
+    const request$ = this.http.post(target, data, finalOptions).pipe(
+        catchError((error: any) => {
+            this.handleError(error);
+            let bfsError = this.getMessage(error);
+            return throwError(() => bfsError);
+        })
+    );
+
+    // 2. Convert to Promise and await it so the method returns the data directly
+    return await lastValueFrom(request$);
+}
 //-------------------------------------
+
 async getItems<T>(url: string, data: any, opts = {}): Promise<T> {
   const target = this.origin + url;
   opts = await this.getHeaders();
