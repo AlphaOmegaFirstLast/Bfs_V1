@@ -17,7 +17,6 @@ import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
 import { type IColumns, formatFilter, IUIMessage, IQueryColumn,IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
-import { TokenService } from '@bfs/_shared/security/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
@@ -45,7 +44,6 @@ export class ProductTransactionCompareComponent
 
     extends BaseReportComponent<IProductTransactionCompareFilter, IProductTransactionCompareWithLookup> {
     override apiService: StoresService = inject(StoresService);
-    override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IProductTransactionCompareRequest;
     override exportRequest = {} as IProductTransactionCompareRequest;
     override downloadFileName: string = "Transactions By Product";
@@ -146,8 +144,4 @@ override getChart(records: IProductTransactionCompareWithLookup[]): EChartsOptio
     }
 
 }
-
-//Template_Start_Code_DontOverwrite_1
-
-//Template_End_Code_DontOverwrite_1
 

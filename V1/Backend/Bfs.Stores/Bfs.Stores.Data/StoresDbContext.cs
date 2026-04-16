@@ -6,14 +6,14 @@ namespace Bfs.Stores.Data;
 
 public class StoresDbContext : DbContext
 {
- public DbSet<StrStoreEntity> StrStores { get; set; }
- public DbSet<StrProductEntity> StrProducts { get; set; }
- public DbSet<StrTransactionEntity> StrTransactions { get; set; }
- public DbSet<StrEffectTypeEntity> StrEffectTypes { get; set; }
- public DbSet<StrThirdPartyTypeEntity> StrThirdPartyTypes { get; set; }
- public DbSet<StrUnitEntity> StrUnits { get; set; }
- public DbSet<StrCurrencyEntity> StrCurrencys { get; set; }
- public DbSet<StrOperationEntity> StrOperations { get; set; }
+ public DbSet<StoreEntity> Stores { get; set; }
+ public DbSet<ProductEntity> Products { get; set; }
+ public DbSet<TransactionEntity> Transactions { get; set; }
+ public DbSet<EffectTypeEntity> EffectTypes { get; set; }
+ public DbSet<ThirdPartyTypeEntity> ThirdPartyTypes { get; set; }
+ public DbSet<UnitEntity> Units { get; set; }
+ public DbSet<CurrencyEntity> Currencys { get; set; }
+ public DbSet<OperationEntity> Operations { get; set; }
 //Template_Component_RegisterDbSet
 
     public StoresDbContext(DbContextOptions<StoresDbContext> options) : base(options)

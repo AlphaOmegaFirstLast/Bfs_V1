@@ -1,0 +1,12 @@
+using Bfs.Core.Interfaces;
+using Bfs.Stores.Data.Models;
+
+namespace Bfs.Stores.Data.Interfaces
+{
+    public interface ITransactionRepository : IRepository<TransactionEntity>
+    {
+        //Template_Start_DontOverwrite_1
+        //Template_End_DontOverwrite_1
+    }
+}
+

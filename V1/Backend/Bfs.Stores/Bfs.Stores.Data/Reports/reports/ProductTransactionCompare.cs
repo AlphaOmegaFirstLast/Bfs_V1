@@ -41,7 +41,7 @@ namespace Bfs.Stores.Data.Reports
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "StrProduct.Name", QueryName = "StrProduct_Name", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "strStrProduct.Name", QueryName = "StrProduct_Name", IsAggregare = false });
 
             //lookups
 
@@ -55,7 +55,7 @@ namespace Bfs.Stores.Data.Reports
            var sql = new StringBuilder();  
            sql.AppendLine(" From StrTransaction ");
 
-           sql.AppendLine($"   Left Join StrProduct on StrTransaction.StrProductId = StrProduct.Id");
+           sql.AppendLine($"   Left Join Product on strStrTransaction.ProductId = Product.Id");
 
            return sql.ToString();
         }
@@ -71,12 +71,12 @@ namespace Bfs.Stores.Data.Reports
 
                 if (!string.IsNullOrEmpty(filter.Quantity))
                 {
-                    sql.AppendLine("StrTransaction.Quantity like '%'+@Quantity+'%' ");
+                    sql.AppendLine("strStrTransaction.Quantity like '%'+@Quantity+'%' ");
                     parameters.Add("@Quantity", filter.Quantity);
                 }
 if (!string.IsNullOrEmpty(filter.Name))
                 {
-                    sql.AppendLine("StrProduct.Name like '%'+@Name+'%' ");
+                    sql.AppendLine("strStrProduct.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
 
@@ -102,13 +102,4 @@ if (!string.IsNullOrEmpty(filter.Name))
        }       
     }
 }
-//Template_Start_Code_DontOverwrite_1
-
-//Template_End_Code_DontOverwrite_1
-//Template_Start_Code_DontOverwrite_2
-
-//Template_End_Code_DontOverwrite_2
-//Template_Start_Code_DontOverwrite_3
-
-//Template_End_Code_DontOverwrite_3
 

@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Effect Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.EffectTypeId" name="effectTypeId">
+          <ng-container *ngFor="let option of EffectTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Third Party Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.ThirdPartyTypeId" name="thirdPartyTypeId">
+          <ng-container *ngFor="let option of ThirdPartyTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>

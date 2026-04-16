@@ -21,30 +21,31 @@ export const StoresMenuItems: MenuItemType[] = [
     {
         label: 'Stores',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-store/list',
+        url: '/str/store/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Products',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-product/list',
+        url: '/str/product/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Transactions',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-transaction/list',
+        url: '/str/transaction/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
-    },    
+    },
 //Template_Component_Menu_Basic
         ]
     },
+
     {
         label: 'Reports',
         icon: 'tablerMail',
@@ -65,6 +66,20 @@ export const StoresMenuItems: MenuItemType[] = [
 //Template_Component_Menu_Reports
         ]
     },
+
+    {
+        label: 'Deployment',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+           app: ['b.ofc'],
+           role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Deployment
+        ]
+    },
+
     {
         label: 'Custom',
         icon: 'tablerMail',
@@ -77,6 +92,20 @@ export const StoresMenuItems: MenuItemType[] = [
 //Template_Component_Menu_Custom
         ]
     },
+
+    {
+        label: 'System',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+           app: ['b.ofc'],
+           role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_System
+        ]
+    },
+
     {
         label: 'Seed Data',
         icon: 'tablerMail',
@@ -89,41 +118,41 @@ export const StoresMenuItems: MenuItemType[] = [
     {
         label: 'Effect Types',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-effect-type/list',
+        url: '/str/effect-type/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Third Party Types',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-third-party-type/list',
+        url: '/str/third-party-type/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Units',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-unit/list',
+        url: '/str/unit/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Currencies',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-currency/list',
+        url: '/str/currency/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Operations',
         icon: 'tablerLayoutSidebar',
-        url: '/str/str-operation/list',
+        url: '/str/operation/list',
         data: {
-            role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
 //Template_Component_Menu_Seed

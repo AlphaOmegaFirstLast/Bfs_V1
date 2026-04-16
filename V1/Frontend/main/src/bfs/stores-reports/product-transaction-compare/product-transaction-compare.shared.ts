@@ -3,7 +3,7 @@ import * as operations from '@bfs/infrastructure-main/infrastructure.operations'
 
 // Output Columns of a Query  [used in entity Query]
 export const ProductTransactionCompareColumns = [
-    { fieldName: 'strProduct_Name', displayName: 'Product Name', sortName: 'Name', width: '50px', isVisible:true },
+    { fieldName: 'strProduct_Name', displayName: 'Product Name', sortName: 'NameName', width: '50px', isVisible:true },
 
     { fieldName: 'sumQuantity', displayName: 'Sum of Quantity', sortName: 'sumQuantity', width: '50px', isVisible:true },
 
@@ -57,8 +57,4 @@ export function getProductTransactionCompareActions(component:any, record: IEnti
         return links;
     }
     //---------------------------------------------------------
-
-//Template_Start_Code_DontOverwrite_1
-
-//Template_End_Code_DontOverwrite_1
 

@@ -1,3 +1,7 @@
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Bfs.Core.Auth;
 using Bfs.Core.Config;
 using Bfs.Core.Contracts;
@@ -5,6 +9,7 @@ using Bfs.Core.Interfaces;
 using Bfs.Core.Middleware;
 using Bfs.Core.Services.Auth;
 using Bfs.Core.TenantManagement;
+using Bfs.Core.Services.Auth;
 using Bfs.Stores.Api.Validators;
 using Bfs.Stores.Contracts;
 using Bfs.Stores.Data;
@@ -14,11 +19,6 @@ using Bfs.Stores.Data.Reports;
 using Bfs.Stores.Data.Repositories;
 using Bfs.Stores.Domain.Interfaces;
 using Bfs.Stores.Domain.Services;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace Bfs.Stores.Api;
 
@@ -98,7 +98,6 @@ public static class BuilderExtensions
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
     }
 
-
     public static void RegisterTenentRelated(this WebApplicationBuilder builder)
     {
         // Memory cache (app-wide)
@@ -112,54 +111,67 @@ public static class BuilderExtensions
         builder.Services.AddScoped<ITenantProvider, TenantProvider>();
     }
 
-
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
     {
+        // if the system is the master system, we can register the MasterDbContext with a fixed connection string. This is because the master system is responsible for managing tenants and their connection strings, so it needs to have a stable connection to the master database. 
+
         //if (settings != null && settings.DbConnections != null)
         //{
-        //    builder.Services.AddDbContext<StoresDbContext>(options => options.UseSqlServer(settings.DbConnections.StoresConnection,
+        //    builder.Services.AddDbContext<Bfs.Master.Data.MasterDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection,
         //    sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
-        //);
+        //    );
         //}
 
         //This is the standard multi‑tenant pattern for database-per-tenant.
         // DbContext with dynamic connection string based on the current tenant
+
         builder.Services.AddDbContext<StoresDbContext>((serviceProvider, options) =>
         {
-            var tenantProvider = serviceProvider.GetRequiredService<ITenantProvider>();
-            var connectionString = tenantProvider.GetCurrentTenantDbConnection();
-
-            options.UseSqlServer(connectionString, sql =>
+            var IsMigrationMode = false;
+            if (IsMigrationMode)
             {
-                sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-            });
+                options.UseSqlServer(settings.DbConnections.TestTenantConnection, sql =>
+                {
+                    sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                });
+            }
+            else
+            {
+                var tenantProvider = serviceProvider.GetRequiredService<ITenantProvider>();
+                var connectionString = tenantProvider.GetCurrentTenantDbConnection();
+
+                options.UseSqlServer(connectionString, sql =>
+                {
+                    sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                });
+            }
         });
     }
 
     public static void RegisterValidators(this WebApplicationBuilder builder)
     {
-            builder.Services.AddScoped<IValidator<StrStore>, StrStoreValidator>();
-            builder.Services.AddScoped<IValidator<StrProduct>, StrProductValidator>();
-            builder.Services.AddScoped<IValidator<StrTransaction>, StrTransactionValidator>();
-            builder.Services.AddScoped<IValidator<StrEffectType>, StrEffectTypeValidator>();
-            builder.Services.AddScoped<IValidator<StrThirdPartyType>, StrThirdPartyTypeValidator>();
-            builder.Services.AddScoped<IValidator<StrUnit>, StrUnitValidator>();
-            builder.Services.AddScoped<IValidator<StrCurrency>, StrCurrencyValidator>();
-            builder.Services.AddScoped<IValidator<StrOperation>, StrOperationValidator>();
+            builder.Services.AddScoped<IValidator<Store>, StoreValidator>();
+            builder.Services.AddScoped<IValidator<Product>, ProductValidator>();
+            builder.Services.AddScoped<IValidator<Transaction>, TransactionValidator>();
+            builder.Services.AddScoped<IValidator<EffectType>, EffectTypeValidator>();
+            builder.Services.AddScoped<IValidator<ThirdPartyType>, ThirdPartyTypeValidator>();
+            builder.Services.AddScoped<IValidator<Unit>, UnitValidator>();
+            builder.Services.AddScoped<IValidator<Currency>, CurrencyValidator>();
+            builder.Services.AddScoped<IValidator<Operation>, OperationValidator>();
 //Template_Component_RegisterValidator
     }
 
     public static void RegisterRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IStrStoreRepository, StrStoreRepository>();
-            builder.Services.AddScoped<IStrProductRepository, StrProductRepository>();
-            builder.Services.AddScoped<IStrTransactionRepository, StrTransactionRepository>();
-            builder.Services.AddScoped<IStrEffectTypeRepository, StrEffectTypeRepository>();
-            builder.Services.AddScoped<IStrThirdPartyTypeRepository, StrThirdPartyTypeRepository>();
-            builder.Services.AddScoped<IStrUnitRepository, StrUnitRepository>();
-            builder.Services.AddScoped<IStrCurrencyRepository, StrCurrencyRepository>();
-            builder.Services.AddScoped<IStrOperationRepository, StrOperationRepository>();
+            builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+            builder.Services.AddScoped<IEffectTypeRepository, EffectTypeRepository>();
+            builder.Services.AddScoped<IThirdPartyTypeRepository, ThirdPartyTypeRepository>();
+            builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+            builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            builder.Services.AddScoped<IOperationRepository, OperationRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -167,14 +179,14 @@ public static class BuilderExtensions
     {
         builder.Services.AddScoped<IReportsService, ReportsService>();
         builder.Services.AddScoped<IOperationsService,OperationsService>();
-            builder.Services.AddScoped<IStrStoreService, StrStoreService>();
-            builder.Services.AddScoped<IStrProductService, StrProductService>();
-            builder.Services.AddScoped<IStrTransactionService, StrTransactionService>();
-            builder.Services.AddScoped<IStrEffectTypeService, StrEffectTypeService>();
-            builder.Services.AddScoped<IStrThirdPartyTypeService, StrThirdPartyTypeService>();
-            builder.Services.AddScoped<IStrUnitService, StrUnitService>();
-            builder.Services.AddScoped<IStrCurrencyService, StrCurrencyService>();
-            builder.Services.AddScoped<IStrOperationService, StrOperationService>();
+            builder.Services.AddScoped<IStoreService, StoreService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ITransactionService, TransactionService>();
+            builder.Services.AddScoped<IEffectTypeService, EffectTypeService>();
+            builder.Services.AddScoped<IThirdPartyTypeService, ThirdPartyTypeService>();
+            builder.Services.AddScoped<IUnitService, UnitService>();
+            builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+            builder.Services.AddScoped<IOperationService, OperationService>();
 //Template_Component_RegisterService
     }
 
@@ -183,44 +195,44 @@ public static class BuilderExtensions
         if (settings != null && settings.DbConnections != null)
         {
             var dbConnection = settings.DbConnections.StoresConnection;
-            builder.Services.AddScoped<IStrStoreList>(provider =>
+            builder.Services.AddScoped<IStoreList>(provider =>
             {
-                return new StrStoreList(dbConnection);
+                return new StoreList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrProductList>(provider =>
+            builder.Services.AddScoped<IProductList>(provider =>
             {
-                return new StrProductList(dbConnection);
+                return new ProductList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrTransactionList>(provider =>
+            builder.Services.AddScoped<ITransactionList>(provider =>
             {
-                return new StrTransactionList(dbConnection);
+                return new TransactionList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrEffectTypeList>(provider =>
+            builder.Services.AddScoped<IEffectTypeList>(provider =>
             {
-                return new StrEffectTypeList(dbConnection);
+                return new EffectTypeList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrThirdPartyTypeList>(provider =>
+            builder.Services.AddScoped<IThirdPartyTypeList>(provider =>
             {
-                return new StrThirdPartyTypeList(dbConnection);
+                return new ThirdPartyTypeList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrUnitList>(provider =>
+            builder.Services.AddScoped<IUnitList>(provider =>
             {
-                return new StrUnitList(dbConnection);
+                return new UnitList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrCurrencyList>(provider =>
+            builder.Services.AddScoped<ICurrencyList>(provider =>
             {
-                return new StrCurrencyList(dbConnection);
+                return new CurrencyList(dbConnection);
             });
 
-            builder.Services.AddScoped<IStrOperationList>(provider =>
+            builder.Services.AddScoped<IOperationList>(provider =>
             {
-                return new StrOperationList(dbConnection);
+                return new OperationList(dbConnection);
             });
 
 //Template_Component_RegisterList

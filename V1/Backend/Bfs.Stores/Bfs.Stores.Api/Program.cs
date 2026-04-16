@@ -1,5 +1,7 @@
 //using Microsoft.ApplicationInsights.AspNetCore
 using Bfs.Core.Config;
+using Bfs.Core.Services.Diagnosis;
+using Bfs.Core.TenantManagement;
 using Microsoft.AspNetCore.Diagnostics;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Threading.Tasks;
@@ -54,6 +56,8 @@ internal class Program
         builder.RegisterValidators();
         builder.RegisterLists(settings);
         builder.RegisterReports(settings);
+        // This is added specifically to force Aspire to wait until the application is ready before processing requests, ensuring that all services are properly initialized.
+        builder.Services.AddHealthChecks().AddCheck<ReadinessHealthCheck>("readiness");
 
         return builder;
     }
@@ -98,6 +102,8 @@ internal class Program
             c.DocExpansion(DocExpansion.None); // Collapses all nodes
         });
 
+        TenantManager.LoadTenants(app, settings?.DbConnections?.MasterConnection);
+        ReadinessHealthCheck.MarkReady();
         return app;
     }
 

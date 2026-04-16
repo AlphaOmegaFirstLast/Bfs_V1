@@ -4,27 +4,27 @@ import { RouteGuardService } from "@bfs/_shared/security/route-guard.service";
 export const Seed_ROUTES: Routes = [ 
     {
         path: '',
-        loadChildren: () => import('./str-effect-type/str-effect-type.route').then((mod) => mod.StrEffectType_ROUTES),
+        loadChildren: () => import('./effect-type/effect-type.route').then((mod) => mod.EffectType_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./str-third-party-type/str-third-party-type.route').then((mod) => mod.StrThirdPartyType_ROUTES),
+        loadChildren: () => import('./third-party-type/third-party-type.route').then((mod) => mod.ThirdPartyType_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./str-unit/str-unit.route').then((mod) => mod.StrUnit_ROUTES),
+        loadChildren: () => import('./unit/unit.route').then((mod) => mod.Unit_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./str-currency/str-currency.route').then((mod) => mod.StrCurrency_ROUTES),
+        loadChildren: () => import('./currency/currency.route').then((mod) => mod.Currency_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./str-operation/str-operation.route').then((mod) => mod.StrOperation_ROUTES),
+        loadChildren: () => import('./operation/operation.route').then((mod) => mod.Operation_ROUTES),
     },
 
 //Template_Component_RegisterRoute

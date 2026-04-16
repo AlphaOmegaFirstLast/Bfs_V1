@@ -21,7 +21,7 @@ namespace Bfs.Stores.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrCurrencyEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.CurrencyEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -42,10 +42,10 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrCurrency", (string)null);
+                    b.ToTable("strCurrency", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrEffectTypeEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.EffectTypeEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -66,40 +66,40 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrEffectType", (string)null);
+                    b.ToTable("strEffectType", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrOperationEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.OperationEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StrEffectTypeId")
+                    b.Property<int>("EffectTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StrThirdPartyTypeId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ThirdPartyTypeId")
                         .HasColumnType("int");
 
-                    b.Property<long>("TenantId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.ToTable("StrOperation", (string)null);
+                    b.ToTable("strOperation", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrProductEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.ProductEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -120,10 +120,10 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrProduct", (string)null);
+                    b.ToTable("strProduct", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrStoreEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.StoreEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -144,10 +144,10 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrStore", (string)null);
+                    b.ToTable("strStore", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrThirdPartyTypeEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.ThirdPartyTypeEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -168,10 +168,10 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrThirdPartyType", (string)null);
+                    b.ToTable("strThirdPartyType", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrTransactionEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.TransactionEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -182,17 +182,17 @@ namespace Bfs.Stores.Data.Migrations
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OperationId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StrOperationId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("StrProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("StrStoreId")
+                    b.Property<long>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("TenantId")
@@ -200,10 +200,10 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrTransaction", (string)null);
+                    b.ToTable("strTransaction", (string)null);
                 });
 
-            modelBuilder.Entity("Bfs.Stores.Data.Models.StrUnitEntity", b =>
+            modelBuilder.Entity("Bfs.Stores.Data.Models.UnitEntity", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -224,7 +224,7 @@ namespace Bfs.Stores.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrUnit", (string)null);
+                    b.ToTable("strUnit", (string)null);
                 });
 #pragma warning restore 612, 618
         }
