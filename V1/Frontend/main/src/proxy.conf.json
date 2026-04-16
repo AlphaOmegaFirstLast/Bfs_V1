@@ -1,5 +1,5 @@
 {
-  "/api": {
+  "/identity": {
     "target": "https://localhost:7131",
     "secure": false,
     "changeOrigin": true,

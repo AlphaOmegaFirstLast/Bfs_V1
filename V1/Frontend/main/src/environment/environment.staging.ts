@@ -1,7 +1,7 @@
 export const environment = {
     config: 'Staging'
   , isSecurityEnabled :true     
- , tokenUrl: 'https://mybepozstaging.azurewebsites.net/auth/api'
+ , identityWebOrigin: 'https://mybepozstaging.azurewebsites.net/auth/api'
  , logoutUrl: 'https://mybepozstaging.azurewebsites.net/auth/account/logout'
   , loginUrl: 'https://mybepozstaging.azurewebsites.net/auth'
       , BestFitApiUrl: 'https://[StagingOrigin]/api'

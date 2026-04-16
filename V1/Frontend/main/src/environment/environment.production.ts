@@ -1,7 +1,7 @@
 export const environment = {
     config: 'production'
   , isSecurityEnabled :true 
- , tokenUrl: 'https://mybepozstaging.azurewebsites.net/auth/api' 
+ , identityWebOrigin: 'https://mybepozstaging.azurewebsites.net/auth/api' 
   , contentApiUrl: 'https://mybepozstagingcontentapi.azurewebsites.net/api/'
   , logoutUrl: 'https://mybepozstaging.azurewebsites.net/auth/account/logout'
   , loginUrl: 'https://mybepozstaging.azurewebsites.net/auth'

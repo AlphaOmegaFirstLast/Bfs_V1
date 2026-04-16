@@ -1,7 +1,6 @@
 /*
   , logoutUrl: 'https://localhost:4201/Identity/Account/Logout'
   , loginUrl: 'https://localhost:4201/Identity/Account/Login'
-  , tokenUrl: 'https://localhost:4201/auth/api'
   are using the same origin as dev angular origin (/main), and the proxy "proxy.config.json" will redirect to authWeb origin.
   so that in development we can use the same origin for angular and Bfs.Identity.Web
   and accordingly the cookies will be set correctly at development time!
@@ -15,14 +14,14 @@ export const environment = {
   , isAspire: false
   , loginUrl: 'https://localhost:7131/Identity/Account/Login'
   , logoutUrl: 'https://localhost:7131/Identity/Account/Logout'
-  , tokenUrl: 'http://localhost:4200/api'
+  , identityWebOrigin: '/identity'
 
   , BestFitApiUrl: 'http://localhost:2101/api'
   , InfrastructureApiUrl: 'http://localhost:3101/api'
   , StoresApiUrl: 'http://localhost:8101/api'
   , AuthApiUrl: 'http://localhost:6101/api'
-    , MasterApiUrl: 'http://localhost:3201/api'
-//Template_System_AddEnvironmentEntry
+  , MasterApiUrl: 'http://localhost:3201/api'
+  //Template_System_AddEnvironmentEntry
 };
 //ToDo set other environments,
 //ToDo check login & logout urls with RouteGuardService and proxy settings 

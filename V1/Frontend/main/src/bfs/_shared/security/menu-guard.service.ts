@@ -34,7 +34,7 @@ export class MenuGuardService {
     // can be enhanced to show multiple app menu if needed in future, by adding a loop here to loop through all apps in session storage and load menu for each app.
 
     var appItems = [] as MenuItemType[];
-    switch (currentSystem) {
+    switch (currentSystem.toLowerCase()) {
       case 'infrastructure':
         appItems = appItems.concat(await this.processItems(currentApp, InfrastructureMenuItems));
         break;
