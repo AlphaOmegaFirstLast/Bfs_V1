@@ -11,7 +11,7 @@ using System.IO.Enumeration;
 namespace Bfs.Identity.Web.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("identity/[controller]")]
 public class TokenController : ControllerBase
 {
     private readonly ITokenService _tokenService;

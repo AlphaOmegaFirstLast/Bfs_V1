@@ -78,6 +78,7 @@ namespace Bfs.Identity.Web.Pages
             // Generate the refresh token and set it in the cookie, Attach the cookie to the Response, so the frontend can use it to get access token and call APIs.
             // set systemId to 0 first, after user select system, call GetRefreshTokenCookie again to update the cookie with the selected systemId, so the frontend can use it to get access token and call APIs.
             _tokenService.GetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenant.Id, aspNetUserId, 0);
+            _tokenService.SetWelcomeCookie(Response, Constants.WelcomeCookieName, tenant.Name, tenant.CompanyName, "", 0, "");
             return Page();
             //return Redirect("http://bfsfrontend.localhost/main/");
         }
@@ -93,9 +94,19 @@ namespace Bfs.Identity.Web.Pages
 
             if (tenantId == 0 || aspNetUserId == null || systemId==0) return Page();
 
+            var welcomeData = Request.Cookies[Constants.WelcomeCookieName];
+            if (welcomeData == null)
+                return Unauthorized(); //todo unauthenticated
+            var tenantData = welcomeData?.Split('|');
+            var tenantName = tenantData[0];
+            var tenantCompanyName = tenantData[1];
+
+            SystemList = await TenantSystem.GetTenantSystems(_masterConnection, tenantId); //Todo use the tenant systems to show the system selection page if there are more than 1 system for the tenant, otherwise directly call the GetTenantSystemCookie and redirect to the system.
+            var system = SystemList.FirstOrDefault(s => s.Id == systemId);
             // Generate the refresh token and set it in the cookie, Attach the cookie to the Response,
             // so the frontend can use it to get access token and call APIs.
             _tokenService.GetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenantId, aspNetUserId, systemId);
+            _tokenService.SetWelcomeCookie(Response, Constants.WelcomeCookieName, tenantName, tenantCompanyName, system?.Name??"", systemId, system?.Logo??"");
 
             // return Redirect("/main");
             return Redirect("http://localhost:4200");
@@ -124,7 +135,7 @@ namespace Bfs.Identity.Web.Pages
             foreach (var item in items)
             {
                 i++;
-                tenantList.Add(new Tenant() { order = i.ToString(), Id = item.Id, Name = item.Name, Logo = item.Logo, DbConnection = item.DbConnection });
+                tenantList.Add(new Tenant() { order = i.ToString(), Id = item.Id, Name = item.Name, CompanyName = item.CompanyName, Logo = item.Logo, DbConnection = item.DbConnection });
             }
 
             return tenantList;
