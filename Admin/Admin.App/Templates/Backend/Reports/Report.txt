@@ -31,7 +31,7 @@ namespace Bfs.[SystemNameCapital].Data.Reports
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -62,11 +62,11 @@ namespace Bfs.[SystemNameCapital].Data.Reports
            sql.AppendLine(" From [DbParentTable] ");
 
            //Template_Start_ReportField_Join_1
-           sql.AppendLine($"   Left Join [JoinName] on [DbParentTable].[JoinName]Id = [JoinName].Id");
+           sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
            //Template_End_ReportField_Join_1
 
            //Template_Start_Field_Lookup_3
-           sql.AppendLine($"   Left Join [JoinName] on [DbParentTable].[JoinName]Id = [JoinName].Id");
+           sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
            //Template_End_Field_Lookup_3
 
            return sql.ToString();

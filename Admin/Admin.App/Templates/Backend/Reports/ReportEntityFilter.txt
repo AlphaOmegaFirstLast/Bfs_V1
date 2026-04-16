@@ -16,6 +16,10 @@ namespace Bfs.[SystemNameCapital].Data
         public [BackendFieldType]? [FilterLookupName] { get; set; }
         //Template_End_FilterField_Lookup_1
 
+        //Template_Start_FilterField_AutoComplete_1
+        public [BackendFieldType]? [FilterAutoCompleteName] { get; set; }
+        //Template_End_FilterField_AutoComplete_1
+
         //Template_Start_FilterField_Range_1
         public [BackendRangeType] [FilterRangeName] { get; set; }
         //Template_End_FilterField_Range_1

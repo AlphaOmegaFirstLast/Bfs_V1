@@ -32,6 +32,7 @@ namespace Admin.App
         public string ParentTable { get; set; } = string.Empty;
         public string DbParentTable { get; set; } = string.Empty;
         public string DbLookupTable { get; set; } = string.Empty;
+        public string DbAutoCompleteTable { get; set; } = string.Empty;
 
         public string Name { get; set; } = string.Empty;
 
@@ -45,6 +46,11 @@ namespace Admin.App
         public string lookupNameCapital;
         public string lookupNameSmall;
         public string lookupFileName;
+
+        public bool isAutoComplete;
+        public string autoCompleteCapital;
+        public string autoCompleteSmall;
+        public string autoCompleteFileName;
 
         public FieldDefinition FieldDefinition = FieldDefinition.Primitive;
         public ReportDefinition ReportDefinition = ReportDefinition.None;
@@ -69,10 +75,12 @@ namespace Admin.App
         public string reportFieldNameCapital;
         public string reportFieldNameSmall;
         public string joinName;
+        public string DbJoinTable;
         public string sortName;
 
         public string filterValueName = string.Empty;
         public string filterLookupName = string.Empty;
+        public string filterAutoCompleteName = string.Empty;
         public string filterRangeName = string.Empty;
         public string backendRangeType = string.Empty;
 
@@ -126,20 +134,30 @@ namespace Admin.App
 
         public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
-            var fieldTemplate = input;
             //table names in the database have prefixes to uniqulely identify which system they belong to, so we need to add the prefix to the parent table name when generating code related to database.
             DbParentTable = codeInfo.CurrentSystem.IsMaster ? ParentTable : $"{codeInfo?.CurrentSystem?.DbPrefix}{ParentTable}";
             DbLookupTable = codeInfo.CurrentSystem.IsMaster ? lookupNameCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{lookupNameCapital}";
+            DbAutoCompleteTable = codeInfo.CurrentSystem.IsMaster ? autoCompleteCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{autoCompleteCapital}";
+            DbJoinTable = codeInfo.CurrentSystem.IsMaster ? joinName : $"{codeInfo?.CurrentSystem?.DbPrefix}{joinName}";
+
+            var fieldTemplate = input;
 
             fieldTemplate = fieldTemplate.Replace("[CapitalFieldName]", fieldCapitalName);
             fieldTemplate = fieldTemplate.Replace("[SmallFieldName]", fieldSmallName);
             fieldTemplate = fieldTemplate.Replace("[DisplayName]", DisplayName);
 
             fieldTemplate = fieldTemplate.Replace("[DbLookupTable]", DbLookupTable);
-            fieldTemplate = fieldTemplate.Replace("[LookupNameCapital]", lookupNameCapital);
             fieldTemplate = fieldTemplate.Replace("[LookupFileName]", lookupFileName);
+            fieldTemplate = fieldTemplate.Replace("[LookupNameCapital]", lookupNameCapital);
             fieldTemplate = fieldTemplate.Replace("[LookupNameSmall]", lookupNameSmall);
+
+            fieldTemplate = fieldTemplate.Replace("[DbAutoCompleteTable]", DbAutoCompleteTable);
+            fieldTemplate = fieldTemplate.Replace("[AutoCompleteFileName]", autoCompleteFileName);
+            fieldTemplate = fieldTemplate.Replace("[AutoCompleteCapital]", autoCompleteCapital);
+            fieldTemplate = fieldTemplate.Replace("[AutoCompleteSmall]", autoCompleteSmall);
+
             fieldTemplate = fieldTemplate.Replace("[JoinName]", joinName);
+            fieldTemplate = fieldTemplate.Replace("[DbJoinTable]", DbJoinTable);
             fieldTemplate = fieldTemplate.Replace("[SortName]", sortName);
 
             fieldTemplate = fieldTemplate.Replace("[FieldDefinition]", FieldDefinition.ToString());
@@ -173,6 +191,7 @@ namespace Admin.App
 
             //Filters
             fieldTemplate = fieldTemplate.Replace("[FilterLookupName]", filterLookupName);
+            fieldTemplate = fieldTemplate.Replace("[FilterAutoCompleteName]", filterAutoCompleteName);
             fieldTemplate = fieldTemplate.Replace("[FilterValueName]", filterValueName);
             fieldTemplate = fieldTemplate.Replace("[FilterRangeName]", filterRangeName);
             fieldTemplate = fieldTemplate.Replace("[BackendRangeType]", backendRangeType);
@@ -204,9 +223,20 @@ namespace Admin.App
             fieldFileName = result.Item3;
 
             isLookup = BackendDataTypeId == BackendDataType.DT_Lookup || BackendDataTypeId == BackendDataType.DT_SeedLookup;
-            lookupNameCapital = result.Item1.Replace("Id", "");
-            lookupNameSmall = MakeFirstLetterSmall(lookupNameCapital);
-            lookupFileName = result.Item3.Replace("-Id", "").Replace("-id", "");
+            if (isLookup) 
+            {
+                lookupNameCapital = result.Item1.Replace("Id", "");
+                lookupNameSmall = MakeFirstLetterSmall(lookupNameCapital);
+                lookupFileName = result.Item3.Replace("-Id", "").Replace("-id", "");
+            }
+
+            isAutoComplete = BackendDataTypeId == BackendDataType.DT_AutoComplete;
+            if (isAutoComplete) 
+            {
+                autoCompleteCapital = result.Item1.Replace("Id", "");
+                autoCompleteSmall = MakeFirstLetterSmall(autoCompleteCapital);
+                autoCompleteFileName = result.Item3.Replace("-Id", "").Replace("-id", "");
+            }
 
             ParentTable = string.IsNullOrEmpty(ParentTable) ? QueryBaseTable : ParentTable;
             ParentTable = string.IsNullOrEmpty(ParentTable) ? componentNameCapital : ParentTable;
@@ -224,9 +254,9 @@ namespace Admin.App
 
             SetReportInfo(componentType);
 
-            SetFilters(BackendDataTypeId, isAggregate);
+            SetFilters(BackendDataTypeId, isLookup, isAutoComplete, isAggregate);
 
-            SetFieldDefinition(BackendDataTypeId, isLookup);
+            SetFieldDefinition(BackendDataTypeId, isLookup, isAutoComplete);
 
             SetReportDefinition(IsJoinField, isAggregate);
 
@@ -241,21 +271,23 @@ namespace Admin.App
             toolTipVisibility = string.IsNullOrEmpty(toolTipNote) ? "style='display:none'" : string.Empty;
         }
 
-        public void SetFilters(BackendDataType BackendDataTypeId, bool isAggregate)
+        public void SetFilters(BackendDataType BackendDataTypeId, bool isLookup, bool isAutoComplete, bool isAggregate)
         {
             var isQueryFilter = (FilterTypeId) != FilterType.None;
             var isLookupFilter = isLookup;
+            var isAutoCompleteFilter = isAutoComplete;
 
             var isValueStringFilter = isQueryFilter && BackendDataTypeId == BackendDataType.DT_string;
             var isValueNumberFilter = isQueryFilter && FilterTypeId == FilterType.ValueNumberFilter;  // must be set explicitly. FilterType.Default will not set it
 
-            var isRangeNumberFilter = isQueryFilter && !isLookup && (BackendDataTypeId == BackendDataType.DT_int || BackendDataTypeId == BackendDataType.DT_decimal);
+            var isRangeNumberFilter = isQueryFilter && !isLookup && !isAutoComplete && (BackendDataTypeId == BackendDataType.DT_int || BackendDataTypeId == BackendDataType.DT_decimal);
             var isRangeDateFilter = isQueryFilter && BackendDataTypeId == BackendDataType.DT_DateTime;
             var isRangeAggregateFilter = isQueryFilter && isAggregate;
 
             FilterDefinition = isValueStringFilter ? FilterDefinition.ValueString
                 : isValueNumberFilter ? FilterDefinition.ValueNumber
                 : isLookupFilter ? FilterDefinition.Lookup
+                : isAutoCompleteFilter ? FilterDefinition.AutoComplete
                 : isRangeAggregateFilter ? FilterDefinition.AggregateRange
                 : (isRangeDateFilter || isRangeNumberFilter) ? FilterDefinition.Range
                 : FilterDefinition.None;
@@ -263,6 +295,7 @@ namespace Admin.App
             backendRangeType = isRangeDateFilter ? "DateRange?" : "NumericRange?";
             filterRangeName = isAggregate ? aggregateName : fieldCapitalName;
             filterLookupName = $"{lookupNameCapital}Id";
+            filterAutoCompleteName = $"{autoCompleteCapital}Id";
             filterValueName = fieldCapitalName;
         }
 
@@ -286,9 +319,12 @@ namespace Admin.App
                 reportFieldNameSmall = fieldSmallName;
             }
 
-            joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital : fieldCapitalName;
+            joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital
+                     : !string.IsNullOrEmpty(autoCompleteCapital) ? autoCompleteCapital
+                     : fieldCapitalName;
             sortName = isAggregate ? aggregateName
                         : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}Name"
+                        : !string.IsNullOrEmpty(autoCompleteCapital) ? $"{autoCompleteCapital}Name"
                         : reportFieldNameCapital;
 
             var chartElement = ReportInfo.ChartElementId == null ? ChartElement.None : (ChartElement)ReportInfo.ChartElementId;
@@ -314,7 +350,9 @@ namespace Admin.App
 
         public void SetBackendDataType()
         {
-            var modifiedBackendDataTypeId = BackendDataTypeId == BackendDataType.DT_Lookup ? BackendDataType.DT_long
+            var modifiedBackendDataTypeId = 
+                    BackendDataTypeId == BackendDataType.DT_AutoComplete ? BackendDataType.DT_long
+                  : BackendDataTypeId == BackendDataType.DT_Lookup ? BackendDataType.DT_long
                   : BackendDataTypeId == BackendDataType.DT_SeedLookup ? BackendDataType.DT_int
                   : BackendDataTypeId == BackendDataType.DT_Default ? (fieldSmallName == "id" ? BackendDataType.DT_long : BackendDataType.DT_string)
                   : BackendDataTypeId;
@@ -410,7 +448,7 @@ namespace Admin.App
                 ReportDefinition = ReportDefinition.None;
         }
 
-        public void SetFieldDefinition(BackendDataType BackendDataTypeId, bool isLookup)
+        public void SetFieldDefinition(BackendDataType BackendDataTypeId, bool isLookup, bool isAutoComplete)
         {
             switch (BackendDataTypeId)
             {
@@ -431,7 +469,9 @@ namespace Admin.App
                     FieldDefinition = FieldDefinition.Object;
                     break;
                 default:
-                    FieldDefinition = isLookup ? FieldDefinition.Lookup : FieldDefinition.Primitive;
+                    FieldDefinition = isLookup ? FieldDefinition.Lookup 
+                        : isAutoComplete? FieldDefinition.AutoComplete
+                        : FieldDefinition.Primitive;
                     break;
             }
         }
@@ -449,7 +489,7 @@ namespace Admin.App
                         case BackendDataType.DT_decimal:
                             return "TextNumber";
                         case BackendDataType.DT_long:
-                            return isLookup ? "Select" : "TextNumber";
+                            return isLookup || isAutoComplete? "Select" : "TextNumber";
                         case BackendDataType.DT_int:
                             return isLookup ? "Select" : "TextNumber";
                         case BackendDataType.DT_DateTime:

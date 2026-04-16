@@ -41,6 +41,7 @@ namespace Admin.App
         public string ReportNameSmall = string.Empty;
 
         public string ReportFileName = string.Empty;
+        public string DbParentTable { get; set; } = string.Empty;
 
         public ComponentType ComponentType = ComponentType.None;
 
@@ -107,6 +108,7 @@ namespace Admin.App
         {
             //table names in the database have prefixes to uniqulely identify which system they belong to, so we need to add the prefix to the parent table name when generating code related to database.
             DbComponentName = codeInfo.CurrentSystem.IsMaster ? ComponentNameCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{ComponentNameCapital}";
+            DbParentTable = codeInfo.CurrentSystem.IsMaster ? QueryBaseTable : $"{codeInfo?.CurrentSystem?.DbPrefix}{QueryBaseTable}";
 
             var outputContent = input.Replace("[ComponentType]", ComponentType.ToString());
 
@@ -118,6 +120,7 @@ namespace Admin.App
             outputContent = outputContent.Replace("[ComponentMenuName]", MenuName.Trim());
             outputContent = outputContent.Replace("[MenuPlaceHolder]", MenuPlaceHolder.Trim());
             outputContent = outputContent.Replace("[QueryBaseTable]", QueryBaseTable);
+            outputContent = outputContent.Replace("[DbParentTable]", DbParentTable);
             outputContent = outputContent.Replace("[InterfaceRequired]", string.IsNullOrEmpty(InterfaceRequired)?"":$",{InterfaceRequired}" );
 
             outputContent = outputContent.Replace("[ReportNameCapital]", ReportNameCapital.Trim());

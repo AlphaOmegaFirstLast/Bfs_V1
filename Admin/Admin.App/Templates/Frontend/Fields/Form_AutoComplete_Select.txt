@@ -1,0 +1,26 @@
+<div class="row mb-2">
+  <div class="col-12">
+     <div class="position-relative" (focusout)="hide[AutoCompleteCapital]Overlay()">
+        <label for="[SmallFieldName]" class="form-label fs-6">[DisplayName]</label>
+        <div class="input-group">
+            <input type="text"  class="form-control" [formControl]="[AutoCompleteSmall]Control"
+                (focus)="[AutoCompleteSmall]Control.value.length >= 2 && (show[AutoCompleteCapital] = true)"
+                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
+            <span class="input-group-text" *ngIf="isLoading"><span class="spinner-border spinner-border-sm"></span></span>
+        </div>
+        <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
+            *ngIf="show[AutoCompleteCapital] && [AutoCompleteSmall]Options.length > 0">
+            <li *ngFor="let option of [AutoCompleteSmall]Options">
+                <button type="button"
+                    class="dropdown-item d-flex justify-content-between align-items-center"
+                    (click)="select[AutoCompleteCapital](option)">
+                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                </button>
+            </li>
+        </ul>
+        <ul class="dropdown-menu show w-100" *ngIf="show[AutoCompleteCapital] && !isLoading && [AutoCompleteSmall]Options.length === 0">
+            <li><span class="dropdown-item-text text-muted">Please select a valid [DisplayName].</span></li>
+        </ul>
+    </div>
+   </div>
+ </div>

@@ -28,6 +28,10 @@ export interface I[ComponentNameCapital] {
     //Template_Start_Field_Lookup_1
     [SmallFieldName]?: [FrontendFieldType];
     //Template_End_Field_Lookup_1 
+    //Template_Start_Field_AutoComplete_1 
+    [SmallFieldName]?: [FrontendFieldType];
+    [AutoCompleteSmall]Name?: string;
+    //Template_End_Field_AutoComplete_1 
     //Template_Start_Field_Object_1
     [SmallFieldName]?: I[CapitalFieldName];
     //Template_End_Field_Object_1 
@@ -44,6 +48,10 @@ export function init[ComponentNameCapital](): I[ComponentNameCapital] {
         //Template_Start_Field_Lookup_2
         [SmallFieldName]: [FrontendDefaultValue],
         //Template_End_Field_Lookup_2
+        //Template_Start_Field_AutoComplete_2
+        [SmallFieldName]: [FrontendDefaultValue],
+        [AutoCompleteSmall]Name: '',
+        //Template_End_Field_AutoComplete_2
         //Template_Start_Field_Object_2
         [SmallFieldName]: init[CapitalFieldName](),
         //Template_End_Field_Object_2
@@ -64,6 +72,10 @@ export function [ComponentNameSmall]UntypedFormGroup(formBuilder: FormBuilder): 
     //Template_Start_Field_Lookup_3
     [SmallFieldName]: [[FrontendDefaultValue]],
     //Template_End_Field_Lookup_3
+    //Template_Start_Field_AutoComplete_3
+    [SmallFieldName]: [[FrontendDefaultValue]],
+    [AutoCompleteSmall]Name: [''],
+    //Template_End_Field_AutoComplete_3
     //Template_Start_Field_Object_3
         [SmallFieldName]: [SmallFieldName]UntypedFormGroup(formBuilder),
     //Template_End_Field_Object_3
@@ -78,6 +90,9 @@ export interface I[ComponentNameCapital]WithLookup extends I[ComponentNameCapita
     //Template_Start_Field_Lookup_4
       [LookupNameSmall]Name?: string;
     //Template_End_Field_Lookup_4
+    //Template_Start_Field_AutoComplete_4
+      [AutoCompleteSmall]Name?: string;
+    //Template_End_Field_AutoComplete_4
 }
 //---------------------------------------------------------
 export interface I[ComponentNameCapital]Request extends IEntityRequest<I[ComponentNameCapital]Filter> {}
@@ -96,6 +111,10 @@ export interface I[ComponentNameCapital]Filter {
     //Template_Start_FilterField_Lookup_1
     [FilterLookupName]?: [FrontendFieldType];
     //Template_End_FilterField_Lookup_1
+
+    //Template_Start_FilterField_AutoComplete_1
+    [FilterAutoCompleteName]?: [FrontendFieldType];
+    //Template_End_FilterField_AutoComplete_1
 
     //Template_Start_FilterField_Range_1
     [FilterRangeName]?: { from?: [FrontendFieldType] ; to?: [FrontendFieldType]} ;
@@ -128,6 +147,10 @@ export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Requ
             //Template_Start_FilterField_Lookup_2
             [FilterLookupName]: undefined ,
             //Template_End_FilterField_Lookup_2
+
+            //Template_Start_FilterField_AutoComplete_2
+            [FilterAutoCompleteName]: undefined ,
+            //Template_End_FilterField_AutoComplete_2
 
             //Template_Start_FilterField_Range_2
             [FilterRangeName]: { from: undefined , to: undefined} ,

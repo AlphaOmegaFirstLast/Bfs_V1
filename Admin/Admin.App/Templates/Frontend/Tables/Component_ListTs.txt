@@ -76,6 +76,10 @@ export class [ReportNameCapital]Component
             case '[ReportFieldNameSmall]':
                 return record['[LookupNameSmall]Name']?.toString();
             //Template_End_Field_Lookup_1
+            //Template_Start_Field_AutoComplete_1
+            case '[ReportFieldNameSmall]':
+                return record['[AutoCompleteSmall]Name']?.toString();
+            //Template_End_Field_AutoComplete_1
             //Template_Start_ReportField_Aggregate_1
             case '[AggregateName]':
                 return record['[AggregateName]']?.toString();

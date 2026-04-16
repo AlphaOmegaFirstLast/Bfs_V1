@@ -41,7 +41,7 @@ public enum ReportDefinition
 {
     None = 1,
     Join = 2,
-    QueryColumn = 3,          // computed by reports
+    QueryColumn = 3,          // output field by reports
     Aggregate = 4,            // computed by reports
 }
 
@@ -53,6 +53,7 @@ public enum FilterDefinition
     Lookup = 4,             // filter by ForignKeyId = value
     Range = 5,              // filter by value between min and max
     AggregateRange = 6,     // filter by aggregate value between min and max, // special setting for Sql Having clause
+    AutoComplete = 7,             // filter by ForignKeyId = value
 }
 
 public enum ChartDefinition
@@ -199,7 +200,8 @@ public enum FieldDefinition
     CustomFieldList = 4,     // saved in record as: json field: CustomFieldList
     ChildrenList = 5,        // saved in different table: 1 to many TabList, TabMatrix
     ChildrenMatrix = 6,      // saved in different table: 1 to many, Holds Matrix Info, TabMatrix
-    ComputedField=7,           
+    AutoComplete = 7,
+    ComputedField = 8,
 }
 
 // Field in regard to code handling and display
@@ -231,6 +233,7 @@ public enum BackendDataType
     DT_ReportInfo = 16,                 // An object that is saved in the database as JSON string
     DT_MatrixInfo = 17,                 // An object that is saved in the database as JSON string
 
-    DT_Computed = 18,                  // Computed field that is saved in the database but not edited by the user.
+    DT_AutoComplete = 18,              // Lookup field that requires autocomplete feature in the frontend, like CountryId, it is a lookup field but with special handling in the frontend.
+    DT_Computed = 19,                  // Computed field that is saved in the database but not edited by the user.
 }
 

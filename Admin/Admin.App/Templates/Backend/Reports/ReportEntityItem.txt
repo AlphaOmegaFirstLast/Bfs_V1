@@ -10,6 +10,9 @@ namespace Bfs.[SystemNameCapital].Data
         //Template_Start_Field_Lookup_1
         public string? [LookupNameCapital]Name { get; set; }
         //Template_End_Field_Lookup_1
+        //Template_Start_Field_AutoComplete_1
+        public string? [AutoCompleteCapital]Name { get; set; }
+        //Template_End_Field_AutoComplete_1
         //Template_Start_ReportField_Aggregate_1
         public string? [AggregateName] { get; set; }
         //Template_End_ReportField_Aggregate_1
