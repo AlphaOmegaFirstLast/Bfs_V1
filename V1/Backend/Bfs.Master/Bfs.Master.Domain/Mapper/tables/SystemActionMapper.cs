@@ -1,0 +1,59 @@
+using Bfs.Core.ObjectFields;
+using Bfs.Master.Contracts;
+using Bfs.Master.Data.Models;
+
+namespace Bfs.Master.Domain.Mapper
+{
+    public static class SystemActionMapper
+    {
+        public static SystemAction ToContract(this SystemActionEntity entity)
+        {
+            var contract = new SystemAction()
+            {
+               IsDeleted= entity.IsDeleted,
+Id= entity.Id,
+ShortName= entity.ShortName,
+Notes= entity.Notes,
+MatchProperty= entity.MatchProperty,
+MatchValues= entity.MatchValues,
+ActionTemplate= entity.ActionTemplate,
+Name= entity.Name,
+
+               ActionTypeId= entity.ActionTypeId,
+WriterTypeId= entity.WriterTypeId,
+
+            };
+
+            return contract;
+        }
+
+        public static List<SystemAction> ToContract(this IEnumerable<SystemActionEntity> SystemActions)
+        {
+            return SystemActions.Select(x => x.ToContract()).ToList();
+        }
+
+        public static List<SystemActionEntity> ToEntity(this IEnumerable<SystemAction> SystemActions)
+        {
+            return SystemActions.Select(x => x.ToEntity()).ToList();
+        }
+
+        public static SystemActionEntity ToEntity(this SystemAction contract, SystemActionEntity entity = null)
+        {
+            var SystemActionEntity = entity ?? new();
+
+            SystemActionEntity.IsDeleted= contract.IsDeleted;
+SystemActionEntity.Id= contract.Id;
+SystemActionEntity.ShortName= contract.ShortName;
+SystemActionEntity.Notes= contract.Notes;
+SystemActionEntity.MatchProperty= contract.MatchProperty;
+SystemActionEntity.MatchValues= contract.MatchValues;
+SystemActionEntity.ActionTemplate= contract.ActionTemplate;
+SystemActionEntity.Name= contract.Name;
+
+            SystemActionEntity.ActionTypeId= contract.ActionTypeId;
+SystemActionEntity.WriterTypeId= contract.WriterTypeId;
+
+            return SystemActionEntity;
+        }     
+    }
+}
