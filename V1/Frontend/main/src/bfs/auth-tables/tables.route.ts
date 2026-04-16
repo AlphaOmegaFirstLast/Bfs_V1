@@ -4,33 +4,39 @@ import { RouteGuardService } from "@bfs/_shared/security/route-guard.service";
 export const TABLES_ROUTES: Routes = [
     {
         path: '',
-        loadChildren: () => import('./auth-role-component-system-action/auth-role-component-system-action.route').then((mod) => mod.AuthRoleComponentSystemAction_ROUTES),
+        loadChildren: () => import('./role-component-system-action/role-component-system-action.route').then((mod) => mod.RoleComponentSystemAction_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./auth-user/auth-user.route').then((mod) => mod.AuthUser_ROUTES),
+        loadChildren: () => import('./user/user.route').then((mod) => mod.User_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./auth-app/auth-app.route').then((mod) => mod.AuthApp_ROUTES),
+        loadChildren: () => import('./app/app.route').then((mod) => mod.App_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./auth-role/auth-role.route').then((mod) => mod.AuthRole_ROUTES),
+        loadChildren: () => import('./role/role.route').then((mod) => mod.Role_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./auth-role-app/auth-role-app.route').then((mod) => mod.AuthRoleApp_ROUTES),
+        loadChildren: () => import('./role-app/role-app.route').then((mod) => mod.RoleApp_ROUTES),
     },
 
     {
         path: '',
-        loadChildren: () => import('./auth-role-user/auth-role-user.route').then((mod) => mod.AuthRoleUser_ROUTES),
+        loadChildren: () => import('./role-user/role-user.route').then((mod) => mod.RoleUser_ROUTES),
+    },
+
+    {
+        path: '',
+        loadChildren: () => import('./user-request/user-request.route').then((mod) => mod.UserRequest_ROUTES),
     },
 
 //Template_Component_RegisterRoute
 ]
+

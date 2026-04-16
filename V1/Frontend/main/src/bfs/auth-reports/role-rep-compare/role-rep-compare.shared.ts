@@ -3,9 +3,9 @@ import * as operations from '@bfs/infrastructure-main/infrastructure.operations'
 
 // Output Columns of a Query  [used in entity Query]
 export const RoleRepCompareColumns = [
-    { fieldName: 'authRole_Id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:true },
-{ fieldName: 'authRole_Name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'authRole_Notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+    { fieldName: 'authRole_Id', displayName: 'ID', sortName: 'AuthRole_Id', width: '50px', isVisible:false },
+{ fieldName: 'authRole_Name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
+{ fieldName: 'authRole_Notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
 
 ];
 

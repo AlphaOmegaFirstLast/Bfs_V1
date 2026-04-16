@@ -53,3 +53,4 @@ export class RoleRepCompareFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

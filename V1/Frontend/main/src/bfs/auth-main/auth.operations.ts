@@ -94,3 +94,61 @@ export async function deploy(me: IUserInterface, record: IIdentifiable, data: an
     });
 }
 //--------------------------------------------------------
+
+export async function publish(me: IUserInterface, record: IIdentifiable, data: any) {
+    var target = data.putUrl;
+    (await me.apiService.put(`${target}/${record.id}`)).subscribe({
+        next: (res: any) => {
+            me.messages.push({ text: 'Publish is a success.', msgType: "info" });
+        },
+        error: (err: any) => {
+            var msg = err.message || 'An error occurred while publishing process.';
+            me.messages.push({ text: msg, msgType: "danger" });
+        }
+    });
+}
+//--------------------------------------------------------
+
+export async function generateTestData(me: IUserInterface, record: IIdentifiable, data: any) {
+    var target = data.getUrl;
+    (await me.apiService.put(`${target}/${record.id}`)).subscribe({
+        next: (res: any) => {
+            me.messages.push({ text: 'Generate Test Data is a success.', msgType: "info" });
+        },
+        error: (err: any) => {
+            var msg = err.message || 'An error occurred while generating test data.';
+            me.messages.push({ text: msg, msgType: "danger" });
+        }
+    });
+}
+//--------------------------------------------------------
+export async function setComponentDefaultActions(me: any, record: IIdentifiable, data: any): Promise<void> {
+    let entityId = record.id;
+    if (!me.isLoading.save) {  // to prevent multiple requests
+        me.messages = [];
+        me.isLoading = true;
+        var target = `/Operations/BfsComponentSystemAction/matrix/${entityId}`;
+
+        var childrenList: any[] = [
+            { "bfsComponentId": entityId, "actionLocationId": "1", "systemActionId": "1" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "2" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "3" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "4" }
+            , { "bfsComponentId": entityId, "actionLocationId": "2", "systemActionId": "5" }
+        ];
+
+        (await me.apiService.put(target, childrenList)).subscribe({
+            next: (res: any) => {
+                me.isLoading.save = false;
+                me.list = res.items;
+            },
+            error: (err: any) => {
+                me.isLoading = false;
+                var msg = err.message || 'An error occurred while saving matrix data.';
+                me.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+    }
+}
+//---------------------------------------------------------
+

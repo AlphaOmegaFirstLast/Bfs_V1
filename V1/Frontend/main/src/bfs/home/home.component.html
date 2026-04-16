@@ -3,12 +3,12 @@
     <div class="col-12">
       <article class="card card-out-of-container border-top-0">
         <div class="position-relative card-side-img overflow-hidden"
-          style="height: 250px; background-image: url({{imgUrl}});">
+          style="height: 250px; background-image: url('../../assets/images/systems/{{welcomeData.systemLogo}}'); background-size: cover; background-position: center;">
           <div
             class="p-4 card-img-overlay rounded-start-0 auth-overlay d-flex align-items-center justify-content-center">
             <section class="text-white text-center py-4">
-              <h3 class="mb-2 fst-italic">"Stock Exchange Market"</h3>
-              <h4 class="fst-italic">Real-time data, insights, and trends from different financial hubs</h4>
+              <h3 class="mb-2 fst-italic">{{welcomeData.system}}</h3>
+              <h4 class="fst-italic">{{welcomeData.company}} | {{welcomeData.tenant}}</h4>
             </section>
           </div>
         </div>
@@ -16,20 +16,21 @@
     </div>
   </div>
 
-  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-    <div class="col-12" style="padding:auto; display: flex; align-items: center; justify-content: center;">
-      <h3 *ngIf="currentSystemApp">Welcome to {{currentSystemApp.displayName}}</h3>
-      <h3 *ngIf="!currentSystemApp">Login is required to access the application.</h3>
+<div class="app-container">
+  <ng-container *ngFor="let item of userApps">
+    <div 
+      class="btn btn-outline-info m-2 app-button" 
+      (click)="setCurrentApp(item.name)">
+      
+      <img [src]="'../../assets/images/apps/' + item.logo" class="app-logo">
+      <span class="app-name">{{item.name}}</span>
+      
     </div>
-  </div>
+  </ng-container>
+</div>
 
-  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-    <div class="col-4" *ngFor="let item of userApps">
-      <input type="button" class="btn btn-primary m-2" value="{{item}}" (click)="setCurrentSystem(item, item)" />
-    </div>
-  </div>
-
-  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+  <!-- Used for testing token and access data retrieval, can be removed in future -->
+  <!-- <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
     <div class="col-6">
       <input type="button" class="btn btn-primary m-2" value="Get Token" (click)="getToken()" />
     </div>
@@ -37,4 +38,5 @@
       <input type="button" class="btn btn-primary m-2" value="Get Access Data" (click)="getAccessData()" />
     </div>
   </div>
-</div>
+</div> -->
+

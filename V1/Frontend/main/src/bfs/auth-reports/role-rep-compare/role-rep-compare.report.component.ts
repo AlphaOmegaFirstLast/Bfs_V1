@@ -17,7 +17,6 @@ import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
 import { type IColumns, formatFilter, IUIMessage, IQueryColumn,IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
-import { TokenService } from '@bfs/_shared/security/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
@@ -45,7 +44,6 @@ export class RoleRepCompareComponent
 
     extends BaseReportComponent<IRoleRepCompareFilter, IRoleRepCompareWithLookup> {
     override apiService: AuthService = inject(AuthService);
-    override tokenService: TokenService = inject(TokenService);
     override queryRequest = {} as IRoleRepCompareRequest;
     override exportRequest = {} as IRoleRepCompareRequest;
     override downloadFileName: string = "Roles";

@@ -19,57 +19,60 @@ export const AuthMenuItems: MenuItemType[] = [
         },
         children: [
     {
-        label: 'Roles',
+        label: 'Role - System Actions',
         icon: 'tablerLayoutSidebar',
-        url: '/bfs/auth-role/list',
-        data: {
-           app: ['b.ofc'],
-           role: ['admin']
-        }
-    },
-    {
-        label: 'Users',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/auth-user/list',
-        data: {
-           app: ['b.ofc'],
-           role: ['admin']
-        }
-    },
-    {
-        label: 'Applications',
-        icon: 'tablerLayoutSidebar',
-        url: '/bfs/auth-app/list',
+        url: '/ath/role-component-system-action/list',
         data: {
             role: ['admin', 'investor','broker']
         }
     },
     {
-        label: 'Role - System Actions',
+        label: 'Users',
         icon: 'tablerLayoutSidebar',
-        url: '/bfs/auth-role-component-system-action/list',
+        url: '/ath/user/list',
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Applications',
+        icon: 'tablerLayoutSidebar',
+        url: '/ath/app/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Roles',
+        icon: 'tablerLayoutSidebar',
+        url: '/ath/role/list',
+        data: {
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Role - Application',
         icon: 'tablerLayoutSidebar',
-        url: '/bfs/auth-role-app/list',
+        url: '/ath/role-app/list',
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            role: ['admin', 'investor','broker']
         }
     },
     {
         label: 'Role - User',
         icon: 'tablerLayoutSidebar',
-        url: '/bfs/auth-role-user/list',
+        url: '/ath/role-user/list',
         data: {
-           app: ['b.ofc'],
-           role: ['admin'] 
-       }
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'User Requests',
+        icon: 'tablerLayoutSidebar',
+        url: '/ath/user-request/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
     },
 //Template_Component_Menu_Basic
         ]
@@ -87,7 +90,7 @@ export const AuthMenuItems: MenuItemType[] = [
     {
         label: 'Roles',
         icon: 'tablerLayoutSidebar',
-        url: '/bfs/report/role-rep-compare/0',
+        url: '/ath/report/role-rep-compare/0',
         data: {
             role: ['admin']
         }
@@ -95,6 +98,20 @@ export const AuthMenuItems: MenuItemType[] = [
 //Template_Component_Menu_Reports
         ]
     },
+
+    {
+        label: 'Deployment',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+           app: ['b.ofc'],
+           role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_Deployment
+        ]
+    },
+
     {
         label: 'Custom',
         icon: 'tablerMail',
@@ -107,6 +124,20 @@ export const AuthMenuItems: MenuItemType[] = [
 //Template_Component_Menu_Custom
         ]
     },
+
+    {
+        label: 'System',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+           app: ['b.ofc'],
+           role: ['admin']
+        },
+        children: [
+//Template_Component_Menu_System
+        ]
+    },
+
     {
         label: 'Seed Data',
         icon: 'tablerMail',
@@ -120,3 +151,4 @@ export const AuthMenuItems: MenuItemType[] = [
         ]
     },
 ];
+

@@ -5,10 +5,11 @@ import { RoleRepCompareComponent } from './role-rep-compare/role-rep-compare.rep
 
 export const REPORTS_ROUTES: Routes = [
     {
-        path: 'bfs/report/role-rep-compare/:id',
+        path: 'ath/report/role-rep-compare/:id',
         component: RoleRepCompareComponent,
         canActivate: [RouteGuardService],
         data: { role: ['admin'], api: ['auth'], app: ['b.ofc'] } 
     },
 //Template_Component_RegisterRoute
 ]
+
