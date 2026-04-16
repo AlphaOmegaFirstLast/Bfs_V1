@@ -64,7 +64,7 @@ namespace Bfs.Core.TenantManagement
 
                 foreach (var tenant in allTenants)
                 {
-                    var memoryOptions = new MemoryCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) };
+                    var memoryOptions = new MemoryCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60) };
                     cache.Set(tenant.TenantId.ToString(), tenant.DbConnection, memoryOptions);
                 }
             }

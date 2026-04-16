@@ -58,12 +58,28 @@ public class TokenService : ITokenService
         Response.Cookies.Append(cookieName, cookieValue, options);
     }
 
+    public void SetWelcomeCookie(HttpResponse Response, string cookieName, string tenantName, string companyName, string systemName, long systemId, string systemLogo)
+    {
+        var cookieValue = $"{tenantName}|{companyName}|{systemName}|{systemId}|{systemLogo}";
+        var options = new CookieOptions
+        {
+            Expires = DateTime.Now.AddMinutes(2), // we dont want this cookie to stay long, it is only used to show welcome message after user select tenant and system, and frontend will store it into the session it will be deleted after 2 minutes.
+            HttpOnly = false, // Set to true if the SPA doesn't need to read it via JS
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Path = "/" // Important for sharing across the domain
+        };
+
+        // Cookie set up
+        Response.Cookies.Append(cookieName, cookieValue, options);
+    }
+
     public static async Task<List<AuthRoleUser>> GetAuthUserRoles(string tenantConnection, string aspNetUserId)
     {
         using var db = new SqlConnection(tenantConnection);
-        var sqlSelect = "select u.id as UserId, ru.AuthRoleId as RoleId " +
-            "from AuthUser u " +
-            "left join AuthRoleUser ru on ru.AuthUserId=u.id " +
+        var sqlSelect = "select u.id as UserId, ru.RoleId as RoleId " +
+            "from athUser u " +
+            "left join athRoleUser ru on ru.UserId=u.id " +
             "where u.AspNetUserId =@AspNetUserId";
 
         var sqlStatement = sqlSelect.ToString();
