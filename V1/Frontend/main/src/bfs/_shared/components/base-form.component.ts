@@ -63,6 +63,7 @@ public tokenService!: any;
     async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
         if (this.entity.id != '0') {
@@ -81,6 +82,9 @@ public tokenService!: any;
     }
     //---------------------------------------------------------
     setChildrenRequests() {
+    }
+    //---------------------------------------------------------
+    setAutoComplete() {
     }
     //---------------------------------------------------------
     async getObjectFieldLookups() {
@@ -171,6 +175,26 @@ public tokenService!: any;
         this.clipboard.copyText(value)
     }
     //---------------------------------------------------------
+    // it calls dapper query, requires all tables must have id filter, otherwise it will return all records from Api, the item[0] will be random.
+    // async view() {
+    //     const target = this.apiUrl + 'list' ;
+    //     const request = { pageSize: 1, filter: { id: this.entity.id } };
+     
+    //     (await this.apiService.post(target , request)).subscribe({
+    //         next: (response: any) => {
+    //             this.entity = response.items[0];
+    //             this.validationForm.patchValue(this.entity);
+    //             this.isLoading = false;
+    //         },
+    //         error: (err: any) => {
+    //             this.isLoading = false;
+    //             var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
+    //             this.messages.push({ text: msg, msgType: "danger" });
+    //         }
+    //     });
+    // }
+    //---------------------------------------------------------  
+    // calls Entity Framework query at the backnd.  
     async view() {
         var target = this.apiUrl + this.entity.id;
         (await this.apiService.get(target)).subscribe({
