@@ -2,13 +2,10 @@
   <Project Path="../Admin/Admin.App/Admin.App.csproj" />
   <Project Path="../Admin/Bfs.Core/Bfs.Core.csproj" />
   <Project Path="../V1/Backend/Bfs.Auth/Bfs.Auth.Api/Bfs.Auth.Api.csproj" />
+  <Project Path="../V1/Backend/Bfs.Auth/Bfs.Auth.Client/Bfs.Auth.Client.csproj" />
   <Project Path="../V1/Backend/Bfs.Auth/Bfs.Auth.Contracts/Bfs.Auth.Contracts.csproj" />
   <Project Path="../V1/Backend/Bfs.Auth/Bfs.Auth.Data/Bfs.Auth.Data.csproj" />
   <Project Path="../V1/Backend/Bfs.Auth/Bfs.Auth.Domain/Bfs.Auth.Domain.csproj" />
-  <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Api/Bfs.Infrastructure.Api.csproj" />
-  <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Contracts/Bfs.Infrastructure.Contracts.csproj" />
-  <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Data/Bfs.Infrastructure.Data.csproj" />
-  <Project Path="../V1/Backend/Bfs.Infrastructure/Bfs.Infrastructure.Domain/Bfs.Infrastructure.Domain.csproj" />
   <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Api/Bfs.Master.Api.csproj" />
   <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Contracts/Bfs.Master.Contracts.csproj" />
   <Project Path="../V1/Backend/Bfs.Master/Bfs.Master.Data/Bfs.Master.Data.csproj" />
