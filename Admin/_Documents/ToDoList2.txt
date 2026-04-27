@@ -1,6 +1,16 @@
+CustomReports url field in the database is saved in the format [system_prefix]/[component-name]/list. i.e.:             "url": "bfs/system-action/list/"
+the url is searched against all app routes. it finds the url within the [system] Routes. ie if it starts with bfs, the route will be found under the system that has the prefix bfs. (infrastructure-apiService)
+if the url starts with mstr then it will be found in master api service, and it will use its api-url. export const REPORTS_ROUTES: Routes = [
+    {
+        path: 'mstr/report/structure-compare/:id',
+        component: StructureCompareComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['master'], app: ['b.ofc'] } 
+    },
+
 logos, missing fields in tenant, system, app  (logo field, abbreviation for any thing related to permissions system, app, action, component)
 
-fix "Code-dont-Delete" issue
+fix "Admin: Code-dont-Delete" issue
 lookups in one promise
 Aspire (explore .ServiceDefaults instrumentations)
 
@@ -13,6 +23,8 @@ Seed fields in one table (category / subcategory)
 Soft Delete
 
 Resource security=> where conditions on table query \ report query. investorId=
+link\unlink users
+
 AI Generate data
 string computed field, as app name = system name - app name, bfsField add field computeFormula=`${systemName}-${name}`
 
@@ -20,7 +32,7 @@ Record validation
 Table validation
 
 autocomplete
-link\unlink users
+Create tenant: create record in master, link it to Auth, run init & seed scripts to define Roles and add bfs.Admin
 
 deals with secrets
 linear reports for stores
@@ -38,6 +50,12 @@ logging
 
 http://localhost:2400/
 
+sql script:
+when adding a new tenant
+- add user: Bfs Admin Randa, Suzette to the following tables:
+- athUser using the same aspnetId as in master
+- athRoleUser the using athUser.Id link to the RoleId = 1
+- dont add the role bfsadmin to the athRole
 
 You’re building multi-tenant, permission-based, JWT-backed API. 
 
