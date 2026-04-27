@@ -23,10 +23,6 @@ const BFS_SYSTEMS_ROUTES: Routes = [
             },
             {
                 path: '',
-                loadChildren: () => import('../bfs/infrastructure-main/infrastructure.route').then((mod) => mod.Infrastructure_ROUTES)
-            },
-            {
-                path: '',
                 loadChildren: () => import('../bfs/stores-main/stores.route').then((mod) => mod.Stores_ROUTES)
             },
             {
