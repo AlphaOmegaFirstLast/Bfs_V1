@@ -108,7 +108,7 @@ public static class BuilderExtensions
 
         // Tenant resolution (per request). TenantProvider is scoped (via AddScoped) and can safely use HttpContext.
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddScoped<ITenantProvider, TenantProvider>();
+        builder.Services.AddScoped<ITenantManager, TenantManager>();
     }
 
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
@@ -137,8 +137,8 @@ public static class BuilderExtensions
             }
             else
             {
-                var tenantProvider = serviceProvider.GetRequiredService<ITenantProvider>();
-                var connectionString = tenantProvider.GetCurrentTenantDbConnection();
+                var tenantProvider = serviceProvider.GetRequiredService<ITenantManager>();
+                var connectionString = tenantProvider.GetTenantDbConnection();
 
                 options.UseSqlServer(connectionString, sql =>
                 {
