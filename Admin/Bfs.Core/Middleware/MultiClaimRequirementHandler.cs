@@ -1,5 +1,6 @@
 ﻿using Bfs.Core.Auth;
 using Bfs.Core.Config;
+using Bfs.Core.Interfaces;
 using Bfs.Core.TenantManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -11,16 +12,19 @@ namespace Bfs.Core.Middleware;
 public class MultiClaimRequirementHandler: AuthorizationHandler<MultiClaimRequirement>
 {
     private readonly BfsSettings _settings;
-    private readonly ITenantProvider _tenantProvider;
+    private readonly IScopeData _scopeData;
+    private readonly ITenantManager _tenantManager;
     private readonly IPermissionProvider _permissionProvider;
 
     public MultiClaimRequirementHandler(
         IOptions<BfsSettings> settings,
-        ITenantProvider tenantProvider,
+        IScopeData scopeData,
+        ITenantManager tenantManager,
         IPermissionProvider permissionProvider)
     {
         _settings = settings.Value;
-        _tenantProvider = tenantProvider;
+        _scopeData = scopeData;
+        _tenantManager = tenantManager;
         _permissionProvider = permissionProvider;
     }
 
@@ -32,23 +36,23 @@ public class MultiClaimRequirementHandler: AuthorizationHandler<MultiClaimRequir
             return; // Security is disabled, so we succeed the requirement
         }
 
-        if (context.User?.Identity?.IsAuthenticated != true)
+        //context.User?.Identity?.IsAuthenticated == true, that means the jwt token is valid and the user is authenticated.
+        if (context.User?.Identity?.IsAuthenticated != true) 
             return; // User is not authenticated, so we don't succeed the requirement
 
         var userRoles = context.User.Claims.Where(x=> x.Type == "roleId").Select(c => c.Value).ToList();
-        var bfsAdmin = "1"; // Todo Assuming "1" is the role ID for bfsAdmin, this should ideally come from a config or constant
-        if (userRoles.Contains(bfsAdmin))
+        if (userRoles.Contains(BfsDefault.BfsAdminRoleId) || userRoles.Contains(BfsDefault.IdentityRoleId))
         {
             context.Succeed(requirement);
             return;
         }
 
         // get tenant-specific permissions, get user 's roles, and check if any of the user's roles have the required permissions
-        var tenantId = _tenantProvider.GetCurrentTenantId();
-        var tenantDb = _tenantProvider.GetCurrentTenantDbConnection();
+        var tenantId = _scopeData.TenantId; //_tenantManager.GetCurrentTenantId();
+        var tenantDb = _tenantManager.GetTenantDbConnection();
         var masterConnection = _settings.DbConnections.MasterConnection;
 
-        var permissions = await _permissionProvider.GetPermissionsAsync(tenantId, masterConnection, tenantDb);
+        var permissions = await _permissionProvider.GetPermissionsAsync(tenantId.ToString(), masterConnection, tenantDb);
         var userPermissions = permissions.Where(p => userRoles.Contains(p.RoleId.ToString())).Select(p => p.Method.ToLower()).ToList();
 
         var isAllowed = true;

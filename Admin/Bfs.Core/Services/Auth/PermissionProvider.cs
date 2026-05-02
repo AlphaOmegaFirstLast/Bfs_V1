@@ -1,4 +1,5 @@
-﻿using Bfs.Core.TenantManagement;
+﻿using Bfs.Core.Config;
+using Bfs.Core.TenantManagement;
 using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
@@ -33,7 +34,7 @@ namespace Bfs.Core.Auth
             string masterConnection,
             string tenantDbConnection)
         {
-            var cacheKey = $"permissions:{tenantId}";
+            var cacheKey = $"{CacheKeys.Permissions}:{tenantId}";
 
             return _cache.GetOrCreateAsync(cacheKey, async entry =>
             {

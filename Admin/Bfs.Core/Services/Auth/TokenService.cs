@@ -37,12 +37,19 @@ public class TokenService : ITokenService
         return jwtToken;
     }
 
+    public async Task<string> CreateIdentityTokenAsync(string masterConnection, string tenantId)
+    {
+        var claims = GetIdentityClaims(tenantId);
+        var jwtToken = CreateJwtToken(claims);
+        return jwtToken;
+    }
+
     // this method is called when user select tenant, the refresh token cookie is set for the selected tenant and user,
     // frontend will use it to get JWT token for API calls. The cookie value format is {tenantId}|{aspnetUserId},
     // frontend will extract tenantId and aspnetUserId from the cookie and pass to GetTokenAsync to get JWT token.
     // this method is NOT called from the Token controller. it is called only in index.cshtml page.
     // the OnPostSelectTenantAsync method in the Index.cshtml.cs when user select tenant, so the tenantId and aspnetUserId can be passed to this method to generate the refresh token cookie.
-    public void GetRefreshTokenCookie(HttpResponse Response, string cookieName, long tenantId, string aspnetUserId, long systemId)
+    public void SetRefreshTokenCookie(HttpResponse Response, string cookieName, long tenantId, string aspnetUserId, long systemId)
     {
         var cookieValue = $"{tenantId}|{aspnetUserId}|{systemId}";
         var options = new CookieOptions
@@ -74,7 +81,7 @@ public class TokenService : ITokenService
         Response.Cookies.Append(cookieName, cookieValue, options);
     }
 
-    public static async Task<List<AuthRoleUser>> GetAuthUserRoles(string tenantConnection, string aspNetUserId)
+    private static async Task<List<AuthRoleUser>> GetAuthUserRoles(string tenantConnection, string aspNetUserId)
     {
         using var db = new SqlConnection(tenantConnection);
         var sqlSelect = "select u.id as UserId, ru.RoleId as RoleId " +
@@ -85,11 +92,11 @@ public class TokenService : ITokenService
         var sqlStatement = sqlSelect.ToString();
         var parameters = new { AspNetUserId = aspNetUserId };
 
-        var items = await db.QueryAsync<AuthRoleUser>(sqlSelect.ToString(), parameters);
+        var items = await db.QueryAsync<AuthRoleUser>(sqlStatement, parameters);
         return items.ToList();
     }
 
-    public List<Claim> GetClaims(string tenantId, List<AuthRoleUser> list)
+    private List<Claim> GetClaims(string tenantId, List<AuthRoleUser> list)
     {
         var addOnce = true;
         var claims = new List<Claim>();
@@ -98,6 +105,7 @@ public class TokenService : ITokenService
 
         foreach (var userRole in list)
         {
+            // if a user doesn't have roles, then it will not have the userId claim. so we add userId claim only when the user has at least one role, and we only need to add it once, no matter how many roles the user has.
             if (addOnce)
             {
                 claims.Add(new Claim("userId", userRole.UserId.ToString()));
@@ -106,12 +114,26 @@ public class TokenService : ITokenService
 
             claims.Add(new Claim("roleId", userRole.RoleId.ToString()));
         }
-        ;
 
         return claims;
     }
 
-    public string CreateJwtToken(List<Claim> claims)
+    private List<Claim> GetIdentityClaims(string tenantId)
+    {
+        //claims that will be assigned to Identity.Web.Api as if it is a user.
+        //it will use the tenantId claim to identify which tenant it is, and use the roleId claim to identify its role,
+        //so it can only access the API that is allowed for that role in that tenant.
+        //currently we only have one role for Identity.Web.Api, which is IdentityRoleId
+        //and it has very limited access to API, only used for user management in the tenant admin page.
+        var claims = new List<Claim>();
+
+        claims.Add(new Claim("tenantId", tenantId));
+        claims.Add(new Claim("roleId", BfsDefault.IdentityRoleId));
+
+        return claims;
+    }
+
+    private string CreateJwtToken(List<Claim> claims)
     {
         var jwtSettings = _settings.JwtSettings;
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));

@@ -8,7 +8,7 @@ public interface IScopeData
     /// <summary>
     ///     Name of the header containing the user ID.
     /// </summary>
-    public static readonly string PortalUserIdHeader = "PortalUserId";
+    public static readonly string UserIdHeader = "UserId";
 
     /// <summary>
     ///     Name of the header containing the tenant ID.
@@ -23,7 +23,7 @@ public interface IScopeData
     /// <summary>
     ///     ID of the user, requesting the operation.
     /// </summary>
-    public long PortalUserId { get; }
+    public long UserId { get; }
 
     /// <summary>
     ///     ID of the tenant, owning the entities in the scope.
