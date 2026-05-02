@@ -109,6 +109,8 @@ public static class BuilderExtensions
         // Tenant resolution (per request). TenantProvider is scoped (via AddScoped) and can safely use HttpContext.
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<ITenantProvider, TenantProvider>();
+
+        builder.Services.AddHostedService<CacheWarmingService>();  // AddHostedService so the host is going to manage the lifecycle of the CacheWarmingService, starting it when the application starts and stopping it when the application shuts down. This ensures that the background service runs continuously in the background, refreshing the tenant cache at regular intervals as defined in the CacheWarmingService implementation.
     }
 
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)

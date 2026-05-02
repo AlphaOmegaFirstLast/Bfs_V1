@@ -112,6 +112,9 @@ namespace Admin.App
 
             var outputContent = input.Replace("[ComponentType]", ComponentType.ToString());
 
+            outputContent = outputContent.Replace("[BestFitDB]", codeInfo.BestFitDB);
+            outputContent = outputContent.Replace("[BestFitSystemName]", codeInfo.BestFitSystemName);
+
             outputContent = outputContent.Replace("[DbComponentName]", DbComponentName.Trim());
             outputContent = outputContent.Replace("[ComponentNameCapital]", ComponentNameCapital.Trim());
             outputContent = outputContent.Replace("[ComponentNameSmall]", ComponentNameSmall.Trim());

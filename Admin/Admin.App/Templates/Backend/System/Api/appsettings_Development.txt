@@ -11,8 +11,8 @@
     "IsSecurityEnabled": "true",
     "IsMasterSystem": "false",
     "DbConnections": {
-      "MasterConnection": "Server=localhost;Database=BestFit_V5;Trusted_Connection=True;TrustServerCertificate=True",
-      "TestTenantConnection": "Server=localhost;Database=Tenant10;Trusted_Connection=True;TrustServerCertificate=True"
+      "MasterConnection": "Server=localhost;Database=[BestFitDB];Trusted_Connection=True;TrustServerCertificate=True",
+      "TestTenantConnection": "Server=localhost;Database=Tenant__Migrations;Trusted_Connection=True;TrustServerCertificate=True"
     },
     "ApiBaseUrls": {
       "AuthApi": "https://localhost:6100",

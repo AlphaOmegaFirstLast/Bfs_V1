@@ -26,7 +26,7 @@ public class AdminController
     [CustomAuthorize("method=r.migrate")]
     public async Task MigrateTenants()
     {
-        var masterConnection = _bfsSettings?.DbConnections?.MasterConnection;
+        var masterConnection = _bfsSettings.DbConnections.MasterConnection;
         await TenantManager.ApplyMigrations< [SystemNameCapital]DbContext >(masterConnection, "[SystemNameCapital]");
     }
 }

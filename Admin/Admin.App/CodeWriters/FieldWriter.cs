@@ -42,6 +42,7 @@ namespace Admin.App
         public string fieldSmallName;
         public string fieldFileName;
 
+        public string childListFileName;
         public bool isLookup;
         public string lookupNameCapital;
         public string lookupNameSmall;
@@ -151,6 +152,8 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[LookupNameCapital]", lookupNameCapital);
             fieldTemplate = fieldTemplate.Replace("[LookupNameSmall]", lookupNameSmall);
 
+            fieldTemplate = fieldTemplate.Replace("[ChildListFileName]", childListFileName);
+
             fieldTemplate = fieldTemplate.Replace("[DbAutoCompleteTable]", DbAutoCompleteTable);
             fieldTemplate = fieldTemplate.Replace("[AutoCompleteFileName]", autoCompleteFileName);
             fieldTemplate = fieldTemplate.Replace("[AutoCompleteCapital]", autoCompleteCapital);
@@ -221,6 +224,8 @@ namespace Admin.App
             fieldCapitalName = result.Item1;
             fieldSmallName = result.Item2;
             fieldFileName = result.Item3;
+
+            childListFileName = result.Item3;
 
             isLookup = BackendDataTypeId == BackendDataType.DT_Lookup || BackendDataTypeId == BackendDataType.DT_SeedLookup;
             if (isLookup) 
@@ -366,7 +371,7 @@ namespace Admin.App
             frontendDataType = BackendDataTypeId == BackendDataType.DT_bool ? "boolean"
                                      : BackendDataTypeId == BackendDataType.DT_int || BackendDataTypeId == BackendDataType.DT_decimal ? "number"
                                      : BackendDataTypeId == BackendDataType.DT_long ? "string"  // fronend missing long type accuracy, using string
-                                     : BackendDataTypeId == BackendDataType.DT_DateTime ? "date"
+                                     : BackendDataTypeId == BackendDataType.DT_DateTime ? "Date | null"
                                      : BackendDataTypeId == BackendDataType.DT_TabList ? "[]"
                                      : BackendDataTypeId == BackendDataType.DT_CustomFieldList ? "ICustomFieldList"
                                      : BackendDataTypeId == BackendDataType.DT_FieldValidation ? "IFieldValidation"
@@ -433,6 +438,7 @@ namespace Admin.App
                        : frontendDataType.ToLower() == "ireportinfo" ? "initReportInfo()"
                        : frontendDataType.ToLower() == "imatrixinfo" ? "initMatrixInfo()"
                        : frontendDataType.ToLower() == "string" && BackendDataTypeId == BackendDataType.DT_long ? "'0'"
+                       : BackendDataTypeId == BackendDataType.DT_DateTime? "null"  // Date type in frontend will be initialized as null, and set to actual date value when used, to avoid timezone issue.
                        : "''";
         }
 

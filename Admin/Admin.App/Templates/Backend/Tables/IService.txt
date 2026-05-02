@@ -1,16 +1,11 @@
 using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.[SystemNameCapital].Contracts;
 
 namespace Bfs.[SystemNameCapital].Domain.Interfaces
 {
-    public interface I[ComponentNameCapital]Service
+    public interface I[ComponentNameCapital]Service: ICrudService<[ComponentNameCapital]>
     {
-        Task<[ComponentNameCapital]?> GetAsync(long id);
-        Task<List<[ComponentNameCapital]>> GetAsync();
-
-        Task<[ComponentNameCapital]> CreateAsync([ComponentNameCapital] contract);
-        Task<[ComponentNameCapital]?> UpdateAsync([ComponentNameCapital] contract);
-        Task DeleteAsync(long id);
         Task<[ComponentNameCapital]> UploadAsync([ComponentNameCapital] contract);
 
         Task<QueryResponse<[ReportNameCapital]Item>> ListAsync(QueryRequest<[ReportNameCapital]Filter> contractRequest);

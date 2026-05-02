@@ -6,6 +6,6 @@
     </a>
 
     <ng-template ngbNavContent>
-        <[LookupFileName]-list [presetFilter]="preset[CapitalFieldName]Filter"/>
+        <[ChildListFileName]-list [presetFilter]="preset[CapitalFieldName]Filter"/>
     </ng-template>
 </li>

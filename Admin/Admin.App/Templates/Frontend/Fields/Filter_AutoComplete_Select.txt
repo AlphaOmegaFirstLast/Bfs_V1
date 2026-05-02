@@ -11,7 +11,7 @@
             <input type="text"  class="form-control" [formControl]="[AutoCompleteSmall]Control"
                 (focus)="[AutoCompleteSmall]Control.value.length >= 2 && (show[AutoCompleteCapital] = true)"
                     autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf="isLoading"><span class="spinner-border spinner-border-sm"></span></span>
+            <span class="input-group-text" *ngIf="isLoading.autoComplete"><span class="spinner-border spinner-border-sm"></span></span>
         </div>
         <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
             *ngIf="show[AutoCompleteCapital] && [AutoCompleteSmall]Options.length > 0">
@@ -23,7 +23,7 @@
                 </button>
             </li>
         </ul>
-        <ul class="dropdown-menu show w-100" *ngIf="show[AutoCompleteCapital] && !isLoading && [AutoCompleteSmall]Options.length === 0">
+        <ul class="dropdown-menu show w-100" *ngIf="show[AutoCompleteCapital] && !isLoading.autoComplete && [AutoCompleteSmall]Options.length === 0">
             <li><span class="dropdown-item-text text-muted">Please select a valid [DisplayName].</span></li>
         </ul>
       </div>
