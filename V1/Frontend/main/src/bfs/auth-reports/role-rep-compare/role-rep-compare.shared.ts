@@ -1,11 +1,11 @@
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
-import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/auth-main/auth.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const RoleRepCompareColumns = [
     { fieldName: 'authRole_Id', displayName: 'ID', sortName: 'AuthRole_Id', width: '50px', isVisible:false },
-{ fieldName: 'authRole_Name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'authRole_Notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+{ fieldName: 'authRole_Name', displayName: 'Name', sortName: 'AuthRole_Name', width: '50px', isVisible:true },
+{ fieldName: 'authRole_Notes', displayName: 'Notes', sortName: 'AuthRole_Notes', width: '50px', isVisible:false },
 
 ];
 
@@ -24,6 +24,7 @@ export interface IRoleRepCompareWithLookup extends IRoleRepCompare{
 //---------------------------------------------------------
 export interface IRoleRepCompareFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 
@@ -41,6 +42,7 @@ export function initRoleRepCompareRequest(): IRoleRepCompareRequest {
         group: '',
         sortOption: {},
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 

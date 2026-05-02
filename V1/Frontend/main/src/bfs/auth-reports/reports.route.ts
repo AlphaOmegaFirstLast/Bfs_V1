@@ -12,4 +12,3 @@ export const REPORTS_ROUTES: Routes = [
     },
 //Template_Component_RegisterRoute
 ]
-
