@@ -1,5 +1,5 @@
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
-import * as operations from '@bfs/infrastructure-main/infrastructure.operations';
+import * as operations from '@bfs/master-main/master.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const ProductTransactionCompareColumns = [
