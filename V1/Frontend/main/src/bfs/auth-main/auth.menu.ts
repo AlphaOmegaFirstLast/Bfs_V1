@@ -147,8 +147,15 @@ export const AuthMenuItems: MenuItemType[] = [
            role: ['admin']
         },
         children: [
+    {
+        label: 'User Request Status',
+        icon: 'tablerLayoutSidebar',
+        url: '/ath/user-request-status/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Seed
         ]
     },
 ];
-

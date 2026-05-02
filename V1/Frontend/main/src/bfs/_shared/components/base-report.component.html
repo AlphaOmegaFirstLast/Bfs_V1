@@ -128,7 +128,7 @@
         </div>
         <!----------------------------------------- Reloading overlay -------------------------------------->
 
-        @if (isLoading) {
+        @if (isLoading.list || isLoading.chart) {
         <div class="card-overlay d-flex">
             <div class="spinner-border text-primary"></div>
         </div>

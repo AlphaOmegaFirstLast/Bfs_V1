@@ -32,11 +32,10 @@ public tokenService!: any;
     public customFieldFormControlList!: UntypedFormArray['controls'];
     public route: ActivatedRoute;
     public submit: boolean = false;
-    public isLoading: boolean = false;
     public currentOperation: string = '';
     public parent: any;
     public messages: IUIMessage[] = [];
-
+    public isLoading: any = {view:false, save: false, lookups: false, autoComplete: false}; 
     entity: Entity;
     me: any = this;
     //-----------------------Object Fields Lookups----------------------------------
@@ -77,7 +76,7 @@ public tokenService!: any;
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         this.messages = [];
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         let target = '';
     }
     //---------------------------------------------------------
@@ -158,11 +157,11 @@ public tokenService!: any;
         target = '/CustomFieldDefinition/list';
         (await this.apiService.post(target, { pageSize: 50 })).subscribe({
             next: (response: IQueryResponse) => {
-                this.isLoading = false;
+                this.isLoading.list = false;
                 this.setCustomFieldControls(response.items);
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.list = false;
                 var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -184,10 +183,10 @@ public tokenService!: any;
     //         next: (response: any) => {
     //             this.entity = response.items[0];
     //             this.validationForm.patchValue(this.entity);
-    //             this.isLoading = false;
+    //             this.isLoading.save = false;
     //         },
     //         error: (err: any) => {
-    //             this.isLoading = false;
+    //             this.isLoading.save = false;
     //             var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
     //             this.messages.push({ text: msg, msgType: "danger" });
     //         }
@@ -197,14 +196,15 @@ public tokenService!: any;
     // calls Entity Framework query at the backnd.  
     async view() {
         var target = this.apiUrl + this.entity.id;
+        this.isLoading.view = true;
         (await this.apiService.get(target)).subscribe({
             next: (response: Entity) => {
                 this.entity = response;
                 this.validationForm.patchValue(this.entity);
-                this.isLoading = false;
+                this.isLoading.view = false;
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.view = false;
                 var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -213,15 +213,16 @@ public tokenService!: any;
     //---------------------------------------------------------
     async add() {
         var target = this.apiUrl;
+        this.isLoading.save = true;
         (await this.apiService.post(target, this.entity)).subscribe({
             next: (response: Entity) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 this.submit = false;
                 this.validationForm.patchValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was added successfully`, msgType: "info" });
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 var msg = err.message || `An error occurred while adding ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -230,16 +231,17 @@ public tokenService!: any;
     //---------------------------------------------------------
     async update() {
         var target = this.apiUrl;
+        this.isLoading.save = true;
         (await this.apiService.put(target, this.entity)).subscribe({
             next: (response: Entity) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 this.submit = false;
                 this.validationForm.patchValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was updated successfully`, msgType: "info" });
 
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 var msg = err.message || `An error occurred while updating ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -248,16 +250,17 @@ public tokenService!: any;
     //---------------------------------------------------------
     async delete() {
         var target = this.apiUrl + this.entity.id;
+        this.isLoading.save = true;
         (await this.apiService.delete(target)).subscribe({
             next: (response: Entity) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 this.submit = false;
                 this.entity = this.initEntity();
                 this.validationForm.patchValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was deleted successfully`, msgType: "info" });
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 var msg = err.message || `An error occurred while deleting ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -271,8 +274,7 @@ public tokenService!: any;
             this.entity = this.validationForm.getRawValue();
             // this.validationForm.disable();
             this.messages = [];
-            if (!this.isLoading) {  // to prevent multiple requests
-                this.isLoading = true;
+            if (!this.isLoading.save) {  // to prevent multiple requests
                 this.applyOperation();
             }
         }

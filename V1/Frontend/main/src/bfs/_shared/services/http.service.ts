@@ -17,7 +17,7 @@ export class HttpService {
   //-------------------------------------
   async get(url: string, opts = {}) {
     var target = this.origin + url;
-    opts = await this.getHeaders();
+    opts = await this.getOptions();
 
     return this.http.get(target, opts).pipe(
       map((res: any) => res),
@@ -31,7 +31,7 @@ export class HttpService {
   //-------------------------------------
   async post(url: string, data: any, opts = {}) {
     var target = this.origin + url;
-    opts = await this.getHeaders();
+    opts = await this.getOptions();
 
     return this.http.post(target, data, opts).pipe(
       map((res: any) => res),
@@ -45,7 +45,7 @@ export class HttpService {
   //-------------------------------------
   async put(url: string, data: any, opts = {}) {
     var target = this.origin + url;
-    opts = await this.getHeaders();
+    opts = await this.getOptions();
 
     return this.http.put(target, data, opts).pipe(
       map((res: any) => res),
@@ -59,7 +59,7 @@ export class HttpService {
   //-------------------------------------
   async delete(url: string, opts = {}) {
     var target = this.origin + url;
-    opts = await this.getHeaders();
+    opts = await this.getOptions();
 
     return this.http.delete(target, opts).pipe(
       map((res: any) => res),
@@ -74,7 +74,7 @@ export class HttpService {
 
 async postAutoComplete(url: string, data: any, opts = {}) {
     const target = this.origin + url;
-    const headers = await this.getHeaders();
+    const headers = await this.getOptions();
     
     // Combine your custom headers with any passed-in options
     const finalOptions = { ...headers, ...opts };
@@ -95,7 +95,7 @@ async postAutoComplete(url: string, data: any, opts = {}) {
 
 async getItems<T>(url: string, data: any, opts = {}): Promise<T> {
   const target = this.origin + url;
-  opts = await this.getHeaders();
+  opts = await this.getOptions();
 
   try {
     return await firstValueFrom(
@@ -110,7 +110,7 @@ async getItems<T>(url: string, data: any, opts = {}): Promise<T> {
 
 async downloadJson(url: string, data: any, opts = {}, fileName:string) {
   const target = this.origin + url;
-  opts = await this.getHeaders();
+  opts = await this.getOptions();
 
   return this.http.post(target, data, opts).pipe(
     map((res: any) => {
@@ -184,7 +184,13 @@ async downloadJson(url: string, data: any, opts = {}, fileName:string) {
     // this.notificationService.showError(message);
   }
   //-------------------------------------
-  private async getHeaders(): Promise<{ headers: HttpHeaders; withCredentials: boolean }> {
+  private async getOptions(): Promise<{ headers: HttpHeaders; withCredentials: boolean }> {
+    const headers = await this.getHeaders();
+    //withCredentials is false because we are using token-based auth, not cookie-based auth
+    return { headers: headers, withCredentials: false };
+  }
+  //-------------------------------------
+    private async getHeaders(): Promise<HttpHeaders> {
 
     var headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
@@ -193,7 +199,8 @@ async downloadJson(url: string, data: any, opts = {}, fileName:string) {
     if (accessToken) {
       headers = headers.set('Authorization', 'Bearer ' + accessToken);
     }
-    return { headers: headers, withCredentials: false };
+    return headers;
   }
   //-------------------------------------
+
 }

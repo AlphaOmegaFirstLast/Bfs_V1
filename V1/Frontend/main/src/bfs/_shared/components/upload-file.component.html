@@ -31,7 +31,7 @@
   }
   <!----------------------------------------- Progress bar -------------------------------------->
   @if (uploadStatus()) {
-  <ngb-progressbar class="mb-3" type="primary" [value]="uploadProgress()">{{ uploadProgress() }}%</ngb-progressbar>
+  <ngb-progressbar class="mb-3" type="{{ uploadStatus() === 'Error' ? 'danger' : 'primary' }}" [value]="uploadProgress()">{{ uploadProgress() }}%</ngb-progressbar>
   }
 
   @if (uploadStatus()) {

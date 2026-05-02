@@ -61,7 +61,7 @@ public tokenService!: any;
     //---------------------------------------------------------
 
     public filterArray: string[] = [];
-    public isLoading: boolean = false;
+    public isLoading: any = {list:false, chart:false,  save: false};   
     public messages: IUIMessage[] = [];
     //-------------------------------------------------------- Set visibility of buttons and sections ----------
     public isSection = { chart: false, table: true, description: false };
@@ -102,13 +102,13 @@ public tokenService!: any;
 
     async getReport(): Promise<void> {
 
-        if (!this.isLoading) {  // to prevent multiple requests
+        if (!this.isLoading.list) {  // to prevent multiple requests
             this.messages = [];
-            this.isLoading = true;
+            this.isLoading.list= true;
             var target = this.getApiUrl;
             (await this.apiService.post(target, this.queryRequest)).subscribe({
                 next: (res: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list= false;
                     this.list = res.items;
                     this.pagination.totalItems = res.totalItems;
                     this.pagination.pageCount = res.totalPages;
@@ -116,7 +116,7 @@ public tokenService!: any;
                     this.setPaginationDescription();
                 },
                 error: (err: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list= false;
                     var msg = err.message || `An error occurred while processing ${this.getApiUrl} data.`;
                     this.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -206,20 +206,20 @@ public tokenService!: any;
     }
     //---------------------------------------------------------
     async exportJson(me: any): Promise<void> {
-        if (!me.isLoading) {  // to prevent multiple requests
+        if (!me.isLoading.list) {  // to prevent multiple requests
             me.messages = [];
-            me.isLoading = true;
+            me.isLoading.list= true;
             var target = me.getApiUrl;
             me.queryRequest.pageSize = me.pagination.totalItems;
             me.queryRequest.pageIndex = 1;
 
             (await me.apiService.downloadJson(target, me.queryRequest, {}, me.downloadFileName)).subscribe({
                 next: (res: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list= false;
                     me.queryRequest.pageSize = me.pageSizes[0];
                 },
                 error: (err: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list= false;
                     var msg = err.message || 'An error occurred while processing Tables Fields data.';
                     me.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -325,17 +325,17 @@ public tokenService!: any;
             "baseReport": this.getCustomReportBaseReport(),
             "url": this.getCustomReportUrl()
         };
-        if (!this.isLoading) {  // to prevent multiple requests
+        if (!this.isLoading.list) {  // to prevent multiple requests
             this.messages = [];
-            this.isLoading = true;
+            this.isLoading.list= true;
             (await this.apiService.post(target, data)).subscribe({
                 next: (response: ICustomReports) => {
-                    this.isLoading = false;
+                    this.isLoading.list= false;
                     let customReport = response;
                     this.messages.push({ text: `${customReport.name} is saved successfully`, msgType: "info" });
                 },
                 error: (err: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list= false;
                     var msg = err.message || 'An error occurred while adding Custom Reports data.';
                     this.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -344,18 +344,18 @@ public tokenService!: any;
     }
     //---------------------------------------------------------
     async restoreCustomReport(): Promise<void> {
-        if (!this.isLoading) {  // to prevent multiple requests
+        if (!this.isLoading.list) {  // to prevent multiple requests
             this.messages = [];
-            this.isLoading = true;
+            this.isLoading.list= true;
             var target = this.apiCustomReportsUrl + this.customReportInfo.id;
             (await this.apiService.get(target)).subscribe({
                 next: (response: ICustomReports) => {
-                    this.isLoading = false;
+                    this.isLoading.list= false;
                     this.queryRequest = response.request ? JSON.parse(response.request) : null;
                     this.getReport();
                 },
                 error: (err: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list= false;
                     var msg = err.message || 'An error occurred while fetching Custom Reports data.';
                     this.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -365,18 +365,18 @@ public tokenService!: any;
     //---------------------------------------------------------
     async duplicateRecord(me: any, record: IWithLookup, data: any): Promise<void> {
         const id = (record as IIdentifiable).id;
-        if (!me.isLoading) {  // to prevent multiple requests
+        if (!me.isLoading.list) {  // to prevent multiple requests
             me.messages = [];
-            me.isLoading = true;
+            me.isLoading.list= true;
             var target = `${me.getByIdApiUrl}${id}`;
             (await me.apiService.get(target)).subscribe({
                 next: (res: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list= false;
                     var duplicatedRecord = res as IWithLookup;
                     me.postDuplicateRecord(me, duplicatedRecord, data);
                 },
                 error: (err: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list= false;
                     var msg = err.message || 'An error occurred while processing Systems data.';
                     me.messages.push({ text: msg, msgType: "danger" });
                 }

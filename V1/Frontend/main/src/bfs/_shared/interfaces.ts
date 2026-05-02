@@ -19,7 +19,7 @@ export interface TokenModel {
 }
 //------------------------------------------------
 export interface IUserInterface {
-    isLoading?: boolean;
+    isLoading?: any;
     apiService?: any;
     router: Router;
     messages: IUIMessage[];
