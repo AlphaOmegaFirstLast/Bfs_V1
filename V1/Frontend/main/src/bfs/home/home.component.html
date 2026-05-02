@@ -7,8 +7,9 @@
           <div
             class="p-4 card-img-overlay rounded-start-0 auth-overlay d-flex align-items-center justify-content-center">
             <section class="text-white text-center py-4">
-              <h3 class="mb-2 fst-italic">{{welcomeData.system}}</h3>
-              <h4 class="fst-italic">{{welcomeData.company}} | {{welcomeData.tenant}}</h4>
+              <h2 class="mb-2 fst-italic">System: {{welcomeData.system}}</h2>
+              <h4 class="fst-italic">Company: {{welcomeData.company}}</h4>
+              <h6 class="fst-italic">Owner: {{welcomeData.tenant}}</h6>
             </section>
           </div>
         </div>
@@ -20,6 +21,7 @@
   <ng-container *ngFor="let item of userApps">
     <div 
       class="btn btn-outline-info m-2 app-button" 
+      style="width: 200px;"
       (click)="setCurrentApp(item.name)">
       
       <img [src]="'../../assets/images/apps/' + item.logo" class="app-logo">

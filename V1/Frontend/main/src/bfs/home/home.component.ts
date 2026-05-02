@@ -7,7 +7,7 @@ import { templates } from 'choices.js';
 
 @Component({
   selector: 'app-home-page',
-  imports: [NgIf, NgFor, CommonModule],
+  imports: [NgFor, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
