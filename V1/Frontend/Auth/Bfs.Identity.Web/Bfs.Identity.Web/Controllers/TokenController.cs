@@ -18,7 +18,8 @@ public class TokenController : ControllerBase
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly BfsSettings _settings;
 
-    public TokenController(ITokenService tokenService, IOptions<BfsSettings> settings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+    public TokenController(ITokenService tokenService, IOptions<BfsSettings> settings,
+    SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
     {
         _tokenService = tokenService; 
         _signInManager = signInManager;

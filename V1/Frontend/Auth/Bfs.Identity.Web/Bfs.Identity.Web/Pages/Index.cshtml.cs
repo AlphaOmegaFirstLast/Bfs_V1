@@ -1,3 +1,5 @@
+using Bfs.Auth.Client;
+using Bfs.Auth.Contracts;
 using Bfs.Core.Config;
 using Bfs.Core.Interfaces;
 using Bfs.Core.Services.Auth;
@@ -20,9 +22,12 @@ namespace Bfs.Identity.Web.Pages
         public List<Tenant> TenantList { get; set; } = new List<Tenant>();
         public List<TenantSystem> SystemList { get; set; } = new List<TenantSystem>();
         public List<Tenant> UserTenantList { get; set; } = new List<Tenant>();
+        public List<Tenant> NewTenantList { get; set; } = new List<Tenant>();
 
         public bool ShowTenants = false;
         public bool ShowSystems = false;
+        public bool ShowNewTenants = false;
+        public bool ShowRequestSentConfirmation = false;
 
         private readonly string _masterConnection;
         private readonly BfsSettings _settings;
@@ -30,12 +35,14 @@ namespace Bfs.Identity.Web.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly AuthClient _authClient;
+
         public IndexModel(
             IOptions<BfsSettings> settings,
             ITokenService tokenService, ILogger<IndexModel> logger,
             SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager
-            )
+            UserManager<IdentityUser> userManager,
+            AuthClient authClient)
         {
             _settings = settings.Value;
             _tokenService = tokenService;
@@ -46,6 +53,7 @@ namespace Bfs.Identity.Web.Pages
             _masterConnection = _settings?.DbConnections?.MasterConnection;
             //Get Tenants from DB, //ToDo Get tenants from Cache.
             TenantList = Tenant.GetTenants(_masterConnection).Result;
+            _authClient = authClient;
         }
 
 
@@ -63,6 +71,41 @@ namespace Bfs.Identity.Web.Pages
             }
         }
 
+        public async Task<IActionResult> OnPostFindNewTenantAsync()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var userClaims = User.Claims;     // Returns list of tenants that the user is not associated with,
+                if (userClaims.Any())
+                {
+                    ShowTenants = false;
+                    ShowNewTenants = true;
+                    NewTenantList = TenantList.Where(x => !userClaims.Any(c => c.Type == "Tenant" && x.Id.ToString() == c.Value)).ToList();
+                }
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostRequestTenantAsync(string newTenantOrder, string dummy)
+        {
+            var tenant = TenantList.FirstOrDefault(t => t.order.ToString() == newTenantOrder);
+            var jwtToken = await _tokenService.CreateIdentityTokenAsync(_settings?.DbConnections?.MasterConnection, tenant.Id.ToString());
+            var aspnetId = _userManager.GetUserId(User);
+            var email = User.Identity.Name;
+            var name = email.Split('@')[0];
+            var response = await _authClient.AddUserRequest(jwtToken, aspnetId, email, name, RequestStatus.WaitingApproval, DateTime.Now);
+            if (response.IsSuccessStatusCode)
+            {
+                ShowRequestSentConfirmation = true;
+            }
+            else
+            {
+                //ToDo handle errors properly
+                ModelState.AddModelError(string.Empty, "There was an error sending the request. Please try again later.");
+            }
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostSelectTenantAsync(string tenantOrder)
         {
             var tenant = TenantList.FirstOrDefault(t => t.order.ToString() == tenantOrder);
@@ -77,7 +120,7 @@ namespace Bfs.Identity.Web.Pages
 
             // Generate the refresh token and set it in the cookie, Attach the cookie to the Response, so the frontend can use it to get access token and call APIs.
             // set systemId to 0 first, after user select system, call GetRefreshTokenCookie again to update the cookie with the selected systemId, so the frontend can use it to get access token and call APIs.
-            _tokenService.GetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenant.Id, aspNetUserId, 0);
+            _tokenService.SetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenant.Id, aspNetUserId, 0);
             _tokenService.SetWelcomeCookie(Response, Constants.WelcomeCookieName, tenant.Name, tenant.CompanyName, "", 0, "");
             return Page();
             //return Redirect("http://bfsfrontend.localhost/main/");
@@ -105,7 +148,7 @@ namespace Bfs.Identity.Web.Pages
             var system = SystemList.FirstOrDefault(s => s.Id == systemId);
             // Generate the refresh token and set it in the cookie, Attach the cookie to the Response,
             // so the frontend can use it to get access token and call APIs.
-            _tokenService.GetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenantId, aspNetUserId, systemId);
+            _tokenService.SetRefreshTokenCookie(Response, Constants.RefreshTokenCookieName, tenantId, aspNetUserId, systemId);
             _tokenService.SetWelcomeCookie(Response, Constants.WelcomeCookieName, tenantName, tenantCompanyName, system?.Name??"", systemId, system?.Logo??"");
 
             // return Redirect("/main");

@@ -1,5 +1,8 @@
 ﻿//using Bfs.Auth.Client;
+using Bfs.Auth.Client;
 using Bfs.Core.Config;
+using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.Core.Services.Auth;
 using Bfs.Identity.Web.Data;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +18,17 @@ public static class BuilderExtensions
         {
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection));
         }
+    }
+
+    public static void RegisterScopeData(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<IScopeData, ScopeData>();
+    }
+
+    public static void RegisterServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<ITokenService, TokenService>();
+        builder.Services.AddScoped<IAspNetUserTenantService, AspNetUserTenantService>();
     }
 
     public static void RegisterIdentity<TContext>(this WebApplicationBuilder builder) where TContext : DbContext
@@ -77,25 +91,20 @@ public static class BuilderExtensions
         });
     }
 
-    public static void RegisterServices(this WebApplicationBuilder builder)
+    public static void RegisterHttpClients(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-        builder.Services.AddScoped<ITokenService, TokenService>();
+        if (settings != null && settings.ApiBaseUrls != null)
+        {
+            var clientConfig = new Action<HttpClient>(client =>
+            {
+                client.BaseAddress = new Uri(settings.ApiBaseUrls.AuthApi); // Auth API base URL
+                client.Timeout = TimeSpan.FromSeconds(30);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
+            builder.Services.AddHttpClient<AuthClient>("AuthApi", clientConfig); // search httpClient wrapper
+        }
     }
-
-    //public static void RegisterHttpClients(this WebApplicationBuilder builder, BfsSettings? settings)
-    //{
-    //    if (settings !=null && settings.ApiBaseUrls !=null)
-    //    {
-    //        var clientConfig = new Action<HttpClient>(client =>
-    //        {
-    //            client.BaseAddress = new Uri(settings.ApiBaseUrls.AuthApi); // Auth API base URL
-    //            client.Timeout = TimeSpan.FromSeconds(30);
-    //            client.DefaultRequestHeaders.Add("Accept", "application/json");
-    //        });
-
-    //        builder.Services.AddHttpClient<AuthClient>("AuthApi", clientConfig); // search httpClient wrapper
-    //    }
-    //}
 }
 
 

@@ -21,10 +21,12 @@ internal class Program
         builder.Services.Configure<BfsSettings>(builder.Configuration.GetSection("Settings"));
 
         // Add Aspire support for development. Bfs.Core.AspireExtensions
-        builder.AddServiceDefaults(); builder.RegisterDbContext(settings);
+        builder.AddServiceDefaults(); 
+        builder.RegisterDbContext(settings);
+        builder.RegisterScopeData();
         builder.RegisterIdentity<ApplicationDbContext>();
         builder.RegisterServices();
-       // builder.RegisterHttpClients(settings);
+        builder.RegisterHttpClients(settings);
         builder.Services.AddLogging();
 
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();

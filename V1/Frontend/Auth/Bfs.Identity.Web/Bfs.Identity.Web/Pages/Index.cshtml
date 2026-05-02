@@ -6,98 +6,159 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<style>
+    .centered {
+        display: block;
+        padding-top: 50px;
+        margin: auto;
+        text-align: center;
+        font-size: large;
+        color: darkred;
+    }
+
+    .home-td {
+        padding: 10px;
+        width: 220px;
+        text-align: center;
+    }
+
+    .btn-td {
+        border-style: none;
+    }
+</style>
 @if (SignInManager.IsSignedIn(User))
 {
-    <style>
-        .no-tenant {
-            display:block;
-            padding: 200px;  
-            margin: auto;
-            text-align: center;
-            font-size:large;
-            color: darkred;
-        }
 
-        .home-td {
-            padding:10px;
-            width: 220px;
-            text-align: center;
-        }
+    <!-- -------------------------------------------------------- -->
+    @if (Model.ShowTenants && Model.UserTenantList.Count == 0)
+    {
+        <div class="centered">You are not attached to any of our tenants. </div>
+    }
 
-        .btn-td {
-            border-style:none;
-        }
-    </style>
+    @if (Model.ShowTenants && Model.UserTenantList.Count > 0)
+    {
+        <form method="post" asp-page-handler="SelectTenant">
+            <div class="centered" >
+                <table style="margin: 0 auto;">
+                    <tr>
+                        @foreach (var tenant in Model.UserTenantList)
+                        {
+                            <td>
+                                <button type="submit" class="btn-td" class="home-td" name="tenantOrder" value="@tenant.order">
+                                    <div style="display:block;">
+                                        <img src="~/images/Companylogos/@tenant.Logo" width="170px" />
+                                    </div>
+                                    <div>
+                                        @tenant.Name
+                                    </div>
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <!-- ---------------------- -->
 
+    }
     @if (Model.ShowTenants)
     {
-        @if (Model.UserTenantList.Count == 0)
-        {
-            <div class="no-tenant">You are not attached to any of our tenants. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
-        }
-        else
-        {
-            <form method="post" asp-page-handler="SelectTenant">
-                <div style="padding-top:170px; width:100%;">
-                    <table style="margin: 0 auto;">
-                        <tr>
-                            @foreach (var tenant in Model.UserTenantList)
-                            {
-                                <td>
-                                    <button type="submit" class="btn-td" class="home-td" name="tenantOrder" value="@tenant.order">
-                                        <div style="display:block;">
-                                            <img src="~/images/Companylogos/@tenant.Logo" width="170px" />
-                                        </div>
-                                        <div>
-                                            @tenant.Name
-                                        </div>
-                                    </button>
-                                </td>
-                            }
-                        </tr>
-                    </table>
-                </div>
-            </form>
-        }
-
+        <form method="post" asp-page-handler="FindNewTenant">
+            <div class="centered">
+               Please click the button below to search for new tenants that you can be linked to.
+            </div>
+            <div class="centered">
+                <button type="submit" class="btn btn-outline-primary" class="home-td">
+                    Find a new tenant.
+                </button>
+            </div>
+        </form>
     }
 
-    @if (Model.ShowSystems)
+    <!-- -------------------------------------------------------- -->
+    @if (Model.ShowNewTenants && Model.NewTenantList.Count == 0)
     {
-        @if (Model.SystemList.Count == 0)
-        {
-            <div class="no-tenant">The tenant selected has no registered systems with BestFitSolutions. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
-        }
-        else
-        {
-            <form method="post" asp-page-handler="SelectSystem">
-                <div style="padding-top:170px; width:100%;">
-                    <table style="margin: 0 auto;">
-                        <tr>
-                            @foreach (var sys in Model.SystemList)
-                            {
-                                <td>
-                                    <button type="submit" class="btn-td" class="home-td" name="systemId" value="@sys.Id">
-                                        <div style="display:block;">
-                                            <img src="~/images/Systemlogos/@sys.Logo" width="170px" />
-                                        </div>
-                                        <div>
-                                            @sys.Name
-                                        </div>
-                                    </button>
-                                </td>
-                            }
-                        </tr>
-                    </table>
-                </div>
-            </form>
-        }
+        <div class="centered">No new tenants found for the logged in user.</div>
+    }
 
-        
+    @if (Model.ShowNewTenants && Model.NewTenantList.Count > 0)
+    {
+        <form method="post" asp-page-handler="RequestTenant">
+            <div style="padding-top:170px; width:100%;">
+                <table style="margin: 0 auto;">
+                    <tr>
+                        @foreach (var tenant in Model.NewTenantList)
+                        {
+                            <td>
+                                <button type="submit" class="btn-td" class="home-td" name="newTenantOrder" value="@tenant.order">
+                                    <div style="display:block;">
+                                        <img src="~/images/Companylogos/@tenant.Logo" width="170px" />
+                                    </div>
+                                    <div>
+                                        @tenant.Name
+                                    </div>
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </table>
+            </div>
+        </form>
+    }
+
+    <!-- -------------------------------------------------------- -->
+    @if (Model.ShowRequestSentConfirmation)
+    {
+        <div class="centered">
+            Your request has been sent to the tenant.
+            <br/> the tenant will respond to your request at his earliest convinience.
+        </div>
+        <div class="centered">
+            <button type="submit" class="btn btn-outline-primary" class="home-td">
+                Back to Home Page.
+            </button>
+        </div>
+    }
+    <!-- -------------------------------------------------------- -->
+    @if (Model.ShowSystems && Model.SystemList.Count == 0)
+    {
+        <div class="centered">The tenant selected has no registered systems with BestFitSolutions. Please contact your Company support to link you to one or more of Best Fit Systems.</div>
+    }
+
+    @if (Model.ShowSystems && Model.SystemList.Count > 0)
+    {
+        <form method="post" asp-page-handler="SelectSystem">
+            <div style="padding-top:170px; width:100%;">
+                <table style="margin: 0 auto;">
+                    <tr>
+                        @foreach (var sys in Model.SystemList)
+                        {
+                            <td>
+                                <button type="submit" class="btn-td" class="home-td" name="systemId" value="@sys.Id">
+                                    <div style="display:block;">
+                                        <img src="~/images/Systemlogos/@sys.Logo" width="170px" />
+                                    </div>
+                                    <div>
+                                        @sys.Name
+                                    </div>
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </table>
+            </div>
+        </form>
     }
 }
-else
+
+@if (!SignInManager.IsSignedIn(User))
 {
+    <div class="text-center" style="display:block;">
+        <img src="~/images/CompanyLogos/BestFitSolutionsLogin.jpg" width="400" />
+    </div>
+    <div class="text-center" style="display:block;">
+        <h2>Welcome to Best Fit Solutions</h2>
+    </div>
     <div class="text-center">
         <a href="~/Identity/Account/Register">Register</a>
         <span>Or</span>

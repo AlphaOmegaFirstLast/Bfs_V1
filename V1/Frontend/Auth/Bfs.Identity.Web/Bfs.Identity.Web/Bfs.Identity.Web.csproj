@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Admin\Bfs.Core\Bfs.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\Backend\Bfs.Auth\Bfs.Auth.Client\Bfs.Auth.Client.csproj" />
   </ItemGroup>
 
 </Project>
