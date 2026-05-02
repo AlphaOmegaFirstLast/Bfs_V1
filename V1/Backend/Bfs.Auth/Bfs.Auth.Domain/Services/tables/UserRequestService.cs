@@ -1,8 +1,11 @@
-using Bfs.Core.Helpers;
 using Bfs.Auth.Contracts;
 using Bfs.Auth.Data.Interfaces;
 using Bfs.Auth.Domain.Interfaces;
 using Bfs.Auth.Domain.Mapper;
+using Bfs.Core.Config;
+using Bfs.Core.Helpers;
+using Bfs.Core.Interfaces;
+using Bfs.Core.Services.Auth;
 
 namespace Bfs.Auth.Domain.Services
 {
@@ -10,10 +13,15 @@ namespace Bfs.Auth.Domain.Services
     {
         private readonly IUserRequestRepository _repo;
         private readonly IUserRequestList _list;
-        public UserRequestService(IUserRequestRepository repo, IUserRequestList list)
+        private readonly IUserService _userService;
+        private readonly IUserTenantService _userTenantService;
+
+        public UserRequestService(IUserRequestRepository repo, IUserRequestList list,IUserService userService, IUserTenantService userTenantService)
         {
             _repo = repo;
             _list = list;
+            _userService = userService;
+            _userTenantService = userTenantService;
         }
 
         public async Task<UserRequest?> GetAsync(long id)
@@ -42,7 +50,7 @@ namespace Bfs.Auth.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageCreatedMessage
+            //var message = new UserRequestCreatedMessage
             //{
             //    Entity = PrepareForMessage(result),
             //};
@@ -56,10 +64,10 @@ namespace Bfs.Auth.Domain.Services
             //ToDo fluent validation, error or exception
 
             var existingEntity = await _repo.GetAsync(contract.Id).ConfigureAwait(false);
-
+            var existingUserRequestStatusId = existingEntity?.UserRequestStatusId;
             var updatedEntity = contract.ToEntity(existingEntity);
 
-            //var message = new DisplayPageUpdatedMessage
+            //var message = new UserRequestUpdatedMessage
             //{
             //    OldEntity = PrepareForMessage(existingContract),
             //};
@@ -68,7 +76,15 @@ namespace Bfs.Auth.Domain.Services
 
             await _repo.UpdateAsync(updatedEntity).ConfigureAwait(false);
             await _repo.SaveAsync().ConfigureAwait(false);
+            if (updatedEntity != null && updatedEntity.UserRequestStatusId == (int)RequestStatus.Approved)
+            {
+                // if RequestStatus changed from WaitingApproval to Approved, then set up user in tenant 
+                if (existingUserRequestStatusId == (int)RequestStatus.WaitingApproval)
+                    await _userTenantService.SetUpUser<User>(updatedEntity,(ICrudService<User>) _userService);
+            }
 
+             var result = await GetAsync(updatedEntity.Id)
+                .ConfigureAwait(false);
             //message.NewEntity = PrepareForMessage(result);
             //await _messagePublisher.PublishMessageAsync(message)
             //    .ConfigureAwait(false);
@@ -88,7 +104,7 @@ namespace Bfs.Auth.Domain.Services
             await _repo.SaveAsync()
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageDeletedMessage
+            //var message = new UserRequestDeletedMessage
             //{
             //    Entity = PrepareForMessage(existingContract),
             //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
@@ -111,7 +127,7 @@ namespace Bfs.Auth.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageCreatedMessage
+            //var message = new UserRequestCreatedMessage
             //{
             //    Entity = PrepareForMessage(result),
             //};

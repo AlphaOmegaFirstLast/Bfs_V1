@@ -47,8 +47,11 @@ namespace Bfs.Auth.Data.Lists
 _fieldList.Add(new QueryField() { DbName = "athUser.AspNetUserId", QueryName = "AspNetUserId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "athUser.Notes", QueryName = "Notes", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athUser.Email", QueryName = "Email", IsAggregare = false });
 
             //lookups
+
+            //autoCompletes
 
            //Aggregates
 
@@ -72,7 +75,7 @@ _fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "Name", I
             {
             if ((filter.Id.HasValue) && (filter.Id>0))
                 {
-                    sql.AppendLine(" AND athUser.Id = @Id");
+                    sql.AppendLine("athUser.Id = @Id");
                     parameters.Add("@Id", filter.Id);
                 }
 
@@ -85,6 +88,11 @@ if (!string.IsNullOrEmpty(filter.Name))
                 {
                     sql.AppendLine("athUser.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
+                }
+if (!string.IsNullOrEmpty(filter.Email))
+                {
+                    sql.AppendLine("athUser.Email like '%'+@Email+'%' ");
+                    parameters.Add("@Email", filter.Email);
                 }
 
             }

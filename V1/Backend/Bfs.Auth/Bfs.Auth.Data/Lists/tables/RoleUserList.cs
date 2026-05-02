@@ -49,9 +49,9 @@ _fieldList.Add(new QueryField() { DbName = "athRoleUser.UserId", QueryName = "Us
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "UserName", IsAggregare = false });
 
             //autoCompletes
-            _fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "UserName", IsAggregare = false });
 
            //Aggregates
 
@@ -63,8 +63,7 @@ _fieldList.Add(new QueryField() { DbName = "athRoleUser.UserId", QueryName = "Us
            sql.AppendLine(" From athRoleUser ");
 
            sql.AppendLine($"   Left Join athRole on athRoleUser.RoleId = athRole.Id");
-
-           sql.AppendLine($"   Left Join athUser on athRoleUser.UserId = athUser.Id");
+sql.AppendLine($"   Left Join athUser on athRoleUser.UserId = athUser.Id");
 
            return sql.ToString();
         }
@@ -88,8 +87,7 @@ _fieldList.Add(new QueryField() { DbName = "athRoleUser.UserId", QueryName = "Us
                     sql.AppendLine("athRoleUser.RoleId = @RoleId");
                     parameters.Add("@RoleId", filter.RoleId.Value);
                 }
-
-                if (filter.UserId.HasValue)
+if (filter.UserId.HasValue)
                 {
                     sql.AppendLine("athRoleUser.UserId = @UserId");
                     parameters.Add("@UserId", filter.UserId.Value);

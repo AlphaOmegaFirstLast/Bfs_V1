@@ -23,6 +23,9 @@ namespace Bfs.Auth.Data.Configuration
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Email).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.UserId).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.RequestDate).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.ResponseDate).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }

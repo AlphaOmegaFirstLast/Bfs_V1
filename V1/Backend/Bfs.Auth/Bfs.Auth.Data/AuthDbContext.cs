@@ -13,6 +13,7 @@ public class AuthDbContext : DbContext
  public DbSet<RoleAppEntity> RoleApps { get; set; }
  public DbSet<RoleUserEntity> RoleUsers { get; set; }
  public DbSet<UserRequestEntity> UserRequests { get; set; }
+ public DbSet<UserRequestStatusEntity> UserRequestStatuss { get; set; }
 //Template_Component_RegisterDbSet
 
     public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)

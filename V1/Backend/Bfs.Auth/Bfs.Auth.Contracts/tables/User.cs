@@ -4,7 +4,7 @@ using Bfs.Core.ObjectFields;
 
 namespace Bfs.Auth.Contracts
 {
-    public class User : IIdentifiable 
+    public class User : IIdentifiable ,IAuthUser
     {
         ///<Summary>
         /// User IsDeleted.
@@ -26,6 +26,10 @@ namespace Bfs.Auth.Contracts
         /// User Name.
         ///</Summary>
         public string Name {get; set;} = string.Empty ;
+///<Summary>
+        /// User Email.
+        ///</Summary>
+        public string Email {get; set;} = string.Empty ;
 
     }
 }

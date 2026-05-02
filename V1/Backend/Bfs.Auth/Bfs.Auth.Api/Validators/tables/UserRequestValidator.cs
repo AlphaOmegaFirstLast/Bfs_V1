@@ -26,6 +26,9 @@ RuleFor(x => x.Email)
 .MinimumLength(3)
 .MaximumLength(50)
 ;
+RuleFor(x => x.RequestDate)
+.NotEmpty().WithErrorCode(ErrorCodes.InvalidRequestDate)
+;
 
         }
     }

@@ -1,10 +1,11 @@
 using Bfs.Core.Interfaces;
 using Bfs.Core.Contracts;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Contracts.Auth;
 
 namespace Bfs.Auth.Contracts
 {
-    public class UserRequest : IIdentifiable 
+    public class UserRequest : IIdentifiable ,IAspnetUserRequest
     {
         ///<Summary>
         /// UserRequest IsDeleted.
@@ -30,6 +31,23 @@ namespace Bfs.Auth.Contracts
         /// UserRequest Email.
         ///</Summary>
         public string Email {get; set;} = string.Empty ;
+///<Summary>
+        /// UserRequest User ID.
+        ///</Summary>
+        public long UserId {get; set;} = 0 ;
+///<Summary>
+        /// UserRequest Request Date.
+        ///</Summary>
+        public DateTime RequestDate {get; set;} = DateTime.MinValue ;
+///<Summary>
+        /// UserRequest Response Date.
+        ///</Summary>
+        public DateTime ResponseDate {get; set;} = DateTime.MinValue ;
+
+        ///<Summary>
+        /// UserRequest User Request Status.
+        ///</Summary>
+        public long UserRequestStatusId {get; set;} = 0 ;
 
     }
 }

@@ -44,12 +44,18 @@ namespace Bfs.Auth.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() { DbName = "athUserRequest.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.AspNetUserId", QueryName = "AspNetUserId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "athUserRequest.Notes", QueryName = "Notes", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "athUserRequest.Name", QueryName = "Name", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "athUserRequest.Email", QueryName = "Email", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athUserRequest.UserId", QueryName = "UserId", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athUserRequest.RequestDate", QueryName = "RequestDate", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athUserRequest.ResponseDate", QueryName = "ResponseDate", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athUserRequest.UserRequestStatusId", QueryName = "UserRequestStatusId", IsAggregare = false });
 
             //lookups
+            _fieldList.Add(new QueryField() { DbName = "athUserRequestStatus.Name", QueryName = "UserRequestStatusName", IsAggregare = false });
+
+            //autoCompletes
 
            //Aggregates
 
@@ -59,6 +65,8 @@ _fieldList.Add(new QueryField() { DbName = "athUserRequest.Email", QueryName = "
         {
            var sql = new StringBuilder();  
            sql.AppendLine(" From athUserRequest ");
+
+           sql.AppendLine($"   Left Join athUserRequestStatus on athUserRequest.UserRequestStatusId = athUserRequestStatus.Id");
 
            return sql.ToString();
         }
@@ -73,8 +81,13 @@ _fieldList.Add(new QueryField() { DbName = "athUserRequest.Email", QueryName = "
             {
             if ((filter.Id.HasValue) && (filter.Id>0))
                 {
-                    sql.AppendLine(" AND athUserRequest.Id = @Id");
+                    sql.AppendLine("athUserRequest.Id = @Id");
                     parameters.Add("@Id", filter.Id);
+                }
+if ((filter.UserId.HasValue) && (filter.UserId>0))
+                {
+                    sql.AppendLine("athUserRequest.UserId = @UserId");
+                    parameters.Add("@UserId", filter.UserId);
                 }
 
                 if (!string.IsNullOrEmpty(filter.AspNetUserId))
@@ -91,6 +104,33 @@ if (!string.IsNullOrEmpty(filter.Email))
                 {
                     sql.AppendLine("athUserRequest.Email like '%'+@Email+'%' ");
                     parameters.Add("@Email", filter.Email);
+                }
+
+                if (filter.UserRequestStatusId.HasValue)
+                {
+                    sql.AppendLine("athUserRequest.UserRequestStatusId = @UserRequestStatusId");
+                    parameters.Add("@UserRequestStatusId", filter.UserRequestStatusId.Value);
+                }
+
+                if (filter.RequestDate?.From.HasValue == true)
+                {
+                    sql.AppendLine("athUserRequest.RequestDate >= @RequestDateFrom");
+                    parameters.Add("@RequestDateFrom", filter.RequestDate.From.Value);
+                }
+                if (filter.RequestDate?.To.HasValue == true)
+                {
+                    sql.AppendLine("athUserRequest.RequestDate <= @RequestDateTo");
+                    parameters.Add("@RequestDateTo", filter.RequestDate.To.Value);
+                }
+if (filter.ResponseDate?.From.HasValue == true)
+                {
+                    sql.AppendLine("athUserRequest.ResponseDate >= @ResponseDateFrom");
+                    parameters.Add("@ResponseDateFrom", filter.ResponseDate.From.Value);
+                }
+                if (filter.ResponseDate?.To.HasValue == true)
+                {
+                    sql.AppendLine("athUserRequest.ResponseDate <= @ResponseDateTo");
+                    parameters.Add("@ResponseDateTo", filter.ResponseDate.To.Value);
                 }
 
             }

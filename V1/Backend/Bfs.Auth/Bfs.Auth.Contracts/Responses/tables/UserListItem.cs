@@ -8,6 +8,7 @@ namespace Bfs.Auth.Contracts
 public string? AspNetUserId { get; set; }
 public string? Notes { get; set; }
 public string? Name { get; set; }
+public string? Email { get; set; }
 
 //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }

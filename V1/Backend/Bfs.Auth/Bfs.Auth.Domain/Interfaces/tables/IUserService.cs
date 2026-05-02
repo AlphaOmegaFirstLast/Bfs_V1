@@ -1,16 +1,11 @@
 using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.Auth.Contracts;
 
 namespace Bfs.Auth.Domain.Interfaces
 {
-    public interface IUserService
+    public interface IUserService: ICrudService<User>
     {
-        Task<User?> GetAsync(long id);
-        Task<List<User>> GetAsync();
-
-        Task<User> CreateAsync(User contract);
-        Task<User?> UpdateAsync(User contract);
-        Task DeleteAsync(long id);
         Task<User> UploadAsync(User contract);
 
         Task<QueryResponse<UserListItem>> ListAsync(QueryRequest<UserListFilter> contractRequest);

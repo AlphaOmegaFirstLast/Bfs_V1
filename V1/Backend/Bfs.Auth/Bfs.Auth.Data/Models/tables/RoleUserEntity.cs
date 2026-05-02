@@ -14,6 +14,7 @@ namespace Bfs.Auth.Data.Models
 public long Id {get; set;} = 0 ;
 
         public long RoleId {get; set;} = 0 ;
+public long UserId {get; set;} = 0 ;
 
     }
 }

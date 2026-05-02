@@ -21,6 +21,11 @@ RuleFor(x => x.Name)
 .MinimumLength(3)
 .MaximumLength(50)
 ;
+RuleFor(x => x.Email)
+.NotEmpty().WithErrorCode(ErrorCodes.InvalidEmail)
+.MinimumLength(3)
+.MaximumLength(50)
+;
 
         }
     }

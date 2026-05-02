@@ -15,6 +15,7 @@ Id= entity.Id,
 AspNetUserId= entity.AspNetUserId,
 Notes= entity.Notes,
 Name= entity.Name,
+Email= entity.Email,
 
             };
 
@@ -40,6 +41,7 @@ UserEntity.Id= contract.Id;
 UserEntity.AspNetUserId= contract.AspNetUserId;
 UserEntity.Notes= contract.Notes;
 UserEntity.Name= contract.Name;
+UserEntity.Email= contract.Email;
 
             return UserEntity;
         }     

@@ -111,39 +111,44 @@ public static class BuilderExtensions
 
         // Tenant resolution (per request). TenantProvider is scoped (via AddScoped) and can safely use HttpContext.
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddScoped<ITenantProvider, TenantProvider>();
+        builder.Services.AddScoped<ITenantManager, TenantManager>();
+        builder.Services.AddScoped<IUserTenantService, UserTenantService>(); // needed only for Auth Api
+
+        builder.Services.AddHostedService<CacheWarmingService>();  // AddHostedService so the host is going to manage the lifecycle of the CacheWarmingService, starting it when the application starts and stopping it when the application shuts down. This ensures that the background service runs continuously in the background, refreshing the tenant cache at regular intervals as defined in the CacheWarmingService implementation.
     }
 
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-        // if the system is the master system, we can register the MasterDbContext with a fixed connection string. This is because the master system is responsible for managing tenants and their connection strings, so it needs to have a stable connection to the master database. 
-
-        //if (settings != null && settings.DbConnections != null)
-        //{
-        //    //builder.Services.AddDbContext<MasterBasicDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection,
-        //    //sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
-        //    //);
-
-        //    // uncomment when creating new migrations, when use add-migration select auth.Api at the build-toolbar and at the package-console bar, the auth.data project is selected.
-        //    // make sure the connection string in appsettings.Development.json is correct, then run add-migration command, after migration is created, comment it back to avoid accidentally running migrations on the tenant databases.
-        //    builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(settings.DbConnections.TestTenantConnection,
-        //    sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
-        //    );
-        //}
-
-        //This is the standard multi‑tenant pattern for database-per-tenant.
-        // DbContext with dynamic connection string based on the current tenant
-
-        builder.Services.AddDbContext<AuthDbContext>((serviceProvider, options) =>
+        if (settings != null && settings.IsMigrationEnabled)
         {
-            var tenantProvider = serviceProvider.GetRequiredService<ITenantProvider>();
-            var connectionString = tenantProvider.GetCurrentTenantDbConnection();
-
-            options.UseSqlServer(connectionString, sql =>
+            // Migrations will be generated based on the TestTenantConnection defined in the appsettings.Development.json file. This allows you to create and apply migrations to a specific tenant database during development without affecting the dynamic connection string logic used in production.
+            // After the migrations are created, you can set isApplyMigration back to false to use the dynamic connection string for tenant databases in development as well. This approach allows you to manage migrations effectively while still supporting the multi-tenant architecture of your application.
+            // Note: When isApplyMigration is true, the AuthDbContext will be registered with a fixed connection string (TestTenantConnection) for the purpose of generating migrations. This means that any migrations created while this flag is true will be based on the schema of the database specified in TestTenantConnection.
+            // to replicate DB changes you call ApplyMigrations extension method on the WebApplication instance in Program.cs, this will apply any pending migrations to the database specified in TestTenantConnection. This is useful during development to ensure that your tenant database schema is up to date with your latest migrations.
+            // uncomment when creating new migrations, when use add-migration select auth.Api at the build-toolbar and at the package-console bar, the auth.data project is selected.
+            // make sure the connection string in appsettings.Development.json is correct, then run add-migration command, after migration is created, comment it back to avoid accidentally running migrations on the tenant databases.
+            if (settings != null && settings.DbConnections != null)
             {
-                sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(settings.DbConnections.TestTenantConnection,
+                                   sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)) );
+            }
+        }
+        else
+        {
+            //This is the standard multi‑tenant pattern for database-per-tenant.
+            // DbContext with dynamic connection string based on the current tenant
+
+            builder.Services.AddDbContext<AuthDbContext>((serviceProvider, options) =>
+            {
+                var tenantProvider = serviceProvider.GetRequiredService<ITenantManager>();
+                var connectionString = tenantProvider.GetTenantDbConnection();
+
+                options.UseSqlServer(connectionString, sql =>
+                {
+                    sql.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                });
             });
-        });
+        }
     }
 
     public static void RegisterValidators(this WebApplicationBuilder builder)
@@ -155,6 +160,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IValidator<RoleApp>, RoleAppValidator>();
         builder.Services.AddScoped<IValidator<RoleUser>, RoleUserValidator>();
         builder.Services.AddScoped<IValidator<UserRequest>, UserRequestValidator>();
+        builder.Services.AddScoped<IValidator<UserRequestStatus>, UserRequestStatusValidator>();
         //Template_Component_RegisterValidator
     }
 
@@ -168,6 +174,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IRoleAppRepository, RoleAppRepository>();
         builder.Services.AddScoped<IRoleUserRepository, RoleUserRepository>();
         builder.Services.AddScoped<IUserRequestRepository, UserRequestRepository>();
+        builder.Services.AddScoped<IUserRequestStatusRepository, UserRequestStatusRepository>();
         //Template_Component_RegisterRepository
     }
 
@@ -182,6 +189,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IRoleAppService, RoleAppService>();
         builder.Services.AddScoped<IRoleUserService, RoleUserService>();
         builder.Services.AddScoped<IUserRequestService, UserRequestService>();
+        builder.Services.AddScoped<IUserRequestStatusService, UserRequestStatusService>();
         //Template_Component_RegisterService
     }
 
@@ -194,8 +202,8 @@ public static class BuilderExtensions
         // ------------------------------------------------------------
         builder.Services.AddScoped(sp =>
         {
-            var tenantProvider = sp.GetRequiredService<ITenantProvider>();
-            var connectionString = tenantProvider.GetCurrentTenantDbConnection();
+            var tenantProvider = sp.GetRequiredService<ITenantManager>();
+            var connectionString = tenantProvider.GetTenantDbConnection();
             return new TenantSqlConfiguration(connectionString);
         });
         // ------------------------------------------------------------
@@ -242,6 +250,13 @@ public static class BuilderExtensions
             return new UserRequestList(config.ConnectionString);
         });
 
+        builder.Services.AddScoped<IUserRequestStatusList>(sp =>
+            {
+                var config = sp.GetRequiredService<TenantSqlConfiguration>();
+                return new UserRequestStatusList(config.ConnectionString);
+
+            });
+
         //Template_Component_RegisterList
     }
 
@@ -249,8 +264,8 @@ public static class BuilderExtensions
     {
         builder.Services.AddScoped(sp =>
         {
-            var tenantProvider = sp.GetRequiredService<ITenantProvider>();
-            var connectionString = tenantProvider.GetCurrentTenantDbConnection();
+            var tenantProvider = sp.GetRequiredService<ITenantManager>();
+            var connectionString = tenantProvider.GetTenantDbConnection();
             return new TenantSqlConfiguration(connectionString);
         });
 

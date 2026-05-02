@@ -16,6 +16,11 @@ AspNetUserId= entity.AspNetUserId,
 Notes= entity.Notes,
 Name= entity.Name,
 Email= entity.Email,
+UserId= entity.UserId,
+RequestDate= entity.RequestDate,
+ResponseDate= entity.ResponseDate,
+
+               UserRequestStatusId= entity.UserRequestStatusId,
 
             };
 
@@ -42,6 +47,11 @@ UserRequestEntity.AspNetUserId= contract.AspNetUserId;
 UserRequestEntity.Notes= contract.Notes;
 UserRequestEntity.Name= contract.Name;
 UserRequestEntity.Email= contract.Email;
+UserRequestEntity.UserId= contract.UserId;
+UserRequestEntity.RequestDate= contract.RequestDate;
+UserRequestEntity.ResponseDate= contract.ResponseDate;
+
+            UserRequestEntity.UserRequestStatusId= contract.UserRequestStatusId;
 
             return UserRequestEntity;
         }     

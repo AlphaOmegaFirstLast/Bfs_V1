@@ -3,10 +3,11 @@ using Bfs.Auth.Contracts;
 using Bfs.Auth.Data.Interfaces;
 using Bfs.Auth.Domain.Interfaces;
 using Bfs.Auth.Domain.Mapper;
+using Bfs.Core.Interfaces;
 
 namespace Bfs.Auth.Domain.Services
 {
-    public class UserService : IUserService
+    public class UserService : IUserService, ICrudService<User>
     {
         private readonly IUserRepository _repo;
         private readonly IUserList _list;
@@ -42,7 +43,7 @@ namespace Bfs.Auth.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageCreatedMessage
+            //var message = new UserCreatedMessage
             //{
             //    Entity = PrepareForMessage(result),
             //};
@@ -59,7 +60,7 @@ namespace Bfs.Auth.Domain.Services
 
             var updatedEntity = contract.ToEntity(existingEntity);
 
-            //var message = new DisplayPageUpdatedMessage
+            //var message = new UserUpdatedMessage
             //{
             //    OldEntity = PrepareForMessage(existingContract),
             //};
@@ -88,7 +89,7 @@ namespace Bfs.Auth.Domain.Services
             await _repo.SaveAsync()
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageDeletedMessage
+            //var message = new UserDeletedMessage
             //{
             //    Entity = PrepareForMessage(existingContract),
             //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
@@ -111,7 +112,7 @@ namespace Bfs.Auth.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageCreatedMessage
+            //var message = new UserCreatedMessage
             //{
             //    Entity = PrepareForMessage(result),
             //};

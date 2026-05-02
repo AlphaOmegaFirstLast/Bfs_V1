@@ -14,6 +14,7 @@ namespace Bfs.Auth.Domain.Mapper
 Id= entity.Id,
 
                RoleId= entity.RoleId,
+UserId= entity.UserId,
 
             };
 
@@ -38,6 +39,7 @@ Id= entity.Id,
 RoleUserEntity.Id= contract.Id;
 
             RoleUserEntity.RoleId= contract.RoleId;
+RoleUserEntity.UserId= contract.UserId;
 
             return RoleUserEntity;
         }     
