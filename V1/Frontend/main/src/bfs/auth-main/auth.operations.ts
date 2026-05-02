@@ -151,4 +151,3 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
     }
 }
 //---------------------------------------------------------
-

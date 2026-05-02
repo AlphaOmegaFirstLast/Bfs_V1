@@ -17,8 +17,13 @@ export class UserRequestFilterComponent implements OnInit {
     public result = {} as IUserRequestFilter;
 
     // Define look ups
+    public UserRequestStatusOptions:  any[] = [];
 
     // Define range filters
+    public RequestDateFrom: Date | null | undefined;
+    public RequestDateTo: Date | null | undefined;
+public ResponseDateFrom: Date | null | undefined;
+    public ResponseDateTo: Date | null | undefined;
 
     isLoading: boolean = false;
     public submit: boolean = false;
@@ -33,11 +38,26 @@ export class UserRequestFilterComponent implements OnInit {
         this.result = this.parent.queryRequest.filter || {};
         await this.getLookups();
         // Initialize range filters if not set
+        this.RequestDateFrom = this.result.RequestDate?.from;
+        this.RequestDateTo   = this.result.RequestDate?.to;
+this.ResponseDateFrom = this.result.ResponseDate?.from;
+        this.ResponseDateTo   = this.result.ResponseDate?.to;
 
     }
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
+        target = "/UserRequestStatus/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.UserRequestStatusOptions = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching User Request Status data.';
+                this.isLoading = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
@@ -49,6 +69,8 @@ export class UserRequestFilterComponent implements OnInit {
     apply() {
         this.activeModal.close('Apply');
         // Apply range filters
+        this.result.RequestDate = { from: this.RequestDateFrom, to: this.RequestDateTo };
+this.result.ResponseDate = { from: this.ResponseDateFrom, to: this.ResponseDateTo };
 
         this.parent.applyFilter(this.result);
     }

@@ -21,7 +21,7 @@ import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 //--------------- system specific ------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/infrastructure-main/infrastructure.operations';
+import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/master.operations';
 
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
@@ -67,8 +67,7 @@ export class RoleUserListComponent
         switch (column.fieldName) {
             case 'roleId':
                 return record['roleName']?.toString();
-
-            case 'userId':
+case 'userId':
                 return record['userName']?.toString();
 
             default:

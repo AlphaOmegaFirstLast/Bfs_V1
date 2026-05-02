@@ -8,9 +8,10 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const UserColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'aspNetUserId', displayName: 'AspNetUserId', sortName: 'AspNetUserName', width: '50px', isVisible:false },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
+{ fieldName: 'aspNetUserId', displayName: 'AspNetUserId', sortName: 'AspNetUserId', width: '50px', isVisible:false },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'email', displayName: 'Email', sortName: 'Email', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -20,6 +21,7 @@ id?: string;
 aspNetUserId?: string;
 notes?: string;
 name?: string;
+email?: string;
 
 }
 //---------------------------------------------------------
@@ -30,6 +32,7 @@ id: '0',
 aspNetUserId: '',
 notes: '',
 name: '',
+email: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -44,6 +47,7 @@ id: ['0'],
 aspNetUserId: [''],
 notes: [''],
 name: [''],
+email: [''],
 
     };
 } 
@@ -57,9 +61,11 @@ export interface IUserRequest extends IEntityRequest<IUserFilter> {}
 //---------------------------------------------------------
 export interface IUserFilter {
     [key: string]: any;
+    Id?: string;
 
     AspNetUserId?: string;
 Name?: string;
+Email?: string;
 
 }
 //---------------------------------------------------------
@@ -74,9 +80,11 @@ export function initUserRequest(): IUserRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             AspNetUserId: undefined ,
 Name: undefined ,
+Email: undefined ,
 
             }
     };

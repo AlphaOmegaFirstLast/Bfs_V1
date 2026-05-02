@@ -8,10 +8,13 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const UserRequestColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'aspNetUserId', displayName: 'AspNetUserId', sortName: 'AspNetUserName', width: '50px', isVisible:false },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'email', displayName: 'Email', sortName: 'EmailName', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'email', displayName: 'Email', sortName: 'Email', width: '50px', isVisible:true },
+{ fieldName: 'userId', displayName: 'User ID', sortName: 'UserId', width: '50px', isVisible:false },
+{ fieldName: 'requestDate', displayName: 'Request Date', sortName: 'RequestDate', width: '50px', isVisible:true },
+{ fieldName: 'responseDate', displayName: 'Response Date', sortName: 'ResponseDate', width: '50px', isVisible:false },
+{ fieldName: 'userRequestStatusId', displayName: 'User Request Status', sortName: 'UserRequestStatusName', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -22,6 +25,11 @@ aspNetUserId?: string;
 notes?: string;
 name?: string;
 email?: string;
+userId?: string;
+requestDate?: Date | null;
+responseDate?: Date | null;
+
+    userRequestStatusId?: string;
 
 }
 //---------------------------------------------------------
@@ -33,6 +41,11 @@ aspNetUserId: '',
 notes: '',
 name: '',
 email: '',
+userId: '0',
+requestDate: null,
+responseDate: null,
+
+        userRequestStatusId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -48,11 +61,18 @@ aspNetUserId: [''],
 notes: [''],
 name: [''],
 email: [''],
+userId: ['0'],
+requestDate: [null],
+responseDate: [null],
+
+    userRequestStatusId: ['0'],
 
     };
 } 
 //---------------------------------------------------------
 export interface IUserRequestWithLookup extends IUserRequest{
+
+    userRequestStatusName?: string;
 
 }
 //---------------------------------------------------------
@@ -61,10 +81,17 @@ export interface IUserRequestRequest extends IEntityRequest<IUserRequestFilter> 
 //---------------------------------------------------------
 export interface IUserRequestFilter {
     [key: string]: any;
+    Id?: string;
+UserId?: string;
 
     AspNetUserId?: string;
 Name?: string;
 Email?: string;
+
+    UserRequestStatusId?: string;
+
+    RequestDate?: { from?: Date | null ; to?: Date | null} ;
+ResponseDate?: { from?: Date | null ; to?: Date | null} ;
 
 }
 //---------------------------------------------------------
@@ -79,10 +106,17 @@ export function initUserRequestRequest(): IUserRequestRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
+UserId: undefined ,
 
             AspNetUserId: undefined ,
 Name: undefined ,
 Email: undefined ,
+
+            UserRequestStatusId: undefined ,
+
+            RequestDate: { from: undefined , to: undefined} ,
+ResponseDate: { from: undefined , to: undefined} ,
 
             }
     };
@@ -112,6 +146,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('userRequest', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/ath/user-request/delete', displayText: 'Delete...' 
+});
+}
+if (component.accessService.isActionAllowed('userRequest', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['userRequestStatusId'], route:'/ath/user-request-status/view', displayText:'Go to UserRequestStatus'
 });
 }
 

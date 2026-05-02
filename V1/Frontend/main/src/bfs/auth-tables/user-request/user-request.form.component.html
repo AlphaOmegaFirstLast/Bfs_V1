@@ -61,16 +61,16 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="aspNetUserId" class="form-label fs-6">AspNetUserId</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is the value of the userId in AspNet Identity database, in BFS Master database.  is set by Linking operation"  />
-
-        <input class="form-control" type="text" id="aspNetUserId" formControlName="aspNetUserId"
-            [class]="submit && !form['aspNetUserId'].errors ? 'is-valid': submit && form['aspNetUserId'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid AspNetUserId.</div>
+        <label for="userRequestStatusId" class="form-label fs-6">User Request Status</label>
+        <select class="form-select" id="userRequestStatusId" formControlName="userRequestStatusId"
+            [class]="submit && !form['userRequestStatusId'].errors ? 'is-valid': submit && form['userRequestStatusId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of UserRequestStatusOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid User Request Status.</div>
     </div>
 </div>
-
 <div class="row mb-2">
     <div class="col-12">
         <label for="name" class="form-label fs-6">Name</label>
@@ -92,6 +92,24 @@
             [class]="submit && !form['email'].errors ? 'is-valid': submit && form['email'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Email.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="requestDate" class="form-label fs-6">Request Date</label>
+        <input class="form-control" type="date" id="requestDate" formControlName="requestDate"
+            [class]="submit && !form['requestDate'].errors ? 'is-valid': submit && form['requestDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Request Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="responseDate" class="form-label fs-6">Response Date</label>
+        <input class="form-control" type="date" id="responseDate" formControlName="responseDate"
+            [class]="submit && !form['responseDate'].errors ? 'is-valid': submit && form['responseDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Response Date.</div>
     </div>
 </div>
 

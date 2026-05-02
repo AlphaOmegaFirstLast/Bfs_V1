@@ -35,18 +35,23 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
     // Children filters
 
     // Define look ups
+    public UserRequestStatusOptions: any[] = [];
+
+    // Define autocomplete
 
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(userRequestUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(userRequestUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -63,10 +68,14 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
 
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {
+
+    }
+    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -83,11 +92,25 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
+        this.isLoading.lookups = true;
+        target = "/UserRequestStatus/list";
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.UserRequestStatusOptions = response.items;
+                this.isLoading.lookups = false;
+            },
+                error: (err: any) => {
+                this.isLoading.lookups = false;
+                var msg = err.message || 'An error occurred while fetching User Request Status data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
 
     }
     //---------------------------------------------------------
+
     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getUserRequestActions(this,record);
         let links: ViewLink[] = actions.filter(action => 

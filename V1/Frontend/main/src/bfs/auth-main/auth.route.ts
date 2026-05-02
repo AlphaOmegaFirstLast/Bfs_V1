@@ -14,4 +14,3 @@ export const Auth_ROUTES: Routes = [
         loadChildren: () => import('../auth-seed/seed.route').then((mod) => mod.Seed_ROUTES),
     }   
 ];
-

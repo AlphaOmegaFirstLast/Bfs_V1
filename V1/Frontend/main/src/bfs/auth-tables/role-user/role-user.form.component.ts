@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,11 +36,9 @@ export class RoleUserFormComponent extends BaseFormComponent<IRoleUser > impleme
 
     // Define look ups
     public RoleOptions: any[] = [];
+public UserOptions: any[] = [];
 
     // Define autocomplete
-    showUser = false; // Toggle for the overlay
-    userOptions: any[] = [];
-    userControl: any;
 
     //---------------------------------------------------------
 
@@ -49,7 +46,6 @@ export class RoleUserFormComponent extends BaseFormComponent<IRoleUser > impleme
 
        super(activatedRoute);
        this.validationForm = this.formBuilder.group(roleUserUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
-      this.userControl = this.validationForm.get('userName') as any;
 
     }
     //---------------------------------------------------------
@@ -74,14 +70,13 @@ export class RoleUserFormComponent extends BaseFormComponent<IRoleUser > impleme
     }
     //---------------------------------------------------------
     override async setAutoComplete() {
-    await this.userAutoComplete();
 
     }
     //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -98,64 +93,35 @@ export class RoleUserFormComponent extends BaseFormComponent<IRoleUser > impleme
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         target = "/Role/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.RoleOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Role data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-
-    }
-    //---------------------------------------------------------
-    async userAutoComplete() {
-        this.validationForm.get('userName')?.valueChanges.pipe(
-            // 1. Only proceed if input length >= 2
-            filter(val => val && val.length >= 2),
-            // 2. Wait 300ms after last keystroke to avoid API spam
-            debounceTime(300),
-            // 3. Only trigger if the value actually changed
-            distinctUntilChanged(),
-            // 4. Switch to API call
-            switchMap(async (searchTerm) => {
-                this.isLoading = true;
-                this.showUser = this.entity.userName != searchTerm; // Show dropdown when searching starts
-                try {
-                    const request = { pageSize: 20, filter: { name: searchTerm } };
-                    const response: any = await this.apiService.postAutoComplete("/User/list", request);
-                    return response.items; // Return the data directly
-                } catch (err: any) {
-                    this.messages.push({ text: err.msg || "Error fetching data", msgType: "danger" });
-                    return []; // Return empty array on error to keep the stream alive
-                } finally {
-                    this.isLoading = false;
-                }
-            })
-        ).subscribe(items => {
-            this.userOptions = items;
+this.isLoading.lookups = true;
+        target = "/User/list";
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.UserOptions = response.items;
+                this.isLoading.lookups = false;
+            },
+                error: (err: any) => {
+                this.isLoading.lookups = false;
+                var msg = err.message || 'An error occurred while fetching User data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
         });
-    }
-    //---------------------------------------------------------
-    selectUser(selectedOption: any) {
-        // Set the input value to the selected name
-        this.validationForm.get('userName')?.setValue(selectedOption.name, { emitEvent: false });
-        this.validationForm.get('userId')?.setValue(selectedOption.id, { emitEvent: false });
-        // Update your hidden form control or parent logic here
-        this.userOptions = [];
-        this.showUser = false;
-    }
-    //---------------------------------------------------------
-    // Close dropdown when input loses focus (with a slight delay to allow clicks)
-    hideUserOverlay() {
-        setTimeout(() => this.showUser = false, 200);
+
     }
     //---------------------------------------------------------
 

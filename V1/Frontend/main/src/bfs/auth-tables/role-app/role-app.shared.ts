@@ -59,6 +59,7 @@ export interface IRoleAppRequest extends IEntityRequest<IRoleAppFilter> {}
 //---------------------------------------------------------
 export interface IRoleAppFilter {
     [key: string]: any;
+    Id?: string;
 
     RoleId?: string;
 AppId?: string;
@@ -76,6 +77,7 @@ export function initRoleAppRequest(): IRoleAppRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             RoleId: undefined ,
 AppId: undefined ,

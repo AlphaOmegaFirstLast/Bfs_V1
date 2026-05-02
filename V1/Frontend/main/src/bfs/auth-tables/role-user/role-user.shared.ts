@@ -9,7 +9,7 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 export const RoleUserColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
 { fieldName: 'roleId', displayName: 'Role', sortName: 'RoleName', width: '50px', isVisible:true },
-{ fieldName: 'userId', displayName: 'Users', sortName: 'UserName', width: '50px', isVisible:true },
+{ fieldName: 'userId', displayName: 'User', sortName: 'UserName', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -18,9 +18,7 @@ export interface IRoleUser {
 id?: string;
 
     roleId?: string;
-
-    userId?: string;
-    userName?: string;
+userId?: string;
 
 }
 //---------------------------------------------------------
@@ -30,9 +28,7 @@ export function initRoleUser(): IRoleUser {
 id: '0',
 
         roleId: '0',
-
-        userId: '0',
-        userName: '',
+userId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -46,9 +42,7 @@ export function roleUserUntypedFormGroup(formBuilder: FormBuilder): any {
 id: ['0'],
 
     roleId: ['0'],
-
-    userId: ['0'],
-    userName: [''],
+userId: ['0'],
 
     };
 } 
@@ -56,8 +50,7 @@ id: ['0'],
 export interface IRoleUserWithLookup extends IRoleUser{
 
     roleName?: string;
-
-    userName?: string;
+userName?: string;
 
 }
 //---------------------------------------------------------
@@ -69,8 +62,7 @@ export interface IRoleUserFilter {
     Id?: string;
 
     RoleId?: string;
-
-    UserId?: string;
+UserId?: string;
 
 }
 //---------------------------------------------------------
@@ -88,8 +80,7 @@ export function initRoleUserRequest(): IRoleUserRequest {
             Id: undefined ,
 
             RoleId: undefined ,
-
-            UserId: undefined ,
+UserId: undefined ,
 
             }
     };

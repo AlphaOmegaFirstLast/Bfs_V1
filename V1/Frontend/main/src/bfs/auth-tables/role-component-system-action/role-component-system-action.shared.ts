@@ -64,6 +64,7 @@ export interface IRoleComponentSystemActionRequest extends IEntityRequest<IRoleC
 //---------------------------------------------------------
 export interface IRoleComponentSystemActionFilter {
     [key: string]: any;
+    Id?: string;
 
     BfsComponentId?: string;
 SystemActionId?: string;
@@ -82,6 +83,7 @@ export function initRoleComponentSystemActionRequest(): IRoleComponentSystemActi
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             BfsComponentId: undefined ,
 SystemActionId: undefined ,

@@ -86,7 +86,7 @@
 <div class="row mb-2">
     <div class="col-12">
         <label for="logo" class="form-label fs-6">Logo</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="images names are case-sensitive"  />
 
         <input class="form-control" type="text" id="logo" formControlName="logo"
             [class]="submit && !form['logo'].errors ? 'is-valid': submit && form['logo'].errors ? 'is-invalid' : ''" />

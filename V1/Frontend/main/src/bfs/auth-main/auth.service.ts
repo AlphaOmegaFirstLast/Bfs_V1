@@ -10,4 +10,3 @@ export class AuthService extends HttpService {
     this.origin = environment.AuthApiUrl;
   }
 }
-

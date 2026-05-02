@@ -8,6 +8,28 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>User ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.UserId" value="{{result.UserId}}" placeholder="User ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
         <label>AspNetUserId</label>
       </div>
       <div class="col -8">
@@ -34,6 +56,44 @@
       </div>
       <div class="col -8">
       <input class="form-control" type="text" [(ngModel)]="result.Email" value="{{result.Email}}" placeholder="Email" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>User Request Status</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.UserRequestStatusId" name="userRequestStatusId">
+          <ng-container *ngFor="let option of UserRequestStatusOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Request Date</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="RequestDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="RequestDateTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Response Date</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="ResponseDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="ResponseDateTo">
       </div>
     </div>
   </div>

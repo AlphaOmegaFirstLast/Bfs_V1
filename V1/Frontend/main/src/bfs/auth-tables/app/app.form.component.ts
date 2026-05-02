@@ -75,7 +75,7 @@ export class AppFormComponent extends BaseFormComponent<IApp > implements OnInit
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -92,17 +92,17 @@ export class AppFormComponent extends BaseFormComponent<IApp > implements OnInit
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         target = "/BfsSystem/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsSystemOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching BestFit System data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }

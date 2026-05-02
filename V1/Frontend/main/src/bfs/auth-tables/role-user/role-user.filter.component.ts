@@ -18,6 +18,7 @@ export class RoleUserFilterComponent implements OnInit {
 
     // Define look ups
     public RoleOptions:  any[] = [];
+public UserOptions:  any[] = [];
 
     // Define range filters
 
@@ -47,6 +48,17 @@ export class RoleUserFilterComponent implements OnInit {
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Role data.';
+                this.isLoading = false;
+            }
+        });
+target = "/User/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.UserOptions = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching User data.';
                 this.isLoading = false;
             }
         });

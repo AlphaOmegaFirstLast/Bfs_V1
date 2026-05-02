@@ -72,31 +72,17 @@
     </div>
 </div>
 <div class="row mb-2">
-  <div class="col-12">
-     <div class="position-relative" (focusout)="hideUserOverlay()">
-        <label for="userId" class="form-label fs-6">Users</label>
-        <div class="input-group">
-            <input type="text"  class="form-control" [formControl]="userControl"
-                (focus)="userControl.value.length >= 2 && (showUser = true)"
-                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf="isLoading"><span class="spinner-border spinner-border-sm"></span></span>
-        </div>
-        <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
-            *ngIf="showUser && userOptions.length > 0">
-            <li *ngFor="let option of userOptions">
-                <button type="button"
-                    class="dropdown-item d-flex justify-content-between align-items-center"
-                    (click)="selectUser(option)">
-                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
-                </button>
-            </li>
-        </ul>
-        <ul class="dropdown-menu show w-100" *ngIf="showUser && !isLoading && userOptions.length === 0">
-            <li><span class="dropdown-item-text text-muted">Please select a valid Users.</span></li>
-        </ul>
+    <div class="col-12">
+        <label for="userId" class="form-label fs-6">User</label>
+        <select class="form-select" id="userId" formControlName="userId"
+            [class]="submit && !form['userId'].errors ? 'is-valid': submit && form['userId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of UserOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid User.</div>
     </div>
-   </div>
- </div>
+</div>
 </div>
 
                                     </div>

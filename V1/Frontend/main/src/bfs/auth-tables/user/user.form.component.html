@@ -85,6 +85,18 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="email" class="form-label fs-6">Email</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="email" formControlName="email"
+            [class]="submit && !form['email'].errors ? 'is-valid': submit && form['email'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Email.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 

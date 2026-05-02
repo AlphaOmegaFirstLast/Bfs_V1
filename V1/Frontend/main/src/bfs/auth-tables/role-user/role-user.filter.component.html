@@ -30,6 +30,20 @@
       </div>
     </div>
   </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>User</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.UserId" name="userId">
+          <ng-container *ngFor="let option of UserOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
