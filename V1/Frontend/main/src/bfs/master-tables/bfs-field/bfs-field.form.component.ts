@@ -39,17 +39,21 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField > impleme
 public FilterTypeOptions: any[] = [];
 public BackendDataTypeOptions: any[] = [];
 
+    // Define autocomplete
+
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(bfsFieldUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(bfsFieldUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -66,10 +70,14 @@ public BackendDataTypeOptions: any[] = [];
 
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {
+
+    }
+    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -86,43 +94,43 @@ public BackendDataTypeOptions: any[] = [];
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         target = "/BfsComponent/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsComponentOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Component data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading = true;
+this.isLoading.lookups = true;
         target = "/FilterType/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.FilterTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Filter Type data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading = true;
+this.isLoading.lookups = true;
         target = "/BackendDataType/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BackendDataTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Backend Type data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -130,6 +138,7 @@ this.isLoading = true;
 
     }
     //---------------------------------------------------------
+
     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getBfsFieldActions(this,record);
         let links: ViewLink[] = actions.filter(action => 

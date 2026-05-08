@@ -13,17 +13,17 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsFieldColumns = [
-    { fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidationName', width: '50px', isVisible:false },
+    { fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible:false },
 { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
 { fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponentName', width: '50px', isVisible:true },
-{ fieldName: 'field', displayName: 'Field', sortName: 'FieldName', width: '50px', isVisible:true },
-{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayNameName', width: '50px', isVisible:true },
+{ fieldName: 'field', displayName: 'Field', sortName: 'Field', width: '50px', isVisible:true },
+{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true },
 { fieldName: 'filterTypeId', displayName: 'Filter Type', sortName: 'FilterTypeName', width: '50px', isVisible:true },
 { fieldName: 'backendDataTypeId', displayName: 'Backend Type', sortName: 'BackendDataTypeName', width: '50px', isVisible:true },
-{ fieldName: 'reportInfo', displayName: 'Report Info', sortName: 'ReportInfoName', width: '50px', isVisible:false },
-{ fieldName: 'matrixInfo', displayName: 'Matrix Info', sortName: 'MatrixInfoName', width: '50px', isVisible:false },
-{ fieldName: 'toolTipInfo', displayName: 'ToolTip Info', sortName: 'ToolTipInfoName', width: '50px', isVisible:false },
-{ fieldName: 'formInfo', displayName: 'Form Info', sortName: 'FormInfoName', width: '50px', isVisible:false },
+{ fieldName: 'reportInfo', displayName: 'Report Info', sortName: 'ReportInfo', width: '50px', isVisible:false },
+{ fieldName: 'matrixInfo', displayName: 'Matrix Info', sortName: 'MatrixInfo', width: '50px', isVisible:false },
+{ fieldName: 'toolTipInfo', displayName: 'ToolTip Info', sortName: 'ToolTipInfo', width: '50px', isVisible:false },
+{ fieldName: 'formInfo', displayName: 'Form Info', sortName: 'FormInfo', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -101,6 +101,7 @@ export interface IBfsFieldRequest extends IEntityRequest<IBfsFieldFilter> {}
 //---------------------------------------------------------
 export interface IBfsFieldFilter {
     [key: string]: any;
+    Id?: string;
 
     Field?: string;
 
@@ -121,6 +122,7 @@ export function initBfsFieldRequest(): IBfsFieldRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Field: undefined ,
 

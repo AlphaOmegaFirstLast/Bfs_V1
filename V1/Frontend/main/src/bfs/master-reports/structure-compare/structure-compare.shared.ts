@@ -4,7 +4,7 @@ import * as operations from '@bfs/master-main/master.operations';
 // Output Columns of a Query  [used in entity Query]
 export const StructureCompareColumns = [
     { fieldName: 'bfsComponent_DataTypeId', displayName: 'Data Type', sortName: 'DataTypeName', width: '50px', isVisible:true },
-{ fieldName: 'bfsComponent_DisplayName', displayName: 'Component Name', sortName: 'DisplayNameName', width: '50px', isVisible:true },
+{ fieldName: 'bfsComponent_DisplayName', displayName: 'Component Name', sortName: 'BfsComponent_DisplayName', width: '50px', isVisible:true },
 
     { fieldName: 'countId', displayName: 'Fields Count Per Component', sortName: 'countId', width: '50px', isVisible:true },
 

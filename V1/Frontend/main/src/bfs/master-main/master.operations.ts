@@ -35,9 +35,9 @@ export async function deleteTree(me: IUserInterface, record: IIdentifiable, data
 
 export async function duplicateRecord(me: IUserInterface, record: IIdentifiable, data: any): Promise<void> {
 
-    if (!me.isLoading) {  // to prevent multiple requests
+    if (!me.isLoading.save) {  // to prevent multiple requests
         me.messages = [];
-        me.isLoading = true;
+        me.isLoading.save = true;
         var target = `${data.postUrl}/${data.recordId}`;
         (await me.apiService.get(target)).subscribe({
             next: async (res: any) => {
@@ -47,7 +47,7 @@ export async function duplicateRecord(me: IUserInterface, record: IIdentifiable,
                 await postDuplicateRecord(me, duplicatedRecord, data);
             },
             error: (err: any) => {
-                me.isLoading = false;
+                me.isLoading.save = false;
                 var msg = err.message || 'An error occurred while processing Systems data.';
                 me.messages.push({ text: msg, msgType: "danger" });
             }
@@ -126,7 +126,7 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
     let entityId = record.id;
     if (!me.isLoading.save) {  // to prevent multiple requests
         me.messages = [];
-        me.isLoading = true;
+        me.isLoading.save = true;
         var target = `/Operations/BfsComponentSystemAction/matrix/${entityId}`;
 
         var childrenList: any[] = [
@@ -143,7 +143,7 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
                 me.list = res.items;
             },
             error: (err: any) => {
-                me.isLoading = false;
+                me.isLoading.save = false;
                 var msg = err.message || 'An error occurred while saving matrix data.';
                 me.messages.push({ text: msg, msgType: "danger" });
             }
