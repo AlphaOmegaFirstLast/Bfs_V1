@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Bfs.Auth.Data.Reports
 {
-    public class RoleRepCompare :QueryBase<RoleRepCompareFilter>,  IRoleRepCompare
+    public class RoleRepCompare : QueryBase<RoleRepCompareFilter>, IRoleRepCompare
     {
         public RoleRepCompare(string connectionString)
         {
@@ -42,29 +42,29 @@ namespace Bfs.Auth.Data.Reports
         {
             //base fields
             _fieldList.Add(new QueryField() { DbName = "athAuthRole.Id", QueryName = "AuthRole_Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athAuthRole.Name", QueryName = "AuthRole_Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "AuthRole_Notes", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "athAuthRole.Name", QueryName = "AuthRole_Name", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "AuthRole_Notes", IsAggregare = false });
 
             //lookups
 
-           //Aggregates
+            //Aggregates
 
         }
 
         protected override string GetFromJoinStatement()
         {
-           var sql = new StringBuilder();  
-           sql.AppendLine(" From [DbParentTable] ");
+            var sql = new StringBuilder();
+            sql.AppendLine(" From [DbParentTable] ");
 
-           return sql.ToString();
+            return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<RoleRepCompareFilter> request, DynamicParameters parameters)
         {
-            var sql = new StringBuilder() ;
+            var sql = new StringBuilder();
             sql.AppendLine(" [DbParentTable].isDeleted=0 ");
 
-                         var filter = request.Filter;
+            var filter = request.Filter;
             if (filter != null)
             {
 
@@ -77,7 +77,7 @@ _fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "Aut
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));        
+                                 .Select(s => s.Trim()));
         }
 
         protected override string GetHavingConditions(QueryRequest<RoleRepCompareFilter> request, DynamicParameters parameters)
@@ -92,8 +92,8 @@ _fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "Aut
 
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));        
-       }       
+                                 .Select(s => s.Trim()));
+        }
     }
 }
 
