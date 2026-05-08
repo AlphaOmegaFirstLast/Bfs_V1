@@ -31,6 +31,11 @@ public interface IScopeData
     public long TenantId { get; }
 
     /// <summary>
+    ///     ID of the role of the User requesting the operation.
+    /// </summary>
+    public long RoleId { get; }
+
+    /// <summary>
     ///     Correlation token for sequence chaining.
     /// </summary>
     public string CorrelationToken { get; }

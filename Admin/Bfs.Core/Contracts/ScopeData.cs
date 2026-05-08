@@ -44,12 +44,12 @@ public class ScopeData : IScopeData
     }
 
     private string? GetClaim(string claimType) =>
-    _httpContextAccessor.HttpContext?
-        .User.Claims.FirstOrDefault(c => c.Type == claimType)?
+        _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == claimType)?
         .Value;
 
     private long GetClaimAsLong(string claimType)
     {
+        //ToDo handle Exception
         var value = GetClaim(claimType);
         return long.TryParse(value, out var result)
             ? result
@@ -67,6 +67,11 @@ public class ScopeData : IScopeData
     ///     ID of the tenant, owning the entities in the scope.
     /// </summary>
     public long TenantId { get; }
+
+    /// <summary>
+    ///     ID of the role of the User requesting the operation.
+    /// </summary>
+    public long RoleId { get; }
 
     /// <summary>
     ///     Correlation token for sequence chaining.
