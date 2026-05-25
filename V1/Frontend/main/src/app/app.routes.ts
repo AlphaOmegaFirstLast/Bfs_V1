@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout.component';
-// import { HomeComponent } from '../bfs/home/home.component';
-// import { environment } from '@environment/environment.staging';
 
 const BFS_SYSTEMS_ROUTES: Routes = [
     {
@@ -15,11 +13,11 @@ const BFS_SYSTEMS_ROUTES: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('../bfs/home/home.route').then((mod) => mod.Home_ROUTES),
+                loadChildren: () => import('../bfs/_shared/pages/home/home.route').then((mod) => mod.Home_ROUTES),
             },
             {
                 path: '',
-                loadChildren: () => import('../bfs/error/error.route').then((mod) => mod.ERROR_PAGES_ROUTES)
+                loadChildren: () => import('../bfs/_shared/pages/error/error.route').then((mod) => mod.ERROR_PAGES_ROUTES)
             },
             {
                 path: '',
