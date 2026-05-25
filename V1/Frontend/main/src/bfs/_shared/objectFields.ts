@@ -133,16 +133,16 @@ export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFor
 //------------------------------------------------
 export async function getReportInfoLookups(me: any): Promise<void> {
     me.messages = [];
-    me.isLoading = true;
+    me.isLoading.lookups = true;
     let target = '';
     target = "/ChartElement/list";
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.ChartElementOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Chart Elements data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }
@@ -151,10 +151,10 @@ export async function getReportInfoLookups(me: any): Promise<void> {
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.AggregateTypeOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Aggregate Type data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }
@@ -188,16 +188,16 @@ export function toolTipInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFo
 //------------------------------------------------
 export async function getToolTipInfoLookups(me: any): Promise<void> {
     me.messages = [];
-    me.isLoading = true;
+    me.isLoading.lookups = true;
     let target = '';
     target = "/ActionLocation/list";
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.ActionLocationOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Chart Elements data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }
@@ -258,16 +258,16 @@ export function formInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormG
 //------------------------------------------------
 export async function getFormInfoLookups(me: any): Promise<void> {
     me.messages = [];
-    me.isLoading = true;
+    me.isLoading.lookups = true;
     let target = '';
     target = "/FormControlType/list";
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.FormControlTypeOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Form Control Type data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }

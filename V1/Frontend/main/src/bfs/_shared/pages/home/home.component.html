@@ -16,20 +16,29 @@
       </article>
     </div>
   </div>
-
-<div class="app-container">
-  <ng-container *ngFor="let item of userApps">
-    <div 
-      class="btn btn-outline-info m-2 app-button" 
-      style="width: 200px;"
-      (click)="setCurrentApp(item.name)">
-      
-      <img [src]="'../../assets/images/apps/' + item.logo" class="app-logo">
-      <span class="app-name">{{item.name}}</span>
-      
+  <!----------------------------------------- Messages -------------------------------------->
+  <div *ngFor="let msg of messages">
+    <div *ngIf="msg.text">
+      <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+        <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+      </ngb-alert>
     </div>
-  </ng-container>
-</div>
+  </div>
+  <!----------------------------------------- User Apps -------------------------------------->
+
+  <div class="app-container">
+    <ng-container *ngFor="let item of userApps">
+      <div
+        class="btn btn-outline-info m-2 app-button"
+        style="width: 200px;"
+        (click)="setCurrentApp(item.name)">
+
+        <img [src]="'../../assets/images/apps/' + item.logo" class="app-logo">
+        <span class="app-name">{{item.name}}</span>
+
+      </div>
+    </ng-container>
+  </div>
 
   <!-- Used for testing token and access data retrieval, can be removed in future -->
   <!-- <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
@@ -41,4 +50,3 @@
     </div>
   </div>
 </div> -->
-

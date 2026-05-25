@@ -1,6 +1,6 @@
 import { Component, Directive, inject, OnInit } from '@angular/core';
-//import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+//import { CommonModule } from '@angular/common';
 //import { FormsModule, ReactiveFormsModule, FormBuilder, Validators,  ValidationErrors } from '@angular/forms';
 
 import { UntypedFormBuilder, UntypedFormArray, type UntypedFormGroup, AbstractControl } from '@angular/forms';
@@ -35,7 +35,7 @@ public tokenService!: any;
     public currentOperation: string = '';
     public parent: any;
     public messages: IUIMessage[] = [];
-    public isLoading: any = {view:false, save: false, lookups: false, autoComplete: false}; 
+    public isLoading: any = {list:false, view:false, save: false, lookups: false, autoComplete: false}; 
     entity: Entity;
     me: any = this;
     //-----------------------Object Fields Lookups----------------------------------
@@ -88,7 +88,8 @@ public tokenService!: any;
     //---------------------------------------------------------
     async getObjectFieldLookups() {
         let currentSystem = sessionStorage.getItem('current-system') || '';
-        if (currentSystem.toLowerCase() == 'infrustructure') {
+        // ToDo set a separate flag: "isMaster", so code is executed regardless of how system is named, currently it relies on system name contains "master"
+        if (currentSystem.toLowerCase() == 'master') {
             await getReportInfoLookups(this);
             await getMatrixInfoLookups(this);
             await getToolTipInfoLookups(this);

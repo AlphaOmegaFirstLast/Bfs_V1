@@ -1,13 +1,16 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
-import { NgIf, NgFor, CommonModule } from '@angular/common';
+import { NgFor, CommonModule } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { TokenService } from '@bfs/_shared/security/token.service';
 import { AccessService } from '@bfs/_shared/security/access.service';
 import { MasterService } from '@bfs/master-main/master.service';
-import { templates } from 'choices.js';
+import { IUIMessage } from '@bfs/_shared/interfaces';
 
 @Component({
   selector: 'app-home-page',
-  imports: [NgFor, CommonModule],
+  imports: [NgFor, NgIcon, NgbAlertModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -19,6 +22,7 @@ export class HomeComponent implements OnInit {
 
   userApps: any[] = [];
   welcomeData: any = { tenant: '', company: '', system: '', systemId: '', systemLogo: ''  };
+    public messages: IUIMessage[] = [];
 
   constructor(private cdr: ChangeDetectorRef) { }
   //-------------------------------------------------------
@@ -26,7 +30,6 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getWelcomeData();
     this.userApps = await this.getAccessData();
-    //  this.cdr.detectChanges();   // <— forces Angular to update the view
   }
   //-------------------------------------------------------
 
@@ -34,14 +37,16 @@ export class HomeComponent implements OnInit {
     let dataReady = await this.accessService.IsAccessServiceReady();
     if (dataReady) {
       var userAppsOfCurrentTenant =  await this.accessService.getUserApplications();
+      // Filter all user apps by systemId of current system, which is stored in session storage by Identity.Web
       var currentSystemId = sessionStorage.getItem('current-systemId');
       if (currentSystemId) {
         return userAppsOfCurrentTenant.filter((app: any) => app.bfsSystemId == currentSystemId);
       }
-      return [];
+    }else{
+      this.messages.push({ text: "Failed to retrieve access data.", msgType: "danger" });
     }
-    else
-      return [];
+
+    return [];
   }
   //-------------------------------------------------------
 

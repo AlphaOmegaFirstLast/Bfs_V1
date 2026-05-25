@@ -96,30 +96,27 @@ export class TokenService {
     });
   }
   //------------------------------------------------------------
-  getTokenObservable(url: string): Observable<string> {
+  getTokenObservable(url: string): Observable<string | null> {
     if (this.inFlightRequest$) {
       return this.inFlightRequest$;
     }
-
     const target = this.identityWebOrigin + url;
-    //const opts = { headers: new HttpHeaders({ 'Content-Type': 'text/plain; charset=utf-8' }), withCredentials: true };
+    //withCredentials is required for the browser to include cookies in the request, which is necessary for the refresh token flow to work, as the refresh token is stored in an HttpOnly cookie for security reasons. The server will look for the refresh token in the cookie when processing the refresh request, and if withCredentials is not set to true, the cookie will not be sent, and the server will not be able to authenticate the request to issue a new access token.
     const opts = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), withCredentials: true };
 
     // The Observable is created and piped with operators for data transformation and error handling.
     var tokenObservable = this.http.get(target, opts).pipe(
 
       map((response: any) => {
-        console.log('token response', response);
-        return response.jwtToken as string;
-      }),
-
-      tap((jwtToken: any) => {
-        this.setTokenModel(jwtToken);
+        const jwtToken =  response.jwtToken as string ;
+        const isValid = this.setTokenModel(jwtToken);
+        return isValid ? jwtToken : ''
       }),
 
       // Map and error handling as in your original code
       catchError((_error: any) => {
-        return throwError(() => 'token fetch error');
+        console.error('Token fetch error', _error);
+        return ''; // Return an empty string on error to indicate failure without throwing, allowing the app to handle it gracefully'';
       }),
 
       finalize(() => {
@@ -136,15 +133,21 @@ export class TokenService {
     return tokenObservable;
   }
   //------------------------------------------------------------
-  setTokenModel(jwtToken: string | null) {
+  setTokenModel(jwtToken: string | null): boolean {
+    this.tokenModel = null;
     if (!jwtToken) {
-      this.tokenModel = null;
-      return;
+      console.error('Invalid token: null');
+      return false;
     }
     const parsedToken = this.parseJwt(jwtToken);
+    if (!parsedToken || !parsedToken.userId) { // in case a user has a login to BestFit Tenant but doesn't have a record in athUser.
+      console.error('Invalid token: missing userId');
+      return false;
+    }
     this.tokenModel = { token: jwtToken, tokenParsed: parsedToken };
     sessionStorage.setItem('token', jwtToken);
     sessionStorage.setItem('token-parsed', JSON.stringify(parsedToken));
+    return true;
   }
   //------------------------------------------------------------
   getTokenModel(): TokenModel | null {
@@ -162,19 +165,13 @@ export class TokenService {
   //------------------------------------------------------------
   parseJwt(token: string): TokenParsed | null {
     const tokenPayload = token.split('.')[1];
-    try {
-      const payloadJson = atob(tokenPayload);
-      const payload = JSON.parse(payloadJson);
-      return payload as TokenParsed;
-    } catch (error) {
-      console.error('Failed to decode or parse token payload:', error);
-      return null;
-    }
+    const payloadJson = atob(tokenPayload);
+    const payload = JSON.parse(payloadJson);
+    const tokenParsed = payload as TokenParsed;
+    return tokenParsed;
   }
   //------------------------------------------------------------
 }
-
-
 
 /* Explanation of the differences between .pipe().subscribe() and await firstValueFrom().pipe():
 .pipe() is for data manipulation and stream transformation. 
