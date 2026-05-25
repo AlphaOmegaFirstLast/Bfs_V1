@@ -9,7 +9,7 @@ using static System.Net.WebRequestMethods;
 
 namespace Bfs.Auth.Data
 {
-    internal class ResourceSecurity
+    public class ResourceSecurity : IResourceSecurity
     {
         private readonly IScopeData _scopeData;
         public List<RoleResource> RoleResourceList { get; set; } = new List<RoleResource>();
@@ -77,7 +77,7 @@ namespace Bfs.Auth.Data
             return parameters;
         }
 
-        public void AddSecurityFilter(ref string queryJoinStatment, ref string queryWhereStatment, ref DynamicParameters parameters )
+        public void Apply(ref string queryJoinStatment, ref string queryWhereStatment, ref DynamicParameters parameters)
         {
             if (string.IsNullOrEmpty(queryJoinStatment))
             {
@@ -103,11 +103,11 @@ namespace Bfs.Auth.Data
             var ok = true;
             foreach (var rule in RoleResourceList)
             {
-                if (rule.RoleId == inputRoleId && rule.ComponentName == componentName)  
+                if (rule.RoleId == inputRoleId && rule.ComponentName == componentName)
                 {
                     var property = entity.GetType().GetProperty(rule.ParameterName.TrimStart('@'));
                     var propertyValue = property?.GetValue(entity);
-                    var expectedValue =  Convert.ChangeType(rule.ParameterValue, Type.GetType("System." + rule.ParameterType, true));
+                    var expectedValue = Convert.ChangeType(rule.ParameterValue, Type.GetType("System." + rule.ParameterType, true));
                     ok = propertyValue != null && propertyValue.Equals(expectedValue);
                     if (!ok)
                         break;
@@ -139,8 +139,8 @@ namespace Bfs.Auth.Data
                 RoleName = "Role1",
                 BfsComponentId = 15,
                 ComponentName = "strStore",
-                JoinStatement = "Left join Area on strArea.Id = strStore.AreaId",
-                WhereStatement = "Area.Name = @AreaName",
+                JoinStatement = "Left join strArea on strArea.Id = strStore.AreaId",
+                WhereStatement = "strArea.Name = @AreaName",
                 ParameterName = "@AreaName",
                 ParameterType = "string",
                 ParameterValue = "North"
