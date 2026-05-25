@@ -23,7 +23,7 @@ public BackendDataTypeOptions:  any[] = [];
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -45,33 +45,33 @@ public BackendDataTypeOptions:  any[] = [];
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsComponentOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Component data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 target = "/FilterType/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.FilterTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Filter Type data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 target = "/BackendDataType/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BackendDataTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Backend Type data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 

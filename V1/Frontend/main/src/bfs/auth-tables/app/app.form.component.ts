@@ -13,6 +13,7 @@ import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink
 
 //----------------------- System Specific -------------------------- 
 import { AuthService } from '@bfs/auth-main/auth.service';
+import { MasterService } from '@bfs/master-main/master.service';
 
 //---------------------- Component Specific ------------------------
 import { type IApp, type IAppRequest, initApp, appUntypedFormGroup } from './app.shared';
@@ -30,6 +31,7 @@ export class AppFormComponent extends BaseFormComponent<IApp > implements OnInit
 
     override apiUrl =  '/App/';
     override apiService: AuthService = inject(AuthService);
+    bfsService: MasterService = inject(MasterService);
     override componentName: string = 'App'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
@@ -96,7 +98,7 @@ export class AppFormComponent extends BaseFormComponent<IApp > implements OnInit
 // }
         this.isLoading.lookups = true;
         target = "/BfsSystem/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+        (await this.bfsService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsSystemOptions = response.items;
                 this.isLoading.lookups = false;

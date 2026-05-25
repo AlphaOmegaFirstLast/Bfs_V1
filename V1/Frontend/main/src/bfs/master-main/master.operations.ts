@@ -41,7 +41,7 @@ export async function duplicateRecord(me: IUserInterface, record: IIdentifiable,
         var target = `${data.postUrl}/${data.recordId}`;
         (await me.apiService.get(target)).subscribe({
             next: async (res: any) => {
-                me.isLoading = false;
+                me.isLoading.list = false;
                 var duplicatedRecord = res;
                 data = { ...data, record: duplicatedRecord };
                 await postDuplicateRecord(me, duplicatedRecord, data);
