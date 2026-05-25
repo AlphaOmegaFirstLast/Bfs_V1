@@ -51,11 +51,21 @@ namespace Bfs.Core.TenantManagement
                 var cacheKey = GetCacheKey();
 
                 if (_cache.TryGetValue(cacheKey, out List<TenantEntity>? tenantsData))
+                {
                     if (tenantsData != null)
                     {
                         var tenant = tenantsData.FirstOrDefault(t => t.TenantId == tenantId);
                         dbConnection = tenant?.DbConnection ?? string.Empty;
                     }
+                    else 
+                    {
+                        throw new Exception($"No Tenants found");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Tenants data not found in cache");
+                }
             }
 
             if (string.IsNullOrEmpty(dbConnection))
@@ -130,17 +140,38 @@ namespace Bfs.Core.TenantManagement
             return await query.ToListAsync();
         }
 
+        private static async Task<List<TenantEntity>> GetAllTenants(string masterConnection, string systemName)
+        {
+            var options = new DbContextOptionsBuilder<MasterBasicDbContext>()
+                 .UseSqlServer(masterConnection) // Replace with your actual connection string
+                 .Options;
+
+            // combine the three tables to get tenants of the specified system, combine in one query to avoid multiple database calls
+            using var db = new MasterBasicDbContext(options);
+            var query = from t in db.BfsTenant 
+                        select new TenantEntity
+                        {
+                            Id = t.Id,
+                            TenantId = t.Id,
+                            DbConnection = t.DbConnection
+                        };
+            return await query.ToListAsync();
+        }
+
         public static async Task ApplyMigrations<T>(string masterConnection, string systemName) where T : DbContext
         {
+            // ToDo Apply SeedData after migration, but SeedData needs to use tenant db context, so it will cause circular dependency if we put SeedData in this project, need to find a way to avoid circular dependency, maybe we can put SeedData in a separate project and reference it in both projects, or we can use reflection to call SeedData without referencing it directly. For now, we can run SeedData manually after running migration, as the number of tenants is not large, it should not be a big issue.
             //using (var scope = app.Services.CreateScope())
             //{
             //    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             //    await db.Database.MigrateAsync();   // run DB migrations
             //    await SeedData.InitializeAsync(db); // seed initial data
             //}
-            //ToDo Do we want to run migrations for all tenants at startup? Or should we have a separate background service that runs migrations for tenants on a schedule or when a new tenant is added? Running migrations for all tenants at startup could lead to longer startup times, especially if there are many tenants. A background service could help mitigate this by running migrations in the background without blocking the application startup.
-            //ToDo Do we want to run migrations for all tenants or only tenants of the specified system? Running migrations for all tenants could lead to unnecessary migrations for tenants that are not part of the specified system, while running migrations only for tenants of the specified system could lead to faster migration times and less resource usage.
-            var tenants = await GetTenantsOfSystem(masterConnection, systemName);
+
+            var isApplyMigrationsForAllTenants = true; // Set this flag based on your requirements
+            var tenants = isApplyMigrationsForAllTenants 
+                ? await GetAllTenants(masterConnection, systemName) 
+                : await GetTenantsOfSystem(masterConnection, systemName);
 
             foreach (var tenant in tenants)
             {

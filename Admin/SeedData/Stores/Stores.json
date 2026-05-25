@@ -1,0 +1,58 @@
+[
+  {
+    "id": "754740198070836",
+    "name": "Store 1 - North",
+    "notes": "",
+    "areaId": "754739221426035",
+    "areaName": "North Area"
+  },
+  {
+    "id": "754740286163740",
+    "name": "Store 2  - North",
+    "notes": "",
+    "areaId": "754739221426035",
+    "areaName": "North Area"
+  },
+  {
+    "id": "754740506758372",
+    "name": "Store 3 - South",
+    "notes": "",
+    "areaId": "754739347117568",
+    "areaName": "South Area"
+  },
+  {
+    "id": "754740591801056",
+    "name": "Store 4 - South",
+    "notes": "",
+    "areaId": "754739347117568",
+    "areaName": "South Area"
+  },
+  {
+    "id": "754740764259436",
+    "name": "Store 5 - East",
+    "notes": "",
+    "areaId": "754739409337528",
+    "areaName": "East Area"
+  },
+  {
+    "id": "754740852296705",
+    "name": "Store 6 - East",
+    "notes": "",
+    "areaId": "754739409337528",
+    "areaName": "East Area"
+  },
+  {
+    "id": "754741015882205",
+    "name": "Store 7 - West",
+    "notes": "",
+    "areaId": "754739483951715",
+    "areaName": "West Area"
+  },
+  {
+    "id": "754741077904351",
+    "name": "Store 8 - West",
+    "notes": "",
+    "areaId": "754739483951715",
+    "areaName": "West Area"
+  }
+]

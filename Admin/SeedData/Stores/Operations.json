@@ -1,0 +1,83 @@
+[
+  {
+    "id": "1",
+    "name": "Reset",
+    "notes": "",
+    "effectTypeId": "3",
+    "thirdPartyTypeId": "1",
+    "effectTypeName": "Set",
+    "thirdPartyTypeName": "None"
+  },
+  {
+    "id": "2",
+    "name": "Receive From Supplier",
+    "notes": "",
+    "effectTypeId": "1",
+    "thirdPartyTypeId": "2",
+    "effectTypeName": "Add",
+    "thirdPartyTypeName": "Supplier"
+  },
+  {
+    "id": "3",
+    "name": "Send To Supplier",
+    "notes": "",
+    "effectTypeId": "2",
+    "thirdPartyTypeId": "2",
+    "effectTypeName": "Subtract",
+    "thirdPartyTypeName": "Supplier"
+  },
+  {
+    "id": "4",
+    "name": "Receive From Customer",
+    "notes": "",
+    "effectTypeId": "1",
+    "thirdPartyTypeId": "3",
+    "effectTypeName": "Add",
+    "thirdPartyTypeName": "Customer"
+  },
+  {
+    "id": "5",
+    "name": "Send To Customer",
+    "notes": "",
+    "effectTypeId": "2",
+    "thirdPartyTypeId": "3",
+    "effectTypeName": "Subtract",
+    "thirdPartyTypeName": "Customer"
+  },
+  {
+    "id": "6",
+    "name": "Receive From Store",
+    "notes": "",
+    "effectTypeId": "1",
+    "thirdPartyTypeId": "4",
+    "effectTypeName": "Add",
+    "thirdPartyTypeName": "Store"
+  },
+  {
+    "id": "7",
+    "name": "Send To Store",
+    "notes": "",
+    "effectTypeId": "2",
+    "thirdPartyTypeId": "4",
+    "effectTypeName": "Subtract",
+    "thirdPartyTypeName": "Store"
+  },
+  {
+    "id": "8",
+    "name": "Adjust - Add",
+    "notes": "To reverse any damage / expired / subtract operation",
+    "effectTypeId": "1",
+    "thirdPartyTypeId": "1",
+    "effectTypeName": "Add",
+    "thirdPartyTypeName": "None"
+  },
+  {
+    "id": "9",
+    "name": "Adjust - Subtract",
+    "notes": "Damage / Expired or any subtract operation",
+    "effectTypeId": "2",
+    "thirdPartyTypeId": "1",
+    "effectTypeName": "Subtract",
+    "thirdPartyTypeName": "None"
+  }
+]

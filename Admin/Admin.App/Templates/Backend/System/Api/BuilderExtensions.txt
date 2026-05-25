@@ -24,6 +24,8 @@ namespace Bfs.[SystemNameCapital].Api;
 
 public static class BuilderExtensions
 {
+    public record TenantSqlConfiguration(string ConnectionString);
+
     public static void RegisterScopeData(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IScopeData, ScopeData>();
@@ -109,7 +111,22 @@ public static class BuilderExtensions
         // Tenant resolution (per request). TenantProvider is scoped (via AddScoped) and can safely use HttpContext.
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<ITenantManager, TenantManager>();
-    }
+        builder.Services.AddScoped<IUserTenantService, UserTenantService>(); // needed only for Auth Api
+
+        builder.Services.AddHostedService<CacheWarmingService>();  // AddHostedService so the host is going to manage the lifecycle of the CacheWarmingService, starting it when the application starts and stopping it when the application shuts down. This ensures that the background service runs continuously in the background, refreshing the tenant cache at regular intervals as defined in the CacheWarmingService implementation.
+   
+        // Get the current tenant's connection string from the TenantProvider and create a TenantSqlConfiguration that can be used by the lists to access the database.
+        // This allows the lists to be tenant-aware and operate on the correct database for each request.
+        // AddScoped is used here because the TenantProvider is scoped to the request, and we want to ensure that each list gets the correct connection string for the current tenant during that request. By registering TenantSqlConfiguration as scoped,
+        //  we can safely inject it into the lists without worrying about cross-tenant data access issues.
+        // ------------------------------------------------------------
+        builder.Services.AddScoped(sp =>
+        {
+            var tenantProvider = sp.GetRequiredService<ITenantManager>();
+            var connectionString = tenantProvider.GetTenantDbConnection();
+            return new TenantSqlConfiguration(connectionString);
+        });
+        // ------------------------------------------------------------ }
 
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
     {
@@ -165,20 +182,12 @@ public static class BuilderExtensions
 
     public static void RegisterLists(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-        if (settings != null && settings.DbConnections != null)
-        {
-            var dbConnection = settings.DbConnections.[SystemNameCapital]Connection;
 //Template_Component_RegisterList
-        }
     }
 
     public static void RegisterReports(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-        if (settings != null && settings.DbConnections != null)
-        {
-            var dbConnection = settings.DbConnections.[SystemNameCapital]Connection;
 //Template_Component_RegisterReport
-        }
     }
 
     public static void RegisterClients(this WebApplicationBuilder builder, BfsSettings? settings)

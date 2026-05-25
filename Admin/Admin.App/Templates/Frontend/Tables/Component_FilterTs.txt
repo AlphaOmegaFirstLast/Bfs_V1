@@ -27,7 +27,7 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
     public [FilterRangeName]To: [FrontendFieldType] | undefined;
     //Template_End_FilterField_Range_1
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -53,11 +53,11 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.[LookupNameCapital]Options = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching [DisplayName] data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
         //Template_End_Field_Lookup_2

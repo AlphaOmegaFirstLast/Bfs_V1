@@ -1,5 +1,5 @@
-            builder.Services.AddScoped<I[ReportNameCapital]>(provider =>
-            {
-                return new [ReportNameCapital](dbConnection);
-            });
-            
+        builder.Services.AddScoped<I[ReportNameCapital]>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new [ReportNameCapital](config.ConnectionString);
+        });
