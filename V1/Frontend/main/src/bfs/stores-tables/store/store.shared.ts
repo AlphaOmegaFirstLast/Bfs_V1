@@ -7,9 +7,10 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const StoreColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+    { fieldName: 'store_Id', displayName: 'ID', sortName: 'Store_Id', width: '50px', isVisible:false },
+{ fieldName: 'store_Name', displayName: 'Name', sortName: 'Store_Name', width: '50px', isVisible:true },
+{ fieldName: 'store_Notes', displayName: 'Notes', sortName: 'Store_Notes', width: '50px', isVisible:false },
+{ fieldName: 'store_AreaId', displayName: 'Area', sortName: 'Area_Name', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -19,6 +20,8 @@ id?: string;
 name?: string;
 notes?: string;
 
+    areaId?: string;
+
 }
 //---------------------------------------------------------
 export function initStore(): IStore {
@@ -27,6 +30,8 @@ export function initStore(): IStore {
 id: '0',
 name: '',
 notes: '',
+
+        areaId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -41,10 +46,14 @@ id: ['0'],
 name: [''],
 notes: [''],
 
+    areaId: ['0'],
+
     };
 } 
 //---------------------------------------------------------
 export interface IStoreWithLookup extends IStore{
+
+    areaName?: string;
 
 }
 //---------------------------------------------------------
@@ -53,8 +62,11 @@ export interface IStoreRequest extends IEntityRequest<IStoreFilter> {}
 //---------------------------------------------------------
 export interface IStoreFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
+
+    AreaId?: string;
 
 }
 //---------------------------------------------------------
@@ -69,8 +81,11 @@ export function initStoreRequest(): IStoreRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
+
+            AreaId: undefined ,
 
             }
     };
@@ -100,6 +115,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('store', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/str/store/delete', displayText: 'Delete...' 
+});
+}
+if (component.accessService.isActionAllowed('store', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['areaId'], route:'/str/area/view', displayText:'Go to Area'
 });
 }
 

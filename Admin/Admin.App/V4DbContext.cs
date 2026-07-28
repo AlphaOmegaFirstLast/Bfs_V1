@@ -18,7 +18,7 @@ namespace Admin.App
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var BestFitConnection = "Server=localhost;Database=BestFit_V5;Trusted_Connection=True;TrustServerCertificate=True";
+            var BestFitConnection = $"Server=localhost;Database={CodeGeneratorBase.BestFitDB};Trusted_Connection=True;TrustServerCertificate=True";
             optionsBuilder.UseSqlServer(BestFitConnection);
        
         /* The line below was added to suppress a warning that EF raises whentrying to add-migration for CustomFields.

@@ -23,6 +23,11 @@ namespace Bfs.Stores.Contracts
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
 
+        ///<Summary>
+        /// Store Area.
+        ///</Summary>
+        public long AreaId {get; set;} = 0 ;
+
     }
 }
 

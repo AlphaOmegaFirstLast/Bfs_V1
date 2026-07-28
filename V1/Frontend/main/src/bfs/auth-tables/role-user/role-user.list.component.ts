@@ -65,9 +65,9 @@ export class RoleUserListComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'roleId':
+            case 'roleUser_RoleId':
                 return record['roleName']?.toString();
-case 'userId':
+case 'roleUser_UserId':
                 return record['userName']?.toString();
 
             default:

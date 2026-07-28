@@ -53,3 +53,4 @@ export class ProductTransactionCompareFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

@@ -65,6 +65,8 @@ export class StoreListComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
+            case 'store_AreaId':
+                return record['areaName']?.toString();
 
             default:
                 return value;

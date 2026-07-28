@@ -39,17 +39,21 @@ export class TransactionFormComponent extends BaseFormComponent<ITransaction > i
 public OperationOptions: any[] = [];
 public ProductOptions: any[] = [];
 
+    // Define autocomplete
+
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(transactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(transactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -66,10 +70,14 @@ public ProductOptions: any[] = [];
 
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {
+
+    }
+    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -86,43 +94,43 @@ public ProductOptions: any[] = [];
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         target = "/Store/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.StoreOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Store data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading = true;
+this.isLoading.lookups = true;
         target = "/Operation/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.OperationOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Operation data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading = true;
+this.isLoading.lookups = true;
         target = "/Product/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.ProductOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Product data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -130,6 +138,7 @@ this.isLoading = true;
 
     }
     //---------------------------------------------------------
+
     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getTransactionActions(this,record);
         let links: ViewLink[] = actions.filter(action => 

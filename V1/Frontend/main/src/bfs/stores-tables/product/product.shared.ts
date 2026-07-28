@@ -8,8 +8,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const ProductColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -53,6 +53,7 @@ export interface IProductRequest extends IEntityRequest<IProductFilter> {}
 //---------------------------------------------------------
 export interface IProductFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 
@@ -69,6 +70,7 @@ export function initProductRequest(): IProductRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 

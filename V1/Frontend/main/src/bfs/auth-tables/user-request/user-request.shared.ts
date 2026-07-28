@@ -7,14 +7,14 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const UserRequestColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'email', displayName: 'Email', sortName: 'Email', width: '50px', isVisible:true },
-{ fieldName: 'userId', displayName: 'User ID', sortName: 'UserId', width: '50px', isVisible:false },
-{ fieldName: 'requestDate', displayName: 'Request Date', sortName: 'RequestDate', width: '50px', isVisible:true },
-{ fieldName: 'responseDate', displayName: 'Response Date', sortName: 'ResponseDate', width: '50px', isVisible:false },
-{ fieldName: 'userRequestStatusId', displayName: 'User Request Status', sortName: 'UserRequestStatusName', width: '50px', isVisible:true },
+    { fieldName: 'userRequest_Id', displayName: 'ID', sortName: 'UserRequest_Id', width: '50px', isVisible:false },
+{ fieldName: 'userRequest_Notes', displayName: 'Notes', sortName: 'UserRequest_Notes', width: '50px', isVisible:false },
+{ fieldName: 'userRequest_Name', displayName: 'Name', sortName: 'UserRequest_Name', width: '50px', isVisible:true },
+{ fieldName: 'userRequest_Email', displayName: 'Email', sortName: 'UserRequest_Email', width: '50px', isVisible:true },
+{ fieldName: 'userRequest_UserId', displayName: 'User ID', sortName: 'UserRequest_UserId', width: '50px', isVisible:false },
+{ fieldName: 'userRequest_RequestDate', displayName: 'Request Date', sortName: 'UserRequest_RequestDate', width: '50px', isVisible:true },
+{ fieldName: 'userRequest_ResponseDate', displayName: 'Response Date', sortName: 'UserRequest_ResponseDate', width: '50px', isVisible:false },
+{ fieldName: 'userRequest_UserRequestStatusId', displayName: 'User Request Status', sortName: 'UserRequestStatus_Name', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------

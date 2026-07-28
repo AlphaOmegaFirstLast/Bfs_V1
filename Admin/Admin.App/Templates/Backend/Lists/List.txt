@@ -1,5 +1,6 @@
 ﻿using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.[SystemNameCapital].Data.Lists
 {
     public class [ReportNameCapital]: QueryBase<[ReportNameCapital]Filter>,  I[ReportNameCapital]
     {
-        public [ReportNameCapital](string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public [ReportNameCapital](string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
         {
             var response = new QueryResponse<[ReportNameCapital]Item>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -44,22 +48,22 @@ namespace Bfs.[SystemNameCapital].Data.Lists
         {
             //base fields
             //Template_Start_ReportField_QueryColumn_1
-            _fieldList.Add(new QueryField() { DbName = "[DbParentTable].[CapitalFieldName]", QueryName = "[ReportFieldNameCapital]", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "[CapitalFieldName]", DbName = "[DbParentTable].[CapitalFieldName]", QueryName = "[ReportFieldNameCapital]", IsAggregare = false});
             //Template_End_ReportField_QueryColumn_1
                    
             //lookups
             //Template_Start_Field_Lookup_1
-             _fieldList.Add(new QueryField() { DbName = "[DbLookupTable].Name", QueryName = "[LookupNameCapital]Name", IsAggregare = false });
+             _fieldList.Add(new QueryField() {ComponentName = "[LookupNameCapital]", FieldName = "Name", DbName = "[DbLookupTable].Name", QueryName = "[LookupNameCapital]Name", IsAggregare = false});
             //Template_End_Field_Lookup_1
 
             //autoCompletes
             //Template_Start_Field_AutoComplete_1
-             _fieldList.Add(new QueryField() { DbName = "[DbAutoCompleteTable].Name", QueryName = "[AutoCompleteCapital]Name", IsAggregare = false });
+             _fieldList.Add(new QueryField() {ComponentName = "[AutoCompleteCapital]", FieldName = "Name", DbName = "[DbAutoCompleteTable].Name", QueryName = "[AutoCompleteCapital]Name", IsAggregare = false});
             //Template_End_Field_AutoComplete_1
 
            //Aggregates
            //Template_Start_ReportField_Aggregate_1
-            _fieldList.Add(new QueryField() { DbName = "[AggregateFunction]([DbParentTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true });
+            _fieldList.Add(new QueryField() { ComponentName = "[ParentTable]", FieldName = "[CapitalFieldName]", DbName = "[AggregateFunction]([DbParentTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true});
            //Template_End_ReportField_Aggregate_1
         }
 

@@ -7,10 +7,10 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const RoleComponentSystemActionColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'bfsComponentId', displayName: 'Component Name', sortName: 'BfsComponentName', width: '50px', isVisible:true },
-{ fieldName: 'systemActionId', displayName: 'System Action', sortName: 'SystemActionName', width: '50px', isVisible:true },
-{ fieldName: 'roleId', displayName: 'Role', sortName: 'RoleName', width: '50px', isVisible:true },
+    { fieldName: 'roleComponentSystemAction_Id', displayName: 'ID', sortName: 'RoleComponentSystemAction_Id', width: '50px', isVisible:false },
+{ fieldName: 'roleComponentSystemAction_BfsComponentId', displayName: 'Component Name', sortName: 'BfsComponent_Name', width: '50px', isVisible:true },
+{ fieldName: 'roleComponentSystemAction_SystemActionId', displayName: 'System Action', sortName: 'SystemAction_Name', width: '50px', isVisible:true },
+{ fieldName: 'roleComponentSystemAction_RoleId', displayName: 'Role', sortName: 'Role_Name', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------

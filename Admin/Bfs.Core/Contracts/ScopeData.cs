@@ -38,6 +38,7 @@ public class ScopeData : IScopeData
         if ((!_settings.IsIdentityWeb) && (isHttpContext && !_settings.IsMigrationEnabled))  // if migration is enabled, we are in the middle of migrating and we might have some services running without HttpContext, so we should not throw an exception in that case.
         {
             UserId = GetClaimAsLong("userId");
+            RoleId = 10;// GetClaimAsLong("roleId");
             TenantId = GetClaimAsLong("tenantId");
             CorrelationToken = Guid.NewGuid().ToString();
         }
@@ -49,7 +50,7 @@ public class ScopeData : IScopeData
 
     private long GetClaimAsLong(string claimType)
     {
-        //ToDo handle Exception
+        //ToDo handle Exception, value = null when a token is expired or invalid
         var value = GetClaim(claimType);
         return long.TryParse(value, out var result)
             ? result

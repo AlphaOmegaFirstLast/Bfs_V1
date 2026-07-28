@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Auth.Data.Lists
 {
     public class UserList: QueryBase<UserListFilter>,  IUserList
     {
-        public UserList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public UserList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<UserListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,11 +47,11 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athUser.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUser.AspNetUserId", QueryName = "AspNetUserId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUser.Notes", QueryName = "Notes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUser.Email", QueryName = "Email", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "Id", DbName = "athUser.Id", QueryName = "User_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "AspNetUserId", DbName = "athUser.AspNetUserId", QueryName = "User_AspNetUserId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "Notes", DbName = "athUser.Notes", QueryName = "User_Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "Name", DbName = "athUser.Name", QueryName = "User_Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "Email", DbName = "athUser.Email", QueryName = "User_Email", IsAggregare = false});
 
             //lookups
 

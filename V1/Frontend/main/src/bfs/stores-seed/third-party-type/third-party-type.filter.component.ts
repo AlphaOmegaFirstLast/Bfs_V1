@@ -53,3 +53,4 @@ export class ThirdPartyTypeFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

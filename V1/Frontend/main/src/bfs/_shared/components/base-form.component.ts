@@ -12,6 +12,7 @@ import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } fro
 
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
 import { AccessService } from '@bfs/_shared/security/access.service';
+import { MasterService } from '@bfs/master-main/master.service';
 //------------------------------------------- Component Specific ------------------------------------------------
 
 @Directive()
@@ -26,6 +27,7 @@ public tokenService!: any;
 
 
     public accessService!: AccessService;
+    public masterService!: MasterService;
     public clipboard = inject(ClipboardService);
     public formBuilder = inject(UntypedFormBuilder);
     public validationForm!: UntypedFormGroup;
@@ -47,6 +49,7 @@ public tokenService!: any;
     constructor(public activatedRoute: ActivatedRoute) {
 
         this.accessService = inject(AccessService);
+        this.masterService = inject(MasterService);
 
         let entityId = '0';
         this.route = activatedRoute;

@@ -8,8 +8,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const TransactionColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'quantity', displayName: 'Quantity', sortName: 'QuantityName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+{ fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 { fieldName: 'storeId', displayName: 'Store', sortName: 'StoreName', width: '50px', isVisible:true },
 { fieldName: 'operationId', displayName: 'Operation', sortName: 'OperationName', width: '50px', isVisible:true },
 { fieldName: 'productId', displayName: 'Product', sortName: 'ProductName', width: '50px', isVisible:true },
@@ -72,6 +72,7 @@ export interface ITransactionRequest extends IEntityRequest<ITransactionFilter> 
 //---------------------------------------------------------
 export interface ITransactionFilter {
     [key: string]: any;
+    Id?: string;
 
     StoreId?: string;
 OperationId?: number;
@@ -92,6 +93,7 @@ export function initTransactionRequest(): ITransactionRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             StoreId: undefined ,
 OperationId: undefined ,

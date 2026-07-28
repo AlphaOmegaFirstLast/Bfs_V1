@@ -83,6 +83,18 @@
     </div>
 </div>
 
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="areaId" class="form-label fs-6">Area</label>
+        <select class="form-select" id="areaId" formControlName="areaId"
+            [class]="submit && !form['areaId'].errors ? 'is-valid': submit && form['areaId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of AreaOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Area.</div>
+    </div>
+</div>
 </div>
 
                                     </div>
@@ -103,3 +115,4 @@
         </div>
     </div>
 </div>
+

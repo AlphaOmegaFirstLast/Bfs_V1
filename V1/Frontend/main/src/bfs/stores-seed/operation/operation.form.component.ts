@@ -38,17 +38,21 @@ export class OperationFormComponent extends BaseFormComponent<IOperation > imple
     public EffectTypeOptions: any[] = [];
 public ThirdPartyTypeOptions: any[] = [];
 
+    // Define autocomplete
+
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(operationUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(operationUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -65,10 +69,14 @@ public ThirdPartyTypeOptions: any[] = [];
 
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {
+
+    }
+    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -85,30 +93,30 @@ public ThirdPartyTypeOptions: any[] = [];
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         target = "/EffectType/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.EffectTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Effect Type data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading = true;
+this.isLoading.lookups = true;
         target = "/ThirdPartyType/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.ThirdPartyTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Third Party Type data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -116,6 +124,7 @@ this.isLoading = true;
 
     }
     //---------------------------------------------------------
+
     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getOperationActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
@@ -142,3 +151,4 @@ this.isLoading = true;
    //--------------------------------------------------------------
 
 }
+

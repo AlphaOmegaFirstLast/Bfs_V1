@@ -14,6 +14,9 @@ public class StoresDbContext : DbContext
  public DbSet<UnitEntity> Units { get; set; }
  public DbSet<CurrencyEntity> Currencys { get; set; }
  public DbSet<OperationEntity> Operations { get; set; }
+ public DbSet<AreaEntity> Areas { get; set; }
+ public DbSet<DocumentEntity> Documents { get; set; }
+ public DbSet<DocumentDetailsEntity> DocumentDetailss { get; set; }
 //Template_Component_RegisterDbSet
 
     public StoresDbContext(DbContextOptions<StoresDbContext> options) : base(options)
@@ -41,3 +44,4 @@ public class StoresDbContext : DbContext
         //Template_ConfigField_Object
     }
 }
+

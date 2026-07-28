@@ -35,18 +35,23 @@ export class StoreFormComponent extends BaseFormComponent<IStore > implements On
     // Children filters
 
     // Define look ups
+    public AreaOptions: any[] = [];
+
+    // Define autocomplete
 
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(storeUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(storeUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -63,10 +68,14 @@ export class StoreFormComponent extends BaseFormComponent<IStore > implements On
 
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {
+
+    }
+    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [
@@ -83,11 +92,25 @@ export class StoreFormComponent extends BaseFormComponent<IStore > implements On
 //   const msg = err?.message || "An error occurred while loading data.";
 //   this.messages.push({ text: msg, msgType: "danger" });
 // } finally {
-//   this.isLoading = false;
+//   this.isLoading.lookups = false;
 // }
+        this.isLoading.lookups = true;
+        target = "/Area/list";
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.AreaOptions = response.items;
+                this.isLoading.lookups = false;
+            },
+                error: (err: any) => {
+                this.isLoading.lookups = false;
+                var msg = err.message || 'An error occurred while fetching Area data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
 
     }
     //---------------------------------------------------------
+
     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getStoreActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
@@ -114,3 +137,4 @@ export class StoreFormComponent extends BaseFormComponent<IStore > implements On
    //--------------------------------------------------------------
 
 }
+

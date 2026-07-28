@@ -42,7 +42,7 @@ namespace Bfs.Stores.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageCreatedMessage
+            //var message = new StoreCreatedMessage
             //{
             //    Entity = PrepareForMessage(result),
             //};
@@ -59,7 +59,7 @@ namespace Bfs.Stores.Domain.Services
 
             var updatedEntity = contract.ToEntity(existingEntity);
 
-            //var message = new DisplayPageUpdatedMessage
+            //var message = new StoreUpdatedMessage
             //{
             //    OldEntity = PrepareForMessage(existingContract),
             //};
@@ -88,7 +88,7 @@ namespace Bfs.Stores.Domain.Services
             await _repo.SaveAsync()
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageDeletedMessage
+            //var message = new StoreDeletedMessage
             //{
             //    Entity = PrepareForMessage(existingContract),
             //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
@@ -111,7 +111,7 @@ namespace Bfs.Stores.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new DisplayPageCreatedMessage
+            //var message = new StoreCreatedMessage
             //{
             //    Entity = PrepareForMessage(result),
             //};

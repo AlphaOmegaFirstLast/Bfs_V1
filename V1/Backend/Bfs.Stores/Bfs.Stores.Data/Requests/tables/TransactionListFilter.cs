@@ -5,6 +5,7 @@ namespace Bfs.Stores.Data
 {
     public class TransactionListFilter
     {
+        public long? Id { get; set; }
 
         public long? StoreId { get; set; }
 public int? OperationId { get; set; }
@@ -14,3 +15,4 @@ public long? ProductId { get; set; }
 
     }
 }
+

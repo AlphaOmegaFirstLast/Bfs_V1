@@ -66,7 +66,7 @@ export class CustomReportsFormComponent extends BaseFormComponent<ICustomReports
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
 //         try{
 //         const [

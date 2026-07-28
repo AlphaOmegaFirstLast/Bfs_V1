@@ -1,16 +1,11 @@
 using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.Stores.Contracts;
 
 namespace Bfs.Stores.Domain.Interfaces
 {
-    public interface IProductService
+    public interface IProductService: ICrudService<Product>
     {
-        Task<Product?> GetAsync(long id);
-        Task<List<Product>> GetAsync();
-
-        Task<Product> CreateAsync(Product contract);
-        Task<Product?> UpdateAsync(Product contract);
-        Task DeleteAsync(long id);
         Task<Product> UploadAsync(Product contract);
 
         Task<QueryResponse<ProductListItem>> ListAsync(QueryRequest<ProductListFilter> contractRequest);

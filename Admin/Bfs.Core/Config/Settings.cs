@@ -16,9 +16,8 @@ public class BfsSettings
 public class DbConnections
 {
     public string MasterConnection { get; set; } = string.Empty;
-    public string StoresConnection { get; set; } = string.Empty;
-    public string TestTenantConnection { get; set; } = string.Empty;
-    public string TenantMigrationConnection { get; set; } = string.Empty;
+    public string MigrationConnection { get; set; } = string.Empty;
+    public string TenantTestConnection { get; set; } = string.Empty;
 }
 
 public class ApiBaseUrls

@@ -1,3 +1,11 @@
+1- Created records in master UI, master DB
+2- Create code by Admin app. => create code only
+3- Create Migration (set security off, migration on)
+4- update database (test_migration Db) => change database to only 1 database
+5- run Api, go to Admin controller / apply migration to all tenants databases => change DB for all tenants
+
+
+
 CustomReports url field in the database is saved in the format [system_prefix]/[component-name]/list. i.e.:             "url": "bfs/system-action/list/"
 the url is searched against all app routes. it finds the url within the [system] Routes. ie if it starts with bfs, the route will be found under the system that has the prefix bfs. (infrastructure-apiService)
 if the url starts with mstr then it will be found in master api service, and it will use its api-url. export const REPORTS_ROUTES: Routes = [
@@ -92,3 +100,10 @@ link a user to a tenant (system-app)
  tenant if accept: 
  operation in tenant, in tenant database: create AuthUser, Close request, assign Roles
  operation in tenant, in master database: add claim AspnetUserClaim with the tenantId
+ 
+ sql script:
+when adding a new tenant
+- add user: Bfs Admin Randa, Suzette to the following tables:
+- athUser using the same aspnetId as in master
+- athRoleUser the using athUser.Id link to the RoleId = 1
+- dont add the role bfsadmin to the athRole

@@ -4,11 +4,11 @@ namespace Bfs.Auth.Data
 {
     public class UserListItem
     {      
-        public string? Id { get; set; }
-public string? AspNetUserId { get; set; }
-public string? Notes { get; set; }
-public string? Name { get; set; }
-public string? Email { get; set; }
+        public string? User_Id { get; set; }
+public string? User_AspNetUserId { get; set; }
+public string? User_Notes { get; set; }
+public string? User_Name { get; set; }
+public string? User_Email { get; set; }
 
 //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }

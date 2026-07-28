@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
       // Filter all user apps by systemId of current system, which is stored in session storage by Identity.Web
       var currentSystemId = sessionStorage.getItem('current-systemId');
       if (currentSystemId) {
-        return userAppsOfCurrentTenant.filter((app: any) => app.bfsSystemId == currentSystemId);
+        return userAppsOfCurrentTenant.filter((app: any) => app.app_BfsSystemId == currentSystemId);
       }
     }else{
       this.messages.push({ text: "Failed to retrieve access data.", msgType: "danger" });

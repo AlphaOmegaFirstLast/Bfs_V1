@@ -17,5 +17,16 @@ export const TABLES_ROUTES: Routes = [
         loadChildren: () => import('./transaction/transaction.route').then((mod) => mod.Transaction_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./document/document.route').then((mod) => mod.Document_ROUTES),
+    },
+
+    {
+        path: '',
+        loadChildren: () => import('./document-details/document-details.route').then((mod) => mod.DocumentDetails_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]
+

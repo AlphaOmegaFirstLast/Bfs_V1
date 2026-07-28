@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Auth.Data.Lists
 {
     public class UserRequestList: QueryBase<UserRequestListFilter>,  IUserRequestList
     {
-        public UserRequestList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public UserRequestList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<UserRequestListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,17 +47,17 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athUserRequest.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.Notes", QueryName = "Notes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.Name", QueryName = "Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.Email", QueryName = "Email", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.UserId", QueryName = "UserId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.RequestDate", QueryName = "RequestDate", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.ResponseDate", QueryName = "ResponseDate", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athUserRequest.UserRequestStatusId", QueryName = "UserRequestStatusId", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "Id", DbName = "athUserRequest.Id", QueryName = "UserRequest_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "Notes", DbName = "athUserRequest.Notes", QueryName = "UserRequest_Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "Name", DbName = "athUserRequest.Name", QueryName = "UserRequest_Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "Email", DbName = "athUserRequest.Email", QueryName = "UserRequest_Email", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "UserId", DbName = "athUserRequest.UserId", QueryName = "UserRequest_UserId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "RequestDate", DbName = "athUserRequest.RequestDate", QueryName = "UserRequest_RequestDate", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "ResponseDate", DbName = "athUserRequest.ResponseDate", QueryName = "UserRequest_ResponseDate", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "UserRequest", FieldName = "UserRequestStatusId", DbName = "athUserRequest.UserRequestStatusId", QueryName = "UserRequest_UserRequestStatusId", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "athUserRequestStatus.Name", QueryName = "UserRequestStatusName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "UserRequestStatus", FieldName = "Name", DbName = "athUserRequestStatus.Name", QueryName = "UserRequestStatusName", IsAggregare = false});
 
             //autoCompletes
 

@@ -1,16 +1,11 @@
 using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.Stores.Contracts;
 
 namespace Bfs.Stores.Domain.Interfaces
 {
-    public interface ITransactionService
+    public interface ITransactionService: ICrudService<Transaction>
     {
-        Task<Transaction?> GetAsync(long id);
-        Task<List<Transaction>> GetAsync();
-
-        Task<Transaction> CreateAsync(Transaction contract);
-        Task<Transaction?> UpdateAsync(Transaction contract);
-        Task DeleteAsync(long id);
         Task<Transaction> UploadAsync(Transaction contract);
 
         Task<QueryResponse<TransactionListItem>> ListAsync(QueryRequest<TransactionListFilter> contractRequest);

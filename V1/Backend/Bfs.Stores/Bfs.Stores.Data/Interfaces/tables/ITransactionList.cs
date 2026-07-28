@@ -8,3 +8,4 @@ namespace Bfs.Stores.Data.Interfaces
         Task<QueryResponse<TransactionListItem>> GetAsync(QueryRequest<TransactionListFilter> request);
     }
 }
+

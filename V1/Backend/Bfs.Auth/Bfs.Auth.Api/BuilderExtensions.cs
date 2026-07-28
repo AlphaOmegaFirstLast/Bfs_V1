@@ -14,6 +14,7 @@ using Bfs.Core.Interfaces;
 using Bfs.Core.Middleware;
 using Bfs.Core.Services.Auth;
 using Bfs.Core.Services.Auth;
+using Bfs.Core.Services.Security;
 using Bfs.Core.TenantManagement;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -101,7 +102,7 @@ public static class BuilderExtensions
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
     }
 
-    public static void RegisterTenentRelated(this WebApplicationBuilder builder)
+    public static void RegisterTenantRelated(this WebApplicationBuilder builder)
     {
         // Memory cache (app-wide)
         builder.Services.AddMemoryCache();
@@ -115,22 +116,44 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IUserTenantService, UserTenantService>(); // needed only for Auth Api
 
         builder.Services.AddHostedService<CacheWarmingService>();  // AddHostedService so the host is going to manage the lifecycle of the CacheWarmingService, starting it when the application starts and stopping it when the application shuts down. This ensures that the background service runs continuously in the background, refreshing the tenant cache at regular intervals as defined in the CacheWarmingService implementation.
+
+        // Get the current tenant's connection string from the TenantProvider and create a TenantSqlConfiguration that can be used by the lists to access the database.
+        // This allows the lists to be tenant-aware and operate on the correct database for each request.
+        // AddScoped is used here because the TenantProvider is scoped to the request, and we want to ensure that each list gets the correct connection string for the current tenant during that request. By registering TenantSqlConfiguration as scoped,
+        //  we can safely inject it into the lists without worrying about cross-tenant data access issues.
+        // ------------------------------------------------------------
+        builder.Services.AddScoped(sp =>
+        {
+            var tenantProvider = sp.GetRequiredService<ITenantManager>();
+            var connectionString = tenantProvider.GetTenantDbConnection();
+            return new TenantSqlConfiguration(connectionString);
+        });
+
+        // Resource Security
+        builder.Services.AddScoped<IResourceSecurity, ResourceSecurity>();
+        builder.Services.AddScoped<ITenantResourceRuleListItem, TenantResourceRuleListItem>();
+        builder.Services.AddScoped<ITenantResourceRuleListFilter, TenantResourceRuleListFilter>();
+        builder.Services.AddScoped<ITenantResourceRuleList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new TenantResourceRuleList(config.ConnectionString);
+        });
     }
 
     public static void RegisterDbContext(this WebApplicationBuilder builder, BfsSettings? settings)
     {
         if (settings != null && settings.IsMigrationEnabled)
         {
-            // Migrations will be generated based on the TestTenantConnection defined in the appsettings.Development.json file. This allows you to create and apply migrations to a specific tenant database during development without affecting the dynamic connection string logic used in production.
+            // Migrations will be generated based on the MigrationConnection defined in the appsettings.Development.json file. This allows you to create and apply migrations to a specific tenant database during development without affecting the dynamic connection string logic used in production.
             // After the migrations are created, you can set isApplyMigration back to false to use the dynamic connection string for tenant databases in development as well. This approach allows you to manage migrations effectively while still supporting the multi-tenant architecture of your application.
-            // Note: When isApplyMigration is true, the AuthDbContext will be registered with a fixed connection string (TestTenantConnection) for the purpose of generating migrations. This means that any migrations created while this flag is true will be based on the schema of the database specified in TestTenantConnection.
-            // to replicate DB changes you call ApplyMigrations extension method on the WebApplication instance in Program.cs, this will apply any pending migrations to the database specified in TestTenantConnection. This is useful during development to ensure that your tenant database schema is up to date with your latest migrations.
+            // Note: When isApplyMigration is true, the AuthDbContext will be registered with a fixed connection string (MigrationConnection) for the purpose of generating migrations. This means that any migrations created while this flag is true will be based on the schema of the database specified in MigrationConnection.
+            // to replicate DB changes you call ApplyMigrations extension method on the WebApplication instance in Program.cs, this will apply any pending migrations to the database specified in MigrationConnection. This is useful during development to ensure that your tenant database schema is up to date with your latest migrations.
             // uncomment when creating new migrations, when use add-migration select auth.Api at the build-toolbar and at the package-console bar, the auth.data project is selected.
             // make sure the connection string in appsettings.Development.json is correct, then run add-migration command, after migration is created, comment it back to avoid accidentally running migrations on the tenant databases.
             if (settings != null && settings.DbConnections != null)
             {
-                builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(settings.DbConnections.TestTenantConnection,
-                                   sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)) );
+                builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(settings.DbConnections.MigrationConnection,
+                                   sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)));
             }
         }
         else
@@ -161,6 +184,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IValidator<RoleUser>, RoleUserValidator>();
         builder.Services.AddScoped<IValidator<UserRequest>, UserRequestValidator>();
         builder.Services.AddScoped<IValidator<UserRequestStatus>, UserRequestStatusValidator>();
+        builder.Services.AddScoped<IValidator<ResourceRule>, ResourceRuleValidator>();
         //Template_Component_RegisterValidator
     }
 
@@ -175,6 +199,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IRoleUserRepository, RoleUserRepository>();
         builder.Services.AddScoped<IUserRequestRepository, UserRequestRepository>();
         builder.Services.AddScoped<IUserRequestStatusRepository, UserRequestStatusRepository>();
+        builder.Services.AddScoped<IResourceRuleRepository, ResourceRuleRepository>();
         //Template_Component_RegisterRepository
     }
 
@@ -190,6 +215,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IRoleUserService, RoleUserService>();
         builder.Services.AddScoped<IUserRequestService, UserRequestService>();
         builder.Services.AddScoped<IUserRequestStatusService, UserRequestStatusService>();
+        builder.Services.AddScoped<IResourceRuleService, ResourceRuleService>();
         //Template_Component_RegisterService
     }
 
@@ -211,52 +237,58 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IRoleComponentSystemActionList>(sp =>
         {
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new RoleComponentSystemActionList(config.ConnectionString);
+            return new RoleComponentSystemActionList(config.ConnectionString, null);
         });
 
         builder.Services.AddScoped<IUserList>(sp =>
         {
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new UserList(config.ConnectionString);
+            return new UserList(config.ConnectionString, null);
         });
 
         builder.Services.AddScoped<IAppList>(sp =>
         {
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new AppList(config.ConnectionString);
+            return new AppList(config.ConnectionString, null);
         });
 
         builder.Services.AddScoped<IRoleList>(sp =>
         {
+            var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new RoleList(config.ConnectionString);
+            return new RoleList(config.ConnectionString, resourceSecurity);
         });
 
         builder.Services.AddScoped<IRoleAppList>(sp =>
         {
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new RoleAppList(config.ConnectionString);
+            return new RoleAppList(config.ConnectionString, null);
         });
 
         builder.Services.AddScoped<IRoleUserList>(sp =>
         {
+
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new RoleUserList(config.ConnectionString);
+            return new RoleUserList(config.ConnectionString, null);
         });
 
         builder.Services.AddScoped<IUserRequestList>(sp =>
         {
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new UserRequestList(config.ConnectionString);
+            return new UserRequestList(config.ConnectionString, null);
         });
 
         builder.Services.AddScoped<IUserRequestStatusList>(sp =>
-            {
-                var config = sp.GetRequiredService<TenantSqlConfiguration>();
-                return new UserRequestStatusList(config.ConnectionString);
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new UserRequestStatusList(config.ConnectionString, null);
+        });
 
-            });
-
+        builder.Services.AddScoped<IResourceRuleList>(sp =>
+        {
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();   
+            return new ResourceRuleList(config.ConnectionString, null);
+        });
         //Template_Component_RegisterList
     }
 

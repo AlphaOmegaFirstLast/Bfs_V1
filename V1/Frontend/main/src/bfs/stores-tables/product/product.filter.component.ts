@@ -20,7 +20,7 @@ export class ProductFilterComponent implements OnInit {
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -53,3 +53,4 @@ export class ProductFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

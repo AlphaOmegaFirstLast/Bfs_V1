@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Bfs.Core.Services.Security;
+using Dapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
@@ -16,23 +17,39 @@ namespace Bfs.Core.Data
         protected List<QueryField> _fieldList = new List<QueryField>();
         protected QueryRequest<TFilter> _request;
 
-        public void SetUp(QueryRequest<TFilter> request)
+        public async Task SetUp(QueryRequest<TFilter> request, IResourceSecurity? resourceSecurity = null)
         {
             _request = request;
+            if (resourceSecurity != null)
+            {
+                await resourceSecurity.SetRoleResourceAsync();
+            }
+
             SetupFields();
 
             // Select statement
-            var selectStatement = GetSelectStatement();
-            sqlStatement.AppendLine(selectStatement);
-            sqlStatement.AppendLine(GetRowNumberClause(_request));
+            var selectStatement = GetSelectStatement(resourceSecurity);
 
             // From & Joins
             var fromJoinStatement = GetFromJoinStatement();
-            sqlStatement.AppendLine(fromJoinStatement);
 
             // Where, applies filtering before Group on aggregate fields
             var whereParameters = new DynamicParameters();
             var whereConditions = GetWhereConditions(_request, whereParameters);
+
+            if (resourceSecurity!=null)
+            {
+                if (resourceSecurity.IsApplicableToQuery(_fieldList))
+                {
+                    fromJoinStatement = resourceSecurity.AddSecurityJoin(fromJoinStatement);
+                    whereConditions = resourceSecurity.AddSecurityWhere(fromJoinStatement, whereConditions);
+                    whereParameters = resourceSecurity.AddSecurityParameter(whereConditions, whereParameters);
+                }
+            }
+
+            sqlStatement.AppendLine(selectStatement);
+            sqlStatement.AppendLine(GetRowNumberClause(_request));
+            sqlStatement.AppendLine(fromJoinStatement);
             sqlStatement.AppendLine($" Where {whereConditions}");
             sqlParameters.AddDynamicParams(whereParameters);
 
@@ -89,10 +106,18 @@ namespace Bfs.Core.Data
             _fieldList = new List<QueryField>();
         }
 
-        protected string GetSelectStatement()
+        protected string GetSelectStatement(IResourceSecurity? resourceSecurity = null)
         {
-            var selectFields = _fieldList.Select(f => $"{f.DbName} As {f.QueryName}");
-            return $"Select {string.Join(", ", selectFields)} ";
+            if (resourceSecurity == null)
+            {
+                var selectFields = _fieldList.Select(f => $"{f.DbName} As {f.QueryName}");
+                return $"Select {string.Join(", ", selectFields)} ";
+            }
+            else
+            {
+                var selectFieldsWithSecurity = _fieldList.Where(f => resourceSecurity.ApplySecuritySelect(f)).Select(f => $"{f.DbName} As {f.QueryName}");
+                return $"Select {string.Join(", ", selectFieldsWithSecurity)} ";
+            }
         }
 
         private string GetGroupStatement()

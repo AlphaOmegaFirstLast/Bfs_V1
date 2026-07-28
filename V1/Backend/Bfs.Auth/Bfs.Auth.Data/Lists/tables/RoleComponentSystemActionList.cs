@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Auth.Data.Lists
 {
     public class RoleComponentSystemActionList: QueryBase<RoleComponentSystemActionListFilter>,  IRoleComponentSystemActionList
     {
-        public RoleComponentSystemActionList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public RoleComponentSystemActionList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<RoleComponentSystemActionListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,15 +47,17 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athRoleComponentSystemAction.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRoleComponentSystemAction.BfsComponentId", QueryName = "BfsComponentId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRoleComponentSystemAction.SystemActionId", QueryName = "SystemActionId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRoleComponentSystemAction.RoleId", QueryName = "RoleId", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "RoleComponentSystemAction", FieldName = "Id", DbName = "athRoleComponentSystemAction.Id", QueryName = "RoleComponentSystemAction_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleComponentSystemAction", FieldName = "BfsComponentId", DbName = "athRoleComponentSystemAction.BfsComponentId", QueryName = "RoleComponentSystemAction_BfsComponentId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleComponentSystemAction", FieldName = "SystemActionId", DbName = "athRoleComponentSystemAction.SystemActionId", QueryName = "RoleComponentSystemAction_SystemActionId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleComponentSystemAction", FieldName = "RoleId", DbName = "athRoleComponentSystemAction.RoleId", QueryName = "RoleComponentSystemAction_RoleId", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "BestFit_V5.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BestFit_V5.dbo.SystemAction.Name", QueryName = "SystemActionName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BestFit_V5.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "Name", DbName = "BestFit_V5.dbo.SystemAction.Name", QueryName = "SystemActionName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false});
+
+            //autoCompletes
 
            //Aggregates
 
@@ -79,7 +85,7 @@ sql.AppendLine($"   Left Join athRole on athRoleComponentSystemAction.RoleId = a
             {
             if ((filter.Id.HasValue) && (filter.Id>0))
                 {
-                    sql.AppendLine(" AND athRoleComponentSystemAction.Id = @Id");
+                    sql.AppendLine("athRoleComponentSystemAction.Id = @Id");
                     parameters.Add("@Id", filter.Id);
                 }
 

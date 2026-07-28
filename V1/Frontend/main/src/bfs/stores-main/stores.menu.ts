@@ -37,7 +37,15 @@ export const StoresMenuItems: MenuItemType[] = [
     {
         label: 'Transactions',
         icon: 'tablerLayoutSidebar',
-        url: '/str/transaction/list',
+        url: '/str/document/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Document Details',
+        icon: 'tablerLayoutSidebar',
+        url: '/str/document-details/list',
         data: {
             role: ['admin', 'investor','broker']
         }
@@ -155,7 +163,16 @@ export const StoresMenuItems: MenuItemType[] = [
             role: ['admin', 'investor','broker']
         }
     },
+    {
+        label: 'Areas',
+        icon: 'tablerLayoutSidebar',
+        url: '/str/area/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Seed
         ]
     },
 ];
+

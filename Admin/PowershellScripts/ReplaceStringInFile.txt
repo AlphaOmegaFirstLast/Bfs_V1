@@ -1,0 +1,5 @@
+$oldStr = 'oldString'
+$newStr = 'newString'
+$srcFile = 'training-images/training_labels.json'
+$destFile = 'training-images/training_labels.json'
+(Get-Content $srcFile) -replace $oldStr, $newStr | Out-File $destFile

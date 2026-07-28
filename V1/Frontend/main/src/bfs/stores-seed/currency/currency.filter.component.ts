@@ -53,3 +53,4 @@ export class CurrencyFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

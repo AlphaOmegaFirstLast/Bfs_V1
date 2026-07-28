@@ -8,3 +8,4 @@ public const string InvalidNotes = "InvalidNotes";
 public const string InvalidQuantity = "InvalidQuantity";
 //Template_FieldSet_ErrorCodes
 }
+

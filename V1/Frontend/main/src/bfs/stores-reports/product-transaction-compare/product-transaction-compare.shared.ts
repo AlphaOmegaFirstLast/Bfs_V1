@@ -1,9 +1,9 @@
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
-import * as operations from '@bfs/master-main/master.operations';
+import * as operations from '@bfs/stores-main/stores.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const ProductTransactionCompareColumns = [
-    { fieldName: 'strProduct_Name', displayName: 'Product Name', sortName: 'NameName', width: '50px', isVisible:true },
+    { fieldName: 'strProduct_Name', displayName: 'Product Name', sortName: 'StrProduct_Name', width: '50px', isVisible:true },
 
     { fieldName: 'sumQuantity', displayName: 'Sum of Quantity', sortName: 'sumQuantity', width: '50px', isVisible:true },
 

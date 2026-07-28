@@ -98,7 +98,7 @@ public static class BuilderExtensions
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
     }
 
-    public static void RegisterTenentRelated(this WebApplicationBuilder builder)
+    public static void RegisterTenantRelated(this WebApplicationBuilder builder)
     {
         // Memory cache (app-wide)
         builder.Services.AddMemoryCache();

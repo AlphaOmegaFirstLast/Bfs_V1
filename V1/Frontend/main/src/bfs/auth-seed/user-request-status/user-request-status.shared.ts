@@ -7,9 +7,9 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const UserRequestStatusColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+    { fieldName: 'userRequestStatus_Id', displayName: 'ID', sortName: 'UserRequestStatus_Id', width: '50px', isVisible:false },
+{ fieldName: 'userRequestStatus_Name', displayName: 'Name', sortName: 'UserRequestStatus_Name', width: '50px', isVisible:true },
+{ fieldName: 'userRequestStatus_Notes', displayName: 'Notes', sortName: 'UserRequestStatus_Notes', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------

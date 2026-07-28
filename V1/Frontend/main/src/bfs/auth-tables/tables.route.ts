@@ -37,5 +37,10 @@ export const TABLES_ROUTES: Routes = [
         loadChildren: () => import('./user-request/user-request.route').then((mod) => mod.UserRequest_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./resource-rule/resource-rule.route').then((mod) => mod.ResourceRule_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]

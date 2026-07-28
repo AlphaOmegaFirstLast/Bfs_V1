@@ -65,9 +65,9 @@ export class RoleAppListComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'roleId':
+            case 'roleApp_RoleId':
                 return record['roleName']?.toString();
-case 'appId':
+case 'roleApp_AppId':
                 return record['appName']?.toString();
 
             default:

@@ -27,5 +27,11 @@ export const Seed_ROUTES: Routes = [
         loadChildren: () => import('./operation/operation.route').then((mod) => mod.Operation_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./area/area.route').then((mod) => mod.Area_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]
+

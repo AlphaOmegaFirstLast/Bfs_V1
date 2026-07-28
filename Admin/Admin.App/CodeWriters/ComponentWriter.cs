@@ -112,7 +112,7 @@ namespace Admin.App
 
             var outputContent = input.Replace("[ComponentType]", ComponentType.ToString());
 
-            outputContent = outputContent.Replace("[BestFitDB]", codeInfo.BestFitDB);
+            outputContent = outputContent.Replace("[BestFitDB]", CodeGeneratorBase.BestFitDB);
             outputContent = outputContent.Replace("[BestFitSystemName]", codeInfo.BestFitSystemName);
 
             outputContent = outputContent.Replace("[DbComponentName]", DbComponentName.Trim());

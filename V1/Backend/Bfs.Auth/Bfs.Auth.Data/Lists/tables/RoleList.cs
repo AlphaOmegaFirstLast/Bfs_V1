@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Auth.Data.Lists
 {
     public class RoleList: QueryBase<RoleListFilter>,  IRoleList
     {
-        public RoleList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public RoleList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<RoleListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,11 +47,13 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athRole.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRole.Notes", QueryName = "Notes", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Id", DbName = "athRole.Id", QueryName = "Role_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbName = "athRole.Name", QueryName = "Role_Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Notes", DbName = "athRole.Notes", QueryName = "Role_Notes", IsAggregare = false});
 
             //lookups
+
+            //autoCompletes
 
            //Aggregates
 
@@ -71,7 +77,7 @@ _fieldList.Add(new QueryField() { DbName = "athRole.Notes", QueryName = "Notes",
             {
             if ((filter.Id.HasValue) && (filter.Id>0))
                 {
-                    sql.AppendLine(" AND athRole.Id = @Id");
+                    sql.AppendLine("athRole.Id = @Id");
                     parameters.Add("@Id", filter.Id);
                 }
 

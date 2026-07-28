@@ -4,9 +4,9 @@ namespace Bfs.Auth.Contracts
 {
     public class RoleUserListItem
     {      
-        public string? Id { get; set; }
-public string? RoleId { get; set; }
-public string? UserId { get; set; }
+        public string? RoleUser_Id { get; set; }
+public string? RoleUser_RoleId { get; set; }
+public string? RoleUser_UserId { get; set; }
 
         public string? RoleName { get; set; }
 public string? UserName { get; set; }

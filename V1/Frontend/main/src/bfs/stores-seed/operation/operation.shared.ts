@@ -8,8 +8,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const OperationColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 { fieldName: 'effectTypeId', displayName: 'Effect Type', sortName: 'EffectTypeName', width: '50px', isVisible:true },
 { fieldName: 'thirdPartyTypeId', displayName: 'Third Party Type', sortName: 'ThirdPartyTypeName', width: '50px', isVisible:true },
 
@@ -67,6 +67,7 @@ export interface IOperationRequest extends IEntityRequest<IOperationFilter> {}
 //---------------------------------------------------------
 export interface IOperationFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 
@@ -86,6 +87,7 @@ export function initOperationRequest(): IOperationRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 

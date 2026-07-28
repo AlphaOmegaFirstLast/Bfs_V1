@@ -70,9 +70,15 @@ namespace Bfs.Core.TenantManagement
 
             if (string.IsNullOrEmpty(dbConnection))
             {
-                throw new Exception($"Tenant not found");
-                // Simulate fetching tenant connection string from a data source
-                //tenantConnectionString = "Server=localhost;Database=Tenant__Migrations;Trusted_Connection=True;TrustServerCertificate=True";
+                if (_settings.IsSecurityEnabled)
+                {
+                    throw new Exception($"Tenant not found");
+                }
+                else
+                {
+                    // Simulate fetching tenant connection string from a data source
+                    dbConnection = _settings.DbConnections.TenantTestConnection ?? throw new Exception("Test tenant connection string is not configured.");
+                }
             }
 
             return dbConnection;

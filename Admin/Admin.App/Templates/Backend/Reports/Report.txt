@@ -9,9 +9,12 @@ namespace Bfs.[SystemNameCapital].Data.Reports
 {
     public class [ReportNameCapital] :QueryBase<[ReportNameCapital]Filter>,  I[ReportNameCapital]
     {
-        public [ReportNameCapital](string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public [ReportNameCapital](string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -20,7 +23,7 @@ namespace Bfs.[SystemNameCapital].Data.Reports
         {
             var response = new QueryResponse<[ReportNameCapital]Item>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {

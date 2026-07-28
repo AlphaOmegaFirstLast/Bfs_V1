@@ -132,14 +132,13 @@ namespace Admin.App
             return input;
         }
 
-
         public virtual string ToContent(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
         {
             //table names in the database have prefixes to uniqulely identify which system they belong to, so we need to add the prefix to the parent table name when generating code related to database.
-            DbParentTable = codeInfo.CurrentSystem.IsMaster ? ParentTable : $"{codeInfo?.CurrentSystem?.DbPrefix}{ParentTable}";
-            DbLookupTable = codeInfo.CurrentSystem.IsMaster ? lookupNameCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{lookupNameCapital}";
-            DbAutoCompleteTable = codeInfo.CurrentSystem.IsMaster ? autoCompleteCapital : $"{codeInfo?.CurrentSystem?.DbPrefix}{autoCompleteCapital}";
-            DbJoinTable = codeInfo.CurrentSystem.IsMaster ? joinName : $"{codeInfo?.CurrentSystem?.DbPrefix}{joinName}";
+            DbParentTable = GetDbTableName(codeInfo, ParentTable);
+            DbLookupTable = GetDbTableName(codeInfo, lookupNameCapital);
+            DbAutoCompleteTable = GetDbTableName(codeInfo, autoCompleteCapital);
+            DbJoinTable = GetDbTableName(codeInfo, joinName);
 
             var fieldTemplate = input;
 
@@ -216,6 +215,19 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[isToolTipVisible]", toolTipVisibility);
 
             return fieldTemplate;
+        }
+
+        private string GetDbTableName(CodeGeneratorBase codeInfo, string tableName)
+        {
+            var prefix = codeInfo?.CurrentSystem?.DbPrefix ?? string.Empty;
+            // for tables in white list, they are shared among systems and dont have system prefix in the database, so we need to use the table name directly without prefix.
+            if (SystemTables.WhiteList.Contains(tableName, StringComparer.OrdinalIgnoreCase))
+            {
+                prefix = $"{CodeGeneratorBase.BestFitDB}.dbo.";
+            }
+            var dbTable = codeInfo.CurrentSystem.IsMaster? tableName : $"{prefix}{tableName}";
+
+            return dbTable;
         }
 
         public virtual void SetInternalFields(ComponentType componentType, string componentNameCapital, string QueryBaseTable)
@@ -312,24 +324,28 @@ namespace Admin.App
             if (isAggregate)
                 aggregateName = MakeFirstLetterSmall($"{aggregateFunction}{fieldCapitalName}");
 
-            if (componentType == ComponentType.Report)
-            {
-                //if Report, use tableName as suffix to avoid field name conflict between tables in join scenario. if not,like in case of list or matrix, use field name only.
-                reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
-                reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
-            }
-            else
-            {
-                reportFieldNameCapital = fieldCapitalName;
-                reportFieldNameSmall = fieldSmallName;
-            }
+            //if Report, use tableName as suffix to avoid field name conflict between tables in join scenario. if not,like in case of list or matrix, use field name only.
+            reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
+            reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
+
+            //if (componentType == ComponentType.Report)
+            //{
+            //    //if Report, use tableName as suffix to avoid field name conflict between tables in join scenario. if not,like in case of list or matrix, use field name only.
+            //    reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
+            //    reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
+            //}
+            //else
+            //{
+            //    reportFieldNameCapital = fieldCapitalName;
+            //    reportFieldNameSmall = fieldSmallName;
+            //}
 
             joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital
                      : !string.IsNullOrEmpty(autoCompleteCapital) ? autoCompleteCapital
                      : fieldCapitalName;
             sortName = isAggregate ? aggregateName
-                        : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}Name"
-                        : !string.IsNullOrEmpty(autoCompleteCapital) ? $"{autoCompleteCapital}Name"
+                        : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}_Name"
+                        : !string.IsNullOrEmpty(autoCompleteCapital) ? $"{autoCompleteCapital}_Name"
                         : reportFieldNameCapital;
 
             var chartElement = ReportInfo.ChartElementId == null ? ChartElement.None : (ChartElement)ReportInfo.ChartElementId;

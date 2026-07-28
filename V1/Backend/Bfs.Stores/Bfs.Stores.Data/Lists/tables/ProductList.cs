@@ -33,7 +33,7 @@ namespace Bfs.Stores.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -43,11 +43,13 @@ namespace Bfs.Stores.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "strProduct.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "strProduct.Name", QueryName = "Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "strProduct.Notes", QueryName = "Notes", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "strProduct.Id", QueryName = "Id", IsAggregare = false, ComponentName = "Product"});
+_fieldList.Add(new QueryField() { DbName = "strProduct.Name", QueryName = "Name", IsAggregare = false, ComponentName = "Product"});
+_fieldList.Add(new QueryField() { DbName = "strProduct.Notes", QueryName = "Notes", IsAggregare = false, ComponentName = "Product"});
 
             //lookups
+
+            //autoCompletes
 
            //Aggregates
 
@@ -56,7 +58,7 @@ _fieldList.Add(new QueryField() { DbName = "strProduct.Notes", QueryName = "Note
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From Product ");
+           sql.AppendLine(" From strProduct ");
 
            return sql.ToString();
         }
@@ -64,11 +66,16 @@ _fieldList.Add(new QueryField() { DbName = "strProduct.Notes", QueryName = "Note
         protected override string GetWhereConditions(QueryRequest<ProductListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" Product.isDeleted=0 ");
+            sql.AppendLine(" strProduct.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("strProduct.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {
@@ -98,3 +105,4 @@ _fieldList.Add(new QueryField() { DbName = "strProduct.Notes", QueryName = "Note
        }       
     }
 }
+

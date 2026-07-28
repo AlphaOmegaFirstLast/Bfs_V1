@@ -74,6 +74,14 @@ export const AuthMenuItems: MenuItemType[] = [
             role: ['admin', 'investor','broker']
         }
     },
+    {
+        label: 'Resource - Rule',
+        icon: 'tablerLayoutSidebar',
+        url: '/ath/resource-rule/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Basic
         ]
     },

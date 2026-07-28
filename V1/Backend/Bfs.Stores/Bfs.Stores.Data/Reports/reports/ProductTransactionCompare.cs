@@ -31,7 +31,7 @@ namespace Bfs.Stores.Data.Reports
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -41,21 +41,21 @@ namespace Bfs.Stores.Data.Reports
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "strStrProduct.Name", QueryName = "StrProduct_Name", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "strProduct.Name", QueryName = "StrProduct_Name", IsAggregare = false });
 
             //lookups
 
            //Aggregates
-           _fieldList.Add(new QueryField() { DbName = "Sum(StrTransaction.quantity)", QueryName = "sumQuantity", IsAggregare = true });
+           _fieldList.Add(new QueryField() { DbName = "Sum(strDocumentDetails.quantity)", QueryName = "sumQuantity", IsAggregare = true });
 
         }
 
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From StrTransaction ");
+           sql.AppendLine(" From strDocumentDetails ");
 
-           sql.AppendLine($"   Left Join Product on strStrTransaction.ProductId = Product.Id");
+           sql.AppendLine($"   Left Join strProduct on strDocumentDetails.ProductId = strProduct.Id");
 
            return sql.ToString();
         }
@@ -63,7 +63,7 @@ namespace Bfs.Stores.Data.Reports
         protected override string GetWhereConditions(QueryRequest<ProductTransactionCompareFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" StrTransaction.isDeleted=0 ");
+            sql.AppendLine(" strDocumentDetails.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
@@ -71,12 +71,12 @@ namespace Bfs.Stores.Data.Reports
 
                 if (!string.IsNullOrEmpty(filter.Quantity))
                 {
-                    sql.AppendLine("strStrTransaction.Quantity like '%'+@Quantity+'%' ");
+                    sql.AppendLine("strDocumentDetails.Quantity  = @Quantity ");
                     parameters.Add("@Quantity", filter.Quantity);
                 }
 if (!string.IsNullOrEmpty(filter.Name))
                 {
-                    sql.AppendLine("strStrProduct.Name like '%'+@Name+'%' ");
+                    sql.AppendLine("strProduct.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
 
@@ -102,4 +102,3 @@ if (!string.IsNullOrEmpty(filter.Name))
        }       
     }
 }
-

@@ -53,3 +53,4 @@ export class EffectTypeFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

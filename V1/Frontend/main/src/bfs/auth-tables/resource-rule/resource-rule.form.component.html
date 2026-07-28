@@ -1,0 +1,202 @@
+<div class="container-fluid">
+    <div class="pb-2"></div>
+    <div class="card">
+        <div class="card-body">
+
+            <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
+                <li [ngbNavItem]="1">
+                    <a href="javascript:void(0)" ngbNavLink> Resource - Rule </a>
+                    <!----------------------------------------- Tab1 Contents -------------------------------------->
+                    <ng-template ngbNavContent>
+                        <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
+                            <div class="card fs-6">
+                                <!-----------------------------------------Header Buttons -------------------------------------->
+
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                             <a [routerLink]="['/ath/resource-rule/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/ath/resource-rule/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div ngbDropdown>
+                                                <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
+                                                <div ngbDropdownMenu>
+                                                    <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
+
+                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                                    </div>
+                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <!----------------------------------------- Messages -------------------------------------->
+                                    <div *ngFor="let msg of messages">
+                                        <div *ngIf="msg.text">
+                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+                                            </ngb-alert>
+                                        </div>
+                                    </div>
+                                    <!----------------------------------------- Form Controls -------------------------------------->
+                                    <div class="row">
+                                    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="id" class="form-label fs-6">ID</label>
+        <input class="form-control" type="text" id="id" formControlName="id"
+            [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid ID.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="roleId" class="form-label fs-6">Role</label>
+        <select class="form-select" id="roleId" formControlName="roleId"
+            [class]="submit && !form['roleId'].errors ? 'is-valid': submit && form['roleId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of RoleOptions">
+            <option [value]="option['role_Id']">{{ option['role_Name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Role.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="roleName" class="form-label fs-6">Role Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="Role Name is saved a long RoleId, which is the actual value used in code. "  />
+
+        <input class="form-control" type="text" id="roleName" formControlName="roleName"
+            [class]="submit && !form['roleName'].errors ? 'is-valid': submit && form['roleName'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Role Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="selectBlackList" class="form-label fs-6">Select Statement  BlackList fields</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="A comma separated field names that the user of the role cannot see their data."  />
+
+        <input class="form-control" type="text" id="selectBlackList" formControlName="selectBlackList"
+            [class]="submit && !form['selectBlackList'].errors ? 'is-valid': submit && form['selectBlackList'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Select Statement  BlackList fields.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="bfsComponentName" class="form-label fs-6">BfsComponent Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="BfsComponent Name is saved a long BfsComponentId, which is the actual value used in code. "  />
+
+        <input class="form-control" type="text" id="bfsComponentName" formControlName="bfsComponentName"
+            [class]="submit && !form['bfsComponentName'].errors ? 'is-valid': submit && form['bfsComponentName'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid BfsComponent Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="bfsComponentId" class="form-label fs-6">BfsComponent</label>
+        <select class="form-select" id="bfsComponentId" formControlName="bfsComponentId"
+            [class]="submit && !form['bfsComponentId'].errors ? 'is-valid': submit && form['bfsComponentId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of BfsComponentOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid BfsComponent.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="joinStatement" class="form-label fs-6">Join Statement</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="Join Statement that might be required to provide fields for the where statement"  />
+
+        <input class="form-control" type="text" id="joinStatement" formControlName="joinStatement"
+            [class]="submit && !form['joinStatement'].errors ? 'is-valid': submit && form['joinStatement'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Join Statement.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="whereStatement" class="form-label fs-6">Where Statement</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="The where statement that will be used to filter records in or out for the user of this role. "  />
+
+        <input class="form-control" type="text" id="whereStatement" formControlName="whereStatement"
+            [class]="submit && !form['whereStatement'].errors ? 'is-valid': submit && form['whereStatement'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Where Statement.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="parameterName" class="form-label fs-6">Parameter Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="The parameter name that is used in the where statement (without @). ie @UserId, @AreaId, @Id "  />
+
+        <input class="form-control" type="text" id="parameterName" formControlName="parameterName"
+            [class]="submit && !form['parameterName'].errors ? 'is-valid': submit && form['parameterName'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Parameter Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="parameterValue" class="form-label fs-6">Parameter Value</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="The parameter value that is used in the where statement ( ie for @AreaName) North Area"  />
+
+        <input class="form-control" type="text" id="parameterValue" formControlName="parameterValue"
+            [class]="submit && !form['parameterValue'].errors ? 'is-valid': submit && form['parameterValue'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Parameter Value.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="parameterType" class="form-label fs-6">Parameter Type</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="The parameter type that is used in the where statemen. ie string, long, int"  />
+
+        <input class="form-control" type="text" id="parameterType" formControlName="parameterType"
+            [class]="submit && !form['parameterType'].errors ? 'is-valid': submit && form['parameterType'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Parameter Type.</div>
+    </div>
+</div>
+
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!----------------------------------------- End Form -------------------------------------->
+
+                    </ng-template>
+                </li>
+
+                <!----------------------------------------------------- Tabs -------------------------------------->
+
+            </ul>
+
+            <div class="tab-content" [ngbNavOutlet]="nav">
+            </div>
+        </div>
+    </div>
+</div>
+

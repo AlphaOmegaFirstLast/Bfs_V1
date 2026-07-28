@@ -8,8 +8,8 @@ namespace Admin.App
 {
     public class CodeGeneratorBase
     {
+        public static string BestFitDB = "BestFit_V5";
         public string BestFitSystemName = "master";
-        public string BestFitDB = "BestFit_V5";
         public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V1";
         public string TemplateRootDir { get; set; } = @".\Templates";
         private string TemplateInfoFile { get; set; } = @".\Templates\ComponentTemplateInfo.json";  // the compiler copies it to the output foldr

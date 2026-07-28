@@ -22,7 +22,7 @@ public UserOptions:  any[] = [];
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -44,22 +44,22 @@ public UserOptions:  any[] = [];
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.RoleOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Role data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 target = "/User/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.UserOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching User data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 

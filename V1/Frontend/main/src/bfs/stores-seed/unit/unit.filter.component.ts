@@ -53,3 +53,4 @@ export class UnitFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

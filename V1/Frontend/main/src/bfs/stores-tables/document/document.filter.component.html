@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Doc No.</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Doc No." #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Store</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.StoreId" name="storeId">
+          <ng-container *ngFor="let option of StoreOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Operation</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.OperationId" name="operationId">
+          <ng-container *ngFor="let option of OperationOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Response Date</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="ResponseDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="ResponseDateTo">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>
+

@@ -8,6 +8,7 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Interfaces;
 using Bfs.Core.Middleware;
 using Bfs.Core.Services.Auth;
+using Bfs.Core.Services.Security;
 using Bfs.Core.TenantManagement;
 using Bfs.Core.Services.Auth;
 using Bfs.[SystemNameCapital].Api.Validators;
@@ -100,7 +101,7 @@ public static class BuilderExtensions
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
     }
 
-    public static void RegisterTenentRelated(this WebApplicationBuilder builder)
+    public static void RegisterTenantRelated(this WebApplicationBuilder builder)
     {
         // Memory cache (app-wide)
         builder.Services.AddMemoryCache();
@@ -114,7 +115,8 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IUserTenantService, UserTenantService>(); // needed only for Auth Api
 
         builder.Services.AddHostedService<CacheWarmingService>();  // AddHostedService so the host is going to manage the lifecycle of the CacheWarmingService, starting it when the application starts and stopping it when the application shuts down. This ensures that the background service runs continuously in the background, refreshing the tenant cache at regular intervals as defined in the CacheWarmingService implementation.
-   
+        builder.Services.AddScoped<IResourceSecurity, ResourceSecurity>();
+
         // Get the current tenant's connection string from the TenantProvider and create a TenantSqlConfiguration that can be used by the lists to access the database.
         // This allows the lists to be tenant-aware and operate on the correct database for each request.
         // AddScoped is used here because the TenantProvider is scoped to the request, and we want to ensure that each list gets the correct connection string for the current tenant during that request. By registering TenantSqlConfiguration as scoped,

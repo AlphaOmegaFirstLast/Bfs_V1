@@ -15,6 +15,8 @@ Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
 
+               AreaId= entity.AreaId,
+
             };
 
             return contract;
@@ -38,6 +40,8 @@ Notes= entity.Notes,
 StoreEntity.Id= contract.Id;
 StoreEntity.Name= contract.Name;
 StoreEntity.Notes= contract.Notes;
+
+            StoreEntity.AreaId= contract.AreaId;
 
             return StoreEntity;
         }     

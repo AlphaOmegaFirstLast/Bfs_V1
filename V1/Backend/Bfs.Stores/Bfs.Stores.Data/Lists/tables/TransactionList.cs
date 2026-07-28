@@ -33,7 +33,7 @@ namespace Bfs.Stores.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -55,6 +55,8 @@ _fieldList.Add(new QueryField() { DbName = "strTransaction.ProductId", QueryName
 _fieldList.Add(new QueryField() { DbName = "strOperation.Name", QueryName = "OperationName", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "strProduct.Name", QueryName = "ProductName", IsAggregare = false });
 
+            //autoCompletes
+
            //Aggregates
 
         }
@@ -62,11 +64,11 @@ _fieldList.Add(new QueryField() { DbName = "strProduct.Name", QueryName = "Produ
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From Transaction ");
+           sql.AppendLine(" From strTransaction ");
 
-           sql.AppendLine($"   Left Join Store on strTransaction.StoreId = Store.Id");
-sql.AppendLine($"   Left Join Operation on strTransaction.OperationId = Operation.Id");
-sql.AppendLine($"   Left Join Product on strTransaction.ProductId = Product.Id");
+           sql.AppendLine($"   Left Join strStore on strTransaction.StoreId = strStore.Id");
+sql.AppendLine($"   Left Join strOperation on strTransaction.OperationId = strOperation.Id");
+sql.AppendLine($"   Left Join strProduct on strTransaction.ProductId = strProduct.Id");
 
            return sql.ToString();
         }
@@ -74,11 +76,16 @@ sql.AppendLine($"   Left Join Product on strTransaction.ProductId = Product.Id")
         protected override string GetWhereConditions(QueryRequest<TransactionListFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" Transaction.isDeleted=0 ");
+            sql.AppendLine(" strTransaction.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("strTransaction.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (filter.StoreId.HasValue)
                 {
@@ -129,3 +136,4 @@ if (filter.ProductId.HasValue)
        }       
     }
 }
+

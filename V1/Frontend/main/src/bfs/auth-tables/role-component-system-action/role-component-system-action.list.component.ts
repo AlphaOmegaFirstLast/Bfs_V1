@@ -65,11 +65,11 @@ export class RoleComponentSystemActionListComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'bfsComponentId':
+            case 'roleComponentSystemAction_BfsComponentId':
                 return record['bfsComponentName']?.toString();
-case 'systemActionId':
+case 'roleComponentSystemAction_SystemActionId':
                 return record['systemActionName']?.toString();
-case 'roleId':
+case 'roleComponentSystemAction_RoleId':
                 return record['roleName']?.toString();
 
             default:

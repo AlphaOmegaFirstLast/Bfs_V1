@@ -7,11 +7,11 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const UserColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'aspNetUserId', displayName: 'AspNetUserId', sortName: 'AspNetUserId', width: '50px', isVisible:false },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'email', displayName: 'Email', sortName: 'Email', width: '50px', isVisible:true },
+    { fieldName: 'user_Id', displayName: 'ID', sortName: 'User_Id', width: '50px', isVisible:false },
+{ fieldName: 'user_AspNetUserId', displayName: 'AspNetUserId', sortName: 'User_AspNetUserId', width: '50px', isVisible:false },
+{ fieldName: 'user_Notes', displayName: 'Notes', sortName: 'User_Notes', width: '50px', isVisible:false },
+{ fieldName: 'user_Name', displayName: 'Name', sortName: 'User_Name', width: '50px', isVisible:true },
+{ fieldName: 'user_Email', displayName: 'Email', sortName: 'User_Email', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------

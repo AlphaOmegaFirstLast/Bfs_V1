@@ -48,7 +48,7 @@ internal class Program
         builder.RegisterScopeData();
         builder.RegisterCrossOrigin(settings);
         builder.RegisterSecurity(settings);
-        builder.RegisterTenentRelated();
+        builder.RegisterTenantRelated();
         builder.RegisterDbContext(settings);
         builder.RegisterRepositories();
         builder.RegisterServices();
@@ -120,3 +120,4 @@ internal class Program
         await context.Response.WriteAsJsonAsync(response);
     }
 }
+

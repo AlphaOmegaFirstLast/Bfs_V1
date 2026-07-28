@@ -65,7 +65,7 @@ export class UserRequestListComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'userRequestStatusId':
+            case 'userRequest_UserRequestStatusId':
                 return record['userRequestStatusName']?.toString();
 
             default:

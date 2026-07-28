@@ -10,3 +10,4 @@ export class StoresService extends HttpService {
     this.origin = environment.StoresApiUrl;
   }
 }
+

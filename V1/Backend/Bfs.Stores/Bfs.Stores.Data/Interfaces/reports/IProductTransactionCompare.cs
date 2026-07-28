@@ -8,4 +8,3 @@ namespace Bfs.Stores.Data.Interfaces
         Task<QueryResponse<ProductTransactionCompareItem>> GetAsync(QueryRequest<ProductTransactionCompareFilter> request);
     }
 }
-

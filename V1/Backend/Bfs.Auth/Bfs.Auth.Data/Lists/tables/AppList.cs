@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Auth.Data.Lists
 {
     public class AppList: QueryBase<AppListFilter>,  IAppList
     {
-        public AppList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public AppList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<AppListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,14 +47,14 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athApp.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athApp.Name", QueryName = "Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athApp.Notes", QueryName = "Notes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athApp.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athApp.Logo", QueryName = "Logo", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Id", DbName = "athApp.Id", QueryName = "App_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Name", DbName = "athApp.Name", QueryName = "App_Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Notes", DbName = "athApp.Notes", QueryName = "App_Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "BfsSystemId", DbName = "athApp.BfsSystemId", QueryName = "App_BfsSystemId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Logo", DbName = "athApp.Logo", QueryName = "App_Logo", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "BestFit_V5.dbo.BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BfsSystem", FieldName = "Name", DbName = "BestFit_V5.dbo.BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false});
 
             //autoCompletes
 

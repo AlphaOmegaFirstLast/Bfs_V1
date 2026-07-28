@@ -20,7 +20,7 @@ export class UserRequestStatusFilterComponent implements OnInit {
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';

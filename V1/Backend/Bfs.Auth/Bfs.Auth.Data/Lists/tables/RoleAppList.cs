@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Auth.Data.Lists
 {
     public class RoleAppList: QueryBase<RoleAppListFilter>,  IRoleAppList
     {
-        public RoleAppList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public RoleAppList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<RoleAppListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,13 +47,15 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athRoleApp.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRoleApp.RoleId", QueryName = "RoleId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athRoleApp.AppId", QueryName = "AppId", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "RoleApp", FieldName = "Id", DbName = "athRoleApp.Id", QueryName = "RoleApp_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleApp", FieldName = "RoleId", DbName = "athRoleApp.RoleId", QueryName = "RoleApp_RoleId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleApp", FieldName = "AppId", DbName = "athRoleApp.AppId", QueryName = "RoleApp_AppId", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athApp.Name", QueryName = "AppName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Name", DbName = "athApp.Name", QueryName = "AppName", IsAggregare = false});
+
+            //autoCompletes
 
            //Aggregates
 
@@ -76,7 +82,7 @@ sql.AppendLine($"   Left Join athApp on athRoleApp.AppId = athApp.Id");
             {
             if ((filter.Id.HasValue) && (filter.Id>0))
                 {
-                    sql.AppendLine(" AND athRoleApp.Id = @Id");
+                    sql.AppendLine("athRoleApp.Id = @Id");
                     parameters.Add("@Id", filter.Id);
                 }
 

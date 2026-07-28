@@ -8,7 +8,9 @@ namespace Bfs.Stores.Api.Validators
     {
         public TransactionValidator()
         {
-
+        RuleFor(x => x.Quantity)
+.NotEmpty().WithErrorCode(ErrorCodes.InvalidQuantity)
+;
 RuleFor(x => x.Notes)
 .MaximumLength(1000)
 ;
@@ -16,3 +18,4 @@ RuleFor(x => x.Notes)
         }
     }
 }
+

@@ -53,6 +53,60 @@ namespace Bfs.Auth.Data.Migrations
                     b.ToTable("athApp", (string)null);
                 });
 
+            modelBuilder.Entity("Bfs.Auth.Data.Models.ResourceRuleEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsComponentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("BfsComponentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JoinStatement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParameterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParameterType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParameterValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SelectBlackList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("WhereStatement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("athResourceRule", (string)null);
+                });
+
             modelBuilder.Entity("Bfs.Auth.Data.Models.RoleAppEntity", b =>
                 {
                     b.Property<long>("Id")

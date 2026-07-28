@@ -4,10 +4,10 @@ namespace Bfs.Auth.Contracts
 {
     public class RoleComponentSystemActionListItem
     {      
-        public string? Id { get; set; }
-public string? BfsComponentId { get; set; }
-public string? SystemActionId { get; set; }
-public string? RoleId { get; set; }
+        public string? RoleComponentSystemAction_Id { get; set; }
+public string? RoleComponentSystemAction_BfsComponentId { get; set; }
+public string? RoleComponentSystemAction_SystemActionId { get; set; }
+public string? RoleComponentSystemAction_RoleId { get; set; }
 
         public string? BfsComponentName { get; set; }
 public string? SystemActionName { get; set; }

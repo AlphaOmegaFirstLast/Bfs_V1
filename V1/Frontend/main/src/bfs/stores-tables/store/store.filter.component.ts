@@ -17,10 +17,11 @@ export class StoreFilterComponent implements OnInit {
     public result = {} as IStoreFilter;
 
     // Define look ups
+    public AreaOptions:  any[] = [];
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -38,6 +39,17 @@ export class StoreFilterComponent implements OnInit {
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
+        target = "/Area/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.AreaOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Area data.';
+                this.isLoading.list = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
@@ -53,3 +65,4 @@ export class StoreFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

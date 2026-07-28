@@ -14,6 +14,6 @@
   <Project Path="../V1/Backend/Bfs.Stores/Bfs.Stores.Contracts/Bfs.Stores.Contracts.csproj" />
   <Project Path="../V1/Backend/Bfs.Stores/Bfs.Stores.Data/Bfs.Stores.Data.csproj" />
   <Project Path="../V1/Backend/Bfs.Stores/Bfs.Stores.Domain/Bfs.Stores.Domain.csproj" />
-  <Project Path="../V1/Frontend/Auth/Bfs.Identity.Web/Bfs.Identity.Web/Bfs.Identity.Web.csproj" />
+  <Project Path="../V1/Frontend/Auth/Bfs.Identity.Web/Bfs.Identity.Web.csproj" />
   <Project Path="Aspire.App.AppHost/Aspire.App.AppHost.csproj" />
 </Solution>

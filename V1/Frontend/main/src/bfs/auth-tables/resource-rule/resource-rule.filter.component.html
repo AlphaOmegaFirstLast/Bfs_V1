@@ -1,0 +1,140 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Select Statement  BlackList fields</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.SelectBlackList" value="{{result.SelectBlackList}}" placeholder="Select Statement  BlackList fields" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>BfsComponent Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.BfsComponentName" value="{{result.BfsComponentName}}" placeholder="BfsComponent Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Join Statement</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.JoinStatement" value="{{result.JoinStatement}}" placeholder="Join Statement" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Where Statement</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.WhereStatement" value="{{result.WhereStatement}}" placeholder="Where Statement" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Parameter Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.ParameterName" value="{{result.ParameterName}}" placeholder="Parameter Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Parameter Value</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.ParameterValue" value="{{result.ParameterValue}}" placeholder="Parameter Value" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Parameter Type</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.ParameterType" value="{{result.ParameterType}}" placeholder="Parameter Type" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Role Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.RoleName" value="{{result.RoleName}}" placeholder="Role Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Role</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.RoleId" name="roleId">
+          <ng-container *ngFor="let option of RoleOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>BfsComponent</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.BfsComponentId" name="bfsComponentId">
+          <ng-container *ngFor="let option of BfsComponentOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>
+

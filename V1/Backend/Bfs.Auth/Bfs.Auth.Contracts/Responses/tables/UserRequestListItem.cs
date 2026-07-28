@@ -4,14 +4,14 @@ namespace Bfs.Auth.Contracts
 {
     public class UserRequestListItem
     {      
-        public string? Id { get; set; }
-public string? Notes { get; set; }
-public string? Name { get; set; }
-public string? Email { get; set; }
-public string? UserId { get; set; }
-public string? RequestDate { get; set; }
-public string? ResponseDate { get; set; }
-public string? UserRequestStatusId { get; set; }
+        public string? UserRequest_Id { get; set; }
+public string? UserRequest_Notes { get; set; }
+public string? UserRequest_Name { get; set; }
+public string? UserRequest_Email { get; set; }
+public string? UserRequest_UserId { get; set; }
+public string? UserRequest_RequestDate { get; set; }
+public string? UserRequest_ResponseDate { get; set; }
+public string? UserRequest_UserRequestStatusId { get; set; }
 
         public string? UserRequestStatusName { get; set; }
 

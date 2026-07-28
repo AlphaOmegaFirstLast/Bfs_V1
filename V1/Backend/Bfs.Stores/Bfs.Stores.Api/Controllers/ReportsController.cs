@@ -24,14 +24,6 @@ public class ReportsController
         _reportsService = reportsService;
     }
 
-    [HttpPost("ProductTransactionCompare")]
-    [CustomAuthorize("method=q.productTransactionCompare")]
-    public async Task<Results<Ok<QueryResponse<ProductTransactionCompareItem>>, BadRequest<ProblemDetails>>> ProductTransactionCompare([FromBody] QueryRequest<ProductTransactionCompareFilter> ReportRequest)
-    {
-        var result = await _reportsService.ProductTransactionCompareAsync(ReportRequest).ConfigureAwait(false);
-        return TypedResults.Ok(result);
-    }
-
 //Template_Component_AddControllerEntry
 }
 

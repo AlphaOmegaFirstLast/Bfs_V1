@@ -10,7 +10,7 @@ namespace Bfs.Stores.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+[Authorize]
 
 public class AdminController
 {
@@ -23,10 +23,10 @@ public class AdminController
     }
 
     [HttpPost("Migrate")]
-   // [CustomAuthorize("method=r.migrate")]
+    [CustomAuthorize("method=r.migrate")]
     public async Task MigrateTenants()
     {
-        var masterConnection = _bfsSettings?.DbConnections?.MasterConnection;
+        var masterConnection = _bfsSettings.DbConnections.MasterConnection;
         await TenantManager.ApplyMigrations< StoresDbContext >(masterConnection, "Stores");
     }
 }

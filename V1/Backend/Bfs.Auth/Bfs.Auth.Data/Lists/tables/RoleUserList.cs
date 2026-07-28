@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -9,11 +10,14 @@ using System.Text;
 
 namespace Bfs.Auth.Data.Lists
 {
-    public class RoleUserList : QueryBase<RoleUserListFilter>, IRoleUserList
+    public class RoleUserList: QueryBase<RoleUserListFilter>,  IRoleUserList
     {
-        public RoleUserList(string connectionString)
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public RoleUserList(string connectionString, IResourceSecurity resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Auth.Data.Lists
         {
             var response = new QueryResponse<RoleUserListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -43,40 +47,40 @@ namespace Bfs.Auth.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athRoleUser.Id", QueryName = "Id", IsAggregare = false });
-            _fieldList.Add(new QueryField() { DbName = "athRoleUser.RoleId", QueryName = "RoleId", IsAggregare = false });
-            _fieldList.Add(new QueryField() { DbName = "athRoleUser.UserId", QueryName = "UserId", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "Id", DbName = "athRoleUser.Id", QueryName = "RoleUser_Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "RoleId", DbName = "athRoleUser.RoleId", QueryName = "RoleUser_RoleId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "UserId", DbName = "athRoleUser.UserId", QueryName = "RoleUser_UserId", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false });
-            _fieldList.Add(new QueryField() { DbName = "athUser.Name", QueryName = "UserName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "Name", DbName = "athUser.Name", QueryName = "UserName", IsAggregare = false});
 
             //autoCompletes
 
-            //Aggregates
+           //Aggregates
 
         }
 
         protected override string GetFromJoinStatement()
         {
-            var sql = new StringBuilder();
-            sql.AppendLine(" From athRoleUser ");
+           var sql = new StringBuilder();  
+           sql.AppendLine(" From athRoleUser ");
 
-            sql.AppendLine($"   Left Join athRole on athRoleUser.RoleId = athRole.Id");
-            sql.AppendLine($"   Left Join athUser on athRoleUser.UserId = athUser.Id");
+           sql.AppendLine($"   Left Join athRole on athRoleUser.RoleId = athRole.Id");
+sql.AppendLine($"   Left Join athUser on athRoleUser.UserId = athUser.Id");
 
-            return sql.ToString();
+           return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<RoleUserListFilter> request, DynamicParameters parameters)
         {
-            var sql = new StringBuilder();
+            var sql = new StringBuilder() ;
             sql.AppendLine(" athRoleUser.isDeleted=0 ");
 
-            var filter = request.Filter;
+                         var filter = request.Filter;
             if (filter != null)
             {
-                if ((filter.Id.HasValue) && (filter.Id > 0))
+            if ((filter.Id.HasValue) && (filter.Id>0))
                 {
                     sql.AppendLine("athRoleUser.Id = @Id");
                     parameters.Add("@Id", filter.Id);
@@ -87,7 +91,7 @@ namespace Bfs.Auth.Data.Lists
                     sql.AppendLine("athRoleUser.RoleId = @RoleId");
                     parameters.Add("@RoleId", filter.RoleId.Value);
                 }
-                if (filter.UserId.HasValue)
+if (filter.UserId.HasValue)
                 {
                     sql.AppendLine("athRoleUser.UserId = @UserId");
                     parameters.Add("@UserId", filter.UserId.Value);
@@ -96,7 +100,7 @@ namespace Bfs.Auth.Data.Lists
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));
+                                 .Select(s => s.Trim()));        
         }
 
         protected override string GetHavingConditions(QueryRequest<RoleUserListFilter> request, DynamicParameters parameters)
@@ -111,8 +115,8 @@ namespace Bfs.Auth.Data.Lists
 
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));
-        }
+                                 .Select(s => s.Trim()));        
+       }       
     }
 }
 

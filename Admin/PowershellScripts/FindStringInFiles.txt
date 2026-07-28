@@ -1,0 +1,10 @@
+# Define the directory, file extension, and search string
+$directory = "SrcDir"
+$extension = "*.extension"
+$searchString = "FindStr"
+
+# Get all files with the specified extension in the directory and subdirectories
+Get-ChildItem -Path $directory -Recurse -Filter $extension | ForEach-Object {
+    # Search each file for the specified string
+    Select-String -Path $_.FullName -Pattern $searchString
+}
