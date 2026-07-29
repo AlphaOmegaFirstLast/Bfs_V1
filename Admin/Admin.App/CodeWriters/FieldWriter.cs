@@ -325,20 +325,17 @@ namespace Admin.App
                 aggregateName = MakeFirstLetterSmall($"{aggregateFunction}{fieldCapitalName}");
 
             //if Report, use tableName as suffix to avoid field name conflict between tables in join scenario. if not,like in case of list or matrix, use field name only.
-            reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
-            reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
-
-            //if (componentType == ComponentType.Report)
-            //{
-            //    //if Report, use tableName as suffix to avoid field name conflict between tables in join scenario. if not,like in case of list or matrix, use field name only.
-            //    reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
-            //    reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
-            //}
-            //else
-            //{
-            //    reportFieldNameCapital = fieldCapitalName;
-            //    reportFieldNameSmall = fieldSmallName;
-            //}
+            // the backend query must return compatible field names.
+            if (componentType == ComponentType.Report)
+            {
+                reportFieldNameCapital = $"{ParentTable}_{fieldCapitalName}";
+                reportFieldNameSmall = $"{parentTableSmall}_{fieldCapitalName}";
+            }
+            else
+            {
+                reportFieldNameCapital = fieldCapitalName;
+                reportFieldNameSmall = fieldSmallName;
+            }
 
             joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital
                      : !string.IsNullOrEmpty(autoCompleteCapital) ? autoCompleteCapital
