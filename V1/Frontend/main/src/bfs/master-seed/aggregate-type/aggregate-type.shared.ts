@@ -8,8 +8,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const AggregateTypeColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -53,6 +53,7 @@ export interface IAggregateTypeRequest extends IEntityRequest<IAggregateTypeFilt
 //---------------------------------------------------------
 export interface IAggregateTypeFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 
@@ -69,6 +70,7 @@ export function initAggregateTypeRequest(): IAggregateTypeRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 
@@ -81,6 +83,27 @@ export function initAggregateTypeRequest(): IAggregateTypeRequest {
 
 export function getAggregateTypeActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
+if (component.accessService.isActionAllowed('aggregateType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/mstr/aggregate-type/add', displayText: 'Add New record'
+});
+}
+if (component.accessService.isActionAllowed('aggregateType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/aggregate-type/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('aggregateType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/aggregate-type/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('aggregateType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/aggregate-type/delete', displayText: 'Delete...' 
+});
+}
 
         return links;
     }

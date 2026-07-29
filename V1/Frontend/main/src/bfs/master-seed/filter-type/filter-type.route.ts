@@ -42,4 +42,3 @@ export const FilterType_ROUTES: Routes = [
         data: { role: ['admin'], api: ['master'], app: ['b.ofc'] } 
     }
 ]
-

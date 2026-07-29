@@ -8,8 +8,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const FilterTypeColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -53,6 +53,7 @@ export interface IFilterTypeRequest extends IEntityRequest<IFilterTypeFilter> {}
 //---------------------------------------------------------
 export interface IFilterTypeFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 
@@ -69,6 +70,7 @@ export function initFilterTypeRequest(): IFilterTypeRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 
@@ -81,6 +83,27 @@ export function initFilterTypeRequest(): IFilterTypeRequest {
 
 export function getFilterTypeActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
+if (component.accessService.isActionAllowed('filterType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/mstr/filter-type/add', displayText: 'Add New record'
+});
+}
+if (component.accessService.isActionAllowed('filterType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/filter-type/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('filterType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/filter-type/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('filterType', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/filter-type/delete', displayText: 'Delete...' 
+});
+}
 
         return links;
     }

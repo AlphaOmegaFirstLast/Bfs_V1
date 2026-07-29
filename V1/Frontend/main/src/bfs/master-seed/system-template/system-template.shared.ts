@@ -8,12 +8,12 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const SystemTemplateColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'projectType', displayName: 'Project Type', sortName: 'ProjectTypeName', width: '50px', isVisible:true },
-{ fieldName: 'outputDirectory', displayName: 'Output Directory', sortName: 'OutputDirectoryName', width: '50px', isVisible:true },
-{ fieldName: 'solutionDirectory', displayName: 'Solution Directory', sortName: 'SolutionDirectoryName', width: '50px', isVisible:true },
-{ fieldName: 'template', displayName: 'Template', sortName: 'TemplateName', width: '50px', isVisible:true },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'projectType', displayName: 'Project Type', sortName: 'ProjectType', width: '50px', isVisible:true },
+{ fieldName: 'outputDirectory', displayName: 'Output Directory', sortName: 'OutputDirectory', width: '50px', isVisible:true },
+{ fieldName: 'solutionDirectory', displayName: 'Solution Directory', sortName: 'SolutionDirectory', width: '50px', isVisible:true },
+{ fieldName: 'template', displayName: 'Template', sortName: 'Template', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -69,6 +69,7 @@ export interface ISystemTemplateRequest extends IEntityRequest<ISystemTemplateFi
 //---------------------------------------------------------
 export interface ISystemTemplateFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 
@@ -85,6 +86,7 @@ export function initSystemTemplateRequest(): ISystemTemplateRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 
@@ -97,6 +99,27 @@ export function initSystemTemplateRequest(): ISystemTemplateRequest {
 
 export function getSystemTemplateActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
+if (component.accessService.isActionAllowed('systemTemplate', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/mstr/system-template/add', displayText: 'Add New record'
+});
+}
+if (component.accessService.isActionAllowed('systemTemplate', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/system-template/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('systemTemplate', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/system-template/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('systemTemplate', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/system-template/delete', displayText: 'Delete...' 
+});
+}
 
         return links;
     }
