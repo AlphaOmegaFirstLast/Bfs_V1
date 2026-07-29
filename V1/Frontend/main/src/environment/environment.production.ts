@@ -10,5 +10,6 @@ export const environment = {
   , StoresApiUrl: 'https://[ProductionOrigin]/api'
   , AuthApiUrl: 'https://[ProductionOrigin]/api'
   , MasterApiUrl: 'https://[ProductionOrigin]/api'
+  , StockExApiUrl: 'https://[ProductionOrigin]/api'
 //Template_System_AddEnvironmentEntry
 };

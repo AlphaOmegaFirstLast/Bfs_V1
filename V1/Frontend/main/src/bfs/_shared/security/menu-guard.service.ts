@@ -6,6 +6,8 @@ import { StoresMenuItems } from '@bfs/stores-main/stores.menu';
 import { AuthMenuItems } from '@bfs/auth-main/auth.menu';
 import { MasterMenuItems } from '@bfs/master-main/master.menu';
 
+import { StockExMenuItems } from '@bfs/stockex-main/stockex.menu';
+
 //Template_System_AddMenuDeclare
 
 @Injectable({
@@ -43,7 +45,10 @@ export class MenuGuardService {
       case 'master':
         appItems = appItems.concat(await this.processItems(currentApp, MasterMenuItems));
         break;
-      //Template_System_AddMenuEntry
+              case 'stockex':
+           appItems = appItems.concat(await this.processItems(currentApp , StockExMenuItems));
+        break;
+//Template_System_AddMenuEntry
       default:
         break;
     }

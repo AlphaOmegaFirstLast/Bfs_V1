@@ -17,6 +17,7 @@ import { StoresService } from '@bfs/stores-main/stores.service';
 import { AuthService } from '@bfs/auth-main/auth.service';
 import { AccessService } from '@bfs/_shared/security/access.service';
 import { MasterService } from '@bfs/master-main/master.service';
+import { StockExService } from '@bfs/stockex-main/stockex.service';
 //Template_System_DeclareProviderEntry
 
 // configure the providers for the application which will be used for dependency injection
@@ -28,13 +29,14 @@ export const appConfig: ApplicationConfig = {
       provideHttpClient(),
       //Replace Angular's default ErrorHandler
       { provide: ErrorHandler, useClass: GlobalErrorHandler },
-  
+
       HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.
       TokenService,
       AccessService,
 StoresService,
 AuthService,
 MasterService,
+StockExService,
 //Template_System_AddProviderEntry
       RouteGuardService,
       MenuGuardService,
