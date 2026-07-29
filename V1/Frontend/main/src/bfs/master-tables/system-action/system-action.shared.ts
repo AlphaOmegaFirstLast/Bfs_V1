@@ -8,14 +8,14 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const SystemActionColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'shortName', displayName: 'Short Name', sortName: 'ShortNameName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionTypeName', width: '50px', isVisible:true },
-{ fieldName: 'writerTypeId', displayName: 'Writer Type', sortName: 'WriterTypeName', width: '50px', isVisible:true },
-{ fieldName: 'matchProperty', displayName: 'Writer Matching Property', sortName: 'MatchPropertyName', width: '50px', isVisible:true },
-{ fieldName: 'matchValues', displayName: 'Writer Matching Values', sortName: 'MatchValuesName', width: '50px', isVisible:true },
-{ fieldName: 'actionTemplate', displayName: 'Action Template', sortName: 'ActionTemplateName', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
+{ fieldName: 'shortName', displayName: 'Short Name', sortName: 'ShortName', width: '50px', isVisible:true },
+{ fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionType_Name', width: '50px', isVisible:true },
+{ fieldName: 'writerTypeId', displayName: 'Writer Type', sortName: 'WriterType_Name', width: '50px', isVisible:true },
+{ fieldName: 'matchProperty', displayName: 'Writer Matching Property', sortName: 'MatchProperty', width: '50px', isVisible:true },
+{ fieldName: 'matchValues', displayName: 'Writer Matching Values', sortName: 'MatchValues', width: '50px', isVisible:true },
+{ fieldName: 'actionTemplate', displayName: 'Action Template', sortName: 'ActionTemplate', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -23,11 +23,11 @@ export interface ISystemAction {
     isDeleted?: boolean;
 id?: string;
 shortName?: string;
-notes?: string;
 matchProperty?: string;
 matchValues?: string;
 actionTemplate?: string;
 name?: string;
+notes?: string;
 
     actionTypeId?: number;
 writerTypeId?: number;
@@ -39,11 +39,11 @@ export function initSystemAction(): ISystemAction {
         isDeleted: false,
 id: '0',
 shortName: '',
-notes: '',
 matchProperty: '',
 matchValues: '',
 actionTemplate: '',
 name: '',
+notes: '',
 
         actionTypeId: 0,
 writerTypeId: 0,
@@ -59,11 +59,11 @@ export function systemActionUntypedFormGroup(formBuilder: FormBuilder): any {
     isDeleted: [false],
 id: ['0'],
 shortName: [''],
-notes: [''],
 matchProperty: [''],
 matchValues: [''],
 actionTemplate: [''],
 name: [''],
+notes: [''],
 
     actionTypeId: [0],
 writerTypeId: [0],
@@ -83,6 +83,7 @@ export interface ISystemActionRequest extends IEntityRequest<ISystemActionFilter
 //---------------------------------------------------------
 export interface ISystemActionFilter {
     [key: string]: any;
+    Id?: string;
 
     ShortName?: string;
 MatchProperty?: string;
@@ -105,6 +106,7 @@ export function initSystemActionRequest(): ISystemActionRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             ShortName: undefined ,
 MatchProperty: undefined ,
