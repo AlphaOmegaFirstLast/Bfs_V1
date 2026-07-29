@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\Admin\Bfs.Core\Bfs.Core.csproj" />
+        <ProjectReference Include="..\Bfs.StockEx.Contracts\Bfs.StockEx.Contracts.csproj" />
+        <ProjectReference Include="..\Bfs.StockEx.Data\Bfs.StockEx.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Interfaces\" />
+      <Folder Include="Mapper\" />
+      <Folder Include="Services\" />
+    </ItemGroup>
+
+</Project>
