@@ -1,4 +1,6 @@
 ﻿using Bfs.Core.Data;
+using Bfs.Core.Services.Security;
+
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Bfs.[SystemNameCapital].Data;
