@@ -1,9 +1,0 @@
-[
-{  "isDeleted": false,  "id": 1,  "userId": 1,  "permission":"a.Broker"},
-{  "isDeleted": false,  "id": 2,  "userId": 1,  "permission":"u.Broker"},
-{  "isDeleted": false,  "id": 3,  "userId": 1,  "permission":"d.Broker"},
-{  "isDeleted": false,  "id": 4,  "userId": 1,  "permission":"v.Broker"},
-{  "isDeleted": false,  "id": 5,  "userId": 1,  "permission":"a.Investor"},
-{  "isDeleted": false,  "id": 6,  "userId": 1,  "permission":"u.Investor"},
-{  "isDeleted": false,  "id": 7,  "userId": 1,  "permission":"a.StockShare"}
-]

@@ -1,7 +1,0 @@
-[
-  { "id": 1, "name": "None" },
-  { "id": 2, "name": "FrontendLink" },
-  { "id": 3, "name": "FrontendFunction" },  
-  { "id": 4, "name": "BackendApiCall" },
-  { "id": 5, "name": "BackendScript" }
-]

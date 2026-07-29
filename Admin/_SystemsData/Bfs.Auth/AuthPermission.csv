@@ -1,5 +1,0 @@
-Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;isQueryFilter;isQueryColumn;Required;FieldLength;MinValue;MaxValue
-Id;ID;FALSE;long;string;text;1;FALSE;ValueFilter;TRUE;FALSE;;;
-IsDeleted;Deleted Permission;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;FALSE;;;
-UserId;User ID;FALSE;long;string;text;2;FALSE;none;TRUE;FALSE;;;
-Permission;Permission;FALSE;string;string;text;3;FALSE;none;TRUE;FALSE;100;;
