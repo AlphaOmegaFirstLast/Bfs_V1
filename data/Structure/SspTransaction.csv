@@ -1,0 +1,11 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Transaction;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+Source;Source;FALSE;string;string;text;2;FALSE;none;TRUE;;TRUE;50;;
+SourceDate;Source Date;FALSE;DateTime;Date;date;3;FALSE;RangeDateFilter;TRUE;;TRUE;;;
+TransactionDate;Transaction Date;FALSE;DateTime;Date;date;4;FALSE;RangeDateFilter;TRUE;;TRUE;;;
+Quantity;Quantity;FALSE;decimal;number;text;5;FALSE;RangeNumberFilter;TRUE;;TRUE;;;
+Price;Price;FALSE;decimal;number;text;6;FALSE;RangeNumberFilter;TRUE;;TRUE;;;
+TransactionTypeId;Transaction Type;FALSE;long;number;select;7;TRUE;LookupFilter;TRUE;;TRUE;;;
+StockShareId;Stock Share;FALSE;long;number;select;8;TRUE;LookupFilter;TRUE;;TRUE;;;
+SsPortfolioId;Portfolio;FALSE;long;number;select;9;TRUE;LookupFilter;TRUE;;TRUE;;;

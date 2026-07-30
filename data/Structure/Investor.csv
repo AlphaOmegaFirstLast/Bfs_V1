@@ -1,0 +1,11 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Investor;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+Code;Investor Code;FALSE;string;string;text;2;FALSE;ValueFilter;TRUE;;TRUE;50;;
+FirstName;First Name;FALSE;string;string;text;2;FALSE;ValueFilter;TRUE;;TRUE;50;;
+LastName;Last Name;FALSE;string;string;text;2;FALSE;ValueFilter;TRUE;;TRUE;50;;
+Email;Email;FALSE;string;string;email;4;FALSE;none;TRUE;;TRUE;50;;
+IsActive;Is Active;FALSE;bool;boolean;checkbox;5;FALSE;none;TRUE;;FALSE;;;
+SsPortfolio;Portfolios;TRUE;list;[];TabList;2;FALSE;none;FALSE;investorId;FALSE;;;
+InvestorBrokerFund;Investor Funds;TRUE;list;[];TabList;3;FALSE;none;FALSE;investorId;FALSE;;;
+BrokerAgreement;Investor Agreements;TRUE;list;[];TabList;4;FALSE;none;FALSE;investorId;FALSE;;;

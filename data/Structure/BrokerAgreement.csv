@@ -1,0 +1,9 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;isQueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Currency;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+InvestorId;Investors;FALSE;long;number;select;3;TRUE;LookupFilter;TRUE;;TRUE;;;
+BrokerId;Brokers;FALSE;long;number;select;4;TRUE;LookupFilter;TRUE;;TRUE;;;
+SsPortfolioId;Portfolios;FALSE;long;number;select;5;TRUE;LookupFilter;TRUE;;TRUE;;;
+OverdraftPrcnt;Overdraft Percent;FALSE;decimal;number;text;6;FALSE;RangeNumberFilter;TRUE;;TRUE;;;
+AgreementDate;Agreement Date;FALSE;DateTime;Date;date;2;FALSE;RangeDateFilter;TRUE;;TRUE;;;
+OverdraftMx;Overdraft Max.;FALSE;long;number;text;7;FALSE;RangeNumberFilter;TRUE;;TRUE;;;

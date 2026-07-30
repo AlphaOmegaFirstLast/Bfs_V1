@@ -1,0 +1,5 @@
+Field;SamllFieldName;DisplayName;LookupQueryName ;isEntity;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;isFilterRange;isQueryFilter;isQueryColumn;BackendDefaultValue;FrontendDefaultValue;Required;FieldLength;MinValue;MaxValue
+Id;id;ID;;TRUE;FALSE;long;number;text;1;FALSE;FALSE;TRUE;TRUE;;0;FALSE;;;
+IsDeleted;Deleted Deparment;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;;;;;;
+Name;name;Name;;TRUE;FALSE;string;string;text;2;FALSE;FALSE;TRUE;TRUE;String.empty();Empty;TRUE;50;;
+EmployeeList;employeeList;Employees;;TRUE;TRUE;List;[];Tab-1;0;FALSE;FALSE;FALSE;FALSE;;[];FALSE;;;

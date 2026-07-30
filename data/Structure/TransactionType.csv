@@ -1,0 +1,7 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Transaction Type;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+Name;Name;FALSE;string;string;text;2;FALSE;none;TRUE;;TRUE;50;;
+DisplayName;Display Name;FALSE;string;string;text;3;FALSE;none;TRUE;;TRUE;50;;
+QuantityEffect;Quantity Effect;FALSE;string;string;text;4;FALSE;none;TRUE;;TRUE;50;;
+CostEffect;Cost Effect;FALSE;string;string;text;5;FALSE;none;TRUE;;TRUE;50;;

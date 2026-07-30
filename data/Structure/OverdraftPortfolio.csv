@@ -1,0 +1,5 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;isQueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;0;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Currency;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+SsPortfolioId;Portfolio;FALSE;long;number;select;2;TRUE;LookupFilter;TRUE;;TRUE;;;
+OverdraftValue;Overdraft Percent;FALSE;decimal;number;text;3;FALSE;RangeNumberFilter;TRUE;;TRUE;;;

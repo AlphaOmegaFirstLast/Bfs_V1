@@ -1,0 +1,7 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Stock Share;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+Name;Name;FALSE;string;string;text;2;FALSE;ValueFilter;TRUE;;TRUE;50;;
+TradingRoomId;Trading Room;FALSE;long;number;select;3;TRUE;LookupFilter;TRUE;;TRUE;;;
+CurrencyId;Currency;FALSE;long;number;select;4;TRUE;LookupFilter;TRUE;;TRUE;;;
+CurrentPrice;Current Price;TRUE;list;[];TabList;5;FALSE;none;FALSE;;FALSE;;;

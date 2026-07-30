@@ -1,0 +1,7 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Fund;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+Fund;Fund;FALSE;decimal;number;text;2;FALSE;none;TRUE;;TRUE;;;
+FundDate;Fund Date;FALSE;DateTime;Date;date;3;FALSE;RangeDateFilter;TRUE;;TRUE;;1980;2026
+InvestorId;Investor;FALSE;long;number;select;4;TRUE;LookupFilter;TRUE;;TRUE;;;
+BrokerId;Broker;FALSE;long;number;select;5;TRUE;LookupFilter;TRUE;;TRUE;;;

@@ -1,0 +1,11 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;0;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Transaction;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+TradingRoomId;Trading Room;FALSE;long;number;select;1;TRUE;LookupFilter;TRUE;;TRUE;;;
+StockShareId;Stock Share;FALSE;long;number;select;1;TRUE;LookupFilter;TRUE;;TRUE;;;
+Value;Value;FALSE;decimal;number;text;2;FALSE;RangeNumberFilter;TRUE;;TRUE;;;
+CouponTypeId;Coupon Type;FALSE;long;number;select;3;TRUE;LookupFilter;TRUE;;TRUE;;;
+AnnounceDate;AnnounceDate;FALSE;DateTime;Date;date;4;FALSE;RangeDateFilter;TRUE;;TRUE;;;
+ValueDate;Value Date;FALSE;DateTime;Date;date;5;FALSE;RangeDateFilter;TRUE;;TRUE;;;
+DueDate;Due Date;FALSE;DateTime;Date;date;6;FALSE;RangeDateFilter;TRUE;;TRUE;;;
+CouponStatusId;Coupon Status;FALSE;long;number;select;7;TRUE;LookupFilter;TRUE;;TRUE;;;

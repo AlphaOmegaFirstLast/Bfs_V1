@@ -1,0 +1,7 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;isQueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Stock;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+SsPortfolioId;Portfolio;FALSE;long;number;select;2;TRUE;FALSE;TRUE;;TRUE;;;
+StockShareId;Stock Share;FALSE;long;number;select;3;TRUE;FALSE;TRUE;;TRUE;;;
+Quantity;Quantity;FALSE;decimal;number;text;4;FALSE;RangeNumberFilter;TRUE;;TRUE;;;
+AverageCost;Average Cost;FALSE;decimal;number;text;5;FALSE;RangeNumberFilter;TRUE;;TRUE;;;

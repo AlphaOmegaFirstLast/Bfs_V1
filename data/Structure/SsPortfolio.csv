@@ -1,0 +1,10 @@
+Field;DisplayName;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;TabListParentId;Required;FieldLength;MinValue;MaxValue
+Id;ID;FALSE;long;number;text;1;FALSE;ValueFilter;TRUE;;FALSE;;;
+IsDeleted;Deleted Portfolio;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;
+Name;Profolio Name;FALSE;string;string;text;2;FALSE;ValueFilter;TRUE;;TRUE;1000;;
+InvestorId;Investor;FALSE;long;number;select;3;TRUE;LookupFilter;TRUE;;TRUE;;;
+BrokerId;Broker;FALSE;long;number;select;4;TRUE;LookupFilter;TRUE;;TRUE;;;
+SspTransaction;Profolio Transactions;TRUE;list;[];TabList;2;FALSE;none;FALSE;ssPortfolioId;FALSE;;;
+CashTransaction;Cash Transaction;TRUE;LIST;[];TabList;3;FALSE;none;FALSE;ssPortfolioId;FALSE;;;
+SsPortfolioBalance;Portfolio Cash Balance;TRUE;LIST;[];TabList;3;FALSE;none;FALSE;ssPortfolioId;FALSE;;;
+OverdarftPortfolio;Overdraft Portfolio;TRUE;LIST;[];TabList;3;FALSE;none;FALSE;ssPortfolioId;FALSE;;;

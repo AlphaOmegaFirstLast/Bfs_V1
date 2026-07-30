@@ -1,0 +1,13 @@
+Field;SamllFieldName;DisplayName;LookupQueryName ;isEntity;isEntityChildren;BackendFieldType;FrontendFieldType;UIFormControl;UIFormControlOrder;isLookup;QueryFilter;isQueryColumn;BackendDefaultValue;FrontendDefaultValue;Required;FieldLength;MinValue;MaxValue
+Id;id;ID;;TRUE;FALSE;long;number;text;1;FALSE;none;TRUE;;0;FALSE;;;
+IsDeleted;Deleted Employee;FALSE;bool;boolean;checkbox;0;FALSE;none;FALSE;;FALSE;;;;;;;
+Name;name;Name;;TRUE;FALSE;string;string;text;2;FALSE;ValueFilter;TRUE;String.empty();Empty;TRUE;50;;
+BirthDate;birthDate;Date of Birth;;TRUE;FALSE;DateTime;Date;date;3;FALSE;RangeFilter;TRUE;;new Date();TRUE;;1980;2024
+Email;email;Email;;TRUE;FALSE;string;string;email;4;FALSE;none;TRUE;String.empty();Empty;TRUE;50;;
+Password;password;Password;;TRUE;FALSE;string;string;password;0;FALSE;none;FALSE;String.empty();Empty;FALSE;15;;
+IsRetired;isRetired;Is Retired;;TRUE;FALSE;bool;boolean;checkbox;5;FALSE;none;TRUE;;FALSE;FALSE;;;
+Salary;salary;Salary;;TRUE;FALSE;decimal;number;text;6;FALSE;RangeFilter;TRUE;;Empty;TRUE;;;
+GenderId;genderId;Gender;gender;TRUE;FALSE;long;number;select;7;TRUE;none;TRUE;;0;TRUE;;;
+PaymentMethodId;paymentMethodId;Payment Method;paymentMethod;TRUE;FALSE;long;number;select;8;TRUE;LookupFilter;TRUE;;0;TRUE;;;
+DepartmentId;departmentId;Department;department;TRUE;FALSE;long;number;select;9;TRUE;LookupFilter;TRUE;;0;FALSE;;;
+JobList;jobList;Job History;;FALSE;TRUE;List;[];Tab-List;0;FALSE;none;FALSE;;[];FALSE;;;
