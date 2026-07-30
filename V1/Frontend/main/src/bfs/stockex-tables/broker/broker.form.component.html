@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Tenant - System </a>
+                    <a href="javascript:void(0)" ngbNavLink> Brokers </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/mstr/bfs-tenant-system/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/mstr/bfs-tenant-system/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/broker/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/broker/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -50,37 +50,39 @@
                                     <div class="row">
                                     <div class="col-6">
 <div class="row mb-2">
-    <div class="col-6">
-        <label for="id" class="form-label fs-6">ID</label>
-        <input class="form-control" type="text" id="id" formControlName="id"
-            [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
+    <div class="col-12">
+        <label for="code" class="form-label fs-6">Code</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="code" formControlName="code"
+            [class]="submit && !form['code'].errors ? 'is-valid': submit && form['code'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid ID.</div>
+        <div class="invalid-feedback">Invalid Code.</div>
     </div>
 </div>
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="bfsTenantId" class="form-label fs-6">Tenant Name</label>
-        <select class="form-select" id="bfsTenantId" formControlName="bfsTenantId"
-            [class]="submit && !form['bfsTenantId'].errors ? 'is-valid': submit && form['bfsTenantId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of BfsTenantOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-            </ng-container>
-        </select>
-        <div class="invalid-feedback">Please select a valid Tenant Name.</div>
+        <label for="name" class="form-label fs-6">Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="name" formControlName="name"
+            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Name.</div>
     </div>
 </div>
+
 <div class="row mb-2">
     <div class="col-12">
-        <label for="bfsSystemId" class="form-label fs-6">BestFit System</label>
-        <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId"
-            [class]="submit && !form['bfsSystemId'].errors ? 'is-valid': submit && form['bfsSystemId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of BfsSystemOptions">
+        <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
+        <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId"
+            [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of TradingRoomOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
-        <div class="invalid-feedback">Please select a valid BestFit System.</div>
+        <div class="invalid-feedback">Please select a valid Trading Room.</div>
     </div>
 </div>
 </div>
@@ -103,4 +105,3 @@
         </div>
     </div>
 </div>
-

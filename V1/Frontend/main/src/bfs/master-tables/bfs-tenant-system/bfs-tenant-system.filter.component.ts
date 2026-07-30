@@ -22,7 +22,7 @@ public BfsSystemOptions:  any[] = [];
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -44,22 +44,22 @@ public BfsSystemOptions:  any[] = [];
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsTenantOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Tenant Name data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 target = "/BfsSystem/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsSystemOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching BestFit System data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 

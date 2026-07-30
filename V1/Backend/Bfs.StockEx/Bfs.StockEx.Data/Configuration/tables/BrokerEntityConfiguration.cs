@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bfs.StockEx.Data.Configuration
 {
-    public class TradingRoomEntityConfiguration : IEntityTypeConfiguration<TradingRoomEntity>
+    public class BrokerEntityConfiguration : IEntityTypeConfiguration<BrokerEntity>
     {
-        public static readonly string TableNameCapital = "stkxTradingRoom";
+        public static readonly string TableNameCapital = "stkxBroker";
 
-        public void Configure(EntityTypeBuilder<TradingRoomEntity> builder)
+        public void Configure(EntityTypeBuilder<BrokerEntity> builder)
         {
             builder.ToTable(TableNameCapital);
             builder.HasKey(e => e.Id);
@@ -17,11 +17,11 @@ namespace Bfs.StockEx.Data.Configuration
             // Explicitly disable identity generation
             builder.Property(e => e.Id).ValueGeneratedNever();
 
-        	//   builder.Property(e => e.IsDeleted).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
+        	//   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.IsDeleted).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.Code).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }
 }
-

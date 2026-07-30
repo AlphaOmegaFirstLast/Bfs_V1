@@ -2,14 +2,16 @@ using Bfs.Core.ObjectFields;
 
 namespace Bfs.StockEx.Data
 {
-    public class TradingRoomListItem
+    public class BrokerListItem
     {      
         public string? Id { get; set; }
+public string? IsDeleted { get; set; }
+public string? Code { get; set; }
 public string? Name { get; set; }
-public string? Broker { get; set; }
-public string? StockShare { get; set; }
+public string? TradingRoomId { get; set; }
+
+        public string? TradingRoomName { get; set; }
 
 //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }
 }
-

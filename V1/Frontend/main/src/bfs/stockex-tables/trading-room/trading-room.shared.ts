@@ -9,7 +9,8 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 export const TradingRoomColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'broker', displayName: 'Brokers', sortName: 'Broker', width: '50px', isVisible:true },
+{ fieldName: 'stockShare', displayName: 'StockShares', sortName: 'StockShare', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -17,7 +18,6 @@ export interface ITradingRoom {
     isDeleted?: boolean;
 id?: string;
 name?: string;
-notes?: string;
 
 }
 //---------------------------------------------------------
@@ -26,7 +26,6 @@ export function initTradingRoom(): ITradingRoom {
         isDeleted: false,
 id: '0',
 name: '',
-notes: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -39,7 +38,6 @@ export function tradingRoomUntypedFormGroup(formBuilder: FormBuilder): any {
     isDeleted: [false],
 id: ['0'],
 name: [''],
-notes: [''],
 
     };
 } 
@@ -83,6 +81,27 @@ export function initTradingRoomRequest(): ITradingRoomRequest {
 
 export function getTradingRoomActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
+if (component.accessService.isActionAllowed('tradingRoom', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/stkx/trading-room/add', displayText: 'Add New record'
+});
+}
+if (component.accessService.isActionAllowed('tradingRoom', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/trading-room/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('tradingRoom', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/trading-room/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('tradingRoom', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/trading-room/delete', displayText: 'Delete...' 
+});
+}
 
         return links;
     }

@@ -13,7 +13,6 @@ namespace Bfs.StockEx.Domain.Mapper
                IsDeleted= entity.IsDeleted,
 Id= entity.Id,
 Name= entity.Name,
-Notes= entity.Notes,
 
             };
 
@@ -37,7 +36,6 @@ Notes= entity.Notes,
             TradingRoomEntity.IsDeleted= contract.IsDeleted;
 TradingRoomEntity.Id= contract.Id;
 TradingRoomEntity.Name= contract.Name;
-TradingRoomEntity.Notes= contract.Notes;
 
             return TradingRoomEntity;
         }     

@@ -7,6 +7,7 @@ namespace Bfs.StockEx.Data;
 public class StockExDbContext : DbContext
 {
  public DbSet<TradingRoomEntity> TradingRooms { get; set; }
+ public DbSet<BrokerEntity> Brokers { get; set; }
 //Template_Component_RegisterDbSet
 
     public StockExDbContext(DbContextOptions<StockExDbContext> options) : base(options)

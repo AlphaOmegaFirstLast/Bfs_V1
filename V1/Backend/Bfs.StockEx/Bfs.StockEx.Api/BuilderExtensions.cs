@@ -176,6 +176,7 @@ public static class BuilderExtensions
     public static void RegisterValidators(this WebApplicationBuilder builder)
     {
             builder.Services.AddScoped<IValidator<TradingRoom>, TradingRoomValidator>();
+            builder.Services.AddScoped<IValidator<Broker>, BrokerValidator>();
 //Template_Component_RegisterValidator
     }
 
@@ -183,6 +184,7 @@ public static class BuilderExtensions
     {
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ITradingRoomRepository, TradingRoomRepository>();
+            builder.Services.AddScoped<IBrokerRepository, BrokerRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -191,6 +193,7 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IReportsService, ReportsService>();
         builder.Services.AddScoped<IOperationsService,OperationsService>();
             builder.Services.AddScoped<ITradingRoomService, TradingRoomService>();
+            builder.Services.AddScoped<IBrokerService, BrokerService>();
 //Template_Component_RegisterService
     }
 
@@ -201,6 +204,12 @@ public static class BuilderExtensions
             var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
             return new TradingRoomList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IBrokerList>(sp =>
+        {
+            var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new BrokerList(config.ConnectionString, resourceSecurity);
         });
 //Template_Component_RegisterList
     }

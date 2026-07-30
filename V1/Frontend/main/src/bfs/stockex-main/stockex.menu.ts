@@ -26,6 +26,14 @@ export const StockExMenuItems: MenuItemType[] = [
             role: ['admin', 'investor','broker']
         }
     },
+    {
+        label: 'Brokers',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/broker/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Basic
         ]
     },

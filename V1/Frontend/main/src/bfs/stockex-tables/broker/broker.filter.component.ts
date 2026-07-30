@@ -4,19 +4,20 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
-import { ITradingRoomFilter } from './trading-room.shared';
+import { IBrokerFilter } from './broker.shared';
 
 @Component({
-    selector: 'app-trading-room-filter',
+    selector: 'app-broker-filter',
     imports: [FormsModule, CommonModule],
-    templateUrl: './trading-room.filter.component.html'
+    templateUrl: './broker.filter.component.html'
     //styles: ``
 })
-export class TradingRoomFilterComponent implements OnInit {
+export class BrokerFilterComponent implements OnInit {
 
-    public result = {} as ITradingRoomFilter;
+    public result = {} as IBrokerFilter;
 
     // Define look ups
+    public TradingRoomOptions:  any[] = [];
 
     // Define range filters
 
@@ -38,6 +39,17 @@ export class TradingRoomFilterComponent implements OnInit {
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
+        target = "/TradingRoom/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.TradingRoomOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Trading Room data.';
+                this.isLoading.list = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
@@ -53,4 +65,3 @@ export class TradingRoomFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
-

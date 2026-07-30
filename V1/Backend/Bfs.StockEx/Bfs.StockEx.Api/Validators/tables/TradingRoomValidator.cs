@@ -13,9 +13,6 @@ namespace Bfs.StockEx.Api.Validators
 .MinimumLength(3)
 .MaximumLength(50)
 ;
-RuleFor(x => x.Notes)
-.MaximumLength(1000)
-;
 
         }
     }

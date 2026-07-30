@@ -8,13 +8,13 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const BfsSystemColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'isMaster', displayName: 'Is BestFit Master System', sortName: 'IsMasterName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'systemTemplateId', displayName: 'Template', sortName: 'SystemTemplateName', width: '50px', isVisible:true },
-{ fieldName: 'basePortNumber', displayName: 'Base Port Number', sortName: 'BasePortNumberName', width: '50px', isVisible:true },
-{ fieldName: 'dbPrefix', displayName: 'DB Prefix', sortName: 'DbPrefixName', width: '50px', isVisible:true },
-{ fieldName: 'logo', displayName: 'Logo', sortName: 'LogoName', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
+{ fieldName: 'isMaster', displayName: 'Is BestFit Master System', sortName: 'IsMaster', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'systemTemplateId', displayName: 'Template', sortName: 'SystemTemplate_Name', width: '50px', isVisible:true },
+{ fieldName: 'basePortNumber', displayName: 'Base Port Number', sortName: 'BasePortNumber', width: '50px', isVisible:true },
+{ fieldName: 'dbPrefix', displayName: 'DB Prefix', sortName: 'DbPrefix', width: '50px', isVisible:true },
+{ fieldName: 'logo', displayName: 'Logo', sortName: 'Logo', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 
 ];
 //---------------------------------------------------------
@@ -78,6 +78,7 @@ export interface IBfsSystemRequest extends IEntityRequest<IBfsSystemFilter> {}
 //---------------------------------------------------------
 export interface IBfsSystemFilter {
     [key: string]: any;
+    Id?: string;
 
     Logo?: string;
 Name?: string;
@@ -97,6 +98,7 @@ export function initBfsSystemRequest(): IBfsSystemRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Logo: undefined ,
 Name: undefined ,

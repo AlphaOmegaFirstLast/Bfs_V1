@@ -18,9 +18,16 @@ import { StockExService } from '@bfs/stockex-main/stockex.service';
 import { type ITradingRoom, type ITradingRoomRequest, initTradingRoom, tradingRoomUntypedFormGroup } from './trading-room.shared';
 import { getTradingRoomActions,  initTradingRoomRequest } from './trading-room.shared';
 
+import {BrokerListComponent} from "../broker/broker.list.component"
+import {IBrokerFilter, IBrokerRequest, initBrokerRequest} from "../broker/broker.shared"
+import {StockShareListComponent} from "../stock-share/stock-share.list.component"
+import {IStockShareFilter, IStockShareRequest, initStockShareRequest} from "../stock-share/stock-share.shared"
+
 @Component({
     selector: 'trading-room-form',
     imports: [
+    BrokerListComponent,
+StockShareListComponent,
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
     standalone: true,
@@ -33,6 +40,8 @@ export class TradingRoomFormComponent extends BaseFormComponent<ITradingRoom > i
     override componentName: string = 'TradingRoom'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
+    presetBrokerFilter: IBrokerFilter | undefined;
+presetStockShareFilter: IStockShareFilter | undefined;
 
     // Define look ups
 
@@ -64,6 +73,16 @@ export class TradingRoomFormComponent extends BaseFormComponent<ITradingRoom > i
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
+        let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
+        this.presetBrokerFilter = presetBrokerRequest.filter;
+        if (this.presetBrokerFilter) {
+            this.presetBrokerFilter.TradingRoomId = this.entity.id;
+        }
+let presetStockShareRequest: IStockShareRequest = initStockShareRequest();
+        this.presetStockShareFilter = presetStockShareRequest.filter;
+        if (this.presetStockShareFilter) {
+            this.presetStockShareFilter.TradingRoomId = this.entity.id;
+        }
 
     }
     //---------------------------------------------------------
@@ -123,3 +142,4 @@ export class TradingRoomFormComponent extends BaseFormComponent<ITradingRoom > i
    //--------------------------------------------------------------
 
 }
+

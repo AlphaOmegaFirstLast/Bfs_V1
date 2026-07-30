@@ -71,18 +71,6 @@
     </div>
 </div>
 
-<div class="row mb-2">
-    <div class="col-12">
-        <label for="notes" class="form-label fs-6">Notes</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="notes" formControlName="notes"
-            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Notes.</div>
-    </div>
-</div>
-
 </div>
 
                                     </div>
@@ -95,6 +83,28 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
+                <!----------------------------------------- Tab Contents Broker -------------------------------------->
+
+<li [ngbNavItem]="2">
+    <a href="javascript:void(0)" ngbNavLink>
+        Brokers
+    </a>
+
+    <ng-template ngbNavContent>
+        <broker-list [presetFilter]="presetBrokerFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents StockShare -------------------------------------->
+
+<li [ngbNavItem]="3">
+    <a href="javascript:void(0)" ngbNavLink>
+        StockShares
+    </a>
+
+    <ng-template ngbNavContent>
+        <stock-share-list [presetFilter]="presetStockShareFilter"/>
+    </ng-template>
+</li>
 
             </ul>
 
@@ -103,3 +113,4 @@
         </div>
     </div>
 </div>
+

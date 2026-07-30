@@ -21,7 +21,7 @@ export class BfsSystemFilterComponent implements OnInit {
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -43,11 +43,11 @@ export class BfsSystemFilterComponent implements OnInit {
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.SystemTemplateOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Template data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 

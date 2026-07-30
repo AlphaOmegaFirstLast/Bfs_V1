@@ -12,30 +12,30 @@ import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
-import { MasterService } from '@bfs/master-main/master.service';
+import { StockExService } from '@bfs/stockex-main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import { type IBfsSystem, type IBfsSystemRequest, initBfsSystem, bfsSystemUntypedFormGroup } from './bfs-system.shared';
-import { getBfsSystemActions,  initBfsSystemRequest } from './bfs-system.shared';
+import { type IBroker, type IBrokerRequest, initBroker, brokerUntypedFormGroup } from './broker.shared';
+import { getBrokerActions,  initBrokerRequest } from './broker.shared';
 
 @Component({
-    selector: 'bfs-system-form',
+    selector: 'broker-form',
     imports: [
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
     standalone: true,
-    templateUrl: './bfs-system.form.component.html',
+    templateUrl: './broker.form.component.html',
 })
-export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > implements OnInit {
+export class BrokerFormComponent extends BaseFormComponent<IBroker > implements OnInit {
 
-    override apiUrl =  '/BfsSystem/';
-    override apiService: MasterService = inject(MasterService);
-    override componentName: string = 'BfsSystem'.toLowerCase();  // used to grab its related custom field definitions
+    override apiUrl =  '/Broker/';
+    override apiService: StockExService = inject(StockExService);
+    override componentName: string = 'Broker'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
 
     // Define look ups
-    public SystemTemplateOptions: any[] = [];
+    public TradingRoomOptions: any[] = [];
 
     // Define autocomplete
 
@@ -44,7 +44,7 @@ export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > imple
     constructor(activatedRoute: ActivatedRoute) {
 
        super(activatedRoute);
-       this.validationForm = this.formBuilder.group(bfsSystemUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       this.validationForm = this.formBuilder.group(brokerUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
 
     }
     //---------------------------------------------------------
@@ -60,8 +60,8 @@ export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > imple
         }
     }
     //---------------------------------------------------------
-    override initEntity(): IBfsSystem  {
-        return initBfsSystem ();
+    override initEntity(): IBroker  {
+        return initBroker ();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
@@ -95,15 +95,15 @@ export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > imple
 //   this.isLoading.lookups = false;
 // }
         this.isLoading.lookups = true;
-        target = "/SystemTemplate/list";
+        target = "/TradingRoom/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
-                this.SystemTemplateOptions = response.items;
+                this.TradingRoomOptions = response.items;
                 this.isLoading.lookups = false;
             },
                 error: (err: any) => {
                 this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching Template data.';
+                var msg = err.message || 'An error occurred while fetching Trading Room data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
@@ -112,7 +112,7 @@ export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > imple
     //---------------------------------------------------------
 
     getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getBfsSystemActions(this,record);
+        let actions = getBrokerActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'FormHeader'
@@ -124,7 +124,7 @@ export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > imple
     }
     //---------------------------------------------------------
     getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getBfsSystemActions(this,record);
+        let actions = getBrokerActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'FormHeader'
@@ -137,4 +137,3 @@ export class BfsSystemFormComponent extends BaseFormComponent<IBfsSystem > imple
    //--------------------------------------------------------------
 
 }
-

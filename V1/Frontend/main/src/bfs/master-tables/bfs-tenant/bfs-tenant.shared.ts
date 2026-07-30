@@ -9,14 +9,14 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsTenantColumns = [
-    { fieldName: 'dbConnection', displayName: 'Database Connection', sortName: 'DbConnectionName', width: '50px', isVisible:false },
+    { fieldName: 'dbConnection', displayName: 'Database Connection', sortName: 'DbConnection', width: '50px', isVisible:false },
 { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'theme', displayName: 'Theme', sortName: 'ThemeName', width: '50px', isVisible:false },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'customFields', displayName: 'Custom Fields', sortName: 'CustomFieldsName', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'companyName', displayName: 'Company Name', sortName: 'CompanyNameName', width: '50px', isVisible:true },
-{ fieldName: 'logo', displayName: 'Logo', sortName: 'LogoName', width: '50px', isVisible:false },
+{ fieldName: 'theme', displayName: 'Theme', sortName: 'Theme', width: '50px', isVisible:false },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'customFields', displayName: 'Custom Fields', sortName: 'CustomFields', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'companyName', displayName: 'Company Name', sortName: 'CompanyName', width: '50px', isVisible:true },
+{ fieldName: 'logo', displayName: 'Logo', sortName: 'Logo', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
@@ -78,6 +78,7 @@ export interface IBfsTenantRequest extends IEntityRequest<IBfsTenantFilter> {}
 //---------------------------------------------------------
 export interface IBfsTenantFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 CompanyName?: string;
@@ -96,6 +97,7 @@ export function initBfsTenantRequest(): IBfsTenantRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 CompanyName: undefined ,
