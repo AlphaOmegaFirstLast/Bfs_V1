@@ -1,0 +1,22 @@
+using Bfs.Core.Helpers;
+
+using Bfs.[SystemNameCapital].Contracts;
+using Bfs.[SystemNameCapital].Data.Interfaces;
+using Bfs.[SystemNameCapital].Domain.Interfaces;
+using Bfs.[SystemNameCapital].Domain.Mapper;
+
+namespace Bfs.[SystemNameCapital].Domain.Services
+{
+    public class ReportsService : IReportsService
+    {
+//Template_Component_AddDeclareEntry
+        public ReportsService(
+//Template_Component_AddParameterEntry
+                            )
+        {
+//Template_Component_AddInitEntry
+        }
+//Template_Component_AddServiceEntry
+    }
+}
+

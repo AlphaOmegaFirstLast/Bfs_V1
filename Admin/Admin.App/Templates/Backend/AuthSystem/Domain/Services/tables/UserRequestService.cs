@@ -1,0 +1,153 @@
+using Bfs.Auth.Contracts;
+using Bfs.Auth.Data.Interfaces;
+using Bfs.Auth.Domain.Interfaces;
+using Bfs.Auth.Domain.Mapper;
+using Bfs.Core.Config;
+using Bfs.Core.Helpers;
+using Bfs.Core.Interfaces;
+using Bfs.Core.Services.Auth;
+
+namespace Bfs.Auth.Domain.Services
+{
+    public class UserRequestService : IUserRequestService
+    {
+        private readonly IUserRequestRepository _repo;
+        private readonly IUserRequestList _list;
+        private readonly IUserService _userService;
+        private readonly IUserTenantService _userTenantService;
+
+        public UserRequestService(IUserRequestRepository repo, IUserRequestList list,IUserService userService, IUserTenantService userTenantService)
+        {
+            _repo = repo;
+            _list = list;
+            _userService = userService;
+            _userTenantService = userTenantService;
+        }
+
+        public async Task<UserRequest?> GetAsync(long id)
+        {
+            var result = await _repo.GetAsync(id).ConfigureAwait(false);
+            return result?.ToContract();
+        }
+
+        public async Task<List<UserRequest>?> GetAsync()
+        {
+            var result = await _repo.GetAsync().ConfigureAwait(false);
+            return result?.ToContract();
+        }
+
+        public async Task<UserRequest> CreateAsync(UserRequest contract)
+
+        {
+
+            var entity = contract.ToEntity();
+            var newEntity = await _repo.CreateAsync(entity)
+                .ConfigureAwait(false);
+
+            await _repo.SaveAsync()
+                .ConfigureAwait(false);
+
+            var result = await GetAsync(newEntity.Id)
+                .ConfigureAwait(false);
+
+            //var message = new UserRequestCreatedMessage
+            //{
+            //    Entity = PrepareForMessage(result),
+            //};
+            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+
+            return result;
+        }
+
+        public async Task<UserRequest?> UpdateAsync(UserRequest contract)
+        {
+            //ToDo fluent validation, error or exception
+
+            var existingEntity = await _repo.GetAsync(contract.Id).ConfigureAwait(false);
+            var existingUserRequestStatusId = existingEntity?.UserRequestStatusId;
+            var updatedEntity = contract.ToEntity(existingEntity);
+
+            //var message = new UserRequestUpdatedMessage
+            //{
+            //    OldEntity = PrepareForMessage(existingContract),
+            //};
+
+            //  existingEntity?.ToEntity();
+
+            await _repo.UpdateAsync(updatedEntity).ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
+            if (updatedEntity != null && updatedEntity.UserRequestStatusId == (int)RequestStatus.Approved)
+            {
+                // if RequestStatus changed from WaitingApproval to Approved, then set up user in tenant 
+                if (existingUserRequestStatusId == (int)RequestStatus.WaitingApproval)
+                    await _userTenantService.SetUpUser<User>(updatedEntity,(ICrudService<User>) _userService);
+            }
+
+             var result = await GetAsync(updatedEntity.Id)
+                .ConfigureAwait(false);
+            //message.NewEntity = PrepareForMessage(result);
+            //await _messagePublisher.PublishMessageAsync(message)
+            //    .ConfigureAwait(false);
+
+            return updatedEntity?.ToContract();
+        }
+
+        public async Task DeleteAsync(long id)
+        {
+            var existingEntity = await _repo.GetAsync(id).ConfigureAwait(false);
+
+            //   existingEntity.IsDeleted = true;
+
+            await _repo.DeleteAsync(existingEntity)
+                .ConfigureAwait(false);
+
+            await _repo.SaveAsync()
+                .ConfigureAwait(false);
+
+            //var message = new UserRequestDeletedMessage
+            //{
+            //    Entity = PrepareForMessage(existingContract),
+            //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
+            //};
+
+            //await _messagePublisher.PublishMessageAsync(message)
+            //    .ConfigureAwait(false);
+        }
+
+        public async Task<UserRequest> UploadAsync(UserRequest contract)
+        {
+
+            var entity = contract.ToEntity();
+            var newEntity = await _repo.UploadAsync(entity)
+                .ConfigureAwait(false);
+
+            await _repo.SaveAsync()
+                .ConfigureAwait(false);
+
+            var result = await GetAsync(newEntity.Id)
+                .ConfigureAwait(false);
+
+            //var message = new UserRequestCreatedMessage
+            //{
+            //    Entity = PrepareForMessage(result),
+            //};
+            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+
+            return result;
+        }
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<UserRequestListItem>> ListAsync(Bfs.Core.Contracts.QueryRequest<UserRequestListFilter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<UserRequestListFilter>, Bfs.Core.Data.QueryRequest<Data.UserRequestListFilter>>(contractRequest);
+
+            var entityResult = await _list.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.UserRequestListItem>, Bfs.Core.Contracts.QueryResponse<UserRequestListItem>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<UserRequestListItem> { Items = new List<UserRequestListItem>(), TotalItems = 0, TotalPages = 0 };
+        }
+
+        //Template_Start_DontOverwrite_1
+        //Template_End_DontOverwrite_1
+    }
+}
+
