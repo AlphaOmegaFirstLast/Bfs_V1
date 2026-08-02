@@ -212,13 +212,13 @@ namespace Admin.App
             string pattern;
             string result = input;
 
-            //Investor has no "Name" field yet required in list query for dropdowns
-            pattern = "Investor.Name";
-            result = result.Replace(pattern, "(Investor.FirstName + ' ' + Investor.LastName) ");
+            ////Investor has no "Name" field yet required in list query for dropdowns
+            //pattern = "Investor.Name";
+            //result = result.Replace(pattern, "(Investor.FirstName + ' ' + Investor.LastName) ");
 
-            //Broker has no "Name" field yet required in list query for dropdowns
-            pattern = "Broker.Name";
-            result = result.Replace(pattern, "(Broker.FirstName + ' ' + Broker.LastName) ");
+            ////Broker has no "Name" field yet required in list query for dropdowns
+            //pattern = "Broker.Name";
+            //result = result.Replace(pattern, "(Broker.FirstName + ' ' + Broker.LastName) ");
 
             return result;
         }

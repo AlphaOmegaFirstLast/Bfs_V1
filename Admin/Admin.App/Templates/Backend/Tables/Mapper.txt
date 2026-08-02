@@ -64,3 +64,4 @@ namespace Bfs.[SystemNameCapital].Domain.Mapper
         }     
     }
 }
+
