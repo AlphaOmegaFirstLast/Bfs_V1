@@ -96,4 +96,3 @@ namespace Bfs.Auth.Data.Reports
         }
     }
 }
-

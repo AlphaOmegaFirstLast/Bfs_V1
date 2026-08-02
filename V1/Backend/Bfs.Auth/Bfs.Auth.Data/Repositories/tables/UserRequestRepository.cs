@@ -18,4 +18,3 @@ namespace Bfs.Auth.Data.Repositories
         //Template_End_DontOverwrite_1
     }
 }
-

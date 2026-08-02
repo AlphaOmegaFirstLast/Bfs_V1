@@ -14,4 +14,3 @@ namespace Bfs.Auth.Domain.Interfaces
         //Template_End_Code_[DontOverwrite]_1   
     }
 }
-

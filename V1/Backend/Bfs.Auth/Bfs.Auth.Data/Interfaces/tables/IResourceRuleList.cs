@@ -8,4 +8,3 @@ namespace Bfs.Auth.Data.Interfaces
         Task<QueryResponse<ResourceRuleListItem>> GetAsync(QueryRequest<ResourceRuleListFilter> request);
     }
 }
-

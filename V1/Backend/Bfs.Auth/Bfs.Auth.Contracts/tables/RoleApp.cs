@@ -26,4 +26,3 @@ namespace Bfs.Auth.Contracts
 
     }
 }
-

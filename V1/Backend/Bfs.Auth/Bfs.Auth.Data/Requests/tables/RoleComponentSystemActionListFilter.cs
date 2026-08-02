@@ -13,4 +13,3 @@ public long? RoleId { get; set; }
 
     }
 }
-

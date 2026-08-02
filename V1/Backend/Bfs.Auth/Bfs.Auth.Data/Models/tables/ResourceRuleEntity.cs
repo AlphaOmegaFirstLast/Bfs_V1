@@ -26,4 +26,3 @@ public long BfsComponentId {get; set;} = 0 ;
 
     }
 }
-

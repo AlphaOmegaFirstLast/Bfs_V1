@@ -25,4 +25,3 @@ namespace Bfs.Auth.Data.Configuration
         }
     }
 }
-

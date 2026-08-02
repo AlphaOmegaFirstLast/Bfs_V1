@@ -21,4 +21,3 @@ public long? BfsComponentId { get; set; }
 
     }
 }
-

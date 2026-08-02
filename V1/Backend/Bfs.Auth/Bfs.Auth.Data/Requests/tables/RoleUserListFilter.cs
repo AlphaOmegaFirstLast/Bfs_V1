@@ -12,4 +12,3 @@ public long? UserId { get; set; }
 
     }
 }
-

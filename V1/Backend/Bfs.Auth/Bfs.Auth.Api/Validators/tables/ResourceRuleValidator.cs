@@ -30,4 +30,3 @@ RuleFor(x => x.ParameterType)
         }
     }
 }
-

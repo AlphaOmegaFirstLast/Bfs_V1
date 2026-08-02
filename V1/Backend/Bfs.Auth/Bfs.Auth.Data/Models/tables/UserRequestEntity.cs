@@ -25,4 +25,3 @@ public DateTime ResponseDate {get; set;} = DateTime.MinValue ;
 
     }
 }
-

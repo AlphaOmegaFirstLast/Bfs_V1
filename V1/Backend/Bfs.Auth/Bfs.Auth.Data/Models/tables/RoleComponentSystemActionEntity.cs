@@ -19,4 +19,3 @@ public long RoleId {get; set;} = 0 ;
 
     }
 }
-

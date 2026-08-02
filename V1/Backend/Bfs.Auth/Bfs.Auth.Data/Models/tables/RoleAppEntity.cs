@@ -18,4 +18,3 @@ public long AppId {get; set;} = 0 ;
 
     }
 }
-

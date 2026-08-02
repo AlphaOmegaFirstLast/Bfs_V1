@@ -25,4 +25,3 @@ RuleFor(x => x.Logo)
         }
     }
 }
-

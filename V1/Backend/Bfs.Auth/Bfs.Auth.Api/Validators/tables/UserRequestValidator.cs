@@ -33,4 +33,3 @@ RuleFor(x => x.RequestDate)
         }
     }
 }
-

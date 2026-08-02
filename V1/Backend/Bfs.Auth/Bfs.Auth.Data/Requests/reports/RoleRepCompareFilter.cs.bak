@@ -1,6 +1,6 @@
-using Bfs.Core.Contracts;
+using Bfs.Core.Data;
 
-namespace Bfs.Auth.Contracts
+namespace Bfs.Auth.Data
 {
     public class RoleRepCompareFilter
     {
@@ -9,3 +9,4 @@ namespace Bfs.Auth.Contracts
 
     }
 }
+

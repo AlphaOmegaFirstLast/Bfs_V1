@@ -9,7 +9,6 @@ public const string InvalidNotes = "InvalidNotes";
 public const string InvalidLogo = "InvalidLogo";
 public const string InvalidEmail = "InvalidEmail";
 public const string InvalidRequestDate = "InvalidRequestDate";
-public const string InvalidResponseDate = "InvalidResponseDate";
 public const string InvalidSelectBlackList = "InvalidSelectBlackList";
 public const string InvalidJoinStatement = "InvalidJoinStatement";
 public const string InvalidWhereStatement = "InvalidWhereStatement";

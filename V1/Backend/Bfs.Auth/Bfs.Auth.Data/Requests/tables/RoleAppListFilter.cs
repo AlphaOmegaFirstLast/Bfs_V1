@@ -12,4 +12,3 @@ public long? AppId { get; set; }
 
     }
 }
-

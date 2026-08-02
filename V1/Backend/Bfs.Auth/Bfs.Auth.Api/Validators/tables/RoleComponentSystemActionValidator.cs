@@ -12,4 +12,3 @@ namespace Bfs.Auth.Api.Validators
         }
     }
 }
-

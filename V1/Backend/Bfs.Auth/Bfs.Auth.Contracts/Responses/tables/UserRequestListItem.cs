@@ -18,4 +18,3 @@ public string? UserRequest_UserRequestStatusId { get; set; }
 //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }
 }
-

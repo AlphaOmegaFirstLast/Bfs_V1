@@ -20,4 +20,3 @@ RuleFor(x => x.Notes)
         }
     }
 }
-

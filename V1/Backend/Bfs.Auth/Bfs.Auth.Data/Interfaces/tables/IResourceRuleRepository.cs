@@ -9,4 +9,3 @@ namespace Bfs.Auth.Data.Interfaces
         //Template_End_DontOverwrite_1
     }
 }
-

@@ -19,4 +19,3 @@ public DateRange? ResponseDate { get; set; }
 
     }
 }
-
