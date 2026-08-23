@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Custom Reports </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/custom-reports/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/custom-reports/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -50,6 +50,16 @@
                                     <div class="row">
                                     <div class="col-6">
 <div class="row mb-2">
+    <div class="col-6">
+        <label for="id" class="form-label fs-6">ID</label>
+        <input class="form-control" type="text" id="id" formControlName="id"
+            [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid ID.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
     <div class="col-12">
         <label for="name" class="form-label fs-6">Name</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
@@ -63,13 +73,58 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="notes" class="form-label fs-6">Notes</label>
+        <label for="request" class="form-label fs-6">Request</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="notes" formControlName="notes"
-            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
+        <input class="form-control" type="text" id="request" formControlName="request"
+            [class]="submit && !form['request'].errors ? 'is-valid': submit && form['request'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Notes.</div>
+        <div class="invalid-feedback">Invalid Request.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="baseReport" class="form-label fs-6">Base Report</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="baseReport" formControlName="baseReport"
+            [class]="submit && !form['baseReport'].errors ? 'is-valid': submit && form['baseReport'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Base Report.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="isPrivate" formControlName="isPrivate" />
+            <label class="form-check-label" for="isPrivate">Private</label>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="createdBy" class="form-label fs-6">Created By</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="createdBy" formControlName="createdBy"
+            [class]="submit && !form['createdBy'].errors ? 'is-valid': submit && form['createdBy'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Created By.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="url" class="form-label fs-6">Base Report Url</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="url" formControlName="url"
+            [class]="submit && !form['url'].errors ? 'is-valid': submit && form['url'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Base Report Url.</div>
     </div>
 </div>
 
@@ -85,28 +140,6 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
-
-<li [ngbNavItem]="2">
-    <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
-    </a>
-
-    <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
-    </ng-template>
-</li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Broker
-    </a>
-
-    <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
-    </ng-template>
-</li>
 
             </ul>
 
@@ -115,4 +148,3 @@
         </div>
     </div>
 </div>
-

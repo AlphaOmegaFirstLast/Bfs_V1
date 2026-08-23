@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Stock Shares </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/stock-share/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/stock-share/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -63,6 +63,31 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
+        <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId"
+            [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of TradingRoomOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Trading Room.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="currencyId" class="form-label fs-6">Currency</label>
+        <select class="form-select" id="currencyId" formControlName="currencyId"
+            [class]="submit && !form['currencyId'].errors ? 'is-valid': submit && form['currencyId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CurrencyOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Currency.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
@@ -85,26 +110,15 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
+                <!----------------------------------------- Tab Contents CurrentPrice -------------------------------------->
 
 <li [ngbNavItem]="2">
     <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
+        Current Price
     </a>
 
     <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
-    </ng-template>
-</li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Broker
-    </a>
-
-    <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
+        <current-price-list [presetFilter]="presetCurrentPriceFilter"/>
     </ng-template>
 </li>
 

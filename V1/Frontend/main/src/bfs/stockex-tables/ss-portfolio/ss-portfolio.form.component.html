@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> StockShare Portfolios </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/ss-portfolio/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/ss-portfolio/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -41,9 +41,11 @@
                                     <!----------------------------------------- Messages -------------------------------------->
                                     <div *ngFor="let msg of messages">
                                         <div *ngIf="msg.text">
-                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
-                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
-                                            </ngb-alert>
+                                            <div *ngFor="let alert of msg.text.split('\n')">
+                                                <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                    <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ alert }}
+                                                </ngb-alert>
+                                            </div>
                                         </div>
                                     </div>
                                     <!----------------------------------------- Form Controls -------------------------------------->
@@ -60,6 +62,59 @@
         <div class="invalid-feedback">Invalid Name.</div>
     </div>
 </div>
+
+<div class="row mb-2">
+  <div class="col-12">
+     <div class="position-relative" (focusout)="hideInvestorOverlay()">
+        <label for="investorId" class="form-label fs-6">Investor</label>
+        <div class="input-group">
+            <input type="text"  class="form-control" formControlName="investorName"
+                (focus)="(investorControl.value?.length ?? 0) >= 2 && (showInvestor = true)"
+                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
+            <span class="input-group-text" *ngIf="isLoading.autoComplete"><span class="spinner-border spinner-border-sm"></span></span>
+        </div>
+        <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
+            *ngIf="showInvestor && investorOptions.length > 0">
+            <li *ngFor="let option of investorOptions">
+                <button type="button"
+                    class="dropdown-item d-flex justify-content-between align-items-center"
+                    (click)="selectInvestor(option)">
+                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                </button>
+            </li>
+        </ul>
+        <ul class="dropdown-menu show w-100" *ngIf="showInvestor && !isLoading.autoComplete && investorOptions.length === 0">
+            <li><span class="dropdown-item-text text-muted">Please select a valid Investor.</span></li>
+        </ul>
+    </div>
+   </div>
+ </div>
+<div class="row mb-2">
+  <div class="col-12">
+     <div class="position-relative" (focusout)="hideBrokerOverlay()">
+        <label for="brokerId" class="form-label fs-6">Broker</label>
+        <div class="input-group">
+            <input type="text"  class="form-control" formControlName="brokerName"
+                (focus)="(brokerControl.value?.length ?? 0) >= 2 && (showBroker = true)"
+                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
+            <span class="input-group-text" *ngIf="isLoading.autoComplete"><span class="spinner-border spinner-border-sm"></span></span>
+        </div>
+        <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
+            *ngIf="showBroker && brokerOptions.length > 0">
+            <li *ngFor="let option of brokerOptions">
+                <button type="button"
+                    class="dropdown-item d-flex justify-content-between align-items-center"
+                    (click)="selectBroker(option)">
+                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                </button>
+            </li>
+        </ul>
+        <ul class="dropdown-menu show w-100" *ngIf="showBroker && !isLoading.autoComplete && brokerOptions.length === 0">
+            <li><span class="dropdown-item-text text-muted">Please select a valid Broker.</span></li>
+        </ul>
+    </div>
+   </div>
+ </div>
 
 <div class="row mb-2">
     <div class="col-12">
@@ -85,26 +140,59 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
+                <!----------------------------------------- Tab Contents SspTransaction -------------------------------------->
 
 <li [ngbNavItem]="2">
     <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
+        StockShare Portfolio Transaction
     </a>
 
     <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
+        <ssp-transaction-list [presetFilter]="presetSspTransactionFilter"/>
     </ng-template>
 </li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
+<!----------------------------------------- Tab Contents CashTransaction -------------------------------------->
 
 <li [ngbNavItem]="3">
     <a href="javascript:void(0)" ngbNavLink>
-        Broker
+        Cash Transaction
     </a>
 
     <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
+        <cash-transaction-list [presetFilter]="presetCashTransactionFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents SsPortfolioBalance -------------------------------------->
+
+<li [ngbNavItem]="4">
+    <a href="javascript:void(0)" ngbNavLink>
+        Cash Portfolio Balance
+    </a>
+
+    <ng-template ngbNavContent>
+        <ss-portfolio-balance-list [presetFilter]="presetSsPortfolioBalanceFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents OverdraftPortfolio -------------------------------------->
+
+<li [ngbNavItem]="5">
+    <a href="javascript:void(0)" ngbNavLink>
+        Overdraft Portfolio
+    </a>
+
+    <ng-template ngbNavContent>
+        <overdraft-portfolio-list [presetFilter]="presetOverdraftPortfolioFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents SspStock -------------------------------------->
+
+<li [ngbNavItem]="6">
+    <a href="javascript:void(0)" ngbNavLink>
+        StockShare Portfolio Balance
+    </a>
+
+    <ng-template ngbNavContent>
+        <ssp-stock-list [presetFilter]="presetSspStockFilter"/>
     </ng-template>
 </li>
 

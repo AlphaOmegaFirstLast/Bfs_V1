@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Investors </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/investor/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/investor/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -51,6 +51,18 @@
                                     <div class="col-6">
 <div class="row mb-2">
     <div class="col-12">
+        <label for="code" class="form-label fs-6">Code</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="code" formControlName="code"
+            [class]="submit && !form['code'].errors ? 'is-valid': submit && form['code'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Code.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="name" class="form-label fs-6">Name</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
@@ -58,6 +70,18 @@
             [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="email" class="form-label fs-6">Email</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="email" formControlName="email"
+            [class]="submit && !form['email'].errors ? 'is-valid': submit && form['email'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Email.</div>
     </div>
 </div>
 
@@ -85,26 +109,37 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
+                <!----------------------------------------- Tab Contents SsPortfolio -------------------------------------->
 
 <li [ngbNavItem]="2">
     <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
+        StockShare Portfolio
     </a>
 
     <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
+        <ss-portfolio-list [presetFilter]="presetSsPortfolioFilter"/>
     </ng-template>
 </li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
+<!----------------------------------------- Tab Contents InvestorBrokerFund -------------------------------------->
 
 <li [ngbNavItem]="3">
     <a href="javascript:void(0)" ngbNavLink>
-        Broker
+        Investor Broker Fund
     </a>
 
     <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
+        <investor-broker-fund-list [presetFilter]="presetInvestorBrokerFundFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents BrokerAgreement -------------------------------------->
+
+<li [ngbNavItem]="4">
+    <a href="javascript:void(0)" ngbNavLink>
+        Broker Agreement
+    </a>
+
+    <ng-template ngbNavContent>
+        <broker-agreement-list [presetFilter]="presetBrokerAgreementFilter"/>
     </ng-template>
 </li>
 

@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Coupon Types </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/coupon-type/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/coupon-type/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -85,28 +85,6 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
-
-<li [ngbNavItem]="2">
-    <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
-    </a>
-
-    <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
-    </ng-template>
-</li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Broker
-    </a>
-
-    <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
-    </ng-template>
-</li>
 
             </ul>
 

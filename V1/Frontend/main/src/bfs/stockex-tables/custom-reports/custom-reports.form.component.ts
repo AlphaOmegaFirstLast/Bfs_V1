@@ -15,33 +15,24 @@ import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink
 import { StockExService } from '@bfs/stockex-main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import { type ITradingRoom, type ITradingRoomRequest, initTradingRoom, tradingRoomUntypedFormGroup } from './trading-room.shared';
-import { getTradingRoomActions,  initTradingRoomRequest } from './trading-room.shared';
-
-import {StockShareListComponent} from "../stock-share/stock-share.list.component"
-import {IStockShareFilter, IStockShareRequest, initStockShareRequest} from "../stock-share/stock-share.shared"
-import {BrokerListComponent} from "../broker/broker.list.component"
-import {IBrokerFilter, IBrokerRequest, initBrokerRequest} from "../broker/broker.shared"
+import { type ICustomReports, type ICustomReportsRequest, initCustomReports, customReportsUntypedFormGroup } from './custom-reports.shared';
+import { getCustomReportsActions,  initCustomReportsRequest } from './custom-reports.shared';
 
 @Component({
-    selector: 'trading-room-form',
+    selector: 'custom-reports-form',
     imports: [
-    StockShareListComponent,
-BrokerListComponent,
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
     standalone: true,
-    templateUrl: './trading-room.form.component.html',
+    templateUrl: './custom-reports.form.component.html',
 })
-export class TradingRoomFormComponent extends BaseFormComponent<ITradingRoom > implements OnInit {
+export class CustomReportsFormComponent extends BaseFormComponent<ICustomReports > implements OnInit {
 
-    override apiUrl =  '/TradingRoom/';
+    override apiUrl =  '/CustomReports/';
     override apiService: StockExService = inject(StockExService);
-    override componentName: string = 'TradingRoom'.toLowerCase();  // used to grab its related custom field definitions
+    override componentName: string = 'CustomReports'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
-    presetStockShareFilter: IStockShareFilter | undefined;
-presetBrokerFilter: IBrokerFilter | undefined;
 
     // Define look ups
 
@@ -52,7 +43,7 @@ presetBrokerFilter: IBrokerFilter | undefined;
     constructor(activatedRoute: ActivatedRoute) {
 
        super(activatedRoute);
-       this.validationForm = this.formBuilder.group(tradingRoomUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       this.validationForm = this.formBuilder.group(customReportsUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
 
     }
     //---------------------------------------------------------
@@ -68,21 +59,11 @@ presetBrokerFilter: IBrokerFilter | undefined;
         }
     }
     //---------------------------------------------------------
-    override initEntity(): ITradingRoom  {
-        return initTradingRoom ();
+    override initEntity(): ICustomReports  {
+        return initCustomReports ();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
-        let presetStockShareRequest: IStockShareRequest = initStockShareRequest();
-        this.presetStockShareFilter = presetStockShareRequest.filter;
-        if (this.presetStockShareFilter) {
-            this.presetStockShareFilter.TradingRoomId = this.entity.id;
-        }
-let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
-        this.presetBrokerFilter = presetBrokerRequest.filter;
-        if (this.presetBrokerFilter) {
-            this.presetBrokerFilter.TradingRoomId = this.entity.id;
-        }
 
     }
     //---------------------------------------------------------
@@ -117,7 +98,7 @@ let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
     //---------------------------------------------------------
 
     getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getTradingRoomActions(this,record);
+        let actions = getCustomReportsActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'FormHeader'
@@ -129,7 +110,7 @@ let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
     }
     //---------------------------------------------------------
     getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getTradingRoomActions(this,record);
+        let actions = getCustomReportsActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'FormHeader'
@@ -142,4 +123,3 @@ let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
    //--------------------------------------------------------------
 
 }
-

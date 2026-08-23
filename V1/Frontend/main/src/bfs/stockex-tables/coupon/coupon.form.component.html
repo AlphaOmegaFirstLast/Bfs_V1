@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Coupons </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/coupon/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/coupon/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -51,16 +51,99 @@
                                     <div class="col-6">
 <div class="row mb-2">
     <div class="col-12">
-        <label for="name" class="form-label fs-6">Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="name" formControlName="name"
-            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
+        <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId"
+            [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of TradingRoomOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Trading Room.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="stockShareId" class="form-label fs-6">Stock Share</label>
+        <select class="form-select" id="stockShareId" formControlName="stockShareId"
+            [class]="submit && !form['stockShareId'].errors ? 'is-valid': submit && form['stockShareId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of StockShareOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Stock Share.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="couponTypeId" class="form-label fs-6">Coupon Type</label>
+        <select class="form-select" id="couponTypeId" formControlName="couponTypeId"
+            [class]="submit && !form['couponTypeId'].errors ? 'is-valid': submit && form['couponTypeId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CouponTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Coupon Type.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="value" class="form-label fs-6">Value</label>
+        <input class="form-control" type="text" id="value" formControlName="value"
+            [class]="submit && !form['value'].errors ? 'is-valid': submit && form['value'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Name.</div>
+        <div class="invalid-feedback">Invalid Value.</div>
     </div>
 </div>
 
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="couponPercent" class="form-label fs-6">Percent</label>
+        <input class="form-control" type="text" id="couponPercent" formControlName="couponPercent"
+            [class]="submit && !form['couponPercent'].errors ? 'is-valid': submit && form['couponPercent'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Percent.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="announceDate" class="form-label fs-6">Announce Date</label>
+        <input class="form-control" type="date" id="announceDate" formControlName="announceDate"
+            [class]="submit && !form['announceDate'].errors ? 'is-valid': submit && form['announceDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Announce Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="valueDate" class="form-label fs-6">Value Date</label>
+        <input class="form-control" type="date" id="valueDate" formControlName="valueDate"
+            [class]="submit && !form['valueDate'].errors ? 'is-valid': submit && form['valueDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Value Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="dueDate" class="form-label fs-6">Due Date</label>
+        <input class="form-control" type="date" id="dueDate" formControlName="dueDate"
+            [class]="submit && !form['dueDate'].errors ? 'is-valid': submit && form['dueDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Due Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="couponStatusId" class="form-label fs-6">Coupon Status</label>
+        <select class="form-select" id="couponStatusId" formControlName="couponStatusId"
+            [class]="submit && !form['couponStatusId'].errors ? 'is-valid': submit && form['couponStatusId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CouponStatusOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Coupon Status.</div>
+    </div>
+</div>
 <div class="row mb-2">
     <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
@@ -85,28 +168,6 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
-
-<li [ngbNavItem]="2">
-    <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
-    </a>
-
-    <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
-    </ng-template>
-</li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Broker
-    </a>
-
-    <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
-    </ng-template>
-</li>
 
             </ul>
 

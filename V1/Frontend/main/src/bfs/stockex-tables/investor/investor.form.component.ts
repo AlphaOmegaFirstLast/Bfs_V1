@@ -15,33 +15,37 @@ import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink
 import { StockExService } from '@bfs/stockex-main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import { type ITradingRoom, type ITradingRoomRequest, initTradingRoom, tradingRoomUntypedFormGroup } from './trading-room.shared';
-import { getTradingRoomActions,  initTradingRoomRequest } from './trading-room.shared';
+import { type IInvestor, type IInvestorRequest, initInvestor, investorUntypedFormGroup } from './investor.shared';
+import { getInvestorActions,  initInvestorRequest } from './investor.shared';
 
-import {StockShareListComponent} from "../stock-share/stock-share.list.component"
-import {IStockShareFilter, IStockShareRequest, initStockShareRequest} from "../stock-share/stock-share.shared"
-import {BrokerListComponent} from "../broker/broker.list.component"
-import {IBrokerFilter, IBrokerRequest, initBrokerRequest} from "../broker/broker.shared"
+import {SsPortfolioListComponent} from "../ss-portfolio/ss-portfolio.list.component"
+import {ISsPortfolioFilter, ISsPortfolioRequest, initSsPortfolioRequest} from "../ss-portfolio/ss-portfolio.shared"
+import {InvestorBrokerFundListComponent} from "../investor-broker-fund/investor-broker-fund.list.component"
+import {IInvestorBrokerFundFilter, IInvestorBrokerFundRequest, initInvestorBrokerFundRequest} from "../investor-broker-fund/investor-broker-fund.shared"
+import {BrokerAgreementListComponent} from "../broker-agreement/broker-agreement.list.component"
+import {IBrokerAgreementFilter, IBrokerAgreementRequest, initBrokerAgreementRequest} from "../broker-agreement/broker-agreement.shared"
 
 @Component({
-    selector: 'trading-room-form',
+    selector: 'investor-form',
     imports: [
-    StockShareListComponent,
-BrokerListComponent,
+    SsPortfolioListComponent,
+InvestorBrokerFundListComponent,
+BrokerAgreementListComponent,
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
     standalone: true,
-    templateUrl: './trading-room.form.component.html',
+    templateUrl: './investor.form.component.html',
 })
-export class TradingRoomFormComponent extends BaseFormComponent<ITradingRoom > implements OnInit {
+export class InvestorFormComponent extends BaseFormComponent<IInvestor > implements OnInit {
 
-    override apiUrl =  '/TradingRoom/';
+    override apiUrl =  '/Investor/';
     override apiService: StockExService = inject(StockExService);
-    override componentName: string = 'TradingRoom'.toLowerCase();  // used to grab its related custom field definitions
+    override componentName: string = 'Investor'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
-    presetStockShareFilter: IStockShareFilter | undefined;
-presetBrokerFilter: IBrokerFilter | undefined;
+    presetSsPortfolioFilter: ISsPortfolioFilter | undefined;
+presetInvestorBrokerFundFilter: IInvestorBrokerFundFilter | undefined;
+presetBrokerAgreementFilter: IBrokerAgreementFilter | undefined;
 
     // Define look ups
 
@@ -52,7 +56,7 @@ presetBrokerFilter: IBrokerFilter | undefined;
     constructor(activatedRoute: ActivatedRoute) {
 
        super(activatedRoute);
-       this.validationForm = this.formBuilder.group(tradingRoomUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       this.validationForm = this.formBuilder.group(investorUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
 
     }
     //---------------------------------------------------------
@@ -68,20 +72,25 @@ presetBrokerFilter: IBrokerFilter | undefined;
         }
     }
     //---------------------------------------------------------
-    override initEntity(): ITradingRoom  {
-        return initTradingRoom ();
+    override initEntity(): IInvestor  {
+        return initInvestor ();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
-        let presetStockShareRequest: IStockShareRequest = initStockShareRequest();
-        this.presetStockShareFilter = presetStockShareRequest.filter;
-        if (this.presetStockShareFilter) {
-            this.presetStockShareFilter.TradingRoomId = this.entity.id;
+        let presetSsPortfolioRequest: ISsPortfolioRequest = initSsPortfolioRequest();
+        this.presetSsPortfolioFilter = presetSsPortfolioRequest.filter;
+        if (this.presetSsPortfolioFilter) {
+            this.presetSsPortfolioFilter.InvestorId = this.entity.id;
         }
-let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
-        this.presetBrokerFilter = presetBrokerRequest.filter;
-        if (this.presetBrokerFilter) {
-            this.presetBrokerFilter.TradingRoomId = this.entity.id;
+let presetInvestorBrokerFundRequest: IInvestorBrokerFundRequest = initInvestorBrokerFundRequest();
+        this.presetInvestorBrokerFundFilter = presetInvestorBrokerFundRequest.filter;
+        if (this.presetInvestorBrokerFundFilter) {
+            this.presetInvestorBrokerFundFilter.InvestorId = this.entity.id;
+        }
+let presetBrokerAgreementRequest: IBrokerAgreementRequest = initBrokerAgreementRequest();
+        this.presetBrokerAgreementFilter = presetBrokerAgreementRequest.filter;
+        if (this.presetBrokerAgreementFilter) {
+            this.presetBrokerAgreementFilter.InvestorId = this.entity.id;
         }
 
     }
@@ -117,7 +126,7 @@ let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
     //---------------------------------------------------------
 
     getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getTradingRoomActions(this,record);
+        let actions = getInvestorActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'FormHeader'
@@ -129,7 +138,7 @@ let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
     }
     //---------------------------------------------------------
     getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getTradingRoomActions(this,record);
+        let actions = getInvestorActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'FormHeader'

@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Investor Broker Funds </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/investor-broker-fund/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/investor-broker-fund/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -63,6 +63,49 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="brokerId" class="form-label fs-6">Broker</label>
+        <select class="form-select" id="brokerId" formControlName="brokerId"
+            [class]="submit && !form['brokerId'].errors ? 'is-valid': submit && form['brokerId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of BrokerOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Broker.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="investorId" class="form-label fs-6">Investor</label>
+        <select class="form-select" id="investorId" formControlName="investorId"
+            [class]="submit && !form['investorId'].errors ? 'is-valid': submit && form['investorId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of InvestorOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Investor.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="fund" class="form-label fs-6">Fund</label>
+        <input class="form-control" type="text" id="fund" formControlName="fund"
+            [class]="submit && !form['fund'].errors ? 'is-valid': submit && form['fund'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Fund.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="fundDate" class="form-label fs-6">Fund Date</label>
+        <input class="form-control" type="date" id="fundDate" formControlName="fundDate"
+            [class]="submit && !form['fundDate'].errors ? 'is-valid': submit && form['fundDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Fund Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
@@ -85,28 +128,6 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
-
-<li [ngbNavItem]="2">
-    <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
-    </a>
-
-    <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
-    </ng-template>
-</li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Broker
-    </a>
-
-    <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
-    </ng-template>
-</li>
 
             </ul>
 

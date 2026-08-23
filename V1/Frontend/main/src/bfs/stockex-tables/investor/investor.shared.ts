@@ -6,27 +6,33 @@ import * as operations from '@bfs/stockex-main/stockex.operations';
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
 
 // Output Columns of a Query  [used in entity Query]
-export const TradingRoomColumns = [
+export const InvestorColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'code', displayName: 'Code', sortName: 'Code', width: '50px', isVisible:false },
+{ fieldName: 'email', displayName: 'Email', sortName: 'Email', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------
-export interface ITradingRoom {
+export interface IInvestor {
     isDeleted?: boolean;
 id?: string;
 name?: string;
 notes?: string;
+code?: string;
+email?: string;
 
 }
 //---------------------------------------------------------
-export function initTradingRoom(): ITradingRoom {
-    let entity: ITradingRoom = {
+export function initInvestor(): IInvestor {
+    let entity: IInvestor = {
         isDeleted: false,
 id: '0',
 name: '',
 notes: '',
+code: '',
+email: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -34,24 +40,26 @@ notes: '',
 //---------------------------------------------------------
 
 // Fields of an Entity [used in Entity form]
-export function tradingRoomUntypedFormGroup(formBuilder: FormBuilder): any {
+export function investorUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
     isDeleted: [false],
 id: ['0'],
 name: [''],
 notes: [''],
+code: [''],
+email: [''],
 
     };
 } 
 //---------------------------------------------------------
-export interface ITradingRoomWithLookup extends ITradingRoom{
+export interface IInvestorWithLookup extends IInvestor{
 
 }
 //---------------------------------------------------------
-export interface ITradingRoomRequest extends IEntityRequest<ITradingRoomFilter> {}
+export interface IInvestorRequest extends IEntityRequest<IInvestorFilter> {}
 
 //---------------------------------------------------------
-export interface ITradingRoomFilter {
+export interface IInvestorFilter {
     [key: string]: any;
     Id?: string;
 
@@ -59,11 +67,11 @@ export interface ITradingRoomFilter {
 
 }
 //---------------------------------------------------------
-export function initTradingRoomRequest(): ITradingRoomRequest {
-    let request: ITradingRoomRequest = {
+export function initInvestorRequest(): IInvestorRequest {
+    let request: IInvestorRequest = {
         pageIndex: 1,
         pageSize: 5,
-        columns: TradingRoomColumns.map(column => ({ ...column })),
+        columns: InvestorColumns.map(column => ({ ...column })),
         group: '',
         sortOption: {
             sortBy: 'id',
@@ -81,27 +89,27 @@ export function initTradingRoomRequest(): ITradingRoomRequest {
 }
 //---------------------------------------------------------
 
-export function getTradingRoomActions(component: any, record: IEntity): IAction[] {
+export function getInvestorActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
-if (component.accessService.isActionAllowed('tradingRoom', ''))
+if (component.accessService.isActionAllowed('investor', ''))
 {links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/stkx/trading-room/add', displayText: 'Add New record'
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/stkx/investor/add', displayText: 'Add New record'
 });
 }
-if (component.accessService.isActionAllowed('tradingRoom', ''))
+if (component.accessService.isActionAllowed('investor', ''))
 {links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/trading-room/view', displayText: 'View...'
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/investor/view', displayText: 'View...'
 });
 }
-if (component.accessService.isActionAllowed('tradingRoom', ''))
+if (component.accessService.isActionAllowed('investor', ''))
 {links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/trading-room/edit', displayText: 'Edit...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/investor/edit', displayText: 'Edit...' 
 });
 }
-if (component.accessService.isActionAllowed('tradingRoom', ''))
+if (component.accessService.isActionAllowed('investor', ''))
 {links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/trading-room/delete', displayText: 'Delete...' 
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/investor/delete', displayText: 'Delete...' 
 });
 }
 

@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Trading Rooms </a>
+                    <a href="javascript:void(0)" ngbNavLink> Stock Share Stocks </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
-                                             <a [routerLink]="['/stkx/trading-room/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <a [routerLink]="['/stkx/ssp-stock/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <a [routerLink]="['/stkx/ssp-stock/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -63,6 +63,50 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="ssPortfolioId" class="form-label fs-6">StockShare Portfolio</label>
+        <select class="form-select" id="ssPortfolioId" formControlName="ssPortfolioId"
+            [class]="submit && !form['ssPortfolioId'].errors ? 'is-valid': submit && form['ssPortfolioId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of SsPortfolioOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid StockShare Portfolio.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="stockShareId" class="form-label fs-6">StockShare </label>
+        <select class="form-select" id="stockShareId" formControlName="stockShareId"
+            [class]="submit && !form['stockShareId'].errors ? 'is-valid': submit && form['stockShareId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of StockShareOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid StockShare .</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="quantity" class="form-label fs-6">Quantity</label>
+        <input class="form-control" type="text" id="quantity" formControlName="quantity"
+            [class]="submit && !form['quantity'].errors ? 'is-valid': submit && form['quantity'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Quantity.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="averageCost" class="form-label fs-6">Average Cost</label>
+        <input class="form-control" type="text" id="averageCost" formControlName="averageCost"
+            [class]="submit && !form['averageCost'].errors ? 'is-valid': submit && form['averageCost'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Average Cost.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
@@ -85,28 +129,6 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
-                <!----------------------------------------- Tab Contents StockShare -------------------------------------->
-
-<li [ngbNavItem]="2">
-    <a href="javascript:void(0)" ngbNavLink>
-        Stock Share
-    </a>
-
-    <ng-template ngbNavContent>
-        <stock-share-list [presetFilter]="presetStockShareFilter"/>
-    </ng-template>
-</li>
-<!----------------------------------------- Tab Contents Broker -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Broker
-    </a>
-
-    <ng-template ngbNavContent>
-        <broker-list [presetFilter]="presetBrokerFilter"/>
-    </ng-template>
-</li>
 
             </ul>
 
