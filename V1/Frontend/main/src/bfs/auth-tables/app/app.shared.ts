@@ -7,11 +7,11 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const AppColumns = [
-    { fieldName: 'app_Id', displayName: 'ID', sortName: 'App_Id', width: '50px', isVisible:false },
-{ fieldName: 'app_Name', displayName: 'Name', sortName: 'App_Name', width: '50px', isVisible:true },
-{ fieldName: 'app_Notes', displayName: 'Notes', sortName: 'App_Notes', width: '50px', isVisible:false },
-{ fieldName: 'app_BfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true },
-{ fieldName: 'app_Logo', displayName: 'Logo', sortName: 'App_Logo', width: '50px', isVisible:false },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true },
+{ fieldName: 'logo', displayName: 'Logo', sortName: 'Logo', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------

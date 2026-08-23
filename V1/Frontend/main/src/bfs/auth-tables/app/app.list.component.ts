@@ -65,7 +65,7 @@ export class AppListComponent
     override render(record: IEntity, column: IColumns): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
-            case 'app_BfsSystemId':
+            case 'bfsSystemId':
                 return record['bfsSystemName']?.toString();
 
             default:

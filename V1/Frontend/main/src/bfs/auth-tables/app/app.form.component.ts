@@ -96,7 +96,7 @@ export class AppFormComponent extends BaseFormComponent<IApp > implements OnInit
 // }
         this.isLoading.lookups = true;
         target = "/BfsSystem/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+        (await this.masterService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsSystemOptions = response.items;
                 this.isLoading.lookups = false;
