@@ -17,6 +17,7 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack()">Back to filtered List</button>
                                              <a [routerLink]="['/stkx/broker/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
                                              <a [routerLink]="['/stkx/broker/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
@@ -75,6 +76,18 @@
 
 <div class="row mb-2">
     <div class="col-12">
+        <label for="email" class="form-label fs-6">Email</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="email" formControlName="email"
+            [class]="submit && !form['email'].errors ? 'is-valid': submit && form['email'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Email.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
         <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
         <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId"
             [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
@@ -85,6 +98,19 @@
         <div class="invalid-feedback">Please select a valid Trading Room.</div>
     </div>
 </div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="notes" class="form-label fs-6">Notes</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="notes" formControlName="notes"
+            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Notes.</div>
+    </div>
+</div>
+
 </div>
 
                                     </div>
@@ -97,6 +123,39 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
+                <!----------------------------------------- Tab Contents SsPortfolio -------------------------------------->
+
+<li [ngbNavItem]="2">
+    <a href="javascript:void(0)" ngbNavLink>
+        StockShare Portfolio
+    </a>
+
+    <ng-template ngbNavContent>
+        <ss-portfolio-list [presetFilter]="presetSsPortfolioFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents InvestorBrokerFund -------------------------------------->
+
+<li [ngbNavItem]="3">
+    <a href="javascript:void(0)" ngbNavLink>
+        Investor Broker Fund
+    </a>
+
+    <ng-template ngbNavContent>
+        <investor-broker-fund-list [presetFilter]="presetInvestorBrokerFundFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents BrokerAgreement -------------------------------------->
+
+<li [ngbNavItem]="4">
+    <a href="javascript:void(0)" ngbNavLink>
+        Broker Agreement
+    </a>
+
+    <ng-template ngbNavContent>
+        <broker-agreement-list [presetFilter]="presetBrokerAgreementFilter"/>
+    </ng-template>
+</li>
 
             </ul>
 
@@ -105,3 +164,4 @@
         </div>
     </div>
 </div>
+

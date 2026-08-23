@@ -65,3 +65,4 @@ export class BrokerFilterComponent implements OnInit {
         this.parent.applyFilter(this.result);
     }
 }
+

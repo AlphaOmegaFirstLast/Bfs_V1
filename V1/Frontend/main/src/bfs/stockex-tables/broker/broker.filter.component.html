@@ -8,15 +8,15 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Code</label>
+        <label>ID</label>
       </div>
       <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.Code" value="{{result.Code}}" placeholder="Code" #ctrl="ngModel"/>
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
       </div>
     </div>
   </div>
 
-  <div class="form-control">
+      <div class="form-control">
     <div class="row">
       <div class="col -4">
         <label>Name</label>
@@ -46,3 +46,4 @@
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
     <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
   </div>
+
