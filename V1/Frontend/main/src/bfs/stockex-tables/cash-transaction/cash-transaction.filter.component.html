@@ -1,0 +1,125 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>StocksShare Transaction</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.SspTransactionId" name="sspTransactionId">
+          <ng-container *ngFor="let option of SspTransactionOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>StockShare Portfolio</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.SsPortfolioId" name="ssPortfolioId">
+          <ng-container *ngFor="let option of SsPortfolioOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Transaction Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.TransactionTypeId" name="transactionTypeId">
+          <ng-container *ngFor="let option of TransactionTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Expenses Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.ExpensesTypeId" name="expensesTypeId">
+          <ng-container *ngFor="let option of ExpensesTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Source Date</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="SourceDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="SourceDateTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Transaction Date</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="TransactionDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="TransactionDateTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Value</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="ValueFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="ValueTo">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>
+
