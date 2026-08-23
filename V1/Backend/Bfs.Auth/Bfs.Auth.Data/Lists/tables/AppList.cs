@@ -54,7 +54,7 @@ _fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "BfsSystemId
 _fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Logo", DbName = "athApp.Logo", QueryName = "Logo", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() {ComponentName = "BfsSystem", FieldName = "Name", DbName = "BestFit_V5.dbo.BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false});
+            _fieldList.Add(new QueryField() {ComponentName = "BfsSystem", FieldName = "Name", DbName = "BestFit_V6.dbo.BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false});
 
             //autoCompletes
 
@@ -67,7 +67,7 @@ _fieldList.Add(new QueryField() {ComponentName = "App", FieldName = "Logo", DbNa
            var sql = new StringBuilder();  
            sql.AppendLine(" From athApp ");
 
-           sql.AppendLine($"   Left Join BestFit_V5.dbo.BfsSystem on athApp.BfsSystemId = BestFit_V5.dbo.BfsSystem.Id");
+           sql.AppendLine($"   Left Join BestFit_V6.dbo.BfsSystem on athApp.BfsSystemId = BestFit_V6.dbo.BfsSystem.Id");
 
            return sql.ToString();
         }

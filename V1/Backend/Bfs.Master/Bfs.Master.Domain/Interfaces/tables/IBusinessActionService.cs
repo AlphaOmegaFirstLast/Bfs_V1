@@ -1,16 +1,11 @@
 using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.Master.Contracts;
 
 namespace Bfs.Master.Domain.Interfaces
 {
-    public interface IBusinessActionService
+    public interface IBusinessActionService: ICrudService<BusinessAction>
     {
-        Task<BusinessAction?> GetAsync(long id);
-        Task<List<BusinessAction>> GetAsync();
-
-        Task<BusinessAction> CreateAsync(BusinessAction contract);
-        Task<BusinessAction?> UpdateAsync(BusinessAction contract);
-        Task DeleteAsync(long id);
         Task<BusinessAction> UploadAsync(BusinessAction contract);
 
         Task<QueryResponse<BusinessActionListItem>> ListAsync(QueryRequest<BusinessActionListFilter> contractRequest);
@@ -19,3 +14,4 @@ namespace Bfs.Master.Domain.Interfaces
         //Template_End_Code_[DontOverwrite]_1   
     }
 }
+

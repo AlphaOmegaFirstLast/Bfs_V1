@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bfs.Master.Data.Migrations
 {
     [DbContext(typeof(MasterDbContext))]
-    partial class MasterDbContextModelSnapshot : ModelSnapshot
+    partial class XXXXXMasterDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,34 @@ namespace Bfs.Master.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BackendDataType", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Master.Data.Models.BfsClientEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DbConnection")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BfsClient", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.Master.Data.Models.BfsComponentBusinessActionEntity", b =>
@@ -362,23 +390,11 @@ namespace Bfs.Master.Data.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("ActionTemplate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ActionTypeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("MatchProperty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MatchValues")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -394,9 +410,6 @@ namespace Bfs.Master.Data.Migrations
 
                     b.Property<long>("TenantId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("WriterTypeId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -798,6 +811,39 @@ namespace Bfs.Master.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WriterType", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Master.Data.Models.BfsClientEntity", b =>
+                {
+                    b.OwnsMany("Bfs.Core.ObjectFields.CustomField", "CustomFields", b1 =>
+                        {
+                            b1.Property<long>("BfsClientEntityId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            b1.Property<long?>("CustomFieldDefinitionId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Value")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("BfsClientEntityId", "__synthesizedOrdinal");
+
+                            b1.ToTable("BfsClient");
+
+                            b1.ToJson("CustomFields");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BfsClientEntityId");
+                        });
+
+                    b.Navigation("CustomFields");
                 });
 
             modelBuilder.Entity("Bfs.Master.Data.Models.BfsFieldEntity", b =>

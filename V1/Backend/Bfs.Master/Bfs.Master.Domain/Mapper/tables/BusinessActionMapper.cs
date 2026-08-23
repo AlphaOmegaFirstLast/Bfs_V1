@@ -12,11 +12,15 @@ namespace Bfs.Master.Domain.Mapper
             {
                IsDeleted= entity.IsDeleted,
 Id= entity.Id,
+ShortName= entity.ShortName,
+MatchProperty= entity.MatchProperty,
+MatchValues= entity.MatchValues,
+ActionTemplate= entity.ActionTemplate,
 Name= entity.Name,
 Notes= entity.Notes,
-ShortName= entity.ShortName,
 
                ActionTypeId= entity.ActionTypeId,
+WriterTypeId= entity.WriterTypeId,
 
             };
 
@@ -39,13 +43,18 @@ ShortName= entity.ShortName,
 
             BusinessActionEntity.IsDeleted= contract.IsDeleted;
 BusinessActionEntity.Id= contract.Id;
+BusinessActionEntity.ShortName= contract.ShortName;
+BusinessActionEntity.MatchProperty= contract.MatchProperty;
+BusinessActionEntity.MatchValues= contract.MatchValues;
+BusinessActionEntity.ActionTemplate= contract.ActionTemplate;
 BusinessActionEntity.Name= contract.Name;
 BusinessActionEntity.Notes= contract.Notes;
-BusinessActionEntity.ShortName= contract.ShortName;
 
             BusinessActionEntity.ActionTypeId= contract.ActionTypeId;
+BusinessActionEntity.WriterTypeId= contract.WriterTypeId;
 
             return BusinessActionEntity;
         }     
     }
 }
+

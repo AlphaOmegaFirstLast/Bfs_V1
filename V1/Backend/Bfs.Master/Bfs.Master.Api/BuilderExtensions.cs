@@ -120,7 +120,7 @@ public static class BuilderExtensions
             builder.Services.AddDbContext<MasterDbContext>(options => options.UseSqlServer(settings.DbConnections.MasterConnection,
             sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
             );
-            //builder.Services.AddDbContext<MasterDbContext>(options => options.UseSqlServer(settings.DbConnections.TestTenantConnection,
+            //builder.Services.AddDbContext<MasterDbContext>(options => options.UseSqlServer(settings.DbConnections.MigrationConnection,
             //sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null))
             //);
         }

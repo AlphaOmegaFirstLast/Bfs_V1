@@ -19,10 +19,14 @@ namespace Bfs.Master.Data.Configuration
 
         	//   builder.Property(e => e.IsDeleted).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.ShortName).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.MatchProperty).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.MatchValues).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.ActionTemplate).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.ShortName).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }
 }
+

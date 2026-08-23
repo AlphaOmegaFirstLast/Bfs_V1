@@ -18,3 +18,4 @@ namespace Bfs.Master.Data.Repositories
         //Template_End_DontOverwrite_1
     }
 }
+

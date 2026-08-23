@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="XXMigrations\20260401123248_init.Designer.txt" />
+    <Compile Include="XXMigrations\20260401123248_init.txt" />
+    <Compile Include="XXMigrations\MasterDbContextModelSnapshot.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.9" />

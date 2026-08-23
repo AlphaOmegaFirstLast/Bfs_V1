@@ -61,7 +61,7 @@ _fieldList.Add(new QueryField() {ComponentName = "ResourceRule", FieldName = "Ro
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BestFit_V5.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BestFit_V6.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false});
 
             //autoCompletes
 
@@ -75,7 +75,7 @@ _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Na
            sql.AppendLine(" From athResourceRule ");
 
            sql.AppendLine($"   Left Join athRole on athResourceRule.RoleId = athRole.Id");
-sql.AppendLine($"   Left Join BestFit_V5.dbo.BfsComponent on athResourceRule.BfsComponentId = BestFit_V5.dbo.BfsComponent.Id");
+sql.AppendLine($"   Left Join BestFit_V6.dbo.BfsComponent on athResourceRule.BfsComponentId = BestFit_V6.dbo.BfsComponent.Id");
 
            return sql.ToString();
         }

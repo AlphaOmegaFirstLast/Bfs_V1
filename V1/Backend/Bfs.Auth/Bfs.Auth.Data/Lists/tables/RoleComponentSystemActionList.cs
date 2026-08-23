@@ -53,8 +53,8 @@ _fieldList.Add(new QueryField() {ComponentName = "RoleComponentSystemAction", Fi
 _fieldList.Add(new QueryField() {ComponentName = "RoleComponentSystemAction", FieldName = "RoleId", DbName = "athRoleComponentSystemAction.RoleId", QueryName = "RoleComponentSystemAction_RoleId", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BestFit_V5.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "Name", DbName = "BestFit_V5.dbo.SystemAction.Name", QueryName = "SystemActionName", IsAggregare = false});
+            _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BestFit_V6.dbo.BfsComponent.Name", QueryName = "BfsComponentName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "Name", DbName = "BestFit_V6.dbo.SystemAction.Name", QueryName = "SystemActionName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbName = "athRole.Name", QueryName = "RoleName", IsAggregare = false});
 
             //autoCompletes
@@ -68,8 +68,8 @@ _fieldList.Add(new QueryField() {ComponentName = "Role", FieldName = "Name", DbN
            var sql = new StringBuilder();  
            sql.AppendLine(" From athRoleComponentSystemAction ");
 
-           sql.AppendLine($"   Left Join BestFit_V5.dbo.BfsComponent on athRoleComponentSystemAction.BfsComponentId = BestFit_V5.dbo.BfsComponent.Id");
-sql.AppendLine($"   Left Join BestFit_V5.dbo.SystemAction on athRoleComponentSystemAction.SystemActionId = BestFit_V5.dbo.SystemAction.Id");
+           sql.AppendLine($"   Left Join BestFit_V6.dbo.BfsComponent on athRoleComponentSystemAction.BfsComponentId = BestFit_V6.dbo.BfsComponent.Id");
+sql.AppendLine($"   Left Join BestFit_V6.dbo.SystemAction on athRoleComponentSystemAction.SystemActionId = BestFit_V6.dbo.SystemAction.Id");
 sql.AppendLine($"   Left Join athRole on athRoleComponentSystemAction.RoleId = athRole.Id");
 
            return sql.ToString();

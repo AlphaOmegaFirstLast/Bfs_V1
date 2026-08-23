@@ -8,3 +8,4 @@ namespace Bfs.Master.Data.Interfaces
         Task<QueryResponse<BusinessActionListItem>> GetAsync(QueryRequest<BusinessActionListFilter> request);
     }
 }
+
