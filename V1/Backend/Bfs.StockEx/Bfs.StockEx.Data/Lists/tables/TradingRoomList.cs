@@ -49,8 +49,7 @@ namespace Bfs.StockEx.Data.Lists
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Id", DbName = "stkxTradingRoom.Id", QueryName = "Id", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Name", DbName = "stkxTradingRoom.Name", QueryName = "Name", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Broker", DbName = "stkxTradingRoom.Broker", QueryName = "Broker", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "StockShare", DbName = "stkxTradingRoom.StockShare", QueryName = "StockShare", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Notes", DbName = "stkxTradingRoom.Notes", QueryName = "Notes", IsAggregare = false});
 
             //lookups
 
@@ -110,4 +109,3 @@ _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Sto
        }       
     }
 }
-

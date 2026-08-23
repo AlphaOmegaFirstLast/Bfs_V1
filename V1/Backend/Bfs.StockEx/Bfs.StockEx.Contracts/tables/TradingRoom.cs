@@ -18,7 +18,10 @@ namespace Bfs.StockEx.Contracts
         /// TradingRoom Name.
         ///</Summary>
         public string Name {get; set;} = string.Empty ;
+///<Summary>
+        /// TradingRoom Notes.
+        ///</Summary>
+        public string Notes {get; set;} = string.Empty ;
 
     }
 }
-

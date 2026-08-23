@@ -11,4 +11,3 @@ namespace Bfs.StockEx.Data
 
     }
 }
-

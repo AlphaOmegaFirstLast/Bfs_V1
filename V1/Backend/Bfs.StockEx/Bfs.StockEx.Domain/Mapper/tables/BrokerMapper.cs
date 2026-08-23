@@ -10,10 +10,12 @@ namespace Bfs.StockEx.Domain.Mapper
         {
             var contract = new Broker()
             {
-               Id= entity.Id,
-IsDeleted= entity.IsDeleted,
-Code= entity.Code,
+               IsDeleted= entity.IsDeleted,
+Id= entity.Id,
 Name= entity.Name,
+Notes= entity.Notes,
+Code= entity.Code,
+Email= entity.Email,
 
                TradingRoomId= entity.TradingRoomId,
 
@@ -36,10 +38,12 @@ Name= entity.Name,
         {
             var BrokerEntity = entity ?? new();
 
-            BrokerEntity.Id= contract.Id;
-BrokerEntity.IsDeleted= contract.IsDeleted;
-BrokerEntity.Code= contract.Code;
+            BrokerEntity.IsDeleted= contract.IsDeleted;
+BrokerEntity.Id= contract.Id;
 BrokerEntity.Name= contract.Name;
+BrokerEntity.Notes= contract.Notes;
+BrokerEntity.Code= contract.Code;
+BrokerEntity.Email= contract.Email;
 
             BrokerEntity.TradingRoomId= contract.TradingRoomId;
 
@@ -47,3 +51,4 @@ BrokerEntity.Name= contract.Name;
         }     
     }
 }
+

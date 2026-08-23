@@ -7,21 +7,29 @@ namespace Bfs.StockEx.Contracts
     public class Broker : IIdentifiable 
     {
         ///<Summary>
-        /// Broker Id.
-        ///</Summary>
-        public long Id {get; set;} = 0 ;
-///<Summary>
         /// Broker IsDeleted.
         ///</Summary>
         public bool IsDeleted {get; set;} = false ;
+///<Summary>
+        /// Broker ID.
+        ///</Summary>
+        public long Id {get; set;} = 0 ;
+///<Summary>
+        /// Broker Name.
+        ///</Summary>
+        public string Name {get; set;} = string.Empty ;
+///<Summary>
+        /// Broker Notes.
+        ///</Summary>
+        public string Notes {get; set;} = string.Empty ;
 ///<Summary>
         /// Broker Code.
         ///</Summary>
         public string Code {get; set;} = string.Empty ;
 ///<Summary>
-        /// Broker Name.
+        /// Broker Email.
         ///</Summary>
-        public string Name {get; set;} = string.Empty ;
+        public string Email {get; set;} = string.Empty ;
 
         ///<Summary>
         /// Broker Trading Room.

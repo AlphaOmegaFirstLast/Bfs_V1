@@ -8,4 +8,3 @@ namespace Bfs.StockEx.Data.Interfaces
         Task<QueryResponse<TradingRoomListItem>> GetAsync(QueryRequest<TradingRoomListFilter> request);
     }
 }
-

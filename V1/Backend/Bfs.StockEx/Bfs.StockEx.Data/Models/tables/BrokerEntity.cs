@@ -10,10 +10,12 @@ namespace Bfs.StockEx.Data.Models
     {
        public long TenantId { get; set; }
 
-        public long Id {get; set;} = 0 ;
-public bool IsDeleted {get; set;} = false ;
-public string Code {get; set;} = string.Empty ;
+        public bool IsDeleted {get; set;} = false ;
+public long Id {get; set;} = 0 ;
 public string Name {get; set;} = string.Empty ;
+public string Notes {get; set;} = string.Empty ;
+public string Code {get; set;} = string.Empty ;
+public string Email {get; set;} = string.Empty ;
 
         public long TradingRoomId {get; set;} = 0 ;
 

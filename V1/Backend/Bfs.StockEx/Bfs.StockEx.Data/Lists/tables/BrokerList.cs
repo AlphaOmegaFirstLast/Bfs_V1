@@ -48,9 +48,10 @@ namespace Bfs.StockEx.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Id", DbName = "stkxBroker.Id", QueryName = "Id", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "IsDeleted", DbName = "stkxBroker.IsDeleted", QueryName = "IsDeleted", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", DbName = "stkxBroker.Name", QueryName = "Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Notes", DbName = "stkxBroker.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Code", DbName = "stkxBroker.Code", QueryName = "Code", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", DbName = "stkx(Broker.FirstName + ' ' + Broker.LastName) ", QueryName = "Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Email", DbName = "stkxBroker.Email", QueryName = "Email", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "TradingRoomId", DbName = "stkxBroker.TradingRoomId", QueryName = "TradingRoomId", IsAggregare = false});
 
             //lookups
@@ -80,15 +81,15 @@ _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "TradingR
                          var filter = request.Filter;
             if (filter != null)
             {
-
-                if (!string.IsNullOrEmpty(filter.Code))
+            if ((filter.Id.HasValue) && (filter.Id>0))
                 {
-                    sql.AppendLine("stkxBroker.Code like '%'+@Code+'%' ");
-                    parameters.Add("@Code", filter.Code);
+                    sql.AppendLine("stkxBroker.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
                 }
-if (!string.IsNullOrEmpty(filter.Name))
+
+                if (!string.IsNullOrEmpty(filter.Name))
                 {
-                    sql.AppendLine("stkx(Broker.FirstName + ' ' + Broker.LastName)  like '%'+@Name+'%' ");
+                    sql.AppendLine("stkxBroker.Name like '%'+@Name+'%' ");
                     parameters.Add("@Name", filter.Name);
                 }
 

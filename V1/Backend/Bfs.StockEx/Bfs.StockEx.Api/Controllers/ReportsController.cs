@@ -32,6 +32,38 @@ public class ReportsController
         return TypedResults.Ok(result);
     }
 
+    [HttpPost("PortfolioCompare")]
+    [CustomAuthorize("method=q.portfolioCompare")]
+    public async Task<Results<Ok<QueryResponse<PortfolioCompareItem>>, BadRequest<ProblemDetails>>> PortfolioCompare([FromBody] QueryRequest<PortfolioCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.PortfolioCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
+    [HttpPost("PortfolioAggregateCompare")]
+    [CustomAuthorize("method=q.portfolioAggregateCompare")]
+    public async Task<Results<Ok<QueryResponse<PortfolioAggregateCompareItem>>, BadRequest<ProblemDetails>>> PortfolioAggregateCompare([FromBody] QueryRequest<PortfolioAggregateCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.PortfolioAggregateCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
+    [HttpPost("PortfolioCashTransactionCompare")]
+    [CustomAuthorize("method=q.portfolioCashTransactionCompare")]
+    public async Task<Results<Ok<QueryResponse<PortfolioCashTransactionCompareItem>>, BadRequest<ProblemDetails>>> PortfolioCashTransactionCompare([FromBody] QueryRequest<PortfolioCashTransactionCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.PortfolioCashTransactionCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
+    [HttpPost("PortfolioCashTransactionAggregateCompare")]
+    [CustomAuthorize("method=q.portfolioCashTransactionAggregateCompare")]
+    public async Task<Results<Ok<QueryResponse<PortfolioCashTransactionAggregateCompareItem>>, BadRequest<ProblemDetails>>> PortfolioCashTransactionAggregateCompare([FromBody] QueryRequest<PortfolioCashTransactionAggregateCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.PortfolioCashTransactionAggregateCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
 //Template_Component_AddControllerEntry
 }
 

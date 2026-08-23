@@ -14,4 +14,3 @@ namespace Bfs.StockEx.Domain.Interfaces
         //Template_End_Code_[DontOverwrite]_1   
     }
 }
-

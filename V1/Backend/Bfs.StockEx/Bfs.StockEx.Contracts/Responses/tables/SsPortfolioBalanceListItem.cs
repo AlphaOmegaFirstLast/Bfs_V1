@@ -1,0 +1,18 @@
+using Bfs.Core.ObjectFields;
+
+namespace Bfs.StockEx.Contracts
+{
+    public class SsPortfolioBalanceListItem
+    {      
+        public string? Id { get; set; }
+public string? Name { get; set; }
+public string? Notes { get; set; }
+public string? SsPortfolioId { get; set; }
+public string? Balance { get; set; }
+
+        public string? SsPortfolioName { get; set; }
+
+//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
+   }
+}
+

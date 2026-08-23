@@ -5,9 +5,10 @@ namespace Bfs.StockEx.Data
     public class BrokerListItem
     {      
         public string? Id { get; set; }
-public string? IsDeleted { get; set; }
-public string? Code { get; set; }
 public string? Name { get; set; }
+public string? Notes { get; set; }
+public string? Code { get; set; }
+public string? Email { get; set; }
 public string? TradingRoomId { get; set; }
 
         public string? TradingRoomName { get; set; }

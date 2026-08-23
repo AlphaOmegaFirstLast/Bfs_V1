@@ -16,6 +16,25 @@ public class OperationsService : IOperationsService
         _unitOfwork = unitOfwork;       
     }
 
-//Template_Field_ChildrenMatrix_AddServiceEntry    
+    public async Task<SspTransaction?> RolloutTransactionAsync(SspTransaction contract)
+    {
+        var entity = contract.ToEntity();
+        var newEntity = await _unitOfwork.RolloutTransactionAsync(entity)
+            .ConfigureAwait(false);
+        var result = await _unitOfwork.SspTransactionRepo.GetAsync(newEntity.Id)
+            .ConfigureAwait(false);
+        return result?.ToContract();
+    }
+
+    public async Task<CashTransaction?> RolloutTransactionAsync(CashTransaction contract)
+    {
+        var entity = contract.ToEntity();
+        var newEntity = await _unitOfwork.RolloutTransactionAsync(entity)
+            .ConfigureAwait(false);
+        var result = await _unitOfwork.CashTransactionRepo.GetAsync(newEntity.Id)
+            .ConfigureAwait(false);
+        return result?.ToContract();
+    }
+    //Template_Field_ChildrenMatrix_AddServiceEntry    
 }
 

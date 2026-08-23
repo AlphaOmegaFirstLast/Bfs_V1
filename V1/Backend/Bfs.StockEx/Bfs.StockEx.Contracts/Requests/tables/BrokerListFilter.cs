@@ -5,9 +5,9 @@ namespace Bfs.StockEx.Contracts
 {
     public class BrokerListFilter
     {
+        public long? Id { get; set; }
 
-        public string? Code { get; set; }
-public string? Name { get; set; }
+        public string? Name { get; set; }
 
         public long? TradingRoomId { get; set; }
 
