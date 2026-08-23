@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "None",
+    "notes": "No Action is called by the FrontEnd"
+  },
+  {
+    "id": 2,
+    "name": "FrontendLink",
+    "notes": "Frontend displays a Link. User clicks the link (url) and gets redirected to another screen|page(url)"
+  },
+  {
+    "id": 3,
+    "name": "FrontendFunction",
+    "notes": "Frontend shows a label|button. when user click the button a Function is executed."
+  }
+]

@@ -1,31 +1,39 @@
-INSERT INTO [BestFit_V3].[dbo].ActionLocation
+INSERT INTO [BestFit_V6].[dbo].ActionLocation
 select *
-from [BestFit_v2].[dbo].ActionLocation
+from [BestFit_V5].[dbo].ActionLocation
 
-INSERT INTO [BestFit_V3].[dbo].AggregateType
+INSERT INTO [BestFit_V6].[dbo].ActionType
 select *
-from [BestFit_v2].[dbo].AggregateType
+from [BestFit_V5].[dbo].ActionType
 
-INSERT INTO [BestFit_V3].[dbo].BackendDataType
+INSERT INTO [BestFit_V6].[dbo].AggregateType
 select *
-from [BestFit_v2].[dbo].BackendDataType
+from [BestFit_V5].[dbo].AggregateType
 
-INSERT INTO [BestFit_V3].[dbo].ChartElement
+INSERT INTO [BestFit_V6].[dbo].BackendDataType
 select *
-from [BestFit_v2].[dbo].ChartElement
+from [BestFit_V5].[dbo].BackendDataType
 
-INSERT INTO [BestFit_V3].[dbo].DataType
+INSERT INTO [BestFit_V6].[dbo].ChartElement
 select *
-from [BestFit_v2].[dbo].DataType
+from [BestFit_V5].[dbo].ChartElement
 
-INSERT INTO [BestFit_V3].[dbo].FilterType
+INSERT INTO [BestFit_V6].[dbo].DataType
 select *
-from [BestFit_v2].[dbo].FilterType
+from [BestFit_V5].[dbo].DataType
 
-INSERT INTO [BestFit_V3].[dbo].FormControlType
+INSERT INTO [BestFit_V6].[dbo].FilterType
 select *
-from [BestFit_v2].[dbo].FormControlType
+from [BestFit_V5].[dbo].FilterType
 
-INSERT INTO [BestFit_V3].[dbo].SystemTemplate
+INSERT INTO [BestFit_V6].[dbo].FormControlType
 select *
-from [BestFit_v2].[dbo].SystemTemplate
+from [BestFit_V5].[dbo].FormControlType
+
+INSERT INTO [BestFit_V6].[dbo].SystemTemplate
+select *
+from [BestFit_V5].[dbo].SystemTemplate
+
+INSERT INTO [BestFit_V6].[dbo].WriterType
+select *
+from [BestFit_V5].[dbo].WriterType

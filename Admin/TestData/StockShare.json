@@ -1,0 +1,128 @@
+[
+  {
+    "id": 816930534896181,
+    "name": "Commercial International Bank (CIB)",
+    "notes": "",
+    "tradingRoomId": 816928711390870,
+    "currencyId": 816930258453823,
+    "tradingRoomName": "EGX Main Trading Floor - Cairo",
+    "currencyName": "EGP"
+  },
+  {
+    "id": 816930574200649,
+    "name": "Telecom Egypt",
+    "notes": "",
+    "tradingRoomId": 816928711390870,
+    "currencyId": 816930258453823,
+    "tradingRoomName": "EGX Main Trading Floor - Cairo",
+    "currencyName": "EGP"
+  },
+  {
+    "id": 820343479916661,
+    "name": "Ezz Steel",
+    "notes": "",
+    "tradingRoomId": 816928711390870,
+    "currencyId": 816930258453823,
+    "tradingRoomName": "EGX Main Trading Floor - Cairo",
+    "currencyName": "EGP"
+  },
+  {
+    "id": 820343534635161,
+    "name": "EFG Hermes",
+    "notes": "",
+    "tradingRoomId": 816928711390870,
+    "currencyId": 816930258453823,
+    "tradingRoomName": "EGX Main Trading Floor - Cairo",
+    "currencyName": "EGP"
+  },
+  {
+    "id": 820343574368847,
+    "name": "Talaat Moustafa Group (TMG)",
+    "notes": "",
+    "tradingRoomId": 816928711390870,
+    "currencyId": 816930258453823,
+    "tradingRoomName": "EGX Main Trading Floor - Cairo",
+    "currencyName": "EGP"
+  },
+  {
+    "id": 820343643713223,
+    "name": "Abu Qir Fertilizers",
+    "notes": "",
+    "tradingRoomId": 816928803256655,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Alexandria Trading Floor",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820344292753892,
+    "name": "Cleopatra Hospitals Group",
+    "notes": "",
+    "tradingRoomId": 816928803256655,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Alexandria Trading Floor",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820344339919294,
+    "name": "Fawry for Banking Technology",
+    "notes": "",
+    "tradingRoomId": 816928803256655,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Alexandria Trading Floor",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820344466226896,
+    "name": "Palm Hills Developments",
+    "notes": "",
+    "tradingRoomId": 816928803256655,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Alexandria Trading Floor",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820344525549190,
+    "name": "Juhayna Food Industries",
+    "notes": "",
+    "tradingRoomId": 816928803256655,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Alexandria Trading Floor",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820344577998473,
+    "name": "Orascom Construction",
+    "notes": "",
+    "tradingRoomId": 816928803256655,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Alexandria Trading Floor",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820345088162697,
+    "name": "Egypt Kuwait Holding (EKH)",
+    "notes": "",
+    "tradingRoomId": 816928835833627,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Operations & Monitoring Room",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820345135745101,
+    "name": "Oriental Weavers",
+    "notes": "",
+    "tradingRoomId": 816928835833627,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Operations & Monitoring Room",
+    "currencyName": "USD"
+  },
+  {
+    "id": 820345183402119,
+    "name": "QNB Alahli",
+    "notes": "",
+    "tradingRoomId": 816928835833627,
+    "currencyId": 816930301669102,
+    "tradingRoomName": "EGX Operations & Monitoring Room",
+    "currencyName": "USD"
+  }
+]

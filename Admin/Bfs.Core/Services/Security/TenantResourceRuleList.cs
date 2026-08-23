@@ -58,7 +58,7 @@ namespace Bfs.Core.Services.Security
             sql.AppendLine(" From athResourceRule ");
 
             sql.AppendLine($"   Left Join athRole on athResourceRule.RoleId = athRole.Id");
-            sql.AppendLine($"   Left Join BestFit_V5.dbo.BfsComponent on athResourceRule.BfsComponentId = BestFit_V5.dbo.BfsComponent.Id");
+            sql.AppendLine($"   Left Join BestFit_V6.dbo.BfsComponent on athResourceRule.BfsComponentId = BestFit_V6.dbo.BfsComponent.Id");
 
             return sql.ToString();
         }

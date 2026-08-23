@@ -1,0 +1,99 @@
+
+CashTransactionType (Basic) : {PortfolioValueEffectType, StockShareQuantityEffectType}
+
+public enum EffectType (seed)
+{
+    None = 0,             
+    Add = 1,
+    Sub = 2,
+    Set = 3
+}
+
+public void CashTransactionAction(object TransactioData)
+{
+    SsPortfolioTransaction.Add(TransactioData);
+    var SsPortfolioBalance = PortfolioBalances.GetPortfolio(TransactioData.portfolioId, TransactioData.StockShareId);
+	
+	switch (TransactioData.ValueEffectType)
+    {
+        case ValueEffectType.Add:
+			SsPortfolioBalance.Value = SsPortfolioBalance.Value + TransactioData.value ;
+            break;
+			
+        case ValueEffectType.Buy:
+			SsPortfolioBalance.Value = SsPortfolioBalance.Value - TransactioData.value ;
+            break;
+			
+        case ValueEffectType.Set:
+			SsPortfolioBalance.Value = TransactioData.value ;
+            break;		
+    }
+	
+	switch (TransactioData.QuantityEffectType)
+    {
+        case QuantityEffectType.Add:
+	        StockShareBalance.Qty = StockShareBalance.Qty + TransactioData.qty ;
+            break;
+			
+        case QuantityEffectType.Buy:
+	        StockShareBalance.Qty = StockShareBalance.Qty - TransactioData.qty ;
+            break;
+			
+        case ValueEffectType.Set:
+	        StockShareBalance.Qty = TransactioData.qty ;
+            break;		
+    }
+}
+================================================================================================
+public enum CashTransactionType  (Seed)
+{
+    None = 0,             
+    SellShare = 1,
+    BuyShare = 2,
+    Deposit = 3,
+    Withrawl = 4,
+    Coupon = 5    
+}
+------------------------------------------------------------------------------------------------
+CashTransactionType  (Seed)
+public void ApplyCashTransactionType(CashTransactionType inputType, object TransactioData)
+{
+    switch (inputType)
+    {
+        case CashTransactionType.BuyShare:
+            BuyAction(TransactioData);
+            break;
+			
+        case CashTransactionType.SellShare:
+            SellAction(TransactioData);
+            break;
+			
+        case CashTransactionType.Deposit:
+            DepositeAction(TransactioData);
+            break;		
+			
+        default:
+            DefaultAction();
+            break;
+
+    }
+}
+
+public void BuyAction(object TransactioData)
+{
+    SsPortfolioTransaction.Add(TransactioData);
+	
+    var SsPortfolioBalance = PortfolioBalances.GetPortfolio(TransactioData.portfolioId, TransactioData.StockShareId);
+    SsPortfolioBalance.Value = SsPortfolioBalance.Value - TransactioData.value ;
+	
+	StockShareBalance.Qty = StockShareBalance.Qty + TransactioData.qty ;
+}
+
+
+public void DepositeAction(object TransactioData)
+{
+    SsPortfolioTransaction.Add(TransactioData);
+	
+    var SsPortfolioBalance = PortfolioBalances.GetPortfolio(TransactioData.portfolioId, TransactioData.StockShareId);
+    SsPortfolioBalance.Value = SsPortfolioBalance.Value + TransactioData.value ;
+}

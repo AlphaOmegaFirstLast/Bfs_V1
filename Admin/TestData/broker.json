@@ -1,0 +1,29 @@
+[
+  {
+    "id": 816929007275748,
+    "name": "EFG Hermes Brokerage",
+    "notes": "",
+    "code": "1023",
+    "email": "efg.hermes@egx.com",
+    "tradingRoomId": 816928711390870,
+    "tradingRoomName": "EGX Main Trading Floor - Cairo"
+  },
+  {
+    "id": 816929047928035,
+    "name": "Beltone Securities",
+    "notes": "",
+    "code": "2045",
+    "email": "beltone.sec@egx.com",
+    "tradingRoomId": 816928803256655,
+    "tradingRoomName": "EGX Alexandria Trading Floor"
+  },
+  {
+    "id": 816929073582510,
+    "name": "Pharos Securities",
+    "notes": "",
+    "code": "3178",
+    "email": "pharos.sec@egx.com",
+    "tradingRoomId": 816928803256655,
+    "tradingRoomName": "EGX Alexandria Trading Floor"
+  }
+]

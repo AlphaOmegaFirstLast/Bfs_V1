@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "None",
+    "notes": ""
+  },
+  {
+    "id": 2,
+    "name": "User Input",
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "name": "System Trigger",
+    "notes": ""
+  },
+  {
+    "id": 4,
+    "name": "Scheduled",
+    "notes": ""
+  }
+]

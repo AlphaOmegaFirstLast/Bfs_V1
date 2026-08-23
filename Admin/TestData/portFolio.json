@@ -1,0 +1,29 @@
+[
+  {
+    "id": 816963407089600,
+    "name": "EGX Portfolio - CIB Investor",
+    "notes": "",
+    "brokerId": 816929007275748,
+    "investorId": 816929463975193,
+    "brokerName": "EFG Hermes Brokerage",
+    "investorName": "Ahmed El‑Sayed"
+  },
+  {
+    "id": 816965891435020,
+    "name": "EGX Portfolio - Retail Investor",
+    "notes": "",
+    "brokerId": 816929047928035,
+    "investorId": 816929463975193,
+    "brokerName": "Beltone Securities",
+    "investorName": "Ahmed El‑Sayed"
+  },
+  {
+    "id": 820306892149038,
+    "name": "EGX Portfolio - Institutional",
+    "notes": "",
+    "brokerId": 816929047928035,
+    "investorId": 816929509196372,
+    "brokerName": "Beltone Securities",
+    "investorName": "Mona Khaled"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "None",
+    "notes": ""
+  },
+  {
+    "id": 2,
+    "name": "Cash",
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "name": "StockShare",
+    "notes": ""
+  }
+]
