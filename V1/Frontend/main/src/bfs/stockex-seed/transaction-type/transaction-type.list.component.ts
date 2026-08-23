@@ -16,7 +16,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn,IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
@@ -27,12 +27,12 @@ import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/mas
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { StockExService } from '@bfs/stockex-main/stockex.service';
 
-import { type ITradingRoomRepCompareWithLookup, type ITradingRoomRepCompareRequest, type ITradingRoomRepCompareFilter } from './trading-room-rep-compare.shared';
-import { getTradingRoomRepCompareActions,  initTradingRoomRepCompareRequest } from './trading-room-rep-compare.shared';
-import { TradingRoomRepCompareFilterComponent } from './trading-room-rep-compare.filter.component'; 
+import { type ITransactionTypeWithLookup, type ITransactionTypeRequest, type ITransactionTypeFilter } from './transaction-type.shared';
+import { getTransactionTypeActions,  initTransactionTypeRequest } from './transaction-type.shared';
+import { TransactionTypeFilterComponent } from './transaction-type.filter.component'; 
 
 @Component({
-    selector: 'trading-room-rep-compare',     
+    selector: 'transaction-type-list',     
     imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
                NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
                NgxEchartsDirective],
@@ -40,29 +40,43 @@ import { TradingRoomRepCompareFilterComponent } from './trading-room-rep-compare
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class TradingRoomRepCompareComponent         
+export class TransactionTypeListComponent         
 
-    extends BaseReportComponent<ITradingRoomRepCompareFilter, ITradingRoomRepCompareWithLookup> {
+    extends BaseReportComponent<ITransactionTypeFilter, ITransactionTypeWithLookup> {
     override apiService: StockExService = inject(StockExService);
-    override queryRequest = {} as ITradingRoomRepCompareRequest;
-    override exportRequest = {} as ITradingRoomRepCompareRequest;
-    override downloadFileName: string = "Trading Room Reports";
+    override queryRequest = {} as ITransactionTypeRequest;
+    override exportRequest = {} as ITransactionTypeRequest;
+    override downloadFileName: string = "Transaction Types";
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
         super(modalService, router, excelService, activatedRoute);
 
-        this.isButton.addNew = false;
-        this.getApiUrl = '/reports/TradingRoomRepCompare';
+        this.isButton.chart = false;
+        this.addNewRecordLink = { route: "/stkx/transaction-type/add/0", displayText: "Add New Transaction Types" };
+        this.getApiUrl = '/TransactionType/List';
+        this.uploadApiUrl = '/TransactionType/upload';
 
-        this.filterComponent = TradingRoomRepCompareFilterComponent;
-        this.queryRequest = initTradingRoomRepCompareRequest();
+        this.filterComponent = TransactionTypeFilterComponent;
+        this.queryRequest = initTransactionTypeRequest();
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IColumns): any {
-        const value = record[column.fieldName as keyof IEntity];
+        const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
+            case 'effectTypeId':
+                return record['effectTypeName']?.toString();
+case 'stockEntityTypeId':
+                return record['stockEntityTypeName']?.toString();
+case 'calculationMethodId':
+                return record['calculationMethodName']?.toString();
+case 'sourceTypeId':
+                return record['sourceTypeName']?.toString();
+case 'stockFieldTypeId':
+                return record['stockFieldTypeName']?.toString();
+case 'nextTransactionTypeId':
+                return record['nextTransactionTypeName']?.toString();
 
             default:
                 return value;
@@ -71,8 +85,8 @@ export class TradingRoomRepCompareComponent
     }
     //---------------------------------------------------------
 
-   override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getTradingRoomRepCompareActions(this,record);
+    override getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = getTransactionTypeActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -84,7 +98,7 @@ export class TradingRoomRepCompareComponent
     }
     //---------------------------------------------------------
     override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getTradingRoomRepCompareActions(this, record);
+        let actions = getTransactionTypeActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
@@ -95,37 +109,6 @@ export class TradingRoomRepCompareComponent
         return links;
     }
 //--------------------------------------------------------------
-
-override getChart(records: ITradingRoomRepCompareWithLookup[]): EChartsOption {
-        // return this.getDemoChart();
-        // reorder records in reverse order to show same order of table records.
-        let reversedRecords = records.reverse();
-        let baseChart = this.getBaseChart();
-        baseChart.yAxis = {
-
-            type: 'category',
-            axisLine: {
-                lineStyle: {
-                    type: 'dashed', color: getColor('light')
-                }
-            },
-            axisLabel: {
-                show: true, color: getColor('body-color')
-            },
-            splitLine: {
-                lineStyle: {
-                    color: "rgba(133, 141, 152, 0.1)", type: 'dashed'
-                }
-            }
-        };
-
-        baseChart.series = [     
-
-        ]
-        ;
-
-        return baseChart;
-    }
 
 }
 

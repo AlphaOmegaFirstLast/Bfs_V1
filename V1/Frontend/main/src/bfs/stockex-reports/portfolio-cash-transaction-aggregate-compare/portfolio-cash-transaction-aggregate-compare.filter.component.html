@@ -8,10 +8,10 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>ID</label>
+        <label>Name</label>
       </div>
       <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.TradingRoom_Id" value="{{result.TradingRoom_Id}}" placeholder="ID" #ctrl="ngModel"/>
+      <input class="form-control" type="text" [(ngModel)]="result.SsPortfolio_Name" value="{{result.SsPortfolio_Name}}" placeholder="Name" #ctrl="ngModel"/>
       </div>
     </div>
   </div>
@@ -19,10 +19,11 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Name</label>
+        <label>Value</label>
       </div>
       <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.TradingRoom_Name" value="{{result.TradingRoom_Name}}" placeholder="Name" #ctrl="ngModel"/>
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="sumValueFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="sumValueTo">
       </div>
     </div>
   </div>
@@ -31,4 +32,3 @@
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
     <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
   </div>
-

@@ -1,0 +1,119 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Effect Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.EffectTypeId" name="effectTypeId">
+          <ng-container *ngFor="let option of EffectTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Applicable To Entity</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.StockEntityTypeId" name="stockEntityTypeId">
+          <ng-container *ngFor="let option of StockEntityTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Calculation Method</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.CalculationMethodId" name="calculationMethodId">
+          <ng-container *ngFor="let option of CalculationMethodOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Source Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.SourceTypeId" name="sourceTypeId">
+          <ng-container *ngFor="let option of SourceTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Applicable To Field</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.StockFieldTypeId" name="stockFieldTypeId">
+          <ng-container *ngFor="let option of StockFieldTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Next Transaction Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.NextTransactionTypeId" name="nextTransactionTypeId">
+          <ng-container *ngFor="let option of NextTransactionTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>
+

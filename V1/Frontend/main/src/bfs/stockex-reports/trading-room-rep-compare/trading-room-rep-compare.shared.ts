@@ -3,14 +3,18 @@ import * as operations from '@bfs/stockex-main/stockex.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const TradingRoomRepCompareColumns = [
-    { fieldName: 'stkxTradingRoom_Name', displayName: 'Name', sortName: 'stkxTradingRoom_Name', width: '50px', isVisible:true },
+    { fieldName: 'tradingRoom_Id', displayName: 'ID', sortName: 'TradingRoom_Id', width: '50px', isVisible:false },
+{ fieldName: 'tradingRoom_Name', displayName: 'Name', sortName: 'TradingRoom_Name', width: '50px', isVisible:true },
+{ fieldName: 'tradingRoom_Notes', displayName: 'Notes', sortName: 'TradingRoom_Notes', width: '50px', isVisible:false },
 
 ];
 
 //---------------------------------------------------------
 
 export interface ITradingRoomRepCompare {
-    stkxTradingRoom_Name?: string;
+    tradingRoom_Id?: string;
+tradingRoom_Name?: string;
+tradingRoom_Notes?: string;
 
 }
 //---------------------------------------------------------
@@ -20,8 +24,9 @@ export interface ITradingRoomRepCompareWithLookup extends ITradingRoomRepCompare
 //---------------------------------------------------------
 export interface ITradingRoomRepCompareFilter {
     [key: string]: any;
+    TradingRoom_Id?: string;
 
-    Name?: string;
+    TradingRoom_Name?: string;
 
 }
 //---------------------------------------------------------
@@ -37,8 +42,9 @@ export function initTradingRoomRepCompareRequest(): ITradingRoomRepCompareReques
         group: '',
         sortOption: {},
         filter: {
+            TradingRoom_Id: undefined ,
 
-            Name: undefined ,
+            TradingRoom_Name: undefined ,
 
             }
     };

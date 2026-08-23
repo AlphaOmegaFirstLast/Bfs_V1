@@ -27,12 +27,12 @@ import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/mas
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { StockExService } from '@bfs/stockex-main/stockex.service';
 
-import { type ITradingRoomRepCompareWithLookup, type ITradingRoomRepCompareRequest, type ITradingRoomRepCompareFilter } from './trading-room-rep-compare.shared';
-import { getTradingRoomRepCompareActions,  initTradingRoomRepCompareRequest } from './trading-room-rep-compare.shared';
-import { TradingRoomRepCompareFilterComponent } from './trading-room-rep-compare.filter.component'; 
+import { type IPortfolioCashTransactionCompareWithLookup, type IPortfolioCashTransactionCompareRequest, type IPortfolioCashTransactionCompareFilter } from './portfolio-cash-transaction-compare.shared';
+import { getPortfolioCashTransactionCompareActions,  initPortfolioCashTransactionCompareRequest } from './portfolio-cash-transaction-compare.shared';
+import { PortfolioCashTransactionCompareFilterComponent } from './portfolio-cash-transaction-compare.filter.component'; 
 
 @Component({
-    selector: 'trading-room-rep-compare',     
+    selector: 'portfolio-cash-transaction-compare',     
     imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
                NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
                NgxEchartsDirective],
@@ -40,13 +40,13 @@ import { TradingRoomRepCompareFilterComponent } from './trading-room-rep-compare
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class TradingRoomRepCompareComponent         
+export class PortfolioCashTransactionCompareComponent         
 
-    extends BaseReportComponent<ITradingRoomRepCompareFilter, ITradingRoomRepCompareWithLookup> {
+    extends BaseReportComponent<IPortfolioCashTransactionCompareFilter, IPortfolioCashTransactionCompareWithLookup> {
     override apiService: StockExService = inject(StockExService);
-    override queryRequest = {} as ITradingRoomRepCompareRequest;
-    override exportRequest = {} as ITradingRoomRepCompareRequest;
-    override downloadFileName: string = "Trading Room Reports";
+    override queryRequest = {} as IPortfolioCashTransactionCompareRequest;
+    override exportRequest = {} as IPortfolioCashTransactionCompareRequest;
+    override downloadFileName: string = "Portfolios Cash Transactions";
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -54,10 +54,10 @@ export class TradingRoomRepCompareComponent
         super(modalService, router, excelService, activatedRoute);
 
         this.isButton.addNew = false;
-        this.getApiUrl = '/reports/TradingRoomRepCompare';
+        this.getApiUrl = '/reports/PortfolioCashTransactionCompare';
 
-        this.filterComponent = TradingRoomRepCompareFilterComponent;
-        this.queryRequest = initTradingRoomRepCompareRequest();
+        this.filterComponent = PortfolioCashTransactionCompareFilterComponent;
+        this.queryRequest = initPortfolioCashTransactionCompareRequest();
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IColumns): any {
@@ -72,7 +72,7 @@ export class TradingRoomRepCompareComponent
     //---------------------------------------------------------
 
    override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getTradingRoomRepCompareActions(this,record);
+        let actions = getPortfolioCashTransactionCompareActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
             && action.actionLocation == 'ListRow'
@@ -84,7 +84,7 @@ export class TradingRoomRepCompareComponent
     }
     //---------------------------------------------------------
     override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getTradingRoomRepCompareActions(this, record);
+        let actions = getPortfolioCashTransactionCompareActions(this, record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'
             && action.actionLocation == 'ListRow'
@@ -96,7 +96,7 @@ export class TradingRoomRepCompareComponent
     }
 //--------------------------------------------------------------
 
-override getChart(records: ITradingRoomRepCompareWithLookup[]): EChartsOption {
+override getChart(records: IPortfolioCashTransactionCompareWithLookup[]): EChartsOption {
         // return this.getDemoChart();
         // reorder records in reverse order to show same order of table records.
         let reversedRecords = records.reverse();
