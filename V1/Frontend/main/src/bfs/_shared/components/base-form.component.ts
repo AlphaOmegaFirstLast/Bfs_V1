@@ -13,6 +13,7 @@ import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } fro
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
 import { AccessService } from '@bfs/_shared/security/access.service';
 import { MasterService } from '@bfs/master-main/master.service';
+import { NavigationService } from '../services/navigation.service';
 //------------------------------------------- Component Specific ------------------------------------------------
 
 @Directive()
@@ -23,10 +24,11 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     public entityDisplayName: string = '';
     public componentName: string = '';
 
-public tokenService!: any;
+    public tokenService!: any;
 
 
     public accessService!: AccessService;
+    public navigationService: NavigationService;
     public masterService!: MasterService;
     public clipboard = inject(ClipboardService);
     public formBuilder = inject(UntypedFormBuilder);
@@ -37,7 +39,7 @@ public tokenService!: any;
     public currentOperation: string = '';
     public parent: any;
     public messages: IUIMessage[] = [];
-    public isLoading: any = {list:false, view:false, save: false, lookups: false, autoComplete: false}; 
+    public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     entity: Entity;
     me: any = this;
     //-----------------------Object Fields Lookups----------------------------------
@@ -48,8 +50,9 @@ public tokenService!: any;
 
     constructor(public activatedRoute: ActivatedRoute) {
 
-        this.accessService = inject(AccessService);
         this.masterService = inject(MasterService);
+        this.accessService = inject(AccessService);
+        this.navigationService = inject(NavigationService);
 
         let entityId = '0';
         this.route = activatedRoute;
@@ -182,7 +185,7 @@ public tokenService!: any;
     // async view() {
     //     const target = this.apiUrl + 'list' ;
     //     const request = { pageSize: 1, filter: { id: this.entity.id } };
-     
+
     //     (await this.apiService.post(target , request)).subscribe({
     //         next: (response: any) => {
     //             this.entity = response.items[0];
@@ -319,6 +322,9 @@ public tokenService!: any;
         this.validationForm.patchValue(this.entity);
     }
     //---------------------------------------------------------
-
+    navigateBack() {
+        this.navigationService.popUrl();
+    }
+    //---------------------------------------------------------
 }
 

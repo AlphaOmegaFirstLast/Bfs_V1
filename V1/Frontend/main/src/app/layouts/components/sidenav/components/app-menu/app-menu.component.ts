@@ -10,6 +10,7 @@ import {menuItems as InspiniaMenuItems} from '@layouts/components/data';
 import {LayoutStoreService} from '@core/services/layout-store.service';
 import {MenuGuardService} from '@bfs/_shared/security/menu-guard.service';
 import {environment} from '@environment/environment'; // Assume this service exists
+import { NavigationService } from '@bfs/_shared/services/navigation.service';
 
 @Component({
     selector: 'app-menu',
@@ -29,6 +30,7 @@ export class AppMenuComponent implements OnInit {
 
     //------------------------------------------------------------
     menuGuardService = inject(MenuGuardService);
+    navigationService = inject(NavigationService);
     menuItems: MenuItemType[] = [];
     //------------------------------------------------------------
     async ngOnInit(): Promise<void> {
@@ -85,6 +87,10 @@ export class AppMenuComponent implements OnInit {
 
             scrollToElement(scrollContainer, scrollContainer.scrollTop + offset, 500);
         }
+    }
+
+    onMenuItemClick(item: MenuItemType): void {
+        this.navigationService.resetUrl();
     }
 
 }

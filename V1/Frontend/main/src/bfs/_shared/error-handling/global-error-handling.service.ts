@@ -17,7 +17,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   //---------------------------------------
   handleError(error: unknown): void {
-    debugger;
+   
     const appError = this.normalizeError(error);
 
     // Always log the error

@@ -31,9 +31,8 @@ const BFS_SYSTEMS_ROUTES: Routes = [
                 path: '',
                 loadChildren: () => import('../bfs/master-main/master.route').then((mod) => mod.Master_ROUTES)
             },
-                {
+    {
         path: '',
-        component: MainLayoutComponent,
         loadChildren: () => import('../bfs/stockex-main/stockex.route').then((mod) => mod.StockEx_ROUTES)
     },
 //Template_System_AddRouteEntry

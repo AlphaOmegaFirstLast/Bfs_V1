@@ -178,10 +178,25 @@ export class HttpService {
       }
       if (errorResponse.error.errors) {  // business validation error
         let inputErrors = errorResponse.error.errors;
-        if (!(inputErrors === null || inputErrors === undefined)){
-           inputErrors = Array.isArray(inputErrors) ? inputErrors : [inputErrors];
+
+        if (typeof inputErrors === 'object' && !Array.isArray(inputErrors)) {
+          const validationMessages: string[] = [];
+          Object.entries(inputErrors).forEach(([key, messages]) => {
+            const list = Array.isArray(messages) ? messages : [messages];
+            list.forEach((msg: any) => {
+              validationMessages.push(`${key}: ${msg}`);
+            });
+          });
+          inputErrors = validationMessages;
+        } else if (!(inputErrors === null || inputErrors === undefined)) {
+          inputErrors = Array.isArray(inputErrors) ? inputErrors : [inputErrors];
         }
-        errorMessage += inputErrors.map((error: any) => ` ${error}`).join(', ');
+
+        if (Array.isArray(inputErrors)) {
+          errorMessage += inputErrors
+            .map((error: any) => ` ${typeof error === 'string' ? error : error.message ?? ''}`)
+            .join('\n');
+        }
       }
     } else if (errorResponse.status === 401) {
       errorMessage = 'Unauthorized access. Please log in again.';

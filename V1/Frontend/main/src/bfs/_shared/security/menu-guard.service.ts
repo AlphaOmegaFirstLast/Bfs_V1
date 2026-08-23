@@ -45,7 +45,8 @@ export class MenuGuardService {
       case 'master':
         appItems = appItems.concat(await this.processItems(currentApp, MasterMenuItems));
         break;
-              case 'stockex':
+
+        case 'stockex':
            appItems = appItems.concat(await this.processItems(currentApp , StockExMenuItems));
         break;
 //Template_System_AddMenuEntry

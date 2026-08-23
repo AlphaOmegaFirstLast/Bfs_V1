@@ -101,6 +101,7 @@ export interface ILookup {
 }
 //------------------------------------------------
 export interface IIdentifiable {
+    [key: string]: any; // Allow additional properties
     id: number;
 }
 //------------------------------------------------

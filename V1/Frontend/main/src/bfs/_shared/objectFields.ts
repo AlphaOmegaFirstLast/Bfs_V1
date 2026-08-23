@@ -37,6 +37,44 @@ export function fieldValidationUntypedFormGroup(formBuilder: FormBuilder): Untyp
     })
 };
 //------------------------------------------------
+export function getFieldValidationHeaders(this: any): string {
+    var result = `<table class="table table-bordered table-sm">
+    
+                <tr><th colspan="7" style="border: 1px solid lightblue;" class="text-center">Field Validation</th></tr>
+                <tr>
+                    <th width="150px">Is Required</th>
+                    <th width="150px">Min Length</th>
+                    <th width="150px">Max Length</th>
+                    <th width="150px">Min Value</th>
+                    <th width="150px">Max Value</th>
+                    <th width="150px">Regex Pattern</th>
+                    <th width="150px">Allowed Values</th>
+                </tr>
+                </table>`;
+    return result;
+}
+//-------------------------------------------------
+export function getFieldValidationData(fieldValidationString: string): string {
+    if (!fieldValidationString) return '';
+    try {
+        const fieldValidation: IFieldValidation = normalizeObjectKeysToLowerFirstLetter(JSON.parse(fieldValidationString) as IFieldValidation);
+        var result = `<table class="table table-bordered table-sm">
+                   <tr>    
+                        <td width="150px"> ${fieldValidation.isRequired ? 'true' : 'false'}</td>
+                        <td width="150px"> ${fieldValidation.minLength}</td>
+                        <td width="150px"> ${fieldValidation.maxLength}</td>
+                        <td width="150px"> ${fieldValidation.minValue}</td>
+                        <td width="150px"> ${fieldValidation.maxValue}</td>
+                        <td width="150px"> ${fieldValidation.regexPattern}</td>
+                        <td width="150px"> ${fieldValidation.allowedValues}</td>
+                    </tr>
+                </table>`;
+        return (result);
+    } catch (e) {
+        return '';
+    }
+}
+//------------------------------------------------
 // Custom validator: check against allowed values
 export function allowedValuesValidator(allowed: string[]) {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -63,7 +101,7 @@ export function getFormControlValidation(sFieldValidation?: string) {
     return validatorsArray;
 }
 //---------------------------------------------------------
-
+// Interface used in List and reports
 export interface IReportInfo {
     parentTable: string;
     isQueryColumn: boolean;
@@ -72,7 +110,22 @@ export interface IReportInfo {
     aggregateTypeId: string,
     chartElementId: string
 }
-//------------------------------------------------
+//---------------------------------------------------------
+function normalizeObjectKeysToLowerFirstLetter<T extends object>(value: T): T {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        return value;
+    }
+
+    const result = {} as Record<string, unknown>;
+    Object.entries(value as Record<string, unknown>).forEach(([key, val]) => {
+        const normalizedKey = key.charAt(0).toLowerCase() + key.slice(1);
+        result[normalizedKey] = val;
+    });
+
+    return result as T;
+}
+//---------------------------------------------------------
+// Fields of an Entity [used in Entity form]
 export function initReportInfo(): IReportInfo {
     return {
         parentTable: '',
@@ -84,9 +137,21 @@ export function initReportInfo(): IReportInfo {
     }
 }
 //-------------------------------------------------
+export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormGroup {
+    return formBuilder.group({
+        parentTable: [''],
+        isQueryColumn: [true],
+        isColumnVisible: [true],
+        isJoinField: [false],
+        aggregateTypeId: ['1'],
+        chartElementId: ['1']
+    })
+};
+//------------------------------------------------
 export function getReportInfoHeaders(this: any): string {
     var result = `<table class="table table-bordered table-sm">
-                <tr><th colspan="6" class="text-center">Report Info</th></tr>
+    
+                <tr><th colspan="6" style="border: 1px solid lightblue;" class="text-center">Report Info</th></tr>
                 <tr>
                     <th width="150px">Parent Table</th>
                     <th width="150px">Is Query Column</th>
@@ -102,15 +167,15 @@ export function getReportInfoHeaders(this: any): string {
 export function getReportInfoData(reportInfoString: string): string {
     if (!reportInfoString) return '';
     try {
-        const reportInfo: IReportInfo = JSON.parse(reportInfoString);
+        const reportInfo: IReportInfo = normalizeObjectKeysToLowerFirstLetter(JSON.parse(reportInfoString) as IReportInfo);
         var result = `<table class="table table-bordered table-sm">
                    <tr>    
-                        <td width="150px"> ${reportInfo.parentTable}</td>
+                        <td width="150px"> ${reportInfo.parentTable??''}</td>
                         <td width="150px"> ${reportInfo.isQueryColumn ? 'true' : 'false'}</td>
                         <td width="150px"> ${reportInfo.isColumnVisible ? 'true' : 'false'}</td>
                         <td width="150px"> ${reportInfo.isJoinField ? 'true' : 'false'}</td>
-                        <td width="150px"> ${reportInfo.aggregateTypeId}</td>
-                        <td width="150px"> ${reportInfo.chartElementId}</td>
+                        <td width="150px"> ${reportInfo.aggregateTypeId??''}</td>
+                        <td width="150px"> ${reportInfo.chartElementId??''}</td>
                     </tr>
                 </table>`;
         return (result);
@@ -118,19 +183,8 @@ export function getReportInfoData(reportInfoString: string): string {
         return '';
     }
 }
-//---------------------------------------------------------
-// Fields of an Entity [used in Entity form]
-export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormGroup {
-    return formBuilder.group({
-        parentTable: [''],
-        isQueryColumn: [true],
-        isColumnVisible: [true],
-        isJoinField: [false],
-        aggregateTypeId: ['1'],
-        chartElementId: ['1']
-    })
-};
 //------------------------------------------------
+
 export async function getReportInfoLookups(me: any): Promise<void> {
     me.messages = [];
     me.isLoading.lookups = true;
@@ -161,7 +215,6 @@ export async function getReportInfoLookups(me: any): Promise<void> {
     });
 }
 //---------------------------------------------------------
-
 
 export interface IToolTipInfo {
     actionLocationId: string,
