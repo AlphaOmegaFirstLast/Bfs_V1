@@ -41,9 +41,11 @@
                                     <!----------------------------------------- Messages -------------------------------------->
                                     <div *ngFor="let msg of messages">
                                         <div *ngIf="msg.text">
-                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
-                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
-                                            </ngb-alert>
+                                            <div *ngFor="let alert of msg.text.split('\n')">
+                                                <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                    <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ alert }}
+                                                </ngb-alert>
+                                            </div>
                                         </div>
                                     </div>
                                     <!----------------------------------------- Form Controls -------------------------------------->

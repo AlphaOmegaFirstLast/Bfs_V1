@@ -36,10 +36,12 @@ public class [ComponentNameCapital]Controller
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.[ComponentNameSmall]")]
-    public async Task<[ComponentNameCapital]?> Get(long id)
+    public async Task<[ReportNameCapital]Item?> Get(long id)
     {
-        var result = await _[ComponentNameSmall]Service.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<[ReportNameCapital]Filter>();
+        listRequest.Filter.Id = id;
+        var response = await _[ComponentNameSmall]Service.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

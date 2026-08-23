@@ -11,6 +11,8 @@
 
     //Template_HtmlFilter_Lookup
 
+    //Template_HtmlFilter_AutoComplete
+
     //Template_HtmlFilter_Range
 
     //Template_HtmlFilter_AggregateRange

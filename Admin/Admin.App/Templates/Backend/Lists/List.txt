@@ -79,6 +79,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
            //Template_Start_Field_Lookup_2
            sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
            //Template_End_Field_Lookup_2
+
            //Template_Start_Field_AutoComplete_2
            sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
            //Template_End_Field_AutoComplete_2

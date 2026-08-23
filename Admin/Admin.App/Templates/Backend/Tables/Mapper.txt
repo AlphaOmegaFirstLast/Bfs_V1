@@ -18,6 +18,10 @@ namespace Bfs.[SystemNameCapital].Domain.Mapper
                [CapitalFieldName]= entity.[CapitalFieldName],
                //Template_End_Field_Lookup_1
 
+               //Template_Start_Field_AutoComplete_1
+               [CapitalFieldName]= entity.[CapitalFieldName],
+               //Template_End_Field_AutoComplete_1
+
                //Template_Start_Field_Object_1
                [CapitalFieldName]= entity.[CapitalFieldName].ToContract(),
                //Template_End_Field_Object_1
@@ -51,6 +55,10 @@ namespace Bfs.[SystemNameCapital].Domain.Mapper
             //Template_Start_Field_Lookup_2
             [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName];
             //Template_End_Field_Lookup_2
+
+            //Template_Start_Field_AutoComplete_2
+            [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName];
+            //Template_End_Field_AutoComplete_2
 
             //Template_Start_Field_Object_2
             [ComponentNameCapital]Entity.[CapitalFieldName]= contract.[CapitalFieldName].ToEntity();

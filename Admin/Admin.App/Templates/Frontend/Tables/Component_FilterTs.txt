@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { I[ComponentNameCapital]Filter } from './[ComponentFileName].shared';
 
+
 @Component({
     selector: 'app-[ComponentFileName]-filter',
     imports: [FormsModule, CommonModule],
@@ -21,13 +22,19 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
     public [LookupNameCapital]Options:  any[] = [];
     //Template_End_Field_Lookup_1
 
+    //Template_Start_Field_AutoComplete_1
+    show[AutoCompleteCapital] = false; // Toggle for the overlay
+    [AutoCompleteSmall]Options: any[] = [];
+    [AutoCompleteSmall]Control: any;
+    //Template_End_Field_AutoComplete_1
+
     // Define range filters
     //Template_Start_FilterField_Range_1
     public [FilterRangeName]From: [FrontendFieldType] | undefined;
     public [FilterRangeName]To: [FrontendFieldType] | undefined;
     //Template_End_FilterField_Range_1
 
-    isLoading: { list: boolean } = { list: false };
+    public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -39,6 +46,7 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         this.result = this.parent.queryRequest.filter || {};
         await this.getLookups();
+        await this.setAutoComplete();
         // Initialize range filters if not set
         //Template_Start_FilterField_Range_2
         this.[FilterRangeName]From = this.result.[FilterRangeName]?.from;
@@ -63,6 +71,42 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
         //Template_End_Field_Lookup_2
     }
     //---------------------------------------------------------
+    async setAutoComplete() {
+    //Template_Start_Field_AutoComplete_2
+        await this.[AutoCompleteSmall]AutoComplete();
+    //Template_End_Field_AutoComplete_2
+    }
+    //---------------------------------------------------------
+    //Template_Start_Field_AutoComplete_3
+     async [AutoCompleteSmall]AutoComplete(searchTerm: string = this.result?.['[AutoCompleteSmall]Name'] ?? ''): Promise<void> {
+        const term = (searchTerm ?? '').trim();
+        this.show[AutoCompleteCapital] = term.length >= 2;
+
+        if (this.show[AutoCompleteCapital]) {
+            this.isLoading.autoComplete = true;
+            try {
+                if (term.length < 2) {
+                    this.[AutoCompleteSmall]Options = [];
+                    return;
+                }
+
+                const request = { pageSize: 20, filter: { name: term } };
+                const response: any = await this.parent.apiService.postAutoComplete("/[AutoCompleteCapital]/list", request);
+                this.[AutoCompleteSmall]Options = response?.items ?? [];
+            } catch (err: any) {
+                this.errorMessage = err?.message ||  "Error fetching data";
+                this.[AutoCompleteSmall]Options = [];
+            } finally {
+                this.isLoading.autoComplete = false;
+            }
+        }
+    }
+  
+   //---------------------------------------------------------
+
+    //Template_End_Field_AutoComplete_3
+    
+
     reset() {
         this.activeModal.close('Reset');
         this.parent.applyFilter(null);

@@ -55,6 +55,11 @@ namespace Bfs.[SystemNameCapital].Data.Reports
              _fieldList.Add(new QueryField() { DbName = "[DbLookupTable].Name", QueryName = "[LookupNameCapital]Name", IsAggregare = false });
             //Template_End_Field_Lookup_1
 
+            //autoComplete
+            //Template_Start_Field_AutoComplete_1
+             _fieldList.Add(new QueryField() { DbName = "[DbAutoCompleteTable].Name", QueryName = "[AutoCompleteCapital]Name", IsAggregare = false });
+            //Template_End_Field_AutoComplete_1
+
            //Aggregates
            //Template_Start_ReportField_Aggregate_1
             _fieldList.Add(new QueryField() { DbName = "[AggregateFunction]([DbParentTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true });
@@ -67,12 +72,16 @@ namespace Bfs.[SystemNameCapital].Data.Reports
            sql.AppendLine(" From [DbParentTable] ");
 
            //Template_Start_ReportField_Join_1
-           sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
+           sql.AppendLine($"   Left Join [DbLeftJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
            //Template_End_ReportField_Join_1
 
-           //Template_Start_Field_Lookup_3
-           sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
-           //Template_End_Field_Lookup_3
+           //Template_Start_Field_Lookup_2
+           sql.AppendLine($"   Left Join [DbLeftJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
+           //Template_End_Field_Lookup_2
+
+           //Template_Start_Field_AutoComplete_2
+           sql.AppendLine($"   Left Join [DbLeftJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
+           //Template_End_Field_AutoComplete_2
 
            return sql.ToString();
         }
@@ -109,15 +118,23 @@ namespace Bfs.[SystemNameCapital].Data.Reports
                 }
                 //Template_End_FilterField_Lookup_1           
 
+                //Template_Start_FilterField_AutoComplete_1
+                if (filter.[FilterAutoCompleteName].HasValue)
+                {
+                    sql.AppendLine("[DbParentTable].[AutoCompleteCapital]Id = @[FilterAutoCompleteName]");
+                    parameters.Add("@[FilterAutoCompleteName]", filter.[FilterAutoCompleteName].Value);
+                }
+                //Template_End_FilterField_AutoComplete_1           
+
                 //Template_Start_FilterField_Range_1
                 if (filter.[FilterRangeName]?.From.HasValue == true)
                 {
-                    sql.AppendLine("[DbParentTable].[FilterRangeName] >= @[FilterRangeName]From");
+                    sql.AppendLine("[DbParentTable].[CapitalFieldName] >= @[FilterRangeName]From");
                     parameters.Add("@[FilterRangeName]From", filter.[FilterRangeName].From.Value);
                 }
                 if (filter.[FilterRangeName]?.To.HasValue == true)
                 {
-                    sql.AppendLine("[DbParentTable].[FilterRangeName] <= @[FilterRangeName]To");
+                    sql.AppendLine("[DbParentTable].[CapitalFieldName] <= @[FilterRangeName]To");
                     parameters.Add("@[FilterRangeName]To", filter.[FilterRangeName].To.Value);
                 }
                 //Template_End_FilterField_Range_1

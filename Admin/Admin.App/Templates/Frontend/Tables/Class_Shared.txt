@@ -1,5 +1,6 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].operations';
 
@@ -67,13 +68,13 @@ export function init[ComponentNameCapital](): I[ComponentNameCapital] {
 export function [ComponentNameSmall]UntypedFormGroup(formBuilder: FormBuilder): any {
     return {
     //Template_Start_Field_Primitive_3
-    [SmallFieldName]: [[FrontendDefaultValue]],
+    [SmallFieldName]: [[FrontendDefaultValue],getFormControlValidation('[FieldValidationJson]')],
     //Template_End_Field_Primitive_3
     //Template_Start_Field_Lookup_3
-    [SmallFieldName]: [[FrontendDefaultValue]],
+    [SmallFieldName]: [[FrontendDefaultValue],getFormControlValidation('[FieldValidationJson]')],
     //Template_End_Field_Lookup_3
     //Template_Start_Field_AutoComplete_3
-    [SmallFieldName]: [[FrontendDefaultValue]],
+    [SmallFieldName]: [[FrontendDefaultValue],getFormControlValidation('[FieldValidationJson]')],
     [AutoCompleteSmall]Name: [''],
     //Template_End_Field_AutoComplete_3
     //Template_Start_Field_Object_3

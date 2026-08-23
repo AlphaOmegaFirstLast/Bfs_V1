@@ -21,6 +21,10 @@ export class [ReportNameCapital]FilterComponent implements OnInit {
     public [LookupNameCapital]Options:  any[] = [];
     //Template_End_Field_Lookup_1
 
+    //Template_Start_Field_AutoComplete_1
+    public [AutoCompleteNameCapital]Options:  any[] = [];
+    //Template_End_Field_AutoComplete_1
+
     // Define range filters
     //Template_Start_FilterField_Range_1
     public [FilterRangeName]From: [FrontendFieldType] | undefined;

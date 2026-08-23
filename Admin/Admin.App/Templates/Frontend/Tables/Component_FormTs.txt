@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-//Template_Start_Field_AutoComplete_4
+//Template_Start_Component_AutoComplete
 import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
-//Template_End_Field_AutoComplete_4
+//Template_End_Component_AutoComplete
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -168,7 +168,7 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
             distinctUntilChanged(),
             // 4. Switch to API call
             switchMap(async (searchTerm) => {
-                this.isAutoCompleteLoading = true;
+                this.isLoading.autoComplete = true;
                 this.show[AutoCompleteCapital] = this.entity.[AutoCompleteSmall]Name != searchTerm; // Show dropdown when searching starts
                 try {
                     const request = { pageSize: 20, filter: { name: searchTerm } };
@@ -178,7 +178,7 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
                     this.messages.push({ text: err.msg || "Error fetching data", msgType: "danger" });
                     return []; // Return empty array on error to keep the stream alive
                 } finally {
-                    this.isAutoCompleteLoading = false;
+                    this.isLoading.autoComplete = false;
                 }
             })
         ).subscribe(items => {

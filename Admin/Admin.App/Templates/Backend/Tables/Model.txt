@@ -18,6 +18,10 @@ namespace Bfs.[SystemNameCapital].Data.Models
         public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
         //Template_End_Field_Lookup_1
 
+        //Template_Start_Field_AutoComplete_1
+        public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
+        //Template_End_Field_AutoComplete_1
+
         //Template_Start_Field_Object_1
         public [BackendFieldType] [CapitalFieldName] {get; set;} = [BackendDefaultValue] ;
         //Template_End_Field_Object_1
