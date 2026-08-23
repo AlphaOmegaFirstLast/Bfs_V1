@@ -67,6 +67,8 @@ export class BusinessActionListComponent
         switch (column.fieldName) {
             case 'actionTypeId':
                 return record['actionTypeName']?.toString();
+case 'writerTypeId':
+                return record['writerTypeName']?.toString();
 
             default:
                 return value;

@@ -8,10 +8,21 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Name</label>
+        <label>ID</label>
       </div>
       <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Name" #ctrl="ngModel"/>
+      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Short Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.ShortName" value="{{result.ShortName}}" placeholder="Short Name" #ctrl="ngModel"/>
       </div>
     </div>
   </div>
@@ -19,10 +30,32 @@
   <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Short Name</label>
+        <label>Writer Matching Property</label>
       </div>
       <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.ShortName" value="{{result.ShortName}}" placeholder="Short Name" #ctrl="ngModel"/>
+      <input class="form-control" type="text" [(ngModel)]="result.MatchProperty" value="{{result.MatchProperty}}" placeholder="Writer Matching Property" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Writer Matching Values</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.MatchValues" value="{{result.MatchValues}}" placeholder="Writer Matching Values" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Name" #ctrl="ngModel"/>
       </div>
     </div>
   </div>
@@ -35,6 +68,20 @@
       <div class="col -8">
         <select class="form-select" [(ngModel)]="result.ActionTypeId" name="actionTypeId">
           <ng-container *ngFor="let option of ActionTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Writer Type</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.WriterTypeId" name="writerTypeId">
+          <ng-container *ngFor="let option of WriterTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>

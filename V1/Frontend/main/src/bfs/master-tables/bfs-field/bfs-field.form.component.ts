@@ -98,7 +98,7 @@ public BackendDataTypeOptions: any[] = [];
 // }
         this.isLoading.lookups = true;
         target = "/BfsComponent/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+        (await this.apiService.post(target,  {pageSize:100})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsComponentOptions = response.items;
                 this.isLoading.lookups = false;

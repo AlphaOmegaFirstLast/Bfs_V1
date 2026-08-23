@@ -18,10 +18,11 @@ export class BusinessActionFilterComponent implements OnInit {
 
     // Define look ups
     public ActionTypeOptions:  any[] = [];
+public WriterTypeOptions:  any[] = [];
 
     // Define range filters
 
-    isLoading: boolean = false;
+    isLoading: { list: boolean } = { list: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -43,11 +44,22 @@ export class BusinessActionFilterComponent implements OnInit {
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.ActionTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Action Type data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
+            }
+        });
+target = "/WriterType/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.WriterTypeOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Writer Type data.';
+                this.isLoading.list = false;
             }
         });
 

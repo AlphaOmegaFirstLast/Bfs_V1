@@ -8,16 +8,16 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const BfsComponentColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystemName', width: '50px', isVisible:true },
-{ fieldName: 'isSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDeleteName', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'NameName', width: '50px', isVisible:true },
-{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayNameName', width: '50px', isVisible:false },
-{ fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataTypeName', width: '50px', isVisible:true },
-{ fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuNameName', width: '50px', isVisible:false },
-{ fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolderName', width: '50px', isVisible:false },
-{ fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTableName', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'NotesName', width: '50px', isVisible:false },
-{ fieldName: 'interfaceRequired', displayName: 'Interface to Implement', sortName: 'InterfaceRequiredName', width: '50px', isVisible:false },
+{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystemId', width: '50px', isVisible:true },
+{ fieldName: 'isSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDelete', width: '50px', isVisible:false },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
+{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:false },
+{ fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataTypeId', width: '50px', isVisible:true },
+{ fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:false },
+{ fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:false },
+{ fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+{ fieldName: 'interfaceRequired', displayName: 'Interface to Implement', sortName: 'InterfaceRequired', width: '50px', isVisible:false },
 
 ];
 //---------------------------------------------------------

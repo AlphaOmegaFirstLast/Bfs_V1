@@ -41,9 +41,11 @@
                                     <!----------------------------------------- Messages -------------------------------------->
                                     <div *ngFor="let msg of messages">
                                         <div *ngIf="msg.text">
-                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
-                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
-                                            </ngb-alert>
+                                            <div *ngFor="let alert of msg.text.split('\n')">
+                                                <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                    <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ alert }}
+                                                </ngb-alert>
+                                            </div>
                                         </div>
                                     </div>
                                     <!----------------------------------------- Form Controls -------------------------------------->
@@ -61,18 +63,6 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="name" class="form-label fs-6">Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="name" formControlName="name"
-            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Name.</div>
-    </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-12">
         <label for="shortName" class="form-label fs-6">Short Name</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="this field will be used in security permissions"  />
 
@@ -85,13 +75,61 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="notes" class="form-label fs-6">Notes</label>
+        <label for="writerTypeId" class="form-label fs-6">Writer Type</label>
+        <select class="form-select" id="writerTypeId" formControlName="writerTypeId"
+            [class]="submit && !form['writerTypeId'].errors ? 'is-valid': submit && form['writerTypeId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of WriterTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Writer Type.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="matchProperty" class="form-label fs-6">Writer Matching Property</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="notes" formControlName="notes"
-            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
+        <input class="form-control" type="text" id="matchProperty" formControlName="matchProperty"
+            [class]="submit && !form['matchProperty'].errors ? 'is-valid': submit && form['matchProperty'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Notes.</div>
+        <div class="invalid-feedback">Invalid Writer Matching Property.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="matchValues" class="form-label fs-6">Writer Matching Values</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="matchValues" formControlName="matchValues"
+            [class]="submit && !form['matchValues'].errors ? 'is-valid': submit && form['matchValues'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Writer Matching Values.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="actionTemplate" class="form-label fs-6">Action Template</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="actionTemplate" formControlName="actionTemplate"
+            [class]="submit && !form['actionTemplate'].errors ? 'is-valid': submit && form['actionTemplate'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Action Template.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="name" class="form-label fs-6">Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="name" formControlName="name"
+            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Name.</div>
     </div>
 </div>
 
@@ -107,6 +145,18 @@
         <div class="invalid-feedback">Please select a valid Action Type.</div>
     </div>
 </div>
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="notes" class="form-label fs-6">Notes</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="notes" formControlName="notes"
+            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Notes.</div>
+    </div>
+</div>
+
 </div>
 
                                     </div>
