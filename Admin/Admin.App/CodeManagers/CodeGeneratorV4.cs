@@ -14,6 +14,7 @@ namespace Admin.App
             //var z = BfsSystemActionEntity.GenerateTestData().Select(x => new BestFitAction(x)).ToList();
             //ComponentSystemActionList = z; //.Select( x=> (IBestFitAction)x).ToList();
             var componentSystemActionList = new List<BfsComponentSystemActionEntity>();
+            var componentBusinessActionList = new List<BfsComponentBusinessActionEntity>();
             // populate database objects
             using (var context = new V4DbContext())
             {
@@ -22,10 +23,14 @@ namespace Admin.App
                     SystemList = context.BfsSystem.Select(x => (ISystemEntity)x).ToList();
                     ComponentList = context.BfsComponent.Select(x => (IComponentEntity)x).ToList();
                     FieldList = context.BfsField.Select(x => (IFieldEntity)x).ToList();
+                   
                     SystemActionList = context.SystemAction.Select(x => (IActionEntity)x).ToList();
                     componentSystemActionList = context.BfsComponentSystemAction.ToList();
+                    
+                    BusinessActionList = context.BusinessAction.Select(x => (IActionEntity)x).ToList();
+                    componentBusinessActionList = context.BfsComponentBusinessAction.ToList();
 
-                    ComponentActionList = (from cs in componentSystemActionList
+                    var SystemActions = (from cs in componentSystemActionList
                                            join sa in SystemActionList on cs.SystemActionId equals sa.Id into gj
                                            from sa in gj.DefaultIfEmpty()
                                            select new ActionWriter
@@ -47,7 +52,30 @@ namespace Admin.App
                                                Notes = sa?.Notes ?? string.Empty,
                                            }).ToList();
 
+                    var BusinessActions = (from cs in componentBusinessActionList
+                                         join ba in BusinessActionList on cs.BusinessActionId equals ba.Id into gj
+                                         from ba in gj.DefaultIfEmpty()
+                                         select new ActionWriter
+                                         {
+                                             Id = ba?.Id ?? cs.Id,
+                                             Name = ba?.Name ?? string.Empty,
+                                             BfsComponentId = cs.BfsComponentId,
+                                             ActionTemplate = ba?.ActionTemplate ?? string.Empty,
+                                             ActionTypeId = ba?.ActionTypeId ?? ActionType.None,
+                                             ActionLocationId = cs.ActionLocationId,
+                                             ActionSourceId = ActionSource.System,
+                                             WriterTypeId = ba?.WriterTypeId ?? WriterType.None,
+                                             MatchProperty = ba?.MatchProperty ?? string.Empty,
+                                             MatchValues = (ba?.MatchValues ?? string.Empty)
+                                                           .Split(',')
+                                                           .Select(s => s.Trim())
+                                                           .Where(s => !string.IsNullOrEmpty(s))
+                                                           .ToArray(),
+                                             Notes = ba?.Notes ?? string.Empty,
+                                         }).ToList();
 
+                    ComponentActionList.AddRange(SystemActions);
+                    ComponentActionList.AddRange(BusinessActions);
                 }
                 catch (Exception ex)
                 {

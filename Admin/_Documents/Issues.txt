@@ -1,0 +1,15 @@
+issues:
+BestFit_V5 should not be hardcoded
+Back Button.
+Master\Details tab should set the parentId
+FieldValidation column doesn't show in List.
+ReportInfo Column Shows incorrect data.
+Record Validations.
+Table Validations.
+If no-Actions dont show the 3dots-button in the list
+
+
+in admin controller comment security
+update master database name in connection string
+Cache Warming :    throw new Exception($"Tenants data not found in cache");
+

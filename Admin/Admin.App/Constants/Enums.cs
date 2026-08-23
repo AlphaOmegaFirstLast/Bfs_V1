@@ -133,9 +133,7 @@ public enum FilterType
 {
     None = 1,
     Default = 2,
-    LookupFilter = 3,           // Filter by Ids of related records => Table.LookupId  = Lookup.Id
-    ValueStringFilter = 4,      // Filter by string value           => field like %input%
-    ValueNumberFilter = 5,      // Filter by number value           => field = input
+    ValueNumberFilter = 3,      // Filter by number value           => field = input
 }
 
 public enum ActionType

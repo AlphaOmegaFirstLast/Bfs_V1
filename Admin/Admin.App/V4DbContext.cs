@@ -15,6 +15,8 @@ namespace Admin.App
         public DbSet<BfsFieldEntity> BfsField { get; set; }
         public DbSet<BfsSystemActionEntity> SystemAction { get; set; }
         public DbSet<BfsComponentSystemActionEntity> BfsComponentSystemAction { get; set; }
+        public DbSet<BfsBusinessActionEntity> BusinessAction { get; set; }
+        public DbSet<BfsComponentBusinessActionEntity> BfsComponentBusinessAction { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -5,6 +5,7 @@ using Admin.App;
 using Bfs.Core.ObjectFields;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OpenTelemetry.Resources;
+using System.Text.Json;
 
 namespace Admin.App
 {
@@ -18,6 +19,7 @@ namespace Admin.App
         public BackendDataType BackendDataTypeId { get; set; } = BackendDataType.DT_Default;
 
         public FieldValidation FieldValidation { get; set; } = new FieldValidation();
+        public string FieldValidationJson { get; set; } = string.Empty;
         public FormInfo FormInfo { get; set; } = new FormInfo();
         public ReportInfo ReportInfo { get; set; } = new ReportInfo();
         public MatrixInfo MatrixInfo { get; set; } = new MatrixInfo();
@@ -76,7 +78,9 @@ namespace Admin.App
         public string reportFieldNameCapital;
         public string reportFieldNameSmall;
         public string joinName;
+        public string leftJoinName;
         public string DbJoinTable;
+        public string DbLeftJoinTable;
         public string sortName;
 
         public string filterValueName = string.Empty;
@@ -99,15 +103,18 @@ namespace Admin.App
         {
             if (source != null)
             {
-                this.Name = source.Field ?? string.Empty;
-                this.Field = source.Field ?? string.Empty;
-                this.DisplayName = source.DisplayName ?? string.Empty;
+                this.Name = source.Field?.Trim() ?? string.Empty;
+                this.Field = source.Field?.Trim() ?? string.Empty;
+                this.DisplayName = source.DisplayName?? string.Empty;
 
                 this.BackendDataTypeId = source.BackendDataTypeId;
                 this.FilterTypeId = source.FilterTypeId;
 
                 //Object Fields. mainly used in Bestfir components & fields. to collect meta data.
-                this.FieldValidation = source.FieldValidation ?? new FieldValidation();
+                this.FieldValidationJson = JsonSerializer.Serialize(
+                source.FieldValidation ?? new FieldValidation());
+
+               //this.FieldValidation = source.FieldValidation ?? new FieldValidation();
                 this.FormInfo = source.FormInfo ?? new FormInfo();
                 this.ReportInfo = source.ReportInfo ?? new ReportInfo();
                 this.MatrixInfo = source.MatrixInfo ?? new MatrixInfo();
@@ -139,6 +146,7 @@ namespace Admin.App
             DbLookupTable = GetDbTableName(codeInfo, lookupNameCapital);
             DbAutoCompleteTable = GetDbTableName(codeInfo, autoCompleteCapital);
             DbJoinTable = GetDbTableName(codeInfo, joinName);
+            DbLeftJoinTable = GetDbTableName(codeInfo, leftJoinName);
 
             var fieldTemplate = input;
 
@@ -152,6 +160,7 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[LookupNameSmall]", lookupNameSmall);
 
             fieldTemplate = fieldTemplate.Replace("[ChildListFileName]", childListFileName);
+            fieldTemplate = fieldTemplate.Replace("[FieldValidationJson]", FieldValidationJson);
 
             fieldTemplate = fieldTemplate.Replace("[DbAutoCompleteTable]", DbAutoCompleteTable);
             fieldTemplate = fieldTemplate.Replace("[AutoCompleteFileName]", autoCompleteFileName);
@@ -160,6 +169,7 @@ namespace Admin.App
 
             fieldTemplate = fieldTemplate.Replace("[JoinName]", joinName);
             fieldTemplate = fieldTemplate.Replace("[DbJoinTable]", DbJoinTable);
+            fieldTemplate = fieldTemplate.Replace("[DbLeftJoinTable]", DbLeftJoinTable);
             fieldTemplate = fieldTemplate.Replace("[SortName]", sortName);
 
             fieldTemplate = fieldTemplate.Replace("[FieldDefinition]", FieldDefinition.ToString());
@@ -267,10 +277,12 @@ namespace Admin.App
             SetBackendDefaultValue(BackendDataTypeId);
             SetFrontendDefaultValue(BackendDataTypeId, frontendDataType);
 
+            // Set UI Controls
             uiFormControl = GetUIFormControl(BackendDataTypeId, FormControlTypeId);
 
-            SetReportInfo(componentType);
+            SetReportInfo(componentType , QueryBaseTable);
 
+            //Set filters is dependent on BackendDataTypeId, isLookup, isAutoComplete, isAggregate, so it should be called after SetReportInfo.
             SetFilters(BackendDataTypeId, isLookup, isAutoComplete, isAggregate);
 
             SetFieldDefinition(BackendDataTypeId, isLookup, isAutoComplete);
@@ -310,13 +322,14 @@ namespace Admin.App
                 : FilterDefinition.None;
 
             backendRangeType = isRangeDateFilter ? "DateRange?" : "NumericRange?";
-            filterRangeName = isAggregate ? aggregateName : fieldCapitalName;
-            filterLookupName = $"{lookupNameCapital}Id";
-            filterAutoCompleteName = $"{autoCompleteCapital}Id";
-            filterValueName = fieldCapitalName;
+            // Filter fields names must be unique.
+            filterRangeName = isAggregate ? aggregateName : reportFieldNameCapital; //fieldCapitalName;
+            filterLookupName = reportFieldNameCapital; // $"{lookupNameCapital}Id";
+            filterAutoCompleteName = reportFieldNameCapital; //$"{autoCompleteCapital}Id";
+            filterValueName = reportFieldNameCapital; //fieldCapitalName;
         }
 
-        public void SetReportInfo(ComponentType componentType)
+        public void SetReportInfo(ComponentType componentType, string QueryBaseTable)
         {
             var aggregateType = ReportInfo.AggregateTypeId == null ? AggregateType.None : (AggregateType)ReportInfo.AggregateTypeId;
             isAggregate = aggregateType != AggregateType.None;
@@ -340,6 +353,10 @@ namespace Admin.App
             joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital
                      : !string.IsNullOrEmpty(autoCompleteCapital) ? autoCompleteCapital
                      : fieldCapitalName;
+            // Todo better handle the case when the joinName is the same as the QueryBaseTable. it happens in case of self join, like parent-child relationship. we need to use a different name for the join table in that case.
+            // We cannot allow the QueryBaseTable to left join itself. it happens in case the relationship parentTable to children. not parentTable to lookup.
+            leftJoinName = joinName == QueryBaseTable? ParentTable : joinName;
+
             sortName = isAggregate ? aggregateName
                         : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}_Name"
                         : !string.IsNullOrEmpty(autoCompleteCapital) ? $"{autoCompleteCapital}_Name"
@@ -451,7 +468,7 @@ namespace Admin.App
                        : frontendDataType.ToLower() == "ireportinfo" ? "initReportInfo()"
                        : frontendDataType.ToLower() == "imatrixinfo" ? "initMatrixInfo()"
                        : frontendDataType.ToLower() == "string" && BackendDataTypeId == BackendDataType.DT_long ? "'0'"
-                       : BackendDataTypeId == BackendDataType.DT_DateTime? "null"  // Date type in frontend will be initialized as null, and set to actual date value when used, to avoid timezone issue.
+                       : BackendDataTypeId == BackendDataType.DT_DateTime? "new Date(0)"  // Date type in frontend will be initialized as null, and set to actual date value when used, to avoid timezone issue.
                        : "''";
         }
 

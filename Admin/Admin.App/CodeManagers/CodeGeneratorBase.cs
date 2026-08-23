@@ -8,7 +8,7 @@ namespace Admin.App
 {
     public class CodeGeneratorBase
     {
-        public static string BestFitDB = "BestFit_V5";
+        public static string BestFitDB = "BestFit_V6";
         public string BestFitSystemName = "master";
         public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V1";
         public string TemplateRootDir { get; set; } = @".\Templates";

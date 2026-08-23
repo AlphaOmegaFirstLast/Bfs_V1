@@ -41,6 +41,9 @@ namespace Admin.App
         public string ReportNameSmall = string.Empty;
 
         public string ReportFileName = string.Empty;
+
+        public string AutoComplete = string.Empty;  // either none or AutoComplete. based on the field definition, if any of the fields is AutoComplete then this will be set to AutoComplete.
+
         public string DbParentTable { get; set; } = string.Empty;
 
         public ComponentType ComponentType = ComponentType.None;
@@ -50,7 +53,7 @@ namespace Admin.App
         public ComponentWriter(IComponentEntity source, string systemName, List<IFieldEntity> allFieldList)
         {
             this.Id = source.Id;
-            this.Name = source.Name;
+            this.Name = source.Name.Trim().Replace(" ", "");
             this.DisplayName = source.DisplayName;
             this.DataType = (DataType)source.DataTypeId;
 
@@ -100,6 +103,11 @@ namespace Admin.App
                 {
                     tabIndex++;
                     field.tabIndex = tabIndex.ToString();
+                }
+
+                if (field.FieldDefinition == FieldDefinition.AutoComplete)
+                {
+                    AutoComplete = "AutoComplete";
                 }
             }
         }
