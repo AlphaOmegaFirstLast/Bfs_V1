@@ -92,13 +92,13 @@ public static class BuilderExtensions
         // Register Authorization handlers and policy provider. that can handle dynamic policies.
         // IAuthorizationHandler is scoped because it is dependent on the current user's claims, which are evaluated per request. The handler needs to access the HttpContext to retrieve these claims,
         // and since HttpContext is scoped to the request, the handler must also be scoped to ensure it operates within the correct context.
-
+       
         builder.Services.AddScoped<IAuthorizationHandler, MultiClaimRequirementHandler>();
 
         // The IAuthorizationPolicyProvider is registered as a singleton because it is responsible for providing authorization policies based on the current user's claims. It does not directly depend on the HttpContext or any per-request data,
         // but it needs to be available throughout the application's lifetime to evaluate policies for incoming requests. By registering it as a singleton,
         // we ensure that there is only one instance of the policy provider that can efficiently serve all requests without needing to be recreated for each one.
-
+       
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
     }
 
