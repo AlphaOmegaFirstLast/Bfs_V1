@@ -61,3 +61,4 @@ BfsComponentEntity.DataTypeId= contract.DataTypeId;
         }     
     }
 }
+

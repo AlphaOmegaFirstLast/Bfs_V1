@@ -5,6 +5,7 @@ namespace Bfs.Master.Contracts
 {
     public class BfsComponentListFilter
     {
+        public long? Id { get; set; }
 
         public string? Name { get; set; }
 public string? InterfaceRequired { get; set; }
@@ -14,3 +15,4 @@ public int? DataTypeId { get; set; }
 
     }
 }
+

@@ -26,3 +26,4 @@ public int DataTypeId {get; set;} = 0 ;
 
     }
 }
+

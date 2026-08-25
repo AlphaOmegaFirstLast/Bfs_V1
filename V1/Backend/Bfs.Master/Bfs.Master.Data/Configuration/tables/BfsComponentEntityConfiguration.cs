@@ -31,3 +31,4 @@ namespace Bfs.Master.Data.Configuration
         }
     }
 }
+
