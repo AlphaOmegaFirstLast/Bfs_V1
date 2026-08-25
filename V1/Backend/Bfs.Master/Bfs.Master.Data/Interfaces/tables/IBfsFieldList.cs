@@ -8,3 +8,4 @@ namespace Bfs.Master.Data.Interfaces
         Task<QueryResponse<BfsFieldListItem>> GetAsync(QueryRequest<BfsFieldListFilter> request);
     }
 }
+

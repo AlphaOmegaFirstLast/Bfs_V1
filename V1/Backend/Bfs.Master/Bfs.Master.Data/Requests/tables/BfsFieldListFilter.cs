@@ -5,6 +5,7 @@ namespace Bfs.Master.Data
 {
     public class BfsFieldListFilter
     {
+        public long? Id { get; set; }
 
         public string? Field { get; set; }
 
@@ -14,3 +15,4 @@ public int? BackendDataTypeId { get; set; }
 
     }
 }
+
