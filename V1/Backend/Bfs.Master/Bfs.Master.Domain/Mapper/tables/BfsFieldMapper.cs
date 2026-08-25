@@ -63,3 +63,4 @@ BfsFieldEntity.FormInfo= contract.FormInfo.ToEntity();
         }     
     }
 }
+
