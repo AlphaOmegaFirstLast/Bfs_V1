@@ -1,5 +1,6 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master-main/master.operations';
 
@@ -13,18 +14,27 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsFieldColumns = [
-    { fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible: false },
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible: false },
-    { fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponentName', width: '50px', isVisible: true },
+    { fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponent_Name', width: '50px', isVisible: true },
     { fieldName: 'field', displayName: 'Field', sortName: 'Field', width: '50px', isVisible: true },
     { fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible: true },
-    { fieldName: 'filterTypeId', displayName: 'Filter Type', sortName: 'FilterTypeName', width: '50px', isVisible: true },
-    { fieldName: 'backendDataTypeId', displayName: 'Backend Type', sortName: 'BackendDataTypeName', width: '50px', isVisible: true },
-    { fieldName: 'reportInfo', displayName: 'Report Info', sortName: 'ReportInfo', width: '50px', isVisible: false },
-    { fieldName: 'matrixInfo', displayName: 'Matrix Info', sortName: 'MatrixInfo', width: '50px', isVisible: false },
-    { fieldName: 'toolTipInfo', displayName: 'ToolTip Info', sortName: 'ToolTipInfo', width: '50px', isVisible: false },
-    { fieldName: 'formInfo', displayName: 'Form Info', sortName: 'FormInfo', width: '50px', isVisible: false },
+    { fieldName: 'filterTypeId', displayName: 'Filter Type', sortName: 'FilterType_Name', width: '50px', isVisible: true },
+    { fieldName: 'backendDataTypeId', displayName: 'Backend Type', sortName: 'BackendDataType_Name', width: '50px', isVisible: true },
+//object fields
+    { fieldName: 'fieldValidation', displayName: 'Field Validation', sortName: 'FieldValidation', width: '50px', isVisible: false },
+    { fieldName: 'jsonFieldValidation', displayName: 'JsonFieldValidation', sortName: 'JsonFieldValidation', width: '50px', isVisible: false },
 
+    { fieldName: 'reportInfo', displayName: 'Report Info', sortName: 'ReportInfo', width: '50px', isVisible: false },
+    { fieldName: 'jsonReportInfo', displayName: 'JsonReportInfo', sortName: 'JsonReportInfo', width: '50px', isVisible: false },
+
+    { fieldName: 'matrixInfo', displayName: 'Matrix Info', sortName: 'MatrixInfo', width: '50px', isVisible: false },
+    { fieldName: 'jsonMatrixInfo', displayName: 'JsonMatrixInfo', sortName: 'JsonMatrixInfo', width: '50px', isVisible: false },
+
+    { fieldName: 'toolTipInfo', displayName: 'ToolTip Info', sortName: 'ToolTipInfo', width: '50px', isVisible: false },
+    { fieldName: 'jsonToolTipInfo', displayName: 'JsonToolTipInfo', sortName: 'JsonToolTipInfo', width: '50px', isVisible: false },
+
+    { fieldName: 'formInfo', displayName: 'Form Info', sortName: 'FormInfo', width: '50px', isVisible: false },
+    { fieldName: 'jsonFormInfo', displayName: 'JsonFormInfo', sortName: 'JsonFormInfo', width: '50px', isVisible: false },
 ];
 //---------------------------------------------------------
 export interface IBfsField {
@@ -38,11 +48,19 @@ export interface IBfsField {
     backendDataTypeId?: number;
 
     fieldValidation?: IFieldValidation;
-    reportInfo?: IReportInfo;
-    matrixInfo?: IMatrixInfo;
-    toolTipInfo?: IToolTipInfo;
-    formInfo?: IFormInfo;
+    jsonFieldValidation?: string;
 
+    reportInfo?: IReportInfo;
+    jsonReportInfo?: string;
+
+    matrixInfo?: IMatrixInfo;
+    jsonMatrixInfo?: string;
+
+    toolTipInfo?: IToolTipInfo;
+    jsonToolTipInfo?: string;
+    
+    formInfo?: IFormInfo;
+    jsonFormInfo?: string;
 }
 //---------------------------------------------------------
 export function initBfsField(): IBfsField {
@@ -69,14 +87,14 @@ export function initBfsField(): IBfsField {
 // Fields of an Entity [used in Entity form]
 export function bfsFieldUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-        isDeleted: [false],
-        id: ['0'],
-        field: [''],
-        displayName: [''],
+        isDeleted: [false, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        id: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        field: ['', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        displayName: ['', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-        bfsComponentId: ['0'],
-        filterTypeId: [0],
-        backendDataTypeId: [0],
+        bfsComponentId: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        filterTypeId: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        backendDataTypeId: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
         fieldValidation: fieldValidationUntypedFormGroup(formBuilder),
         reportInfo: reportInfoUntypedFormGroup(formBuilder),
@@ -106,7 +124,6 @@ export interface IBfsFieldFilter {
     BfsComponentId?: string;
     FilterTypeId?: number;
     BackendDataTypeId?: number;
-
 }
 //---------------------------------------------------------
 export function initBfsFieldRequest(): IBfsFieldRequest {
@@ -127,7 +144,6 @@ export function initBfsFieldRequest(): IBfsFieldRequest {
             BfsComponentId: undefined,
             FilterTypeId: undefined,
             BackendDataTypeId: undefined,
-
         }
     };
 
