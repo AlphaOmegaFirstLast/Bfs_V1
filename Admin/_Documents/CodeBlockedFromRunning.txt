@@ -1,0 +1,29 @@
+Smart App Control doesn’t offer a “developer mode,” so when it’s **On**, it enforces code‑integrity rules that block **unsigned, user‑built binaries** from running out of folders like `bin\Debug`. That’s exactly why your Visual Studio output DLL is being stopped.
+
+The only way to keep SAC enabled while still running your own C# builds is to make your assemblies look like trusted code. You do that by **signing your DLLs with a certificate that Windows trusts**. Once signed, SAC treats them like legitimate, verified binaries and allows them to load normally.
+
+Here’s the practical path developers use:
+
+---
+
+### ✔ Sign your C# assemblies with a trusted certificate  
+Create a signing certificate, add it to Trusted Publishers, and sign your build output. SAC will allow the DLL because it’s now trusted code.
+
+---
+
+### ✔ Build in Release mode and sign the output  
+Release builds are easier to sign and deploy. SAC doesn’t care about Debug vs Release; it cares about trust.
+
+---
+
+### ✔ Place your signed build in a trusted folder  
+Program Files is always allowed. SAC respects that location.
+
+---
+
+### ✔ Keep SAC On  
+Once your assemblies are signed and in a trusted path, SAC stays active and your Visual Studio projects run normally.
+
+---
+
+If you want, I can walk you through creating a signing certificate and applying it to your project so your builds run smoothly with SAC still enabled.
