@@ -10,6 +10,7 @@ import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
@@ -35,11 +36,13 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField > impleme
     // Children filters
 
     // Define look ups
-    public BfsComponentOptions: any[] = [];
-public FilterTypeOptions: any[] = [];
+    public FilterTypeOptions: any[] = [];
 public BackendDataTypeOptions: any[] = [];
 
     // Define autocomplete
+    showBfsComponent = false; // Toggle for the overlay
+    bfsComponentOptions: any[] = [];
+    bfsComponentControl: any;
 
     //---------------------------------------------------------
 
@@ -47,6 +50,7 @@ public BackendDataTypeOptions: any[] = [];
 
        super(activatedRoute);
        this.validationForm = this.formBuilder.group(bfsFieldUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+      this.bfsComponentControl = this.validationForm.get('bfsComponentName') as any;
 
     }
     //---------------------------------------------------------
@@ -71,6 +75,7 @@ public BackendDataTypeOptions: any[] = [];
     }
     //---------------------------------------------------------
     override async setAutoComplete() {
+    await this.bfsComponentAutoComplete();
 
     }
     //---------------------------------------------------------
@@ -97,19 +102,6 @@ public BackendDataTypeOptions: any[] = [];
 //   this.isLoading.lookups = false;
 // }
         this.isLoading.lookups = true;
-        target = "/BfsComponent/list";
-        (await this.apiService.post(target,  {pageSize:100})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.BfsComponentOptions = response.items;
-                this.isLoading.lookups = false;
-            },
-                error: (err: any) => {
-                this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching Component data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
-this.isLoading.lookups = true;
         target = "/FilterType/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
@@ -136,6 +128,48 @@ this.isLoading.lookups = true;
             }
         });
 
+    }
+    //---------------------------------------------------------
+    async bfsComponentAutoComplete() {
+        this.validationForm.get('bfsComponentName')?.valueChanges.pipe(
+            // 1. Only proceed if input length >= 2
+            filter(val => val && val.length >= 2),
+            // 2. Wait 300ms after last keystroke to avoid API spam
+            debounceTime(300),
+            // 3. Only trigger if the value actually changed
+            distinctUntilChanged(),
+            // 4. Switch to API call
+            switchMap(async (searchTerm) => {
+                this.isLoading.autoComplete = true;
+                this.showBfsComponent = this.entity.bfsComponentName != searchTerm; // Show dropdown when searching starts
+                try {
+                    const request = { pageSize: 20, filter: { name: searchTerm } };
+                    const response: any = await this.apiService.postAutoComplete("/BfsComponent/list", request);
+                    return response.items; // Return the data directly
+                } catch (err: any) {
+                    this.messages.push({ text: err.msg || "Error fetching data", msgType: "danger" });
+                    return []; // Return empty array on error to keep the stream alive
+                } finally {
+                    this.isLoading.autoComplete = false;
+                }
+            })
+        ).subscribe(items => {
+            this.bfsComponentOptions = items;
+        });
+    }
+    //---------------------------------------------------------
+    selectBfsComponent(selectedOption: any) {
+        // Set the input value to the selected name
+        this.validationForm.get('bfsComponentName')?.setValue(selectedOption.name, { emitEvent: false });
+        this.validationForm.get('bfsComponentId')?.setValue(selectedOption.id, { emitEvent: false });
+        // Update your hidden form control or parent logic here
+        this.bfsComponentOptions = [];
+        this.showBfsComponent = false;
+    }
+    //---------------------------------------------------------
+    // Close dropdown when input loses focus (with a slight delay to allow clicks)
+    hideBfsComponentOverlay() {
+        setTimeout(() => this.showBfsComponent = false, 200);
     }
     //---------------------------------------------------------
 

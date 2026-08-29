@@ -30,20 +30,6 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Component</label>
-      </div>
-      <div class="col -8">
-        <select class="form-select" [(ngModel)]="result.BfsComponentId" name="bfsComponentId">
-          <ng-container *ngFor="let option of BfsComponentOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-          </ng-container>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="form-control">
-    <div class="row">
-      <div class="col -4">
         <label>Filter Type</label>
       </div>
       <div class="col -8">
@@ -69,6 +55,47 @@
       </div>
     </div>
   </div>
+
+  <!-- BfsComponentAutoComplete Start -->
+  <div class="form-control">
+    <div class="row">
+     <div class="position-relative" (focusout)="hideBfsComponentOverlay()">
+      <div class="col -4">
+        <label>Component</label>
+      </div>
+      <div class="col -8">
+        <div class="input-group position-relative">
+          <input
+            id="bfsComponentControl"
+            type="text"
+            class="form-control"
+            [(ngModel)]="result.BfsComponentName"
+            (ngModelChange)="onBfsComponentInput($event)"
+            (focus)="(result.BfsComponentName || '').length >= 2 ? showBfsComponent = true : showBfsComponent = false"
+            autocomplete="off"
+            placeholder="Type at least 2 characters..." />
+          <span class="input-group-text" *ngIf="isLoading.autoComplete">
+            <span class="spinner-border spinner-border-sm"></span>
+          </span>
+        </div>
+        <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
+            *ngIf="showBfsComponent && bfsComponentOptions.length > 0">
+            <li *ngFor="let option of bfsComponentOptions">
+                <button type="button"
+                    class="dropdown-item d-flex justify-content-between align-items-center"
+                    (mousedown)="$event.preventDefault(); selectBfsComponent(option)">
+                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                </button>
+            </li>
+        </ul>
+        <ul class="dropdown-menu show w-100" *ngIf="showBfsComponent && !isLoading.autoComplete && bfsComponentOptions.length === 0">
+            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+        </ul>
+      </div>
+     </div>
+    </div>
+  </div>
+  <!-- BfsComponent AutoComplete End -->
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
