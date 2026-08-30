@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
+//Template_Component_AutoComplete_1
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,6 +38,7 @@ export class SsPortfolioBalanceFormComponent extends BaseFormComponent<ISsPortfo
 
     // Define look ups
     public SsPortfolioOptions: any[] = [];
+public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -104,6 +107,19 @@ export class SsPortfolioBalanceFormComponent extends BaseFormComponent<ISsPortfo
                 error: (err: any) => {
                 this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching  Portfolio data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+this.isLoading.lookups = true;
+        target = "/Currency/list";
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.CurrencyOptions = response.items;
+                this.isLoading.lookups = false;
+            },
+                error: (err: any) => {
+                this.isLoading.lookups = false;
+                var msg = err.message || 'An error occurred while fetching Currency data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });

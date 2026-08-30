@@ -16,7 +16,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
@@ -62,7 +62,7 @@ export class OverdraftPortfolioListComponent
         this.queryRequest = initOverdraftPortfolioRequest();
     }
     //---------------------------------------------------------
-    override render(record: IEntity, column: IColumns): any {
+    override render(record: IEntity, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             case 'ssPortfolioId':

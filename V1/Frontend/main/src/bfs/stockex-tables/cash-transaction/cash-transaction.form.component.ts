@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
+//Template_Component_AutoComplete_1
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -39,6 +41,7 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
 public SsPortfolioOptions: any[] = [];
 public TransactionTypeOptions: any[] = [];
 public ExpensesTypeOptions: any[] = [];
+public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -125,7 +128,7 @@ this.isLoading.lookups = true;
         });
 this.isLoading.lookups = true;
         target = "/TransactionType/list";
-        (await this.apiService.post(target,  {filter:{StockEntityTypeId:2,SourceTypeId:2},pageSize:50})).subscribe({
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.TransactionTypeOptions = response.items;
                 this.isLoading.lookups = false;
@@ -146,6 +149,19 @@ this.isLoading.lookups = true;
                 error: (err: any) => {
                 this.isLoading.lookups = false;
                 var msg = err.message || 'An error occurred while fetching Expenses Type data.';
+                this.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+this.isLoading.lookups = true;
+        target = "/Currency/list";
+        (await this.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.CurrencyOptions = response.items;
+                this.isLoading.lookups = false;
+            },
+                error: (err: any) => {
+                this.isLoading.lookups = false;
+                var msg = err.message || 'An error occurred while fetching Currency data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });

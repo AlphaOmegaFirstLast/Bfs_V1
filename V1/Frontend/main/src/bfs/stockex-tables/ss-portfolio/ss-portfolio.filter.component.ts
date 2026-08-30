@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { ISsPortfolioFilter } from './ss-portfolio.shared';
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
+//Template_Component_AutoComplete
 
 @Component({
     selector: 'app-ss-portfolio-filter',
@@ -20,12 +22,12 @@ export class SsPortfolioFilterComponent implements OnInit {
 
     showBroker = false; // Toggle for the overlay
     brokerOptions: any[] = [];
-    brokerControl: any;
 showInvestor = false; // Toggle for the overlay
     investorOptions: any[] = [];
-    investorControl: any;
 
     // Define range filters
+    public InterestFrom: number | undefined;
+    public InterestTo: number | undefined;
 
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
@@ -41,6 +43,8 @@ showInvestor = false; // Toggle for the overlay
         await this.getLookups();
         await this.setAutoComplete();
         // Initialize range filters if not set
+        this.InterestFrom = this.result.Interest?.from;
+        this.InterestTo   = this.result.Interest?.to;
 
     }
     //---------------------------------------------------------
@@ -53,58 +57,95 @@ showInvestor = false; // Toggle for the overlay
     await this.brokerAutoComplete();
 await this.investorAutoComplete();
 
+}
+//---------------------------------------------------------
+
+async brokerAutoComplete(searchTerm: string = this.result.BrokerName ?? ''): Promise<void> {
+        const term = (searchTerm ?? '').trim();
+        if (term.length < 2) {
+            this.brokerOptions = [];
+            this.showBroker = false;
+            return;
+        }
+
+        this.showBroker = true;
+        this.isLoading.autoComplete = true;
+        try {
+            const request = { pageSize: 20, filter: { name: term } };
+            const response: any = await this.parent.apiService.postAutoComplete('/Broker/list', request);
+            this.brokerOptions = response?.items ?? [];
+        } catch (err: any) {
+            this.errorMessage = err?.message || 'Error fetching data';
+            this.brokerOptions = [];
+        } finally {
+            this.isLoading.autoComplete = false;
+        }
     }
     //---------------------------------------------------------
-    async brokerAutoComplete(searchTerm: string = this.result?.['brokerName'] ?? ''): Promise<void> {
+    onBrokerInput(value: string): void {
+        const val = value ?? '';
+        // Reset selected ID
+        this.result.BrokerName = undefined;
+        this.result.BrokerId = undefined;
+        this.brokerAutoComplete(val);
+    }
+    //---------------------------------------------------------
+    selectBroker(selectedOption: any) {
+        this.result.BrokerName = selectedOption?.name ?? undefined;
+        this.result.BrokerId = selectedOption?.id ?? undefined;
+        this.brokerOptions = [];
+        this.showBroker = false;
+    }
+    //---------------------------------------------------------
+    hideBrokerOverlay() {
+        setTimeout(() => {
+            this.showBroker = false;
+        }, 200);
+    }
+    //---------------------------------------------------------
+async investorAutoComplete(searchTerm: string = this.result.InvestorName ?? ''): Promise<void> {
         const term = (searchTerm ?? '').trim();
-        this.showBroker = term.length >= 2;
+        if (term.length < 2) {
+            this.investorOptions = [];
+            this.showInvestor = false;
+            return;
+        }
 
-        if (this.showBroker) {
-            this.isLoading.autoComplete = true;
-            try {
-                if (term.length < 2) {
-                    this.brokerOptions = [];
-                    return;
-                }
-
-                const request = { pageSize: 20, filter: { name: term } };
-                const response: any = await this.parent.apiService.postAutoComplete("/Broker/list", request);
-                this.brokerOptions = response?.items ?? [];
-            } catch (err: any) {
-                this.errorMessage = err?.message ||  "Error fetching data";
-                this.brokerOptions = [];
-            } finally {
-                this.isLoading.autoComplete = false;
-            }
+        this.showInvestor = true;
+        this.isLoading.autoComplete = true;
+        try {
+            const request = { pageSize: 20, filter: { name: term } };
+            const response: any = await this.parent.apiService.postAutoComplete('/Investor/list', request);
+            this.investorOptions = response?.items ?? [];
+        } catch (err: any) {
+            this.errorMessage = err?.message || 'Error fetching data';
+            this.investorOptions = [];
+        } finally {
+            this.isLoading.autoComplete = false;
         }
     }
-
-   //---------------------------------------------------------
-async investorAutoComplete(searchTerm: string = this.result?.['investorName'] ?? ''): Promise<void> {
-        const term = (searchTerm ?? '').trim();
-        this.showInvestor = term.length >= 2;
-
-        if (this.showInvestor) {
-            this.isLoading.autoComplete = true;
-            try {
-                if (term.length < 2) {
-                    this.investorOptions = [];
-                    return;
-                }
-
-                const request = { pageSize: 20, filter: { name: term } };
-                const response: any = await this.parent.apiService.postAutoComplete("/Investor/list", request);
-                this.investorOptions = response?.items ?? [];
-            } catch (err: any) {
-                this.errorMessage = err?.message ||  "Error fetching data";
-                this.investorOptions = [];
-            } finally {
-                this.isLoading.autoComplete = false;
-            }
-        }
+    //---------------------------------------------------------
+    onInvestorInput(value: string): void {
+        const val = value ?? '';
+        // Reset selected ID
+        this.result.InvestorName = undefined;
+        this.result.InvestorId = undefined;
+        this.investorAutoComplete(val);
     }
-
-   //---------------------------------------------------------
+    //---------------------------------------------------------
+    selectInvestor(selectedOption: any) {
+        this.result.InvestorName = selectedOption?.name ?? undefined;
+        this.result.InvestorId = selectedOption?.id ?? undefined;
+        this.investorOptions = [];
+        this.showInvestor = false;
+    }
+    //---------------------------------------------------------
+    hideInvestorOverlay() {
+        setTimeout(() => {
+            this.showInvestor = false;
+        }, 200);
+    }
+    //---------------------------------------------------------
 
     reset() {
         this.activeModal.close('Reset');
@@ -114,6 +155,7 @@ async investorAutoComplete(searchTerm: string = this.result?.['investorName'] ??
     apply() {
         this.activeModal.close('Apply');
         // Apply range filters
+        this.result.Interest = { from: this.InterestFrom, to: this.InterestTo };
 
         this.parent.applyFilter(this.result);
     }

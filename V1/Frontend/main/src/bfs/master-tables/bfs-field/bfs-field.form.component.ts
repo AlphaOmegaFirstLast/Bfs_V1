@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
+//Template_Component_AutoComplete_1
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +12,6 @@ import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
-import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
@@ -141,7 +142,7 @@ this.isLoading.lookups = true;
             // 4. Switch to API call
             switchMap(async (searchTerm) => {
                 this.isLoading.autoComplete = true;
-                this.showBfsComponent = this.entity.bfsComponentName != searchTerm; // Show dropdown when searching starts
+                this.showBfsComponent = this.entity.bfsComponentName != searchTerm ; // Show dropdown when searching starts
                 try {
                     const request = { pageSize: 20, filter: { name: searchTerm } };
                     const response: any = await this.apiService.postAutoComplete("/BfsComponent/list", request);

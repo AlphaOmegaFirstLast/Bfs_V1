@@ -106,6 +106,18 @@
 </div>
 
 <div class="row mb-2">
+    <div class="col-12">
+        <label for="currencyId" class="form-label fs-6">Currency</label>
+        <select class="form-select" id="currencyId" formControlName="currencyId"
+            [class]="submit && !form['currencyId'].errors ? 'is-valid': submit && form['currencyId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CurrencyOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Currency.</div>
+    </div>
+</div>
+<div class="row mb-2">
     <div class="col-6">
         <label for="value" class="form-label fs-6">Value</label>
         <input class="form-control" type="text" id="value" formControlName="value"

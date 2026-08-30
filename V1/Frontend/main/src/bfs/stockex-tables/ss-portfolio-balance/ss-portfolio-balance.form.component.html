@@ -41,9 +41,11 @@
                                     <!----------------------------------------- Messages -------------------------------------->
                                     <div *ngFor="let msg of messages">
                                         <div *ngIf="msg.text">
-                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
-                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
-                                            </ngb-alert>
+                                            <div *ngFor="let alert of msg.text.split('\n')">
+                                                <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                    <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ alert }}
+                                                </ngb-alert>
+                                            </div>
                                         </div>
                                     </div>
                                     <!----------------------------------------- Form Controls -------------------------------------->
@@ -83,6 +85,18 @@
     </div>
 </div>
 
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="currencyId" class="form-label fs-6">Currency</label>
+        <select class="form-select" id="currencyId" formControlName="currencyId"
+            [class]="submit && !form['currencyId'].errors ? 'is-valid': submit && form['currencyId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CurrencyOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Currency.</div>
+    </div>
+</div>
 <div class="row mb-2">
     <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>

@@ -2,6 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+//Template_Start_Component_AutoComplete
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
+//Template_End_Component_AutoComplete
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -54,17 +57,21 @@ presetBfsComponentBusinessActionFilter: IBfsComponentBusinessActionFilter | unde
     public BfsSystemOptions: any[] = [];
 public DataTypeOptions: any[] = [];
 
+    // Define autocomplete
+
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(bfsComponentUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(bfsComponentUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -94,6 +101,10 @@ let presetBfsComponentBusinessActionRequest: IBfsComponentBusinessActionRequest 
         if (this.presetBfsComponentBusinessActionFilter) {
             this.presetBfsComponentBusinessActionFilter.BfsComponentId = this.entity.id;
         }
+
+    }
+    //---------------------------------------------------------
+    override async setAutoComplete() {
 
     }
     //---------------------------------------------------------
@@ -148,6 +159,7 @@ this.isLoading.lookups = true;
 
     }
     //---------------------------------------------------------
+
     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getBfsComponentActions(this,record);
         let links: ViewLink[] = actions.filter(action => 

@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { ICashTransactionFilter } from './cash-transaction.shared';
+import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
+//Template_Component_AutoComplete
 
 @Component({
     selector: 'app-cash-transaction-filter',
@@ -21,6 +23,7 @@ export class CashTransactionFilterComponent implements OnInit {
 public SsPortfolioOptions:  any[] = [];
 public TransactionTypeOptions:  any[] = [];
 public ExpensesTypeOptions:  any[] = [];
+public CurrencyOptions:  any[] = [];
 
     // Define range filters
     public SourceDateFrom: Date | null | undefined;
@@ -30,7 +33,7 @@ public TransactionDateFrom: Date | null | undefined;
 public ValueFrom: number | undefined;
     public ValueTo: number | undefined;
 
-    isLoading: { list: boolean } = { list: false };
+    public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -42,6 +45,7 @@ public ValueFrom: number | undefined;
     async ngOnInit(): Promise<void> {
         this.result = this.parent.queryRequest.filter || {};
         await this.getLookups();
+        await this.setAutoComplete();
         // Initialize range filters if not set
         this.SourceDateFrom = this.result.SourceDate?.from;
         this.SourceDateTo   = this.result.SourceDate?.to;
@@ -98,9 +102,25 @@ target = "/ExpensesType/list";
                 this.isLoading.list = false;
             }
         });
+target = "/Currency/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.CurrencyOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Currency data.';
+                this.isLoading.list = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
+    async setAutoComplete() {
+
+}
+//---------------------------------------------------------
+
     reset() {
         this.activeModal.close('Reset');
         this.parent.applyFilter(null);

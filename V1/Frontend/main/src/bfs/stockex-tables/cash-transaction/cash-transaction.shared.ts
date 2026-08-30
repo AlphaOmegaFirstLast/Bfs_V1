@@ -8,17 +8,18 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const CashTransactionColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
-{ fieldName: 'sspTransactionId', displayName: 'StocksShare Transaction', sortName: 'SspTransaction_Name', width: '50px', isVisible:true },
-{ fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true },
-{ fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible:false },
-{ fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false },
-{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false },
-{ fieldName: 'value', displayName: 'Value', sortName: 'Value', width: '50px', isVisible:false },
-{ fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true },
-{ fieldName: 'expensesTypeId', displayName: 'Expenses Type', sortName: 'ExpensesType_Name', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'sspTransactionId', displayName: 'StocksShare Transaction', sortName: 'SspTransaction_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'value', displayName: 'Value', sortName: 'Value', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'expensesTypeId', displayName: 'Expenses Type', sortName: 'ExpensesType_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -36,6 +37,7 @@ value?: number;
 ssPortfolioId?: string;
 transactionTypeId?: number;
 expensesTypeId?: string;
+currencyId?: string;
 
 }
 //---------------------------------------------------------
@@ -54,6 +56,7 @@ value: 0,
 ssPortfolioId: '0',
 transactionTypeId: 0,
 expensesTypeId: '0',
+currencyId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -76,6 +79,7 @@ value: [0,getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLeng
 ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 transactionTypeId: [0,getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 expensesTypeId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     };
 } 
@@ -86,6 +90,7 @@ export interface ICashTransactionWithLookup extends ICashTransaction{
 ssPortfolioName?: string;
 transactionTypeName?: string;
 expensesTypeName?: string;
+currencyName?: string;
 
 }
 //---------------------------------------------------------
@@ -102,6 +107,7 @@ export interface ICashTransactionFilter {
 SsPortfolioId?: string;
 TransactionTypeId?: number;
 ExpensesTypeId?: string;
+CurrencyId?: string;
 
     SourceDate?: { from?: Date | null ; to?: Date | null} ;
 TransactionDate?: { from?: Date | null ; to?: Date | null} ;
@@ -128,6 +134,7 @@ export function initCashTransactionRequest(): ICashTransactionRequest {
 SsPortfolioId: undefined ,
 TransactionTypeId: undefined ,
 ExpensesTypeId: undefined ,
+CurrencyId: undefined ,
 
             SourceDate: { from: undefined , to: undefined} ,
 TransactionDate: { from: undefined , to: undefined} ,
@@ -181,6 +188,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('cashTransaction', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['expensesTypeId'], route:'/stkx/expenses-type/view', displayText:'Go to ExpensesType'
+});
+}
+if (component.accessService.isActionAllowed('cashTransaction', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['currencyId'], route:'/stkx/currency/view', displayText:'Go to Currency'
 });
 }
 

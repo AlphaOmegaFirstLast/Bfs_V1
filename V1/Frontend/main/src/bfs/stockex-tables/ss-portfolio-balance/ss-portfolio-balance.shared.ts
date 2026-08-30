@@ -1,5 +1,6 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/stockex-main/stockex.operations';
 
@@ -7,11 +8,12 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 
 // Output Columns of a Query  [used in entity Query]
 export const SsPortfolioBalanceColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:false },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
-{ fieldName: 'ssPortfolioId', displayName: ' Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true },
-{ fieldName: 'balance', displayName: 'Balance', sortName: 'Balance', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'ssPortfolioId', displayName: ' Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'balance', displayName: 'Balance', sortName: 'Balance', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -23,6 +25,7 @@ notes?: string;
 balance?: number;
 
     ssPortfolioId?: string;
+currencyId?: string;
 
 }
 //---------------------------------------------------------
@@ -35,6 +38,7 @@ notes: '',
 balance: 0,
 
         ssPortfolioId: '0',
+currencyId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -44,13 +48,14 @@ balance: 0,
 // Fields of an Entity [used in Entity form]
 export function ssPortfolioBalanceUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false],
-id: ['0'],
-name: [''],
-notes: [''],
-balance: [0],
+    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+name: ['',getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+balance: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    ssPortfolioId: ['0'],
+    ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     };
 } 
@@ -58,6 +63,7 @@ balance: [0],
 export interface ISsPortfolioBalanceWithLookup extends ISsPortfolioBalance{
 
     ssPortfolioName?: string;
+currencyName?: string;
 
 }
 //---------------------------------------------------------
@@ -71,6 +77,7 @@ export interface ISsPortfolioBalanceFilter {
     Name?: string;
 
     SsPortfolioId?: string;
+CurrencyId?: string;
 
     Balance?: { from?: number ; to?: number} ;
 
@@ -92,6 +99,7 @@ export function initSsPortfolioBalanceRequest(): ISsPortfolioBalanceRequest {
             Name: undefined ,
 
             SsPortfolioId: undefined ,
+CurrencyId: undefined ,
 
             Balance: { from: undefined , to: undefined} ,
 
@@ -128,6 +136,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('ssPortfolioBalance', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['ssPortfolioId'], route:'/stkx/ss-portfolio/view', displayText:'Go to SsPortfolio'
+});
+}
+if (component.accessService.isActionAllowed('ssPortfolioBalance', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['currencyId'], route:'/stkx/currency/view', displayText:'Go to Currency'
 });
 }
 

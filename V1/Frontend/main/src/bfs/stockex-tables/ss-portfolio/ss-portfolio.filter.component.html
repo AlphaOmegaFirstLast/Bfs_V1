@@ -28,72 +28,97 @@
   </div>
 
       <!-- BrokerAutoComplete Start -->
-  <!-- <div class="form-control">
+  <div class="form-control">
     <div class="row">
      <div class="position-relative" (focusout)="hideBrokerOverlay()">
       <div class="col -4">
-        <label>Broker</label>
+        <label>Component</label>
       </div>
       <div class="col -8">
-        <label for="brokerId" class="form-label fs-6">Broker</label>
-        <div class="input-group">
-            <input type="text"  class="form-control" [formControl]="brokerControl"
-                (focus)="brokerControl.value.length >= 2 && (showBroker = true)"
-                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf=""><span class="spinner-border spinner-border-sm"></span></span>
+        <div class="input-group position-relative">
+          <input
+            id="brokerControl"
+            type="text"
+            class="form-control"
+            [(ngModel)]="result.BrokerName"
+            (ngModelChange)="onBrokerInput($event)"
+            (focus)="(result.BrokerName || '').length >= 2 ? showBroker = true : showBroker = false"
+            autocomplete="off"
+            placeholder="Type at least 2 characters..." />
+          <span class="input-group-text" *ngIf="isLoading.autoComplete">
+            <span class="spinner-border spinner-border-sm"></span>
+          </span>
         </div>
         <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
             *ngIf="showBroker && brokerOptions.length > 0">
             <li *ngFor="let option of brokerOptions">
                 <button type="button"
                     class="dropdown-item d-flex justify-content-between align-items-center"
-                    (click)="selectBroker(option)">
+                    (mousedown)="$event.preventDefault(); selectBroker(option)">
                     <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
                 </button>
             </li>
         </ul>
         <ul class="dropdown-menu show w-100" *ngIf="showBroker && !isLoading.autoComplete && brokerOptions.length === 0">
-            <li><span class="dropdown-item-text text-muted">Please select a valid Broker.</span></li>
+            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
         </ul>
       </div>
      </div>
     </div>
-  </div> -->
+  </div>
   <!-- Broker AutoComplete End -->
-
   <!-- InvestorAutoComplete Start -->
-  <!-- <div class="form-control">
+  <div class="form-control">
     <div class="row">
      <div class="position-relative" (focusout)="hideInvestorOverlay()">
       <div class="col -4">
-        <label>Investor</label>
+        <label>Component</label>
       </div>
       <div class="col -8">
-        <label for="investorId" class="form-label fs-6">Investor</label>
-        <div class="input-group">
-            <input type="text"  class="form-control" [formControl]="investorControl"
-                (focus)="investorControl.value.length >= 2 && (showInvestor = true)"
-                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf=""><span class="spinner-border spinner-border-sm"></span></span>
+        <div class="input-group position-relative">
+          <input
+            id="investorControl"
+            type="text"
+            class="form-control"
+            [(ngModel)]="result.InvestorName"
+            (ngModelChange)="onInvestorInput($event)"
+            (focus)="(result.InvestorName || '').length >= 2 ? showInvestor = true : showInvestor = false"
+            autocomplete="off"
+            placeholder="Type at least 2 characters..." />
+          <span class="input-group-text" *ngIf="isLoading.autoComplete">
+            <span class="spinner-border spinner-border-sm"></span>
+          </span>
         </div>
         <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
             *ngIf="showInvestor && investorOptions.length > 0">
             <li *ngFor="let option of investorOptions">
                 <button type="button"
                     class="dropdown-item d-flex justify-content-between align-items-center"
-                    (click)="selectInvestor(option)">
+                    (mousedown)="$event.preventDefault(); selectInvestor(option)">
                     <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
                 </button>
             </li>
         </ul>
         <ul class="dropdown-menu show w-100" *ngIf="showInvestor && !isLoading.autoComplete && investorOptions.length === 0">
-            <li><span class="dropdown-item-text text-muted">Please select a valid Investor.</span></li>
+            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
         </ul>
       </div>
      </div>
     </div>
-  </div> -->
+  </div>
   <!-- Investor AutoComplete End -->
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Interest</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="InterestFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="InterestTo">
+      </div>
+    </div>
+  </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>

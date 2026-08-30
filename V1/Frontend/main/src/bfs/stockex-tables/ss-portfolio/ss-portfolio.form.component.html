@@ -68,10 +68,10 @@
      <div class="position-relative" (focusout)="hideInvestorOverlay()">
         <label for="investorId" class="form-label fs-6">Investor</label>
         <div class="input-group">
-            <input type="text"  class="form-control" formControlName="investorName"
-                (focus)="(investorControl.value?.length ?? 0) >= 2 && (showInvestor = true)"
+            <input type="text"  class="form-control" [formControl]="investorControl"
+                (focus)="investorControl.value.length >= 2 && (showInvestor = true)"
                     autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf="isLoading.autoComplete"><span class="spinner-border spinner-border-sm"></span></span>
+            <span class="input-group-text" *ngIf=""><span class="spinner-border spinner-border-sm"></span></span>
         </div>
         <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
             *ngIf="showInvestor && investorOptions.length > 0">
@@ -94,10 +94,10 @@
      <div class="position-relative" (focusout)="hideBrokerOverlay()">
         <label for="brokerId" class="form-label fs-6">Broker</label>
         <div class="input-group">
-            <input type="text"  class="form-control" formControlName="brokerName"
-                (focus)="(brokerControl.value?.length ?? 0) >= 2 && (showBroker = true)"
+            <input type="text"  class="form-control" [formControl]="brokerControl"
+                (focus)="brokerControl.value.length >= 2 && (showBroker = true)"
                     autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf="isLoading.autoComplete"><span class="spinner-border spinner-border-sm"></span></span>
+            <span class="input-group-text" *ngIf=""><span class="spinner-border spinner-border-sm"></span></span>
         </div>
         <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
             *ngIf="showBroker && brokerOptions.length > 0">
@@ -115,6 +115,15 @@
     </div>
    </div>
  </div>
+<div class="row mb-2">
+    <div class="col-6">
+        <label for="interest" class="form-label fs-6">Interest</label>
+        <input class="form-control" type="text" id="interest" formControlName="interest"
+            [class]="submit && !form['interest'].errors ? 'is-valid': submit && form['interest'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Interest.</div>
+    </div>
+</div>
 
 <div class="row mb-2">
     <div class="col-12">

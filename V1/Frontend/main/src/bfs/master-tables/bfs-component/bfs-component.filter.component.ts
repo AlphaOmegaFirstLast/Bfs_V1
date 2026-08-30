@@ -22,7 +22,7 @@ public DataTypeOptions:  any[] = [];
 
     // Define range filters
 
-    isLoading: boolean = false;
+    public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
@@ -34,6 +34,7 @@ public DataTypeOptions:  any[] = [];
     async ngOnInit(): Promise<void> {
         this.result = this.parent.queryRequest.filter || {};
         await this.getLookups();
+        await this.setAutoComplete();
         // Initialize range filters if not set
 
     }
@@ -44,27 +45,32 @@ public DataTypeOptions:  any[] = [];
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BfsSystemOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching BestFit System data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 target = "/DataType/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.DataTypeOptions = response.items;
-                this.isLoading = false;
+                this.isLoading.list = false;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Data Type data.';
-                this.isLoading = false;
+                this.isLoading.list = false;
             }
         });
 
     }
     //---------------------------------------------------------
+    async setAutoComplete() {
+
+    }
+    //---------------------------------------------------------
+
     reset() {
         this.activeModal.close('Reset');
         this.parent.applyFilter(null);

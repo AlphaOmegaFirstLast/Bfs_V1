@@ -60,9 +60,10 @@ export async function postDuplicateRecord(me: IUserInterface, record: any, data:
     if (record as IIdentifiable) {
 
         record.id = 0; // reset id only for record duplication 
-
+        var newRecord = JSON.parse(JSON.stringify(record)); // deep copy to avoid reference issues
+        debugger;
         var target = data.postUrl;  // for record duplication the default postUrl is used, for tree duplication a different url is used
-        (await me.apiService.post(target, record)).subscribe({
+        (await me.apiService.post(target, newRecord)).subscribe({
             next: (res: any) => {
                 me.messages.push({ text: 'Record duplicated successfully.', msgType: "info" });
                 if (data.onSuccessMethodName)

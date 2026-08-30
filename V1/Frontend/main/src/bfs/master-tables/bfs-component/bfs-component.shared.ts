@@ -1,5 +1,6 @@
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master-main/master.operations';
 
@@ -8,11 +9,11 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const BfsComponentColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystemId', width: '50px', isVisible:true },
+{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true },
 { fieldName: 'isSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDelete', width: '50px', isVisible:false },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
 { fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:false },
-{ fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataTypeId', width: '50px', isVisible:true },
+{ fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataType_Name', width: '50px', isVisible:true },
 { fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:false },
 { fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:false },
 { fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true },
@@ -62,19 +63,19 @@ dataTypeId: 0,
 // Fields of an Entity [used in Entity form]
 export function bfsComponentUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false],
-id: ['0'],
-isSoftDelete: [false],
-name: [''],
-displayName: [''],
-menuName: [''],
-menuPlaceHolder: [''],
-queryBaseTable: [''],
-notes: [''],
-interfaceRequired: [''],
+    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+isSoftDelete: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+name: ['',getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+displayName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+menuName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+menuPlaceHolder: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+queryBaseTable: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"500","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+interfaceRequired: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"0","MaxLength":"100","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    bfsSystemId: ['0'],
-dataTypeId: [0],
+    bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+dataTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     };
 } 
@@ -91,6 +92,7 @@ export interface IBfsComponentRequest extends IEntityRequest<IBfsComponentFilter
 //---------------------------------------------------------
 export interface IBfsComponentFilter {
     [key: string]: any;
+    Id?: string;
 
     Name?: string;
 InterfaceRequired?: string;
@@ -111,6 +113,7 @@ export function initBfsComponentRequest(): IBfsComponentRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             Name: undefined ,
 InterfaceRequired: undefined ,
