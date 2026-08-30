@@ -1,6 +1,7 @@
+using Bfs.StockEx.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Bfs.StockEx.Data.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Bfs.StockEx.Data;
 
@@ -37,9 +38,10 @@ public class StockExDbContext : DbContext
 
     public StockExDbContext(DbContextOptions<StockExDbContext> options) : base(options)
     {
+    // keep empty — options are provided by caller
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     { /* The line below was added to suppress a warning that EF raises whentrying to add-migration for CustomFields.
         "Unable to create a 'DbContext' of type 'AppDbContext'.
         The exception 'An error was generated for warning
@@ -60,3 +62,5 @@ public class StockExDbContext : DbContext
         //Template_ConfigField_Object
     }
 }
+
+

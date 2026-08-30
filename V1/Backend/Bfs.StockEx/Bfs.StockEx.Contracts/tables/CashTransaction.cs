@@ -55,6 +55,10 @@ namespace Bfs.StockEx.Contracts
         /// CashTransaction Expenses Type.
         ///</Summary>
         public long ExpensesTypeId {get; set;} = 0 ;
+///<Summary>
+        /// CashTransaction Currency.
+        ///</Summary>
+        public long CurrencyId {get; set;} = 0 ;
 
     }
 }

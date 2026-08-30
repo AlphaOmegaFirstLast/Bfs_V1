@@ -4,11 +4,12 @@ namespace Bfs.StockEx.Data
 {
     public class SsPortfolioListItem
     {      
-        public string? Id { get; set; }
-public string? Name { get; set; }
-public string? Notes { get; set; }
-public string? BrokerId { get; set; }
-public string? InvestorId { get; set; }
+        public long Id { get; set; }
+public string Name { get; set; }
+public string Notes { get; set; }
+public long BrokerId { get; set; }
+public long InvestorId { get; set; }
+public decimal Interest { get; set; }
 
         public string? BrokerName { get; set; }
 public string? InvestorName { get; set; }

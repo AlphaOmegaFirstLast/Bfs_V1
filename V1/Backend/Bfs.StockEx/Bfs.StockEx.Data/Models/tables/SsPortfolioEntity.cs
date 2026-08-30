@@ -14,6 +14,7 @@ namespace Bfs.StockEx.Data.Models
 public long Id {get; set;} = 0 ;
 public string Name {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
+public decimal Interest {get; set;} = 0 ;
 
         public long BrokerId {get; set;} = 0 ;
 public long InvestorId {get; set;} = 0 ;

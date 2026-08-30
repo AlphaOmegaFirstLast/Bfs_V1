@@ -21,6 +21,7 @@ namespace Bfs.StockEx.Data.Configuration
 //   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.Interest).HasMaxLength([FieldLength]).IsRequired();
 
         }
     }

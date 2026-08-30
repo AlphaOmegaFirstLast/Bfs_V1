@@ -17,6 +17,8 @@ public string Notes {get; set;} = string.Empty ;
 public decimal Balance {get; set;} = 0 ;
 
         public long SsPortfolioId {get; set;} = 0 ;
+public long CurrencyId {get; set;} = 0 ;
 
     }
 }
+

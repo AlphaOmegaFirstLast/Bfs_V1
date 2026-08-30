@@ -1,16 +1,11 @@
 using Bfs.Core.Contracts;
+using Bfs.Core.Interfaces;
 using Bfs.Master.Contracts;
 
 namespace Bfs.Master.Domain.Interfaces
 {
-    public interface IBfsFieldService
+    public interface IBfsFieldService: ICrudService<BfsField>
     {
-        Task<BfsField?> GetAsync(long id);
-        Task<List<BfsField>> GetAsync();
-
-        Task<BfsField> CreateAsync(BfsField contract);
-        Task<BfsField?> UpdateAsync(BfsField contract);
-        Task DeleteAsync(long id);
         Task<BfsField> UploadAsync(BfsField contract);
 
         Task<QueryResponse<BfsFieldListItem>> ListAsync(QueryRequest<BfsFieldListFilter> contractRequest);
@@ -19,3 +14,4 @@ namespace Bfs.Master.Domain.Interfaces
         //Template_End_Code_[DontOverwrite]_1   
     }
 }
+

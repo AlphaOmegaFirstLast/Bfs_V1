@@ -36,10 +36,12 @@ public class BfsFieldController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.bfsField")]
-    public async Task<BfsField?> Get(long id)
+    public async Task<BfsFieldListItem?> Get(long id)
     {
-        var result = await _bfsFieldService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<BfsFieldListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _bfsFieldService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

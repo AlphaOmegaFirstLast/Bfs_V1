@@ -14,6 +14,7 @@ namespace Bfs.StockEx.Domain.Mapper
 Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
+Interest= entity.Interest,
 
                BrokerId= entity.BrokerId,
 InvestorId= entity.InvestorId,
@@ -41,6 +42,7 @@ InvestorId= entity.InvestorId,
 SsPortfolioEntity.Id= contract.Id;
 SsPortfolioEntity.Name= contract.Name;
 SsPortfolioEntity.Notes= contract.Notes;
+SsPortfolioEntity.Interest= contract.Interest;
 
             SsPortfolioEntity.BrokerId= contract.BrokerId;
 SsPortfolioEntity.InvestorId= contract.InvestorId;

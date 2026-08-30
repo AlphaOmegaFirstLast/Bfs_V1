@@ -4,6 +4,7 @@ using Bfs.StockEx.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bfs.StockEx.Data.Migrations
 {
     [DbContext(typeof(StockExDbContext))]
-    partial class StockExDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260830082906_ssPortfolioCurrency")]
+    partial class ssPortfolioCurrency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,9 +129,6 @@ namespace Bfs.StockEx.Data.Migrations
             modelBuilder.Entity("Bfs.StockEx.Data.Models.CashTransactionEntity", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CurrencyId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ExpensesTypeId")
@@ -548,9 +548,6 @@ namespace Bfs.StockEx.Data.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("CurrencyId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -581,8 +578,8 @@ namespace Bfs.StockEx.Data.Migrations
                     b.Property<long>("BrokerId")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("Interest")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("InvestorId")
                         .HasColumnType("bigint");

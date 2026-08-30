@@ -12,6 +12,8 @@ namespace Bfs.StockEx.Data
         public long? BrokerId { get; set; }
 public long? InvestorId { get; set; }
 
+        public NumericRange? Interest { get; set; }
+
     }
 }
 

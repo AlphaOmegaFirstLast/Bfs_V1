@@ -1,4 +1,5 @@
 using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
 
@@ -12,9 +13,9 @@ namespace Bfs.StockEx.Data.Lists
 {
     public class CashTransactionList: QueryBase<CashTransactionListFilter>,  ICashTransactionList
     {
-        private readonly IResourceSecurity _resourceSecurity;
+        private readonly IResourceSecurity? _resourceSecurity;
 
-        public CashTransactionList(string connectionString, IResourceSecurity resourceSecurity)
+        public CashTransactionList(string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
@@ -33,7 +34,7 @@ namespace Bfs.StockEx.Data.Lists
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<CashTransactionListItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<CashTransactionListItem>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -42,6 +43,15 @@ namespace Bfs.StockEx.Data.Lists
             }
 
             return response;
+        }
+
+        private List<CashTransactionListItem> DoMapping(IEnumerable<CashTransactionListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (CashTransactionListItem)record;
+
+                return item;
+            }).ToList();
         }
 
         protected override void SetupFields()
@@ -58,12 +68,16 @@ _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = 
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Value", DbName = "stkxCashTransaction.Value", QueryName = "Value", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "TransactionTypeId", DbName = "stkxCashTransaction.TransactionTypeId", QueryName = "TransactionTypeId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "ExpensesTypeId", DbName = "stkxCashTransaction.ExpensesTypeId", QueryName = "ExpensesTypeId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "CurrencyId", DbName = "stkxCashTransaction.CurrencyId", QueryName = "CurrencyId", IsAggregare = false});
+
+            //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Name", QueryName = "SspTransactionName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "TransactionType", FieldName = "Name", DbName = "stkxTransactionType.Name", QueryName = "TransactionTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "ExpensesType", FieldName = "Name", DbName = "stkxExpensesType.Name", QueryName = "ExpensesTypeName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
 
             //autoCompletes
 
@@ -80,6 +94,7 @@ _fieldList.Add(new QueryField() {ComponentName = "ExpensesType", FieldName = "Na
 sql.AppendLine($"   Left Join stkxSsPortfolio on stkxCashTransaction.SsPortfolioId = stkxSsPortfolio.Id");
 sql.AppendLine($"   Left Join stkxTransactionType on stkxCashTransaction.TransactionTypeId = stkxTransactionType.Id");
 sql.AppendLine($"   Left Join stkxExpensesType on stkxCashTransaction.ExpensesTypeId = stkxExpensesType.Id");
+sql.AppendLine($"   Left Join stkxCurrency on stkxCashTransaction.CurrencyId = stkxCurrency.Id");
 
            return sql.ToString();
         }
@@ -123,6 +138,11 @@ if (filter.ExpensesTypeId.HasValue)
                 {
                     sql.AppendLine("stkxCashTransaction.ExpensesTypeId = @ExpensesTypeId");
                     parameters.Add("@ExpensesTypeId", filter.ExpensesTypeId.Value);
+                }
+if (filter.CurrencyId.HasValue)
+                {
+                    sql.AppendLine("stkxCashTransaction.CurrencyId = @CurrencyId");
+                    parameters.Add("@CurrencyId", filter.CurrencyId.Value);
                 }
 
                 if (filter.SourceDate?.From.HasValue == true)

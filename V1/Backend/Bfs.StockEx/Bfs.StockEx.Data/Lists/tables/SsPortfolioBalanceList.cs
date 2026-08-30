@@ -1,4 +1,5 @@
 using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
 
@@ -12,9 +13,9 @@ namespace Bfs.StockEx.Data.Lists
 {
     public class SsPortfolioBalanceList: QueryBase<SsPortfolioBalanceListFilter>,  ISsPortfolioBalanceList
     {
-        private readonly IResourceSecurity _resourceSecurity;
+        private readonly IResourceSecurity? _resourceSecurity;
 
-        public SsPortfolioBalanceList(string connectionString, IResourceSecurity resourceSecurity)
+        public SsPortfolioBalanceList(string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
@@ -33,7 +34,7 @@ namespace Bfs.StockEx.Data.Lists
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<SsPortfolioBalanceListItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<SsPortfolioBalanceListItem>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -44,6 +45,15 @@ namespace Bfs.StockEx.Data.Lists
             return response;
         }
 
+        private List<SsPortfolioBalanceListItem> DoMapping(IEnumerable<SsPortfolioBalanceListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (SsPortfolioBalanceListItem)record;
+
+                return item;
+            }).ToList();
+        }
+
         protected override void SetupFields()
         {
             //base fields
@@ -52,9 +62,13 @@ _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "Notes", DbName = "stkxSsPortfolioBalance.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "SsPortfolioId", DbName = "stkxSsPortfolioBalance.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "Balance", DbName = "stkxSsPortfolioBalance.Balance", QueryName = "Balance", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "CurrencyId", DbName = "stkxSsPortfolioBalance.CurrencyId", QueryName = "CurrencyId", IsAggregare = false});
+
+            //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
 
             //autoCompletes
 
@@ -68,6 +82,7 @@ _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName
            sql.AppendLine(" From stkxSsPortfolioBalance ");
 
            sql.AppendLine($"   Left Join stkxSsPortfolio on stkxSsPortfolioBalance.SsPortfolioId = stkxSsPortfolio.Id");
+sql.AppendLine($"   Left Join stkxCurrency on stkxSsPortfolioBalance.CurrencyId = stkxCurrency.Id");
 
            return sql.ToString();
         }
@@ -96,6 +111,11 @@ _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName
                 {
                     sql.AppendLine("stkxSsPortfolioBalance.SsPortfolioId = @SsPortfolioId");
                     parameters.Add("@SsPortfolioId", filter.SsPortfolioId.Value);
+                }
+if (filter.CurrencyId.HasValue)
+                {
+                    sql.AppendLine("stkxSsPortfolioBalance.CurrencyId = @CurrencyId");
+                    parameters.Add("@CurrencyId", filter.CurrencyId.Value);
                 }
 
                 if (filter.Balance?.From.HasValue == true)

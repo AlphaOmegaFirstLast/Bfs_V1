@@ -8,15 +8,8 @@ namespace Bfs.StockEx.Api.Validators
     {
         public SsPortfolioBalanceValidator()
         {
-        RuleFor(x => x.Name)
-.NotEmpty().WithErrorCode(ErrorCodes.InvalidName)
-.MinimumLength(3)
-.MaximumLength(50)
-;
-RuleFor(x => x.Notes)
-.MaximumLength(1000)
-;
 
         }
     }
 }
+

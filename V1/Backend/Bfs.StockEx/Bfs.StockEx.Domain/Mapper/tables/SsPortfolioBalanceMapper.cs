@@ -17,6 +17,7 @@ Notes= entity.Notes,
 Balance= entity.Balance,
 
                SsPortfolioId= entity.SsPortfolioId,
+CurrencyId= entity.CurrencyId,
 
             };
 
@@ -44,6 +45,7 @@ SsPortfolioBalanceEntity.Notes= contract.Notes;
 SsPortfolioBalanceEntity.Balance= contract.Balance;
 
             SsPortfolioBalanceEntity.SsPortfolioId= contract.SsPortfolioId;
+SsPortfolioBalanceEntity.CurrencyId= contract.CurrencyId;
 
             return SsPortfolioBalanceEntity;
         }     

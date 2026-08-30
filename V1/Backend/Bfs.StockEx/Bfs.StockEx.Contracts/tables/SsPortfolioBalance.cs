@@ -31,6 +31,11 @@ namespace Bfs.StockEx.Contracts
         /// SsPortfolioBalance  Portfolio.
         ///</Summary>
         public long SsPortfolioId {get; set;} = 0 ;
+///<Summary>
+        /// SsPortfolioBalance Currency.
+        ///</Summary>
+        public long CurrencyId {get; set;} = 0 ;
 
     }
 }
+

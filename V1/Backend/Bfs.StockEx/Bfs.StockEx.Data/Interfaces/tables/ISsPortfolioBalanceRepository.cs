@@ -9,3 +9,4 @@ namespace Bfs.StockEx.Data.Interfaces
         //Template_End_DontOverwrite_1
     }
 }
+

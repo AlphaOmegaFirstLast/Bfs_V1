@@ -36,10 +36,12 @@ public class BfsComponentController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.bfsComponent")]
-    public async Task<BfsComponent?> Get(long id)
+    public async Task<BfsComponentListItem?> Get(long id)
     {
-        var result = await _bfsComponentService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<BfsComponentListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _bfsComponentService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

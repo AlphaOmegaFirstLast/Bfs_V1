@@ -13,6 +13,7 @@ namespace Bfs.StockEx.Data
 public long? SsPortfolioId { get; set; }
 public int? TransactionTypeId { get; set; }
 public long? ExpensesTypeId { get; set; }
+public long? CurrencyId { get; set; }
 
         public DateRange? SourceDate { get; set; }
 public DateRange? TransactionDate { get; set; }

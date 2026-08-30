@@ -23,6 +23,7 @@ public decimal Value {get; set;} = 0 ;
 public long SsPortfolioId {get; set;} = 0 ;
 public int TransactionTypeId {get; set;} = 0 ;
 public long ExpensesTypeId {get; set;} = 0 ;
+public long CurrencyId {get; set;} = 0 ;
 
     }
 }

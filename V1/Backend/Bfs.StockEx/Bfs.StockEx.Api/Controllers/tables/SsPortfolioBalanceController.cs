@@ -36,10 +36,12 @@ public class SsPortfolioBalanceController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.ssPortfolioBalance")]
-    public async Task<SsPortfolioBalance?> Get(long id)
+    public async Task<SsPortfolioBalanceListItem?> Get(long id)
     {
-        var result = await _ssPortfolioBalanceService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<SsPortfolioBalanceListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _ssPortfolioBalanceService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

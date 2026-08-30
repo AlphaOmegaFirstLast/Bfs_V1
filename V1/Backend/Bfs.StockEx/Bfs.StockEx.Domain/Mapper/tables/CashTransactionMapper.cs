@@ -23,6 +23,7 @@ Value= entity.Value,
 SsPortfolioId= entity.SsPortfolioId,
 TransactionTypeId= entity.TransactionTypeId,
 ExpensesTypeId= entity.ExpensesTypeId,
+CurrencyId= entity.CurrencyId,
 
             };
 
@@ -56,6 +57,7 @@ CashTransactionEntity.Value= contract.Value;
 CashTransactionEntity.SsPortfolioId= contract.SsPortfolioId;
 CashTransactionEntity.TransactionTypeId= contract.TransactionTypeId;
 CashTransactionEntity.ExpensesTypeId= contract.ExpensesTypeId;
+CashTransactionEntity.CurrencyId= contract.CurrencyId;
 
             return CashTransactionEntity;
         }     

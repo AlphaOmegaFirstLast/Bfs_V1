@@ -12,6 +12,8 @@ namespace Bfs.StockEx.Contracts
         public long? BrokerId { get; set; }
 public long? InvestorId { get; set; }
 
+        public NumericRange? Interest { get; set; }
+
     }
 }
 

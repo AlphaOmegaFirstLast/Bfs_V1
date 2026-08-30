@@ -36,10 +36,12 @@ public class CashTransactionController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.cashTransaction")]
-    public async Task<CashTransaction?> Get(long id)
+    public async Task<CashTransactionListItem?> Get(long id)
     {
-        var result = await _cashTransactionService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<CashTransactionListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _cashTransactionService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

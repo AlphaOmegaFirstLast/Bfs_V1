@@ -1,5 +1,6 @@
 using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -11,9 +12,12 @@ namespace Bfs.Master.Data.Lists
 {
     public class BfsComponentList: QueryBase<BfsComponentListFilter>,  IBfsComponentList
     {
-        public BfsComponentList(string connectionString)
+        private readonly IResourceSecurity? _resourceSecurity;
+
+        public BfsComponentList(string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,7 +26,7 @@ namespace Bfs.Master.Data.Lists
         {
             var response = new QueryResponse<BfsComponentListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
@@ -33,7 +37,7 @@ namespace Bfs.Master.Data.Lists
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
@@ -43,21 +47,23 @@ namespace Bfs.Master.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsComponent.Id", QueryName = "Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.IsSoftDelete", QueryName = "IsSoftDelete", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.Name", QueryName = "Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.DisplayName", QueryName = "DisplayName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.DataTypeId", QueryName = "DataTypeId", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuName", QueryName = "MenuName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.MenuPlaceHolder", QueryName = "MenuPlaceHolder", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.QueryBaseTable", QueryName = "QueryBaseTable", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.Notes", QueryName = "Notes", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "BfsComponent.InterfaceRequired", QueryName = "InterfaceRequired", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Id", DbName = "BfsComponent.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "BfsSystemId", DbName = "BfsComponent.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "IsSoftDelete", DbName = "BfsComponent.IsSoftDelete", QueryName = "IsSoftDelete", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BfsComponent.Name", QueryName = "Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "DisplayName", DbName = "BfsComponent.DisplayName", QueryName = "DisplayName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "DataTypeId", DbName = "BfsComponent.DataTypeId", QueryName = "DataTypeId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "MenuName", DbName = "BfsComponent.MenuName", QueryName = "MenuName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "MenuPlaceHolder", DbName = "BfsComponent.MenuPlaceHolder", QueryName = "MenuPlaceHolder", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "QueryBaseTable", DbName = "BfsComponent.QueryBaseTable", QueryName = "QueryBaseTable", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Notes", DbName = "BfsComponent.Notes", QueryName = "Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "InterfaceRequired", DbName = "BfsComponent.InterfaceRequired", QueryName = "InterfaceRequired", IsAggregare = false});
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "DataType.Name", QueryName = "DataTypeName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BfsSystem", FieldName = "Name", DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "DataType", FieldName = "Name", DbName = "DataType.Name", QueryName = "DataTypeName", IsAggregare = false});
+
+            //autoCompletes
 
            //Aggregates
 
@@ -82,6 +88,11 @@ sql.AppendLine($"   Left Join DataType on BfsComponent.DataTypeId = DataType.Id"
                          var filter = request.Filter;
             if (filter != null)
             {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("BfsComponent.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {
@@ -127,3 +138,4 @@ if (filter.DataTypeId.HasValue)
        }       
     }
 }
+

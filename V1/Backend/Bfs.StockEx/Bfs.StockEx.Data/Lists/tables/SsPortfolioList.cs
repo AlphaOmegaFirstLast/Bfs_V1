@@ -1,4 +1,5 @@
 using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
 
@@ -12,9 +13,9 @@ namespace Bfs.StockEx.Data.Lists
 {
     public class SsPortfolioList: QueryBase<SsPortfolioListFilter>,  ISsPortfolioList
     {
-        private readonly IResourceSecurity _resourceSecurity;
+        private readonly IResourceSecurity? _resourceSecurity;
 
-        public SsPortfolioList(string connectionString, IResourceSecurity resourceSecurity)
+        public SsPortfolioList(string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
@@ -33,7 +34,7 @@ namespace Bfs.StockEx.Data.Lists
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<SsPortfolioListItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<SsPortfolioListItem>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -44,6 +45,15 @@ namespace Bfs.StockEx.Data.Lists
             return response;
         }
 
+        private List<SsPortfolioListItem> DoMapping(IEnumerable<SsPortfolioListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (SsPortfolioListItem)record;
+
+                return item;
+            }).ToList();
+        }
+
         protected override void SetupFields()
         {
             //base fields
@@ -52,6 +62,9 @@ _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Nam
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Notes", DbName = "stkxSsPortfolio.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "BrokerId", DbName = "stkxSsPortfolio.BrokerId", QueryName = "BrokerId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "InvestorId", DbName = "stkxSsPortfolio.InvestorId", QueryName = "InvestorId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Interest", DbName = "stkxSsPortfolio.Interest", QueryName = "Interest", IsAggregare = false});
+
+            //object fields
 
             //lookups
 
@@ -103,6 +116,17 @@ if (filter.InvestorId.HasValue)
                 {
                     sql.AppendLine("stkxSsPortfolio.InvestorId = @InvestorId");
                     parameters.Add("@InvestorId", filter.InvestorId.Value);
+                }
+
+                if (filter.Interest?.From.HasValue == true)
+                {
+                    sql.AppendLine("stkxSsPortfolio.Interest >= @InterestFrom");
+                    parameters.Add("@InterestFrom", filter.Interest.From.Value);
+                }
+                if (filter.Interest?.To.HasValue == true)
+                {
+                    sql.AppendLine("stkxSsPortfolio.Interest <= @InterestTo");
+                    parameters.Add("@InterestTo", filter.Interest.To.Value);
                 }
 
             }

@@ -22,6 +22,10 @@ namespace Bfs.StockEx.Contracts
         /// SsPortfolio Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
+///<Summary>
+        /// SsPortfolio Interest.
+        ///</Summary>
+        public decimal Interest {get; set;} = 0 ;
 
         ///<Summary>
         /// SsPortfolio Broker.
@@ -31,7 +35,6 @@ namespace Bfs.StockEx.Contracts
         /// SsPortfolio Investor.
         ///</Summary>
         public long InvestorId {get; set;} = 0 ;
-
 
     }
 }

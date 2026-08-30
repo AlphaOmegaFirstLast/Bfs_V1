@@ -6,7 +6,7 @@ namespace Bfs.Master.Data
     {      
         public string? Id { get; set; }
 public string? BfsSystemId { get; set; }
-public string? IsSoftDelete { get; set; }
+public bool? IsSoftDelete { get; set; }
 public string? Name { get; set; }
 public string? DisplayName { get; set; }
 public string? DataTypeId { get; set; }
