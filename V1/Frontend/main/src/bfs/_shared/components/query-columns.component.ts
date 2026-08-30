@@ -1,30 +1,40 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IColumns } from '../interfaces';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { IQueryColumn } from '../interfaces';
 
 @Component({
     selector: 'bfs-query-columns',
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule, CommonModule, DragDropModule],
     templateUrl: './query-columns.component.html'
     //styles: ``
 })
-export class QueryColumnsComponent implements OnInit{
+export class QueryColumnsComponent implements OnInit {
 
-    public result: IColumns[] = [];
+    public result: IQueryColumn[] = [];
     public parent: any;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal) { }
 
     ngOnInit(): void {
         this.result = this.parent.queryRequest.columns || [];
     }
+    
+    drop(event: CdkDragDrop<IQueryColumn[]>) {
+        moveItemInArray(this.result, event.previousIndex, event.currentIndex);
 
+        // Update columnOrder property if you want to persist ordering
+        this.result = this.result.map((col, idx) => ({
+            ...col,
+            columnOrder: idx
+        }));
+    }
     reset() {
         this.activeModal.close('Reset');
-        let columns: IColumns[] = this.parent.queryRequest.columns;    // do casting first
+        let columns: IQueryColumn[] = this.parent.queryRequest.columns;    // do casting first
         this.result = columns.map(x => ({ ...x, isVisible: true }));   // set all columns visible
         this.parent.applyColumns(this.result);
     }

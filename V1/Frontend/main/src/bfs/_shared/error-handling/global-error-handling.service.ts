@@ -36,7 +36,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     // Re-throw in dev so DevTools still shows the stack
     if (!environment.production) {
-      console.error('[GlobalErrorHandler]', appError);
+      console.warn('[GlobalErrorHandler]', appError); //console.error causes recursive calls to handleError() in dev mode
     }
   }
   //---------------------------------------

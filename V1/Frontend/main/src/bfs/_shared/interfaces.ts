@@ -56,14 +56,6 @@ export interface ActionLink {
     data?: any;
 }
 //------------------------------------------------
-export interface IColumns {
-    fieldName: string;
-    displayName: string;
-    sortName: string;
-    width: string;
-    isVisible: boolean;
-}
-//------------------------------------------------
 export interface IQueryColumn {
     [key: string]: any; // Allow additional properties
     fieldName: string;
@@ -71,6 +63,7 @@ export interface IQueryColumn {
     sortName: string;
     width: string;
     isVisible: boolean;
+    columnOrder?: number;
 }
 //------------------------------------------------
 export interface ISort {
@@ -85,7 +78,7 @@ export interface IEntityRequest<TFilter> {
     filter?: TFilter;
     sortOption?: ISort;
     group: string;
-    columns: IColumns[];
+    columns: IQueryColumn[];
 }
 
 //------------------------------------------------

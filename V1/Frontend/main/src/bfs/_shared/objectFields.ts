@@ -54,10 +54,10 @@ export function getFieldValidationHeaders(this: any): string {
     return result;
 }
 //-------------------------------------------------
-export function getFieldValidationData(fieldValidationString: string): string {
-    if (!fieldValidationString) return '';
+export function getFieldValidationData(fieldValidation: IFieldValidation): string {
+    if (!fieldValidation) return '';
     try {
-        const fieldValidation: IFieldValidation = normalizeObjectKeysToLowerFirstLetter(JSON.parse(fieldValidationString) as IFieldValidation);
+      //  const fieldValidation: IFieldValidation = normalizeObjectKeysToLowerFirstLetter(JSON.parse(fieldValidationString) as IFieldValidation);
         var result = `<table class="table table-bordered table-sm">
                    <tr>    
                         <td width="150px"> ${fieldValidation.isRequired ? 'true' : 'false'}</td>
@@ -108,7 +108,8 @@ export interface IReportInfo {
     isColumnVisible: boolean;
     isJoinField: boolean;
     aggregateTypeId: string,
-    chartElementId: string
+    chartElementId: string,
+    columnOrder: string
 }
 //---------------------------------------------------------
 function normalizeObjectKeysToLowerFirstLetter<T extends object>(value: T): T {
@@ -133,7 +134,8 @@ export function initReportInfo(): IReportInfo {
         isColumnVisible: true,
         isJoinField: false,
         aggregateTypeId: '1',
-        chartElementId: '1'
+        chartElementId: '1',
+        columnOrder:'1'
     }
 }
 //-------------------------------------------------
@@ -144,7 +146,8 @@ export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFor
         isColumnVisible: [true],
         isJoinField: [false],
         aggregateTypeId: ['1'],
-        chartElementId: ['1']
+        chartElementId: ['1'],
+        columnOrder: ['1']
     })
 };
 //------------------------------------------------
@@ -164,10 +167,10 @@ export function getReportInfoHeaders(this: any): string {
     return result;
 }
 //-------------------------------------------------
-export function getReportInfoData(reportInfoString: string): string {
-    if (!reportInfoString) return '';
+export function getReportInfoData(reportInfo: IReportInfo): string {
+    if (!reportInfo) return '';
     try {
-        const reportInfo: IReportInfo = normalizeObjectKeysToLowerFirstLetter(JSON.parse(reportInfoString) as IReportInfo);
+ //       const reportInfo: IReportInfo = normalizeObjectKeysToLowerFirstLetter(JSON.parse(reportInfoString) as IReportInfo);
         var result = `<table class="table table-bordered table-sm">
                    <tr>    
                         <td width="150px"> ${reportInfo.parentTable??''}</td>

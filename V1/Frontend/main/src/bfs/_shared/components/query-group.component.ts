@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IColumns } from '../interfaces';
+import { IQueryColumn } from '../interfaces';
 
 @Component({
     selector: 'bfs-query-group',
@@ -14,7 +14,7 @@ import { IColumns } from '../interfaces';
 export class QueryGroupComponent implements OnInit{
     
     public result: string = '';
-    public itemColumns: IColumns[] = [];
+    public itemColumns: IQueryColumn[] = [];
     public parent: any;
 
     constructor(public activeModal: NgbActiveModal) {

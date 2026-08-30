@@ -18,8 +18,9 @@ import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 //---------------- bfs shared -------------------------------------
-import { IAction, IEntity, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
-import { type IColumns, ICustomReports, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+//
+import { ICustomReports, IEntityRequest, IIdentifiable, IUIMessage, IUserInterface } from "@bfs/_shared/interfaces";
+import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { QuerySortComponent } from '@bfs/_shared/components/query-sort.component';
 import { QueryColumnsComponent } from '@bfs/_shared/components/query-columns.component';
 import { QueryGroupComponent } from '@bfs/_shared/components/query-group.component';
@@ -135,8 +136,16 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         }
     }
     //---------------------------------------------------------
+    reOrderColumns(inputColumns: IQueryColumn[]):IQueryColumn[] {    
+        let resultColumns = inputColumns.sort((a, b) =>
+            (a.columnOrder ?? 0) - (b.columnOrder ?? 0)
+        );
+
+        return resultColumns;
+    }
+    //---------------------------------------------------------
     getDescription() {
-        this.queryRequest.columns = JSON.parse(JSON.stringify(this.queryRequest.columns)) as IColumns[];
+        let filterColumns = JSON.parse(JSON.stringify(this.queryRequest.columns)) as IQueryColumn[];
         this.queryRequest.filter = JSON.parse(JSON.stringify(this.queryRequest.filter));
         // for each filter property, if it has a value, add it to the description array
         const description: string[] = [];
@@ -148,7 +157,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
                 && !(typeof value === 'object' && Object.keys(value).length === 0)
                 && !(typeof value === 'object' && ('from' in value || 'to' in value) && (value as any)["from"] === undefined && (value as any)["to"] === undefined)
             ) {
-                let label = this.queryRequest.columns.find(col => col.fieldName.toLowerCase() === key.toLowerCase())?.displayName || key;
+                let label = filterColumns.find(col => col.fieldName.toLowerCase() === key.toLowerCase())?.displayName || key;
                 description.push(`${label}: ${value}`);
             }
         }
@@ -198,7 +207,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     }
     //---------------------------------------------------------
     applyColumns(result?: any) {
-        this.queryRequest.columns = result;
+        this.queryRequest.columns = this.reOrderColumns(result);
         this.captureCurrentReportParameters("temp_" + Date.now());
     }
     //---------------------------------------------------------
@@ -261,7 +270,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     //---------------------------------------------------------
     isObjectField(field: string): boolean {
         field = field.toLowerCase();
-        return field.includes('fieldvalidation') || field.includes('reportinfo');
+        return field==='fieldvalidation' || field==='reportinfo' ;//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
     }
     //---------------------------------------------------------        
     objectFieldHeaders(field: string): SafeHtml {
@@ -283,13 +292,14 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     //---------------------------------------------------------
     objectFieldData(record: any, field: string): SafeHtml {
         var result = '';
+        let jsonField = 'json'+ field;
 
         switch (field.toLowerCase()) {
             case 'reportinfo':
-                result = getReportInfoData(record[field] as string);
+                result = getReportInfoData(record[field]);
                 break;
             case 'fieldvalidation':
-                result = getFieldValidationData(record[field] as string);
+                result = getFieldValidationData(record[field]);
                 break;
 
             default:
@@ -567,7 +577,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return request;
     }
     //---------------------------------------------------------
-    render(record: IEntity, column: IColumns): any {
+    render(record: IEntity, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
             default:
