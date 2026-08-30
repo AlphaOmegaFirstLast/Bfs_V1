@@ -24,7 +24,6 @@ obj/
 bin/
 
 Documentation/
-Seed/
 
 # Environment files
 /.env

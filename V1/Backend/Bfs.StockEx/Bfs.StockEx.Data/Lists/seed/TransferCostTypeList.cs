@@ -1,0 +1,112 @@
+using Bfs.Core.Data;
+using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
+
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Bfs.StockEx.Data.Interfaces;
+using Bfs.StockEx.Data;
+using System.Text;
+
+namespace Bfs.StockEx.Data.Lists
+{
+    public class TransferCostTypeList: QueryBase<TransferCostTypeListFilter>,  ITransferCostTypeList
+    {
+        private readonly IResourceSecurity _resourceSecurity;
+
+        public TransferCostTypeList(string connectionString, IResourceSecurity resourceSecurity)
+        {
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
+        }
+
+        private readonly string _connectionString;
+
+        public async Task<QueryResponse<TransferCostTypeListItem>> GetAsync(QueryRequest<TransferCostTypeListFilter> request)
+        {
+            var response = new QueryResponse<TransferCostTypeListItem>();
+
+            await SetUp(request, _resourceSecurity);
+
+            using var db = new SqlConnection(_connectionString);
+            {
+                // Run Report
+                var mainQuery = GetMainSqlStatement();
+                var items = await db.QueryAsync<TransferCostTypeListItem>(mainQuery.sql, mainQuery.parameters);
+                response.Items = (List<TransferCostTypeListItem>)items;
+
+                // Run Count
+                var countQuery = GetCountSqlStatement();
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
+                response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
+            }
+
+            return response;
+        }
+
+        protected override void SetupFields()
+        {
+            //base fields
+            _fieldList.Add(new QueryField() {ComponentName = "TransferCostType", FieldName = "Id", DbName = "stkxTransferCostType.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "TransferCostType", FieldName = "Name", DbName = "stkxTransferCostType.Name", QueryName = "Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "TransferCostType", FieldName = "Notes", DbName = "stkxTransferCostType.Notes", QueryName = "Notes", IsAggregare = false});
+
+            //lookups
+
+            //autoCompletes
+
+           //Aggregates
+
+        }
+
+        protected override string GetFromJoinStatement()
+        {
+           var sql = new StringBuilder();  
+           sql.AppendLine(" From stkxTransferCostType ");
+
+           return sql.ToString();
+        }
+
+        protected override string GetWhereConditions(QueryRequest<TransferCostTypeListFilter> request, DynamicParameters parameters)
+        {
+            var sql = new StringBuilder() ;
+            sql.AppendLine(" stkxTransferCostType.isDeleted=0 ");
+
+                         var filter = request.Filter;
+            if (filter != null)
+            {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("stkxTransferCostType.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
+
+                if (!string.IsNullOrEmpty(filter.Name))
+                {
+                    sql.AppendLine("stkxTransferCostType.Name like '%'+@Name+'%' ");
+                    parameters.Add("@Name", filter.Name);
+                }
+
+            }
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+        }
+
+        protected override string GetHavingConditions(QueryRequest<TransferCostTypeListFilter> request, DynamicParameters parameters)
+        {
+            var filter = request.Filter;
+            if (filter == null)
+            {
+                return "";
+            }
+
+            var sql = new StringBuilder();
+
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+       }       
+    }
+}
+

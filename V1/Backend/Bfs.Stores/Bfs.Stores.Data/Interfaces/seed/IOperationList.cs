@@ -1,0 +1,11 @@
+using Bfs.Core.Data;
+using Bfs.Stores.Data;
+
+namespace Bfs.Stores.Data.Interfaces
+{
+    public interface IOperationList
+    {
+        Task<QueryResponse<OperationListItem>> GetAsync(QueryRequest<OperationListFilter> request);
+    }
+}
+
