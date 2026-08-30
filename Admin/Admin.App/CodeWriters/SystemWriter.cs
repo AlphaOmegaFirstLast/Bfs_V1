@@ -14,6 +14,7 @@ namespace Admin.App
         public string DbPrefix { get; set; } = string.Empty;
 
         public bool IsMaster { get; set; } = false;
+        public string IsMasterFlag { get; set; } = "false";
 
         public SystemWriter(ISystemEntity source)
         {
@@ -22,6 +23,7 @@ namespace Admin.App
             this.BasePortNumber = source.BasePortNumber;
             this.DbPrefix = source.DbPrefix;
             this.IsMaster = source.IsMaster;
+            this.IsMasterFlag = source.IsMaster ? "true" : "false";
         }
 
         public string SetRelated(CodeGeneratorBase codeInfo, string input, PlaceHolderInfo? placeHolder)
@@ -35,6 +37,7 @@ namespace Admin.App
             outputContent = outputContent.Replace("[SystemNameCapital]", Name.Trim());
             outputContent = outputContent.Replace("[SystemNameSmall]", Name.ToLower());
             outputContent = outputContent.Replace("[BasePortNumber]", BasePortNumber);
+            outputContent = outputContent.Replace("[IsMasterFlag]", IsMasterFlag);
             return outputContent;
         }
 

@@ -7,5 +7,6 @@ public class ReportInfo
     public bool? IsColumnVisible { get; set; } = true;
     public bool? IsJoinField { get; set; } = false;
     public int? AggregateTypeId { get; set; } = 0;
-    public int? ChartElementId { get; set; } = 0;
+    public int? ChartElementId { get; set; } = 0; 
+    public int? ColumnOrder { get; set; } = 1;
 }

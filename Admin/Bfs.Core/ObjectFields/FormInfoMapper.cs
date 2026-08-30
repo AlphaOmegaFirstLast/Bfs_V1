@@ -1,5 +1,6 @@
 namespace Bfs.Core.ObjectFields
 {
+    //ToDo do we need mappers for object fields
     public static class FormInfoMapper
     {
         public static FormInfo ToContract(this FormInfo entity)

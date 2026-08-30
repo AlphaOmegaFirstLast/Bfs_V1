@@ -27,7 +27,7 @@ namespace Admin.App
         public FormControlType FormControlTypeId { get; set; } = FormControlType.Default;
 
         //ICodeWriter implementation
-
+        public int ColumnOrder { get; set; } = 1;
         public bool IsQueryColumn { get; set; } = true;
         public bool IsColumnVisible { get; set; } = false;
         public bool IsJoinField { get; set; } = false;
@@ -82,6 +82,7 @@ namespace Admin.App
         public string DbJoinTable;
         public string DbLeftJoinTable;
         public string sortName;
+        public string reportBackendType = "string?";
 
         public string filterValueName = string.Empty;
         public string filterLookupName = string.Empty;
@@ -121,6 +122,7 @@ namespace Admin.App
                 this.ToolTipInfo = source.ToolTipInfo ?? new ToolTipInfo();
 
                 this.ParentTable = source.ReportInfo?.ParentTable ?? string.Empty;
+                this.ColumnOrder = source.ReportInfo?.ColumnOrder ?? 1;
                 this.IsQueryColumn = source.ReportInfo?.IsQueryColumn ?? true;
                 this.IsColumnVisible = source.ReportInfo?.IsColumnVisible ?? true;
                 this.IsJoinField = source.ReportInfo?.IsJoinField ?? false;
@@ -171,6 +173,7 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[DbJoinTable]", DbJoinTable);
             fieldTemplate = fieldTemplate.Replace("[DbLeftJoinTable]", DbLeftJoinTable);
             fieldTemplate = fieldTemplate.Replace("[SortName]", sortName);
+            fieldTemplate = fieldTemplate.Replace("[ReportBackendType]", reportBackendType);
 
             fieldTemplate = fieldTemplate.Replace("[FieldDefinition]", FieldDefinition.ToString());
             fieldTemplate = fieldTemplate.Replace("[ReportDefinition]", ReportDefinition.ToString());
@@ -192,6 +195,7 @@ namespace Admin.App
             fieldTemplate = fieldTemplate.Replace("[DbParentTable]", DbParentTable);
             fieldTemplate = fieldTemplate.Replace("[ParentTable]", ParentTable);
             fieldTemplate = fieldTemplate.Replace("[ParentTableSmall]", parentTableSmall);
+            fieldTemplate = fieldTemplate.Replace("[ColumnOrder]", ColumnOrder.ToString().ToLower());
             fieldTemplate = fieldTemplate.Replace("[IsQueryColumn]", IsQueryColumn.ToString().ToLower());
             fieldTemplate = fieldTemplate.Replace("[IsColumnVisible]", IsColumnVisible.ToString().ToLower());
             fieldTemplate = fieldTemplate.Replace("[IsJoinField]", IsJoinField.ToString().ToLower());
@@ -346,8 +350,8 @@ namespace Admin.App
             }
             else
             {
-                reportFieldNameCapital = fieldCapitalName;
-                reportFieldNameSmall = fieldSmallName;
+                reportFieldNameCapital = FieldDefinition == FieldDefinition.Object ? $"json{fieldCapitalName}" : fieldCapitalName;
+                reportFieldNameSmall = FieldDefinition == FieldDefinition.Object ? $"json{fieldSmallName}" : fieldSmallName;
             }
 
             joinName = !string.IsNullOrEmpty(lookupNameCapital) ? lookupNameCapital
@@ -370,6 +374,7 @@ namespace Admin.App
                 : isChartVerticalField ?
                 ChartDefinition.Vertical
                 : ChartDefinition.None;
+            reportBackendType = backendDataType;
         }
 
         private void SetMatrixDefinition(MatrixInfo matrixInfo)
@@ -474,6 +479,7 @@ namespace Admin.App
 
         public void SetReportDefinition(bool IsJoinField, bool isAggregate)
         {
+            IsQueryColumn = FieldDefinition == FieldDefinition.Object? false: IsQueryColumn; // object fields will be output different from other fields. will be added to query columns in templates.
             if (IsJoinField)
                 ReportDefinition = ReportDefinition.Join;
             else if (isAggregate)

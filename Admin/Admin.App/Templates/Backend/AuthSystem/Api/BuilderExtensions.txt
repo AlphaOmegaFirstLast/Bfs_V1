@@ -25,6 +25,10 @@ namespace Bfs.[SystemNameCapital].Api;
 
 public static class BuilderExtensions
 {
+    /// <summary>
+    /// The TenantSqlConfiguration is a record which has only one property: the connection string.
+    /// It is used to pass the connection string to services that require database access, ensuring that each tenant operates on its own database.
+    /// </summary>
     public record TenantSqlConfiguration(string ConnectionString);
 
     public static void RegisterScopeData(this WebApplicationBuilder builder)

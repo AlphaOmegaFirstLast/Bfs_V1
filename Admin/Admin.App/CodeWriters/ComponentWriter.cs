@@ -42,7 +42,7 @@ namespace Admin.App
 
         public string ReportFileName = string.Empty;
 
-        public string AutoComplete = string.Empty;  // either none or AutoComplete. based on the field definition, if any of the fields is AutoComplete then this will be set to AutoComplete.
+        public string HasAutoComplete = string.Empty;  // either none or AutoComplete. based on the field definition, if any of the fields is AutoComplete then this will be set to AutoComplete.
 
         public string DbParentTable { get; set; } = string.Empty;
 
@@ -107,7 +107,7 @@ namespace Admin.App
 
                 if (field.FieldDefinition == FieldDefinition.AutoComplete)
                 {
-                    AutoComplete = "AutoComplete";
+                    HasAutoComplete = "AutoComplete";
                 }
             }
         }
@@ -133,6 +133,7 @@ namespace Admin.App
             outputContent = outputContent.Replace("[QueryBaseTable]", QueryBaseTable);
             outputContent = outputContent.Replace("[DbParentTable]", DbParentTable);
             outputContent = outputContent.Replace("[InterfaceRequired]", string.IsNullOrEmpty(InterfaceRequired)?"":$",{InterfaceRequired}" );
+            outputContent = outputContent.Replace("[HasAutoComplete]", HasAutoComplete.Trim());
 
             outputContent = outputContent.Replace("[ReportNameCapital]", ReportNameCapital.Trim());
             outputContent = outputContent.Replace("[ReportNameSmall]", ReportNameSmall.Trim());

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { I[ComponentNameCapital]Filter } from './[ComponentFileName].shared';
-
+//Template_Component_AutoComplete
 
 @Component({
     selector: 'app-[ComponentFileName]-filter',
@@ -25,7 +25,6 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
     //Template_Start_Field_AutoComplete_1
     show[AutoCompleteCapital] = false; // Toggle for the overlay
     [AutoCompleteSmall]Options: any[] = [];
-    [AutoCompleteSmall]Control: any;
     //Template_End_Field_AutoComplete_1
 
     // Define range filters
@@ -73,39 +72,56 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
     //---------------------------------------------------------
     async setAutoComplete() {
     //Template_Start_Field_AutoComplete_2
-        await this.[AutoCompleteSmall]AutoComplete();
+    await this.[AutoCompleteSmall]AutoComplete();
     //Template_End_Field_AutoComplete_2
-    }
-    //---------------------------------------------------------
-    //Template_Start_Field_AutoComplete_3
-     async [AutoCompleteSmall]AutoComplete(searchTerm: string = this.result?.['[AutoCompleteSmall]Name'] ?? ''): Promise<void> {
+}
+//---------------------------------------------------------
+
+//Template_Start_Field_AutoComplete_3
+   async [AutoCompleteSmall]AutoComplete(searchTerm: string = this.result.[AutoCompleteCapital]Name ?? ''): Promise<void> {
         const term = (searchTerm ?? '').trim();
-        this.show[AutoCompleteCapital] = term.length >= 2;
+        if (term.length < 2) {
+            this.[AutoCompleteSmall]Options = [];
+            this.show[AutoCompleteCapital] = false;
+            return;
+        }
 
-        if (this.show[AutoCompleteCapital]) {
-            this.isLoading.autoComplete = true;
-            try {
-                if (term.length < 2) {
-                    this.[AutoCompleteSmall]Options = [];
-                    return;
-                }
-
-                const request = { pageSize: 20, filter: { name: term } };
-                const response: any = await this.parent.apiService.postAutoComplete("/[AutoCompleteCapital]/list", request);
-                this.[AutoCompleteSmall]Options = response?.items ?? [];
-            } catch (err: any) {
-                this.errorMessage = err?.message ||  "Error fetching data";
-                this.[AutoCompleteSmall]Options = [];
-            } finally {
-                this.isLoading.autoComplete = false;
-            }
+        this.show[AutoCompleteCapital] = true;
+        this.isLoading.autoComplete = true;
+        try {
+            const request = { pageSize: 20, filter: { name: term } };
+            const response: any = await this.parent.apiService.postAutoComplete('/[AutoCompleteCapital]/list', request);
+            this.[AutoCompleteSmall]Options = response?.items ?? [];
+        } catch (err: any) {
+            this.errorMessage = err?.message || 'Error fetching data';
+            this.[AutoCompleteSmall]Options = [];
+        } finally {
+            this.isLoading.autoComplete = false;
         }
     }
-  
-   //---------------------------------------------------------
-
+    //---------------------------------------------------------
+    on[AutoCompleteCapital]Input(value: string): void {
+        const val = value ?? '';
+        // Reset selected ID
+        this.result.[AutoCompleteCapital]Name = undefined;
+        this.result.[AutoCompleteCapital]Id = undefined;
+        this.[AutoCompleteSmall]AutoComplete(val);
+    }
+    //---------------------------------------------------------
+    select[AutoCompleteCapital](selectedOption: any) {
+        this.result.[AutoCompleteCapital]Name = selectedOption?.name ?? undefined;
+        this.result.[AutoCompleteCapital]Id = selectedOption?.id ?? undefined;
+        this.[AutoCompleteSmall]Options = [];
+        this.show[AutoCompleteCapital] = false;
+    }
+    //---------------------------------------------------------
+    hide[AutoCompleteCapital]Overlay() {
+        setTimeout(() => {
+            this.show[AutoCompleteCapital] = false;
+        }, 200);
+    }
+    //---------------------------------------------------------
     //Template_End_Field_AutoComplete_3
-    
 
     reset() {
         this.activeModal.close('Reset');

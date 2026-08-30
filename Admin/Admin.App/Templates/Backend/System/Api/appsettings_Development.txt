@@ -10,7 +10,7 @@
     "AllowedOrigins": "*",
     "IsSecurityEnabled": "true",
     "IsMigrationEnabled": "false",
-    "IsMasterSystem": "false",
+    "IsMasterSystem": "[IsMasterFlag]",
     "DbConnections": {
       "MasterConnection": "Server=localhost;Database=[BestFitDB];Trusted_Connection=True;TrustServerCertificate=True",
       "MigrationConnection": "Server=localhost;Database=Tenant__Migrations;Trusted_Connection=True;TrustServerCertificate=True"

@@ -129,7 +129,7 @@ public static class BuilderExtensions
         });
 
         // Resource Security
-        builder.Services.AddScoped<IResourceSecurity, ResourceSecurity>();
+        builder.Services.AddScoped<IResourceSecurity, ResourceSecurity>();  // this class calls TenantResourceRuleList to read Auth data from Auth Tables. 
         builder.Services.AddScoped<ITenantResourceRuleListItem, TenantResourceRuleListItem>();
         builder.Services.AddScoped<ITenantResourceRuleListFilter, TenantResourceRuleListFilter>();
         builder.Services.AddScoped<ITenantResourceRuleList>(sp =>
@@ -159,7 +159,7 @@ public static class BuilderExtensions
         {
             //This is the standard multi‑tenant pattern for database-per-tenant.
             // DbContext with dynamic connection string based on the current tenant
-
+            // if settings.IsMasterSystem is true, then the connection string will be MasterConnection.
             builder.Services.AddDbContext<[SystemNameCapital]DbContext>((serviceProvider, options) =>
             {
                 var tenantProvider = serviceProvider.GetRequiredService<ITenantManager>();

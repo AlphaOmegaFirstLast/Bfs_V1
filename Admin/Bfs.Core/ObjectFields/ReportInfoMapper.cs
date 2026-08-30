@@ -12,6 +12,7 @@ namespace Bfs.Core.ObjectFields
                 IsJoinField = entity.IsJoinField,
                 AggregateTypeId = entity.AggregateTypeId,
                 ChartElementId = entity.ChartElementId,
+                ColumnOrder = entity.ColumnOrder,
             };
             return contract;
         }
@@ -31,6 +32,7 @@ namespace Bfs.Core.ObjectFields
                 IsJoinField = contract.IsJoinField,
                 AggregateTypeId = contract.AggregateTypeId,
                 ChartElementId = contract.ChartElementId,
+                ColumnOrder = contract.ColumnOrder,
             };
 
             return entity;

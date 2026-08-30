@@ -9,7 +9,7 @@
   "Settings": {
     "AllowedOrigins": "*",
     "IsSecurityEnabled": "true",
-    "IsMasterSystem": "false",
+    "IsMasterSystem": "[IsMasterFlag]",
     "DbConnections": {
 	    "MasterConnection": "Server=tcp:[SqlServerName].database.windows.net,1433;Initial Catalog=[DatabaseName];Persist Security Info=False;User ID=[SqlServerName];Password=[SqlServerPassword];MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
     },

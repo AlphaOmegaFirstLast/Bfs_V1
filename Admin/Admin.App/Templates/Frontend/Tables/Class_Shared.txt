@@ -15,10 +15,16 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder
 // Output Columns of a Query  [used in entity Query]
 export const [ComponentNameCapital]Columns = [
     //Template_Start_ReportField_QueryColumn_1
-    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible] },
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible], columnOrder:[ColumnOrder] },
     //Template_End_ReportField_QueryColumn_1
+
+    //Template_Start_Field_Object_5
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[ReportFieldNameCapital]', sortName: 'json[SortName]', width: '50px', isVisible:[IsColumnVisible] },
+    { fieldName: 'json[ReportFieldNameCapital]', displayName: 'Json [ReportFieldNameCapital]', sortName: 'json[SortName]', width: '50px', isVisible:[IsColumnVisible], columnOrder:[ColumnOrder] },
+    //Template_End_Field_Object_5
+    
     //Template_Start_ReportField_Aggregate_1
-    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible] },
+    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible],  columnOrder:[ColumnOrder] },
     //Template_End_ReportField_Aggregate_1
 ];
 //---------------------------------------------------------
@@ -35,6 +41,7 @@ export interface I[ComponentNameCapital] {
     //Template_End_Field_AutoComplete_1 
     //Template_Start_Field_Object_1
     [SmallFieldName]?: I[CapitalFieldName];
+    json[CapitalFieldName]?: string;
     //Template_End_Field_Object_1 
     //Template_Start_Field_CustomFieldList_1
     [SmallFieldName]?: ICustomField[];
@@ -115,6 +122,7 @@ export interface I[ComponentNameCapital]Filter {
 
     //Template_Start_FilterField_AutoComplete_1
     [FilterAutoCompleteName]?: [FrontendFieldType];
+    [AutoCompleteCapital]Name?: string,
     //Template_End_FilterField_AutoComplete_1
 
     //Template_Start_FilterField_Range_1
@@ -151,6 +159,7 @@ export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Requ
 
             //Template_Start_FilterField_AutoComplete_2
             [FilterAutoCompleteName]: undefined ,
+            [AutoCompleteCapital]Name: undefined ,
             //Template_End_FilterField_AutoComplete_2
 
             //Template_Start_FilterField_Range_2

@@ -41,6 +41,16 @@
                                             </div>
 
                                             <div class="row mb-2">
+                                                <div class="col-6">
+                                                    <label for="columnOrder" class="form-label fs-6">Column Order</label>
+                                                    <input class="form-control" type="text" id="columnOrder" formControlName="columnOrder"
+                                                        [class]="submit && !form['columnOrder'].errors ? 'is-valid': submit && form['columnOrder'].errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Column Order.</div>
+                                                </div>
+                                            </div>     
+                                            
+                                            <div class="row mb-2">
                                                 <div class="col-12">
                                                     <label for="aggregateTypeId" class="form-label fs-6">Aggregate Type</label>
                                                     <select class="form-select" id="aggregateTypeId" formControlName="aggregateTypeId"

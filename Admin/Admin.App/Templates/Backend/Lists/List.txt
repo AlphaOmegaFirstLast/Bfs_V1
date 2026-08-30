@@ -1,4 +1,5 @@
 ﻿using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
 
@@ -12,9 +13,9 @@ namespace Bfs.[SystemNameCapital].Data.Lists
 {
     public class [ReportNameCapital]: QueryBase<[ReportNameCapital]Filter>,  I[ReportNameCapital]
     {
-        private readonly IResourceSecurity _resourceSecurity;
+        private readonly IResourceSecurity? _resourceSecurity;
 
-        public [ReportNameCapital](string connectionString, IResourceSecurity resourceSecurity)
+        public [ReportNameCapital](string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
@@ -33,7 +34,7 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<[ReportNameCapital]Item>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<[ReportNameCapital]Item>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -44,12 +45,29 @@ namespace Bfs.[SystemNameCapital].Data.Lists
             return response;
         }
 
+        private List<[ReportNameCapital]Item> DoMapping(IEnumerable<[ReportNameCapital]Item> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = ([ReportNameCapital]Item)record;
+//Template_Start_Field_Object_1
+                //object fields are stored as JSON in the database, so we need to parse them into the correct type
+                item.[CapitalFieldName] = SerializationHelper.GetParsed<[ReportNameCapital]Item, [BackendFieldType]>(item, "Json[CapitalFieldName]");
+//Template_End_Field_Object_1
+                return item;
+            }).ToList();
+        }
+        
         protected override void SetupFields()
         {
             //base fields
             //Template_Start_ReportField_QueryColumn_1
             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "[CapitalFieldName]", DbName = "[DbParentTable].[CapitalFieldName]", QueryName = "[ReportFieldNameCapital]", IsAggregare = false});
             //Template_End_ReportField_QueryColumn_1
+
+            //object fields
+            //Template_Start_Field_Object_2
+            _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "[CapitalFieldName]", DbName = "[DbParentTable].[CapitalFieldName]", QueryName = "Json[ReportFieldNameCapital]", IsAggregare = false});
+            //Template_End_Field_Object_2
                    
             //lookups
             //Template_Start_Field_Lookup_1

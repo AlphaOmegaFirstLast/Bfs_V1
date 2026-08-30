@@ -157,11 +157,11 @@
         "Notes": "Add Route Entry of the Component, in its corresponding .route.ts"
       },
       {
-        "ParentId": [ "604" ],
-        "Name": "Component_AutoComplete",
-        "TemplateFile": "",
-        "PlaceHolderType": "StartEnd",
-        "TemplateContentType": "Embedded",
+        "ParentId": [ "604", "606" ],
+        "Name": "Component_[HasAutoComplete]",
+        "TemplateFile": "Frontend\\Tables\\RegisterAutoComplete.txt",
+        "PlaceHolderType": "PlaceHolder",
+        "TemplateContentType": "ExternalFile",
         "KeepPlaceHolder": false,
         "Notes": "Add import statement that is required for autocomplete functionality"
       },

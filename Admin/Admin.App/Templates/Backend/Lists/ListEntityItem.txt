@@ -5,8 +5,14 @@ namespace Bfs.[SystemNameCapital].Data
     public class [ReportNameCapital]Item
     {      
         //Template_Start_ReportField_QueryColumn_1
-        public string? [ReportFieldNameCapital] { get; set; }
+        public [ReportBackendType] [ReportFieldNameCapital] { get; set; }
         //Template_End_ReportField_QueryColumn_1
+
+        //Template_Start_Field_Object_1
+        public dynamic [CapitalFieldName] { get; set; }
+        public string? Json[CapitalFieldName] { get; set; }
+        //Template_End_Field_Object_1
+
         //Template_Start_Field_Lookup_1
         public string? [LookupNameCapital]Name { get; set; }
         //Template_End_Field_Lookup_1
