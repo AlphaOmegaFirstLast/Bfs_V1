@@ -6,7 +6,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormArray, type UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { ClipboardService } from '@core/services/clipboard.service';
 
-import { IQueryResponse, ILookup, IUIMessage, IEntity, ICustomFieldDefinitionRecord, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryResponse, ILookup, IUIMessage, IEntity, ICustomFieldDefinitionRecord, ViewLink, ActionLink, IAction } from '@bfs/_shared/interfaces';
 import { getFormControlValidation, getFormInfoLookups } from '@bfs/_shared/objectFields';
 import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } from '@bfs/_shared/objectFields';
 
@@ -200,6 +200,35 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     //     });
     // }
     //---------------------------------------------------------  
+    getActions(record: IEntity): IAction[] {
+        return [] as IAction[];
+    }
+    //---------------------------------------------------------
+    getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = this.getActions(record);
+        let links: ViewLink[] = actions.filter(action =>
+            action.actionType == 'FrontendLink'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+    getRecordActions(record: IEntity): ActionLink[] {
+        let actions = this.getActions(record);
+        let links: ActionLink[] = actions.filter(action =>
+            action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+
     // calls Entity Framework query at the backnd.  
     async view() {
         var target = this.apiUrl + this.entity.id;

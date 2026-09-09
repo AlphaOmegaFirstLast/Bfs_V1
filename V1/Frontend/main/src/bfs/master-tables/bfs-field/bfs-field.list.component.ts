@@ -16,19 +16,14 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryColumn, IEntity, IAction } from '@bfs/_shared/interfaces';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
-
-//--------------- system specific ------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/master.operations';
 
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { MasterService } from '@bfs/master-main/master.service';
-
-import { type IBfsFieldWithLookup, type IBfsFieldRequest, type IBfsFieldFilter } from './bfs-field.shared';
-import { getBfsFieldActions,  initBfsFieldRequest } from './bfs-field.shared';
+import { type IBfsFieldRequest, type IBfsFieldFilter, initBfsFieldRequest, renderBfsField, getBfsFieldActions} from './bfs-field.shared';
 import { BfsFieldFilterComponent } from './bfs-field.filter.component'; 
 
 @Component({
@@ -42,7 +37,7 @@ import { BfsFieldFilterComponent } from './bfs-field.filter.component';
 })
 export class BfsFieldListComponent         
 
-    extends BaseReportComponent<IBfsFieldFilter, IBfsFieldWithLookup> {
+    extends BaseReportComponent<IBfsFieldFilter,null> {
     override apiService: MasterService = inject(MasterService);
     override queryRequest = {} as IBfsFieldRequest;
     override exportRequest = {} as IBfsFieldRequest;
@@ -63,47 +58,12 @@ export class BfsFieldListComponent
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
-        switch (column.fieldName) {
-            case 'filterTypeId':
-                return record['filterTypeName']?.toString();
-case 'backendDataTypeId':
-                return record['backendDataTypeName']?.toString();
-
-            case 'bfsComponentId':
-                return record['bfsComponentName']?.toString();
-
-            default:
-                return value;
-        }
-        return value;
+        return renderBfsField(record, column);
     }
     //---------------------------------------------------------
-
-    override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getBfsFieldActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getBfsFieldActions(this, record);
     }
-    //---------------------------------------------------------
-    override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getBfsFieldActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-//--------------------------------------------------------------
 
 }
 

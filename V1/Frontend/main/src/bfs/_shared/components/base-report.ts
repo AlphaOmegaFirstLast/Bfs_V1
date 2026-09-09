@@ -19,7 +19,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 //---------------- bfs shared -------------------------------------
 //
-import { ICustomReports, IEntityRequest, IIdentifiable, IUIMessage, IUserInterface } from "@bfs/_shared/interfaces";
+import { IAction, ICustomReports, IEntityRequest, IIdentifiable, IUIMessage, IUserInterface } from "@bfs/_shared/interfaces";
 import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { QuerySortComponent } from '@bfs/_shared/components/query-sort.component';
 import { QueryColumnsComponent } from '@bfs/_shared/components/query-columns.component';
@@ -136,7 +136,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         }
     }
     //---------------------------------------------------------
-    reOrderColumns(inputColumns: IQueryColumn[]):IQueryColumn[] {    
+    reOrderColumns(inputColumns: IQueryColumn[]): IQueryColumn[] {
         let resultColumns = inputColumns.sort((a, b) =>
             (a.columnOrder ?? 0) - (b.columnOrder ?? 0)
         );
@@ -270,7 +270,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     //---------------------------------------------------------
     isObjectField(field: string): boolean {
         field = field.toLowerCase();
-        return field==='fieldvalidation' || field==='reportinfo' ;//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
+        return field === 'fieldvalidation' || field === 'reportinfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
     }
     //---------------------------------------------------------        
     objectFieldHeaders(field: string): SafeHtml {
@@ -292,7 +292,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     //---------------------------------------------------------
     objectFieldData(record: any, field: string): SafeHtml {
         var result = '';
-        let jsonField = 'json'+ field;
+        let jsonField = 'json' + field;
 
         switch (field.toLowerCase()) {
             case 'reportinfo':
@@ -586,14 +586,32 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         return value;
     }
     //---------------------------------------------------------
+    getActions(record: IEntity): IAction[] {
+        return [] as IAction[];
+    }
+    //---------------------------------------------------------
     getRecordLinks(record: IEntity): ViewLink[] {
-        //to be overridden in descendant classes to provide record level links
-        return [];
+        let actions = this.getActions(record);
+        let links: ViewLink[] = actions.filter(action =>
+            action.actionType == 'FrontendLink'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
+        });
+
+        return links;
     }
     //---------------------------------------------------------
     getRecordActions(record: IEntity): ActionLink[] {
-        //to be overridden in descendant classes to provide record level links
-        return [];
+        let actions = this.getActions(record);
+        let links: ActionLink[] = actions.filter(action =>
+            action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+        });
+
+        return links;
     }
     //---------------------------------------------------------
 

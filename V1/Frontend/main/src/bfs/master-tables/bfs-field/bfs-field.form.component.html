@@ -17,6 +17,7 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack()">Back to filtered List</button>
                                              <a [routerLink]="['/mstr/bfs-field/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
                                              <a [routerLink]="['/mstr/bfs-field/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
@@ -63,30 +64,31 @@
 
 <div class="row mb-2">
   <div class="col-12">
-     <div class="position-relative" (focusout)="hideBfsComponentOverlay()">
-        <label for="bfsComponentId" class="form-label fs-6">Component</label>
+     <div class="position-relative" (focusout)="hideAutoOverlay(autoBfsComponent)">
+        <label class="form-label fs-6">Component</label>
         <div class="input-group">
-            <input type="text"  class="form-control" [formControl]="bfsComponentControl"
-                (focus)="bfsComponentControl.value.length >= 2 && (showBfsComponent = true)"
-                    autocomplete="off" placeholder="Type at least 2 characters..." >                                                    
-            <span class="input-group-text" *ngIf=""><span class="spinner-border spinner-border-sm"></span></span>
+            <input type="text"  class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                   [formControl]="autoBfsComponent.control"  (focus)="onAutoFocus(autoBfsComponent)" >       
+                                                                     
+            <span class="input-group-text" *ngIf="isAutoShowSpin(autoBfsComponent)"><span class="spinner-border spinner-border-sm"></span></span>
         </div>
-        <ul class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;"
-            *ngIf="showBfsComponent && bfsComponentOptions.length > 0">
-            <li *ngFor="let option of bfsComponentOptions">
-                <button type="button"
-                    class="dropdown-item d-flex justify-content-between align-items-center"
-                    (click)="selectBfsComponent(option)">
+
+        <ul *ngIf="isAutoShowList(autoBfsComponent)" class="dropdown-menu show w-100 shadow-sm" style="max-height: 200px; overflow-y: auto;" >
+            <li *ngFor="let option of autoBfsComponent.options">
+                <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+                    (mousedown)="$event.preventDefault(); onAutoSelect(validationForm, autoBfsComponent, option)">
                     <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
                 </button>
             </li>
         </ul>
-        <ul class="dropdown-menu show w-100" *ngIf="showBfsComponent && !isLoading.autoComplete && bfsComponentOptions.length === 0">
+
+        <ul class="dropdown-menu show w-100" *ngIf="isAutoShowError(autoBfsComponent)">
             <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
         </ul>
     </div>
    </div>
  </div>
+ 
 <div class="row mb-2">
     <div class="col-12">
         <label for="field" class="form-label fs-6">Field</label>
@@ -176,6 +178,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-6">
+                                                    <label for="columnOrder" class="form-label fs-6">Column Order</label>
+                                                    <input class="form-control" type="text" id="columnOrder" formControlName="columnOrder"
+                                                        [class]="submit && !form['columnOrder'].errors ? 'is-valid': submit && form['columnOrder'].errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid Column Order.</div>
+                                                </div>
+                                            </div>     
 
                                             <div class="row mb-2">
                                                 <div class="col-12">

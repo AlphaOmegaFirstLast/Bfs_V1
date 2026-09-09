@@ -162,6 +162,7 @@ export function getReportInfoHeaders(this: any): string {
                     <th width="150px">Is Join Field</th>
                     <th width="150px">Aggregate Type Id</th>
                     <th width="150px">Chart Element Id</th>
+                    <th width="150px">Column Order</th>
                 </tr>
                 </table>`;
     return result;
@@ -179,6 +180,7 @@ export function getReportInfoData(reportInfo: IReportInfo): string {
                         <td width="150px"> ${reportInfo.isJoinField ? 'true' : 'false'}</td>
                         <td width="150px"> ${reportInfo.aggregateTypeId??''}</td>
                         <td width="150px"> ${reportInfo.chartElementId??''}</td>
+                        <td width="150px"> ${reportInfo.columnOrder??''}</td>
                     </tr>
                 </table>`;
         return (result);
