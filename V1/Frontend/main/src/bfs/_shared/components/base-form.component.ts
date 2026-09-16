@@ -92,6 +92,9 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     setAutoComplete() {
     }
     //---------------------------------------------------------
+    setDataAutoComplete() {
+    }
+    //---------------------------------------------------------
     async getObjectFieldLookups() {
         let currentSystem = sessionStorage.getItem('current-system') || '';
         // ToDo set a separate flag: "isMaster", so code is executed regardless of how system is named, currently it relies on system name contains "master"
@@ -230,13 +233,14 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
     //---------------------------------------------------------
 
     // calls Entity Framework query at the backnd.  
-    async view() {
+    async view():Promise<boolean> {
         var target = this.apiUrl + this.entity.id;
         this.isLoading.view = true;
         (await this.apiService.get(target)).subscribe({
             next: (response: Entity) => {
                 this.entity = response;
                 this.validationForm.patchValue(this.entity);
+                this.setDataAutoComplete();
                 this.isLoading.view = false;
             },
             error: (err: any) => {
@@ -245,6 +249,8 @@ export class BaseFormComponent<Entity extends IEntity> implements OnInit {
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
+
+        return true;
     }
     //---------------------------------------------------------
     async add() {

@@ -18,7 +18,8 @@ import { MasterService } from '@bfs/master-main/master.service';
 
 //---------------------- Component Specific ------------------------
 import { type IBfsField, initBfsField, bfsFieldUntypedFormGroup, getBfsFieldActions } from './bfs-field.shared';
-import { IAutoComplete, setAuto, isAutoShowError, isAutoShowSpin, onAutoFocus, isAutoShowList, onAutoSelect, hideAutoOverlay } from '@bfs/_shared/helpers/auto-complete.helper';
+//import { IAutoComplete, setAuto, isAutoShowError, isAutoShowSpin, onAutoFocus, isAutoShowList, onAutoSelect, hideAutoOverlay } from '@bfs/_shared/helpers/auto-complete.helper';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 @Component({
     selector: 'bfs-field-form',
@@ -39,20 +40,24 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField> implemen
     public FilterTypeOptions: any[] = [];
     public BackendDataTypeOptions: any[] = [];
 
-    isAutoShowError:any; isAutoShowSpin:any; onAutoSelect:any; onAutoFocus:any; isAutoShowList:any; hideAutoOverlay:any;
+   // isAutoShowError:any; isAutoShowSpin:any; onAutoSelect:any; onAutoFocus:any; isAutoShowList:any; hideAutoOverlay:any;
 
-    autoBfsComponent: IAutoComplete = { queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true };
+    //autoBfsComponent: IAutoComplete = { queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true };
+    bfsComponentAuto: AutoCompleteHelper = new AutoCompleteHelper(this.apiService,{ queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', controlName:'', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
         super(activatedRoute);
         this.validationForm = this.formBuilder.group(bfsFieldUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
-        this.isAutoShowSpin = isAutoShowSpin;
-        this.onAutoFocus = onAutoFocus;
-        this.isAutoShowList = isAutoShowList;
-        this.onAutoSelect = onAutoSelect;
-        this.hideAutoOverlay = hideAutoOverlay;
-        this.isAutoShowError = isAutoShowError;
+        this.bfsComponentAuto.autoComplete.control = this.validationForm.get('bfsComponentName');
+
+        // this.isAutoShowSpin = isAutoShowSpin;
+        // this.onAutoFocus = onAutoFocus;
+        // this.isAutoShowList = isAutoShowList;
+        // this.onAutoSelect = onAutoSelect;
+        // this.hideAutoOverlay = hideAutoOverlay;
+        // this.isAutoShowError = isAutoShowError;
+      //  this.bfsComponent = new AutoCompleteHelper(this.apiService, this.autoBfsComponent);
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
@@ -115,12 +120,18 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField> implemen
     }
     //---------------------------------------------------------
     override async setAutoComplete() {
-        this.autoBfsComponent.name = this.entity.bfsComponentName;
-        this.autoBfsComponent.id = this.entity.bfsComponentId;
-        await setAuto(this.apiService, this.validationForm,this.entity, this.autoBfsComponent);
+        // this.autoBfsComponent.name = this.entity.bfsComponentName;
+        // this.autoBfsComponent.id = this.entity.bfsComponentId;
+     //   await setAuto(this.apiService, this.validationForm,this.entity, this.autoBfsComponent);
+     
+    await this.bfsComponentAuto.setOnChangeHandler(this.validationForm);
     }
     //---------------------------------------------------------
 
+    override async setDataAutoComplete() {
+        this.bfsComponentAuto.setData(this.entity.bfsComponentId,this.entity.bfsComponentName);
+    }
+    //---------------------------------------------------------
     override getActions(record: IEntity): IAction[] {
         return getBfsFieldActions(this, record);
     }
