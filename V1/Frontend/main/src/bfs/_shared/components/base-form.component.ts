@@ -15,9 +15,13 @@ import { AccessService } from '@bfs/_shared/security/access.service';
 import { MasterService } from '@bfs/master-main/master.service';
 import { NavigationService } from '../services/navigation.service';
 //------------------------------------------- Component Specific ------------------------------------------------
+export interface IBaseForm {
+  validationForm: UntypedFormGroup,
+  submit: boolean,
+}
 
 @Directive()
-export class BaseFormComponent<Entity extends IEntity> implements OnInit {
+export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnInit {
 
     public apiUrl = '';
     public apiService!: any;

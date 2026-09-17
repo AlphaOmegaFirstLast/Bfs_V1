@@ -83,25 +83,19 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-12">
-                                                    <div class="position-relative"
-                                                        (focusout)="bfsComponentAuto.hideOverlay()">
+                                                    <div class="position-relative"  (focusout)="bfsComponentAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Component</label>
                                                         <div class="input-group">
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                                [formControl]="bfsComponentAuto.control"
+                                                                (focus)="bfsComponentAuto.onFocus()"  [class]="bfsComponentAuto.cssClass()"  />
 
-                                                            <input type="text" class="form-control" autocomplete="off"
-                                                                placeholder="Type at least 2 characters..."
-                                                                [formControl]="bfsComponentAuto.autoComplete.control"
-                                                                (focus)="bfsComponentAuto.onFocus()"
-                                                                [class]="bfsComponentAuto.cssClass()"
-                                                                />
-
-                                                            <span class="input-group-text"  *ngIf="bfsComponentAuto.isShowSpin()"><span
-                                                                    class="spinner-border spinner-border-sm"></span></span>
+                                                            <span class="input-group-text"  *ngIf="bfsComponentAuto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>
                                                         </div>
+                                                        
                                                         <ul *ngIf="bfsComponentAuto.isShowList()"  class="dropdown-menu show w-100 shadow-sm"
                                                             style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
-                                                            <li
-                                                                *ngFor="let option of bfsComponentAuto.optionList; let i = index">
+                                                            <li *ngFor="let option of bfsComponentAuto.optionList; let i = index">
                                                                 <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
                                                                     (mousedown)="$event.preventDefault(); bfsComponentAuto.onSelect(option)">
                                                                     <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
@@ -112,15 +106,6 @@
                                                         <ul class="dropdown-menu show w-100" *ngIf="bfsComponentAuto.isError">
                                                             <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
                                                         </ul>
-
-                                                        isShowList:{{bfsComponentAuto.isShowList()}}:
-                                                        {{bfsComponentAuto.autoComplete.options.length}}
-                                                        <!-- <br/> 1{{bfsComponentAuto.autoComplete.options[0].name}} -->
-                                                        <div *ngFor="let option of bfsComponentAuto.optionList">
-                                                            <span>{{ option.name }}</span> 
-                                                        </div>
-                                                        <br /> -------------
-
                                                     </div>
                                                 </div>
                                             </div>

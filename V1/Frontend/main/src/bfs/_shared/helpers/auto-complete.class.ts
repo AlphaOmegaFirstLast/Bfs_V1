@@ -2,6 +2,7 @@ import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeM
 import { IEntity, ILookup } from "../interfaces";
 import { UntypedFormGroup } from '@angular/forms';
 import { HttpService } from '../services/http.service';
+import { IBaseForm } from '../components/base-form.component';
 
 export interface IAutoComplete {
     queryUrl: string,
@@ -18,14 +19,35 @@ export interface IAutoComplete {
 export class AutoCompleteHelper {
     isError: boolean = false;
     validationForm?: UntypedFormGroup;
-    constructor(public apiService: HttpService, public autoComplete: IAutoComplete) {
+    form?: IBaseForm;
+
+    queryUrl: string = '';
+    id?: string = '';
+    name?: string = '';
+    isInitial?: boolean = true;
+    showDropDown: boolean = false;
+    options: ILookup[] = [];
+    isLoading: boolean = false;
+    fieldName: string = '';
+    control: any = null;
+
+    constructor(public apiService: HttpService, autoComplete: IAutoComplete) {
+        this.queryUrl = autoComplete.queryUrl;
+        this.id = autoComplete.id;
+        this.name = autoComplete.name;
+        this.isInitial = autoComplete.isInitial;
+        this.showDropDown = autoComplete.showDropDown;
+        this.options = autoComplete.options;
+        this.isLoading = autoComplete.isLoading;
+        this.fieldName = autoComplete.fieldName;
+        this.control = autoComplete.control;
     }
     //---------------------------------------------------------
-    async setOnChangeHandler(validationForm: UntypedFormGroup) {
-        this.validationForm = validationForm;
+    async setOnChangeHandler(form: IBaseForm) {
+        this.form = form;
         // set event handler for the validationForm input-change event, of the autoControl field
-        let controlName = this.autoComplete.fieldName + 'Name';
-        this.validationForm.get(controlName)?.valueChanges.pipe(
+        let controlName = this.fieldName + 'Name';
+        this.form.validationForm.get(controlName)?.valueChanges.pipe(
             // 1. Only proceed if input length >= 2
             filter(val => val && val.length >= 2),
             // 2. Wait 300ms after last keystroke to avoid API spam
@@ -35,11 +57,11 @@ export class AutoCompleteHelper {
             // 4. Switch to API call
             switchMap(
                 async (searchTerm) => {
-                    if (!this.autoComplete.isInitial) {
+                    if (!this.isInitial) {
                         return await this.doApiCall(searchTerm);  // returning result
                     }
                     else {
-                        this.autoComplete.isInitial = false;
+                        this.isInitial = false;
                         return null;
                     }
                 }
@@ -49,20 +71,26 @@ export class AutoCompleteHelper {
     //---------------------------------------------------------  
     setFormControls() {
         //set the validationForm controls
-        let controlId = this.autoComplete.fieldName + 'Id';
-        let controlName = this.autoComplete.fieldName + 'Name';
+        let controlId = this.fieldName + 'Id';
+        let controlName = this.fieldName + 'Name';
 
-        this.validationForm?.get(controlId)?.setValue(this.autoComplete.id, { emitEvent: false });
-        this.validationForm?.get(controlName)?.setValue(this.autoComplete.name, { emitEvent: false });
+        this.form?.validationForm.get(controlId)?.setValue(this.id, { emitEvent: false });
+        this.form?.validationForm.get(controlName)?.setValue(this.name, { emitEvent: false });
     }
     //--------------------------------------------------------- 
     setData(id?: string, name?: string) {
-        this.autoComplete.id = id;
-        this.autoComplete.name = name;
+        this.id = id;
+        this.name = name;
         this.setFormControls();
     }
     //---------------------------------------------------------  
-
+    cssClass() {
+        let invalidSelection = this.id == undefined;
+        let css = invalidSelection || this.isError ? 'is-invalid' : 'is-valid';
+        css = this.form?.submit ? css : '';
+        return css;
+    }
+    //---------------------------------------------------------
     onSelect(selectedOption: ILookup) {
 
         this.init();
@@ -71,7 +99,7 @@ export class AutoCompleteHelper {
     //---------------------------------------------------------
 
     async doAuto(searchTerm?: string): Promise<void> {
-        searchTerm = this.autoComplete.name ?? '';
+        searchTerm = this.name ?? '';
         const term = (searchTerm ?? '').trim();
         if (term.length < 2) {
             this.init();
@@ -83,35 +111,30 @@ export class AutoCompleteHelper {
     //---------------------------------------------------------   
 
     async doApiCall(searchTerm?: string, messageList?: any[]): Promise<IAutoComplete> {
-        this.autoComplete.isLoading = true;
+        this.isLoading = true;
         this.isError = false;
         try {
             const request = { pageSize: 20, filter: { name: searchTerm } };
-            const response: any = await this.apiService.postAutoComplete(this.autoComplete.queryUrl, request);
-            this.autoComplete.options = response?.items ?? [];
+            const response: any = await this.apiService.postAutoComplete(this.queryUrl, request);
+            this.options = response?.items ?? [];
             this.isError = response?.items.length == 0;
             this.setData(undefined, searchTerm);  //invalidate id, leave name as it is
         } catch (err: any) {
             messageList?.push({ text: err.msg || "Error fetching data", msgType: "danger" });
         } finally {
-            this.autoComplete.isLoading = false;
-            this.autoComplete.showDropDown = true;
+            this.isLoading = false;
+            this.showDropDown = true;
         }
 
-        return this.autoComplete;
+        return this as IAutoComplete;
     }
     //---------------------------------------------------------    
-    isShowSpin(): boolean {
-        return this.autoComplete.isLoading;
-    }
-    //---------------------------------------------------------
-
     isShowList(): boolean {
-        return (!this.autoComplete.isInitial) && this.autoComplete.showDropDown && this.autoComplete.options.length > 0;
+        return (!this.isInitial) && this.showDropDown && this.options.length > 0;
     }
     //---------------------------------------------------------
     onFocus() {
-        (this.autoComplete.name || '').length >= 2 ? this.autoComplete.showDropDown = true : this.autoComplete.showDropDown = false;
+        (this.name || '').length >= 2 ? this.showDropDown = true : this.showDropDown = false;
     }
     //---------------------------------------------------------
     onInputChange(value: any,): void {
@@ -122,26 +145,19 @@ export class AutoCompleteHelper {
     }
     //---------------------------------------------------------
     init() {
-        this.autoComplete.name = undefined;
-        this.autoComplete.id = undefined;
-        this.autoComplete.options = [];
-        this.autoComplete.showDropDown = false;
-        this.autoComplete.isInitial = true;
+        this.name = undefined;
+        this.id = undefined;
+        this.options = [];
+        this.showDropDown = false;
+        this.isInitial = true;
     }
     //---------------------------------------------------------
     hideOverlay() {
-        setTimeout(() => this.autoComplete.showDropDown = false, 200);
-    }
-    //---------------------------------------------------------
-    cssClass() {
-       let invalidSelection = this.autoComplete.id == undefined;
-    
-       let css =  invalidSelection || this.isError ? 'is-invalid': 'is-valid';
-       return css;
+        setTimeout(() => this.showDropDown = false, 200);
     }
     //---------------------------------------------------------
     get optionList() {
-        return this.autoComplete.options;
+        return this.options;
     }
     //---------------------------------------------------------
 }

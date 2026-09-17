@@ -43,13 +43,13 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField> implemen
    // isAutoShowError:any; isAutoShowSpin:any; onAutoSelect:any; onAutoFocus:any; isAutoShowList:any; hideAutoOverlay:any;
 
     //autoBfsComponent: IAutoComplete = { queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true };
-    bfsComponentAuto: AutoCompleteHelper = new AutoCompleteHelper(this.apiService,{ queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', controlName:'', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    bfsComponentAuto: AutoCompleteHelper = new AutoCompleteHelper(this.apiService,{ queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
         super(activatedRoute);
         this.validationForm = this.formBuilder.group(bfsFieldUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
-        this.bfsComponentAuto.autoComplete.control = this.validationForm.get('bfsComponentName');
+        this.bfsComponentAuto.control = this.validationForm.get('bfsComponentName');
 
         // this.isAutoShowSpin = isAutoShowSpin;
         // this.onAutoFocus = onAutoFocus;
@@ -124,7 +124,7 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField> implemen
         // this.autoBfsComponent.id = this.entity.bfsComponentId;
      //   await setAuto(this.apiService, this.validationForm,this.entity, this.autoBfsComponent);
      
-    await this.bfsComponentAuto.setOnChangeHandler(this.validationForm);
+    await this.bfsComponentAuto.setOnChangeHandler(this);
     }
     //---------------------------------------------------------
 
