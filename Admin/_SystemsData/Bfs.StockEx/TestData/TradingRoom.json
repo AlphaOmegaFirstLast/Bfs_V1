@@ -1,7 +1,36 @@
 [
-  { "id": 1, "name": "Trading Room 1"},
-  { "id": 2, "name": "Trading Room 2"},
-  { "id": 3, "name": "Trading Room 3"},
-  { "id": 4, "name": "Trading Room 4"}, 
-  { "id":5,  "name": "Trading Room 5"}
+ {
+   Id: 1
+   TenantId: 100
+   IsDeleted: 0
+   Name: 'EGX Main Trading Floor - Cairo'
+ },
+
+ {
+  Id: 2
+  TenantId: 100
+  IsDeleted: 0
+  Name: 'EGX Alexandria Trading Floor'
+ },
+
+ {
+  Id: 3
+  TenantId: 100
+  IsDeleted: 0
+  Name: 'CIB Treasury Trading Room'
+ },
+
+ {
+  Id: 4
+  TenantId: 100
+  IsDeleted: 0
+  Name: 'Banque Misr Trading Room'
+ },
+
+ {
+  Id: 5
+  TenantId: 100
+  IsDeleted: 0
+  Name: 'EFG Hermes Trading Room'
+ }
 ]

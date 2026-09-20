@@ -5,7 +5,7 @@ namespace Bfs.[SystemNameCapital].Data.Interfaces
 {
     public interface I[ComponentNameCapital]Repository : IRepository<[ComponentNameCapital]Entity>
     {
-        //Template_Start_DontOverwrite_1
-        //Template_End_DontOverwrite_1
+        //Template_Start_Code_DontOverwrite_1
+        //Template_End_Code_DontOverwrite_1
     }
 }
