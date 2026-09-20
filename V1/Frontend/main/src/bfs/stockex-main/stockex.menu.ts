@@ -238,7 +238,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
-            //Template_Component_Menu_Reports
+    {
+        label: 'Nav Report',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/report/nav-report-compare/0',
+        data: {
+            role: ['admin']
+        }
+    },
+//Template_Component_Menu_Reports
         ]
     },
     {
