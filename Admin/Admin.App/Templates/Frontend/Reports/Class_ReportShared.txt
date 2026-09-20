@@ -107,6 +107,29 @@ export function init[ReportNameCapital]Request(): I[ReportNameCapital]Request {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
+export function render[ReportNameCapital](record: IEntity, column: IQueryColumn): any {
+        const value = record[column.fieldName as keyof IEntity];
+        switch (column.fieldName) {
+            //Template_Start_Field_Lookup_1
+            case '[ReportFieldNameSmall]':
+                return record['[LookupNameSmall]Name']?.toString();
+            //Template_End_Field_Lookup_1
+
+            //Template_Start_Field_AutoComplete_1
+            case '[ReportFieldNameSmall]':
+                return record['[AutoCompleteNameSmall]Name']?.toString();
+            //Template_End_Field_AutoComplete_1
+
+            //Template_Start_ReportField_Aggregate_1
+            case '[AggregateName]':
+                return record['[AggregateName]']?.toString();
+            //Template_End_ReportField_Aggregate_1
+            default:
+                return value;
+        }
+        return value;
+    }
+    //---------------------------------------------------------
 export function get[ReportNameCapital]Actions(component:any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 

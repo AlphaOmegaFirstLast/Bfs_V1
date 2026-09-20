@@ -56,7 +56,7 @@ export interface ActionLink {
     data?: any;
 }
 //------------------------------------------------
-export interface IColumns {
+export interface IQueryColumn {
     fieldName: string;
     displayName: string;
     sortName: string;
@@ -85,7 +85,7 @@ export interface IEntityRequest<TFilter> {
     filter?: TFilter;
     sortOption?: ISort;
     group: string;
-    columns: IColumns[];
+    columns: IQueryColumn[];
 }
 
 //------------------------------------------------

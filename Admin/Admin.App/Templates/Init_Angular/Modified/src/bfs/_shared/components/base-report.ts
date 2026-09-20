@@ -19,7 +19,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 //---------------- bfs shared -------------------------------------
 import { IAction, IEntity, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
-import { type IColumns, ICustomReports, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { type IQueryColumn, ICustomReports, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { QuerySortComponent } from '@bfs/_shared/components/query-sort.component';
 import { QueryColumnsComponent } from '@bfs/_shared/components/query-columns.component';
 import { QueryGroupComponent } from '@bfs/_shared/components/query-group.component';
@@ -483,7 +483,7 @@ public tokenService!: any;
         return request;
     }
     //---------------------------------------------------------
-    render(record: IEntity, column: IColumns): any {
+    render(record: IEntity, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
             default:

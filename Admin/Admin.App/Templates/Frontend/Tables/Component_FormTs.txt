@@ -10,14 +10,13 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
-import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
+import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
 
 //---------------------- Component Specific ------------------------
-import { type I[ComponentNameCapital], type I[ComponentNameCapital]Request, init[ComponentNameCapital], [ComponentNameSmall]UntypedFormGroup } from './[ComponentFileName].shared';
-import { get[ComponentNameCapital]Actions,  init[ComponentNameCapital]Request } from './[ComponentFileName].shared';
+import { type I[ComponentNameCapital], init[ComponentNameCapital], [ComponentNameSmall]UntypedFormGroup, get[ComponentNameCapital]Actions} from './[ComponentFileName].shared';
 
 //Template_Start_Field_ChildrenList_1
 import {[CapitalFieldName]ListComponent} from "../[ChildListFileName]/[ChildListFileName].list.component"
@@ -120,24 +119,27 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
         let target = '';
         this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
-//         try{
-//         const [
-//             BfsSystemList, 
-//             DataTypeList,
-//         ] = await Promise.all
-//         ([
-//             this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 300 }),
-//             this.apiService.getItems<IQueryResponse>("/DataType/list", { pageSize: 300 }),
-//         ]);
-//         this.BfsSystemOptions = BfsSystemList.items;
-//         this.DataTypeOptions = DataTypeList.items;
-// } catch (err: any) {
-//   const msg = err?.message || "An error occurred while loading data.";
-//   this.messages.push({ text: msg, msgType: "danger" });
-// } finally {
-//   this.isLoading.lookups = false;
-// }
-        //Template_Start_Field_Lookup_2
+         try{
+         const [
+              //Template_Start_Field_Lookup_2
+              [LookupNameSmall]Response, 
+             //Template_End_Field_Lookup_2
+         ] = await Promise.all
+         ([
+        //Template_Start_Field_Lookup_3
+            this.apiService.getItems<IQueryResponse>("/[LookupNameCapital]/list", { pageSize: 30 }),
+        //Template_End_Field_Lookup_3
+         ]);
+        //Template_Start_Field_Lookup_4
+         this.[LookupNameCapital]Options = [LookupNameSmall]Response.items;
+        //Template_End_Field_Lookup_4
+ } catch (err: any) {
+   const msg = err?.message || "An error occurred while loading data.";
+   this.messages.push({ text: msg, msgType: "danger" });
+ } finally {
+   this.isLoading.lookups = false;
+ }
+ /*
         this.isLoading.lookups = true;
         target = "/[LookupNameCapital]/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
@@ -151,7 +153,7 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-        //Template_End_Field_Lookup_2
+        */
     }
     //---------------------------------------------------------
     //Template_Start_Field_AutoComplete_3
@@ -199,30 +201,7 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
     //---------------------------------------------------------
     //Template_End_Field_AutoComplete_3
 
-    getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = get[ComponentNameCapital]Actions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return get[ComponentNameCapital]Actions(this, record);
     }
-    //---------------------------------------------------------
-    getRecordActions(record: IEntity): ActionLink[] {
-        let actions = get[ComponentNameCapital]Actions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-   //--------------------------------------------------------------
-
-
 }

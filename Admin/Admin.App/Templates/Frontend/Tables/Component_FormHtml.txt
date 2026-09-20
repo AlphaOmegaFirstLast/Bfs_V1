@@ -17,6 +17,7 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack()">Back to filtered List</button>
                                              <a [routerLink]="['/[SystemPrefixSmall]/[ComponentFileName]/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
                                              <a [routerLink]="['/[SystemPrefixSmall]/[ComponentFileName]/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>

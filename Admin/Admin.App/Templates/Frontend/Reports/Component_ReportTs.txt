@@ -20,15 +20,10 @@ import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interf
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
 
-//--------------- system specific ------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/[BestFitSystemName]-main/[BestFitSystemName].operations';
-
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
-
-import { type I[ReportNameCapital]WithLookup, type I[ReportNameCapital]Request, type I[ReportNameCapital]Filter } from './[ReportFileName].shared';
-import { get[ReportNameCapital]Actions,  init[ReportNameCapital]Request } from './[ReportFileName].shared';
+import { type I[ReportNameCapital]Request, type I[ReportNameCapital]Filter, init[ReportNameCapital]Request, render[ReportNameCapital], get[ReportNameCapital]Actions} from './[ReportFileName].shared';
 import { [ReportNameCapital]FilterComponent } from './[ReportFileName].filter.component'; 
 
 @Component({
@@ -42,7 +37,7 @@ import { [ReportNameCapital]FilterComponent } from './[ReportFileName].filter.co
 })
 export class [ReportNameCapital]Component         
 
-    extends BaseReportComponent<I[ReportNameCapital]Filter, I[ReportNameCapital]WithLookup> {
+    extends BaseReportComponent<I[ReportNameCapital]Filter, null> {
     override apiService: [SystemNameCapital]Service = inject([SystemNameCapital]Service);
     override queryRequest = {} as I[ReportNameCapital]Request;
     override exportRequest = {} as I[ReportNameCapital]Request;
@@ -62,60 +57,21 @@ export class [ReportNameCapital]Component
         this.isButton.chart = false;
         this.addNewRecordLink = { route: "/[SystemPrefixSmall]/[ComponentFileName]/add/0", displayText: "Add New [ComponentMenuName]" };
         this.getApiUrl = '/[ComponentFileName]/[ReportTypeCapital]';
-        this.uploadApiUrl = '/[ComponentNameCapital]/upload';
+        this.uploadApiUrl = '/[ReportNameCapital]/upload';
         //Template_End_Component_Table_1
 
         this.filterComponent = [ReportNameCapital]FilterComponent;
         this.queryRequest = init[ReportNameCapital]Request();
     }
     //---------------------------------------------------------
-    override render(record: IEntity, column: IColumns): any {
-        const value = record[column.fieldName as keyof IEntity];
-        switch (column.fieldName) {
-            //Template_Start_Field_Lookup_1
-            case '[ReportFieldNameSmall]':
-                return record['[LookupNameSmall]Name']?.toString();
-            //Template_End_Field_Lookup_1
-
-            //Template_Start_Field_AutoComplete_1
-            case '[ReportFieldNameSmall]':
-                return record['[AutoCompleteNameSmall]Name']?.toString();
-            //Template_End_Field_AutoComplete_1
-
-            //Template_Start_ReportField_Aggregate_1
-            case '[AggregateName]':
-                return record['[AggregateName]']?.toString();
-            //Template_End_ReportField_Aggregate_1
-            default:
-                return value;
-        }
-        return value;
+    override render(record: IEntity, column: IQueryColumn): any {
+        return render[ReportNameCapital](record, column);
     }
     //---------------------------------------------------------
-
-   override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = get[ReportNameCapital]Actions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return get[ReportNameCapital]Actions(this, record);
     }
-    //---------------------------------------------------------
-    override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = get[ReportNameCapital]Actions(this, record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
 
-        return links;
-    }
 //--------------------------------------------------------------
 
 //Template_Start_Component_Report_2

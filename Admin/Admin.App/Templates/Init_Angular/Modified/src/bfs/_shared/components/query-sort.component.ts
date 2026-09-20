@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IColumns,ISort } from '../interfaces';
+import { IQueryColumn,ISort } from '../interfaces';
 
 @Component({
     selector: 'bfs-query-sort',
@@ -14,7 +14,7 @@ import { IColumns,ISort } from '../interfaces';
 export class QuerySortComponent implements OnInit{
     
     public result = {} as ISort;
-    public itemColumns: IColumns[] = [];
+    public itemColumns: IQueryColumn[] = [];
     public parent: any;
 
     constructor(public activeModal: NgbActiveModal) {

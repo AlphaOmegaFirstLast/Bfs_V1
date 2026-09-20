@@ -16,7 +16,7 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { type IColumns, formatFilter, IUIMessage, ViewLink, ActionLink, IQueryColumn } from '@bfs/_shared/interfaces';
+import { type IQueryColumn, formatFilter, IUIMessage, ViewLink, ActionLink, IQueryColumn } from '@bfs/_shared/interfaces';
 import { TokenService } from '@bfs/_shared/services/token.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
@@ -56,7 +56,7 @@ export class CustomReportsListComponent      //ToDoReport CustomReportsReportCom
         this.queryRequest = initCustomReportsRequest();
     }
     //---------------------------------------------------------
-    override render(record: IQueryColumn, column: IColumns): any {
+    override render(record: IQueryColumn, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IQueryColumn];
         switch (column.fieldName) {
             
