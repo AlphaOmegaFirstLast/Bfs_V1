@@ -111,7 +111,7 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
     }
     //---------------------------------------------------------
 
-    getRecordLinks(record: IEntity): ViewLink[] {
+override     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getUserRequestActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
@@ -123,7 +123,7 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
         return links;
     }
     //---------------------------------------------------------
-    getRecordActions(record: IEntity): ActionLink[] {
+override     getRecordActions(record: IEntity): ActionLink[] {
         let actions = getUserRequestActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'

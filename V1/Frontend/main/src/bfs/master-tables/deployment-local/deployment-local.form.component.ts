@@ -102,7 +102,7 @@ export class DeploymentLocalFormComponent extends BaseFormComponent<IDeploymentL
 
     }
     //---------------------------------------------------------
-    getRecordLinks(record: IEntity): ViewLink[] {
+override     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getDeploymentLocalActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
@@ -114,7 +114,7 @@ export class DeploymentLocalFormComponent extends BaseFormComponent<IDeploymentL
         return links;
     }
     //---------------------------------------------------------
-    getRecordActions(record: IEntity): ActionLink[] {
+override     getRecordActions(record: IEntity): ActionLink[] {
         let actions = getDeploymentLocalActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'

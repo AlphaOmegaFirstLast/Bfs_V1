@@ -97,7 +97,7 @@ export class StockFieldTypeFormComponent extends BaseFormComponent<IStockFieldTy
     }
     //---------------------------------------------------------
 
-    getRecordLinks(record: IEntity): ViewLink[] {
+override     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getStockFieldTypeActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
@@ -109,7 +109,7 @@ export class StockFieldTypeFormComponent extends BaseFormComponent<IStockFieldTy
         return links;
     }
     //---------------------------------------------------------
-    getRecordActions(record: IEntity): ActionLink[] {
+override     getRecordActions(record: IEntity): ActionLink[] {
         let actions = getStockFieldTypeActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'

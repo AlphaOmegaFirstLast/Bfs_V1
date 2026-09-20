@@ -9,7 +9,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
-import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
+import { IEntity, IQueryResponse, ActionLink, ViewLink } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
@@ -125,7 +125,7 @@ this.isLoading.lookups = true;
     }
     //---------------------------------------------------------
 
-    getRecordLinks(record: IEntity): ViewLink[] {
+override     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getBusinessActionActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
@@ -137,7 +137,7 @@ this.isLoading.lookups = true;
         return links;
     }
     //---------------------------------------------------------
-    getRecordActions(record: IEntity): ActionLink[] {
+override     getRecordActions(record: IEntity): ActionLink[] {
         let actions = getBusinessActionActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'

@@ -2,8 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
-//Template_Component_AutoComplete_1
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,14 +10,13 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction, ILookup } from '@bfs/_shared/interfaces';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
 
 //---------------------- Component Specific ------------------------
 import { type IBfsField, initBfsField, bfsFieldUntypedFormGroup, getBfsFieldActions } from './bfs-field.shared';
-//import { IAutoComplete, setAuto, isAutoShowError, isAutoShowSpin, onAutoFocus, isAutoShowList, onAutoSelect, hideAutoOverlay } from '@bfs/_shared/helpers/auto-complete.helper';
-import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 @Component({
     selector: 'bfs-field-form',
@@ -40,24 +37,13 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField> implemen
     public FilterTypeOptions: any[] = [];
     public BackendDataTypeOptions: any[] = [];
 
-   // isAutoShowError:any; isAutoShowSpin:any; onAutoSelect:any; onAutoFocus:any; isAutoShowList:any; hideAutoOverlay:any;
-
-    //autoBfsComponent: IAutoComplete = { queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true };
-    bfsComponentAuto: AutoCompleteHelper = new AutoCompleteHelper(this.apiService,{ queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    bfsComponentAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
         super(activatedRoute);
         this.validationForm = this.formBuilder.group(bfsFieldUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
         this.bfsComponentAuto.control = this.validationForm.get('bfsComponentName');
-
-        // this.isAutoShowSpin = isAutoShowSpin;
-        // this.onAutoFocus = onAutoFocus;
-        // this.isAutoShowList = isAutoShowList;
-        // this.onAutoSelect = onAutoSelect;
-        // this.hideAutoOverlay = hideAutoOverlay;
-        // this.isAutoShowError = isAutoShowError;
-      //  this.bfsComponent = new AutoCompleteHelper(this.apiService, this.autoBfsComponent);
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
@@ -119,15 +105,11 @@ export class BfsFieldFormComponent extends BaseFormComponent<IBfsField> implemen
                */
     }
     //---------------------------------------------------------
-    override async setAutoComplete() {
-        // this.autoBfsComponent.name = this.entity.bfsComponentName;
-        // this.autoBfsComponent.id = this.entity.bfsComponentId;
-     //   await setAuto(this.apiService, this.validationForm,this.entity, this.autoBfsComponent);
-     
-    await this.bfsComponentAuto.setOnChangeHandler(this);
+    override async setAutoComplete() {   
+       await this.bfsComponentAuto.setUpForm(this.apiService, this);
     }
     //---------------------------------------------------------
-
+    // required to set the control with the entity initial values
     override async setDataAutoComplete() {
         this.bfsComponentAuto.setData(this.entity.bfsComponentId,this.entity.bfsComponentName);
     }

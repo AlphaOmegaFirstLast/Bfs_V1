@@ -22,7 +22,7 @@
                                         <button type="submit" class="btn btn-sm btn-outline-primary me-2"
                                             *ngIf="currentOperation=='delete'">Delete</button>
                                         <button type="button" class="btn btn-sm btn-outline-primary me-2"
-                                            (click)="this.navigateBack()">Back to filtered List</button>
+                                            (click)="this.navigateBack('/mstr/bfs-field/list')">Back to filtered List</button>
                                         <a [routerLink]="['/mstr/bfs-field/list']"
                                             class="btn btn-sm btn-outline-primary"
                                             *ngIf="currentOperation=='view'">Back</a>
@@ -92,7 +92,7 @@
 
                                                             <span class="input-group-text"  *ngIf="bfsComponentAuto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>
                                                         </div>
-                                                        
+
                                                         <ul *ngIf="bfsComponentAuto.isShowList()"  class="dropdown-menu show w-100 shadow-sm"
                                                             style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
                                                             <li *ngFor="let option of bfsComponentAuto.optionList; let i = index">

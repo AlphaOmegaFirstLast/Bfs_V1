@@ -5,59 +5,61 @@
 <div class="modal-body">
   <div class="form-control">
 
-      <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>ID</label>
-      </div>
-      <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID" #ctrl="ngModel"/>
+    <div class="form-control">
+      <div class="row">
+        <div class="col -4">
+          <label>ID</label>
+        </div>
+        <div class="col -8">
+          <input class="form-control" type="text" [(ngModel)]="result.Id" value="{{result.Id}}" placeholder="ID"
+            #ctrl="ngModel" />
+        </div>
       </div>
     </div>
-  </div>
 
-      <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>Field</label>
-      </div>
-      <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.Field" value="{{result.Field}}" placeholder="Field" #ctrl="ngModel"/>
+    <div class="form-control">
+      <div class="row">
+        <div class="col -4">
+          <label>Field</label>
+        </div>
+        <div class="col -8">
+          <input class="form-control" type="text" [(ngModel)]="result.Field" value="{{result.Field}}"
+            placeholder="Field" #ctrl="ngModel" />
+        </div>
       </div>
     </div>
-  </div>
 
-      <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>Filter Type</label>
-      </div>
-      <div class="col -8">
-        <select class="form-select" [(ngModel)]="result.FilterTypeId" name="filterTypeId">
-          <ng-container *ngFor="let option of FilterTypeOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-          </ng-container>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>Backend Type</label>
-      </div>
-      <div class="col -8">
-        <select class="form-select" [(ngModel)]="result.BackendDataTypeId" name="backendDataTypeId">
-          <ng-container *ngFor="let option of BackendDataTypeOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-          </ng-container>
-        </select>
+    <div class="form-control">
+      <div class="row">
+        <div class="col -4">
+          <label>Filter Type</label>
+        </div>
+        <div class="col -8">
+          <select class="form-select" [(ngModel)]="result.FilterTypeId" name="filterTypeId">
+            <ng-container *ngFor="let option of FilterTypeOptions">
+              <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+          </select>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="form-control">
+      <div class="row">
+        <div class="col -4">
+          <label>Backend Type</label>
+        </div>
+        <div class="col -8">
+          <select class="form-select" [(ngModel)]="result.BackendDataTypeId" name="backendDataTypeId">
+            <ng-container *ngFor="let option of BackendDataTypeOptions">
+              <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+    </div>
 
-      <!-- BfsComponentAutoComplete Start -->
-  <div class="form-control">
+    <!-- BfsComponentAutoComplete Start -->
+    <!-- <div class="form-control">
     <div class="row">
      <div class="position-relative" (focusout)="hideBfsComponentOverlay()">
       <div class="col -4">
@@ -94,11 +96,45 @@
       </div>
      </div>
     </div>
+  </div> -->
+    <!-- BfsComponent AutoComplete End -->
+
+    <div class="row mb-2">
+      <div class="col-12">
+        <div class="position-relative" (focusout)="bfsComponentAuto.hideOverlay()">
+          <label class="form-label fs-6">Component</label>
+          <div class="input-group">
+            <input id="bfsComponentControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+              [(ngModel)]="result.BfsComponentName"
+              (ngModelChange)="bfsComponentAuto.onInputChange($event)" 
+              (focus)="bfsComponentAuto.onFocus()" />
+            <span class="input-group-text" *ngIf="bfsComponentAuto.isLoading">
+              <span class="spinner-border spinner-border-sm"></span>
+            </span>
+          </div>
+          <span class="input-group-text" *ngIf="bfsComponentAuto.isLoading"><span
+              class="spinner-border spinner-border-sm"></span></span>
+        </div>
+
+        <ul *ngIf="bfsComponentAuto.isShowList()" class="dropdown-menu show w-100 shadow-sm"
+          style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
+          <li *ngFor="let option of bfsComponentAuto.optionList; let i = index">
+            <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+              (mousedown)="$event.preventDefault(); bfsComponentAuto.onSelect(option)">
+              <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+            </button>
+          </li>
+        </ul>
+
+        <ul class="dropdown-menu show w-100" *ngIf="bfsComponentAuto.isError">
+          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <!-- BfsComponent AutoComplete End -->
+
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
     <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
   </div>
-

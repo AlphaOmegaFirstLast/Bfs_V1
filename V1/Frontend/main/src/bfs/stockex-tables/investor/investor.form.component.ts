@@ -125,7 +125,7 @@ let presetBrokerAgreementRequest: IBrokerAgreementRequest = initBrokerAgreementR
     }
     //---------------------------------------------------------
 
-    getRecordLinks(record: IEntity): ViewLink[] {
+override     getRecordLinks(record: IEntity): ViewLink[] {
         let actions = getInvestorActions(this,record);
         let links: ViewLink[] = actions.filter(action => 
                action.actionType == 'FrontendLink'
@@ -137,7 +137,7 @@ let presetBrokerAgreementRequest: IBrokerAgreementRequest = initBrokerAgreementR
         return links;
     }
     //---------------------------------------------------------
-    getRecordActions(record: IEntity): ActionLink[] {
+override     getRecordActions(record: IEntity): ActionLink[] {
         let actions = getInvestorActions(this,record);
         let links: ActionLink[] = actions.filter(action => 
                action.actionType == 'FrontendFunction'

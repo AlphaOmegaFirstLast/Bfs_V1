@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IBfsFieldFilter } from './bfs-field.shared';
-import { debounceTime, distinctUntilChanged, filter, switchMap, finalize, mergeMap } from 'rxjs/operators';
-//Template_Component_AutoComplete
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
+
 
 @Component({
     selector: 'app-bfs-field-filter',
@@ -19,8 +19,10 @@ export class BfsFieldFilterComponent implements OnInit {
     public result = {} as IBfsFieldFilter;
 
     // Define look ups
-    public FilterTypeOptions:  any[] = [];
-public BackendDataTypeOptions:  any[] = [];
+    public FilterTypeOptions: any[] = [];
+    public BackendDataTypeOptions: any[] = [];
+
+    bfsComponentAuto: AutoCompleteHelper;
 
     showBfsComponent = false; // Toggle for the overlay
     bfsComponentOptions: any[] = [];
@@ -33,8 +35,11 @@ public BackendDataTypeOptions:  any[] = [];
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+
     //---------------------------------------------------------
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) {
+        this.bfsComponentAuto = new AutoCompleteHelper({ queryUrl: "/BfsComponent/list", fieldName: 'BfsComponent', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    }
 
     async ngOnInit(): Promise<void> {
         this.result = this.parent.queryRequest.filter || {};
@@ -47,23 +52,23 @@ public BackendDataTypeOptions:  any[] = [];
     async getLookups(): Promise<void> {
         let target = '';
         target = "/FilterType/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+        (await this.parent.apiService.post(target, { pageSize: 50 })).subscribe({
             next: (response: IQueryResponse) => {
                 this.FilterTypeOptions = response.items;
                 this.isLoading.list = false;
             },
-                error: (err: any) => {
+            error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Filter Type data.';
                 this.isLoading.list = false;
             }
         });
-target = "/BackendDataType/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+        target = "/BackendDataType/list";
+        (await this.parent.apiService.post(target, { pageSize: 50 })).subscribe({
             next: (response: IQueryResponse) => {
                 this.BackendDataTypeOptions = response.items;
                 this.isLoading.list = false;
             },
-                error: (err: any) => {
+            error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Backend Type data.';
                 this.isLoading.list = false;
             }
@@ -72,55 +77,62 @@ target = "/BackendDataType/list";
     }
     //---------------------------------------------------------
     async setAutoComplete() {
-    await this.bfsComponentAutoComplete();
-
-}
-//---------------------------------------------------------
-
-async bfsComponentAutoComplete(searchTerm: string = this.result.BfsComponentName ?? ''): Promise<void> {
-        const term = (searchTerm ?? '').trim();
-        if (term.length < 2) {
-            this.bfsComponentOptions = [];
-            this.showBfsComponent = false;
-            return;
-        }
-
-        this.showBfsComponent = true;
-        this.isLoading.autoComplete = true;
-        try {
-            const request = { pageSize: 20, filter: { name: term } };
-            const response: any = await this.parent.apiService.postAutoComplete('/BfsComponent/list', request);
-            this.bfsComponentOptions = response?.items ?? [];
-        } catch (err: any) {
-            this.errorMessage = err?.message || 'Error fetching data';
-            this.bfsComponentOptions = [];
-        } finally {
-            this.isLoading.autoComplete = false;
-        }
-    }
-    //---------------------------------------------------------
-    onBfsComponentInput(value: string): void {
-        const val = value ?? '';
-        // Reset selected ID
-        this.result.BfsComponentName = undefined;
-        this.result.BfsComponentId = undefined;
-        this.bfsComponentAutoComplete(val);
-    }
-    //---------------------------------------------------------
-    selectBfsComponent(selectedOption: any) {
-        this.result.BfsComponentName = selectedOption?.name ?? undefined;
-        this.result.BfsComponentId = selectedOption?.id ?? undefined;
-        this.bfsComponentOptions = [];
-        this.showBfsComponent = false;
-    }
-    //---------------------------------------------------------
-    hideBfsComponentOverlay() {
-        setTimeout(() => {
-            this.showBfsComponent = false;
-        }, 200);
+        // await this.bfsComponentAutoComplete();
+        this.bfsComponentAuto.setupFilter(this.parent.apiService, this.result);
     }
     //---------------------------------------------------------
 
+    // async bfsComponentAutoComplete(searchTerm: string = this.result.BfsComponentName ?? ''): Promise<void> {
+    //     const term = (searchTerm ?? '').trim();
+    //     if (term.length < 2) {
+    //         this.bfsComponentOptions = [];
+    //         this.showBfsComponent = false;
+    //         return;
+    //     }
+
+    //     this.showBfsComponent = true;
+    //     this.isLoading.autoComplete = true;
+    //     try {
+    //         const request = { pageSize: 20, filter: { name: term } };
+    //         const response: any = await this.parent.apiService.postAutoComplete('/BfsComponent/list', request);
+    //         this.bfsComponentOptions = response?.items ?? [];
+    //     } catch (err: any) {
+    //         this.errorMessage = err?.message || 'Error fetching data';
+    //         this.bfsComponentOptions = [];
+    //     } finally {
+    //         this.isLoading.autoComplete = false;
+    //     }
+    // }
+    // //---------------------------------------------------------
+    // onBfsComponentInput(value: string): void {
+    //     const val = value ?? '';
+    //     // Reset selected ID
+    //     this.result.BfsComponentName = undefined;
+    //     this.result.BfsComponentId = undefined;
+    //     this.bfsComponentAutoComplete(val);
+    // }
+    // //---------------------------------------------------------
+    // selectBfsComponent(selectedOption: any) {
+    //     this.result.BfsComponentName = selectedOption?.name ?? undefined;
+    //     this.result.BfsComponentId = selectedOption?.id ?? undefined;
+    //     this.bfsComponentOptions = [];
+    //     this.showBfsComponent = false;
+    // }
+    // //---------------------------------------------------------
+    // hideBfsComponentOverlay() {
+    //     setTimeout(() => {
+    //         this.showBfsComponent = false;
+    //     }, 200);
+    // }
+    // //---------------------------------------------------------
+    // onBfsComponentInput(value: string): void {
+    //     const val = value ?? '';
+    //     // Reset selected ID
+    //     this.result.BfsComponentName = undefined;
+    //     this.result.BfsComponentId = undefined;
+    //     this.bfsComponentAutoComplete(val);
+    // }
+    //---------------------------------------------------------
     reset() {
         this.activeModal.close('Reset');
         this.parent.applyFilter(null);
