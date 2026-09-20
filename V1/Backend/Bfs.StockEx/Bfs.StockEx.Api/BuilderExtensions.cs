@@ -464,6 +464,18 @@ public static class BuilderExtensions
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
             return new PortfolioCashTransactionAggregateCompare(config.ConnectionString, resourceSecurity);
         });
+        builder.Services.AddScoped<IReportCompare>(sp =>
+        {
+            var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new ReportCompare(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<INavReportCompare>(sp =>
+        {
+            var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new NavReportCompare(config.ConnectionString, resourceSecurity);
+        });
 //Template_Component_RegisterReport
     }
 

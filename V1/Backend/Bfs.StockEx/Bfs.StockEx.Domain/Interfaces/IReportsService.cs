@@ -16,6 +16,10 @@ namespace Bfs.StockEx.Domain.Interfaces
 
         Task<QueryResponse<PortfolioCashTransactionAggregateCompareItem>> PortfolioCashTransactionAggregateCompareAsync(QueryRequest<PortfolioCashTransactionAggregateCompareFilter> contractRequest);
 
+        Task<QueryResponse<ReportCompareItem>> ReportCompareAsync(QueryRequest<ReportCompareFilter> contractRequest);
+
+        Task<QueryResponse<NavReportCompareItem>> NavReportCompareAsync(QueryRequest<NavReportCompareFilter> contractRequest);
+
 //Template_Component_AddIServiceEntry
   }
 }

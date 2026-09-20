@@ -19,6 +19,10 @@ namespace Bfs.StockEx.Domain.Services
 
         private readonly IPortfolioCashTransactionAggregateCompare _portfolioCashTransactionAggregateCompare;
 
+        private readonly IReportCompare _reportCompare;
+
+        private readonly INavReportCompare _navReportCompare;
+
 //Template_Component_AddDeclareEntry
         public ReportsService(
               ITradingRoomRepCompare tradingRoomRepCompare
@@ -30,6 +34,10 @@ namespace Bfs.StockEx.Domain.Services
               ,IPortfolioCashTransactionCompare portfolioCashTransactionCompare
 
               ,IPortfolioCashTransactionAggregateCompare portfolioCashTransactionAggregateCompare
+
+              ,IReportCompare reportCompare
+
+              ,INavReportCompare navReportCompare
 
 //Template_Component_AddParameterEntry
                             )
@@ -43,6 +51,10 @@ namespace Bfs.StockEx.Domain.Services
               _portfolioCashTransactionCompare = portfolioCashTransactionCompare;
 
               _portfolioCashTransactionAggregateCompare = portfolioCashTransactionAggregateCompare;
+
+              _reportCompare = reportCompare;
+
+              _navReportCompare = navReportCompare;
 
 //Template_Component_AddInitEntry
         }
@@ -95,6 +107,26 @@ namespace Bfs.StockEx.Domain.Services
             var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.PortfolioCashTransactionAggregateCompareItem>, Bfs.Core.Contracts.QueryResponse<PortfolioCashTransactionAggregateCompareItem>>(entityResult);
 
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<PortfolioCashTransactionAggregateCompareItem> { Items = new List<PortfolioCashTransactionAggregateCompareItem>(), TotalItems = 0, TotalPages = 0 };
+        }
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<ReportCompareItem>> ReportCompareAsync(Bfs.Core.Contracts.QueryRequest<ReportCompareFilter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<ReportCompareFilter>, Bfs.Core.Data.QueryRequest<Data.ReportCompareFilter>>(contractRequest);
+
+            var entityResult = await _reportCompare.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.ReportCompareItem>, Bfs.Core.Contracts.QueryResponse<ReportCompareItem>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<ReportCompareItem> { Items = new List<ReportCompareItem>(), TotalItems = 0, TotalPages = 0 };
+        }
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<NavReportCompareItem>> NavReportCompareAsync(Bfs.Core.Contracts.QueryRequest<NavReportCompareFilter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<NavReportCompareFilter>, Bfs.Core.Data.QueryRequest<Data.NavReportCompareFilter>>(contractRequest);
+
+            var entityResult = await _navReportCompare.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.NavReportCompareItem>, Bfs.Core.Contracts.QueryResponse<NavReportCompareItem>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<NavReportCompareItem> { Items = new List<NavReportCompareItem>(), TotalItems = 0, TotalPages = 0 };
         }
 //Template_Component_AddServiceEntry
     }

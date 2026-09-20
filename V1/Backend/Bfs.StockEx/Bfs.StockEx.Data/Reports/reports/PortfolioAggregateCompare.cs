@@ -55,6 +55,7 @@ namespace Bfs.StockEx.Data.Reports
             //Aggregates
             _fieldList.Add(new QueryField() { DbName = "Sum(stkxSspTransaction.quantity)", QueryName = "sumQuantity", IsAggregare = true });
             _fieldList.Add(new QueryField() { DbName = "Sum(stkxSspTransaction.price)", QueryName = "sumPrice", IsAggregare = true });
+           
 
         }
 

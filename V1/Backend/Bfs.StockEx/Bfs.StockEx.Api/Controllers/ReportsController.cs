@@ -64,6 +64,22 @@ public class ReportsController
         return TypedResults.Ok(result);
     }
 
+    [HttpPost("ReportCompare")]
+    [CustomAuthorize("method=q.reportCompare")]
+    public async Task<Results<Ok<QueryResponse<ReportCompareItem>>, BadRequest<ProblemDetails>>> ReportCompare([FromBody] QueryRequest<ReportCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.ReportCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
+    [HttpPost("NavReportCompare")]
+    [CustomAuthorize("method=q.navReportCompare")]
+    public async Task<Results<Ok<QueryResponse<NavReportCompareItem>>, BadRequest<ProblemDetails>>> NavReportCompare([FromBody] QueryRequest<NavReportCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.NavReportCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
 //Template_Component_AddControllerEntry
 }
 

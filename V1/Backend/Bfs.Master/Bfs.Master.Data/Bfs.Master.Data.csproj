@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="XXMigrations\20260401123248_init.Designer.txt" />
-    <Compile Include="XXMigrations\20260401123248_init.txt" />
-    <Compile Include="XXMigrations\MasterDbContextModelSnapshot.txt" />
+    <Compile Remove="XXMigrations\**" />
+    <EmbeddedResource Remove="XXMigrations\**" />
+    <None Remove="XXMigrations\**" />
   </ItemGroup>
 
   <ItemGroup>

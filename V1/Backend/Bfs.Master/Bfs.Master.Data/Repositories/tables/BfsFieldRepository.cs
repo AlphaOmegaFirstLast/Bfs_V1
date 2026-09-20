@@ -14,7 +14,7 @@ namespace Bfs.Master.Data.Repositories
             _context = dbContext;
         }
 
-        //Template_Start_DontOverwrite_1
+        //Template_Start_Code_DontOverwrite_1
         public async Task<List<BfsFieldEntity>> GetByComponentIdAsync(long componentId)
         {
             return await DbSet.Where(e => e.BfsComponentId == componentId).ToListAsync().ConfigureAwait(false);
@@ -27,6 +27,6 @@ namespace Bfs.Master.Data.Repositories
 
             DbSet.RemoveRange(existingList);
         }
-        //Template_End_DontOverwrite_1
+        //Template_End_Code_DontOverwrite_1
     }
 }

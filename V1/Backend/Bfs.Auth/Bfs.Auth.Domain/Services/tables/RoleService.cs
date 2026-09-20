@@ -130,8 +130,8 @@ namespace Bfs.Auth.Domain.Services
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<RoleListItem> { Items = new List<RoleListItem>(), TotalItems = 0, TotalPages = 0 };
         }
 
-        //Template_Start_DontOverwrite_1
-        //Template_End_DontOverwrite_1
+        //Template_Start_Code_DontOverwrite_1
+        //Template_End_Code_DontOverwrite_1
     }
 }
 

@@ -130,8 +130,8 @@ namespace Bfs.StockEx.Domain.Services
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StockEntityTypeListItem> { Items = new List<StockEntityTypeListItem>(), TotalItems = 0, TotalPages = 0 };
         }
 
-        //Template_Start_DontOverwrite_1
-        //Template_End_DontOverwrite_1
+        //Template_Start_Code_DontOverwrite_1
+        //Template_End_Code_DontOverwrite_1
     }
 }
 
