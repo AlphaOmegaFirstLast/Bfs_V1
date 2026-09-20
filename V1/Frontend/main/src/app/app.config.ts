@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
         //provideHttpClient(withInterceptors([httpErrorInterceptor])),
         provideHttpClient(),
         //Replace Angular's default ErrorHandler
-        { provide: ErrorHandler, useClass: GlobalErrorHandler },
+      //  { provide: ErrorHandler, useClass: GlobalErrorHandler },
 
         NavigationService,
         HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.

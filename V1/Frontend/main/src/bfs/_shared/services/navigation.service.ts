@@ -85,7 +85,7 @@ export class NavigationService {
   }
   //-----------------------------------------------
 
-  popUrl() {
+  popUrl(fallbackUrl?:string) {
 
     var urlStack = this.getStackFromSessionStorage("navHistory");
     var nextUrl = urlStack.pop();
@@ -93,6 +93,10 @@ export class NavigationService {
 
     if (nextUrl) {
       this.router.navigateByUrl(nextUrl);
+    }
+    else if(fallbackUrl){
+      this.router.navigateByUrl(fallbackUrl);
+
     }
   }
 }

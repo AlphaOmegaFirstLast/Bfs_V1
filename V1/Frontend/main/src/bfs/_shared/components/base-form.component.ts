@@ -16,8 +16,8 @@ import { MasterService } from '@bfs/master-main/master.service';
 import { NavigationService } from '../services/navigation.service';
 //------------------------------------------- Component Specific ------------------------------------------------
 export interface IBaseForm {
-  validationForm: UntypedFormGroup,
-  submit: boolean,
+    validationForm: UntypedFormGroup,
+    submit: boolean,
 }
 
 @Directive()
@@ -237,7 +237,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     //---------------------------------------------------------
 
     // calls Entity Framework query at the backnd.  
-    async view():Promise<boolean> {
+    async view(): Promise<boolean> {
         var target = this.apiUrl + this.entity.id;
         this.isLoading.view = true;
         (await this.apiService.get(target)).subscribe({
@@ -361,8 +361,8 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         this.validationForm.patchValue(this.entity);
     }
     //---------------------------------------------------------
-    navigateBack() {
-        this.navigationService.popUrl();
+    navigateBack(fallbackUrl?:string) {
+        this.navigationService.popUrl(fallbackUrl);
     }
     //---------------------------------------------------------
 }
