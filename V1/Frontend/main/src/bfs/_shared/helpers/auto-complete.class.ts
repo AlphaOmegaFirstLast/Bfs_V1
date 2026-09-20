@@ -17,9 +17,14 @@ export interface IAutoComplete {
 }
 
 export class AutoCompleteHelper {
+
+    apiService?: HttpService;
     isError: boolean = false;
     validationForm?: UntypedFormGroup;
     form?: IBaseForm;
+    result?: any;
+    isForm: boolean = false;
+    isFilter: boolean = false;
 
     queryUrl: string = '';
     id?: string = '';
@@ -31,7 +36,7 @@ export class AutoCompleteHelper {
     fieldName: string = '';
     control: any = null;
 
-    constructor(public apiService: HttpService, autoComplete: IAutoComplete) {
+    constructor(autoComplete: IAutoComplete) {
         this.queryUrl = autoComplete.queryUrl;
         this.id = autoComplete.id;
         this.name = autoComplete.name;
@@ -43,8 +48,10 @@ export class AutoCompleteHelper {
         this.control = autoComplete.control;
     }
     //---------------------------------------------------------
-    async setOnChangeHandler(form: IBaseForm) {
+    async setUpForm(apiService: HttpService, form: IBaseForm) {
+        this.apiService = apiService;
         this.form = form;
+        this.isForm = true;
         // set event handler for the validationForm input-change event, of the autoControl field
         let controlName = this.fieldName + 'Name';
         this.form.validationForm.get(controlName)?.valueChanges.pipe(
@@ -78,10 +85,30 @@ export class AutoCompleteHelper {
         this.form?.validationForm.get(controlName)?.setValue(this.name, { emitEvent: false });
     }
     //--------------------------------------------------------- 
+    setupFilter(apiService: HttpService, result: any) {
+        this.apiService = apiService;
+        this.isFilter = true;
+        this.result = result;
+    }
+    //--------------------------------------------------------- 
+    setFilterControls() {
+        //set the validationForm controls
+        let controlId = this.fieldName + 'Id';
+        let controlName = this.fieldName + 'Name';
+
+        this.result[controlId] = this.id;
+        this.result[controlName] = this.name;
+    }
+    //--------------------------------------------------------- 
     setData(id?: string, name?: string) {
         this.id = id;
         this.name = name;
-        this.setFormControls();
+        if (this.isForm) {
+            this.setFormControls();
+        }
+        else {
+            this.setFilterControls();
+        }
     }
     //---------------------------------------------------------  
     cssClass() {
@@ -99,14 +126,14 @@ export class AutoCompleteHelper {
     //---------------------------------------------------------
 
     async doAuto(searchTerm?: string): Promise<void> {
-        searchTerm = this.name ?? '';
         const term = (searchTerm ?? '').trim();
         if (term.length < 2) {
             this.init();
             return;
         }
 
-        await this.doApiCall(searchTerm);
+        this.isInitial = false;
+        await this.doApiCall(searchTerm);  // returning result
     }
     //---------------------------------------------------------   
 
@@ -115,7 +142,7 @@ export class AutoCompleteHelper {
         this.isError = false;
         try {
             const request = { pageSize: 20, filter: { name: searchTerm } };
-            const response: any = await this.apiService.postAutoComplete(this.queryUrl, request);
+            const response: any = await this.apiService?.postAutoComplete(this.queryUrl, request);
             this.options = response?.items ?? [];
             this.isError = response?.items.length == 0;
             this.setData(undefined, searchTerm);  //invalidate id, leave name as it is
@@ -138,10 +165,18 @@ export class AutoCompleteHelper {
     }
     //---------------------------------------------------------
     onInputChange(value: any,): void {
-        const val = value ?? '';
+      //  const searchTerm = value ?? '';
         // Reset selected ID
         this.init();
-        this.doAuto(val);
+      //  this.doAuto(val);
+        const searchTerm = (value ?? '').trim();
+        if (searchTerm.length < 2) {
+            this.init();
+            return;
+        }
+        
+        this.isInitial = false;
+        this.doApiCall(searchTerm);  // returning result
     }
     //---------------------------------------------------------
     init() {
