@@ -1,20 +1,18 @@
 import { inject, Injectable } from '@angular/core';
-import { forkJoin, Observable, of, tap } from 'rxjs';
 import { environment } from '@/environment/environment';
 import { safeHtmlDecode } from '../helpers/html.helper';
 import { AuthService } from '@bfs/auth-main/auth.service';
-import { InfrastructureService } from '@bfs/infrastructure-main/infrastructure.service';
+import { MasterService } from '@bfs/master-main/master.service';
 import { IQueryResponse, TokenModel, TokenParsed } from '../interfaces';
-import { promises } from 'dns';
 
 @Injectable({ providedIn: 'root' })  // Ensure the service is a singleton and available application-wide
 export class AccessService {
     authService: AuthService;
-    bfsService: InfrastructureService;
+    bfsService: MasterService;
 
     tokenModel: TokenModel | null = null;
     tokenParsed: TokenParsed | null = null;
-    isLoading: boolean = false;
+    loadingPromise: Promise<boolean> | null = null;
     isLoaded: boolean = false;
     bfsAdminRoleId = '1'; // assuming 1 is the roleId for bfs.admin, this value should be consistent with the data in the database
 
@@ -32,49 +30,60 @@ export class AccessService {
     //-----------------------------------------------------------------  
     constructor() {
         this.authService = inject(AuthService);
-        this.bfsService = inject(InfrastructureService);
+        this.bfsService = inject(MasterService);
     }
     //----------------------------------------------------------------- 
     async loadRoleData(): Promise<void> {
-        if (this.isLoaded){
-            return; // the data is already fetched and cached, no need to load again
+        try {
+            const [components, systemActions, roles, apps, roleApp, roleComponentSystemAction] = await Promise.all([
+                this.bfsService.getItems<IQueryResponse>("/bfsComponent/list", { pageSize: 300 }),
+                this.bfsService.getItems<IQueryResponse>("/SystemAction/list", { pageSize: 300 }),
+
+                this.authService.getItems<IQueryResponse>("/Role/list", { pageSize: 300 }),
+                this.authService.getItems<IQueryResponse>("/App/list", { pageSize: 300 }),
+                this.authService.getItems<IQueryResponse>("/RoleApp/list", { pageSize: 300 }),
+                this.authService.getItems<IQueryResponse>("/RoleComponentSystemAction/list", { pageSize: 300 })
+            ]);
+            //after you get the data, cache it in the service properties so that it can be used for subsequent calls without needing to fetch from the server again
+            this.components = components.items;
+            this.systemActions = systemActions.items;
+            this.roles = roles.items;
+            this.apps = apps.items;
+            this.roleApp = roleApp.items;
+            this.rolesComponentSystemActions = roleComponentSystemAction.items;
+            //  this.rolesBusinessActions = rolesBusinessActions.items; 
+        } catch (err) {
+            // Re-throw so IsAccessServiceReady() catches it, resets loadingPromise,
+            // and returns false — allowing a retry on the next call.
+            console.error('loadRoleData failed:', err);
+            throw err;
         }
-
-        if (this.isLoading) {
-            return; // the data is still being loaded, Prevent multiple simultaneous loads
-        }
-
-        this.isLoading = true;
-        const [components, systemActions, roles, apps, roleApp, roleComponentSystemAction] = await Promise.all([
-            this.bfsService.getItems<IQueryResponse>("/bfsComponent/list", { pageSize: 300 }),
-            this.bfsService.getItems<IQueryResponse>("/SystemAction/list", { pageSize: 300 }),
-
-            this.authService.getItems<IQueryResponse>("/AuthRole/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/AuthApp/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/AuthRoleApp/list", { pageSize: 300 }),
-            this.authService.getItems<IQueryResponse>("/RoleComponentSystemAction/list", { pageSize: 300 })
-
-        ]);
-        //after you get the data, cache it in the service properties so that it can be used for subsequent calls without needing to fetch from the server again
-        this.isLoading = false;
-        this.isLoaded = true;
-        this.components = components.items;
-        this.systemActions = systemActions.items;
-        this.roles = roles.items;
-        this.apps = apps.items;
-        this.roleApp = roleApp.items;
-        this.rolesComponentSystemActions = roleComponentSystemAction.items;
-        //  this.rolesBusinessActions = rolesBusinessActions.items; 
     }
     //-----------------------------------------------------------------   
     async IsAccessServiceReady(): Promise<boolean> {
-        if (!this.isLoaded && !this.isLoading ) {  // if not loaading means either the data is already loaded or not started loading yet, in both cases we want to attempt to load the data if it is not loaded yet
-            await this.loadRoleData();
+        // Already loaded — return immediately
+        if (this.isLoaded) {
+            return true;
         }
-        // this sentance will not guarantee the data is loaded as loadRoleData is async and we are not awaiting it in this method, 
-        // but it will ensure that the loading process is triggered if it has not been triggered yet, 
-        // and it will return true if the data is already loaded or loading is completed, false if the loading is still in progress.
-        return this.isLoaded && !this.isLoading;
+
+        // A load is already in flight — reuse that same Promise
+        if (this.loadingPromise) {
+            return this.loadingPromise;
+        }
+
+        // First caller: kick off the load and cache the Promise
+        this.loadingPromise = this.loadRoleData()
+            .then(() => {
+                this.isLoaded = true;
+                return true;
+            })
+            .catch((err) => {
+                console.error('Failed to load role data', err);
+                this.loadingPromise = null; // allow retry on next call
+                return false;
+            });
+
+        return this.loadingPromise;
     }
     //-----------------------------------------------------------------
     // to handle a special case when an array has only one value, it is passed as a string.
@@ -88,7 +97,7 @@ export class AccessService {
     //------------------------------------------------------------
     async isActionAllowed(component: string, action: string): Promise<boolean> {
 
-        return true ;
+        return true;
         if (environment.isSecurityEnabled === false) {
             return true; // Allow access if security is disabled
         }
@@ -149,7 +158,7 @@ export class AccessService {
             this.setTokenParsed();
         }
 
-        return this.tokenParsed?.role?.includes(this.bfsAdminRoleId) || false;
+        return this.tokenParsed?.roleId?.includes(this.bfsAdminRoleId) || false;
     }
     //-----------------------------------------------------------------
     private setTokenParsed(): void {
@@ -161,7 +170,7 @@ export class AccessService {
         if (!this.tokenParsed) {
             this.setTokenParsed();
         }
-        let userRoleIds = this.tokenParsed?.role || [];
+        let userRoleIds = this.tokenParsed?.roleId || [];
         let roles = this.roles?.filter(x => userRoleIds.includes(x.id)).map(x => x.name) || [];
         return roles;
     }
@@ -173,7 +182,7 @@ export class AccessService {
             this.setTokenParsed();
         }
 
-        let userRoleIds = this.tokenParsed?.role || [];
+        let userRoleIds = this.tokenParsed?.roleId || [];
         let componentActionIds = this.rolesComponentSystemActions.filter(ra => userRoleIds.includes(ra.roleId));
         for (let ca of componentActionIds || []) {
             let actionNames = this.systemActions?.find(x => x.id === ca.systemActionId)?.name || [];
@@ -189,9 +198,22 @@ export class AccessService {
             return this.apps.map(a => a.name) || [];
         }
         else {
-            let userRoleIds = this.tokenParsed?.role || [];
+            let userRoleIds = this.tokenParsed?.roleId || [];
             let appIds = this.roleApp.filter(ra => userRoleIds.includes(ra.roleId)).map(ra => ra.appId);
             let apps = this.apps.filter(app => appIds?.includes(app.id)).map(a => a.name) || [];
+            return apps;
+        }
+    }
+    //------------------------------------------------------------
+    public async getUserApplications(): Promise<string[]> {
+
+        if (this.isBfsAdmin()) {
+            return this.apps || [];
+        }
+        else {
+            let userRoleIds = this.tokenParsed?.roleId || [];
+            let appIds = this.roleApp.filter(ra => userRoleIds.includes(ra.roleId)).map(ra => ra.appId);
+            let apps = this.apps.filter(app => appIds?.includes(app.id)) || [];
             return apps;
         }
     }

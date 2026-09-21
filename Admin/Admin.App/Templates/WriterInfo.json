@@ -159,9 +159,9 @@
       {
         "ParentId": [ "604", "606" ],
         "Name": "Component_[HasAutoComplete]",
-        "TemplateFile": "Frontend\\Tables\\RegisterAutoComplete.txt",
-        "PlaceHolderType": "PlaceHolder",
-        "TemplateContentType": "ExternalFile",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
         "KeepPlaceHolder": false,
         "Notes": "Add import statement that is required for autocomplete functionality"
       },

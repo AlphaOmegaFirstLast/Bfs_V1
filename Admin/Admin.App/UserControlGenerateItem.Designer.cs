@@ -36,6 +36,8 @@
             btnRollBackItem = new Button();
             lblItem = new Label();
             btnWriters = new Button();
+            btnApplyManual = new Button();
+            btnSaveManual = new Button();
             SuspendLayout();
             // 
             // txtTemplate
@@ -80,7 +82,7 @@
             // 
             btnExecuteItem.Location = new Point(789, 41);
             btnExecuteItem.Name = "btnExecuteItem";
-            btnExecuteItem.Size = new Size(98, 34);
+            btnExecuteItem.Size = new Size(94, 34);
             btnExecuteItem.TabIndex = 4;
             btnExecuteItem.Text = "Execute";
             btnExecuteItem.UseVisualStyleBackColor = true;
@@ -88,9 +90,9 @@
             // 
             // btnRollBackItem
             // 
-            btnRollBackItem.Location = new Point(896, 41);
+            btnRollBackItem.Location = new Point(887, 41);
             btnRollBackItem.Name = "btnRollBackItem";
-            btnRollBackItem.Size = new Size(98, 34);
+            btnRollBackItem.Size = new Size(94, 34);
             btnRollBackItem.TabIndex = 5;
             btnRollBackItem.Text = "Roll Back";
             btnRollBackItem.UseVisualStyleBackColor = true;
@@ -108,19 +110,41 @@
             // 
             // btnWriters
             // 
-            btnWriters.Location = new Point(1004, 43);
+            btnWriters.Location = new Point(987, 41);
             btnWriters.Name = "btnWriters";
-            btnWriters.Size = new Size(120, 30);
+            btnWriters.Size = new Size(79, 34);
             btnWriters.TabIndex = 7;
             btnWriters.Text = "Writers";
             btnWriters.UseVisualStyleBackColor = true;
             btnWriters.Click += btnWriters_Click;
+            // 
+            // btnApplyManual
+            // 
+            btnApplyManual.Location = new Point(1205, 41);
+            btnApplyManual.Name = "btnApplyManual";
+            btnApplyManual.Size = new Size(130, 34);
+            btnApplyManual.TabIndex = 9;
+            btnApplyManual.Text = "Apply Manual";
+            btnApplyManual.UseVisualStyleBackColor = true;
+            btnApplyManual.Click += btnApplyManualItem_Click;
+            // 
+            // btnSaveManual
+            // 
+            btnSaveManual.Location = new Point(1072, 41);
+            btnSaveManual.Name = "btnSaveManual";
+            btnSaveManual.Size = new Size(128, 34);
+            btnSaveManual.TabIndex = 8;
+            btnSaveManual.Text = "Save Manual";
+            btnSaveManual.UseVisualStyleBackColor = true;
+            btnSaveManual.Click += btnSaveManualItem_Click;
             // 
             // UserControlGenerateItem
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
+            Controls.Add(btnApplyManual);
+            Controls.Add(btnSaveManual);
             Controls.Add(btnWriters);
             Controls.Add(lblItem);
             Controls.Add(btnRollBackItem);
@@ -130,7 +154,7 @@
             Controls.Add(label1);
             Controls.Add(txtTemplate);
             Name = "UserControlGenerateItem";
-            Size = new Size(1240, 79);
+            Size = new Size(1343, 79);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -145,5 +169,7 @@
         private Button btnRollBackItem;
         private Label lblItem;
         private Button btnWriters;
+        private Button btnApplyManual;
+        private Button btnSaveManual;
     }
 }

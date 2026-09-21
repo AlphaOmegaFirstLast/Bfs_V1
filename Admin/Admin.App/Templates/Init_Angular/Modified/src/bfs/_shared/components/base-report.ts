@@ -18,8 +18,9 @@ import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 //---------------- bfs shared -------------------------------------
-import { IAction, IEntity, IEntityRequest, IIdentifiable, IQueryColumn, IUserInterface } from "@bfs/_shared/interfaces";
-import { type IQueryColumn, ICustomReports, formatFilter, IUIMessage, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+//
+import { IAction, ICustomReports, IEntityRequest, IIdentifiable, IUIMessage, IUserInterface } from "@bfs/_shared/interfaces";
+import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
 import { QuerySortComponent } from '@bfs/_shared/components/query-sort.component';
 import { QueryColumnsComponent } from '@bfs/_shared/components/query-columns.component';
 import { QueryGroupComponent } from '@bfs/_shared/components/query-group.component';
@@ -29,7 +30,8 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 import { AccessService } from '@bfs/_shared/security/access.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
-import { getReportInfoData, getReportInfoHeaders } from '../objectFields';
+import { getReportInfoData, getReportInfoHeaders, getFieldValidationData, getFieldValidationHeaders } from '../objectFields';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
     selector: 'app-base-report',
@@ -39,18 +41,19 @@ export class BaseReportComponent<IFilter, IWithLookup> {
     @ViewChild('exportExcel') exportComponent!: ExportComponent<IFilter>;
     @Input() presetFilter: IFilter | undefined;
     filter!: IFilter;
-    lookup!: IWithLookup;
     public list: IEntity[] = [];
     public customReportInfo = { id: '0', name: 'NamePlaceHolder', url: 'UrlPlaceHolder' };
     public apiCustomReportsUrl = "/CustomReports/";
 
-public tokenService!: any;
+    public tokenService!: any;
 
     public getApiUrl = '';
     public getByIdApiUrl = '';
     public uploadApiUrl = '';
     public apiService!: any;
     public accessService!: AccessService;
+    public navigationService: NavigationService;
+
     public queryRequest = {} as IEntityRequest<IFilter>;
     public exportRequest = {} as IEntityRequest<IFilter>;
     public filterComponent: any;
@@ -61,7 +64,7 @@ public tokenService!: any;
     //---------------------------------------------------------
 
     public filterArray: string[] = [];
-    public isLoading: boolean = false;
+    public isLoading: any = { list: false, chart: false, save: false };
     public messages: IUIMessage[] = [];
     //-------------------------------------------------------- Set visibility of buttons and sections ----------
     public isSection = { chart: false, table: true, description: false };
@@ -81,6 +84,7 @@ public tokenService!: any;
         this.readCustomReportIdParameter();
         this.queryRequest = this.setRequestType();
         this.accessService = inject(AccessService);
+        this.navigationService = inject(NavigationService);
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {
@@ -90,25 +94,33 @@ public tokenService!: any;
         this.queryRequest.pageSize = this.pageSizes[0];
         // the call could be from a custom report, in that case restore it. or Directly from base report (List or report) 
         if (this.customReportInfo.id && this.customReportInfo.id != '0') {
-            await this.restoreCustomReport();
-            await this.getReport();
+            if (this.customReportInfo.id.startsWith('temp')) {
+                await this.restoreTempReport();
+                await this.getReport();
+            }
+            else {
+                await this.restoreCustomReport();
+                await this.getReport();
+            }
         }
         else {
             await this.getReport();
         }
+
         this.setAccessible();
     }
     //---------------------------------------------------------
 
     async getReport(): Promise<void> {
 
-        if (!this.isLoading) {  // to prevent multiple requests
+        if (!this.isLoading.list) {  // to prevent multiple requests
             this.messages = [];
-            this.isLoading = true;
+            this.isLoading.list = true;
             var target = this.getApiUrl;
+            this.captureCurrentReportParameters("temp_" + Date.now());
             (await this.apiService.post(target, this.queryRequest)).subscribe({
                 next: (res: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list = false;
                     this.list = res.items;
                     this.pagination.totalItems = res.totalItems;
                     this.pagination.pageCount = res.totalPages;
@@ -116,7 +128,7 @@ public tokenService!: any;
                     this.setPaginationDescription();
                 },
                 error: (err: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list = false;
                     var msg = err.message || `An error occurred while processing ${this.getApiUrl} data.`;
                     this.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -124,8 +136,32 @@ public tokenService!: any;
         }
     }
     //---------------------------------------------------------
+    reOrderColumns(inputColumns: IQueryColumn[]): IQueryColumn[] {
+        let resultColumns = inputColumns.sort((a, b) =>
+            (a.columnOrder ?? 0) - (b.columnOrder ?? 0)
+        );
+
+        return resultColumns;
+    }
+    //---------------------------------------------------------
     getDescription() {
-        return ["Phrasing the filter object, working on this.queryRequest"];
+        let filterColumns = JSON.parse(JSON.stringify(this.queryRequest.columns)) as IQueryColumn[];
+        this.queryRequest.filter = JSON.parse(JSON.stringify(this.queryRequest.filter));
+        // for each filter property, if it has a value, add it to the description array
+        const description: string[] = [];
+        if (this.queryRequest.filter == null || this.queryRequest.filter === '{}' || this.queryRequest.filter == undefined) {
+            return description;
+        }
+        for (const [key, value] of Object.entries(this.queryRequest.filter)) {
+            if (value !== undefined && value !== null && value !== ''
+                && !(typeof value === 'object' && Object.keys(value).length === 0)
+                && !(typeof value === 'object' && ('from' in value || 'to' in value) && (value as any)["from"] === undefined && (value as any)["to"] === undefined)
+            ) {
+                let label = filterColumns.find(col => col.fieldName.toLowerCase() === key.toLowerCase())?.displayName || key;
+                description.push(`${label}: ${value}`);
+            }
+        }
+        return description;
     }
     //---------------------------------------------------------
     openFilter() {
@@ -171,13 +207,13 @@ public tokenService!: any;
     }
     //---------------------------------------------------------
     applyColumns(result?: any) {
-        this.queryRequest.columns = result;
+        this.queryRequest.columns = this.reOrderColumns(result);
+        this.captureCurrentReportParameters("temp_" + Date.now());
     }
     //---------------------------------------------------------
     openSaveReport(me: any) {
         const modalRef = me.modalService.open(SaveReportComponent, { 'backdrop': 'static' });
         modalRef.componentInstance.parent = me;
-
     }
     //---------------------------------------------------------   
     viewDescription() {
@@ -206,20 +242,20 @@ public tokenService!: any;
     }
     //---------------------------------------------------------
     async exportJson(me: any): Promise<void> {
-        if (!me.isLoading) {  // to prevent multiple requests
+        if (!me.isLoading.list) {  // to prevent multiple requests
             me.messages = [];
-            me.isLoading = true;
+            me.isLoading.list = true;
             var target = me.getApiUrl;
             me.queryRequest.pageSize = me.pagination.totalItems;
             me.queryRequest.pageIndex = 1;
 
             (await me.apiService.downloadJson(target, me.queryRequest, {}, me.downloadFileName)).subscribe({
                 next: (res: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list = false;
                     me.queryRequest.pageSize = me.pageSizes[0];
                 },
                 error: (err: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list = false;
                     var msg = err.message || 'An error occurred while processing Tables Fields data.';
                     me.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -234,7 +270,7 @@ public tokenService!: any;
     //---------------------------------------------------------
     isObjectField(field: string): boolean {
         field = field.toLowerCase();
-        return field.includes('fieldvalidation') || field.includes('reportinfo');
+        return field === 'fieldvalidation' || field === 'reportinfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
     }
     //---------------------------------------------------------        
     objectFieldHeaders(field: string): SafeHtml {
@@ -243,6 +279,10 @@ public tokenService!: any;
             case 'reportinfo':
                 result = getReportInfoHeaders();
                 break;
+            case 'fieldvalidation':
+                result = getFieldValidationHeaders();
+                break;
+
             default:
                 result = '';
         }
@@ -252,21 +292,28 @@ public tokenService!: any;
     //---------------------------------------------------------
     objectFieldData(record: any, field: string): SafeHtml {
         var result = '';
+        let jsonField = 'json' + field;
 
         switch (field.toLowerCase()) {
             case 'reportinfo':
-                result = getReportInfoData(record[field] as string);
+                result = getReportInfoData(record[field]);
                 break;
+            case 'fieldvalidation':
+                result = getFieldValidationData(record[field]);
+                break;
+
             default:
                 result = '';
         }
-        
+
         return this.sanitizer.bypassSecurityTrustHtml(result) || '';
     }
     //---------------------------------------------------------
     readCustomReportIdParameter() {
         let route = this.activatedRoute;
-        // customReportId either in this format: "/report/structure-report/0"  or in this format:   "/client/list/0"
+        // customReportId either:
+        // in this format: "/report/structure-report/0"  
+        // or in this format: "/stores/list/0"
         // invalid format /component/edit/15 when the component has "tab list" EntityChildren. CustomReportId is not expected in that format and should not block data retrieval 
         if (route.snapshot.url.length == 4) {
             let segment0 = route.snapshot.url[route.snapshot.url.length - 4].path;
@@ -284,6 +331,30 @@ public tokenService!: any;
                 this.customReportInfo.id = segment3;
             }
         }
+    }
+    //---------------------------------------------------------
+    static writeCustomReportIdParameter(url: string, reportName: string): string {
+        // customReportId either:
+        // in this format: "/report/structure-report/0"  
+        // or in this format: "/stores/list/0"
+        // invalid format /component/edit/15 when the component has "tab list" EntityChildren. CustomReportId is not expected in that format and should not block data retrieval 
+        var segments = url.split('/').filter(segment => segment.length > 0);
+        if (segments.length == 4) {
+            let segment0 = segments[segments.length - 4];
+            let segment1 = segments[segments.length - 3];
+            let segment2 = segments[segments.length - 2];
+            let segment3 = segments[segments.length - 1];
+            segment3 = reportName;
+            url = `${segment0}/${segment1}/${segment2}/${segment3}`;
+        }
+        else if (segments.length == 3) {
+            let segment0 = segments[segments.length - 3];
+            let segment1 = segments[segments.length - 2];
+            let segment2 = segments[segments.length - 1];
+            let segment3 = reportName;
+            url = `${segment0}/${segment1}/${segment2}/${segment3}`;
+        }
+        return url;
     }
     //---------------------------------------------------------
     goToCustomReport(me: IUserInterface, record: any, data: any) {
@@ -313,8 +384,7 @@ public tokenService!: any;
         return '';
     }
     //---------------------------------------------------------
-    async saveCustomReport(reportName: string) {
-        var target = this.apiCustomReportsUrl;
+    captureCurrentReportParameters(reportName: string): any {
         var data = {
             "isDeleted": false,
             "id": 0,
@@ -325,17 +395,27 @@ public tokenService!: any;
             "baseReport": this.getCustomReportBaseReport(),
             "url": this.getCustomReportUrl()
         };
-        if (!this.isLoading) {  // to prevent multiple requests
+
+        this.saveTempReport(data);
+        return data;
+    }
+    //---------------------------------------------------------
+
+    async saveCustomReport(reportName: string) {
+        var target = this.apiCustomReportsUrl;
+        var data = this.captureCurrentReportParameters(reportName);
+
+        if (!this.isLoading.list) {  // to prevent multiple requests
             this.messages = [];
-            this.isLoading = true;
+            this.isLoading.list = true;
             (await this.apiService.post(target, data)).subscribe({
                 next: (response: ICustomReports) => {
-                    this.isLoading = false;
+                    this.isLoading.list = false;
                     let customReport = response;
                     this.messages.push({ text: `${customReport.name} is saved successfully`, msgType: "info" });
                 },
                 error: (err: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list = false;
                     var msg = err.message || 'An error occurred while adding Custom Reports data.';
                     this.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -343,19 +423,33 @@ public tokenService!: any;
         }
     }
     //---------------------------------------------------------
+
+    saveTempReport(data: any = null) {
+        sessionStorage.setItem("tempReport", JSON.stringify(data));
+    }
+    //---------------------------------------------------------
+    restoreTempReport() {
+        var info = this.navigationService.getReport(this.customReportInfo.id);
+        var tempReport = info;
+        if (tempReport) {
+            var parsedRequest = JSON.parse(tempReport.request);
+            this.queryRequest = parsedRequest;
+        }
+    }
+    //---------------------------------------------------------
     async restoreCustomReport(): Promise<void> {
-        if (!this.isLoading) {  // to prevent multiple requests
+        if (!this.isLoading.list) {  // to prevent multiple requests
             this.messages = [];
-            this.isLoading = true;
+            this.isLoading.list = true;
             var target = this.apiCustomReportsUrl + this.customReportInfo.id;
             (await this.apiService.get(target)).subscribe({
                 next: (response: ICustomReports) => {
-                    this.isLoading = false;
+                    this.isLoading.list = false;
                     this.queryRequest = response.request ? JSON.parse(response.request) : null;
                     this.getReport();
                 },
                 error: (err: any) => {
-                    this.isLoading = false;
+                    this.isLoading.list = false;
                     var msg = err.message || 'An error occurred while fetching Custom Reports data.';
                     this.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -363,20 +457,20 @@ public tokenService!: any;
         }
     }
     //---------------------------------------------------------
-    async duplicateRecord(me: any, record: IWithLookup, data: any): Promise<void> {
+    async duplicateRecord(me: any, record: IIdentifiable, data: any): Promise<void> {
         const id = (record as IIdentifiable).id;
-        if (!me.isLoading) {  // to prevent multiple requests
+        if (!me.isLoading.list) {  // to prevent multiple requests
             me.messages = [];
-            me.isLoading = true;
+            me.isLoading.list = true;
             var target = `${me.getByIdApiUrl}${id}`;
             (await me.apiService.get(target)).subscribe({
                 next: (res: any) => {
-                    me.isLoading = false;
-                    var duplicatedRecord = res as IWithLookup;
+                    me.isLoading.list = false;
+                    var duplicatedRecord = res as IIdentifiable;
                     me.postDuplicateRecord(me, duplicatedRecord, data);
                 },
                 error: (err: any) => {
-                    me.isLoading = false;
+                    me.isLoading.list = false;
                     var msg = err.message || 'An error occurred while processing Systems data.';
                     me.messages.push({ text: msg, msgType: "danger" });
                 }
@@ -384,7 +478,7 @@ public tokenService!: any;
         }
     }
     //---------------------------------------------------------
-    async postDuplicateRecord(me: any, record: IWithLookup, data: any) {
+    async postDuplicateRecord(me: any, record: IIdentifiable, data: any) {
         if (record as IIdentifiable) {
             (record as IIdentifiable).id = 0; // reset id only for record duplication and not for tree duplication
 
@@ -407,7 +501,7 @@ public tokenService!: any;
     }
     //---------------------------------------------------------
 
-    async duplicateTree(me: any, record: IWithLookup, data: any) {
+    async duplicateTree(me: any, record: IIdentifiable, data: any) {
         if (record as IIdentifiable) {
             var target = data.postUrl;  // for record duplication the default postUrl is used, for tree duplication a different url is used
             (await me.apiService.post(target, `${(record as IIdentifiable).id}`)).subscribe({
@@ -492,14 +586,32 @@ public tokenService!: any;
         return value;
     }
     //---------------------------------------------------------
+    getActions(record: IEntity): IAction[] {
+        return [] as IAction[];
+    }
+    //---------------------------------------------------------
     getRecordLinks(record: IEntity): ViewLink[] {
-        //to be overridden in descendant classes to provide record level links
-        return [];
+        let actions = this.getActions(record);
+        let links: ViewLink[] = actions.filter(action =>
+            action.actionType == 'FrontendLink'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
+        });
+
+        return links;
     }
     //---------------------------------------------------------
     getRecordActions(record: IEntity): ActionLink[] {
-        //to be overridden in descendant classes to provide record level links
-        return [];
+        let actions = this.getActions(record);
+        let links: ActionLink[] = actions.filter(action =>
+            action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+        });
+
+        return links;
     }
     //---------------------------------------------------------
 
@@ -639,4 +751,6 @@ public tokenService!: any;
         return this.getDemoChart();
     }
 }
+
+
 

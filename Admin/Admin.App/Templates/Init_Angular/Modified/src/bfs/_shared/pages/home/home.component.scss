@@ -1,0 +1,24 @@
+.app-container {
+  display: flex;            /* Activate Flexbox */
+  flex-wrap: wrap;          /* Allow wrapping to next line if screen is narrow */
+  justify-content: center;  /* Center items horizontally */
+  align-items: center;      /* Center items vertically */
+  gap: 15px;                /* Modern way to add spacing between items */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app-button {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;   /* Stack logo and text vertically */
+  align-items: center;      /* Center items inside the button */
+  min-width: 120px;
+  padding: 15px;
+}
+
+.app-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}

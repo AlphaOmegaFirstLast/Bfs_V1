@@ -8,7 +8,7 @@ type FilterObject = Record<string, Primitive | Range | undefined>;
 export interface TokenParsed {
   userId: string;
   exp: number; // e.g. offsetSeconds from Date.now()/1000
-  role: string[];
+  roleId: string[];
   app: string[];
   method: string[];
 }
@@ -19,7 +19,7 @@ export interface TokenModel {
 }
 //------------------------------------------------
 export interface IUserInterface {
-    isLoading?: boolean;
+    isLoading?: any;
     apiService?: any;
     router: Router;
     messages: IUIMessage[];
@@ -57,20 +57,13 @@ export interface ActionLink {
 }
 //------------------------------------------------
 export interface IQueryColumn {
-    fieldName: string;
-    displayName: string;
-    sortName: string;
-    width: string;
-    isVisible: boolean;
-}
-//------------------------------------------------
-export interface IQueryColumn {
     [key: string]: any; // Allow additional properties
     fieldName: string;
     displayName: string;
     sortName: string;
     width: string;
     isVisible: boolean;
+    columnOrder?: number;
 }
 //------------------------------------------------
 export interface ISort {
@@ -101,6 +94,7 @@ export interface ILookup {
 }
 //------------------------------------------------
 export interface IIdentifiable {
+    [key: string]: any; // Allow additional properties
     id: number;
 }
 //------------------------------------------------

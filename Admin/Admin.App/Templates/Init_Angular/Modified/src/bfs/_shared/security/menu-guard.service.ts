@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { MenuItemType } from '@/app/types/layout';
 import { AccessService } from './access.service'; // Assume this service exists
 
-import { BestFitMenuItems } from '../../bestfit-main/bestfit.menu'; // Assume this service exists
-import { InfrastructureMenuItems } from '@bfs/infrastructure-main/infrastructure.menu';
 import { StoresMenuItems } from '@bfs/stores-main/stores.menu';
 import { AuthMenuItems } from '@bfs/auth-main/auth.menu';
+import { MasterMenuItems } from '@bfs/master-main/master.menu';
+
+import { StockExMenuItems } from '@bfs/stockex-main/stockex.menu';
+
 //Template_System_AddMenuDeclare
 
 @Injectable({
@@ -21,33 +23,33 @@ export class MenuGuardService {
       console.error('AccessService data is not ready');
       return [];
     }
-    var currentSystem = sessionStorage.getItem('current-system') ;
-    var currentApp = sessionStorage.getItem('current-app') ;
+    var currentSystem = sessionStorage.getItem('current-system');
+    var currentApp = sessionStorage.getItem('current-app');
     if (!currentSystem || !currentApp) {
       console.error('Current system or app is not set in session storage');
       return [];
     }
 
-
     // Based on the current app, load the corresponding menu items
     // currently designed to show one app menu at a time.
     // can be enhanced to show multiple app menu if needed in future, by adding a loop here to loop through all apps in session storage and load menu for each app.
-  
-  var appItems = [] as MenuItemType[];
-  switch (currentSystem) {
-      case 'bestfit':
-        appItems = appItems.concat(await this.processItems(currentApp, BestFitMenuItems));
-        break;
-      case 'infrastructure':
-        appItems = appItems.concat(await this.processItems(currentApp, InfrastructureMenuItems));
-        break;
+
+    var appItems = [] as MenuItemType[];
+    switch (currentSystem.toLowerCase()) {
       case 'stores':
         appItems = appItems.concat(await this.processItems(currentApp, StoresMenuItems));
         break;
       case 'auth':
         appItems = appItems.concat(await this.processItems(currentApp, AuthMenuItems));
         break;
-      //Template_System_AddMenuEntry
+      case 'master':
+        appItems = appItems.concat(await this.processItems(currentApp, MasterMenuItems));
+        break;
+
+        case 'stockex':
+           appItems = appItems.concat(await this.processItems(currentApp , StockExMenuItems));
+        break;
+//Template_System_AddMenuEntry
       default:
         break;
     }

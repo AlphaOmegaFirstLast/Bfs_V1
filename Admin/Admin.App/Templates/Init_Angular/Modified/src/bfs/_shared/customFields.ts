@@ -1,5 +1,4 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
-import { ICustomFieldDefinition } from "@bfs/bestfit-tables/custom-field-definition/custom-field-definition.shared";
 import { ICustomFieldDefinitionRecord } from "./interfaces";
 
 export interface ICustomField {

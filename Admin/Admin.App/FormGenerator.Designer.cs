@@ -64,6 +64,8 @@
             panel1 = new Panel();
             ckDisableSecurity = new CheckBox();
             ckKeepExistingCode = new CheckBox();
+            btnApplyManualCode = new Button();
+            btnExtractManualCode = new Button();
             label7 = new Label();
             txtBfsRootDir = new TextBox();
             btnGenerateSystem = new Button();
@@ -237,7 +239,7 @@
             // 
             // btnGenerateAll
             // 
-            btnGenerateAll.Location = new Point(618, 254);
+            btnGenerateAll.Location = new Point(607, 254);
             btnGenerateAll.Name = "btnGenerateAll";
             btnGenerateAll.Size = new Size(230, 35);
             btnGenerateAll.TabIndex = 12;
@@ -247,7 +249,7 @@
             // 
             // btnModifyAll
             // 
-            btnModifyAll.Location = new Point(618, 295);
+            btnModifyAll.Location = new Point(607, 295);
             btnModifyAll.Name = "btnModifyAll";
             btnModifyAll.Size = new Size(230, 35);
             btnModifyAll.TabIndex = 13;
@@ -257,7 +259,7 @@
             // 
             // btnModifyComponent
             // 
-            btnModifyComponent.Location = new Point(895, 295);
+            btnModifyComponent.Location = new Point(861, 295);
             btnModifyComponent.Name = "btnModifyComponent";
             btnModifyComponent.Size = new Size(230, 35);
             btnModifyComponent.TabIndex = 15;
@@ -267,7 +269,7 @@
             // 
             // btnGenerateComponent
             // 
-            btnGenerateComponent.Location = new Point(895, 254);
+            btnGenerateComponent.Location = new Point(861, 254);
             btnGenerateComponent.Name = "btnGenerateComponent";
             btnGenerateComponent.Size = new Size(230, 35);
             btnGenerateComponent.TabIndex = 14;
@@ -277,7 +279,7 @@
             // 
             // btnShowModify
             // 
-            btnShowModify.Location = new Point(1172, 295);
+            btnShowModify.Location = new Point(1123, 296);
             btnShowModify.Name = "btnShowModify";
             btnShowModify.Size = new Size(230, 35);
             btnShowModify.TabIndex = 17;
@@ -287,7 +289,7 @@
             // 
             // btnShowGenerate
             // 
-            btnShowGenerate.Location = new Point(1172, 254);
+            btnShowGenerate.Location = new Point(1123, 255);
             btnShowGenerate.Name = "btnShowGenerate";
             btnShowGenerate.Size = new Size(230, 35);
             btnShowGenerate.TabIndex = 16;
@@ -297,7 +299,7 @@
             // 
             // btnRollBackModifyComponent
             // 
-            btnRollBackModifyComponent.Location = new Point(1449, 295);
+            btnRollBackModifyComponent.Location = new Point(1381, 295);
             btnRollBackModifyComponent.Name = "btnRollBackModifyComponent";
             btnRollBackModifyComponent.Size = new Size(230, 35);
             btnRollBackModifyComponent.TabIndex = 19;
@@ -307,7 +309,7 @@
             // 
             // btnRollBackGenerateComponent
             // 
-            btnRollBackGenerateComponent.Location = new Point(1449, 254);
+            btnRollBackGenerateComponent.Location = new Point(1381, 254);
             btnRollBackGenerateComponent.Name = "btnRollBackGenerateComponent";
             btnRollBackGenerateComponent.Size = new Size(230, 35);
             btnRollBackGenerateComponent.TabIndex = 18;
@@ -318,7 +320,7 @@
             // txtNameCapital
             // 
             txtNameCapital.ForeColor = SystemColors.HotTrack;
-            txtNameCapital.Location = new Point(615, 214);
+            txtNameCapital.Location = new Point(604, 214);
             txtNameCapital.Name = "txtNameCapital";
             txtNameCapital.Size = new Size(230, 31);
             txtNameCapital.TabIndex = 20;
@@ -326,7 +328,7 @@
             // txtNameSmall
             // 
             txtNameSmall.ForeColor = SystemColors.HotTrack;
-            txtNameSmall.Location = new Point(893, 214);
+            txtNameSmall.Location = new Point(859, 214);
             txtNameSmall.Name = "txtNameSmall";
             txtNameSmall.Size = new Size(230, 31);
             txtNameSmall.TabIndex = 21;
@@ -334,7 +336,7 @@
             // txtMenuName
             // 
             txtMenuName.ForeColor = SystemColors.HotTrack;
-            txtMenuName.Location = new Point(1171, 214);
+            txtMenuName.Location = new Point(1122, 215);
             txtMenuName.Name = "txtMenuName";
             txtMenuName.Size = new Size(230, 31);
             txtMenuName.TabIndex = 22;
@@ -342,7 +344,7 @@
             // txtFileName
             // 
             txtFileName.ForeColor = SystemColors.HotTrack;
-            txtFileName.Location = new Point(1449, 214);
+            txtFileName.Location = new Point(1381, 214);
             txtFileName.Name = "txtFileName";
             txtFileName.Size = new Size(230, 31);
             txtFileName.TabIndex = 23;
@@ -351,7 +353,7 @@
             // 
             label2.AutoSize = true;
             label2.ForeColor = Color.Red;
-            label2.Location = new Point(614, 186);
+            label2.Location = new Point(603, 186);
             label2.Name = "label2";
             label2.Size = new Size(118, 25);
             label2.TabIndex = 24;
@@ -361,7 +363,7 @@
             // 
             label3.AutoSize = true;
             label3.ForeColor = Color.Red;
-            label3.Location = new Point(1445, 186);
+            label3.Location = new Point(1377, 186);
             label3.Name = "label3";
             label3.Size = new Size(167, 25);
             label3.TabIndex = 25;
@@ -371,7 +373,7 @@
             // 
             label4.AutoSize = true;
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(1167, 186);
+            label4.Location = new Point(1118, 187);
             label4.Name = "label4";
             label4.Size = new Size(175, 25);
             label4.TabIndex = 26;
@@ -381,7 +383,7 @@
             // 
             label5.AutoSize = true;
             label5.ForeColor = Color.Red;
-            label5.Location = new Point(890, 186);
+            label5.Location = new Point(856, 186);
             label5.Name = "label5";
             label5.Size = new Size(107, 25);
             label5.TabIndex = 27;
@@ -390,9 +392,9 @@
             // panelItems
             // 
             panelItems.AutoScroll = true;
-            panelItems.Location = new Point(617, 337);
+            panelItems.Location = new Point(606, 337);
             panelItems.Name = "panelItems";
-            panelItems.Size = new Size(1270, 632);
+            panelItems.Size = new Size(1462, 632);
             panelItems.TabIndex = 28;
             // 
             // txtMessage
@@ -422,9 +424,9 @@
             panel1.Controls.Add(ckKeepExistingCode);
             panel1.Controls.Add(panelBackend);
             panel1.Controls.Add(panelFrontend);
-            panel1.Location = new Point(618, 0);
+            panel1.Location = new Point(607, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1061, 183);
+            panel1.Size = new Size(1269, 183);
             panel1.TabIndex = 31;
             // 
             // ckDisableSecurity
@@ -448,6 +450,26 @@
             ckKeepExistingCode.TabIndex = 37;
             ckKeepExistingCode.Text = "Keep Existing Code";
             ckKeepExistingCode.UseVisualStyleBackColor = true;
+            // 
+            // btnApplyManualCode
+            // 
+            btnApplyManualCode.Location = new Point(1646, 295);
+            btnApplyManualCode.Name = "btnApplyManualCode";
+            btnApplyManualCode.Size = new Size(230, 35);
+            btnApplyManualCode.TabIndex = 40;
+            btnApplyManualCode.Text = "Apply Manual Code";
+            btnApplyManualCode.UseVisualStyleBackColor = true;
+            btnApplyManualCode.Click += btnApplyManualComponent_Click;
+            // 
+            // btnExtractManualCode
+            // 
+            btnExtractManualCode.Location = new Point(1646, 254);
+            btnExtractManualCode.Name = "btnExtractManualCode";
+            btnExtractManualCode.Size = new Size(230, 35);
+            btnExtractManualCode.TabIndex = 39;
+            btnExtractManualCode.Text = "Save Manual Code";
+            btnExtractManualCode.UseVisualStyleBackColor = true;
+            btnExtractManualCode.Click += btnSaveManualComponent_Click;
             // 
             // label7
             // 
@@ -501,8 +523,10 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1924, 1050);
+            ClientSize = new Size(2091, 1050);
+            Controls.Add(btnApplyManualCode);
             Controls.Add(btnRefreshDb);
+            Controls.Add(btnExtractManualCode);
             Controls.Add(label8);
             Controls.Add(btnGenerateSystem);
             Controls.Add(txtBfsRootDir);
@@ -593,5 +617,7 @@
         private CheckBox ckDisableSecurity;
         private CheckBox ckKeepExistingCode;
         private Button btnRefreshDb;
+        private Button btnApplyManualCode;
+        private Button btnExtractManualCode;
     }
 }

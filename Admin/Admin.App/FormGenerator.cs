@@ -168,8 +168,8 @@ namespace CodeAdmin
                 : ckAllReports.Checked ? DataType.Reports
                 : DataType.None;
 
-            _codeGenerator.SelectedComponentList = _codeGenerator.ComponentList.Where(x => 
-                           x.BfsSystemId == _codeGenerator.CurrentSystem?.Id 
+            _codeGenerator.SelectedComponentList = _codeGenerator.ComponentList.Where(x =>
+                           x.BfsSystemId == _codeGenerator.CurrentSystem?.Id
                         && (DataType)x.DataTypeId == dataType).ToList();
             _codeGenerator.CurrentComponent = null;
 
@@ -247,7 +247,7 @@ namespace CodeAdmin
             panelItems.Controls.Clear();
             foreach (var generatorTemplate in componentTemplate.GeneratorTemplateList)
             {
-                var control = new UserControlGenerateItem(generatorTemplate, this.Generate, this.RollbackGenerate);
+                var control = new UserControlGenerateItem(generatorTemplate, this.Generate, this.RollbackGenerate, this.SaveManual, this.ApplyManual);
                 panelItems.Controls.Add(control);
             }
 
@@ -259,7 +259,7 @@ namespace CodeAdmin
             panelItems.Controls.Clear();
             foreach (var modifierTemplate in componentTemplate.ModifierTemplateList)
             {
-                var control = new UserControlGenerateItem(modifierTemplate, this.Modify, this.RollbackModify);
+                var control = new UserControlGenerateItem(modifierTemplate, this.Modify, this.RollbackModify, this.SaveManual, this.ApplyManual);
                 panelItems.Controls.Add(control);
             }
 
@@ -345,6 +345,48 @@ namespace CodeAdmin
             {
                 SetMessage($"Error: {ex.Message}");
             }
+        }
+
+        public void SaveManual(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
+        {
+            try
+            {
+                codeInfo.KeepExistingCode = ckKeepExistingCode.Checked;
+                if (generatorTemplate.TemplateFile.EndsWith("*.*"))
+                {
+                    TemplateManager.InitFrameWork(codeInfo, generatorTemplate);
+                }
+                else
+                {
+                   TemplateManager.SaveManualCode(codeInfo, generatorTemplate.OutputFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                SetMessage($"Error: {ex.Message}");
+            }
+            SetMessage("Done. ");
+        }
+
+        public void ApplyManual(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
+        {
+            try
+            {
+                codeInfo.KeepExistingCode = ckKeepExistingCode.Checked;
+                if (generatorTemplate.TemplateFile.EndsWith("*.*"))
+                {
+                    TemplateManager.InitFrameWork(codeInfo, generatorTemplate);
+                }
+                else
+                {
+                    TemplateManager.ApplyManualCode(codeInfo, generatorTemplate.OutputFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                SetMessage($"Error: {ex.Message}");
+            }
+            SetMessage("Done. ");
         }
 
         private void SetMessage(string message)
@@ -581,6 +623,80 @@ namespace CodeAdmin
         private void btnRefreshDb_Click(object sender, EventArgs e)
         {
             _codeGenerator = new CodeGeneratorV4();
+        }
+
+        private void btnSaveManual_Click(object sender, EventArgs e)
+        {
+            SetUIControls("Generating ", _codeGenerator.CurrentComponent?.ComponentNameCapital);
+            foreach (var componentTemplate in _codeGenerator.SelectedTemplateList)
+            {
+                _codeGenerator.CurrentTemplate = componentTemplate;
+
+                var currentControlsKey = GetControlsKey(_codeGenerator, "Generate");
+                if (lastControlsKey != currentControlsKey)
+                {
+                    lastControlsKey = currentControlsKey;
+                    CreateControlsOfGeneratedFiles(_codeGenerator.CurrentTemplate);
+                }
+
+                foreach (var control in panelItems.Controls)
+                {
+                    if (control is UserControlGenerateItem generateItemControl)
+                    {
+                        generateItemControl.SetUp(_codeGenerator);
+                        generateItemControl.btnSaveManualItem_Click(sender, e);
+                    }
+                }
+            }
+        }
+
+        private void btnApplyManual_Click(object sender, EventArgs e)
+        {
+            SetUIControls("Generating ", _codeGenerator.CurrentComponent?.ComponentNameCapital);
+            foreach (var componentTemplate in _codeGenerator.SelectedTemplateList)
+            {
+                _codeGenerator.CurrentTemplate = componentTemplate;
+
+                var currentControlsKey = GetControlsKey(_codeGenerator, "Generate");
+                if (lastControlsKey != currentControlsKey)
+                {
+                    lastControlsKey = currentControlsKey;
+                    CreateControlsOfGeneratedFiles(_codeGenerator.CurrentTemplate);
+                }
+
+                foreach (var control in panelItems.Controls)
+                {
+                    if (control is UserControlGenerateItem generateItemControl)
+                    {
+                        generateItemControl.SetUp(_codeGenerator);
+                        generateItemControl.btnApplyManualItem_Click(sender, e);
+                    }
+                }
+            }
+        }
+
+        private async void btnSaveManualComponent_Click(object sender, EventArgs e)
+        {
+            var filteredComponents = _codeGenerator.SelectedComponentList;
+            foreach (var item in filteredComponents)
+            {
+                _codeGenerator.SetComponent(item);
+                await Task.Yield();   // Let UI repaint before continuing
+                await Task.Delay(1000);
+                btnSaveManual_Click(sender, e);
+            }
+        }
+
+        private async void btnApplyManualComponent_Click(object sender, EventArgs e)
+        {
+            var filteredComponents = _codeGenerator.SelectedComponentList;
+            foreach (var item in filteredComponents)
+            {
+                _codeGenerator.SetComponent(item);
+                await Task.Yield();   // Let UI repaint before continuing
+                await Task.Delay(1000);
+                btnApplyManual_Click(sender, e);
+            }
         }
     }
 }

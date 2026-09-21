@@ -165,6 +165,7 @@ namespace Admin.App
         {
             //Clear Replacable PlaceHolders
             input = ClearPlaceHolder(codeInfo, input, "[ComponentType]", Enum.GetNames(typeof(ComponentType)).ToList());
+            input = ClearPlaceHolder(codeInfo, input, "[HasAutoComplete]", new List<string>(){ "AutoComplete" });
             input = ClearPlaceHolder(codeInfo, input, "[FieldDefinition]", Enum.GetNames(typeof(FieldDefinition)).ToList());
             input = ClearPlaceHolder(codeInfo, input, "[ReportDefinition]", Enum.GetNames(typeof(ReportDefinition)).ToList());
             input = ClearPlaceHolder(codeInfo, input, "[FilterDefinition]", Enum.GetNames(typeof(FilterDefinition)).ToList());
@@ -282,7 +283,78 @@ namespace Admin.App
             FileHelper.DeleteFile(outputFilePath);
             return outputFilePath;
         }
+
+        public static void SaveManualCode(CodeGeneratorBase codeInfo, string outputFilePath)
+        {
+            var input = FileHelper.ReadFile(outputFilePath);
+
+            var placeHolderName = "Code_DontOverwrite";
+            var existingCodeList = new List<BfsManualCode>();
+
+            var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
+            if (placeHolder != null)
+            {
+                var templateHelper = new TemplateHelper(placeHolder, placeHolderName);
+                var templatesCount = templateHelper.GetTemplateCount(input);
+
+                for (int i = 1; i <= templatesCount; i++)
+                {
+                    var startIndex = outputFilePath.LastIndexOf(@"\") + 1;
+                    var endIndex = outputFilePath.LastIndexOf(@".");
+                    var itemName = endIndex > startIndex ? outputFilePath.Substring(startIndex, endIndex - startIndex) : string.Empty;
+                    var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
+                    var manualCode = new BfsManualCode()
+                    {
+                        BfsSystemId = codeInfo.CurrentSystem?.Id,
+                        BfsComponentId = codeInfo.CurrentComponent?.Id,
+                        ItemName = itemName,
+                        FileName = outputFilePath,
+                        StartTemplate = $@"//Template_Start_{placeHolderName}_{i}",
+                        EndTemplate = $@"//Template_End_{placeHolderName}_{i}",
+                        ManualCode = existingSnippet
+                    };
+
+                    existingCodeList.Add(manualCode);
+                }
+            }
+        }
+
+        public static void ApplyManualCode(CodeGeneratorBase codeInfo, string outputFilePath)
+        {
+            var outputCode = FileHelper.ReadFile(outputFilePath);
+
+            var placeHolderName = "Code_DontOverwrite";
+            var existingCodeList = new List<BfsManualCode>();
+
+            var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
+            if (placeHolder != null)
+            {
+                var templateHelper = new TemplateHelper(placeHolder, placeHolderName);
+                var templatesCount = templateHelper.GetTemplateCount(outputCode);
+
+                for (int i = 1; i <= templatesCount; i++)
+                {
+                    outputCode = outputCode.Replace(templateHelper.GetStartTemplate(i), string.Empty);
+                }
+            }
+
+            FileHelper.SaveFile(outputFilePath, outputCode);
+        }
     }
+}
+
+
+
+public class BfsManualCode
+{
+    public long Id { get; set; }
+    public long? BfsSystemId { get; set; }
+    public long? BfsComponentId { get; set; }
+    public string ItemName { get; set; }
+    public string FileName { get; set; }
+    public string StartTemplate { get; set; }
+    public string EndTemplate { get; set; }
+    public string ManualCode { get; set; }
 }
 
 /* Angular Validation Forms

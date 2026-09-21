@@ -1,42 +1,49 @@
 import { Component, Directive, inject, OnInit } from '@angular/core';
-//import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+//import { CommonModule } from '@angular/common';
 //import { FormsModule, ReactiveFormsModule, FormBuilder, Validators,  ValidationErrors } from '@angular/forms';
 
 import { UntypedFormBuilder, UntypedFormArray, type UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { ClipboardService } from '@core/services/clipboard.service';
 
-import { IQueryResponse, ILookup, IUIMessage, IEntity, ICustomFieldDefinitionRecord, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryResponse, ILookup, IUIMessage, IEntity, ICustomFieldDefinitionRecord, ViewLink, ActionLink, IAction } from '@bfs/_shared/interfaces';
 import { getFormControlValidation, getFormInfoLookups } from '@bfs/_shared/objectFields';
 import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } from '@bfs/_shared/objectFields';
 
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
 import { AccessService } from '@bfs/_shared/security/access.service';
+import { MasterService } from '@bfs/master-main/master.service';
+import { NavigationService } from '../services/navigation.service';
 //------------------------------------------- Component Specific ------------------------------------------------
+export interface IBaseForm {
+    validationForm: UntypedFormGroup,
+    submit: boolean,
+}
 
 @Directive()
-export class BaseFormComponent<Entity extends IEntity> implements OnInit {
+export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnInit {
 
     public apiUrl = '';
     public apiService!: any;
     public entityDisplayName: string = '';
     public componentName: string = '';
 
-public tokenService!: any;
+    public tokenService!: any;
 
 
     public accessService!: AccessService;
+    public navigationService: NavigationService;
+    public masterService!: MasterService;
     public clipboard = inject(ClipboardService);
     public formBuilder = inject(UntypedFormBuilder);
     public validationForm!: UntypedFormGroup;
     public customFieldFormControlList!: UntypedFormArray['controls'];
     public route: ActivatedRoute;
     public submit: boolean = false;
-    public isLoading: boolean = false;
     public currentOperation: string = '';
     public parent: any;
     public messages: IUIMessage[] = [];
-
+    public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     entity: Entity;
     me: any = this;
     //-----------------------Object Fields Lookups----------------------------------
@@ -47,7 +54,9 @@ public tokenService!: any;
 
     constructor(public activatedRoute: ActivatedRoute) {
 
+        this.masterService = inject(MasterService);
         this.accessService = inject(AccessService);
+        this.navigationService = inject(NavigationService);
 
         let entityId = '0';
         this.route = activatedRoute;
@@ -63,6 +72,7 @@ public tokenService!: any;
     async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
         if (this.entity.id != '0') {
@@ -76,16 +86,23 @@ public tokenService!: any;
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         this.messages = [];
-        this.isLoading = true;
+        this.isLoading.lookups = true;
         let target = '';
     }
     //---------------------------------------------------------
     setChildrenRequests() {
     }
     //---------------------------------------------------------
+    setAutoComplete() {
+    }
+    //---------------------------------------------------------
+    setDataAutoComplete() {
+    }
+    //---------------------------------------------------------
     async getObjectFieldLookups() {
         let currentSystem = sessionStorage.getItem('current-system') || '';
-        if (currentSystem.toLowerCase() == 'infrustructure') {
+        // ToDo set a separate flag: "isMaster", so code is executed regardless of how system is named, currently it relies on system name contains "master"
+        if (currentSystem.toLowerCase() == 'master') {
             await getReportInfoLookups(this);
             await getMatrixInfoLookups(this);
             await getToolTipInfoLookups(this);
@@ -154,11 +171,11 @@ public tokenService!: any;
         target = '/CustomFieldDefinition/list';
         (await this.apiService.post(target, { pageSize: 50 })).subscribe({
             next: (response: IQueryResponse) => {
-                this.isLoading = false;
+                this.isLoading.list = false;
                 this.setCustomFieldControls(response.items);
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.list = false;
                 var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -171,33 +188,87 @@ public tokenService!: any;
         this.clipboard.copyText(value)
     }
     //---------------------------------------------------------
-    async view() {
+    // it calls dapper query, requires all tables must have id filter, otherwise it will return all records from Api, the item[0] will be random.
+    // async view() {
+    //     const target = this.apiUrl + 'list' ;
+    //     const request = { pageSize: 1, filter: { id: this.entity.id } };
+
+    //     (await this.apiService.post(target , request)).subscribe({
+    //         next: (response: any) => {
+    //             this.entity = response.items[0];
+    //             this.validationForm.patchValue(this.entity);
+    //             this.isLoading.save = false;
+    //         },
+    //         error: (err: any) => {
+    //             this.isLoading.save = false;
+    //             var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
+    //             this.messages.push({ text: msg, msgType: "danger" });
+    //         }
+    //     });
+    // }
+    //---------------------------------------------------------  
+    getActions(record: IEntity): IAction[] {
+        return [] as IAction[];
+    }
+    //---------------------------------------------------------
+    getRecordLinks(record: IEntity): ViewLink[] {
+        let actions = this.getActions(record);
+        let links: ViewLink[] = actions.filter(action =>
+            action.actionType == 'FrontendLink'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+    getRecordActions(record: IEntity): ActionLink[] {
+        let actions = this.getActions(record);
+        let links: ActionLink[] = actions.filter(action =>
+            action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListRow'
+        ).map(action => {
+            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+
+    // calls Entity Framework query at the backnd.  
+    async view(): Promise<boolean> {
         var target = this.apiUrl + this.entity.id;
+        this.isLoading.view = true;
         (await this.apiService.get(target)).subscribe({
             next: (response: Entity) => {
                 this.entity = response;
                 this.validationForm.patchValue(this.entity);
-                this.isLoading = false;
+                this.setDataAutoComplete();
+                this.isLoading.view = false;
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.view = false;
                 var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
+
+        return true;
     }
     //---------------------------------------------------------
     async add() {
         var target = this.apiUrl;
+        this.isLoading.save = true;
         (await this.apiService.post(target, this.entity)).subscribe({
             next: (response: Entity) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 this.submit = false;
                 this.validationForm.patchValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was added successfully`, msgType: "info" });
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 var msg = err.message || `An error occurred while adding ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -206,16 +277,17 @@ public tokenService!: any;
     //---------------------------------------------------------
     async update() {
         var target = this.apiUrl;
+        this.isLoading.save = true;
         (await this.apiService.put(target, this.entity)).subscribe({
             next: (response: Entity) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 this.submit = false;
                 this.validationForm.patchValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was updated successfully`, msgType: "info" });
 
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 var msg = err.message || `An error occurred while updating ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -224,16 +296,17 @@ public tokenService!: any;
     //---------------------------------------------------------
     async delete() {
         var target = this.apiUrl + this.entity.id;
+        this.isLoading.save = true;
         (await this.apiService.delete(target)).subscribe({
             next: (response: Entity) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 this.submit = false;
                 this.entity = this.initEntity();
                 this.validationForm.patchValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was deleted successfully`, msgType: "info" });
             },
             error: (err: any) => {
-                this.isLoading = false;
+                this.isLoading.save = false;
                 var msg = err.message || `An error occurred while deleting ${this.entityDisplayName} data.`;
                 this.messages.push({ text: msg, msgType: "danger" });
             }
@@ -247,8 +320,7 @@ public tokenService!: any;
             this.entity = this.validationForm.getRawValue();
             // this.validationForm.disable();
             this.messages = [];
-            if (!this.isLoading) {  // to prevent multiple requests
-                this.isLoading = true;
+            if (!this.isLoading.save) {  // to prevent multiple requests
                 this.applyOperation();
             }
         }
@@ -289,6 +361,9 @@ public tokenService!: any;
         this.validationForm.patchValue(this.entity);
     }
     //---------------------------------------------------------
-
+    navigateBack(fallbackUrl?:string) {
+        this.navigationService.popUrl(fallbackUrl);
+    }
+    //---------------------------------------------------------
 }
 

@@ -37,6 +37,44 @@ export function fieldValidationUntypedFormGroup(formBuilder: FormBuilder): Untyp
     })
 };
 //------------------------------------------------
+export function getFieldValidationHeaders(this: any): string {
+    var result = `<table class="table table-bordered table-sm">
+    
+                <tr><th colspan="7" style="border: 1px solid lightblue;" class="text-center">Field Validation</th></tr>
+                <tr>
+                    <th width="150px">Is Required</th>
+                    <th width="150px">Min Length</th>
+                    <th width="150px">Max Length</th>
+                    <th width="150px">Min Value</th>
+                    <th width="150px">Max Value</th>
+                    <th width="150px">Regex Pattern</th>
+                    <th width="150px">Allowed Values</th>
+                </tr>
+                </table>`;
+    return result;
+}
+//-------------------------------------------------
+export function getFieldValidationData(fieldValidation: IFieldValidation): string {
+    if (!fieldValidation) return '';
+    try {
+      //  const fieldValidation: IFieldValidation = normalizeObjectKeysToLowerFirstLetter(JSON.parse(fieldValidationString) as IFieldValidation);
+        var result = `<table class="table table-bordered table-sm">
+                   <tr>    
+                        <td width="150px"> ${fieldValidation.isRequired ? 'true' : 'false'}</td>
+                        <td width="150px"> ${fieldValidation.minLength}</td>
+                        <td width="150px"> ${fieldValidation.maxLength}</td>
+                        <td width="150px"> ${fieldValidation.minValue}</td>
+                        <td width="150px"> ${fieldValidation.maxValue}</td>
+                        <td width="150px"> ${fieldValidation.regexPattern}</td>
+                        <td width="150px"> ${fieldValidation.allowedValues}</td>
+                    </tr>
+                </table>`;
+        return (result);
+    } catch (e) {
+        return '';
+    }
+}
+//------------------------------------------------
 // Custom validator: check against allowed values
 export function allowedValuesValidator(allowed: string[]) {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -63,16 +101,32 @@ export function getFormControlValidation(sFieldValidation?: string) {
     return validatorsArray;
 }
 //---------------------------------------------------------
-
+// Interface used in List and reports
 export interface IReportInfo {
     parentTable: string;
     isQueryColumn: boolean;
     isColumnVisible: boolean;
     isJoinField: boolean;
     aggregateTypeId: string,
-    chartElementId: string
+    chartElementId: string,
+    columnOrder: string
 }
-//------------------------------------------------
+//---------------------------------------------------------
+function normalizeObjectKeysToLowerFirstLetter<T extends object>(value: T): T {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        return value;
+    }
+
+    const result = {} as Record<string, unknown>;
+    Object.entries(value as Record<string, unknown>).forEach(([key, val]) => {
+        const normalizedKey = key.charAt(0).toLowerCase() + key.slice(1);
+        result[normalizedKey] = val;
+    });
+
+    return result as T;
+}
+//---------------------------------------------------------
+// Fields of an Entity [used in Entity form]
 export function initReportInfo(): IReportInfo {
     return {
         parentTable: '',
@@ -80,46 +134,11 @@ export function initReportInfo(): IReportInfo {
         isColumnVisible: true,
         isJoinField: false,
         aggregateTypeId: '1',
-        chartElementId: '1'
+        chartElementId: '1',
+        columnOrder:'1'
     }
 }
 //-------------------------------------------------
-export function getReportInfoHeaders(this: any): string {
-    var result = `<table class="table table-bordered table-sm">
-                <tr><th colspan="6" class="text-center">Report Info</th></tr>
-                <tr>
-                    <th width="150px">Parent Table</th>
-                    <th width="150px">Is Query Column</th>
-                    <th width="150px">Is Column Visible</th>
-                    <th width="150px">Is Join Field</th>
-                    <th width="150px">Aggregate Type Id</th>
-                    <th width="150px">Chart Element Id</th>
-                </tr>
-                </table>`;
-    return result;
-}
-//-------------------------------------------------
-export function getReportInfoData(reportInfoString: string): string {
-    if (!reportInfoString) return '';
-    try {
-        const reportInfo: IReportInfo = JSON.parse(reportInfoString);
-        var result = `<table class="table table-bordered table-sm">
-                   <tr>    
-                        <td width="150px"> ${reportInfo.parentTable}</td>
-                        <td width="150px"> ${reportInfo.isQueryColumn ? 'true' : 'false'}</td>
-                        <td width="150px"> ${reportInfo.isColumnVisible ? 'true' : 'false'}</td>
-                        <td width="150px"> ${reportInfo.isJoinField ? 'true' : 'false'}</td>
-                        <td width="150px"> ${reportInfo.aggregateTypeId}</td>
-                        <td width="150px"> ${reportInfo.chartElementId}</td>
-                    </tr>
-                </table>`;
-        return (result);
-    } catch (e) {
-        return '';
-    }
-}
-//---------------------------------------------------------
-// Fields of an Entity [used in Entity form]
 export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormGroup {
     return formBuilder.group({
         parentTable: [''],
@@ -127,22 +146,62 @@ export function reportInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFor
         isColumnVisible: [true],
         isJoinField: [false],
         aggregateTypeId: ['1'],
-        chartElementId: ['1']
+        chartElementId: ['1'],
+        columnOrder: ['1']
     })
 };
 //------------------------------------------------
+export function getReportInfoHeaders(this: any): string {
+    var result = `<table class="table table-bordered table-sm">
+    
+                <tr><th colspan="6" style="border: 1px solid lightblue;" class="text-center">Report Info</th></tr>
+                <tr>
+                    <th width="150px">Parent Table</th>
+                    <th width="150px">Is Query Column</th>
+                    <th width="150px">Is Column Visible</th>
+                    <th width="150px">Is Join Field</th>
+                    <th width="150px">Aggregate Type Id</th>
+                    <th width="150px">Chart Element Id</th>
+                    <th width="150px">Column Order</th>
+                </tr>
+                </table>`;
+    return result;
+}
+//-------------------------------------------------
+export function getReportInfoData(reportInfo: IReportInfo): string {
+    if (!reportInfo) return '';
+    try {
+ //       const reportInfo: IReportInfo = normalizeObjectKeysToLowerFirstLetter(JSON.parse(reportInfoString) as IReportInfo);
+        var result = `<table class="table table-bordered table-sm">
+                   <tr>    
+                        <td width="150px"> ${reportInfo.parentTable??''}</td>
+                        <td width="150px"> ${reportInfo.isQueryColumn ? 'true' : 'false'}</td>
+                        <td width="150px"> ${reportInfo.isColumnVisible ? 'true' : 'false'}</td>
+                        <td width="150px"> ${reportInfo.isJoinField ? 'true' : 'false'}</td>
+                        <td width="150px"> ${reportInfo.aggregateTypeId??''}</td>
+                        <td width="150px"> ${reportInfo.chartElementId??''}</td>
+                        <td width="150px"> ${reportInfo.columnOrder??''}</td>
+                    </tr>
+                </table>`;
+        return (result);
+    } catch (e) {
+        return '';
+    }
+}
+//------------------------------------------------
+
 export async function getReportInfoLookups(me: any): Promise<void> {
     me.messages = [];
-    me.isLoading = true;
+    me.isLoading.lookups = true;
     let target = '';
     target = "/ChartElement/list";
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.ChartElementOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Chart Elements data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }
@@ -151,17 +210,16 @@ export async function getReportInfoLookups(me: any): Promise<void> {
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.AggregateTypeOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Aggregate Type data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }
     });
 }
 //---------------------------------------------------------
-
 
 export interface IToolTipInfo {
     actionLocationId: string,
@@ -188,16 +246,16 @@ export function toolTipInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFo
 //------------------------------------------------
 export async function getToolTipInfoLookups(me: any): Promise<void> {
     me.messages = [];
-    me.isLoading = true;
+    me.isLoading.lookups = true;
     let target = '';
     target = "/ActionLocation/list";
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.ActionLocationOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Chart Elements data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }
@@ -258,16 +316,16 @@ export function formInfoUntypedFormGroup(formBuilder: FormBuilder): UntypedFormG
 //------------------------------------------------
 export async function getFormInfoLookups(me: any): Promise<void> {
     me.messages = [];
-    me.isLoading = true;
+    me.isLoading.lookups = true;
     let target = '';
     target = "/FormControlType/list";
     (await me.apiService.post(target, { pageSize: 30 })).subscribe({
         next: (response: IQueryResponse) => {
             me.FormControlTypeOptions = response.items;
-            me.isLoading = false;
+            me.isLoading.lookups = false;
         },
         error: (err: any) => {
-            me.isLoading = false;
+            me.isLoading.lookups = false;
             var msg = err.message || 'An error occurred while fetching Form Control Type data.';
             me.messages.push({ text: msg, msgType: "danger" });
         }

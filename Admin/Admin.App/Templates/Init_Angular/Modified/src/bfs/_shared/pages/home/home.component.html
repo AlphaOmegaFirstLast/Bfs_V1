@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <article class="card card-out-of-container border-top-0">
+        <div class="position-relative card-side-img overflow-hidden"
+          style="height: 250px; background-image: url('../../assets/images/systems/{{welcomeData.systemLogo}}'); background-size: cover; background-position: center;">
+          <div
+            class="p-4 card-img-overlay rounded-start-0 auth-overlay d-flex align-items-center justify-content-center">
+            <section class="text-white text-center py-4">
+              <h2 class="mb-2 fst-italic">System: {{welcomeData.system}}</h2>
+              <h4 class="fst-italic">Company: {{welcomeData.company}}</h4>
+              <h6 class="fst-italic">Owner: {{welcomeData.tenant}}</h6>
+            </section>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <!----------------------------------------- Messages -------------------------------------->
+  <div *ngFor="let msg of messages">
+    <div *ngIf="msg.text">
+      <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+        <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
+      </ngb-alert>
+    </div>
+  </div>
+  <!----------------------------------------- User Apps -------------------------------------->
+
+  <div class="app-container">
+    <ng-container *ngFor="let item of userApps">
+      <div
+        class="btn btn-outline-info m-2 app-button"
+        style="width: 200px;"
+        (click)="setCurrentApp(item.name)">
+
+        <img [src]="'../../assets/images/apps/' + item.logo" class="app-logo">
+        <span class="app-name">{{item.name}}</span>
+
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Used for testing token and access data retrieval, can be removed in future -->
+  <!-- <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-6">
+      <input type="button" class="btn btn-primary m-2" value="Get Token" (click)="getToken()" />
+    </div>
+    <div class="col-6">
+      <input type="button" class="btn btn-primary m-2" value="Get Access Data" (click)="getAccessData()" />
+    </div>
+  </div>
+</div> -->

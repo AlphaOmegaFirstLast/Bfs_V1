@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/cor
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { TokenService } from '../security/token.service';
 
 @Component({
   selector: 'app-upload',
@@ -24,11 +25,13 @@ export class UploadFileComponent {
   statusMessage = signal<string>('');
   uploadProgress = signal<number>(0);
   isUploading = signal<boolean>(false);
+  tokenService: TokenService;
 
   //-------------------------------------
 
   constructor(public activeModal: NgbActiveModal) {
     this.http = inject(HttpClient);
+    this.tokenService = inject(TokenService);
   }
   //---------------------------------------------------------
   cancel() {
@@ -67,7 +70,7 @@ export class UploadFileComponent {
   /**
    * Executes the file upload to the server.
    */
-  onUpload(): void {
+  async onUpload(): Promise<void> {
     const file = this.selectedFile();
     if (!file) {
       this.uploadStatus.set('Error');
@@ -86,10 +89,18 @@ export class UploadFileComponent {
     // 2. Append the file with the field name 'file', as required by the endpoint/curl command
     // The third argument is the filename, which helps the server correctly identify the file.
     formData.append('file', file, file.name);
+    // 3. Prepare headers, including Authorization if needed
+    let headers = new HttpHeaders();
+       const accessToken = await this.tokenService.getToken();
+    if (accessToken) {
+      headers = headers.set('Authorization', 'Bearer ' + accessToken);
+    }
 
     this.http.post(this.uploadUrl, formData, {
       reportProgress: true, // Report upload progress events
-      observe: 'events'     // Observe all events, not just the final response
+      observe: 'events',     // Observe all events, not just the final response
+      headers: headers,
+      withCredentials: false // Ensure credentials are not sent, as we're using token-based auth
     }).subscribe({
       next: (event) => {
         switch (event.type) {
@@ -120,7 +131,17 @@ export class UploadFileComponent {
         if (error.status === 0) {
           this.statusMessage.set('Upload failed: Could not connect to the server at ' + this.uploadUrl + '. Please ensure the server is running.');
         } else {
-          this.statusMessage.set('Upload failed with error ' + error.status + ': ' + (error.statusText || 'Unknown error') + '. Check the console for details.');
+          if (error.error instanceof ErrorEvent) {
+            // Client-side error
+            this.statusMessage.set('Upload failed with client-side error: ' + error.error.message);
+          } else {
+            // Server-side error
+            if (error.error && error.error.detail) {
+              this.statusMessage.set('Upload failed with server error ' + error.status + ': ' + error.error.detail);
+            } else {  
+              this.statusMessage.set('Upload failed with error ' + error.status + ': ' + (error.statusText || 'Unknown error') + '. Check the console for details.');
+            }           
+          }
         }
         console.error('Upload error:', error);
       },

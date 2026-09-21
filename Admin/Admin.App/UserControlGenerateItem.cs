@@ -7,23 +7,29 @@ namespace CodeAdmin
     public partial class UserControlGenerateItem : UserControl
     {
         private readonly TemplateInfo _generatorTemplate;
-        private Action<CodeGeneratorBase, TemplateInfo> _methodName;
-        private Action<CodeGeneratorBase, TemplateInfo> _rollBackMethodName;
-        private CodeGeneratorBase _codeInfo ;
+        private Action<CodeGeneratorBase, TemplateInfo> _generateMethod;
+        private Action<CodeGeneratorBase, TemplateInfo> _rollBackMethod;
+        private Action<CodeGeneratorBase, TemplateInfo> _saveManualMethod;
+        private Action<CodeGeneratorBase, TemplateInfo> _applyManualMethod;
+        private CodeGeneratorBase _codeInfo;
         private string _outputFile;
-        public UserControlGenerateItem(TemplateInfo generatorTemplate, Action<CodeGeneratorBase, TemplateInfo> method, Action<CodeGeneratorBase, TemplateInfo> rollBackMethodName)
+        public UserControlGenerateItem(TemplateInfo generatorTemplate
+            , Action<CodeGeneratorBase, TemplateInfo> generateMethod, Action<CodeGeneratorBase, TemplateInfo> rollBackMethod,
+            Action<CodeGeneratorBase, TemplateInfo> saveManualMethod, Action<CodeGeneratorBase, TemplateInfo> applyManualMethod)
         {
             InitializeComponent();
 
             _generatorTemplate = generatorTemplate;
-            _methodName = method;
-            _rollBackMethodName = rollBackMethodName;
+            _generateMethod = generateMethod;
+            _rollBackMethod = rollBackMethod;
+            _saveManualMethod = saveManualMethod;
+            _applyManualMethod = applyManualMethod;
         }
 
         public void SetUp(CodeGeneratorBase codeInfo)
         {
             _codeInfo = codeInfo;
-            btnExecuteItem.Text = _methodName.Method.Name;
+            btnExecuteItem.Text = _generateMethod.Method.Name;
             txtTemplate.Text = TemplateHelper.GetTemplateFilePath(codeInfo.TemplateRootDir, _generatorTemplate.TemplateFile);
             txtOutputFolder.Text = _generatorTemplate.GetOutputFilePath(codeInfo);
 
@@ -43,12 +49,12 @@ namespace CodeAdmin
         public void btnExecuteItem_Click(object sender, EventArgs e)
         {
             // Call the delegate if it's assigned
-            _methodName?.Invoke(_codeInfo, _generatorTemplate);
+            _generateMethod?.Invoke(_codeInfo, _generatorTemplate);
         }
 
         public void btnRollBackItem_Click(object sender, EventArgs e)
         {
-            _rollBackMethodName?.Invoke(_codeInfo, _generatorTemplate);
+            _rollBackMethod?.Invoke(_codeInfo, _generatorTemplate);
         }
 
         private void btnWriters_Click(object sender, EventArgs e)
@@ -58,6 +64,16 @@ namespace CodeAdmin
             form.TemplateOutputDir = _outputFile;
             form.List = _codeInfo.GetPlaceHolderListOfTemplate(_generatorTemplate);
             form.RefreshGrid();
+        }
+
+        public void btnSaveManualItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Save: " + _outputFile);
+        }
+
+        public void btnApplyManualItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Apply: " + _outputFile);
         }
     }
 }
