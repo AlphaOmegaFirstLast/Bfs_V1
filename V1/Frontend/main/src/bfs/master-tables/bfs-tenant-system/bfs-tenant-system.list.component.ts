@@ -16,19 +16,14 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryColumn, IEntity, IAction } from '@bfs/_shared/interfaces';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
-
-//--------------- system specific ------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/master.operations';
 
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { MasterService } from '@bfs/master-main/master.service';
-
-import { type IBfsTenantSystemWithLookup, type IBfsTenantSystemRequest, type IBfsTenantSystemFilter } from './bfs-tenant-system.shared';
-import { getBfsTenantSystemActions,  initBfsTenantSystemRequest } from './bfs-tenant-system.shared';
+import { type IBfsTenantSystemRequest, type IBfsTenantSystemFilter, initBfsTenantSystemRequest, renderBfsTenantSystem, getBfsTenantSystemActions} from './bfs-tenant-system.shared';
 import { BfsTenantSystemFilterComponent } from './bfs-tenant-system.filter.component'; 
 
 @Component({
@@ -42,7 +37,7 @@ import { BfsTenantSystemFilterComponent } from './bfs-tenant-system.filter.compo
 })
 export class BfsTenantSystemListComponent         
 
-    extends BaseReportComponent<IBfsTenantSystemFilter, IBfsTenantSystemWithLookup> {
+    extends BaseReportComponent<IBfsTenantSystemFilter,null> {
     override apiService: MasterService = inject(MasterService);
     override queryRequest = {} as IBfsTenantSystemRequest;
     override exportRequest = {} as IBfsTenantSystemRequest;
@@ -63,44 +58,12 @@ export class BfsTenantSystemListComponent
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
-        switch (column.fieldName) {
-            case 'bfsTenantId':
-                return record['bfsTenantName']?.toString();
-case 'bfsSystemId':
-                return record['bfsSystemName']?.toString();
-
-            default:
-                return value;
-        }
-        return value;
+        return renderBfsTenantSystem(record, column);
     }
     //---------------------------------------------------------
-
-    override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getBfsTenantSystemActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getBfsTenantSystemActions(this, record);
     }
-    //---------------------------------------------------------
-    override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getBfsTenantSystemActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-//--------------------------------------------------------------
 
 }
 

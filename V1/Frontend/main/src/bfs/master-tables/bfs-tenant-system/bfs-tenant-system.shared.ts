@@ -1,15 +1,14 @@
-
+import { FormBuilder } from "@angular/forms";
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master-main/master.operations';
 
-import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
-
 // Output Columns of a Query  [used in entity Query]
 export const BfsTenantSystemColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'bfsTenantId', displayName: 'Tenant Name', sortName: 'BfsTenant_Name', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'bfsTenantId', displayName: 'Tenant Name', sortName: 'BfsTenant_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -18,7 +17,9 @@ export interface IBfsTenantSystem {
 id?: string;
 
     bfsTenantId?: string;
-bfsSystemId?: string;
+
+    bfsSystemId?: string;
+    bfsSystemName?: string;
 
 }
 //---------------------------------------------------------
@@ -28,7 +29,9 @@ export function initBfsTenantSystem(): IBfsTenantSystem {
 id: '0',
 
         bfsTenantId: '0',
-bfsSystemId: '0',
+
+        bfsSystemId: '0',
+        bfsSystemName: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -38,11 +41,13 @@ bfsSystemId: '0',
 // Fields of an Entity [used in Entity form]
 export function bfsTenantSystemUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false],
-id: ['0'],
+    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    bfsTenantId: ['0'],
-bfsSystemId: ['0'],
+    bfsTenantId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    bfsSystemName: [''],
 
     };
 } 
@@ -50,7 +55,8 @@ bfsSystemId: ['0'],
 export interface IBfsTenantSystemWithLookup extends IBfsTenantSystem{
 
     bfsTenantName?: string;
-bfsSystemName?: string;
+
+    bfsSystemName?: string;
 
 }
 //---------------------------------------------------------
@@ -62,7 +68,9 @@ export interface IBfsTenantSystemFilter {
     Id?: string;
 
     BfsTenantId?: string;
-BfsSystemId?: string;
+
+    BfsSystemId?: string;
+    BfsSystemName?: string,
 
 }
 //---------------------------------------------------------
@@ -80,7 +88,9 @@ export function initBfsTenantSystemRequest(): IBfsTenantSystemRequest {
             Id: undefined ,
 
             BfsTenantId: undefined ,
-BfsSystemId: undefined ,
+
+            BfsSystemId: undefined ,
+            BfsSystemName: undefined ,
 
             }
     };
@@ -88,7 +98,21 @@ BfsSystemId: undefined ,
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
+export function renderBfsTenantSystem(record: IEntity, column: IQueryColumn): any {
+        const value = record[column.fieldName as keyof IEntity];
+        switch (column.fieldName) {
+            case 'bfsTenantId':
+                return record['bfsTenantName']?.toString();
 
+            case 'bfsSystemId':
+                return record['bfsSystemName']?.toString();
+
+            default:
+                return value;
+        }
+        return value;
+    }
+    //---------------------------------------------------------
 export function getBfsTenantSystemActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
@@ -115,11 +139,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',re
 if (component.accessService.isActionAllowed('bfsTenantSystem', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsTenantId'], route:'/mstr/bfs-tenant/view', displayText:'Go to BfsTenant'
-});
-}
-if (component.accessService.isActionAllowed('bfsTenantSystem', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/mstr/bfs-system/view', displayText:'Go to BfsSystem'
 });
 }
 

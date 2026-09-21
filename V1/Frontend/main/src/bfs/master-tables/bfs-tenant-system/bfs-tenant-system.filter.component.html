@@ -30,20 +30,42 @@
       </div>
     </div>
   </div>
-  <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>BestFit System</label>
-      </div>
-      <div class="col -8">
-        <select class="form-select" [(ngModel)]="result.BfsSystemId" name="bfsSystemId">
-          <ng-container *ngFor="let option of BfsSystemOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-          </ng-container>
-        </select>
+
+      <!-- BfsSystemAutoComplete Start -->
+    <div class="row mb-2">
+      <div class="col-12">
+        <div class="position-relative" (focusout)="bfsSystemAuto.hideOverlay()">
+          <label class="form-label fs-6">Component</label>
+          <div class="input-group">
+            <input id="bfsSystemControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+              [(ngModel)]="result.BfsSystemName"
+              (ngModelChange)="bfsSystemAuto.onInputChange($event)" 
+              (focus)="bfsSystemAuto.onFocus()" />
+            <span class="input-group-text" *ngIf="bfsSystemAuto.isLoading">
+              <span class="spinner-border spinner-border-sm"></span>
+            </span>
+          </div>
+          <span class="input-group-text" *ngIf="bfsSystemAuto.isLoading"><span
+              class="spinner-border spinner-border-sm"></span></span>
+        </div>
+
+        <ul *ngIf="bfsSystemAuto.isShowList()" class="dropdown-menu show w-100 shadow-sm"
+          style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
+          <li *ngFor="let option of bfsSystemAuto.optionList; let i = index">
+            <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+              (mousedown)="$event.preventDefault(); bfsSystemAuto.onSelect(option)">
+              <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+            </button>
+          </li>
+        </ul>
+
+        <ul class="dropdown-menu show w-100" *ngIf="bfsSystemAuto.isError">
+          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+        </ul>
       </div>
     </div>
   </div>
+  <!-- BfsSystem AutoComplete End -->
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>

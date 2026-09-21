@@ -2,21 +2,20 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
-import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
+import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
-import { type IBfsTenantSystem, type IBfsTenantSystemRequest, initBfsTenantSystem, bfsTenantSystemUntypedFormGroup } from './bfs-tenant-system.shared';
-import { getBfsTenantSystemActions,  initBfsTenantSystemRequest } from './bfs-tenant-system.shared';
+import { type IBfsTenantSystem, initBfsTenantSystem, bfsTenantSystemUntypedFormGroup, getBfsTenantSystemActions} from './bfs-tenant-system.shared';
 
 @Component({
     selector: 'bfs-tenant-system-form',
@@ -36,9 +35,9 @@ export class BfsTenantSystemFormComponent extends BaseFormComponent<IBfsTenantSy
 
     // Define look ups
     public BfsTenantOptions: any[] = [];
-public BfsSystemOptions: any[] = [];
 
     // Define autocomplete
+    bfsSystemAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/BfsSystem/list", fieldName: 'bfsSystem', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     //---------------------------------------------------------
 
@@ -46,6 +45,7 @@ public BfsSystemOptions: any[] = [];
 
        super(activatedRoute);
        this.validationForm = this.formBuilder.group(bfsTenantSystemUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+      this.bfsSystemAuto.control = this.validationForm.get('bfsSystemName');
 
     }
     //---------------------------------------------------------
@@ -69,86 +69,58 @@ public BfsSystemOptions: any[] = [];
 
     }
     //---------------------------------------------------------
-    override async setAutoComplete() {
-
-    }
-    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
         this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
-//         try{
-//         const [
-//             BfsSystemList, 
-//             DataTypeList,
-//         ] = await Promise.all
-//         ([
-//             this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 300 }),
-//             this.apiService.getItems<IQueryResponse>("/DataType/list", { pageSize: 300 }),
-//         ]);
-//         this.BfsSystemOptions = BfsSystemList.items;
-//         this.DataTypeOptions = DataTypeList.items;
-// } catch (err: any) {
-//   const msg = err?.message || "An error occurred while loading data.";
-//   this.messages.push({ text: msg, msgType: "danger" });
-// } finally {
-//   this.isLoading.lookups = false;
-// }
+         try{
+         const [
+              bfsTenantResponse,
+
+         ] = await Promise.all
+         ([
+        this.apiService.getItems<IQueryResponse>("/BfsTenant/list", { pageSize: 30 }),
+
+         ]);
+        this.BfsTenantOptions = bfsTenantResponse.items;
+
+ } catch (err: any) {
+   const msg = err?.message || "An error occurred while loading data.";
+   this.messages.push({ text: msg, msgType: "danger" });
+ } finally {
+   this.isLoading.lookups = false;
+ }
+ /*
         this.isLoading.lookups = true;
-        target = "/BfsTenant/list";
+        target = "/[LookupNameCapital]/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
-                this.BfsTenantOptions = response.items;
+                this.[LookupNameCapital]Options = response.items;
                 this.isLoading.lookups = false;
             },
                 error: (err: any) => {
                 this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching Tenant Name data.';
+                var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading.lookups = true;
-        target = "/BfsSystem/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.BfsSystemOptions = response.items;
-                this.isLoading.lookups = false;
-            },
-                error: (err: any) => {
-                this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching BestFit System data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
-
+        */
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    override async setAutoComplete() {   
+       await this.bfsSystemAuto.setUpForm(this.apiService, this);
+    }
+    //---------------------------------------------------------
+    // required to set the control with the entity initial values
+    override async setDataAutoComplete() {
+        this.bfsSystemAuto.setData(this.entity.bfsSystemId,this.entity.bfsSystemName);
     }
     //---------------------------------------------------------
 
-override     getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getBfsTenantSystemActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getBfsTenantSystemActions(this, record);
     }
-    //---------------------------------------------------------
-override     getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getBfsTenantSystemActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-   //--------------------------------------------------------------
-
 }
 

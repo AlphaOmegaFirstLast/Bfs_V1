@@ -24,9 +24,6 @@ export class BfsFieldFilterComponent implements OnInit {
 
     bfsComponentAuto: AutoCompleteHelper;
 
-    showBfsComponent = false; // Toggle for the overlay
-    bfsComponentOptions: any[] = [];
-
     // Define range filters
 
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
@@ -77,61 +74,8 @@ export class BfsFieldFilterComponent implements OnInit {
     }
     //---------------------------------------------------------
     async setAutoComplete() {
-        // await this.bfsComponentAutoComplete();
         this.bfsComponentAuto.setupFilter(this.parent.apiService, this.result);
     }
-    //---------------------------------------------------------
-
-    // async bfsComponentAutoComplete(searchTerm: string = this.result.BfsComponentName ?? ''): Promise<void> {
-    //     const term = (searchTerm ?? '').trim();
-    //     if (term.length < 2) {
-    //         this.bfsComponentOptions = [];
-    //         this.showBfsComponent = false;
-    //         return;
-    //     }
-
-    //     this.showBfsComponent = true;
-    //     this.isLoading.autoComplete = true;
-    //     try {
-    //         const request = { pageSize: 20, filter: { name: term } };
-    //         const response: any = await this.parent.apiService.postAutoComplete('/BfsComponent/list', request);
-    //         this.bfsComponentOptions = response?.items ?? [];
-    //     } catch (err: any) {
-    //         this.errorMessage = err?.message || 'Error fetching data';
-    //         this.bfsComponentOptions = [];
-    //     } finally {
-    //         this.isLoading.autoComplete = false;
-    //     }
-    // }
-    // //---------------------------------------------------------
-    // onBfsComponentInput(value: string): void {
-    //     const val = value ?? '';
-    //     // Reset selected ID
-    //     this.result.BfsComponentName = undefined;
-    //     this.result.BfsComponentId = undefined;
-    //     this.bfsComponentAutoComplete(val);
-    // }
-    // //---------------------------------------------------------
-    // selectBfsComponent(selectedOption: any) {
-    //     this.result.BfsComponentName = selectedOption?.name ?? undefined;
-    //     this.result.BfsComponentId = selectedOption?.id ?? undefined;
-    //     this.bfsComponentOptions = [];
-    //     this.showBfsComponent = false;
-    // }
-    // //---------------------------------------------------------
-    // hideBfsComponentOverlay() {
-    //     setTimeout(() => {
-    //         this.showBfsComponent = false;
-    //     }, 200);
-    // }
-    // //---------------------------------------------------------
-    // onBfsComponentInput(value: string): void {
-    //     const val = value ?? '';
-    //     // Reset selected ID
-    //     this.result.BfsComponentName = undefined;
-    //     this.result.BfsComponentId = undefined;
-    //     this.bfsComponentAutoComplete(val);
-    // }
     //---------------------------------------------------------
     reset() {
         this.activeModal.close('Reset');
