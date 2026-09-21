@@ -1,5 +1,7 @@
 using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
 
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -9,11 +11,14 @@ using System.Text;
 
 namespace Bfs.Master.Data.Lists
 {
-    public class BfsTenantSystemList : QueryBase<BfsTenantSystemListFilter>, IBfsTenantSystemList
+    public class BfsTenantSystemList: QueryBase<BfsTenantSystemListFilter>,  IBfsTenantSystemList
     {
-        public BfsTenantSystemList(string connectionString)
+        private readonly IResourceSecurity? _resourceSecurity;
+
+        public BfsTenantSystemList(string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -22,68 +27,84 @@ namespace Bfs.Master.Data.Lists
         {
             var response = new QueryResponse<BfsTenantSystemListItem>();
 
-            SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<BfsTenantSystemListItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<BfsTenantSystemListItem>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
-                response.TotalItems = db.ExecuteScalar<long>(countQuery.sql, countQuery.parameters);
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
                 response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
             }
 
             return response;
         }
 
+        private List<BfsTenantSystemListItem> DoMapping(IEnumerable<BfsTenantSystemListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (BfsTenantSystemListItem)record;
+
+                return item;
+            }).ToList();
+        }
+
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "BfsTenantSystem.Id", QueryName = "Id", IsAggregare = false });
-            _fieldList.Add(new QueryField() { DbName = "BfsTenantSystem.BfsTenantId", QueryName = "BfsTenantId", IsAggregare = false });
-            _fieldList.Add(new QueryField() { DbName = "BfsTenantSystem.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BfsTenantSystem", FieldName = "Id", DbName = "BfsTenantSystem.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsTenantSystem", FieldName = "BfsTenantId", DbName = "BfsTenantSystem.BfsTenantId", QueryName = "BfsTenantId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsTenantSystem", FieldName = "BfsSystemId", DbName = "BfsTenantSystem.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false});
+
+            //object fields
 
             //lookups
-            _fieldList.Add(new QueryField() { DbName = "BfsTenant.Name", QueryName = "BfsTenantName", IsAggregare = false });
-            _fieldList.Add(new QueryField() { DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BfsTenant", FieldName = "Name", DbName = "BfsTenant.Name", QueryName = "BfsTenantName", IsAggregare = false});
 
-            //Aggregates
+            //autoCompletes
+            _fieldList.Add(new QueryField() {ComponentName = "BfsSystem", FieldName = "Name", DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false});
+
+           //Aggregates
 
         }
 
         protected override string GetFromJoinStatement()
         {
-            var sql = new StringBuilder();
-            sql.AppendLine(" From BfsTenantSystem ");
+           var sql = new StringBuilder();  
+           sql.AppendLine(" From BfsTenantSystem ");
 
-            sql.AppendLine($"   Left Join BfsTenant on BfsTenantSystem.BfsTenantId = BfsTenant.Id");
-            sql.AppendLine($"   Left Join BfsSystem on BfsTenantSystem.BfsSystemId = BfsSystem.Id");
+           sql.AppendLine($"   Left Join BfsTenant on BfsTenantSystem.BfsTenantId = BfsTenant.Id");
 
-            return sql.ToString();
+           sql.AppendLine($"   Left Join BfsSystem on BfsTenantSystem.BfsSystemId = BfsSystem.Id");
+
+           return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<BfsTenantSystemListFilter> request, DynamicParameters parameters)
         {
-            var sql = new StringBuilder();
+            var sql = new StringBuilder() ;
             sql.AppendLine(" BfsTenantSystem.isDeleted=0 ");
 
-            var filter = request.Filter;
+                         var filter = request.Filter;
             if (filter != null)
             {
-                if (filter.Id.HasValue)
+            if ((filter.Id.HasValue) && (filter.Id>0))
                 {
                     sql.AppendLine("BfsTenantSystem.Id = @Id");
-                    parameters.Add("@Id", filter.Id.Value);
+                    parameters.Add("@Id", filter.Id);
                 }
+
                 if (filter.BfsTenantId.HasValue)
                 {
                     sql.AppendLine("BfsTenantSystem.BfsTenantId = @BfsTenantId");
                     parameters.Add("@BfsTenantId", filter.BfsTenantId.Value);
                 }
+
                 if (filter.BfsSystemId.HasValue)
                 {
                     sql.AppendLine("BfsTenantSystem.BfsSystemId = @BfsSystemId");
@@ -93,7 +114,7 @@ namespace Bfs.Master.Data.Lists
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));
+                                 .Select(s => s.Trim()));        
         }
 
         protected override string GetHavingConditions(QueryRequest<BfsTenantSystemListFilter> request, DynamicParameters parameters)
@@ -105,9 +126,11 @@ namespace Bfs.Master.Data.Lists
             }
 
             var sql = new StringBuilder();
+
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));
-        }
+                                 .Select(s => s.Trim()));        
+       }       
     }
 }
+

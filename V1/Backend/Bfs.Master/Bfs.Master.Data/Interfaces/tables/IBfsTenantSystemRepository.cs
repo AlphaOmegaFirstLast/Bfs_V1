@@ -9,3 +9,4 @@ namespace Bfs.Master.Data.Interfaces
         //Template_End_Code_DontOverwrite_1
     }
 }
+

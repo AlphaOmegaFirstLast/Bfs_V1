@@ -36,10 +36,12 @@ public class BfsTenantSystemController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.bfsTenantSystem")]
-    public async Task<BfsTenantSystem?> Get(long id)
+    public async Task<BfsTenantSystemListItem?> Get(long id)
     {
-        var result = await _bfsTenantSystemService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<BfsTenantSystemListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _bfsTenantSystemService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

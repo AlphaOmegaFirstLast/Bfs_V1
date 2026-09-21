@@ -14,7 +14,9 @@ namespace Bfs.Master.Data.Models
 public long Id {get; set;} = 0 ;
 
         public long BfsTenantId {get; set;} = 0 ;
-public long BfsSystemId {get; set;} = 0 ;
+
+        public long BfsSystemId {get; set;} = 0 ;
 
     }
 }
+

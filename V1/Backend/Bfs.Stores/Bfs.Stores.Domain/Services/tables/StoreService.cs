@@ -10,10 +10,18 @@ namespace Bfs.Stores.Domain.Services
     {
         private readonly IStoreRepository _repo;
         private readonly IStoreList _list;
+        //Template_Start_Code_DontOverwrite_1
+        public readonly string test = "test - keep existing data";
+
+        //Template_End_Code_DontOverwrite_1
+
         public StoreService(IStoreRepository repo, IStoreList list)
         {
             _repo = repo;
             _list = list;
+            //Template_Start_Code_DontOverwrite_2
+            //testing keep comments
+            //Template_End_Code_DontOverwrite_2
         }
 
         public async Task<Store?> GetAsync(long id)
@@ -130,8 +138,13 @@ namespace Bfs.Stores.Domain.Services
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StoreListItem> { Items = new List<StoreListItem>(), TotalItems = 0, TotalPages = 0 };
         }
 
-        //Template_Start_Code_DontOverwrite_1
-        //Template_End_Code_DontOverwrite_1
+        //Template_Start_Code_DontOverwrite_3
+        public static bool DoRecordValidation(string x, string y) 
+        {
+            //testing keep existing data
+            return x == y;
+        }
+        //Template_End_Code_DontOverwrite_3
     }
 }
 

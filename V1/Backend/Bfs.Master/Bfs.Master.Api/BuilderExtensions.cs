@@ -175,89 +175,89 @@ public static class BuilderExtensions
 
     public static void RegisterValidators(this WebApplicationBuilder builder)
     {
-            builder.Services.AddScoped<IValidator<SystemTemplate>, SystemTemplateValidator>();
-            builder.Services.AddScoped<IValidator<DataType>, DataTypeValidator>();
-            builder.Services.AddScoped<IValidator<FilterType>, FilterTypeValidator>();
-            builder.Services.AddScoped<IValidator<FormControlType>, FormControlTypeValidator>();
-            builder.Services.AddScoped<IValidator<BackendDataType>, BackendDataTypeValidator>();
-            builder.Services.AddScoped<IValidator<ActionType>, ActionTypeValidator>();
-            builder.Services.AddScoped<IValidator<AggregateType>, AggregateTypeValidator>();
-            builder.Services.AddScoped<IValidator<ActionLocation>, ActionLocationValidator>();
-            builder.Services.AddScoped<IValidator<ChartElement>, ChartElementValidator>();
-            builder.Services.AddScoped<IValidator<WriterType>, WriterTypeValidator>();
-            builder.Services.AddScoped<IValidator<BfsComponent>, BfsComponentValidator>();
-            builder.Services.AddScoped<IValidator<BfsField>, BfsFieldValidator>();
-            builder.Services.AddScoped<IValidator<BfsSystem>, BfsSystemValidator>();
-            builder.Services.AddScoped<IValidator<BfsTenant>, BfsTenantValidator>();
-            builder.Services.AddScoped<IValidator<BfsTenantSystem>, BfsTenantSystemValidator>();
-            builder.Services.AddScoped<IValidator<BfsComponentBusinessAction>, BfsComponentBusinessActionValidator>();
-            builder.Services.AddScoped<IValidator<CustomReports>, CustomReportsValidator>();
-            builder.Services.AddScoped<IValidator<CustomFieldDefinition>, CustomFieldDefinitionValidator>();
-            builder.Services.AddScoped<IValidator<SystemAction>, SystemActionValidator>();
-            builder.Services.AddScoped<IValidator<BusinessAction>, BusinessActionValidator>();
-            builder.Services.AddScoped<IValidator<DeploymentAzure>, DeploymentAzureValidator>();
-            builder.Services.AddScoped<IValidator<DeploymentLocal>, DeploymentLocalValidator>();
-            builder.Services.AddScoped<IValidator<BfsComponentSystemAction>, BfsComponentSystemActionValidator>();
-//Template_Component_RegisterValidator
+        builder.Services.AddScoped<IValidator<SystemTemplate>, SystemTemplateValidator>();
+        builder.Services.AddScoped<IValidator<DataType>, DataTypeValidator>();
+        builder.Services.AddScoped<IValidator<FilterType>, FilterTypeValidator>();
+        builder.Services.AddScoped<IValidator<FormControlType>, FormControlTypeValidator>();
+        builder.Services.AddScoped<IValidator<BackendDataType>, BackendDataTypeValidator>();
+        builder.Services.AddScoped<IValidator<ActionType>, ActionTypeValidator>();
+        builder.Services.AddScoped<IValidator<AggregateType>, AggregateTypeValidator>();
+        builder.Services.AddScoped<IValidator<ActionLocation>, ActionLocationValidator>();
+        builder.Services.AddScoped<IValidator<ChartElement>, ChartElementValidator>();
+        builder.Services.AddScoped<IValidator<WriterType>, WriterTypeValidator>();
+        builder.Services.AddScoped<IValidator<BfsComponent>, BfsComponentValidator>();
+        builder.Services.AddScoped<IValidator<BfsField>, BfsFieldValidator>();
+        builder.Services.AddScoped<IValidator<BfsSystem>, BfsSystemValidator>();
+        builder.Services.AddScoped<IValidator<BfsTenant>, BfsTenantValidator>();
+        builder.Services.AddScoped<IValidator<BfsTenantSystem>, BfsTenantSystemValidator>();
+        builder.Services.AddScoped<IValidator<BfsComponentBusinessAction>, BfsComponentBusinessActionValidator>();
+        builder.Services.AddScoped<IValidator<CustomReports>, CustomReportsValidator>();
+        builder.Services.AddScoped<IValidator<CustomFieldDefinition>, CustomFieldDefinitionValidator>();
+        builder.Services.AddScoped<IValidator<SystemAction>, SystemActionValidator>();
+        builder.Services.AddScoped<IValidator<BusinessAction>, BusinessActionValidator>();
+        builder.Services.AddScoped<IValidator<DeploymentAzure>, DeploymentAzureValidator>();
+        builder.Services.AddScoped<IValidator<DeploymentLocal>, DeploymentLocalValidator>();
+        builder.Services.AddScoped<IValidator<BfsComponentSystemAction>, BfsComponentSystemActionValidator>();
+        //Template_Component_RegisterValidator
     }
 
     public static void RegisterRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<ISystemTemplateRepository, SystemTemplateRepository>();
-            builder.Services.AddScoped<IDataTypeRepository, DataTypeRepository>();
-            builder.Services.AddScoped<IFilterTypeRepository, FilterTypeRepository>();
-            builder.Services.AddScoped<IFormControlTypeRepository, FormControlTypeRepository>();
-            builder.Services.AddScoped<IBackendDataTypeRepository, BackendDataTypeRepository>();
-            builder.Services.AddScoped<IActionTypeRepository, ActionTypeRepository>();
-            builder.Services.AddScoped<IAggregateTypeRepository, AggregateTypeRepository>();
-            builder.Services.AddScoped<IActionLocationRepository, ActionLocationRepository>();
-            builder.Services.AddScoped<IChartElementRepository, ChartElementRepository>();
-            builder.Services.AddScoped<IWriterTypeRepository, WriterTypeRepository>();
-            builder.Services.AddScoped<IBfsComponentRepository, BfsComponentRepository>();
-            builder.Services.AddScoped<IBfsFieldRepository, BfsFieldRepository>();
-            builder.Services.AddScoped<IBfsSystemRepository, BfsSystemRepository>();
-            builder.Services.AddScoped<IBfsTenantRepository, BfsTenantRepository>();
-            builder.Services.AddScoped<IBfsTenantSystemRepository, BfsTenantSystemRepository>();
-            builder.Services.AddScoped<IBfsComponentBusinessActionRepository, BfsComponentBusinessActionRepository>();
-            builder.Services.AddScoped<ICustomReportsRepository, CustomReportsRepository>();
-            builder.Services.AddScoped<ICustomFieldDefinitionRepository, CustomFieldDefinitionRepository>();
-            builder.Services.AddScoped<ISystemActionRepository, SystemActionRepository>();
-            builder.Services.AddScoped<IBusinessActionRepository, BusinessActionRepository>();
-            builder.Services.AddScoped<IDeploymentAzureRepository, DeploymentAzureRepository>();
-            builder.Services.AddScoped<IDeploymentLocalRepository, DeploymentLocalRepository>();
-            builder.Services.AddScoped<IBfsComponentSystemActionRepository, BfsComponentSystemActionRepository>();
-//Template_Component_RegisterRepository
+        builder.Services.AddScoped<ISystemTemplateRepository, SystemTemplateRepository>();
+        builder.Services.AddScoped<IDataTypeRepository, DataTypeRepository>();
+        builder.Services.AddScoped<IFilterTypeRepository, FilterTypeRepository>();
+        builder.Services.AddScoped<IFormControlTypeRepository, FormControlTypeRepository>();
+        builder.Services.AddScoped<IBackendDataTypeRepository, BackendDataTypeRepository>();
+        builder.Services.AddScoped<IActionTypeRepository, ActionTypeRepository>();
+        builder.Services.AddScoped<IAggregateTypeRepository, AggregateTypeRepository>();
+        builder.Services.AddScoped<IActionLocationRepository, ActionLocationRepository>();
+        builder.Services.AddScoped<IChartElementRepository, ChartElementRepository>();
+        builder.Services.AddScoped<IWriterTypeRepository, WriterTypeRepository>();
+        builder.Services.AddScoped<IBfsComponentRepository, BfsComponentRepository>();
+        builder.Services.AddScoped<IBfsFieldRepository, BfsFieldRepository>();
+        builder.Services.AddScoped<IBfsSystemRepository, BfsSystemRepository>();
+        builder.Services.AddScoped<IBfsTenantRepository, BfsTenantRepository>();
+        builder.Services.AddScoped<IBfsTenantSystemRepository, BfsTenantSystemRepository>();
+        builder.Services.AddScoped<IBfsComponentBusinessActionRepository, BfsComponentBusinessActionRepository>();
+        builder.Services.AddScoped<ICustomReportsRepository, CustomReportsRepository>();
+        builder.Services.AddScoped<ICustomFieldDefinitionRepository, CustomFieldDefinitionRepository>();
+        builder.Services.AddScoped<ISystemActionRepository, SystemActionRepository>();
+        builder.Services.AddScoped<IBusinessActionRepository, BusinessActionRepository>();
+        builder.Services.AddScoped<IDeploymentAzureRepository, DeploymentAzureRepository>();
+        builder.Services.AddScoped<IDeploymentLocalRepository, DeploymentLocalRepository>();
+        builder.Services.AddScoped<IBfsComponentSystemActionRepository, BfsComponentSystemActionRepository>();
+        //Template_Component_RegisterRepository
     }
 
     public static void RegisterServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IReportsService, ReportsService>();
-        builder.Services.AddScoped<IOperationsService,OperationsService>();
-            builder.Services.AddScoped<ISystemTemplateService, SystemTemplateService>();
-            builder.Services.AddScoped<IDataTypeService, DataTypeService>();
-            builder.Services.AddScoped<IFilterTypeService, FilterTypeService>();
-            builder.Services.AddScoped<IFormControlTypeService, FormControlTypeService>();
-            builder.Services.AddScoped<IBackendDataTypeService, BackendDataTypeService>();
-            builder.Services.AddScoped<IActionTypeService, ActionTypeService>();
-            builder.Services.AddScoped<IAggregateTypeService, AggregateTypeService>();
-            builder.Services.AddScoped<IActionLocationService, ActionLocationService>();
-            builder.Services.AddScoped<IChartElementService, ChartElementService>();
-            builder.Services.AddScoped<IWriterTypeService, WriterTypeService>();
-            builder.Services.AddScoped<IBfsComponentService, BfsComponentService>();
-            builder.Services.AddScoped<IBfsFieldService, BfsFieldService>();
-            builder.Services.AddScoped<IBfsSystemService, BfsSystemService>();
-            builder.Services.AddScoped<IBfsTenantService, BfsTenantService>();
-            builder.Services.AddScoped<IBfsTenantSystemService, BfsTenantSystemService>();
-            builder.Services.AddScoped<IBfsComponentBusinessActionService, BfsComponentBusinessActionService>();
-            builder.Services.AddScoped<ICustomReportsService, CustomReportsService>();
-            builder.Services.AddScoped<ICustomFieldDefinitionService, CustomFieldDefinitionService>();
-            builder.Services.AddScoped<ISystemActionService, SystemActionService>();
-            builder.Services.AddScoped<IBusinessActionService, BusinessActionService>();
-            builder.Services.AddScoped<IDeploymentAzureService, DeploymentAzureService>();
-            builder.Services.AddScoped<IDeploymentLocalService, DeploymentLocalService>();
-            builder.Services.AddScoped<IBfsComponentSystemActionService, BfsComponentSystemActionService>();
-//Template_Component_RegisterService
+        builder.Services.AddScoped<IOperationsService, OperationsService>();
+        builder.Services.AddScoped<ISystemTemplateService, SystemTemplateService>();
+        builder.Services.AddScoped<IDataTypeService, DataTypeService>();
+        builder.Services.AddScoped<IFilterTypeService, FilterTypeService>();
+        builder.Services.AddScoped<IFormControlTypeService, FormControlTypeService>();
+        builder.Services.AddScoped<IBackendDataTypeService, BackendDataTypeService>();
+        builder.Services.AddScoped<IActionTypeService, ActionTypeService>();
+        builder.Services.AddScoped<IAggregateTypeService, AggregateTypeService>();
+        builder.Services.AddScoped<IActionLocationService, ActionLocationService>();
+        builder.Services.AddScoped<IChartElementService, ChartElementService>();
+        builder.Services.AddScoped<IWriterTypeService, WriterTypeService>();
+        builder.Services.AddScoped<IBfsComponentService, BfsComponentService>();
+        builder.Services.AddScoped<IBfsFieldService, BfsFieldService>();
+        builder.Services.AddScoped<IBfsSystemService, BfsSystemService>();
+        builder.Services.AddScoped<IBfsTenantService, BfsTenantService>();
+        builder.Services.AddScoped<IBfsTenantSystemService, BfsTenantSystemService>();
+        builder.Services.AddScoped<IBfsComponentBusinessActionService, BfsComponentBusinessActionService>();
+        builder.Services.AddScoped<ICustomReportsService, CustomReportsService>();
+        builder.Services.AddScoped<ICustomFieldDefinitionService, CustomFieldDefinitionService>();
+        builder.Services.AddScoped<ISystemActionService, SystemActionService>();
+        builder.Services.AddScoped<IBusinessActionService, BusinessActionService>();
+        builder.Services.AddScoped<IDeploymentAzureService, DeploymentAzureService>();
+        builder.Services.AddScoped<IDeploymentLocalService, DeploymentLocalService>();
+        builder.Services.AddScoped<IBfsComponentSystemActionService, BfsComponentSystemActionService>();
+        //Template_Component_RegisterService
     }
 
     public static void RegisterLists(this WebApplicationBuilder builder, BfsSettings? settings)
@@ -325,11 +325,6 @@ public static class BuilderExtensions
                 return new BfsTenantList(dbConnection);
             });
 
-            builder.Services.AddScoped<IBfsTenantSystemList>(provider =>
-            {
-                return new BfsTenantSystemList(dbConnection);
-            });
-
             builder.Services.AddScoped<IBfsComponentBusinessActionList>(provider =>
             {
                 return new BfsComponentBusinessActionList(dbConnection);
@@ -370,15 +365,21 @@ public static class BuilderExtensions
                 return new BfsComponentSystemActionList(dbConnection);
             });
 
-        builder.Services.AddScoped<IBfsComponentList>(sp =>
-        {
-            var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new BfsComponentList(config.ConnectionString,null);
-        });
+            builder.Services.AddScoped<IBfsComponentList>(sp =>
+            {
+                var config = sp.GetRequiredService<TenantSqlConfiguration>();
+                return new BfsComponentList(config.ConnectionString, null);
+            });
             builder.Services.AddScoped<IBfsFieldList>(sp =>
             {
                 var config = sp.GetRequiredService<TenantSqlConfiguration>();
                 return new BfsFieldList(config.ConnectionString, null);
+            });
+
+            builder.Services.AddScoped<IBfsTenantSystemList>(sp =>
+            {
+                var config = sp.GetRequiredService<TenantSqlConfiguration>();
+                return new BfsTenantSystemList(config.ConnectionString, null);
             });
             //Template_Component_RegisterList
         }
@@ -394,12 +395,12 @@ public static class BuilderExtensions
                 return new StructureCompare(dbConnection);
             });
 
-//Template_Component_RegisterReport
+            //Template_Component_RegisterReport
         }
     }
 
     public static void RegisterClients(this WebApplicationBuilder builder, BfsSettings? settings)
     {
-//Template_Component_RegisterHttpClient
+        //Template_Component_RegisterHttpClient
     }
 }

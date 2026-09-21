@@ -14,7 +14,8 @@ namespace Bfs.Master.Domain.Mapper
 Id= entity.Id,
 
                BfsTenantId= entity.BfsTenantId,
-BfsSystemId= entity.BfsSystemId,
+
+               BfsSystemId= entity.BfsSystemId,
 
             };
 
@@ -39,9 +40,11 @@ BfsSystemId= entity.BfsSystemId,
 BfsTenantSystemEntity.Id= contract.Id;
 
             BfsTenantSystemEntity.BfsTenantId= contract.BfsTenantId;
-BfsTenantSystemEntity.BfsSystemId= contract.BfsSystemId;
+
+            BfsTenantSystemEntity.BfsSystemId= contract.BfsSystemId;
 
             return BfsTenantSystemEntity;
         }     
     }
 }
+

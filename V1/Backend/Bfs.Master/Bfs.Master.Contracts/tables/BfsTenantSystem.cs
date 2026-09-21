@@ -19,10 +19,12 @@ namespace Bfs.Master.Contracts
         /// BfsTenantSystem Tenant Name.
         ///</Summary>
         public long BfsTenantId {get; set;} = 0 ;
-///<Summary>
+
+        ///<Summary>
         /// BfsTenantSystem BestFit System.
         ///</Summary>
         public long BfsSystemId {get; set;} = 0 ;
 
     }
 }
+

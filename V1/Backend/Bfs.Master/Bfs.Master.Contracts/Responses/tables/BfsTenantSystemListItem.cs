@@ -4,13 +4,15 @@ namespace Bfs.Master.Contracts
 {
     public class BfsTenantSystemListItem
     {      
-        public string? Id { get; set; }
-public string? BfsTenantId { get; set; }
-public string? BfsSystemId { get; set; }
+        public long Id { get; set; }
+public long BfsTenantId { get; set; }
+public long BfsSystemId { get; set; }
 
         public string? BfsTenantName { get; set; }
-public string? BfsSystemName { get; set; }
+
+        public string? BfsSystemName { get; set; }
 
 //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }
 }
+
