@@ -28,8 +28,8 @@ namespace Bfs.Core.Services.Deployment
             args += $" -IsHttpsRequired  \"{info.IsHttpsRequired}\" ";
             args += $" -WebSite \"{info.WebSite}\" ";
             args += $" -AppPoolName \"{info.AppPoolName}\" ";
-            args += $" -TargetDeployVirtualFolder \"{info.TargetVirtualDir}\" ";
-
+            args += $" -TargetVirtualDir \"{info.TargetVirtualDir}\" ";
+            args += $" -Port \"{info.Port}\" ";
             RunPowershell(args);
         }
 
@@ -41,7 +41,7 @@ namespace Bfs.Core.Services.Deployment
             args += $" -PublishProfilePath \"{info.PublishProfilePath}\" ";
             args += $" -ResourceGroup \"{info.ResourceGroup}\" ";
             args += $" -AppService \"{info.AppService}\" ";
-            args += $" -TargetDeployVirtualFolder \"{info.TargetVirtualDir}\" ";
+            args += $" -TargetVirtualDir \"{info.TargetVirtualDir}\" ";
 
             args = SetAzureKeys(args, new AzureAcount());
 

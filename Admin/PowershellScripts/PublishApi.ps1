@@ -60,7 +60,6 @@ function PublishApi()
      writeMsg "Publish Api Complete. "
 }
 #--------------------------------------------
-
 PublishApi 
 
 #C:\Bfs_V1\Admin\PowershellScripts\PublishApi.ps1 -SourcePath 'C:\Bfs\V1\Backend\Bfs.XXX\Bfs.XXX.Api' -SourceProject 'Bfs.XXX.Api.csproj' -PublishPath 'c:\publish\backend\XXX' -Config 'debug'  -EnvironmentValue 'development'

@@ -7,6 +7,9 @@
     [int]$Port
 	)  
 
+$ErrorActionPreference = "Stop"
+$ErrorView = "DetailedView"
+
 $ArgumentArray = @(
     $PublishPath,
     $isHttpsRequired,
@@ -44,9 +47,9 @@ function writeMsg([String] $msg)
 }
 #--------------------------------------------
 
-function EnsureAppPool($AppPoolName) 
+<# function EnsureAppPool($AppPoolName) 
 {
-    if (-not (Get-WebAppPoolState -Name $AppPoolName -ErrorAction SilentlyContinue)) {
+    if (-not (Get-WebAppPool -Name $AppPoolName -ErrorAction SilentlyContinue)) {
 
         writeMsg "Creating App Pool: $AppPoolName"
         New-WebAppPool -Name $AppPoolName
@@ -59,14 +62,30 @@ function EnsureAppPool($AppPoolName)
         writeMsg "App Pool '$AppPoolName' already exists"
     }
 }
+#>
 #--------------------------------------------
+function EnsureAppPool($AppPoolName) 
+{
+    $poolPath = "IIS:\AppPools\$AppPoolName"
+
+    if (-not (Test-Path $poolPath)) {
+        writeMsg "Creating App Pool: $AppPoolName"
+        New-WebAppPool -Name $AppPoolName
+        Set-ItemProperty $poolPath -Name "managedRuntimeVersion" -Value ""
+        Set-ItemProperty $poolPath -Name "processModel.identityType" -Value "ApplicationPoolIdentity"
+    }
+    else {
+        writeMsg "App Pool '$AppPoolName' already exists"
+    }
+}
+
 
 function EnsureSite($PublishPath,$WebSite, $AppPoolName, $port) 
 {
     if (-not (Get-Website -Name $WebSite -ErrorAction SilentlyContinue))
     {
         writeMsg "Creating IIS Site: $WebSite"
-        New-WebAppPool -Name $WebSite
+        #New-WebAppPool -Name $WebSite
         New-Website -Name $WebSite -Port $port -PhysicalPath $PublishPath -ApplicationPool $AppPoolName -HostHeader $WebSite
     } 
     else 
@@ -119,10 +138,6 @@ function DeployLocal()
 
 DeployLocal
 #C:\Bfs_V1\Admin\PowershellScripts\DeployLocal.ps1 -PublishPath 'c:\publish\frontend\main' -AppPoolName 'bfsFrontend'  -WebSite 'bfsFrontend.localhost' -TargetVirtualDir 'main'  -Port '80'
-
-
-
-
 
 
 
