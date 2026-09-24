@@ -2,12 +2,16 @@ using Bfs.[SystemNameCapital].Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Data.Configuration
 {
     public class [ComponentNameCapital]EntityConfiguration : IEntityTypeConfiguration<[ComponentNameCapital]Entity>
     {
         public static readonly string TableNameCapital = "[DbComponentName]";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
         public void Configure(EntityTypeBuilder<[ComponentNameCapital]Entity> builder)
         {
@@ -19,7 +23,10 @@ namespace Bfs.[SystemNameCapital].Data.Configuration
 
         	//Template_Start_Field_Primitive_1
 			//   builder.Property(e => e.[CapitalFieldName]).HasMaxLength([FieldLength]).IsRequired(); 
-			//Template_End_Field_Primitive_1     
+			//Template_End_Field_Primitive_1   
+            
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
         }
     }
 }

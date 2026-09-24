@@ -8,6 +8,8 @@ import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 //Template_End_Component_AutoComplete_1
 import { I[ComponentNameCapital]Filter } from './[ComponentFileName].shared';
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 @Component({
     selector: 'app-[ComponentFileName]-filter',
@@ -97,4 +99,6 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 }

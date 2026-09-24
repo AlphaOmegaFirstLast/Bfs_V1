@@ -10,6 +10,7 @@ namespace Admin.App
     public class V4DbContext : DbContext
     {
         // A DbSet<TEntity> corresponds to a table in the database
+        public DbSet<BfsManualCodeEntity> BfsManualCode { get; set; }
         public DbSet<BfsSystemEntity> BfsSystem { get; set; }
         public DbSet<BfsComponentEntity> BfsComponent { get; set; }
         public DbSet<BfsFieldEntity> BfsField { get; set; }

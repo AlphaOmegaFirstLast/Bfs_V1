@@ -68,12 +68,12 @@ namespace CodeAdmin
 
         public void btnSaveManualItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Save: " + _outputFile);
+            _saveManualMethod?.Invoke(_codeInfo, _generatorTemplate);
         }
 
         public void btnApplyManualItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Apply: " + _outputFile);
+            _applyManualMethod?.Invoke(_codeInfo, _generatorTemplate);
         }
     }
 }

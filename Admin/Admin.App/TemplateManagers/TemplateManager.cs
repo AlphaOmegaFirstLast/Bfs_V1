@@ -1,14 +1,5 @@
 ﻿using Admin.App.Constants;
-using Admin.App;
-using Admin.App;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Routing.Template;
-using OpenTelemetry.Resources;
-using System;
-using System.ComponentModel;
-using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using Admin.App.CodeWriters;
 
 namespace Admin.App
@@ -23,7 +14,7 @@ namespace Admin.App
             FileHelper.CopyDirectory(sourceDir, destinationDir);
         }
 
-        public static string Generate(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
+        public static async Task<string> Generate(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
             // Get the template content of a component. replace System, Component, and Field-related terms in the template.
             var input = TemplateHelper.GetTemplateFileContent(codeInfo.TemplateRootDir, generatorTemplate.TemplateFile);
@@ -37,7 +28,7 @@ namespace Admin.App
 
             if (generatorTemplate.SaveGeneratedCode == SaveGeneratedCode.PerAllWriters)
             {
-                return TemplateManager.SaveFile(codeInfo, generatorTemplate, generatedCode, false); // dont save file if generatedCode is empty
+                return await TemplateManager.SaveFile(codeInfo, generatorTemplate, generatedCode, false); // dont save file if generatedCode is empty
             }
             else if (generatorTemplate.SaveGeneratedCode == SaveGeneratedCode.PerWriter)
             {
@@ -56,7 +47,7 @@ namespace Admin.App
             return string.Empty;
         }
 
-        public static string Modify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
+        public static async Task<string> Modify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
         {
             var fileToModifyFilePath = modifierTemplate.GetOutputFilePath(codeInfo);
             var input = FileHelper.ReadFile(fileToModifyFilePath);
@@ -69,7 +60,7 @@ namespace Admin.App
             generatedCode = HandleSpecialCases(generatedCode);
 
             var snippetList = codeInfo.CodeTracker.GetSnippetList();
-            return TemplateManager.SaveFile(codeInfo, modifierTemplate, generatedCode, true); // dont save file if generatedCode is empty
+            return await TemplateManager.SaveFile(codeInfo, modifierTemplate, generatedCode, true); // dont save file if generatedCode is empty
         }
 
         public static void RollBackModify(CodeGeneratorBase codeInfo, TemplateInfo modifierTemplate)
@@ -165,7 +156,9 @@ namespace Admin.App
         {
             //Clear Replacable PlaceHolders
             input = ClearPlaceHolder(codeInfo, input, "[ComponentType]", Enum.GetNames(typeof(ComponentType)).ToList());
-            input = ClearPlaceHolder(codeInfo, input, "[HasAutoComplete]", new List<string>(){ "AutoComplete" });
+            input = ClearPlaceHolder(codeInfo, input, "[HasAutoComplete]", new List<string>() { "AutoComplete" });
+            input = ClearPlaceHolder(codeInfo, input, "[HasMessaging]", new List<string>() { "Messaging" });
+            input = ClearPlaceHolder(codeInfo, input, "[HasSoftDelete]", new List<string>() { "SoftDelete" });
             input = ClearPlaceHolder(codeInfo, input, "[FieldDefinition]", Enum.GetNames(typeof(FieldDefinition)).ToList());
             input = ClearPlaceHolder(codeInfo, input, "[ReportDefinition]", Enum.GetNames(typeof(ReportDefinition)).ToList());
             input = ClearPlaceHolder(codeInfo, input, "[FilterDefinition]", Enum.GetNames(typeof(FilterDefinition)).ToList());
@@ -216,64 +209,28 @@ namespace Admin.App
             ////Investor has no "Name" field yet required in list query for dropdowns
             //pattern = "Investor.Name";
             //result = result.Replace(pattern, "(Investor.FirstName + ' ' + Investor.LastName) ");
-
-            ////Broker has no "Name" field yet required in list query for dropdowns
-            //pattern = "Broker.Name";
-            //result = result.Replace(pattern, "(Broker.FirstName + ' ' + Broker.LastName) ");
-
             return result;
         }
 
-        public static void KeepExisitingSnipts(CodeGeneratorBase codeInfo, string outputFilePath, string generatedCode)
-        {
-            var input = FileHelper.ReadFile(outputFilePath);
-
-            var placeHolderName = "Code_DontOverwrite";
-            var existingCodeList = new StringBuilder();
-
-            var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
-            if (placeHolder != null)
-            {
-                var templateHelper = new TemplateHelper(placeHolder, placeHolderName);
-                var templatesCount = templateHelper.GetTemplateCount(input);
-
-                for (int i = 1; i <= templatesCount; i++)
-                {
-                    if (placeHolder.TemplateContentType == TemplateContentType.Embedded)
-                    {
-                        var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
-                        if (!string.IsNullOrEmpty(existingSnippet))
-                        {
-                            existingCodeList.AppendLine($@"//Template_Start_{placeHolderName}_{i}");
-                            existingCodeList.AppendLine(existingSnippet);
-                            existingCodeList.AppendLine($@"//Template_End_{placeHolderName}_{i}");
-                        }
-                    }
-                }
-            }
-
-            var output = new StringBuilder();
-            output.AppendLine(generatedCode);
-            output.AppendLine(existingCodeList.ToString());
-
-            FileHelper.SaveFile(outputFilePath, output.ToString());
-        }
-
-        public static string SaveFile(CodeGeneratorBase codeInfo, TemplateInfo templateInfo, string generatedCode, bool saveEmpty = true)
+        public static async Task<string> SaveFile(CodeGeneratorBase codeInfo, TemplateInfo templateInfo, string generatedCode, bool saveEmpty = true)
         {
             var outputFilePath = templateInfo.GetOutputFilePath(codeInfo);
+            if (string.IsNullOrEmpty(generatedCode) && !saveEmpty)
+                return string.Empty;
+
             // We need to keep code if new file to be generated to protect existing code from being overwritten.
             if (templateInfo.TemplateType == TemplateType.Generator && codeInfo.KeepExistingCode && File.Exists(outputFilePath))
             {
-                KeepExisitingSnipts(codeInfo, outputFilePath, generatedCode);
+                await SaveManualCode(codeInfo, templateInfo);
             }
-            else
-            {
-                if (string.IsNullOrEmpty(generatedCode) && !saveEmpty)
-                    return string.Empty;
 
-                FileHelper.SaveFile(outputFilePath, generatedCode);
+            FileHelper.SaveFile(outputFilePath, generatedCode);
+
+            if (templateInfo.TemplateType == TemplateType.Generator && codeInfo.KeepExistingCode && File.Exists(outputFilePath))
+            {
+                await ApplyManualCode(codeInfo, templateInfo);
             }
+
             return outputFilePath;
         }
 
@@ -284,12 +241,13 @@ namespace Admin.App
             return outputFilePath;
         }
 
-        public static void SaveManualCode(CodeGeneratorBase codeInfo, string outputFilePath)
+        public static async Task SaveManualCode(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
+            var outputFilePath = generatorTemplate.GetOutputFilePath(codeInfo);
             var input = FileHelper.ReadFile(outputFilePath);
 
             var placeHolderName = "Code_DontOverwrite";
-            var existingCodeList = new List<BfsManualCode>();
+            var existingCodeList = new List<IManualCodeEntity>();
 
             var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
             if (placeHolder != null)
@@ -303,28 +261,34 @@ namespace Admin.App
                     var endIndex = outputFilePath.LastIndexOf(@".");
                     var itemName = endIndex > startIndex ? outputFilePath.Substring(startIndex, endIndex - startIndex) : string.Empty;
                     var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
-                    var manualCode = new BfsManualCode()
+                    if (!string.IsNullOrEmpty(existingSnippet))
                     {
-                        BfsSystemId = codeInfo.CurrentSystem?.Id,
-                        BfsComponentId = codeInfo.CurrentComponent?.Id,
-                        ItemName = itemName,
-                        FileName = outputFilePath,
-                        StartTemplate = $@"//Template_Start_{placeHolderName}_{i}",
-                        EndTemplate = $@"//Template_End_{placeHolderName}_{i}",
-                        ManualCode = existingSnippet
-                    };
+                        var manualCode = new BfsManualCodeEntity()
+                        {
+                            BfsSystemId = codeInfo.CurrentSystem?.Id ?? 0,
+                            BfsComponentId = codeInfo.CurrentComponent?.Id ?? 0,
+                            Name = itemName,
+                            FileName = outputFilePath,
+                            StartTemplate = $@"//Template_Start_{placeHolderName}_{i}",
+                            EndTemplate = $@"//Template_End_{placeHolderName}_{i}",
+                            Code = existingSnippet
+                        };
 
-                    existingCodeList.Add(manualCode);
+                        existingCodeList.Add(manualCode);
+                    }
                 }
+
+                await codeInfo.WriteDbManualCode(existingCodeList);
             }
         }
 
-        public static void ApplyManualCode(CodeGeneratorBase codeInfo, string outputFilePath)
+        public static async Task ApplyManualCode(CodeGeneratorBase codeInfo, TemplateInfo generatorTemplate)
         {
+            var outputFilePath = generatorTemplate.GetOutputFilePath(codeInfo);
             var outputCode = FileHelper.ReadFile(outputFilePath);
 
             var placeHolderName = "Code_DontOverwrite";
-            var existingCodeList = new List<BfsManualCode>();
+            var existingCodeList = codeInfo.ManualCodeList.Where(x => x.FileName == outputFilePath);
 
             var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
             if (placeHolder != null)
@@ -334,28 +298,33 @@ namespace Admin.App
 
                 for (int i = 1; i <= templatesCount; i++)
                 {
-                    outputCode = outputCode.Replace(templateHelper.GetStartTemplate(i), string.Empty);
-                }
-            }
+                    var startTemplate = $@"//Template_Start_{placeHolderName}_{i}";
+                    var endTemplate = $@"//Template_End_{placeHolderName}_{i}";
+                    var manualCodeRecord = existingCodeList.FirstOrDefault(x => x.StartTemplate == startTemplate  && x.EndTemplate == endTemplate);
 
-            FileHelper.SaveFile(outputFilePath, outputCode);
+                    var sbManual = new StringBuilder();
+                    sbManual.AppendLine(startTemplate);
+                    var contentToInsert = manualCodeRecord?.Code ?? string.Empty;
+                    if (!string.IsNullOrEmpty(contentToInsert))
+                    {
+                        sbManual.AppendLine(contentToInsert);
+                    }
+                    sbManual.AppendLine(endTemplate);
+
+                    var manualSnippet = sbManual.ToString();    
+                    var snippetToReplace = templateHelper.GetTemplateIncludingTags(outputCode, i);
+                    if (!string.IsNullOrEmpty(snippetToReplace))
+                    {
+                        outputCode = outputCode.Replace(snippetToReplace, manualSnippet);
+                    }
+                }
+
+                FileHelper.SaveFile(outputFilePath, outputCode);
+            }
         }
     }
 }
 
-
-
-public class BfsManualCode
-{
-    public long Id { get; set; }
-    public long? BfsSystemId { get; set; }
-    public long? BfsComponentId { get; set; }
-    public string ItemName { get; set; }
-    public string FileName { get; set; }
-    public string StartTemplate { get; set; }
-    public string EndTemplate { get; set; }
-    public string ManualCode { get; set; }
-}
 
 /* Angular Validation Forms
  

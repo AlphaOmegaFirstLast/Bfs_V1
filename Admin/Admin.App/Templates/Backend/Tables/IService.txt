@@ -1,6 +1,8 @@
 using Bfs.Core.Contracts;
 using Bfs.Core.Interfaces;
 using Bfs.[SystemNameCapital].Contracts;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Domain.Interfaces
 {
@@ -10,7 +12,7 @@ namespace Bfs.[SystemNameCapital].Domain.Interfaces
 
         Task<QueryResponse<[ReportNameCapital]Item>> ListAsync(QueryRequest<[ReportNameCapital]Filter> contractRequest);
 
-        //Template_Start_Code_[DontOverwrite]_1
-        //Template_End_Code_[DontOverwrite]_1   
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     }
 }

@@ -3,12 +3,14 @@ using Admin.App;
 using Admin.App;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using Bfs.Core.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Admin.App
 {
     public class CodeGeneratorBase
     {
-        public static string BestFitDB = "BestFit_V6";
+        public static string BestFitDB = "BestFit_V8";
         public string BestFitSystemName = "master";
         public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V1";
         public string TemplateRootDir { get; set; } = @".\Templates";
@@ -26,6 +28,7 @@ namespace Admin.App
 
         // Lists are public for user interaction in the UI
         public List<BestFitTemplate> TemplateList { get; set; } = new List<BestFitTemplate>();
+        public List<IManualCodeEntity> ManualCodeList { get; set; } = new List<IManualCodeEntity>();
         public List<ISystemEntity> SystemList { get; set; } = new List<ISystemEntity>();
         public List<IComponentEntity> ComponentList { get; set; } = new List<IComponentEntity>();
 
@@ -62,6 +65,39 @@ namespace Admin.App
             //overridden in descendant classes
         }
 
+        public async Task WriteDbManualCode(List<IManualCodeEntity> manualCodeList)
+        {
+            var list = manualCodeList.Select(x => new BfsManualCodeEntity()
+            {
+                Id = IdGenerator.GetId(),
+                BfsSystemId = x.BfsSystemId,
+                BfsComponentId = x.BfsComponentId,
+                Name = x.Name,
+                FileName = x.FileName,
+                StartTemplate = x.StartTemplate,
+                EndTemplate = x.EndTemplate,
+                Code = x.Code
+            });
+
+            var fileName = list.FirstOrDefault()?.FileName;
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                using (var context = new V4DbContext())
+                {
+                    try
+                    {
+                        var oldlist = context.BfsManualCode.Where(x => x.FileName == fileName);
+                        context.BfsManualCode.RemoveRange(oldlist);
+                        context.BfsManualCode.AddRange(list);
+                        await context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
 
         public void SetSystem(ISystemEntity systemEntity)
         {

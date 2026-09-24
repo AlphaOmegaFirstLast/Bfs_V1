@@ -3,6 +3,8 @@ import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/int
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].operations';
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 //Template_Start_Field_Object_4
 import { I[CapitalFieldName], init[CapitalFieldName], [SmallFieldName]UntypedFormGroup } from "@bfs/_shared/objectFields";
@@ -87,6 +89,9 @@ export function [ComponentNameSmall]UntypedFormGroup(formBuilder: FormBuilder): 
     //Template_Start_Field_CustomFieldList_3
         [SmallFieldName]: formBuilder.array([]),
     //Template_End_Field_CustomFieldList_3
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     };
 } 
 //---------------------------------------------------------
@@ -191,7 +196,33 @@ export function get[ComponentNameCapital]Actions(component: any, record: IEntity
 
         return links;
     }
-    //---------------------------------------------------------
+//---------------------------------------------------------
+//Template_Start_Code_DontOverwrite_3
+export function isVisible(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
+    //check using const control = this.validationForm.get(fieldName);
+    // or this.entity[fieldName]
+    switch (fieldName) {
+        case 'toPortfolioId':
+           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+           return true;
+    }
+    return true;
+}
+//---------------------------------------------------------
+export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
+    //check using const control = this.validationForm.get(fieldName);
+    // or this.entity[fieldName]
+    switch (fieldName) {
+        case 'toPortfolioId':
+           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+           return true;
+    }
+    return true;
+}
+//Template_End_Code_DontOverwrite_3
+
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 
 

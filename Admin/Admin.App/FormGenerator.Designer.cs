@@ -65,7 +65,7 @@
             ckDisableSecurity = new CheckBox();
             ckKeepExistingCode = new CheckBox();
             btnApplyManualCode = new Button();
-            btnExtractManualCode = new Button();
+            btnSaveManualCode = new Button();
             label7 = new Label();
             txtBfsRootDir = new TextBox();
             btnGenerateSystem = new Button();
@@ -461,15 +461,15 @@
             btnApplyManualCode.UseVisualStyleBackColor = true;
             btnApplyManualCode.Click += btnApplyManualComponent_Click;
             // 
-            // btnExtractManualCode
+            // btnSaveManualCode
             // 
-            btnExtractManualCode.Location = new Point(1646, 254);
-            btnExtractManualCode.Name = "btnExtractManualCode";
-            btnExtractManualCode.Size = new Size(230, 35);
-            btnExtractManualCode.TabIndex = 39;
-            btnExtractManualCode.Text = "Save Manual Code";
-            btnExtractManualCode.UseVisualStyleBackColor = true;
-            btnExtractManualCode.Click += btnSaveManualComponent_Click;
+            btnSaveManualCode.Location = new Point(1646, 254);
+            btnSaveManualCode.Name = "btnSaveManualCode";
+            btnSaveManualCode.Size = new Size(230, 35);
+            btnSaveManualCode.TabIndex = 39;
+            btnSaveManualCode.Text = "Save Manual Code";
+            btnSaveManualCode.UseVisualStyleBackColor = true;
+            btnSaveManualCode.Click += btnSaveManualComponent_Click;
             // 
             // label7
             // 
@@ -526,7 +526,7 @@
             ClientSize = new Size(2091, 1050);
             Controls.Add(btnApplyManualCode);
             Controls.Add(btnRefreshDb);
-            Controls.Add(btnExtractManualCode);
+            Controls.Add(btnSaveManualCode);
             Controls.Add(label8);
             Controls.Add(btnGenerateSystem);
             Controls.Add(txtBfsRootDir);
@@ -618,6 +618,6 @@
         private CheckBox ckKeepExistingCode;
         private Button btnRefreshDb;
         private Button btnApplyManualCode;
-        private Button btnExtractManualCode;
+        private Button btnSaveManualCode;
     }
 }

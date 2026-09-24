@@ -3,6 +3,8 @@ using Bfs.[SystemNameCapital].Contracts;
 using Bfs.[SystemNameCapital].Data.Interfaces;
 using Bfs.[SystemNameCapital].Domain.Interfaces;
 using Bfs.[SystemNameCapital].Domain.Mapper;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Domain.Services
 {
@@ -10,10 +12,20 @@ namespace Bfs.[SystemNameCapital].Domain.Services
     {
         private readonly I[ComponentNameCapital]Repository _repo;
         private readonly I[ReportNameCapital] _list;
-        public [ComponentNameCapital]Service(I[ComponentNameCapital]Repository repo, I[ReportNameCapital] list)
+   //Template_Start_Code_DontOverwrite_2
+   //Template_End_Code_DontOverwrite_2
+
+        public [ComponentNameCapital]Service(
+          I[ComponentNameCapital]Repository repo
+        , I[ReportNameCapital] list
+  //Template_Start_Code_DontOverwrite_3
+  //Template_End_Code_DontOverwrite_3
+        )
         {
             _repo = repo;
             _list = list;
+  //Template_Start_Code_DontOverwrite_4
+  //Template_End_Code_DontOverwrite_4
         }
 
         public async Task<[ComponentNameCapital]?> GetAsync(long id)
@@ -42,11 +54,10 @@ namespace Bfs.[SystemNameCapital].Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new [ComponentNameCapital]CreatedMessage
-            //{
-            //    Entity = PrepareForMessage(result),
-            //};
-            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            //Template_Start_Component_Messaging_1
+            var message = new [ComponentNameCapital]CreatedMessage { Entity = PrepareForMessage(result) };
+            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            //Template_End_Component_Messaging_1
 
             return result;
         }
@@ -56,22 +67,19 @@ namespace Bfs.[SystemNameCapital].Domain.Services
             //ToDo fluent validation, error or exception
 
             var existingEntity = await _repo.GetAsync(contract.Id).ConfigureAwait(false);
-
             var updatedEntity = contract.ToEntity(existingEntity);
 
-            //var message = new [ComponentNameCapital]UpdatedMessage
-            //{
-            //    OldEntity = PrepareForMessage(existingContract),
-            //};
-
-            //  existingEntity?.ToEntity();
+            //Template_Start_Component_Messaging_2
+            var message = new [ComponentNameCapital]UpdatedMessage { OldEntity = PrepareForMessage(existingEntity) };
+            //Template_End_Component_Messaging_2
 
             await _repo.UpdateAsync(updatedEntity).ConfigureAwait(false);
             await _repo.SaveAsync().ConfigureAwait(false);
 
-            //message.NewEntity = PrepareForMessage(result);
-            //await _messagePublisher.PublishMessageAsync(message)
-            //    .ConfigureAwait(false);
+            //Template_Start_Component_Messaging_3
+            message.NewEntity = PrepareForMessage(result);
+            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            //Template_End_Component_Messaging_3
 
             return updatedEntity?.ToContract();
         }
@@ -80,42 +88,42 @@ namespace Bfs.[SystemNameCapital].Domain.Services
         {
             var existingEntity = await _repo.GetAsync(id).ConfigureAwait(false);
 
-            //   existingEntity.IsDeleted = true;
+            //Template_Start_Component_SoftDelete_1
+              existingEntity.IsDeleted = true;
+            //Template_End_Component_SoftDelete_1
 
-            await _repo.DeleteAsync(existingEntity)
-                .ConfigureAwait(false);
+            await _repo.DeleteAsync(existingEntity).ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
 
-            //var message = new [ComponentNameCapital]DeletedMessage
-            //{
-            //    Entity = PrepareForMessage(existingContract),
-            //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
-            //};
+            //Template_Start_Component_Messaging_4
+            var message = new [ComponentNameCapital]DeletedMessage()
+            {
+                Entity = PrepareForMessage(existingContract),
+                CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
+            };
 
-            //await _messagePublisher.PublishMessageAsync(message)
-            //    .ConfigureAwait(false);
+            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            //Template_End_Component_Messaging_4
         }
 
         public async Task<[ComponentNameCapital]> UploadAsync([ComponentNameCapital] contract)
         {
 
             var entity = contract.ToEntity();
-            var newEntity = await _repo.UploadAsync(entity)
-                .ConfigureAwait(false);
+            var newEntity = await _repo.UploadAsync(entity).ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
 
-            var result = await GetAsync(newEntity.Id)
-                .ConfigureAwait(false);
+            var result = await GetAsync(newEntity.Id).ConfigureAwait(false);
 
-            //var message = new [ComponentNameCapital]CreatedMessage
-            //{
-            //    Entity = PrepareForMessage(result),
-            //};
-            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            //Template_Start_Component_Messaging_5
+            var message = new [ComponentNameCapital]UploadMessage
+            {
+                Entity = PrepareForMessage(result),
+            };
+            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            //Template_End_Component_Messaging_5
 
             return result;
         }
@@ -130,8 +138,8 @@ namespace Bfs.[SystemNameCapital].Domain.Services
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item> { Items = new List<[ReportNameCapital]Item>(), TotalItems = 0, TotalPages = 0 };
         }
 
-        //Template_Start_Code_DontOverwrite_1
-        //Template_End_Code_DontOverwrite_1
+  //Template_Start_Code_DontOverwrite_5
+  //Template_End_Code_DontOverwrite_5
     }
 }
 

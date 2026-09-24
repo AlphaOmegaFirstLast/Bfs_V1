@@ -351,15 +351,7 @@ namespace CodeAdmin
         {
             try
             {
-                codeInfo.KeepExistingCode = ckKeepExistingCode.Checked;
-                if (generatorTemplate.TemplateFile.EndsWith("*.*"))
-                {
-                    TemplateManager.InitFrameWork(codeInfo, generatorTemplate);
-                }
-                else
-                {
-                   TemplateManager.SaveManualCode(codeInfo, generatorTemplate.OutputFile);
-                }
+                TemplateManager.SaveManualCode(codeInfo, generatorTemplate);
             }
             catch (Exception ex)
             {
@@ -372,15 +364,7 @@ namespace CodeAdmin
         {
             try
             {
-                codeInfo.KeepExistingCode = ckKeepExistingCode.Checked;
-                if (generatorTemplate.TemplateFile.EndsWith("*.*"))
-                {
-                    TemplateManager.InitFrameWork(codeInfo, generatorTemplate);
-                }
-                else
-                {
-                    TemplateManager.ApplyManualCode(codeInfo, generatorTemplate.OutputFile);
-                }
+                TemplateManager.ApplyManualCode(codeInfo, generatorTemplate);
             }
             catch (Exception ex)
             {
@@ -443,6 +427,10 @@ namespace CodeAdmin
 
             btnGenerateAll.Enabled = isTemplate && isAllComponent;
             btnModifyAll.Enabled = isTemplate && isAllComponent;
+
+            btnSaveManualCode.Enabled = isTemplate && (isSystem || isComponent || isAllComponent);
+            btnApplyManualCode.Enabled = isTemplate && (isSystem || isComponent || isAllComponent);
+
         }
 
         private void btnRollBackGenerateComponent_Click(object sender, EventArgs e)

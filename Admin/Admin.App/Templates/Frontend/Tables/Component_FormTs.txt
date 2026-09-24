@@ -17,6 +17,8 @@ import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-com
 //Template_End_Component_AutoComplete_1
 //---------------------- Component Specific ------------------------
 import { type I[ComponentNameCapital], init[ComponentNameCapital], [ComponentNameSmall]UntypedFormGroup, get[ComponentNameCapital]Actions} from './[ComponentFileName].shared';
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 //Template_Start_Field_ChildrenList_1
 import {[CapitalFieldName]ListComponent} from "../[ChildListFileName]/[ChildListFileName].list.component"
@@ -164,4 +166,19 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
     override getActions(record: IEntity): IAction[] {
         return get[ComponentNameCapital]Actions(this, record);
     }
+
+   //---------------------------------------------------------
+    isVisible(fieldName: string): boolean {
+
+        return isVisible(this.entity,this.validationForm, fieldName);
+    }
+    //--------------------------------------------------------------
+    isEnabled(fieldName: string): boolean {
+
+        return isEnabled(this.entity,this.validationForm, fieldName);
+    }
+    //--------------------------------------------------------------
+
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 }

@@ -3,18 +3,30 @@ using Bfs.Core.Interfaces;
 using Bfs.[SystemNameCapital].Data.Interfaces;
 using Bfs.[SystemNameCapital].Data.Models;
 using Microsoft.EntityFrameworkCore;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Data.Repositories
 {
     public class [ComponentNameCapital]Repository : SqlRepository<[ComponentNameCapital]Entity, [SystemNameCapital]DbContext>, I[ComponentNameCapital]Repository
     {
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
         private readonly [SystemNameCapital]DbContext _context;
-        public [ComponentNameCapital]Repository([SystemNameCapital]DbContext dbContext, IScopeData scopeData) : base(dbContext, scopeData)
+        public [ComponentNameCapital]Repository([SystemNameCapital]DbContext dbContext, IScopeData scopeData
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+        
+        ) : base(dbContext, scopeData)
         {
             _context = dbContext;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
         }
 
-        //Template_Start_Code_DontOverwrite_1
-        //Template_End_Code_DontOverwrite_1
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
     }
 }

@@ -43,6 +43,8 @@ namespace Admin.App
         public string ReportFileName = string.Empty;
 
         public string HasAutoComplete = string.Empty;  // either none or AutoComplete. based on the field definition, if any of the fields is AutoComplete then this will be set to AutoComplete.
+        public string HasMessaging = string.Empty;     // "Messaging";     // either none or Messaging. based on System settings.
+        public string HasSoftDelete = string.Empty;    // either none or SoftDelete. based on component settings.
 
         public string DbParentTable { get; set; } = string.Empty;
 
@@ -63,6 +65,7 @@ namespace Admin.App
             this.QueryBaseTable = source.QueryBaseTable; //todo add field to ComponentEntity // source.QueryBaseTable;
             this.Notes = source.Notes;
             this.InterfaceRequired = source.InterfaceRequired;
+            this.HasSoftDelete = source.IsDeleted? "SoftDelete": string.Empty;
 
             var result = CodeGeneratorBase.GetNames(Name);
             ComponentNameCapital = result.Item1;
@@ -134,6 +137,8 @@ namespace Admin.App
             outputContent = outputContent.Replace("[DbParentTable]", DbParentTable);
             outputContent = outputContent.Replace("[InterfaceRequired]", string.IsNullOrEmpty(InterfaceRequired)?"":$",{InterfaceRequired}" );
             outputContent = outputContent.Replace("[HasAutoComplete]", HasAutoComplete.Trim());
+            outputContent = outputContent.Replace("[HasMessaging]", HasMessaging.Trim());
+            outputContent = outputContent.Replace("[HasSoftDelete]", HasSoftDelete.Trim());
 
             outputContent = outputContent.Replace("[ReportNameCapital]", ReportNameCapital.Trim());
             outputContent = outputContent.Replace("[ReportNameSmall]", ReportNameSmall.Trim());

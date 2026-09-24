@@ -17,6 +17,8 @@ import { BaseMatrixComponent } from '@bfs/_shared/components/base-matrix';
 import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
 import { [MatrixNameCapital]FilterComponent } from '../[MatrixFileName]/[MatrixFileName].filter.component'; 
 import { type I[MatrixNameCapital]WithLookup, type I[MatrixNameCapital]Request, type I[MatrixNameCapital]Filter, init[MatrixNameCapital]Request } from '../[MatrixFileName]/[MatrixFileName].shared';
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 @Component({
     selector: '[MatrixFileName]-matrix',      
@@ -56,3 +58,5 @@ export class [MatrixNameCapital]MatrixComponent extends BaseMatrixComponent <I[M
 }
 
 //Template_End_Field_ChildrenMatrix_1
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
