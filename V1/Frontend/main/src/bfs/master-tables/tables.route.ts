@@ -67,6 +67,11 @@ export const TABLES_ROUTES: Routes = [
         loadChildren: () => import('./bfs-component-system-action/bfs-component-system-action.route').then((mod) => mod.BfsComponentSystemAction_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./bfs-manual-code/bfs-manual-code.route').then((mod) => mod.BfsManualCode_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]
 

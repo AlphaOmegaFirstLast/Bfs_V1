@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> System Actions </a>
+                    <a href="javascript:void(0)" ngbNavLink> Manual Code </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,8 +17,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/mstr/business-action/list')">Back</button>
-                                             <a [routerLink]="['/mstr/business-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/mstr/bfs-manual-code/list')">Back</button>
+                                             <a [routerLink]="['/mstr/bfs-manual-code/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -63,68 +63,32 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="shortName" class="form-label fs-6">Short Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="this field will be used in security permissions"  />
-
-        <input class="form-control" type="text" id="shortName" formControlName="shortName"
-            [class]="submit && !form['shortName'].errors ? 'is-valid': submit && form['shortName'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Short Name.</div>
-    </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-12">
-        <label for="writerTypeId" class="form-label fs-6">Writer Type</label>
-        <select class="form-select" id="writerTypeId" formControlName="writerTypeId"
-            [class]="submit && !form['writerTypeId'].errors ? 'is-valid': submit && form['writerTypeId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of WriterTypeOptions">
+        <label for="bfsSystemId" class="form-label fs-6">BestFit System</label>
+        <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId"
+            [class]="submit && !form['bfsSystemId'].errors ? 'is-valid': submit && form['bfsSystemId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of BfsSystemOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>
         </select>
-        <div class="invalid-feedback">Please select a valid Writer Type.</div>
+        <div class="invalid-feedback">Please select a valid BestFit System.</div>
     </div>
 </div>
 <div class="row mb-2">
     <div class="col-12">
-        <label for="matchProperty" class="form-label fs-6">Writer Matching Property</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="matchProperty" formControlName="matchProperty"
-            [class]="submit && !form['matchProperty'].errors ? 'is-valid': submit && form['matchProperty'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Writer Matching Property.</div>
+        <label for="bfsComponentId" class="form-label fs-6">Component</label>
+        <select class="form-select" id="bfsComponentId" formControlName="bfsComponentId"
+            [class]="submit && !form['bfsComponentId'].errors ? 'is-valid': submit && form['bfsComponentId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of BfsComponentOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Component.</div>
     </div>
 </div>
-
-<div class="row mb-2">
-    <div class="col-12">
-        <label for="matchValues" class="form-label fs-6">Writer Matching Values</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="matchValues" formControlName="matchValues"
-            [class]="submit && !form['matchValues'].errors ? 'is-valid': submit && form['matchValues'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Writer Matching Values.</div>
-    </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-12">
-        <label for="actionTemplate" class="form-label fs-6">Action Template</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="actionTemplate" formControlName="actionTemplate"
-            [class]="submit && !form['actionTemplate'].errors ? 'is-valid': submit && form['actionTemplate'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Action Template.</div>
-    </div>
-</div>
-
 <div class="row mb-2">
     <div class="col-12">
         <label for="name" class="form-label fs-6">Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="That is info that will be displayed in the side menu"  />
 
         <input class="form-control" type="text" id="name" formControlName="name"
             [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
@@ -135,20 +99,56 @@
 
 <div class="row mb-2">
     <div class="col-12">
-        <label for="actionTypeId" class="form-label fs-6">Action Type</label>
-        <select class="form-select" id="actionTypeId" formControlName="actionTypeId"
-            [class]="submit && !form['actionTypeId'].errors ? 'is-valid': submit && form['actionTypeId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of ActionTypeOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-            </ng-container>
-        </select>
-        <div class="invalid-feedback">Please select a valid Action Type.</div>
+        <label for="fileName" class="form-label fs-6">FileName</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="fileName" formControlName="fileName"
+            [class]="submit && !form['fileName'].errors ? 'is-valid': submit && form['fileName'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid FileName.</div>
     </div>
 </div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="startTemplate" class="form-label fs-6">Start Template</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="startTemplate" formControlName="startTemplate"
+            [class]="submit && !form['startTemplate'].errors ? 'is-valid': submit && form['startTemplate'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Start Template.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="endTemplate" class="form-label fs-6">End Template</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="endTemplate" formControlName="endTemplate"
+            [class]="submit && !form['endTemplate'].errors ? 'is-valid': submit && form['endTemplate'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid End Template.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12">
+        <label for="code" class="form-label fs-6">Code</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="it holds info about the component represented by this record"  />
+
+        <input class="form-control" type="text" id="code" formControlName="code"
+            [class]="submit && !form['code'].errors ? 'is-valid': submit && form['code'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Code.</div>
+    </div>
+</div>
+
 <div class="row mb-2">
     <div class="col-12">
         <label for="notes" class="form-label fs-6">Notes</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="it holds info about the component represented by this record"  />
 
         <input class="form-control" type="text" id="notes" formControlName="notes"
             [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
@@ -177,4 +177,3 @@
         </div>
     </div>
 </div>
-

@@ -5,21 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
-import { IBusinessActionFilter } from './business-action.shared';
+import { IBfsManualCodeFilter } from './bfs-manual-code.shared';
 
 @Component({
-    selector: 'app-business-action-filter',
+    selector: 'app-bfs-manual-code-filter',
     imports: [FormsModule, CommonModule],
-    templateUrl: './business-action.filter.component.html'
+    templateUrl: './bfs-manual-code.filter.component.html'
     //styles: ``
 })
-export class BusinessActionFilterComponent implements OnInit {
+export class BfsManualCodeFilterComponent implements OnInit {
 
-    public result = {} as IBusinessActionFilter;
+    public result = {} as IBfsManualCodeFilter;
 
     // Define look ups
-    public ActionTypeOptions:  any[] = [];
-public WriterTypeOptions:  any[] = [];
+    public BfsSystemOptions:  any[] = [];
+public BfsComponentOptions:  any[] = [];
 
     // Define autocomplete fields
 
@@ -46,25 +46,25 @@ public WriterTypeOptions:  any[] = [];
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
-        target = "/ActionType/list";
+        target = "/BfsSystem/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
-                this.ActionTypeOptions = response.items;
+                this.BfsSystemOptions = response.items;
                 this.isLoading.list = false;
             },
                 error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching Action Type data.';
+                this.errorMessage = err.message || 'An error occurred while fetching BestFit System data.';
                 this.isLoading.list = false;
             }
         });
-target = "/WriterType/list";
+target = "/BfsComponent/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
-                this.WriterTypeOptions = response.items;
+                this.BfsComponentOptions = response.items;
                 this.isLoading.list = false;
             },
                 error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching Writer Type data.';
+                this.errorMessage = err.message || 'An error occurred while fetching Component data.';
                 this.isLoading.list = false;
             }
         });
@@ -88,4 +88,3 @@ target = "/WriterType/list";
         this.parent.applyFilter(this.result);
     }
 }
-

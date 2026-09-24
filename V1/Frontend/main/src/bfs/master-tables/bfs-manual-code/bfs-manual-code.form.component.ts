@@ -14,27 +14,27 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 import { MasterService } from '@bfs/master-main/master.service';
 
 //---------------------- Component Specific ------------------------
-import { type IBusinessAction, initBusinessAction, businessActionUntypedFormGroup, getBusinessActionActions} from './business-action.shared';
+import { type IBfsManualCode, initBfsManualCode, bfsManualCodeUntypedFormGroup, getBfsManualCodeActions} from './bfs-manual-code.shared';
 
 @Component({
-    selector: 'business-action-form',
+    selector: 'bfs-manual-code-form',
     imports: [
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
     standalone: true,
-    templateUrl: './business-action.form.component.html',
+    templateUrl: './bfs-manual-code.form.component.html',
 })
-export class BusinessActionFormComponent extends BaseFormComponent<IBusinessAction > implements OnInit {
+export class BfsManualCodeFormComponent extends BaseFormComponent<IBfsManualCode > implements OnInit {
 
-    override apiUrl =  '/BusinessAction/';
+    override apiUrl =  '/BfsManualCode/';
     override apiService: MasterService = inject(MasterService);
-    override componentName: string = 'BusinessAction'.toLowerCase();  // used to grab its related custom field definitions
+    override componentName: string = 'BfsManualCode'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
 
     // Define look ups
-    public ActionTypeOptions: any[] = [];
-public WriterTypeOptions: any[] = [];
+    public BfsSystemOptions: any[] = [];
+public BfsComponentOptions: any[] = [];
 
     // Define autocomplete
 
@@ -43,7 +43,7 @@ public WriterTypeOptions: any[] = [];
     constructor(activatedRoute: ActivatedRoute) {
 
        super(activatedRoute);
-       this.validationForm = this.formBuilder.group(businessActionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       this.validationForm = this.formBuilder.group(bfsManualCodeUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
 
     }
     //---------------------------------------------------------
@@ -59,8 +59,8 @@ public WriterTypeOptions: any[] = [];
         }
     }
     //---------------------------------------------------------
-    override initEntity(): IBusinessAction  {
-        return initBusinessAction ();
+    override initEntity(): IBfsManualCode  {
+        return initBfsManualCode ();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
@@ -74,17 +74,17 @@ public WriterTypeOptions: any[] = [];
 // Promise.all to improve performance. apply later
          try{
          const [
-              actionTypeResponse,
-writerTypeResponse,
+              bfsSystemResponse,
+bfsComponentResponse,
 
          ] = await Promise.all
          ([
-        this.apiService.getItems<IQueryResponse>("/ActionType/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/WriterType/list", { pageSize: 30 }),
+        this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 30 }),
+this.apiService.getItems<IQueryResponse>("/BfsComponent/list", { pageSize: 30 }),
 
          ]);
-        this.ActionTypeOptions = actionTypeResponse.items;
-this.WriterTypeOptions = writerTypeResponse.items;
+        this.BfsSystemOptions = bfsSystemResponse.items;
+this.BfsComponentOptions = bfsComponentResponse.items;
 
  } catch (err: any) {
    const msg = err?.message || "An error occurred while loading data.";
@@ -111,7 +111,6 @@ this.WriterTypeOptions = writerTypeResponse.items;
     //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
-        return getBusinessActionActions(this, record);
+        return getBfsManualCodeActions(this, record);
     }
 }
-

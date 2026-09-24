@@ -23,11 +23,11 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { MasterService } from '@bfs/master-main/master.service';
-import { type IBusinessActionRequest, type IBusinessActionFilter, initBusinessActionRequest, renderBusinessAction, getBusinessActionActions} from './business-action.shared';
-import { BusinessActionFilterComponent } from './business-action.filter.component'; 
+import { type IBfsManualCodeRequest, type IBfsManualCodeFilter, initBfsManualCodeRequest, renderBfsManualCode, getBfsManualCodeActions} from './bfs-manual-code.shared';
+import { BfsManualCodeFilterComponent } from './bfs-manual-code.filter.component'; 
 
 @Component({
-    selector: 'business-action-list',     
+    selector: 'bfs-manual-code-list',     
     imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
                NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
                NgxEchartsDirective],
@@ -35,13 +35,13 @@ import { BusinessActionFilterComponent } from './business-action.filter.componen
     standalone: true,
     templateUrl: '../../_shared/components/base-report.component.html',
 })
-export class BusinessActionListComponent         
+export class BfsManualCodeListComponent         
 
-    extends BaseReportComponent<IBusinessActionFilter,null> {
+    extends BaseReportComponent<IBfsManualCodeFilter,null> {
     override apiService: MasterService = inject(MasterService);
-    override queryRequest = {} as IBusinessActionRequest;
-    override exportRequest = {} as IBusinessActionRequest;
-    override downloadFileName: string = "System Actions";
+    override queryRequest = {} as IBfsManualCodeRequest;
+    override exportRequest = {} as IBfsManualCodeRequest;
+    override downloadFileName: string = "Manual Code";
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -49,20 +49,20 @@ export class BusinessActionListComponent
         super(modalService, router, excelService, activatedRoute);
 
         this.isButton.chart = false;
-        this.addNewRecordLink = { route: "/mstr/business-action/add/0", displayText: "Add New System Actions" };
-        this.getApiUrl = '/BusinessAction/List';
-        this.uploadApiUrl = '/BusinessAction/upload';
+        this.addNewRecordLink = { route: "/mstr/bfs-manual-code/add/0", displayText: "Add New Manual Code" };
+        this.getApiUrl = '/BfsManualCode/List';
+        this.uploadApiUrl = '/BfsManualCode/upload';
 
-        this.filterComponent = BusinessActionFilterComponent;
-        this.queryRequest = initBusinessActionRequest();
+        this.filterComponent = BfsManualCodeFilterComponent;
+        this.queryRequest = initBfsManualCodeRequest();
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        return renderBusinessAction(record, column);
+        return renderBfsManualCode(record, column);
     }
     //---------------------------------------------------------
     override getActions(record: IEntity): IAction[] {
-        return getBusinessActionActions(this, record);
+        return getBfsManualCodeActions(this, record);
     }
 
 }
