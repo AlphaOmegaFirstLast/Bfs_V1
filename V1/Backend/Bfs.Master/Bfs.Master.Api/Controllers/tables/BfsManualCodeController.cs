@@ -6,58 +6,47 @@ using FluentValidation;
 using FluentValidation.Results;
 using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
-using Bfs.Stores.Contracts;
-using Bfs.Stores.Domain.Interfaces;
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1
+using Bfs.Master.Contracts;
+using Bfs.Master.Domain.Interfaces;
 
-namespace Bfs.Stores.Api.Controllers;
+namespace Bfs.Master.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
 
-public class StoreController
+public class BfsManualCodeController
 {
-    private readonly IStoreService _storeService;
-    private IValidator<Store> _validator;
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+    private readonly IBfsManualCodeService _bfsManualCodeService;
+    private IValidator<BfsManualCode> _validator;
 
-    public StoreController(IStoreService storeService, IValidator<Store> validator
-//Template_Start_Code_DontOverwrite_3
-//Template_End_Code_DontOverwrite_3
-
-    )
+    public BfsManualCodeController(IBfsManualCodeService bfsManualCodeService, IValidator<BfsManualCode> validator)
     {
-        _storeService = storeService;
+        _bfsManualCodeService = bfsManualCodeService;
         _validator = validator;
-//Template_Start_Code_DontOverwrite_4
-//Template_End_Code_DontOverwrite_4
-
     }
 
     [HttpGet]
     [CustomAuthorize("role=bfs.admin")]
-    public async Task<List<Store>> Get()
+    public async Task<List<BfsManualCode>> Get()
     {
-        var result = await _storeService.GetAsync().ConfigureAwait(false);
+        var result = await _bfsManualCodeService.GetAsync().ConfigureAwait(false);
         return result;
     }
 
     [HttpGet("{id}")]
-    [CustomAuthorize("method=q.store")]
-    public async Task<StoreListItem?> Get(long id)
+    [CustomAuthorize("method=q.bfsManualCode")]
+    public async Task<BfsManualCodeListItem?> Get(long id)
     {
-        var listRequest = new QueryRequest<StoreListFilter>();
+        var listRequest = new QueryRequest<BfsManualCodeListFilter>();
         listRequest.Filter.Id = id;
-        var response = await _storeService.ListAsync(listRequest).ConfigureAwait(false);
+        var response = await _bfsManualCodeService.ListAsync(listRequest).ConfigureAwait(false);
         return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]
-    [CustomAuthorize("method=a.store")]
-    public async Task<Results<Ok<Store>, BadRequest<ProblemDetails>>> Post([FromBody] Store value)
+    [CustomAuthorize("method=a.bfsManualCode")]
+    public async Task<Results<Ok<BfsManualCode>, BadRequest<ProblemDetails>>> Post([FromBody] BfsManualCode value)
     {
         ValidationResult validResult = await _validator.ValidateAsync(value);
 
@@ -73,13 +62,13 @@ public class StoreController
             return TypedResults.BadRequest(problemDetails);
         }
 
-        var createdStore = await _storeService.CreateAsync(value).ConfigureAwait(false);
-        return TypedResults.Ok(createdStore);
+        var createdBfsManualCode = await _bfsManualCodeService.CreateAsync(value).ConfigureAwait(false);
+        return TypedResults.Ok(createdBfsManualCode);
     }
 
     [HttpPut]
-    [CustomAuthorize("method=u.store")]
-    public async Task<Results<Ok<Store>, BadRequest<ProblemDetails>>> Put([FromBody] Store value)
+    [CustomAuthorize("method=u.bfsManualCode")]
+    public async Task<Results<Ok<BfsManualCode>, BadRequest<ProblemDetails>>> Put([FromBody] BfsManualCode value)
     {
         ValidationResult validResult = await _validator.ValidateAsync(value);
 
@@ -93,17 +82,17 @@ public class StoreController
             return TypedResults.BadRequest(problemDetails);
         }
 
-        var updatedStore = await _storeService.UpdateAsync(value).ConfigureAwait(false);
-        return TypedResults.Ok(updatedStore);
+        var updatedBfsManualCode = await _bfsManualCodeService.UpdateAsync(value).ConfigureAwait(false);
+        return TypedResults.Ok(updatedBfsManualCode);
     }
 
     [HttpDelete("{id}")]
-    [CustomAuthorize("method=d.store")]
+    [CustomAuthorize("method=d.bfsManualCode")]
     public async Task<Results<Ok, BadRequest<ProblemDetails>>> Delete(long id)
     {
         try
         {
-            await _storeService.DeleteAsync(id).ConfigureAwait(false);
+            await _bfsManualCodeService.DeleteAsync(id).ConfigureAwait(false);
             return TypedResults.Ok();
         }
         catch (Exception ex)
@@ -118,10 +107,10 @@ public class StoreController
     }
 
     [HttpPost("List")]
-    [CustomAuthorize("method=q.store")]
-    public async Task<Results<Ok<QueryResponse<StoreListItem>>, BadRequest<ProblemDetails>>> List([FromBody] QueryRequest<StoreListFilter> listRequest)
+    [CustomAuthorize("method=q.bfsManualCode")]
+    public async Task<Results<Ok<QueryResponse<BfsManualCodeListItem>>, BadRequest<ProblemDetails>>> List([FromBody] QueryRequest<BfsManualCodeListFilter> listRequest)
     {
-        var result = await _storeService.ListAsync(listRequest).ConfigureAwait(false);
+        var result = await _bfsManualCodeService.ListAsync(listRequest).ConfigureAwait(false);
         return TypedResults.Ok(result);
     }
 
@@ -146,12 +135,12 @@ public class StoreController
             };
 
             using var stream = file.OpenReadStream();
-            var recordList = await JsonSerializer.DeserializeAsync<List<Store>>(stream, options);
+            var recordList = await JsonSerializer.DeserializeAsync<List<BfsManualCode>>(stream, options);
 
             if (recordList == null)
             {
                 problemDetails.Title = "Deserialization Failed";
-                problemDetails.Detail = "The uploaded file could not be deserialized into a Store list.";
+                problemDetails.Detail = "The uploaded file could not be deserialized into a BfsManualCode list.";
                 return TypedResults.BadRequest(problemDetails);
             }
 
@@ -165,7 +154,7 @@ public class StoreController
                     problemDetails.Extensions = new Dictionary<string, object?>() { { "errors", validResult.Errors.Select(x => new { errorCode = x.ErrorCode, message = x.ErrorMessage }) } };
                     return TypedResults.BadRequest(problemDetails);
                 }
-                await _storeService.UploadAsync(record).ConfigureAwait(false);
+                await _bfsManualCodeService.UploadAsync(record).ConfigureAwait(false);
             }
 
             return TypedResults.Ok();
@@ -177,8 +166,8 @@ public class StoreController
             return TypedResults.BadRequest(problemDetails);
         }
     }
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1   
 
-//Template_Start_Code_DontOverwrite_5
-//Template_End_Code_DontOverwrite_5
 }
 

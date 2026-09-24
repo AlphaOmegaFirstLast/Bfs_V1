@@ -1,4 +1,5 @@
 using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
 
@@ -12,9 +13,12 @@ namespace Bfs.Master.Data.Lists
 {
     public class BusinessActionList: QueryBase<BusinessActionListFilter>,  IBusinessActionList
     {
-        public BusinessActionList(string connectionString)
+        private readonly IResourceSecurity? _resourceSecurity;
+
+        public BusinessActionList(string connectionString, IResourceSecurity? resourceSecurity)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
         }
 
         private readonly string _connectionString;
@@ -23,14 +27,14 @@ namespace Bfs.Master.Data.Lists
         {
             var response = new QueryResponse<BusinessActionListItem>();
 
-            await SetUp(request);
+            await SetUp(request, _resourceSecurity);
 
             using var db = new SqlConnection(_connectionString);
             {
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<BusinessActionListItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<BusinessActionListItem>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -39,6 +43,15 @@ namespace Bfs.Master.Data.Lists
             }
 
             return response;
+        }
+
+        private List<BusinessActionListItem> DoMapping(IEnumerable<BusinessActionListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (BusinessActionListItem)record;
+
+                return item;
+            }).ToList();
         }
 
         protected override void SetupFields()
@@ -53,6 +66,8 @@ _fieldList.Add(new QueryField() {ComponentName = "BusinessAction", FieldName = "
 _fieldList.Add(new QueryField() {ComponentName = "BusinessAction", FieldName = "ActionTemplate", DbName = "BusinessAction.ActionTemplate", QueryName = "ActionTemplate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BusinessAction", FieldName = "Name", DbName = "BusinessAction.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BusinessAction", FieldName = "Notes", DbName = "BusinessAction.Notes", QueryName = "Notes", IsAggregare = false});
+
+            //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "ActionType", FieldName = "Name", DbName = "ActionType.Name", QueryName = "ActionTypeName", IsAggregare = false});

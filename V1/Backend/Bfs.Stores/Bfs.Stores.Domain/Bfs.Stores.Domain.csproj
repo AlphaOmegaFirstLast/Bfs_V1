@@ -18,5 +18,9 @@
       <Folder Include="Services\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
+    </ItemGroup>
+
 </Project>
 

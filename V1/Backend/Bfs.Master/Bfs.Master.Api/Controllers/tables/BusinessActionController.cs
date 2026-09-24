@@ -36,10 +36,12 @@ public class BusinessActionController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.businessAction")]
-    public async Task<BusinessAction?> Get(long id)
+    public async Task<BusinessActionListItem?> Get(long id)
     {
-        var result = await _businessActionService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<BusinessActionListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _businessActionService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

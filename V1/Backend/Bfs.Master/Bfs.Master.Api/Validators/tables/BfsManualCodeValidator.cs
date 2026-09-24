@@ -4,12 +4,11 @@ using Bfs.Master.Domain;
 
 namespace Bfs.Master.Api.Validators
 {
-    public class BusinessActionValidator : AbstractValidator<BusinessAction>
+    public class BfsManualCodeValidator : AbstractValidator<BfsManualCode>
     {
-        public BusinessActionValidator()
+        public BfsManualCodeValidator()
         {
 
         }
     }
 }
-

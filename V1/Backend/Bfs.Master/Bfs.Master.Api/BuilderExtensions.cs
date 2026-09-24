@@ -198,7 +198,9 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IValidator<DeploymentAzure>, DeploymentAzureValidator>();
         builder.Services.AddScoped<IValidator<DeploymentLocal>, DeploymentLocalValidator>();
         builder.Services.AddScoped<IValidator<BfsComponentSystemAction>, BfsComponentSystemActionValidator>();
-        //Template_Component_RegisterValidator
+
+            builder.Services.AddScoped<IValidator<BfsManualCode>, BfsManualCodeValidator>();
+//Template_Component_RegisterValidator
     }
 
     public static void RegisterRepositories(this WebApplicationBuilder builder)
@@ -227,7 +229,9 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IDeploymentAzureRepository, DeploymentAzureRepository>();
         builder.Services.AddScoped<IDeploymentLocalRepository, DeploymentLocalRepository>();
         builder.Services.AddScoped<IBfsComponentSystemActionRepository, BfsComponentSystemActionRepository>();
-        //Template_Component_RegisterRepository
+
+                    builder.Services.AddScoped<IBfsManualCodeRepository, BfsManualCodeRepository>();
+//Template_Component_RegisterRepository
     }
 
     public static void RegisterServices(this WebApplicationBuilder builder)
@@ -257,7 +261,9 @@ public static class BuilderExtensions
         builder.Services.AddScoped<IDeploymentAzureService, DeploymentAzureService>();
         builder.Services.AddScoped<IDeploymentLocalService, DeploymentLocalService>();
         builder.Services.AddScoped<IBfsComponentSystemActionService, BfsComponentSystemActionService>();
-        //Template_Component_RegisterService
+
+                    builder.Services.AddScoped<IBfsManualCodeService, BfsManualCodeService>();
+//Template_Component_RegisterService
     }
 
     public static void RegisterLists(this WebApplicationBuilder builder, BfsSettings? settings)
@@ -345,11 +351,6 @@ public static class BuilderExtensions
                 return new SystemActionList(dbConnection);
             });
 
-            builder.Services.AddScoped<IBusinessActionList>(provider =>
-            {
-                return new BusinessActionList(dbConnection);
-            });
-
             builder.Services.AddScoped<IDeploymentAzureList>(provider =>
             {
                 return new DeploymentAzureList(dbConnection);
@@ -380,6 +381,20 @@ public static class BuilderExtensions
             {
                 var config = sp.GetRequiredService<TenantSqlConfiguration>();
                 return new BfsTenantSystemList(config.ConnectionString, null);
+            });
+
+        builder.Services.AddScoped<IBfsManualCodeList>(sp =>
+        {
+            var resourceSecurity = settings.IsMasterSystem ? null : sp.GetRequiredService<IResourceSecurity>();
+            var config = sp.GetRequiredService<TenantSqlConfiguration>();
+            return new BfsManualCodeList(config.ConnectionString, null);
+        });
+
+
+            builder.Services.AddScoped<IBusinessActionList>(sp =>
+            {
+                var config = sp.GetRequiredService<TenantSqlConfiguration>();
+                return new BusinessActionList(config.ConnectionString, null);
             });
             //Template_Component_RegisterList
         }

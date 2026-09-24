@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Admin\Bfs.Core\Bfs.Core.csproj" />
     <ProjectReference Include="..\Bfs.Auth.Contracts\Bfs.Auth.Contracts.csproj" />
   </ItemGroup>
