@@ -16,7 +16,7 @@ import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemN
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 //Template_End_Component_AutoComplete_1
 //---------------------- Component Specific ------------------------
-import { type I[ComponentNameCapital], init[ComponentNameCapital], [ComponentNameSmall]UntypedFormGroup, get[ComponentNameCapital]Actions} from './[ComponentFileName].shared';
+import {isEnabled, isVisible, type I[ComponentNameCapital], init[ComponentNameCapital], [ComponentNameSmall]UntypedFormGroup, get[ComponentNameCapital]Actions} from './[ComponentFileName].shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
