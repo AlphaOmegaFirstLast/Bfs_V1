@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.[SystemNameCapital].Contracts;
 using Bfs.[SystemNameCapital].Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Api.Controllers;
 
@@ -19,11 +21,20 @@ public class [ComponentNameCapital]Controller
 {
     private readonly I[ComponentNameCapital]Service _[ComponentNameSmall]Service;
     private IValidator<[ComponentNameCapital]> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-    public [ComponentNameCapital]Controller(I[ComponentNameCapital]Service [ComponentNameSmall]Service, IValidator<[ComponentNameCapital]> validator)
+    public [ComponentNameCapital]Controller(I[ComponentNameCapital]Service [ComponentNameSmall]Service, IValidator<[ComponentNameCapital]> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
     {
         _[ComponentNameSmall]Service = [ComponentNameSmall]Service;
         _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
     }
 
     [HttpGet]
@@ -166,8 +177,8 @@ public class [ComponentNameCapital]Controller
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
 
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 }
 

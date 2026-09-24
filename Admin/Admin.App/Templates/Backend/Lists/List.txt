@@ -8,17 +8,26 @@ using Microsoft.Data.SqlClient;
 using Bfs.[SystemNameCapital].Data.Interfaces;
 using Bfs.[SystemNameCapital].Data;
 using System.Text;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Data.Lists
 {
     public class [ReportNameCapital]: QueryBase<[ReportNameCapital]Filter>,  I[ReportNameCapital]
     {
         private readonly IResourceSecurity? _resourceSecurity;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-        public [ReportNameCapital](string connectionString, IResourceSecurity? resourceSecurity)
+        public [ReportNameCapital](string connectionString, IResourceSecurity? resourceSecurity
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+        )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
         }
 
         private readonly string _connectionString;
@@ -189,6 +198,8 @@ namespace Bfs.[SystemNameCapital].Data.Lists
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
-       }       
+       } 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1       
     }
 }

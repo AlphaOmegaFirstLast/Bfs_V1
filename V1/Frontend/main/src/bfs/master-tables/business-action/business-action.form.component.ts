@@ -2,21 +2,19 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
-import { IEntity, IQueryResponse, ActionLink, ViewLink } from '@bfs/_shared/interfaces';
+import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
 
 //---------------------- Component Specific ------------------------
-import { type IBusinessAction, type IBusinessActionRequest, initBusinessAction, businessActionUntypedFormGroup } from './business-action.shared';
-import { getBusinessActionActions,  initBusinessActionRequest } from './business-action.shared';
+import { type IBusinessAction, initBusinessAction, businessActionUntypedFormGroup, getBusinessActionActions} from './business-action.shared';
 
 @Component({
     selector: 'business-action-form',
@@ -69,86 +67,51 @@ public WriterTypeOptions: any[] = [];
 
     }
     //---------------------------------------------------------
-    override async setAutoComplete() {
-
-    }
-    //---------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
         this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
-//         try{
-//         const [
-//             BfsSystemList, 
-//             DataTypeList,
-//         ] = await Promise.all
-//         ([
-//             this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 300 }),
-//             this.apiService.getItems<IQueryResponse>("/DataType/list", { pageSize: 300 }),
-//         ]);
-//         this.BfsSystemOptions = BfsSystemList.items;
-//         this.DataTypeOptions = DataTypeList.items;
-// } catch (err: any) {
-//   const msg = err?.message || "An error occurred while loading data.";
-//   this.messages.push({ text: msg, msgType: "danger" });
-// } finally {
-//   this.isLoading.lookups = false;
-// }
+         try{
+         const [
+              actionTypeResponse,
+writerTypeResponse,
+
+         ] = await Promise.all
+         ([
+        this.apiService.getItems<IQueryResponse>("/ActionType/list", { pageSize: 30 }),
+this.apiService.getItems<IQueryResponse>("/WriterType/list", { pageSize: 30 }),
+
+         ]);
+        this.ActionTypeOptions = actionTypeResponse.items;
+this.WriterTypeOptions = writerTypeResponse.items;
+
+ } catch (err: any) {
+   const msg = err?.message || "An error occurred while loading data.";
+   this.messages.push({ text: msg, msgType: "danger" });
+ } finally {
+   this.isLoading.lookups = false;
+ }
+ /*
         this.isLoading.lookups = true;
-        target = "/ActionType/list";
+        target = "/[LookupNameCapital]/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
-                this.ActionTypeOptions = response.items;
+                this.[LookupNameCapital]Options = response.items;
                 this.isLoading.lookups = false;
             },
                 error: (err: any) => {
                 this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching Action Type data.';
+                var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-this.isLoading.lookups = true;
-        target = "/WriterType/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.WriterTypeOptions = response.items;
-                this.isLoading.lookups = false;
-            },
-                error: (err: any) => {
-                this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching Writer Type data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
-
+        */
     }
     //---------------------------------------------------------
 
-override     getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getBusinessActionActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getBusinessActionActions(this, record);
     }
-    //---------------------------------------------------------
-override     getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getBusinessActionActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-   //--------------------------------------------------------------
-
 }
 

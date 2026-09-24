@@ -3,6 +3,8 @@ using Bfs.Stores.Contracts;
 using Bfs.Stores.Data.Interfaces;
 using Bfs.Stores.Domain.Interfaces;
 using Bfs.Stores.Domain.Mapper;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Stores.Domain.Services
 {
@@ -10,18 +12,20 @@ namespace Bfs.Stores.Domain.Services
     {
         private readonly IStoreRepository _repo;
         private readonly IStoreList _list;
-        //Template_Start_Code_DontOverwrite_1
-        public readonly string test = "test - keep existing data";
+   //Template_Start_Code_DontOverwrite_2
+   //Template_End_Code_DontOverwrite_2
 
-        //Template_End_Code_DontOverwrite_1
-
-        public StoreService(IStoreRepository repo, IStoreList list)
+        public StoreService(
+          IStoreRepository repo
+        , IStoreList list
+  //Template_Start_Code_DontOverwrite_3
+  //Template_End_Code_DontOverwrite_3
+        )
         {
             _repo = repo;
             _list = list;
-            //Template_Start_Code_DontOverwrite_2
-            //testing keep comments
-            //Template_End_Code_DontOverwrite_2
+  //Template_Start_Code_DontOverwrite_4
+  //Template_End_Code_DontOverwrite_4
         }
 
         public async Task<Store?> GetAsync(long id)
@@ -50,12 +54,6 @@ namespace Bfs.Stores.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new StoreCreatedMessage
-            //{
-            //    Entity = PrepareForMessage(result),
-            //};
-            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
-
             return result;
         }
 
@@ -64,22 +62,10 @@ namespace Bfs.Stores.Domain.Services
             //ToDo fluent validation, error or exception
 
             var existingEntity = await _repo.GetAsync(contract.Id).ConfigureAwait(false);
-
             var updatedEntity = contract.ToEntity(existingEntity);
-
-            //var message = new StoreUpdatedMessage
-            //{
-            //    OldEntity = PrepareForMessage(existingContract),
-            //};
-
-            //  existingEntity?.ToEntity();
 
             await _repo.UpdateAsync(updatedEntity).ConfigureAwait(false);
             await _repo.SaveAsync().ConfigureAwait(false);
-
-            //message.NewEntity = PrepareForMessage(result);
-            //await _messagePublisher.PublishMessageAsync(message)
-            //    .ConfigureAwait(false);
 
             return updatedEntity?.ToContract();
         }
@@ -88,42 +74,21 @@ namespace Bfs.Stores.Domain.Services
         {
             var existingEntity = await _repo.GetAsync(id).ConfigureAwait(false);
 
-            //   existingEntity.IsDeleted = true;
+            await _repo.DeleteAsync(existingEntity).ConfigureAwait(false);
 
-            await _repo.DeleteAsync(existingEntity)
-                .ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
-
-            //var message = new StoreDeletedMessage
-            //{
-            //    Entity = PrepareForMessage(existingContract),
-            //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
-            //};
-
-            //await _messagePublisher.PublishMessageAsync(message)
-            //    .ConfigureAwait(false);
         }
 
         public async Task<Store> UploadAsync(Store contract)
         {
 
             var entity = contract.ToEntity();
-            var newEntity = await _repo.UploadAsync(entity)
-                .ConfigureAwait(false);
+            var newEntity = await _repo.UploadAsync(entity).ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
 
-            var result = await GetAsync(newEntity.Id)
-                .ConfigureAwait(false);
-
-            //var message = new StoreCreatedMessage
-            //{
-            //    Entity = PrepareForMessage(result),
-            //};
-            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            var result = await GetAsync(newEntity.Id).ConfigureAwait(false);
 
             return result;
         }
@@ -138,13 +103,8 @@ namespace Bfs.Stores.Domain.Services
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StoreListItem> { Items = new List<StoreListItem>(), TotalItems = 0, TotalPages = 0 };
         }
 
-        //Template_Start_Code_DontOverwrite_3
-        public static bool DoRecordValidation(string x, string y) 
-        {
-            //testing keep existing data
-            return x == y;
-        }
-        //Template_End_Code_DontOverwrite_3
+  //Template_Start_Code_DontOverwrite_5
+  //Template_End_Code_DontOverwrite_5
     }
 }
 

@@ -25,6 +25,8 @@ import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
 import { type I[ComponentNameCapital]Request, type I[ComponentNameCapital]Filter, init[ComponentNameCapital]Request, render[ComponentNameCapital], get[ComponentNameCapital]Actions} from './[ComponentFileName].shared';
 import { [ComponentNameCapital]FilterComponent } from './[ComponentFileName].filter.component'; 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 @Component({
     selector: '[ReportFileName]',     
@@ -120,5 +122,8 @@ export class [ReportNameCapital]Component
         return baseChart;
     }
 //Template_End_Component_Report_2
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
 }
 

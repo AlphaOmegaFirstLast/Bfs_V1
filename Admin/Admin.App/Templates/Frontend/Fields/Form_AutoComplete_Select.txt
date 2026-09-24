@@ -1,5 +1,5 @@
   <!-- [AutoCompleteCapital]AutoComplete Start -->
-                                            <div class="row mb-2">
+                                            <div class="row mb-2"  *ngIf="isVisible('[SmallFieldName]')" [disabled]="isEnabled('[SmallFieldName]')?">
                                                 <div class="col-12">
                                                     <div class="position-relative"  (focusout)="[AutoCompleteSmall]Auto.hideOverlay()">
                                                         <label class="form-label fs-6">Component</label>

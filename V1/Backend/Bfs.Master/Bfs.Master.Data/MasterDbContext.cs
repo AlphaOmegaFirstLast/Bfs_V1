@@ -29,6 +29,8 @@ public class MasterDbContext : DbContext
  public DbSet<DeploymentAzureEntity> DeploymentAzures { get; set; }
  public DbSet<DeploymentLocalEntity> DeploymentLocals { get; set; }
  public DbSet<BfsComponentSystemActionEntity> BfsComponentSystemActions { get; set; }
+
+ public DbSet<BfsManualCodeEntity> BfsManualCodes { get; set; }
 //Template_Component_RegisterDbSet
 
     public MasterDbContext(DbContextOptions<MasterDbContext> options) : base(options)

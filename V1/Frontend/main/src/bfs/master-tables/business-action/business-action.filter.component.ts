@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
+
 import { IBusinessActionFilter } from './business-action.shared';
 
 @Component({
@@ -20,20 +21,25 @@ export class BusinessActionFilterComponent implements OnInit {
     public ActionTypeOptions:  any[] = [];
 public WriterTypeOptions:  any[] = [];
 
+    // Define autocomplete fields
+
     // Define range filters
 
-    isLoading: { list: boolean } = { list: false };
+    public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
     public errorMessage: string = '';
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
     //---------------------------------------------------------
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) {
+
+    }
 
     async ngOnInit(): Promise<void> {
         this.result = this.parent.queryRequest.filter || {};
         await this.getLookups();
+        await this.setAutoComplete();
         // Initialize range filters if not set
 
     }
@@ -65,6 +71,11 @@ target = "/WriterType/list";
 
     }
     //---------------------------------------------------------
+    async setAutoComplete() {
+
+}
+//---------------------------------------------------------
+
     reset() {
         this.activeModal.close('Reset');
         this.parent.applyFilter(null);

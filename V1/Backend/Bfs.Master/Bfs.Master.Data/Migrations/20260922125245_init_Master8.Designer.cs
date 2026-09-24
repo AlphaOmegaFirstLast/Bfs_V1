@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bfs.Master.Data.Migrations
 {
     [DbContext(typeof(MasterDbContext))]
-    [Migration("20260807123755_init_Master6")]
-    partial class init_Master6
+    [Migration("20260922125245_init_Master8")]
+    partial class init_Master8
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,6 +254,52 @@ namespace Bfs.Master.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BfsField", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.Master.Data.Models.BfsManualCodeEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsComponentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BfsSystemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EndTemplate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StartTemplate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BfsManualCode", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.Master.Data.Models.BfsSystemEntity", b =>
@@ -862,6 +908,9 @@ namespace Bfs.Master.Data.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<int?>("ChartElementId")
+                                .HasColumnType("int");
+
+                            b1.Property<int?>("ColumnOrder")
                                 .HasColumnType("int");
 
                             b1.Property<bool?>("IsColumnVisible")

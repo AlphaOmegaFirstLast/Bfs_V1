@@ -11,8 +11,6 @@ namespace Admin.App
 
         public override void ReadDbEntities()
         {
-            //var z = BfsSystemActionEntity.GenerateTestData().Select(x => new BestFitAction(x)).ToList();
-            //ComponentSystemActionList = z; //.Select( x=> (IBestFitAction)x).ToList();
             var componentSystemActionList = new List<BfsComponentSystemActionEntity>();
             var componentBusinessActionList = new List<BfsComponentBusinessActionEntity>();
             // populate database objects
@@ -20,6 +18,7 @@ namespace Admin.App
             {
                 try
                 {
+                    ManualCodeList = context.BfsManualCode.Select(x => (IManualCodeEntity)x).ToList();
                     SystemList = context.BfsSystem.Select(x => (ISystemEntity)x).ToList();
                     ComponentList = context.BfsComponent.Select(x => (IComponentEntity)x).ToList();
                     FieldList = context.BfsField.Select(x => (IFieldEntity)x).ToList();

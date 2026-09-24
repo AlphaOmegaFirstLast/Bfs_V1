@@ -1,6 +1,8 @@
 using Bfs.Core.Contracts;
 using Bfs.Core.Interfaces;
 using Bfs.Stores.Contracts;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Stores.Domain.Interfaces
 {
@@ -10,8 +12,7 @@ namespace Bfs.Stores.Domain.Interfaces
 
         Task<QueryResponse<StoreListItem>> ListAsync(QueryRequest<StoreListFilter> contractRequest);
 
-        //Template_Start_Code_[DontOverwrite]_1
-        //Template_End_Code_[DontOverwrite]_1   
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     }
 }
-

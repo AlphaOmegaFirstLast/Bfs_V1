@@ -163,7 +163,25 @@
         "PlaceHolderType": "StartEnd",
         "TemplateContentType": "Embedded",
         "KeepPlaceHolder": false,
-        "Notes": "Add import statement that is required for autocomplete functionality"
+        "Notes": "Add code required for autocomplete functionality"
+      },
+      {
+        "ParentId": [ "104" ],
+        "Name": "Component_[HasMessaging]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Set Code in [Component]Service.cs that is required for Messaging functionality"
+      },
+      {
+        "ParentId": [ "104" ],
+        "Name": "Component_[HasSoftDelete]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Set Code in [Component]Service.cs that is required for SoftDelete functionality. it set a flag. code might need further changes."
       },
       {
         "ParentId": [ "609" ],

@@ -1,22 +1,20 @@
-
+import { FormBuilder } from "@angular/forms";
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master-main/master.operations';
 
-import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
-
 // Output Columns of a Query  [used in entity Query]
 export const BusinessActionColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'shortName', displayName: 'Short Name', sortName: 'ShortName', width: '50px', isVisible:true },
-{ fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionType_Name', width: '50px', isVisible:true },
-{ fieldName: 'writerTypeId', displayName: 'Writer Type', sortName: 'WriterType_Name', width: '50px', isVisible:true },
-{ fieldName: 'matchProperty', displayName: 'Writer Matching Property', sortName: 'MatchProperty', width: '50px', isVisible:true },
-{ fieldName: 'matchValues', displayName: 'Writer Matching Values', sortName: 'MatchValues', width: '50px', isVisible:true },
-{ fieldName: 'actionTemplate', displayName: 'Action Template', sortName: 'ActionTemplate', width: '50px', isVisible:false },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'shortName', displayName: 'Short Name', sortName: 'ShortName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionType_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'writerTypeId', displayName: 'Writer Type', sortName: 'WriterType_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'matchProperty', displayName: 'Writer Matching Property', sortName: 'MatchProperty', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'matchValues', displayName: 'Writer Matching Values', sortName: 'MatchValues', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'actionTemplate', displayName: 'Action Template', sortName: 'ActionTemplate', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -123,7 +121,20 @@ WriterTypeId: undefined ,
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
+export function renderBusinessAction(record: IEntity, column: IQueryColumn): any {
+        const value = record[column.fieldName as keyof IEntity];
+        switch (column.fieldName) {
+            case 'actionTypeId':
+                return record['actionTypeName']?.toString();
+case 'writerTypeId':
+                return record['writerTypeName']?.toString();
 
+            default:
+                return value;
+        }
+        return value;
+    }
+    //---------------------------------------------------------
 export function getBusinessActionActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
 
@@ -155,12 +166,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('businessAction', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['writerTypeId'], route:'/mstr/writer-type/view', displayText:'Go to WriterType'
-});
-}
-
-if (component.accessService.isActionAllowed('businessAction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BusinessAction', onSuccessMethodName: 'getReport' }
 });
 }
 

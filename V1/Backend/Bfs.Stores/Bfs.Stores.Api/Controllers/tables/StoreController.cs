@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.Stores.Contracts;
 using Bfs.Stores.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Stores.Api.Controllers;
 
@@ -19,11 +21,20 @@ public class StoreController
 {
     private readonly IStoreService _storeService;
     private IValidator<Store> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-    public StoreController(IStoreService storeService, IValidator<Store> validator)
+    public StoreController(IStoreService storeService, IValidator<Store> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
     {
         _storeService = storeService;
         _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
     }
 
     [HttpGet]
@@ -36,10 +47,12 @@ public class StoreController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.store")]
-    public async Task<Store?> Get(long id)
+    public async Task<StoreListItem?> Get(long id)
     {
-        var result = await _storeService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<StoreListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _storeService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]
@@ -164,8 +177,8 @@ public class StoreController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
 
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 }
 

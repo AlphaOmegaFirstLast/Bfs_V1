@@ -74,6 +74,15 @@ export const MasterMenuItems: MenuItemType[] = [
             role: ['admin', 'investor','broker']
         }
     },
+
+    {
+        label: 'Manual Code',
+        icon: 'tablerLayoutSidebar',
+        url: '/mstr/bfs-manual-code/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Basic
         ]
     },

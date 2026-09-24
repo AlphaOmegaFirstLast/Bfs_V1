@@ -5,7 +5,7 @@
 
             <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
                 <li [ngbNavItem]="1">
-                    <a href="javascript:void(0)" ngbNavLink> Business Actions </a>
+                    <a href="javascript:void(0)" ngbNavLink> System Actions </a>
                     <!----------------------------------------- Tab1 Contents -------------------------------------->
                     <ng-template ngbNavContent>
                         <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
@@ -17,7 +17,7 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/mstr/business-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/mstr/business-action/list')">Back</button>
                                              <a [routerLink]="['/mstr/business-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">

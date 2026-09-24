@@ -1,10 +1,14 @@
 using Bfs.Core.Data;
 using Bfs.[SystemNameCapital].Data;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Data.Interfaces
 {
     public interface I[ReportNameCapital]
     {
         Task<QueryResponse<[ReportNameCapital]Item>> GetAsync(QueryRequest<[ReportNameCapital]Filter> request);
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     }
 }

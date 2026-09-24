@@ -1,6 +1,6 @@
         builder.Services.AddScoped<I[ReportNameCapital]>(sp =>
         {
-            var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
-            var config = sp.GetRequiredService<TenantSqlConfiguration>();
-            return new [ReportNameCapital](config.ConnectionString, resourceSecurity);
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new [ReportNameCapital](config.ConnectionString, resourceSecurity);
         });

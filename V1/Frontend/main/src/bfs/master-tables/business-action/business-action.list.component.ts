@@ -16,19 +16,14 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryColumn, IEntity, IAction } from '@bfs/_shared/interfaces';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
-
-//--------------- system specific ------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/master.operations';
 
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { MasterService } from '@bfs/master-main/master.service';
-
-import { type IBusinessActionWithLookup, type IBusinessActionRequest, type IBusinessActionFilter } from './business-action.shared';
-import { getBusinessActionActions,  initBusinessActionRequest } from './business-action.shared';
+import { type IBusinessActionRequest, type IBusinessActionFilter, initBusinessActionRequest, renderBusinessAction, getBusinessActionActions} from './business-action.shared';
 import { BusinessActionFilterComponent } from './business-action.filter.component'; 
 
 @Component({
@@ -42,11 +37,11 @@ import { BusinessActionFilterComponent } from './business-action.filter.componen
 })
 export class BusinessActionListComponent         
 
-    extends BaseReportComponent<IBusinessActionFilter, IBusinessActionWithLookup> {
+    extends BaseReportComponent<IBusinessActionFilter,null> {
     override apiService: MasterService = inject(MasterService);
     override queryRequest = {} as IBusinessActionRequest;
     override exportRequest = {} as IBusinessActionRequest;
-    override downloadFileName: string = "Business Actions";
+    override downloadFileName: string = "System Actions";
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -54,7 +49,7 @@ export class BusinessActionListComponent
         super(modalService, router, excelService, activatedRoute);
 
         this.isButton.chart = false;
-        this.addNewRecordLink = { route: "/mstr/business-action/add/0", displayText: "Add New Business Actions" };
+        this.addNewRecordLink = { route: "/mstr/business-action/add/0", displayText: "Add New System Actions" };
         this.getApiUrl = '/BusinessAction/List';
         this.uploadApiUrl = '/BusinessAction/upload';
 
@@ -63,44 +58,12 @@ export class BusinessActionListComponent
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
-        switch (column.fieldName) {
-            case 'actionTypeId':
-                return record['actionTypeName']?.toString();
-case 'writerTypeId':
-                return record['writerTypeName']?.toString();
-
-            default:
-                return value;
-        }
-        return value;
+        return renderBusinessAction(record, column);
     }
     //---------------------------------------------------------
-
-    override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getBusinessActionActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getBusinessActionActions(this, record);
     }
-    //---------------------------------------------------------
-    override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getBusinessActionActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-//--------------------------------------------------------------
 
 }
 

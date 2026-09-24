@@ -1,6 +1,8 @@
 using FluentValidation;
 using Bfs.[SystemNameCapital].Contracts;
 using Bfs.[SystemNameCapital].Domain;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Api.Validators
 {
@@ -8,7 +10,10 @@ namespace Bfs.[SystemNameCapital].Api.Validators
     {
         public [ComponentNameCapital]Validator()
         {
-        //Template_FieldSet_Validators
+//Template_FieldSet_Validators
+
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
         }
     }
 }
