@@ -8,3 +8,4 @@ namespace Bfs.Master.Data.Interfaces
         Task<QueryResponse<DeploymentLocalListItem>> GetAsync(QueryRequest<DeploymentLocalListFilter> request);
     }
 }
+

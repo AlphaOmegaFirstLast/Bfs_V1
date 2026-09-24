@@ -17,7 +17,7 @@
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <a [routerLink]="['/mstr/deployment-local/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation=='view'" >Back</a>
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/mstr/deployment-local/list')">Back</button>
                                              <a [routerLink]="['/mstr/deployment-local/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
@@ -41,9 +41,11 @@
                                     <!----------------------------------------- Messages -------------------------------------->
                                     <div *ngFor="let msg of messages">
                                         <div *ngIf="msg.text">
-                                            <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
-                                                <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ msg.text }}
-                                            </ngb-alert>
+                                            <div *ngFor="let alert of msg.text.split('\n')">
+                                                <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                    <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ alert }}
+                                                </ngb-alert>
+                                            </div>
                                         </div>
                                     </div>
                                     <!----------------------------------------- Form Controls -------------------------------------->

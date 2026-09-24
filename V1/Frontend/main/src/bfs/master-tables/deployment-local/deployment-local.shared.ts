@@ -1,25 +1,24 @@
-
+import { FormBuilder } from "@angular/forms";
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master-main/master.operations';
 
-import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, FormBuilder } from "@angular/forms";
-
 // Output Columns of a Query  [used in entity Query]
 export const DeploymentLocalColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false },
-{ fieldName: 'scriptFile', displayName: 'ScriptFile', sortName: 'ScriptFileName', width: '50px', isVisible:true },
-{ fieldName: 'bfsSystemId', displayName: 'System Info', sortName: 'BfsSystemName', width: '50px', isVisible:true },
-{ fieldName: 'sourceProject', displayName: 'SourceProject', sortName: 'SourceProjectName', width: '50px', isVisible:true },
-{ fieldName: 'sourcePath', displayName: 'SourcePath', sortName: 'SourcePathName', width: '50px', isVisible:false },
-{ fieldName: 'publishPath', displayName: 'PublishPath', sortName: 'PublishPathName', width: '50px', isVisible:false },
-{ fieldName: 'config', displayName: 'Config', sortName: 'ConfigName', width: '50px', isVisible:true },
-{ fieldName: 'environmentValue', displayName: 'EnvironmentValue', sortName: 'EnvironmentValueName', width: '50px', isVisible:true },
-{ fieldName: 'targetVirtualDir', displayName: 'TargetVirtualDir', sortName: 'TargetVirtualDirName', width: '50px', isVisible:true },
-{ fieldName: 'webSite', displayName: 'WebSite', sortName: 'WebSiteName', width: '50px', isVisible:true },
-{ fieldName: 'appPoolName', displayName: 'AppPoolName', sortName: 'AppPoolNameName', width: '50px', isVisible:true },
-{ fieldName: 'port', displayName: 'Port', sortName: 'PortName', width: '50px', isVisible:true },
-{ fieldName: 'isHttpsRequired', displayName: 'IsHttpsRequired', sortName: 'IsHttpsRequiredName', width: '50px', isVisible:true },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'scriptFile', displayName: 'ScriptFile', sortName: 'ScriptFile', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'bfsSystemId', displayName: 'System Info', sortName: 'BfsSystem_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'sourceProject', displayName: 'SourceProject', sortName: 'SourceProject', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'sourcePath', displayName: 'SourcePath', sortName: 'SourcePath', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'publishPath', displayName: 'PublishPath', sortName: 'PublishPath', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'config', displayName: 'Config', sortName: 'Config', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'environmentValue', displayName: 'EnvironmentValue', sortName: 'EnvironmentValue', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'targetVirtualDir', displayName: 'TargetVirtualDir', sortName: 'TargetVirtualDir', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'webSite', displayName: 'WebSite', sortName: 'WebSite', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'appPoolName', displayName: 'AppPoolName', sortName: 'AppPoolName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'port', displayName: 'Port', sortName: 'Port', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'isHttpsRequired', displayName: 'IsHttpsRequired', sortName: 'IsHttpsRequired', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -68,21 +67,21 @@ isHttpsRequired: false,
 // Fields of an Entity [used in Entity form]
 export function deploymentLocalUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false],
-id: ['0'],
-scriptFile: [''],
-sourceProject: [''],
-sourcePath: [''],
-publishPath: [''],
-config: [''],
-environmentValue: [''],
-targetVirtualDir: [''],
-webSite: [''],
-appPoolName: [''],
-port: [''],
-isHttpsRequired: [false],
+    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+scriptFile: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+sourceProject: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+sourcePath: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+publishPath: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+config: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+environmentValue: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+targetVirtualDir: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+webSite: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+appPoolName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+port: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+isHttpsRequired: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    bfsSystemId: ['0'],
+    bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     };
 } 
@@ -98,6 +97,7 @@ export interface IDeploymentLocalRequest extends IEntityRequest<IDeploymentLocal
 //---------------------------------------------------------
 export interface IDeploymentLocalFilter {
     [key: string]: any;
+    Id?: string;
 
     BfsSystemId?: string;
 
@@ -114,6 +114,7 @@ export function initDeploymentLocalRequest(): IDeploymentLocalRequest {
             direction: 'asc'
             },
         filter: {
+            Id: undefined ,
 
             BfsSystemId: undefined ,
 
@@ -123,9 +124,41 @@ export function initDeploymentLocalRequest(): IDeploymentLocalRequest {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
+export function renderDeploymentLocal(record: IEntity, column: IQueryColumn): any {
+        const value = record[column.fieldName as keyof IEntity];
+        switch (column.fieldName) {
+            case 'bfsSystemId':
+                return record['bfsSystemName']?.toString();
 
+            default:
+                return value;
+        }
+        return value;
+    }
+    //---------------------------------------------------------
 export function getDeploymentLocalActions(component: any, record: IEntity): IAction[] {
         let links: IAction[] = [];
+
+if (component.accessService.isActionAllowed('deploymentLocal', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/deployment-local/delete', displayText: 'Delete...' 
+});
+}
+if (component.accessService.isActionAllowed('deploymentLocal', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/deployment-local/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('deploymentLocal', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/deployment-local/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('deploymentLocal', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/mstr/deployment-local/add', displayText: 'Add New record'
+});
+}
 
 if (component.accessService.isActionAllowed('deploymentLocal', ''))
 {links.push({

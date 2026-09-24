@@ -65,3 +65,4 @@ DeploymentLocalEntity.IsHttpsRequired= contract.IsHttpsRequired;
         }     
     }
 }
+

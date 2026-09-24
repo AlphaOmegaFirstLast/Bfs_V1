@@ -66,3 +66,4 @@ namespace Bfs.Master.Contracts
 
     }
 }
+

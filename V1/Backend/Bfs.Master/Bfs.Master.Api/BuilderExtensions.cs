@@ -355,9 +355,10 @@ public static class BuilderExtensions
                 return new DeploymentAzureList(dbConnection);
             });
 
-            builder.Services.AddScoped<IDeploymentLocalList>(provider =>
+            builder.Services.AddScoped<IDeploymentLocalList>(sp =>
             {
-                return new DeploymentLocalList(dbConnection);
+                var config = sp.GetRequiredService<TenantSqlConfiguration>();
+                return new DeploymentLocalList(config.ConnectionString, null);
             });
 
             builder.Services.AddScoped<IBfsComponentSystemActionList>(provider =>
@@ -381,7 +382,8 @@ public static class BuilderExtensions
                 var config = sp.GetRequiredService<TenantSqlConfiguration>();
                 return new BfsTenantSystemList(config.ConnectionString, null);
             });
-            //Template_Component_RegisterList
+
+//Template_Component_RegisterList
         }
     }
 

@@ -36,10 +36,12 @@ public class DeploymentLocalController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.deploymentLocal")]
-    public async Task<DeploymentLocal?> Get(long id)
+    public async Task<DeploymentLocalListItem?> Get(long id)
     {
-        var result = await _deploymentLocalService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<DeploymentLocalListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _deploymentLocalService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]

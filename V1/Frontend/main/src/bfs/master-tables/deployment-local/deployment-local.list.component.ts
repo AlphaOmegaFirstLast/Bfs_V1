@@ -16,19 +16,14 @@ import type { EChartsType } from 'echarts/core';
 import { echarts } from '@/app/config/echarts-config';
 import { EChartsOption } from 'echarts';
 //---------------- bfs shared -------------------------------------
-import { IQueryColumn, IEntity, ViewLink, ActionLink } from '@bfs/_shared/interfaces';
+import { IQueryColumn, IEntity, IAction } from '@bfs/_shared/interfaces';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
 import { ExportComponent } from '@bfs/_shared/components/export.component';
-
-//--------------- system specific ------------------------------
-import { deleteTree, duplicateRecord, duplicateTree } from '@bfs/master-main/master.operations';
 
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { MasterService } from '@bfs/master-main/master.service';
-
-import { type IDeploymentLocalWithLookup, type IDeploymentLocalRequest, type IDeploymentLocalFilter } from './deployment-local.shared';
-import { getDeploymentLocalActions,  initDeploymentLocalRequest } from './deployment-local.shared';
+import { type IDeploymentLocalRequest, type IDeploymentLocalFilter, initDeploymentLocalRequest, renderDeploymentLocal, getDeploymentLocalActions} from './deployment-local.shared';
 import { DeploymentLocalFilterComponent } from './deployment-local.filter.component'; 
 
 @Component({
@@ -42,7 +37,7 @@ import { DeploymentLocalFilterComponent } from './deployment-local.filter.compon
 })
 export class DeploymentLocalListComponent         
 
-    extends BaseReportComponent<IDeploymentLocalFilter, IDeploymentLocalWithLookup> {
+    extends BaseReportComponent<IDeploymentLocalFilter,null> {
     override apiService: MasterService = inject(MasterService);
     override queryRequest = {} as IDeploymentLocalRequest;
     override exportRequest = {} as IDeploymentLocalRequest;
@@ -63,42 +58,12 @@ export class DeploymentLocalListComponent
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IQueryColumn];
-        switch (column.fieldName) {
-            case 'bfsSystemId':
-                return record['bfsSystemName']?.toString();
-
-            default:
-                return value;
-        }
-        return value;
+        return renderDeploymentLocal(record, column);
     }
     //---------------------------------------------------------
-
-    override getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getDeploymentLocalActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
-
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getDeploymentLocalActions(this, record);
     }
-    //---------------------------------------------------------
-    override getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getDeploymentLocalActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-//--------------------------------------------------------------
 
 }
 

@@ -5,8 +5,10 @@ namespace Bfs.Master.Contracts
 {
     public class DeploymentLocalListFilter
     {
+        public long? Id { get; set; }
 
         public long? BfsSystemId { get; set; }
 
     }
 }
+

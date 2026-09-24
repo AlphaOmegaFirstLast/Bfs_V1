@@ -2,21 +2,19 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
-import { IQueryResponse, ILookup, IUIMessage, IQueryColumn, ActionLink, ViewLink, IEntity } from '@bfs/_shared/interfaces';
+import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master-main/master.service';
 
 //---------------------- Component Specific ------------------------
-import { type IDeploymentLocal, type IDeploymentLocalRequest, initDeploymentLocal, deploymentLocalUntypedFormGroup } from './deployment-local.shared';
-import { getDeploymentLocalActions,  initDeploymentLocalRequest } from './deployment-local.shared';
+import { type IDeploymentLocal, initDeploymentLocal, deploymentLocalUntypedFormGroup, getDeploymentLocalActions} from './deployment-local.shared';
 
 @Component({
     selector: 'deployment-local-form',
@@ -37,17 +35,21 @@ export class DeploymentLocalFormComponent extends BaseFormComponent<IDeploymentL
     // Define look ups
     public BfsSystemOptions: any[] = [];
 
+    // Define autocomplete
+
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(deploymentLocalUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(deploymentLocalUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+
     }
     //---------------------------------------------------------
     override async ngOnInit(): Promise<void> {
         this.setChildrenRequests();
         await this.getCustomFieldDefinitions();
+        await this.setAutoComplete();
         await this.getLookups();
         await this.getObjectFieldLookups();
 
@@ -67,65 +69,45 @@ export class DeploymentLocalFormComponent extends BaseFormComponent<IDeploymentL
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
-        this.isLoading = true;
+        this.isLoading.lookups = true;
 // Promise.all to improve performance. apply later
-//         try{
-//         const [
-//             BfsSystemList, 
-//             DataTypeList,
-//         ] = await Promise.all
-//         ([
-//             this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 300 }),
-//             this.apiService.getItems<IQueryResponse>("/DataType/list", { pageSize: 300 }),
-//         ]);
-//         this.BfsSystemOptions = BfsSystemList.items;
-//         this.DataTypeOptions = DataTypeList.items;
-// } catch (err: any) {
-//   const msg = err?.message || "An error occurred while loading data.";
-//   this.messages.push({ text: msg, msgType: "danger" });
-// } finally {
-//   this.isLoading = false;
-// }
-        this.isLoading = true;
-        target = "/BfsSystem/list";
+         try{
+         const [
+              bfsSystemResponse,
+
+         ] = await Promise.all
+         ([
+        this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 30 }),
+
+         ]);
+        this.BfsSystemOptions = bfsSystemResponse.items;
+
+ } catch (err: any) {
+   const msg = err?.message || "An error occurred while loading data.";
+   this.messages.push({ text: msg, msgType: "danger" });
+ } finally {
+   this.isLoading.lookups = false;
+ }
+ /*
+        this.isLoading.lookups = true;
+        target = "/[LookupNameCapital]/list";
         (await this.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
-                this.BfsSystemOptions = response.items;
-                this.isLoading = false;
+                this.[LookupNameCapital]Options = response.items;
+                this.isLoading.lookups = false;
             },
                 error: (err: any) => {
-                this.isLoading = false;
-                var msg = err.message || 'An error occurred while fetching System Info data.';
+                this.isLoading.lookups = false;
+                var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
                 this.messages.push({ text: msg, msgType: "danger" });
             }
         });
-
+        */
     }
     //---------------------------------------------------------
-override     getRecordLinks(record: IEntity): ViewLink[] {
-        let actions = getDeploymentLocalActions(this,record);
-        let links: ViewLink[] = actions.filter(action => 
-               action.actionType == 'FrontendLink'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, route: action.route?? '', displayText: action.displayText}
-        });
 
-        return links;
+    override getActions(record: IEntity): IAction[] {
+        return getDeploymentLocalActions(this, record);
     }
-    //---------------------------------------------------------
-override     getRecordActions(record: IEntity): ActionLink[] {
-        let actions = getDeploymentLocalActions(this,record);
-        let links: ActionLink[] = actions.filter(action => 
-               action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'FormHeader'
-            ).map(action => {
-            return { recordId: action.recordId, action: action.action?? null, displayText: action.displayText, data: action.data}
-        });
-
-        return links;
-    }
-   //--------------------------------------------------------------
-
 }
 
