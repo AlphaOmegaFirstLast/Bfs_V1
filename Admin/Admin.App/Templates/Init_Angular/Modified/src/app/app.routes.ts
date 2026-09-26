@@ -14,20 +14,10 @@ const BFS_SYSTEMS_ROUTES: Routes = [
         path: 'landing',
         component: HomeComponent,
     },
-    //     {
-    //     path: '',
-    //     component: MainLayoutComponent,
-    //     loadChildren: () => import('../bfs/bestfit-main/bestfit.route').then((mod) => mod.BestFit_ROUTES)
-    // },
     {
         path: '',
         component: MainLayoutComponent,
-        loadChildren: () => import('../bfs/infrastructure-main/infrastructure.route').then((mod) => mod.Infrastructure_ROUTES)
-    },
-    {
-        path: '',
-        component: MainLayoutComponent,
-        loadChildren: () => import('../bfs/stores-main/stores.route').then((mod) => mod.Stores_ROUTES)
+        loadChildren: () => import('../bfs/master-main/stores.route').then((mod) => mod.Master_ROUTES)
     },
     {
         path: '',

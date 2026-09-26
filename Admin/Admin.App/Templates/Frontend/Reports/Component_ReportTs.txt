@@ -22,7 +22,7 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
-import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
+import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].service';
 import { type I[ReportNameCapital]Request, type I[ReportNameCapital]Filter, init[ReportNameCapital]Request, render[ReportNameCapital], get[ReportNameCapital]Actions} from './[ReportFileName].shared';
 import { [ReportNameCapital]FilterComponent } from './[ReportFileName].filter.component'; 
 

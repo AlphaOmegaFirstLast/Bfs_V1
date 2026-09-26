@@ -2,7 +2,7 @@ import { FormBuilder } from "@angular/forms";
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
-import * as operations from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].operations';
+import * as operations from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].operations';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 

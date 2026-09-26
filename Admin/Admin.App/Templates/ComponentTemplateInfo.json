@@ -276,49 +276,49 @@
       {
         "Id": "601",
         "TemplateFile": "Frontend\\Tables\\Class_Shared.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].shared.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].shared.ts"
       },
       {
         "Id": "602",
         "TemplateFile": "Frontend\\Tables\\Class_Routes.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].route.ts"
       },
       {
         "Id": "603",
         "TemplateFile": "Frontend\\Tables\\Component_ListTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].list.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].list.component.ts"
       },
       {
         "Id": "604",
         "TemplateFile": "Frontend\\Tables\\Component_FormTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].form.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].form.component.ts"
       },
       {
         "Id": "605",
         "TemplateFile": "Frontend\\Tables\\Component_FormHtml.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].form.component.html"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].form.component.html"
       },
       {
         "Id": "606",
         "TemplateFile": "Frontend\\Tables\\Component_FilterTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.ts"
       },
       {
         "Id": "607",
         "TemplateFile": "Frontend\\Tables\\Component_FilterHtml.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.html"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[ComponentFileName].filter.component.html"
       }
     ],
     "ModifierTemplateList": [
       {
         "Id": "608",
         "TemplateFile": "Frontend\\Tables\\RegisterRoute.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[DataType].route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[DataType].route.ts"
       },
       {
         "Id": "609",
         "TemplateFile": "Frontend\\Tables\\RegisterMenu.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].menu.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\main\\[SystemNameSmall].menu.ts"
       }
     ]
   },
@@ -330,7 +330,7 @@
       {
         "Id": "701",
         "TemplateFile": "Frontend\\Tables\\Component_MatrixTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ComponentFileName]\\[WriterFileName].matrix.component.ts",
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ComponentFileName]\\[WriterFileName].matrix.component.ts",
         "SaveGeneratedCode": "PerWriter"
       }
     ],
@@ -344,39 +344,39 @@
       {
         "Id": "801",
         "TemplateFile": "Frontend\\Reports\\Class_ReportShared.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].shared.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ReportFileName]\\[ReportFileName].shared.ts"
       },
       {
         "Id": "802",
         "TemplateFile": "Frontend\\Reports\\Component_ReportTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].report.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ReportFileName]\\[ReportFileName].report.component.ts"
       },
       {
         "Id": "803",
         "TemplateFile": "Frontend\\Reports\\Component_ReportFilterTs.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].filter.component.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ReportFileName]\\[ReportFileName].filter.component.ts"
       },
       {
         "Id": "804",
         "TemplateFile": "Frontend\\Reports\\Component_ReportFilterHtml.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[ReportFileName]\\[ReportFileName].filter.component.html"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[ReportFileName]\\[ReportFileName].filter.component.html"
       }
     ],
     "ModifierTemplateList": [
       {
         "Id": "805",
         "TemplateFile": "Frontend\\Reports\\RegisterRoute.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[DataType].route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[DataType].route.ts"
       },
       {
         "Id": "806",
         "TemplateFile": "Frontend\\Reports\\AddDeclareEntry.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-[DataType]\\[DataType].route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\[DataType]\\[DataType].route.ts"
       },
       {
         "Id": "807",
         "TemplateFile": "Frontend\\Reports\\RegisterMenu.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].menu.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\main\\[SystemNameSmall].menu.ts"
       }
     ]
   },
@@ -553,37 +553,37 @@
       {
         "Id": "1401",
         "TemplateFile": "Frontend\\System\\System_Routes_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\main\\[SystemNameSmall].route.ts"
       },
       {
         "Id": "1402",
         "TemplateFile": "Frontend\\System\\Menu_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].menu.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\main\\[SystemNameSmall].menu.ts"
       },
       {
         "Id": "1403",
         "TemplateFile": "Frontend\\System\\Operations_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].operations.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\main\\[SystemNameSmall].operations.ts"
       },
       {
         "Id": "1404",
         "TemplateFile": "Frontend\\System\\Service_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-main\\[SystemNameSmall].service.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\main\\[SystemNameSmall].service.ts"
       },
       {
         "Id": "1405",
         "TemplateFile": "Frontend\\System\\Seed_Routes_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-seed\\seed.route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\seed\\seed.route.ts"
       },
       {
         "Id": "1406",
         "TemplateFile": "Frontend\\System\\Tables_Routes_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-tables\\tables.route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\tables\\tables.route.ts"
       },
       {
         "Id": "1407",
         "TemplateFile": "Frontend\\System\\Reports_Routes_Ts.txt",
-        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]-reports\\reports.route.ts"
+        "OutputFile": "[SystemRootDir]\\[SystemNameSmall]\\reports\\reports.route.ts"
       }
     ],
     "ModifierTemplateList": [

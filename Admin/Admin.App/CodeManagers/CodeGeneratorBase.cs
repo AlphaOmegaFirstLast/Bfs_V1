@@ -12,7 +12,7 @@ namespace Admin.App
     {
         public static string BestFitDB = "BestFit_V8";
         public string BestFitSystemName = "master";
-        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V1";
+        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V2";
         public string TemplateRootDir { get; set; } = @".\Templates";
         private string TemplateInfoFile { get; set; } = @".\Templates\ComponentTemplateInfo.json";  // the compiler copies it to the output foldr
         private string PlaceHolderInfoFile { get; set; } = @".\Templates\WriterInfo.json";  // the compiler copies it to the output foldr
