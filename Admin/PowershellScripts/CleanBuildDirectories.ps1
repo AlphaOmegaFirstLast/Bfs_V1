@@ -1,7 +1,7 @@
 ﻿# Define the parent directory and the folders to target
 #$parentDir = "C:\Bfs_V1\Admin"
-#$parentDir = "C:\Bfs_V1\V1\Backend"
-$parentDir = "C:\Bfs_V1\V1\Frontend\Auth"
+$parentDir = "C:\Bfs_V1\V1\Backend"
+#$parentDir = "C:\Bfs_V1\V2\Frontend\Auth"
 $targets = @('bin', 'obj', '.vs')
 
 # Check if the parent directory exists before proceeding
