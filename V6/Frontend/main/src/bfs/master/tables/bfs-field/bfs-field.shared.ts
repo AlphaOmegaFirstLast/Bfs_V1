@@ -1,0 +1,231 @@
+import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
+
+import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { getFormControlValidation } from "@bfs/_shared/objectFields";
+//------------------------ Operation Business Specific ---------------------------------
+import * as operations from '@bfs/master/main/master.operations';
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
+import { IFieldValidation, initFieldValidation, fieldValidationUntypedFormGroup } from "@bfs/_shared/objectFields";
+import { IReportInfo, initReportInfo, reportInfoUntypedFormGroup } from "@bfs/_shared/objectFields";
+import { IMatrixInfo, initMatrixInfo, matrixInfoUntypedFormGroup } from "@bfs/_shared/objectFields";
+import { IToolTipInfo, initToolTipInfo, toolTipInfoUntypedFormGroup } from "@bfs/_shared/objectFields";
+import { IFormInfo, initFormInfo, formInfoUntypedFormGroup } from "@bfs/_shared/objectFields";
+
+// Output Columns of a Query  [used in entity Query]
+export const BfsFieldColumns = [
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'bfsComponentId', displayName: 'Component', sortName: 'BfsComponent_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'field', displayName: 'Field', sortName: 'Field', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'filterTypeId', displayName: 'Filter Type', sortName: 'FilterType_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'backendDataTypeId', displayName: 'Backend Type', sortName: 'BackendDataType_Name', width: '50px', isVisible:true, columnOrder:1 },
+
+    { fieldName: 'fieldValidation', displayName: 'FieldValidation', sortName: 'jsonFieldValidation', width: '50px', isVisible:false },
+    { fieldName: 'jsonFieldValidation', displayName: 'Json FieldValidation', sortName: 'jsonFieldValidation', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'reportInfo', displayName: 'ReportInfo', sortName: 'jsonReportInfo', width: '50px', isVisible:false },
+    { fieldName: 'jsonReportInfo', displayName: 'Json ReportInfo', sortName: 'jsonReportInfo', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'matrixInfo', displayName: 'MatrixInfo', sortName: 'jsonMatrixInfo', width: '50px', isVisible:false },
+    { fieldName: 'jsonMatrixInfo', displayName: 'Json MatrixInfo', sortName: 'jsonMatrixInfo', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'toolTipInfo', displayName: 'ToolTipInfo', sortName: 'jsonToolTipInfo', width: '50px', isVisible:false },
+    { fieldName: 'jsonToolTipInfo', displayName: 'Json ToolTipInfo', sortName: 'jsonToolTipInfo', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'formInfo', displayName: 'FormInfo', sortName: 'jsonFormInfo', width: '50px', isVisible:false },
+    { fieldName: 'jsonFormInfo', displayName: 'Json FormInfo', sortName: 'jsonFormInfo', width: '50px', isVisible:false, columnOrder:1 },
+
+];
+//---------------------------------------------------------
+export interface IBfsField extends IEntity{
+    isDeleted?: boolean;
+id?: string;
+field?: string;
+displayName?: string;
+
+    filterTypeId?: number;
+backendDataTypeId?: number;
+
+    bfsComponentId?: string;
+    bfsComponentName?: string;
+
+    fieldValidation?: IFieldValidation;
+    jsonFieldValidation?: string;
+reportInfo?: IReportInfo;
+    jsonReportInfo?: string;
+matrixInfo?: IMatrixInfo;
+    jsonMatrixInfo?: string;
+toolTipInfo?: IToolTipInfo;
+    jsonToolTipInfo?: string;
+formInfo?: IFormInfo;
+    jsonFormInfo?: string;
+
+}
+//---------------------------------------------------------
+export function initBfsField(): IBfsField {
+    let entity: IBfsField = {
+        isDeleted: false,
+id: '0',
+field: '',
+displayName: '',
+
+        filterTypeId: 0,
+backendDataTypeId: 0,
+
+        bfsComponentId: '0',
+        bfsComponentName: '',
+
+        fieldValidation: initFieldValidation(),
+reportInfo: initReportInfo(),
+matrixInfo: initMatrixInfo(),
+toolTipInfo: initToolTipInfo(),
+formInfo: initFormInfo(),
+
+    };
+    return JSON.parse(JSON.stringify(entity));
+}
+//---------------------------------------------------------
+
+// Fields of an Entity [used in Entity form]
+export function bfsFieldUntypedFormGroup(formBuilder: FormBuilder): any {
+    return {
+    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+field: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+displayName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    filterTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+backendDataTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    bfsComponentId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    bfsComponentName: [''],
+
+    fieldValidation: fieldValidationUntypedFormGroup(formBuilder),
+reportInfo: reportInfoUntypedFormGroup(formBuilder),
+matrixInfo: matrixInfoUntypedFormGroup(formBuilder),
+toolTipInfo: toolTipInfoUntypedFormGroup(formBuilder),
+formInfo: formInfoUntypedFormGroup(formBuilder),
+
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
+    };
+} 
+//---------------------------------------------------------
+export interface IBfsFieldRequest extends IEntityRequest<IBfsFieldFilter> {}
+
+//---------------------------------------------------------
+export interface IBfsFieldFilter {
+    [key: string]: any;
+    Id?: string;
+
+    Field?: string;
+
+    FilterTypeId?: number;
+BackendDataTypeId?: number;
+
+    BfsComponentId?: string;
+    BfsComponentName?: string,
+
+}
+//---------------------------------------------------------
+export function initBfsFieldRequest(): IBfsFieldRequest {
+    let request: IBfsFieldRequest = {
+        pageIndex: 1,
+        pageSize: 5,
+        columns: BfsFieldColumns.map(column => ({ ...column })),
+        group: '',
+        sortOption: {
+            sortBy: 'id',
+            direction: 'asc'
+            },
+        filter: {
+            Id: undefined ,
+
+            Field: undefined ,
+
+            FilterTypeId: undefined ,
+BackendDataTypeId: undefined ,
+
+            BfsComponentId: undefined ,
+            BfsComponentName: undefined ,
+
+            }
+    };
+
+    return JSON.parse(JSON.stringify(request));
+}
+//---------------------------------------------------------
+export function renderBfsField(record: IBfsField, column: IQueryColumn): any {
+        const value = record[column.fieldName as keyof IBfsField];
+        switch (column.fieldName) {
+            case 'filterTypeId':
+                return record['filterTypeName']?.toString();
+case 'backendDataTypeId':
+                return record['backendDataTypeName']?.toString();
+
+            case 'bfsComponentId':
+                return record['bfsComponentName']?.toString();
+
+            default:
+                return value;
+        }
+        return value;
+    }
+    //---------------------------------------------------------
+export function getBfsFieldActions(component: any, record: IBfsField): IAction[] {
+        let links: IAction[] = [];
+
+if (component.accessService.isActionAllowed('bfsField', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/mstr/bfs-field/add', displayText: 'Add New record'
+});
+}
+if (component.accessService.isActionAllowed('bfsField', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/bfs-field/view', displayText: 'View...'
+});
+}
+if (component.accessService.isActionAllowed('bfsField', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/bfs-field/edit', displayText: 'Edit...' 
+});
+}
+if (component.accessService.isActionAllowed('bfsField', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/bfs-field/delete', displayText: 'Delete...' 
+});
+}
+
+if (component.accessService.isActionAllowed('bfsField', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsField', onSuccessMethodName: 'getReport' }
+});
+}
+
+        return links;
+    }
+//---------------------------------------------------------
+export function isVisible(entity: IBfsField, validationForm: UntypedFormGroup, fieldName: string): boolean {
+    //check using const control = this.validationForm.get(fieldName);
+    // or this.entity[fieldName]
+    switch (fieldName) {
+        case 'exampleId':
+           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+           return true;
+    }
+    return true;
+}
+//---------------------------------------------------------
+export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
+    //check using const control = this.validationForm.get(fieldName);
+    // or this.entity[fieldName]
+    switch (fieldName) {
+        case 'exampleId':
+           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+           return true;
+    }
+    return true;
+}
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
