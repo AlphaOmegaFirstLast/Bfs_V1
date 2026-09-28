@@ -37,7 +37,7 @@ import { NavigationService } from '../services/navigation.service';
     selector: 'app-base-report',
     template: '' // descendant classes will use './base-report.component.html'
 })
-export class BaseReportComponent<IFilter, IWithLookup> {
+export class BaseReportComponent<IFilter> {
     @ViewChild('exportExcel') exportComponent!: ExportComponent<IFilter>;
     @Input() presetFilter: IFilter | undefined;
     filter!: IFilter;
@@ -747,7 +747,7 @@ export class BaseReportComponent<IFilter, IWithLookup> {
         };
     }
     //---------------------------------------------------------
-    getChart(records: IWithLookup[]): EChartsOption {
+    getChart(records: IEntity[]): EChartsOption {
         return this.getDemoChart();
     }
 }

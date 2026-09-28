@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@/environment/environment';
 import { safeHtmlDecode } from '../helpers/html.helper';
-import { AuthService } from '@bfs/auth-main/auth.service';
-import { MasterService } from '@bfs/master-main/master.service';
+import { AuthService } from '@bfs/auth/main/auth.service';
+import { MasterService } from '@bfs/master/main/master.service';
 import { IQueryResponse, TokenModel, TokenParsed } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })  // Ensure the service is a singleton and available application-wide

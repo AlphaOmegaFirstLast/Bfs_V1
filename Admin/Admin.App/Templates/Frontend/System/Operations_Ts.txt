@@ -1,4 +1,5 @@
-import { IIdentifiable, IUserInterface } from "../_shared/interfaces";
+//Template_Start_Code_DontOverwrite_1
+import { IIdentifiable, IUserInterface } from '@bfs/_shared/interfaces';
 
 //---------------------------------------------------------
 
@@ -151,3 +152,4 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
     }
 }
 //---------------------------------------------------------
+//Template_End_Code_DontOverwrite_1

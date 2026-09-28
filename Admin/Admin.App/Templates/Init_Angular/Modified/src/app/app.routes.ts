@@ -1,35 +1,27 @@
-import {Routes} from '@angular/router';
-import {MainLayoutComponent} from '@layouts/main-layout/main-layout.component';
-import { HomeComponent } from '../bfs/home/home.component';
-import { environment } from '@environment/environment.staging';
+import { Routes } from '@angular/router';
+import { MainLayoutComponent } from '@layouts/main-layout/main-layout.component';
 
 const BFS_SYSTEMS_ROUTES: Routes = [
     {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
-
-    },
-    {
-        path: 'landing',
-        component: HomeComponent,
     },
     {
         path: '',
         component: MainLayoutComponent,
-        loadChildren: () => import('../bfs/master-main/infrastructure.route').then((mod) => mod.Infrastructure_ROUTES)
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('../bfs/_shared/pages/home/home.route').then((mod) => mod.Home_ROUTES),
+            },
+            {
+                path: '',
+                loadChildren: () => import('../bfs/_shared/pages/error/error.route').then((mod) => mod.ERROR_PAGES_ROUTES)
+            },
+            //Template_System_AddRouteEntry
+        ]
     },
-    {
-        path: '',
-        component: MainLayoutComponent,
-        loadChildren: () => import('../bfs/stores-main/stores.route').then((mod) => mod.Stores_ROUTES)
-    },
-    {
-        path: '',
-        component: MainLayoutComponent,
-        loadChildren: () => import('../bfs/auth-main/auth.route').then((mod) => mod.Auth_ROUTES)
-    },
-//Template_System_AddRouteEntry
 ];
 
 export const routes: Routes = BFS_SYSTEMS_ROUTES;

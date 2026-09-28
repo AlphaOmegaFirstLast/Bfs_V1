@@ -11,12 +11,14 @@
 */
 export const environment = {
     config: 'Dev'
+    , isSecurityEnabled: true
     , isAspire: false
-    , isSecurityEnabled: false
-    , loginUrl: 'http://localhost:5043/auth/Identity/Account/Login'
-    , logoutUrl: 'http://localhost:5043/auth/Identity/Account/Logout'
-    , tokenUrl: 'http://localhost:5043/auth/api'
+    , loginUrl: 'https://localhost:7131/Identity/Account/Login'
+    , logoutUrl: 'https://localhost:7131/Identity/Account/Logout'
+    , identityWebOrigin: '/identity'
+
     //Template_System_AddEnvironmentEntry
 };
+
 //ToDo set other environments,
 //ToDo check login & logout urls with RouteGuardService and proxy settings 

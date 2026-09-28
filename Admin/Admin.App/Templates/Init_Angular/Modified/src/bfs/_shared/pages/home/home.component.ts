@@ -5,7 +5,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { TokenService } from '@bfs/_shared/security/token.service';
 import { AccessService } from '@bfs/_shared/security/access.service';
-import { MasterService } from '@bfs/master-main/master.service';
+import { MasterService } from '@bfs/master/main/master.service';
 import { IUIMessage } from '@bfs/_shared/interfaces';
 
 @Component({

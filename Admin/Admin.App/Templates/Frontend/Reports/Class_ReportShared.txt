@@ -1,5 +1,5 @@
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
-import * as operations from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].operations';
+import * as operations from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const [ReportNameCapital]Columns = [
@@ -14,6 +14,7 @@ export const [ReportNameCapital]Columns = [
 //---------------------------------------------------------
 
 export interface I[ReportNameCapital] {
+    [key: string]: any;
     //Template_Start_ReportField_QueryColumn_2
     [ReportFieldNameSmall]?: [FrontendFieldType];
     //Template_End_ReportField_QueryColumn_2
@@ -23,21 +24,6 @@ export interface I[ReportNameCapital] {
     //Template_Start_Field_CustomFieldList_1
     [ReportFieldNameSmall]?: [FrontendFieldType];
     //Template_End_Field_CustomFieldList_1   
-}
-//---------------------------------------------------------
-export interface I[ReportNameCapital]WithLookup extends I[ReportNameCapital]{
-
-    //Template_Start_Field_Lookup_1
-    [LookupNameSmall]Name?: string;    
-    //Template_End_Field_Lookup_1
-
-    //Template_Start_Field_AutoComplete_1
-    [AutoCompleteNameSmall]Name?: string;
-    //Template_End_Field_AutoComplete_1
-
-    //Template_Start_ReportField_Aggregate_2
-    [AggregateName]?:number;
-    //Template_End_ReportField_Aggregate_2
 }
 //---------------------------------------------------------
 export interface I[ReportNameCapital]Filter {
@@ -110,20 +96,20 @@ export function init[ReportNameCapital]Request(): I[ReportNameCapital]Request {
 export function render[ReportNameCapital](record: IEntity, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
-            //Template_Start_Field_Lookup_1
+            //Template_Start_Field_Lookup_2
             case '[ReportFieldNameSmall]':
                 return record['[LookupNameSmall]Name']?.toString();
-            //Template_End_Field_Lookup_1
+            //Template_End_Field_Lookup_2
 
-            //Template_Start_Field_AutoComplete_1
+            //Template_Start_Field_AutoComplete_2
             case '[ReportFieldNameSmall]':
                 return record['[AutoCompleteNameSmall]Name']?.toString();
-            //Template_End_Field_AutoComplete_1
+            //Template_End_Field_AutoComplete_2
 
-            //Template_Start_ReportField_Aggregate_1
+            //Template_Start_ReportField_Aggregate_3
             case '[AggregateName]':
                 return record['[AggregateName]']?.toString();
-            //Template_End_ReportField_Aggregate_1
+            //Template_End_ReportField_Aggregate_3
             default:
                 return value;
         }

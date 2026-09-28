@@ -12,7 +12,7 @@ import { getMatrixInfoLookups, getReportInfoLookups, getToolTipInfoLookups } fro
 
 import { initCustomField, ICustomField } from '@bfs/_shared/customFields';
 import { AccessService } from '@bfs/_shared/security/access.service';
-import { MasterService } from '@bfs/master-main/master.service';
+import { MasterService } from '@bfs/master/main/master.service';
 import { NavigationService } from '../services/navigation.service';
 //------------------------------------------- Component Specific ------------------------------------------------
 export interface IBaseForm {

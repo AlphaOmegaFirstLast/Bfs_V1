@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpEventType, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { TokenService } from '../security/token.service';
+import { TokenService } from '@bfs/_shared/security/token.service';
 
 @Component({
   selector: 'app-upload',

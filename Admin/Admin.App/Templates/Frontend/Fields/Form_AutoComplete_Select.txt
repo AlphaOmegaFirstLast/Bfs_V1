@@ -1,11 +1,12 @@
   <!-- [AutoCompleteCapital]AutoComplete Start -->
-                                            <div class="row mb-2"  *ngIf="isVisible('[SmallFieldName]')" [disabled]="isEnabled('[SmallFieldName]')?">
+                                            <div class="row mb-2"  *ngIf="isVisible('[SmallFieldName]')">
                                                 <div class="col-12">
                                                     <div class="position-relative"  (focusout)="[AutoCompleteSmall]Auto.hideOverlay()">
                                                         <label class="form-label fs-6">Component</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
                                                                 [formControl]="[AutoCompleteSmall]Auto.control"
+                                                                [disabled]="isEnabled('[SmallFieldName]')"
                                                                 (focus)="[AutoCompleteSmall]Auto.onFocus()"  [class]="[AutoCompleteSmall]Auto.cssClass()"  />
 
                                                             <span class="input-group-text"  *ngIf="[AutoCompleteSmall]Auto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>

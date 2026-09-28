@@ -11,7 +11,7 @@ import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
-import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]-main/[SystemNameSmall].service';
+import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].service';
 //Template_Start_Component_AutoComplete_1
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 //Template_End_Component_AutoComplete_1
