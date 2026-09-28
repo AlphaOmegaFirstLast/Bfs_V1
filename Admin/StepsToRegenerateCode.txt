@@ -1,0 +1,9 @@
+- Read Database_V8. Rebuild Frontend systems in V9.  (Master, Auth, StockEx)
+- Manually copy code from V1. Operations (Master, StockEx). to V8 
+- Run Save ManualCode.
+All good in Database_V8 and code V9.
+
+Then move to the other laptop. to do same to backend.
+- Read Database_V8. Rebuild Backend systems in V9. 
+- Manually copy code from V1. Operations (Master, StockEx). to V8 
+- Run Save ManualCode.
