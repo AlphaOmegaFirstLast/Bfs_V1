@@ -260,6 +260,10 @@ namespace Admin.App
                     var startIndex = outputFilePath.LastIndexOf(@"\") + 1;
                     var endIndex = outputFilePath.LastIndexOf(@".");
                     var itemName = endIndex > startIndex ? outputFilePath.Substring(startIndex, endIndex - startIndex) : string.Empty;
+                    var SB = outputFilePath.LastIndexOf(@"Backend");
+                    var SF = outputFilePath.LastIndexOf(@"Frontend");
+                    var start = SB > 0 ? SB : SF;
+                    var filePath = outputFilePath.Substring(start);
                     var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
                     if (!string.IsNullOrEmpty(existingSnippet))
                     {
@@ -268,7 +272,7 @@ namespace Admin.App
                             BfsSystemId = codeInfo.CurrentSystem?.Id ?? 0,
                             BfsComponentId = codeInfo.CurrentComponent?.Id ?? 0,
                             Name = itemName,
-                            FileName = outputFilePath,
+                            FileName = filePath,
                             StartTemplate = $@"//Template_Start_{placeHolderName}_{i}",
                             EndTemplate = $@"//Template_End_{placeHolderName}_{i}",
                             Code = existingSnippet
@@ -288,7 +292,7 @@ namespace Admin.App
             var outputCode = FileHelper.ReadFile(outputFilePath);
 
             var placeHolderName = "Code_DontOverwrite";
-            var existingCodeList = codeInfo.ManualCodeList.Where(x => x.FileName == outputFilePath);
+            var existingCodeList = codeInfo.ManualCodeList.Where(x => outputFilePath.Contains(x.FileName));
 
             var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
             if (placeHolder != null)

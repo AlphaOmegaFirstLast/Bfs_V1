@@ -12,7 +12,7 @@ namespace Admin.App
     {
         public static string BestFitDB = "BestFit_V8";
         public string BestFitSystemName = "master";
-        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V2";
+        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V8";
         public string TemplateRootDir { get; set; } = @".\Templates";
         private string TemplateInfoFile { get; set; } = @".\Templates\ComponentTemplateInfo.json";  // the compiler copies it to the output foldr
         private string PlaceHolderInfoFile { get; set; } = @".\Templates\WriterInfo.json";  // the compiler copies it to the output foldr
@@ -86,7 +86,7 @@ namespace Admin.App
                 {
                     try
                     {
-                        var oldlist = context.BfsManualCode.Where(x => x.FileName == fileName);
+                        var oldlist = context.BfsManualCode.Where(x => fileName.Contains(x.FileName));
                         context.BfsManualCode.RemoveRange(oldlist);
                         context.BfsManualCode.AddRange(list);
                         await context.SaveChangesAsync();
