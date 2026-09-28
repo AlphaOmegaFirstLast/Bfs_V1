@@ -611,6 +611,7 @@ namespace CodeAdmin
         private void btnRefreshDb_Click(object sender, EventArgs e)
         {
             _codeGenerator = new CodeGeneratorV4();
+            btnGenerateSystem_Click(sender, e);
         }
 
         private void btnSaveManual_Click(object sender, EventArgs e)

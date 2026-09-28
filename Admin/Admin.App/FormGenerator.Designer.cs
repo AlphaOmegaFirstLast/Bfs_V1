@@ -71,6 +71,7 @@
             btnGenerateSystem = new Button();
             label8 = new Label();
             btnRefreshDb = new Button();
+            txtWarning = new Label();
             tabInfo.SuspendLayout();
             tabTables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridTables).BeginInit();
@@ -420,6 +421,7 @@
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.BorderStyle = BorderStyle.Fixed3D;
+            panel1.Controls.Add(txtWarning);
             panel1.Controls.Add(ckDisableSecurity);
             panel1.Controls.Add(ckKeepExistingCode);
             panel1.Controls.Add(panelBackend);
@@ -518,6 +520,16 @@
             btnRefreshDb.Text = "Refresh Database";
             btnRefreshDb.UseVisualStyleBackColor = true;
             btnRefreshDb.Click += btnRefreshDb_Click;
+            // 
+            // txtWarning
+            // 
+            txtWarning.AutoSize = true;
+            txtWarning.ForeColor = Color.Red;
+            txtWarning.Location = new Point(639, 130);
+            txtWarning.Name = "txtWarning";
+            txtWarning.Size = new Size(625, 25);
+            txtWarning.TabIndex = 39;
+            txtWarning.Text = "Change (when init_Angular)!!!  src/proxy.config.json => [Bfs.Identity.Web URL]";
             // 
             // FormGenerator
             // 
@@ -619,5 +631,6 @@
         private Button btnRefreshDb;
         private Button btnApplyManualCode;
         private Button btnSaveManualCode;
+        private Label txtWarning;
     }
 }
