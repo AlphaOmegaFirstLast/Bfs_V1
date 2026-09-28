@@ -5,14 +5,13 @@ import { routes } from './app.routes';
 import { DecimalPipe } from '@angular/common'
 import { provideDaterangepickerLocale} from 'ngx-daterangepicker-bootstrap';
 import { provideHttpClient } from '@angular/common/http';
+
 import { HttpService } from '@bfs/_shared/services/http.service';
 import { TokenService } from '@bfs/_shared/security/token.service';
 import { RouteGuardService } from '@bfs/_shared/security/route-guard.service';
 import { MenuGuardService } from '@bfs/_shared/security/menu-guard.service';
-
-import { MasterService } from '@bfs/master-main/master.service';
-import { AuthService } from '@bfs/auth-main/auth.service';
 import { AccessService } from '@bfs/_shared/security/access.service';
+
 //Template_System_DeclareProviderEntry
 
 // configure the providers for the application which will be used for dependency injection
@@ -23,11 +22,9 @@ export const appConfig: ApplicationConfig = {
       HttpService, //is added to Angular’s dependency injection container. it can be injected into constructors of components and other services.
       TokenService,
       AccessService,
-MasterService,
-AuthService,
-//Template_System_AddProviderEntry
       RouteGuardService,
       MenuGuardService,
+     //Template_System_AddProviderEntry
       provideZoneChangeDetection({ eventCoalescing: true }),
       provideRouter(routes),
       provideAnimations(),

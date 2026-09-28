@@ -1,7 +1,10 @@
 export const environment = {
     config: 'Local'
-    , contentApiUrl: 'https://localhost:7100'
-    , logoutUrl: 'http://localhost:5042'
-    , loginUrl: 'http://localhost:5042'
+    , isSecurityEnabled: true
+    , isAspire: false
+    , identityWebOrigin: '/identity'
+    , loginUrl: 'https://localhost:7131/Identity/Account/Login'
+    , logoutUrl: 'https://localhost:7131/Identity/Account/Logout'
+
     //Template_System_AddEnvironmentEntry
 };

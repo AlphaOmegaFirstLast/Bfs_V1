@@ -3,7 +3,7 @@ import {NgbDropdown, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-
 import {userDropdownItems} from '@layouts/components/data';
 import {RouterLink} from '@angular/router';
 import {NgIcon} from '@ng-icons/core';
-import { TokenService } from '@bfs/_shared/services/token.service';
+import { TokenService } from '@bfs/_shared/security/token.service';
 
 @Component({
   selector: 'app-user-profile-topbar',

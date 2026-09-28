@@ -2,7 +2,7 @@ import { signal, inject, Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom, from, Observable, throwError } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { TokenService } from '../security/token.service';
+import { TokenService } from '@bfs/_shared/security/token.service';
 import { environment } from '@environment/environment';
 import { FatalError } from '../error-handling/error.model';
 

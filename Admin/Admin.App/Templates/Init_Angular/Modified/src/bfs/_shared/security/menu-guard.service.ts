@@ -2,12 +2,6 @@ import { Injectable } from '@angular/core';
 import { MenuItemType } from '@/app/types/layout';
 import { AccessService } from './access.service'; // Assume this service exists
 
-import { StoresMenuItems } from '@bfs/stores-main/stores.menu';
-import { AuthMenuItems } from '@bfs/auth-main/auth.menu';
-import { MasterMenuItems } from '@bfs/master-main/master.menu';
-
-import { StockExMenuItems } from '@bfs/stockex-main/stockex.menu';
-
 //Template_System_AddMenuDeclare
 
 @Injectable({
@@ -36,19 +30,6 @@ export class MenuGuardService {
 
     var appItems = [] as MenuItemType[];
     switch (currentSystem.toLowerCase()) {
-      case 'stores':
-        appItems = appItems.concat(await this.processItems(currentApp, StoresMenuItems));
-        break;
-      case 'auth':
-        appItems = appItems.concat(await this.processItems(currentApp, AuthMenuItems));
-        break;
-      case 'master':
-        appItems = appItems.concat(await this.processItems(currentApp, MasterMenuItems));
-        break;
-
-        case 'stockex':
-           appItems = appItems.concat(await this.processItems(currentApp , StockExMenuItems));
-        break;
 //Template_System_AddMenuEntry
       default:
         break;

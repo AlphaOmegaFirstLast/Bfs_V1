@@ -1,4 +1,5 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
+
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
@@ -27,7 +28,7 @@ export const [ComponentNameCapital]Columns = [
     //Template_End_ReportField_Aggregate_1
 ];
 //---------------------------------------------------------
-export interface I[ComponentNameCapital] {
+export interface I[ComponentNameCapital] extends IEntity{
     //Template_Start_Field_Primitive_1
     [SmallFieldName]?: [FrontendFieldType];
     //Template_End_Field_Primitive_1 
@@ -95,16 +96,6 @@ export function [ComponentNameSmall]UntypedFormGroup(formBuilder: FormBuilder): 
     };
 } 
 //---------------------------------------------------------
-export interface I[ComponentNameCapital]WithLookup extends I[ComponentNameCapital]{
-
-    //Template_Start_Field_Lookup_4
-      [LookupNameSmall]Name?: string;
-    //Template_End_Field_Lookup_4
-    //Template_Start_Field_AutoComplete_4
-      [AutoCompleteSmall]Name?: string;
-    //Template_End_Field_AutoComplete_4
-}
-//---------------------------------------------------------
 export interface I[ComponentNameCapital]Request extends IEntityRequest<I[ComponentNameCapital]Filter> {}
 
 //---------------------------------------------------------
@@ -167,17 +158,17 @@ export function init[ComponentNameCapital]Request(): I[ComponentNameCapital]Requ
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function render[ComponentNameCapital](record: IEntity, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IEntity];
+export function render[ComponentNameCapital](record: I[ComponentNameCapital], column: IQueryColumn): any {
+        const value = record[column.fieldName as keyof I[ComponentNameCapital]];
         switch (column.fieldName) {
             //Template_Start_Field_Lookup_5
             case '[ReportFieldNameSmall]':
                 return record['[LookupNameSmall]Name']?.toString();
             //Template_End_Field_Lookup_5
-            //Template_Start_Field_AutoComplete_5
+            //Template_Start_Field_AutoComplete_4
             case '[ReportFieldNameSmall]':
                 return record['[AutoCompleteSmall]Name']?.toString();
-            //Template_End_Field_AutoComplete_5
+            //Template_End_Field_AutoComplete_4
             //Template_Start_ReportField_Aggregate_2
             case '[AggregateName]':
                 return record['[AggregateName]']?.toString();
@@ -188,7 +179,7 @@ export function render[ComponentNameCapital](record: IEntity, column: IQueryColu
         return value;
     }
     //---------------------------------------------------------
-export function get[ComponentNameCapital]Actions(component: any, record: IEntity): IAction[] {
+export function get[ComponentNameCapital]Actions(component: any, record: I[ComponentNameCapital]): IAction[] {
         let links: IAction[] = [];
 
            //Template_Action_FrontendLink
@@ -197,12 +188,11 @@ export function get[ComponentNameCapital]Actions(component: any, record: IEntity
         return links;
     }
 //---------------------------------------------------------
-//Template_Start_Code_DontOverwrite_3
-export function isVisible(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
+export function isVisible(entity: I[ComponentNameCapital], validationForm: UntypedFormGroup, fieldName: string): boolean {
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
     switch (fieldName) {
-        case 'toPortfolioId':
+        case 'exampleId':
            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
            return true;
     }
@@ -213,16 +203,15 @@ export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fie
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
     switch (fieldName) {
-        case 'toPortfolioId':
+        case 'exampleId':
            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
            return true;
     }
     return true;
 }
-//Template_End_Code_DontOverwrite_3
 
-//Template_Start_Code_DontOverwrite_4
-//Template_End_Code_DontOverwrite_4
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
 
 
