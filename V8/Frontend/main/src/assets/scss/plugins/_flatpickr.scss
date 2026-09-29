@@ -27,7 +27,7 @@
     }
 
     &.open {
-        z-index: 999 !important;
+        z-index: $zindex-modal + 1 !important;
     }
 }
 
