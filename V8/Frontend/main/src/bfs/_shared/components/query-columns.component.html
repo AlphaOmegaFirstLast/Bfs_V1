@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title">Columns to View</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div cdkDropList  (cdkDropListDropped)="drop($event)" class="list-group">
+    <div cdkDrag  *ngFor="let column of result; let i = index"  class="list-group-item d-flex align-items-center">
+      <span class="me-2" cdkDragHandle style="cursor: grab;">☰</span>
+
+      <input type="checkbox" [id]="'ck' + column.fieldName" [(ngModel)]="column.isVisible"  class="form-check-input me-2" />
+      <label [for]="'ck' + column.fieldName"   class="form-check-label flex-grow-1">
+        {{ column.displayName }}
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+  <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+</div>

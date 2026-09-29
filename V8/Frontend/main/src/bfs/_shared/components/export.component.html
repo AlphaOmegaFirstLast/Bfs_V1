@@ -1,0 +1,17 @@
+<!----------------------------------------- Progress bar -------------------------------------->
+@if (isExporting) {
+<ngb-progressbar class="mb-3" type="primary" [value]="progress">{{ progress }}%</ngb-progressbar>
+}
+<!----------------------------------------- Messages -------------------------------------->
+
+@if (infoMessage) {
+<ngb-alert type="info" class="d-flex align-items-center gap-1 mb-1" [dismissible]="true" (click)="infoMessage = ''" role="alert">
+  <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ infoMessage }}
+</ngb-alert>
+}
+@if (errorMessage) {
+<ngb-alert type="danger" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="errorMessage = ''" role="alert">
+  <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ errorMessage }}
+</ngb-alert>
+}
+<!----------------------------------------- List Table -------------------------------------->

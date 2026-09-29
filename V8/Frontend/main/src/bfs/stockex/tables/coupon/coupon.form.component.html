@@ -1,0 +1,180 @@
+<div class="container-fluid">
+    <div class="pb-2"></div>
+    <div class="card">
+        <div class="card-body">
+
+            <ul ngbNav #nav="ngbNav" class="nav nav-tabs mb-3" [activeId]="1">
+                <li [ngbNavItem]="1">
+                    <a href="javascript:void(0)" ngbNavLink> Coupons </a>
+                    <!----------------------------------------- Tab1 Contents -------------------------------------->
+                    <ng-template ngbNavContent>
+                        <form card-body class="g-3 needs-validation" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationForm">
+                            <div class="card fs-6">
+                                <!-----------------------------------------Header Buttons -------------------------------------->
+
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
+                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/coupon/list')">Back</button>
+                                             <a [routerLink]="['/stkx/coupon/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div ngbDropdown>
+                                                <button class="btn btn-sm  btn-primary" type="button" ngbDropdownToggle> Actions </button>
+                                                <div ngbDropdownMenu>
+                                                    <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
+
+                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                        <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
+                                                    </div>
+                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                        <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="card-body">
+                                    <!----------------------------------------- Messages -------------------------------------->
+                                    <div *ngFor="let msg of messages">
+                                        <div *ngIf="msg.text">
+                                            <div *ngFor="let alert of msg.text.split('\n')">
+                                                <ngb-alert type="{{msg.msgType}}" class="d-flex align-items-center gap-1 mb-2" [dismissible]="true" (click)="msg.text = '' " role="alert">
+                                                    <ng-icon name="tablerAlertOctagon" class="fs-xl"></ng-icon> {{ alert }}
+                                                </ngb-alert>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!----------------------------------------- Form Controls -------------------------------------->
+                                    <div class="row">
+                                    <div class="col-6">
+<div class="row mb-2"  *ngIf="isVisible('tradingRoomId')">
+    <div class="col-12">
+        <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
+        <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId" [disabled]="isEnabled('tradingRoomId')"
+            [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of TradingRoomOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Trading Room.</div>
+    </div>
+</div>
+<div class="row mb-2"  *ngIf="isVisible('stockShareId')">
+    <div class="col-12">
+        <label for="stockShareId" class="form-label fs-6">Stock Share</label>
+        <select class="form-select" id="stockShareId" formControlName="stockShareId" [disabled]="isEnabled('stockShareId')"
+            [class]="submit && !form['stockShareId'].errors ? 'is-valid': submit && form['stockShareId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of StockShareOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Stock Share.</div>
+    </div>
+</div>
+<div class="row mb-2"  *ngIf="isVisible('couponTypeId')">
+    <div class="col-12">
+        <label for="couponTypeId" class="form-label fs-6">Coupon Type</label>
+        <select class="form-select" id="couponTypeId" formControlName="couponTypeId" [disabled]="isEnabled('couponTypeId')"
+            [class]="submit && !form['couponTypeId'].errors ? 'is-valid': submit && form['couponTypeId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CouponTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Coupon Type.</div>
+    </div>
+</div>
+<div class="row mb-2"  *ngIf="isVisible('value')">
+    <div class="col-6">
+        <label for="value" class="form-label fs-6">Value</label>
+        <input class="form-control" type="text" id="value" formControlName="value"  [disabled]="isEnabled('value')"
+            [class]="submit && !form['value'].errors ? 'is-valid': submit && form['value'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Value.</div>
+    </div>
+</div>
+
+<div class="row mb-2"  *ngIf="isVisible('couponPercent')">
+    <div class="col-6">
+        <label for="couponPercent" class="form-label fs-6">Percent</label>
+        <input class="form-control" type="text" id="couponPercent" formControlName="couponPercent"  [disabled]="isEnabled('couponPercent')"
+            [class]="submit && !form['couponPercent'].errors ? 'is-valid': submit && form['couponPercent'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Percent.</div>
+    </div>
+</div>
+
+<div class="row mb-2"  *ngIf="isVisible('announceDate')">
+    <div class="col-12">
+        <label for="announceDate" class="form-label fs-6">Announce Date</label>
+        <input class="form-control" type="date" id="announceDate" formControlName="announceDate" [disabled]="isEnabled('announceDate')"
+            [class]="submit && !form['announceDate'].errors ? 'is-valid': submit && form['announceDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Announce Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2"  *ngIf="isVisible('valueDate')">
+    <div class="col-12">
+        <label for="valueDate" class="form-label fs-6">Value Date</label>
+        <input class="form-control" type="date" id="valueDate" formControlName="valueDate" [disabled]="isEnabled('valueDate')"
+            [class]="submit && !form['valueDate'].errors ? 'is-valid': submit && form['valueDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Value Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2"  *ngIf="isVisible('dueDate')">
+    <div class="col-12">
+        <label for="dueDate" class="form-label fs-6">Due Date</label>
+        <input class="form-control" type="date" id="dueDate" formControlName="dueDate" [disabled]="isEnabled('dueDate')"
+            [class]="submit && !form['dueDate'].errors ? 'is-valid': submit && form['dueDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Due Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2"  *ngIf="isVisible('couponStatusId')">
+    <div class="col-12">
+        <label for="couponStatusId" class="form-label fs-6">Coupon Status</label>
+        <select class="form-select" id="couponStatusId" formControlName="couponStatusId" [disabled]="isEnabled('couponStatusId')"
+            [class]="submit && !form['couponStatusId'].errors ? 'is-valid': submit && form['couponStatusId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CouponStatusOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Coupon Status.</div>
+    </div>
+</div>
+<div class="row mb-2"  *ngIf="isVisible('notes')">
+    <div class="col-12">
+        <label for="notes" class="form-label fs-6">Notes</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="notes" formControlName="notes" [disabled]="isEnabled('notes')"
+            [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Notes.</div>
+    </div>
+</div>
+
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!----------------------------------------- End Form -------------------------------------->
+
+                    </ng-template>
+                </li>
+
+                <!----------------------------------------------------- Tabs -------------------------------------->
+
+            </ul>
+
+            <div class="tab-content" [ngbNavOutlet]="nav">
+            </div>
+        </div>
+    </div>
+</div>
