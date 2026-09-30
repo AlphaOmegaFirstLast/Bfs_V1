@@ -26,10 +26,10 @@
                                                 <div ngbDropdownMenu>
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
 
-                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                    <div *ngFor="let link of linkList">
                                                         <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
                                                     </div>
-                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                    <div *ngFor="let link of actionList">
                                                         <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
                                                     </div>
 

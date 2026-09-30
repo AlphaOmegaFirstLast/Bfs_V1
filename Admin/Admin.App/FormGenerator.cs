@@ -542,7 +542,7 @@ namespace CodeAdmin
             {
                 _codeGenerator.SetComponent(item);
                 await Task.Yield();   // Let UI repaint before continuing
-                await Task.Delay(1000);
+                await Task.Delay(500);
                 btnGenerateComponent_Click(sender, e);
             }
         }
@@ -554,7 +554,7 @@ namespace CodeAdmin
             {
                 _codeGenerator.SetComponent(item);
                 await Task.Yield();   // Let UI repaint before continuing
-                await Task.Delay(1000);
+                await Task.Delay(500);
                 btnModifyComponent_Click(sender, e);
             }
         }
@@ -671,7 +671,7 @@ namespace CodeAdmin
             {
                 _codeGenerator.SetComponent(item);
                 await Task.Yield();   // Let UI repaint before continuing
-                await Task.Delay(1000);
+                await Task.Delay(500);
                 btnSaveManual_Click(sender, e);
             }
         }
@@ -683,7 +683,7 @@ namespace CodeAdmin
             {
                 _codeGenerator.SetComponent(item);
                 await Task.Yield();   // Let UI repaint before continuing
-                await Task.Delay(1000);
+                await Task.Delay(500);
                 btnApplyManual_Click(sender, e);
             }
         }

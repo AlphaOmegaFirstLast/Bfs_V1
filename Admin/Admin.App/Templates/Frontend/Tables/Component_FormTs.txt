@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -38,9 +40,10 @@ import {I[MatrixNameCapital]Filter, I[MatrixNameCapital]Request, init[MatrixName
     //Template_Start_Field_ChildrenMatrix_2
     [MatrixNameCapital]MatrixComponent,
     //Template_End_Field_ChildrenMatrix_2
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './[ComponentFileName].form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[ComponentNameCapital] > implements OnInit {
 
@@ -85,6 +88,9 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): I[ComponentNameCapital]  {
@@ -150,18 +156,19 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
         */
     }
     //---------------------------------------------------------
-    //Template_Start_Field_AutoComplete_3
-    //---------------------------------------------------------
     override async setAutoComplete() {   
+    //Template_Start_Field_AutoComplete_3
        await this.[AutoCompleteSmall]Auto.setUpForm(this.apiService, this);
+    //Template_End_Field_AutoComplete_3
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
+    //Template_Start_Field_AutoComplete_4
         this.[AutoCompleteSmall]Auto.setData(this.entity.[AutoCompleteSmall]Id,this.entity.[AutoCompleteSmall]Name);
+    //Template_End_Field_AutoComplete_4
     }
     //---------------------------------------------------------
-    //Template_End_Field_AutoComplete_3
 
     override getActions(record: IEntity): IAction[] {
         return get[ComponentNameCapital]Actions(this, record);

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 //Template_Start_Component_AutoComplete_1
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
@@ -13,8 +14,9 @@ import { I[ComponentNameCapital]Filter } from './[ComponentFileName].shared';
 
 @Component({
     selector: 'app-[ComponentFileName]-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './[ComponentFileName].filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './[ComponentFileName].filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class [ComponentNameCapital]FilterComponent implements OnInit {
