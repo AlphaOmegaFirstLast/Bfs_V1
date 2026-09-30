@@ -54,9 +54,9 @@ namespace Bfs.StockEx.Data.Reports
             //autoComplete
 
             //Aggregates
-            _fieldList.Add(new QueryField() { DbName = "Sum(stkxCurrentPrice.price * stkxSspStock.Quantity)", QueryName = "StockValue", IsAggregare = true });
-            _fieldList.Add(new QueryField() { DbName = "Sum(stkxSsPortfolioBalance.balance)", QueryName = "Cash", IsAggregare = true });
-            _fieldList.Add(new QueryField() { DbName = "Sum(stkxSsPortfolioBalance.balance) + Sum(stkxCurrentPrice.price * stkxSspStock.Quantity)", QueryName = "NAV", IsAggregare = true });
+            _fieldList.Add(new QueryField() { DbName = "Sum(isnull(stkxCurrentPrice.price,0) * isnull(stkxSspStock.Quantity,0))", QueryName = "StockValue", IsAggregare = true });
+            _fieldList.Add(new QueryField() { DbName = "Sum(isnull(stkxSsPortfolioBalance.balance,0))", QueryName = "Cash", IsAggregare = true });
+            _fieldList.Add(new QueryField() { DbName = "Sum(isnull(stkxSsPortfolioBalance.balance,0)) + Sum(isnull(stkxCurrentPrice.price,0) * isnull(stkxSspStock.Quantity,0))", QueryName = "NAV", IsAggregare = true });
         }
 
         protected override string GetFromJoinStatement()
@@ -77,7 +77,7 @@ namespace Bfs.StockEx.Data.Reports
         {
             var sql = new StringBuilder();
             sql.AppendLine(" stkxSsPortfolio.isDeleted=0 ");
-            sql.AppendLine(" (stkxCurrentPrice.TransactionDate = CAST(GETDATE() AS DATE) or  stkxCurrentPrice.TransactionDate is null)");
+            sql.AppendLine("  CAST(stkxCurrentPrice.TransactionDate AS DATE) = CAST(GETDATE() AS DATE)");
 
             var filter = request.Filter;
             if (filter != null)
