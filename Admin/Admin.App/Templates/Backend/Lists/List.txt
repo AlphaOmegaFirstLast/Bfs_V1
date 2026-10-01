@@ -92,6 +92,8 @@ namespace Bfs.[SystemNameCapital].Data.Lists
            //Template_Start_ReportField_Aggregate_1
             _fieldList.Add(new QueryField() { ComponentName = "[ParentTable]", FieldName = "[CapitalFieldName]", DbName = "[AggregateFunction]([DbParentTable].[SmallFieldName])", QueryName = "[AggregateName]", IsAggregare = true});
            //Template_End_ReportField_Aggregate_1
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
         }
 
         protected override string GetFromJoinStatement()
@@ -110,6 +112,8 @@ namespace Bfs.[SystemNameCapital].Data.Lists
            //Template_Start_Field_AutoComplete_2
            sql.AppendLine($"   Left Join [DbJoinTable] on [DbParentTable].[JoinName]Id = [DbJoinTable].Id");
            //Template_End_Field_AutoComplete_2
+//Template_Start_Code_DontOverwrite_6
+//Template_End_Code_DontOverwrite_6
 
            return sql.ToString();
         }
