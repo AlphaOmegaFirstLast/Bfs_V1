@@ -46,6 +46,9 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     entity: Entity;
     me: any = this;
+
+    linkList: ViewLink[] = [];
+    actionList: ActionLink[] = [];
     //-----------------------Object Fields Lookups----------------------------------
     public ChartElementOptions: any[] = []; //{ id: number, name: string }[] = [];
     public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
@@ -233,7 +236,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         let actions = this.getActions(record);
         let links: ViewLink[] = actions.filter(action =>
             action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
+            && action.actionLocation == 'FormHeader'
         ).map(action => {
             return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
         });
@@ -245,7 +248,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         let actions = this.getActions(record);
         let links: ActionLink[] = actions.filter(action =>
             action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
+            && action.actionLocation == 'FormHeader'
         ).map(action => {
             return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
         });
@@ -332,14 +335,24 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     }
     //---------------------------------------------------------
     validSubmit() {
-        this.submit = true
-        if (this.validationForm.valid) {
-            // One-time sync to entity object
-            this.entity = this.validationForm.getRawValue();
-            // this.validationForm.disable();
-            this.messages = [];
+        if (this.currentOperation == 'delete') {
             if (!this.isLoading.save) {  // to prevent multiple requests
                 this.applyOperation();
+            }
+        }
+        else {
+            this.submit = true
+            if (this.validationForm.valid) {
+                // One-time sync to entity object
+                this.entity = this.validationForm.getRawValue();
+                // this.validationForm.disable();
+                this.messages = [];
+                if (!this.isLoading.save) {  // to prevent multiple requests
+                    this.applyOperation();
+                }
+            }
+            else {
+                this.messages.push({ text: "Invalid Fields Found", msgType: "danger" });
             }
         }
     }
@@ -379,7 +392,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         this.patchFormValue(this.entity);
     }
     //---------------------------------------------------------
-    navigateBack(fallbackUrl?:string) {
+    navigateBack(fallbackUrl?: string) {
         this.navigationService.popUrl(fallbackUrl);
     }
     //---------------------------------------------------------

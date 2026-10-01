@@ -3,13 +3,14 @@ import { MenuItemType } from '@/app/types/layout';
 //------------------------------------------------------------
 // Application specific menu items
 export const StockExMenuItems: MenuItemType[] = [
-    {label: 'StockEx', 
-     isTitle: true,
-     data: {
+    {
+        label: 'StockEx',
+        isTitle: true,
+        data: {
             role: ['admin']
         },
     },
-//Template_Start_Code_DontOverwrite_1
+    //Template_Start_Code_DontOverwrite_1
     {
         label: 'Quick Access',
         icon: 'tablerMail',
@@ -27,7 +28,7 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-                        {
+            {
                 label: 'Portfolios Balances',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/ss-portfolio-balance/list',
@@ -43,86 +44,94 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
+            {
+                label: 'Nav Report',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/nav-report-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
         ]
-    },    
-//Template_End_Code_DontOverwrite_1
+    },
+    //Template_End_Code_DontOverwrite_1
     {
         label: 'Basic',
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            app: ['b.ofc'],
+            role: ['admin']
         },
         children: [
-    {
-        label: 'Trading Rooms',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/trading-room/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Brokers',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/broker/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Investors',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/investor/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Broker Agreements',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/broker-agreement/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Currencies',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/currency/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Expenses Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/expenses-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'StockShare Portfolios',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/ss-portfolio/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Stock Shares',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/stock-share/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-//Template_Component_Menu_Basic
+            {
+                label: 'Trading Rooms',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/trading-room/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Brokers',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/broker/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Investors',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/investor/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Broker Agreements',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/broker-agreement/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Currencies',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/currency/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Expenses Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/expenses-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'StockShare Portfolios',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/ss-portfolio/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Stock Shares',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/stock-share/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Basic
         ]
     },
-//Template_Start_Code_DontOverwrite_2
+    //Template_Start_Code_DontOverwrite_2
     {
         label: 'Transactions',
         icon: 'tablerMail',
@@ -191,57 +200,65 @@ export const StockExMenuItems: MenuItemType[] = [
             //Template_Component_Menu_Transactions
         ]
     },
-//Template_End_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
     {
         label: 'Reports',
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            app: ['b.ofc'],
+            role: ['admin']
         },
         children: [
-    {
-        label: 'Trading Room Reports',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/trading-room-rep-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-    {
-        label: 'Portfolios Stock Share Transactions',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/portfolio-stock-share-transaction-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-    {
-        label: 'Portfolio Aggregate Report',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/portfolio-aggregate-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-    {
-        label: 'Portfolios Cash Transactions',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/portfolio-cash-transaction-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-    {
-        label: 'Total Portfolio Cash Transaction Aggregate',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/portfolio-cash-transaction-aggregate-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-//Template_Component_Menu_Reports
+            {
+                label: 'Trading Room Reports',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/trading-room-rep-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            {
+                label: 'Portfolios Stock Share Transactions',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/portfolio-stock-share-transaction-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            {
+                label: 'Portfolio Aggregate Report',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/portfolio-aggregate-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            {
+                label: 'Portfolios Cash Transactions',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/portfolio-cash-transaction-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            {
+                label: 'Total Portfolio Cash Transaction Aggregate',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/portfolio-cash-transaction-aggregate-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            {
+                label: 'Nav Report',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/nav-report-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            //Template_Component_Menu_Reports
         ]
     },
     {
@@ -249,48 +266,48 @@ export const StockExMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            app: ['b.ofc'],
+            role: ['admin']
         },
         children: [
-    {
-        label: 'Custom Reports',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/custom-reports/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-//Template_Component_Menu_Custom
+            {
+                label: 'Custom Reports',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/custom-reports/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Custom
         ]
     },
 
     {
-        label: 'System',
+        label: 'Balances',
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            app: ['b.ofc'],
+            role: ['admin']
         },
         children: [
-    {
-        label: 'Portfolio Balances',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/ss-portfolio-balance/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Stock Share Stocks',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/ssp-stock/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-//Template_Component_Menu_System
+            {
+                label: 'Portfolio Balances',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/ss-portfolio-balance/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Stock Share Stocks',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/ssp-stock/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Balances
         ]
     },
     {
@@ -298,83 +315,83 @@ export const StockExMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-           app: ['b.ofc'],
-           role: ['admin']
+            app: ['b.ofc'],
+            role: ['admin']
         },
         children: [
-    {
-        label: 'Coupon Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/coupon-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Coupon Status',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/coupon-status/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Effect Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/effect-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Stock Entity Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/stock-entity-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Calculation Methods',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/calculation-method/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Source Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/source-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Stock Field Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/stock-field-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Transaction Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/transaction-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Transfer Cost Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/transfer-cost-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },    
-//Template_Component_Menu_Seed
+            {
+                label: 'Coupon Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/coupon-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Coupon Status',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/coupon-status/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Effect Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/effect-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Stock Entity Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/stock-entity-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Calculation Methods',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/calculation-method/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Source Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/source-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Stock Field Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/stock-field-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Transaction Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/transaction-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Transfer Cost Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/transfer-cost-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Seed
         ]
     },
 ];

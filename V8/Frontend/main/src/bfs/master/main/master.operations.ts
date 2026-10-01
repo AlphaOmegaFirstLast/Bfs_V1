@@ -1,5 +1,4 @@
-//Template_Start_Code_DontOverwrite_1
-import { IIdentifiable, IUserInterface } from '@bfs/_shared/interfaces';
+import { IIdentifiable, IUserInterface } from "@bfs/_shared/interfaces";
 
 //---------------------------------------------------------
 
@@ -36,19 +35,19 @@ export async function deleteTree(me: IUserInterface, record: IIdentifiable, data
 
 export async function duplicateRecord(me: IUserInterface, record: IIdentifiable, data: any): Promise<void> {
 
-    if (!me.isLoading) {  // to prevent multiple requests
+    if (!me.isLoading.save) {  // to prevent multiple requests
         me.messages = [];
-        me.isLoading = true;
+        me.isLoading.save = true;
         var target = `${data.postUrl}/${data.recordId}`;
         (await me.apiService.get(target)).subscribe({
             next: async (res: any) => {
-                me.isLoading = false;
+                me.isLoading.list = false;
                 var duplicatedRecord = res;
                 data = { ...data, record: duplicatedRecord };
                 await postDuplicateRecord(me, duplicatedRecord, data);
             },
             error: (err: any) => {
-                me.isLoading = false;
+                me.isLoading.save = false;
                 var msg = err.message || 'An error occurred while processing Systems data.';
                 me.messages.push({ text: msg, msgType: "danger" });
             }
@@ -61,9 +60,9 @@ export async function postDuplicateRecord(me: IUserInterface, record: any, data:
     if (record as IIdentifiable) {
 
         record.id = 0; // reset id only for record duplication 
-
+        var newRecord = JSON.parse(JSON.stringify(record)); // deep copy to avoid reference issues
         var target = data.postUrl;  // for record duplication the default postUrl is used, for tree duplication a different url is used
-        (await me.apiService.post(target, record)).subscribe({
+        (await me.apiService.post(target, newRecord)).subscribe({
             next: (res: any) => {
                 me.messages.push({ text: 'Record duplicated successfully.', msgType: "info" });
                 if (data.onSuccessMethodName)
@@ -127,7 +126,7 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
     let entityId = record.id;
     if (!me.isLoading.save) {  // to prevent multiple requests
         me.messages = [];
-        me.isLoading = true;
+        me.isLoading.save = true;
         var target = `/Operations/BfsComponentSystemAction/matrix/${entityId}`;
 
         var childrenList: any[] = [
@@ -144,7 +143,7 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
                 me.list = res.items;
             },
             error: (err: any) => {
-                me.isLoading = false;
+                me.isLoading.save = false;
                 var msg = err.message || 'An error occurred while saving matrix data.';
                 me.messages.push({ text: msg, msgType: "danger" });
             }
@@ -152,4 +151,3 @@ export async function setComponentDefaultActions(me: any, record: IIdentifiable,
     }
 }
 //---------------------------------------------------------
-//Template_End_Code_DontOverwrite_1
