@@ -1,4 +1,5 @@
 using Bfs.Core.Data;
+using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
 
@@ -7,17 +8,28 @@ using Microsoft.Data.SqlClient;
 using Bfs.StockEx.Data.Interfaces;
 using Bfs.StockEx.Data;
 using System.Text;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Data.Lists
 {
     public class BrokerAgreementList: QueryBase<BrokerAgreementListFilter>,  IBrokerAgreementList
     {
-        private readonly IResourceSecurity _resourceSecurity;
+        private readonly IResourceSecurity? _resourceSecurity;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-        public BrokerAgreementList(string connectionString, IResourceSecurity resourceSecurity)
+        public BrokerAgreementList(string connectionString, IResourceSecurity? resourceSecurity
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+        )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
         }
 
         private readonly string _connectionString;
@@ -33,7 +45,7 @@ namespace Bfs.StockEx.Data.Lists
                 // Run Report
                 var mainQuery = GetMainSqlStatement();
                 var items = await db.QueryAsync<BrokerAgreementListItem>(mainQuery.sql, mainQuery.parameters);
-                response.Items = (List<BrokerAgreementListItem>)items;
+                response.Items = DoMapping(items);
 
                 // Run Count
                 var countQuery = GetCountSqlStatement();
@@ -44,26 +56,36 @@ namespace Bfs.StockEx.Data.Lists
             return response;
         }
 
+        private List<BrokerAgreementListItem> DoMapping(IEnumerable<BrokerAgreementListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (BrokerAgreementListItem)record;
+
+                return item;
+            }).ToList();
+        }
+
         protected override void SetupFields()
         {
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "AgreementDate", DbName = "stkxBrokerAgreement.AgreementDate", QueryName = "AgreementDate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Id", DbName = "stkxBrokerAgreement.Id", QueryName = "Id", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Notes", DbName = "stkxBrokerAgreement.Notes", QueryName = "Notes", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "OverdraftPrcnt", DbName = "stkxBrokerAgreement.OverdraftPrcnt", QueryName = "OverdraftPrcnt", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "OverdraftMx", DbName = "stkxBrokerAgreement.OverdraftMx", QueryName = "OverdraftMx", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "InvestorId", DbName = "stkxBrokerAgreement.InvestorId", QueryName = "InvestorId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "BrokerId", DbName = "stkxBrokerAgreement.BrokerId", QueryName = "BrokerId", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "SsPortfolioId", DbName = "stkxBrokerAgreement.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false});
+
+            //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "Investor", FieldName = "Name", DbName = "stkxInvestor.Name", QueryName = "InvestorName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", DbName = "stkxBroker.Name", QueryName = "BrokerName", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
 
             //autoCompletes
 
            //Aggregates
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 
         }
 
@@ -74,7 +96,9 @@ _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Nam
 
            sql.AppendLine($"   Left Join stkxInvestor on stkxBrokerAgreement.InvestorId = stkxInvestor.Id");
 sql.AppendLine($"   Left Join stkxBroker on stkxBrokerAgreement.BrokerId = stkxBroker.Id");
-sql.AppendLine($"   Left Join stkxSsPortfolio on stkxBrokerAgreement.SsPortfolioId = stkxSsPortfolio.Id");
+
+//Template_Start_Code_DontOverwrite_6
+//Template_End_Code_DontOverwrite_6
 
            return sql.ToString();
         }
@@ -109,11 +133,6 @@ if (filter.BrokerId.HasValue)
                     sql.AppendLine("stkxBrokerAgreement.BrokerId = @BrokerId");
                     parameters.Add("@BrokerId", filter.BrokerId.Value);
                 }
-if (filter.SsPortfolioId.HasValue)
-                {
-                    sql.AppendLine("stkxBrokerAgreement.SsPortfolioId = @SsPortfolioId");
-                    parameters.Add("@SsPortfolioId", filter.SsPortfolioId.Value);
-                }
 
                 if (filter.AgreementDate?.From.HasValue == true)
                 {
@@ -124,26 +143,6 @@ if (filter.SsPortfolioId.HasValue)
                 {
                     sql.AppendLine("stkxBrokerAgreement.AgreementDate <= @AgreementDateTo");
                     parameters.Add("@AgreementDateTo", filter.AgreementDate.To.Value);
-                }
-if (filter.OverdraftPrcnt?.From.HasValue == true)
-                {
-                    sql.AppendLine("stkxBrokerAgreement.OverdraftPrcnt >= @OverdraftPrcntFrom");
-                    parameters.Add("@OverdraftPrcntFrom", filter.OverdraftPrcnt.From.Value);
-                }
-                if (filter.OverdraftPrcnt?.To.HasValue == true)
-                {
-                    sql.AppendLine("stkxBrokerAgreement.OverdraftPrcnt <= @OverdraftPrcntTo");
-                    parameters.Add("@OverdraftPrcntTo", filter.OverdraftPrcnt.To.Value);
-                }
-if (filter.OverdraftMx?.From.HasValue == true)
-                {
-                    sql.AppendLine("stkxBrokerAgreement.OverdraftMx >= @OverdraftMxFrom");
-                    parameters.Add("@OverdraftMxFrom", filter.OverdraftMx.From.Value);
-                }
-                if (filter.OverdraftMx?.To.HasValue == true)
-                {
-                    sql.AppendLine("stkxBrokerAgreement.OverdraftMx <= @OverdraftMxTo");
-                    parameters.Add("@OverdraftMxTo", filter.OverdraftMx.To.Value);
                 }
 
             }
@@ -165,6 +164,9 @@ if (filter.OverdraftMx?.From.HasValue == true)
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
-       }       
+       } 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
     }
 }

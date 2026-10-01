@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +21,20 @@ public class BrokerAgreementController
 {
     private readonly IBrokerAgreementService _brokerAgreementService;
     private IValidator<BrokerAgreement> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-    public BrokerAgreementController(IBrokerAgreementService brokerAgreementService, IValidator<BrokerAgreement> validator)
+    public BrokerAgreementController(IBrokerAgreementService brokerAgreementService, IValidator<BrokerAgreement> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
     {
         _brokerAgreementService = brokerAgreementService;
         _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
     }
 
     [HttpGet]
@@ -36,10 +47,12 @@ public class BrokerAgreementController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.brokerAgreement")]
-    public async Task<BrokerAgreement?> Get(long id)
+    public async Task<BrokerAgreementListItem?> Get(long id)
     {
-        var result = await _brokerAgreementService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<BrokerAgreementListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _brokerAgreementService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]
@@ -164,8 +177,9 @@ public class BrokerAgreementController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 
 }
 

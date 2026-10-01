@@ -4,6 +4,7 @@ using Bfs.StockEx.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bfs.StockEx.Data.Migrations
 {
     [DbContext(typeof(StockExDbContext))]
-    partial class StockExDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261001085024_updatedBrokerAgrrement")]
+    partial class updatedBrokerAgrrement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,6 +49,15 @@ namespace Bfs.StockEx.Data.Migrations
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OverdraftMx")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OverdraftPrcnt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SsPortfolioId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("TenantId")
                         .HasColumnType("bigint");

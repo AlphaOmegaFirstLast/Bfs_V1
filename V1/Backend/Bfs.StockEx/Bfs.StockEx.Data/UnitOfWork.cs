@@ -157,24 +157,24 @@ public class UnitOfWork : IUnitOfWork
     public async Task<CashTransactionEntity> RolloutCashTransactionAsync(TransactionTypeEntity currentTransactionType, CashTransactionEntity cashEntity)
     {
         var newTransaction = await cashTransactionRepo.CreateAsync(cashEntity);
-        var cash = await GetCashBalanceById(newTransaction.SsPortfolioId);
+        var portfolioBalance = await GetCashBalanceById(newTransaction.SsPortfolioId, newTransaction.CurrencyId);
 
         decimal resultAmount = 0;
         // ------------------------
 
         if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.Cash)
         {
-            resultAmount = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, cash.Balance, newTransaction.Value, 0);
+            resultAmount = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, portfolioBalance.Balance, newTransaction.Value, 0);
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
-                    cash.Balance = cash.Balance + resultAmount; 
+                    portfolioBalance.Balance = portfolioBalance.Balance + resultAmount; 
                     break;
                 case (int)enumEffectTypes.Sub:
-                    cash.Balance = cash.Balance - resultAmount; 
+                    portfolioBalance.Balance = portfolioBalance.Balance - resultAmount; 
                     break;
                 case (int)enumEffectTypes.Set:
-                    cash.Balance = resultAmount;
+                    portfolioBalance.Balance = resultAmount;
                     break;
             }
         }
@@ -199,9 +199,9 @@ public class UnitOfWork : IUnitOfWork
         return stock;
     }
 
-    public async Task<SsPortfolioBalanceEntity> GetCashBalanceById(long ssPortfolioId)
+    public async Task<SsPortfolioBalanceEntity> GetCashBalanceById(long ssPortfolioId,long currencyId)
     {
-        var balance = await _context.SsPortfolioBalances.FirstOrDefaultAsync(x => x.SsPortfolioId == ssPortfolioId);
+        var balance = await _context.SsPortfolioBalances.FirstOrDefaultAsync(x => x.SsPortfolioId == ssPortfolioId && x.CurrencyId == currencyId);
         if (balance == null)
         {
             balance = await ssPortfolioBalanceRepo.CreateAsync(new SsPortfolioBalanceEntity()

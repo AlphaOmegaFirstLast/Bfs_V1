@@ -26,14 +26,6 @@ namespace Bfs.StockEx.Contracts
         /// BrokerAgreement Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
-///<Summary>
-        /// BrokerAgreement Overdraft Percent.
-        ///</Summary>
-        public decimal OverdraftPrcnt {get; set;} = 0 ;
-///<Summary>
-        /// BrokerAgreement Overdraft Max.
-        ///</Summary>
-        public decimal OverdraftMx {get; set;} = 0 ;
 
         ///<Summary>
         /// BrokerAgreement Investor.
@@ -43,10 +35,6 @@ namespace Bfs.StockEx.Contracts
         /// BrokerAgreement Broker.
         ///</Summary>
         public long BrokerId {get; set;} = 0 ;
-///<Summary>
-        /// BrokerAgreement StockShare Portfolio.
-        ///</Summary>
-        public long SsPortfolioId {get; set;} = 0 ;
 
     }
 }

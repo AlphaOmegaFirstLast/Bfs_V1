@@ -11,11 +11,8 @@ namespace Bfs.StockEx.Data
 
         public long? InvestorId { get; set; }
 public long? BrokerId { get; set; }
-public long? SsPortfolioId { get; set; }
 
         public DateRange? AgreementDate { get; set; }
-public NumericRange? OverdraftPrcnt { get; set; }
-public NumericRange? OverdraftMx { get; set; }
 
     }
 }

@@ -15,12 +15,9 @@ IsDeleted= entity.IsDeleted,
 Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
-OverdraftPrcnt= entity.OverdraftPrcnt,
-OverdraftMx= entity.OverdraftMx,
 
                InvestorId= entity.InvestorId,
 BrokerId= entity.BrokerId,
-SsPortfolioId= entity.SsPortfolioId,
 
             };
 
@@ -46,12 +43,9 @@ BrokerAgreementEntity.IsDeleted= contract.IsDeleted;
 BrokerAgreementEntity.Id= contract.Id;
 BrokerAgreementEntity.Name= contract.Name;
 BrokerAgreementEntity.Notes= contract.Notes;
-BrokerAgreementEntity.OverdraftPrcnt= contract.OverdraftPrcnt;
-BrokerAgreementEntity.OverdraftMx= contract.OverdraftMx;
 
             BrokerAgreementEntity.InvestorId= contract.InvestorId;
 BrokerAgreementEntity.BrokerId= contract.BrokerId;
-BrokerAgreementEntity.SsPortfolioId= contract.SsPortfolioId;
 
             return BrokerAgreementEntity;
         }     

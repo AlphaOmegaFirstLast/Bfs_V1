@@ -1,6 +1,8 @@
 using FluentValidation;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Validators
 {
@@ -8,13 +10,9 @@ namespace Bfs.StockEx.Api.Validators
     {
         public BrokerAgreementValidator()
         {
-        RuleFor(x => x.Name)
-.MinimumLength(0)
-.MaximumLength(0)
-;
-RuleFor(x => x.Notes)
-.MaximumLength(0)
-;
+
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
         }
     }

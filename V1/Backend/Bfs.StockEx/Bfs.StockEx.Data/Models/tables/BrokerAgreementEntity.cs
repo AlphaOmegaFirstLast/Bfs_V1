@@ -15,12 +15,9 @@ public bool IsDeleted {get; set;} = false ;
 public long Id {get; set;} = 0 ;
 public string Name {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
-public decimal OverdraftPrcnt {get; set;} = 0 ;
-public decimal OverdraftMx {get; set;} = 0 ;
 
         public long InvestorId {get; set;} = 0 ;
 public long BrokerId {get; set;} = 0 ;
-public long SsPortfolioId {get; set;} = 0 ;
 
     }
 }
