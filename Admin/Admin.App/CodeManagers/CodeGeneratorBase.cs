@@ -10,9 +10,9 @@ namespace Admin.App
 {
     public class CodeGeneratorBase
     {
-        public static string BestFitDB = "BestFit_V8";
+        public static string BestFitDB = "BestFit_V8"; //the database that the generator reads structure from
         public string BestFitSystemName = "master";
-        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V8";
+        public string BfsRootDir { get; set; } = @"C:\Bfs_V1\V8";  //output directory for generated code
         public string TemplateRootDir { get; set; } = @".\Templates";
         private string TemplateInfoFile { get; set; } = @".\Templates\ComponentTemplateInfo.json";  // the compiler copies it to the output foldr
         private string PlaceHolderInfoFile { get; set; } = @".\Templates\WriterInfo.json";  // the compiler copies it to the output foldr
