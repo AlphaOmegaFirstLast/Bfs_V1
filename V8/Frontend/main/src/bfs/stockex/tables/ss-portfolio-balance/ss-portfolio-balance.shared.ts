@@ -14,6 +14,7 @@ export const SsPortfolioBalanceColumns = [
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'ssPortfolioId', displayName: ' Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'balance', displayName: 'Balance', sortName: 'Balance', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -25,6 +26,7 @@ notes?: string;
 balance?: number;
 
     ssPortfolioId?: string;
+currencyId?: string;
 
 }
 //---------------------------------------------------------
@@ -37,6 +39,7 @@ notes: '',
 balance: 0,
 
         ssPortfolioId: '0',
+currencyId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -53,6 +56,7 @@ notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLeng
 balance: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -70,6 +74,7 @@ export interface ISsPortfolioBalanceFilter {
     Name?: string;
 
     SsPortfolioId?: string;
+CurrencyId?: string;
 
     Balance?: { from?: number ; to?: number} ;
 
@@ -91,6 +96,7 @@ export function initSsPortfolioBalanceRequest(): ISsPortfolioBalanceRequest {
             Name: undefined ,
 
             SsPortfolioId: undefined ,
+CurrencyId: undefined ,
 
             Balance: { from: undefined , to: undefined} ,
 
@@ -105,6 +111,8 @@ export function renderSsPortfolioBalance(record: ISsPortfolioBalance, column: IQ
         switch (column.fieldName) {
             case 'ssPortfolioId':
                 return record['ssPortfolioName']?.toString();
+case 'currencyId':
+                return record['currencyName']?.toString();
 
             default:
                 return value;
@@ -138,6 +146,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('ssPortfolioBalance', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['ssPortfolioId'], route:'/stkx/ss-portfolio/view', displayText:'Go to SsPortfolio'
+});
+}
+if (component.accessService.isActionAllowed('ssPortfolioBalance', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['currencyId'], route:'/stkx/currency/view', displayText:'Go to Currency'
 });
 }
 

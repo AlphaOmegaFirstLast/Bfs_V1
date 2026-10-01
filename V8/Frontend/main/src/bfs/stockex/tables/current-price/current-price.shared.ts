@@ -11,8 +11,8 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 export const CurrentPriceColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------

@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +24,10 @@ import {isEnabled, isVisible, type ISspStock, initSspStock, sspStockUntypedFormG
     selector: 'ssp-stock-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './ssp-stock.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class SspStockFormComponent extends BaseFormComponent<ISspStock > implements OnInit {
 
@@ -37,6 +40,7 @@ export class SspStockFormComponent extends BaseFormComponent<ISspStock > impleme
     // Define look ups
     public SsPortfolioOptions: any[] = [];
 public StockShareOptions: any[] = [];
+public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -59,6 +63,9 @@ public StockShareOptions: any[] = [];
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): ISspStock  {
@@ -78,15 +85,18 @@ public StockShareOptions: any[] = [];
          const [
               ssPortfolioResponse,
 stockShareResponse,
+currencyResponse,
 
          ] = await Promise.all
          ([
         this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
 this.apiService.getItems<IQueryResponse>("/StockShare/list", { pageSize: 30 }),
+this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
 
          ]);
         this.SsPortfolioOptions = ssPortfolioResponse.items;
 this.StockShareOptions = stockShareResponse.items;
+this.CurrencyOptions = currencyResponse.items;
 
  } catch (err: any) {
    const msg = err?.message || "An error occurred while loading data.";

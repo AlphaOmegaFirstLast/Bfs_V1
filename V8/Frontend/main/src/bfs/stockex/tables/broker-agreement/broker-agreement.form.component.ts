@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +24,10 @@ import {isEnabled, isVisible, type IBrokerAgreement, initBrokerAgreement, broker
     selector: 'broker-agreement-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './broker-agreement.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class BrokerAgreementFormComponent extends BaseFormComponent<IBrokerAgreement > implements OnInit {
 
@@ -37,7 +40,6 @@ export class BrokerAgreementFormComponent extends BaseFormComponent<IBrokerAgree
     // Define look ups
     public InvestorOptions: any[] = [];
 public BrokerOptions: any[] = [];
-public SsPortfolioOptions: any[] = [];
 
     // Define autocomplete
 
@@ -60,6 +62,9 @@ public SsPortfolioOptions: any[] = [];
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): IBrokerAgreement  {
@@ -79,18 +84,15 @@ public SsPortfolioOptions: any[] = [];
          const [
               investorResponse,
 brokerResponse,
-ssPortfolioResponse,
 
          ] = await Promise.all
          ([
         this.apiService.getItems<IQueryResponse>("/Investor/list", { pageSize: 30 }),
 this.apiService.getItems<IQueryResponse>("/Broker/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
 
          ]);
         this.InvestorOptions = investorResponse.items;
 this.BrokerOptions = brokerResponse.items;
-this.SsPortfolioOptions = ssPortfolioResponse.items;
 
  } catch (err: any) {
    const msg = err?.message || "An error occurred while loading data.";

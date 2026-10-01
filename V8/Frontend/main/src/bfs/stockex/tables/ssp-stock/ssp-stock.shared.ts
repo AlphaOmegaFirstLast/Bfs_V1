@@ -16,6 +16,7 @@ export const SspStockColumns = [
 { fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'stockShareId', displayName: 'StockShare ', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'averageCost', displayName: 'Average Cost', sortName: 'AverageCost', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -29,6 +30,7 @@ averageCost?: number;
 
     ssPortfolioId?: string;
 stockShareId?: string;
+currencyId?: string;
 
 }
 //---------------------------------------------------------
@@ -43,6 +45,7 @@ averageCost: 0,
 
         ssPortfolioId: '0',
 stockShareId: '0',
+currencyId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -61,6 +64,7 @@ averageCost: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"
 
     ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 stockShareId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -79,6 +83,7 @@ export interface ISspStockFilter {
 
     SsPortfolioId?: string;
 StockShareId?: string;
+CurrencyId?: string;
 
     Quantity?: { from?: number ; to?: number} ;
 AverageCost?: { from?: number ; to?: number} ;
@@ -102,6 +107,7 @@ export function initSspStockRequest(): ISspStockRequest {
 
             SsPortfolioId: undefined ,
 StockShareId: undefined ,
+CurrencyId: undefined ,
 
             Quantity: { from: undefined , to: undefined} ,
 AverageCost: { from: undefined , to: undefined} ,
@@ -119,6 +125,8 @@ export function renderSspStock(record: ISspStock, column: IQueryColumn): any {
                 return record['ssPortfolioName']?.toString();
 case 'stockShareId':
                 return record['stockShareName']?.toString();
+case 'currencyId':
+                return record['currencyName']?.toString();
 
             default:
                 return value;
@@ -157,6 +165,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('sspStock', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['stockShareId'], route:'/stkx/stock-share/view', displayText:'Go to StockShare'
+});
+}
+if (component.accessService.isActionAllowed('sspStock', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['currencyId'], route:'/stkx/currency/view', displayText:'Go to Currency'
 });
 }
 

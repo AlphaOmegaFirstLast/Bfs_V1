@@ -3,13 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IPortfolioStockShareTransactionCompareFilter } from './portfolio-stock-share-transaction-compare.shared';
 
 @Component({
     selector: 'app-portfolio-stock-share-transaction-compare-report-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './portfolio-stock-share-transaction-compare.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './portfolio-stock-share-transaction-compare.filter.component.html',
+    providers: [provideFlatpickrDefaults()]
     //styles: ``
 })
 export class PortfolioStockShareTransactionCompareFilterComponent implements OnInit {

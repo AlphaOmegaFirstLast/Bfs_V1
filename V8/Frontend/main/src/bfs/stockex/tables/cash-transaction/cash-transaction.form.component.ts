@@ -1,12 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -14,7 +16,7 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import { isEnabled, isVisible, type ICashTransaction, initCashTransaction, cashTransactionUntypedFormGroup, getCashTransactionActions } from './cash-transaction.shared';
+import {isEnabled, isVisible, type ICashTransaction, initCashTransaction, cashTransactionUntypedFormGroup, getCashTransactionActions} from './cash-transaction.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -22,13 +24,14 @@ import { isEnabled, isVisible, type ICashTransaction, initCashTransaction, cashT
     selector: 'cash-transaction-form',
     imports: [
 
-        CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule, RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './cash-transaction.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
-export class CashTransactionFormComponent extends BaseFormComponent<ICashTransaction> implements OnInit {
+export class CashTransactionFormComponent extends BaseFormComponent<ICashTransaction > implements OnInit {
 
-    override apiUrl = '/CashTransaction/';
+    override apiUrl =  '/CashTransaction/';
     override apiService: StockExService = inject(StockExService);
     override componentName: string = 'CashTransaction'.toLowerCase();  // used to grab its related custom field definitions
 
@@ -36,9 +39,10 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
 
     // Define look ups
     public SspTransactionOptions: any[] = [];
-    public SsPortfolioOptions: any[] = [];
-    public TransactionTypeOptions: any[] = [];
-    public ExpensesTypeOptions: any[] = [];
+public SsPortfolioOptions: any[] = [];
+public TransactionTypeOptions: any[] = [];
+public ExpensesTypeOptions: any[] = [];
+public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -46,8 +50,8 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
 
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(cashTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(cashTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
 
     }
     //---------------------------------------------------------
@@ -61,17 +65,20 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
-    override initEntity(): ICashTransaction {
-        return initCashTransaction();
+    override initEntity(): ICashTransaction  {
+        return initCashTransaction ();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
 
     }
     //---------------------------------------------------------
-    override async setAutoComplete() {
+    override async setAutoComplete() {   
 
     }
     //---------------------------------------------------------
@@ -85,20 +92,20 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
         return getCashTransactionActions(this, record);
     }
 
-    //---------------------------------------------------------
+   //---------------------------------------------------------
     isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity, this.validationForm, fieldName);
+        return isVisible(this.entity,this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
     isEnabled(fieldName: string): boolean {
 
-        return isEnabled(this.entity, this.validationForm, fieldName);
+        return isEnabled(this.entity,this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
 
-    //Template_Start_Code_DontOverwrite_2
-    override async getLookups(): Promise<void> {
+//Template_Start_Code_DontOverwrite_2
+override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
         this.isLoading.lookups = true;
@@ -109,6 +116,7 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
                 ssPortfolioResponse,
                 transactionTypeResponse,
                 expensesTypeResponse,
+                currencyResponse,
 
             ] = await Promise.all
                 ([
@@ -116,12 +124,14 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
                     this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
                     this.apiService.getItems<IQueryResponse>("/TransactionType/list", { "filter": { "stockEntityTypeId": 2, "sourceTypeId": 2 }, pageSize: 50 }),
                     this.apiService.getItems<IQueryResponse>("/ExpensesType/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
 
                 ]);
             this.SspTransactionOptions = sspTransactionResponse.items;
             this.SsPortfolioOptions = ssPortfolioResponse.items;
             this.TransactionTypeOptions = transactionTypeResponse.items;
             this.ExpensesTypeOptions = expensesTypeResponse.items;
+            this.CurrencyOptions = currencyResponse.items;
 
         } catch (err: any) {
             const msg = err?.message || "An error occurred while loading data.";
@@ -145,5 +155,6 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
                });
                */
     }
-    //Template_End_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
 }

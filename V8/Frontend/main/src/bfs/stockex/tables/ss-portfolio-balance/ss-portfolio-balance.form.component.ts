@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +24,10 @@ import {isEnabled, isVisible, type ISsPortfolioBalance, initSsPortfolioBalance, 
     selector: 'ss-portfolio-balance-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './ss-portfolio-balance.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class SsPortfolioBalanceFormComponent extends BaseFormComponent<ISsPortfolioBalance > implements OnInit {
 
@@ -36,6 +39,7 @@ export class SsPortfolioBalanceFormComponent extends BaseFormComponent<ISsPortfo
 
     // Define look ups
     public SsPortfolioOptions: any[] = [];
+public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -58,6 +62,9 @@ export class SsPortfolioBalanceFormComponent extends BaseFormComponent<ISsPortfo
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): ISsPortfolioBalance  {
@@ -76,13 +83,16 @@ export class SsPortfolioBalanceFormComponent extends BaseFormComponent<ISsPortfo
          try{
          const [
               ssPortfolioResponse,
+currencyResponse,
 
          ] = await Promise.all
          ([
         this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
+this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
 
          ]);
         this.SsPortfolioOptions = ssPortfolioResponse.items;
+this.CurrencyOptions = currencyResponse.items;
 
  } catch (err: any) {
    const msg = err?.message || "An error occurred while loading data.";

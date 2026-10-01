@@ -7,7 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
-import { FlatpickrDirective } from 'angularx-flatpickr';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -26,6 +27,7 @@ import { isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTran
         CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule, RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './ssp-transaction.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class SspTransactionFormComponent extends BaseFormComponent<ISspTransaction> implements OnInit {
 
@@ -40,6 +42,7 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
     public TransactionTypeOptions: any[] = [];
     public StockShareOptions: any[] = [];
     public ToPortfolioOptions: any[] = [];
+    public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -62,6 +65,9 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);
     }
     //---------------------------------------------------------
     override initEntity(): ISspTransaction {

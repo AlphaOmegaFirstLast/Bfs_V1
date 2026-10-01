@@ -12,11 +12,8 @@ export const BrokerAgreementColumns = [
     { fieldName: 'agreementDate', displayName: 'Agreement Date', sortName: 'AgreementDate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftPrcnt', displayName: 'Overdraft Percent', sortName: 'OverdraftPrcnt', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftMx', displayName: 'Overdraft Max', sortName: 'OverdraftMx', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'investorId', displayName: 'Investor', sortName: 'Investor_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'brokerId', displayName: 'Broker', sortName: 'Broker_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -26,28 +23,22 @@ isDeleted?: boolean;
 id?: string;
 name?: string;
 notes?: string;
-overdraftPrcnt?: number;
-overdraftMx?: number;
 
     investorId?: string;
 brokerId?: string;
-ssPortfolioId?: string;
 
 }
 //---------------------------------------------------------
 export function initBrokerAgreement(): IBrokerAgreement {
     let entity: IBrokerAgreement = {
-        agreementDate: new Date(0),
+        agreementDate: new Date(),
 isDeleted: false,
 id: '0',
 name: '',
 notes: '',
-overdraftPrcnt: 0,
-overdraftMx: 0,
 
         investorId: '0',
 brokerId: '0',
-ssPortfolioId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -57,17 +48,14 @@ ssPortfolioId: '0',
 // Fields of an Entity [used in Entity form]
 export function brokerAgreementUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    agreementDate: [new Date(0),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    agreementDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"0","MaxLength":"0","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"0","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-overdraftPrcnt: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-overdraftMx: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     investorId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 brokerId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -86,11 +74,8 @@ export interface IBrokerAgreementFilter {
 
     InvestorId?: string;
 BrokerId?: string;
-SsPortfolioId?: string;
 
     AgreementDate?: { from?: Date | null ; to?: Date | null} ;
-OverdraftPrcnt?: { from?: number ; to?: number} ;
-OverdraftMx?: { from?: number ; to?: number} ;
 
 }
 //---------------------------------------------------------
@@ -111,11 +96,8 @@ export function initBrokerAgreementRequest(): IBrokerAgreementRequest {
 
             InvestorId: undefined ,
 BrokerId: undefined ,
-SsPortfolioId: undefined ,
 
             AgreementDate: { from: undefined , to: undefined} ,
-OverdraftPrcnt: { from: undefined , to: undefined} ,
-OverdraftMx: { from: undefined , to: undefined} ,
 
             }
     };
@@ -130,8 +112,6 @@ export function renderBrokerAgreement(record: IBrokerAgreement, column: IQueryCo
                 return record['investorName']?.toString();
 case 'brokerId':
                 return record['brokerName']?.toString();
-case 'ssPortfolioId':
-                return record['ssPortfolioName']?.toString();
 
             default:
                 return value;
@@ -170,11 +150,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('brokerAgreement', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['brokerId'], route:'/stkx/broker/view', displayText:'Go to Broker'
-});
-}
-if (component.accessService.isActionAllowed('brokerAgreement', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['ssPortfolioId'], route:'/stkx/ss-portfolio/view', displayText:'Go to SsPortfolio'
 });
 }
 

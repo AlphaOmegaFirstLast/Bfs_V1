@@ -55,8 +55,8 @@
         <label>Transaction Date</label>
       </div>
       <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="SspTransaction_TransactionDateFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="SspTransaction_TransactionDateTo">
+        <label class="me-2">from</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="SspTransaction_TransactionDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="SspTransaction_TransactionDateTo">
       </div>
     </div>
   </div>

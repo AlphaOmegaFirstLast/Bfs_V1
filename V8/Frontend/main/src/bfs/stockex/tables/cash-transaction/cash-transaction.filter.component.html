@@ -83,6 +83,20 @@
       </div>
     </div>
   </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Currency</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.CurrencyId" name="currencyId">
+          <ng-container *ngFor="let option of CurrencyOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
 
       <div class="form-control">
     <div class="row">
@@ -90,8 +104,8 @@
         <label>Source Date</label>
       </div>
       <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="SourceDateFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="SourceDateTo">
+        <label class="me-2">from</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="SourceDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="SourceDateTo">
       </div>
     </div>
   </div>
@@ -101,8 +115,8 @@
         <label>Transaction Date</label>
       </div>
       <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="TransactionDateFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="TransactionDateTo">
+        <label class="me-2">from</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="TransactionDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="TransactionDateTo">
       </div>
     </div>
   </div>

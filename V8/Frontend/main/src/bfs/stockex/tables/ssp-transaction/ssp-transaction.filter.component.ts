@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ISspTransactionFilter } from './ssp-transaction.shared';
@@ -11,8 +12,9 @@ import { ISspTransactionFilter } from './ssp-transaction.shared';
 
 @Component({
     selector: 'app-ssp-transaction-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './ssp-transaction.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './ssp-transaction.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class SspTransactionFilterComponent implements OnInit {
@@ -24,6 +26,7 @@ export class SspTransactionFilterComponent implements OnInit {
 public TransactionTypeOptions:  any[] = [];
 public StockShareOptions:  any[] = [];
 public ToPortfolioOptions:  any[] = [];
+public CurrencyOptions:  any[] = [];
 
     // Define autocomplete fields
 
@@ -111,6 +114,17 @@ target = "/ToPortfolio/list";
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching To Portfolio data.';
+                this.isLoading.list = false;
+            }
+        });
+target = "/Currency/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.CurrencyOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Currency data.';
                 this.isLoading.list = false;
             }
         });

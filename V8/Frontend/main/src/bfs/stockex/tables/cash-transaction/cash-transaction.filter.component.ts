@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ICashTransactionFilter } from './cash-transaction.shared';
@@ -11,8 +12,9 @@ import { ICashTransactionFilter } from './cash-transaction.shared';
 
 @Component({
     selector: 'app-cash-transaction-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './cash-transaction.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './cash-transaction.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class CashTransactionFilterComponent implements OnInit {
@@ -24,6 +26,7 @@ export class CashTransactionFilterComponent implements OnInit {
 public SsPortfolioOptions:  any[] = [];
 public TransactionTypeOptions:  any[] = [];
 public ExpensesTypeOptions:  any[] = [];
+public CurrencyOptions:  any[] = [];
 
     // Define autocomplete fields
 
@@ -103,6 +106,17 @@ target = "/ExpensesType/list";
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching Expenses Type data.';
+                this.isLoading.list = false;
+            }
+        });
+target = "/Currency/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.CurrencyOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Currency data.';
                 this.isLoading.list = false;
             }
         });
