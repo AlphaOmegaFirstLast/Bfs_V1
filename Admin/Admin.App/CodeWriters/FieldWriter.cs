@@ -473,7 +473,7 @@ namespace Admin.App
                        : frontendDataType.ToLower() == "ireportinfo" ? "initReportInfo()"
                        : frontendDataType.ToLower() == "imatrixinfo" ? "initMatrixInfo()"
                        : frontendDataType.ToLower() == "string" && BackendDataTypeId == BackendDataType.DT_long ? "'0'"
-                       : BackendDataTypeId == BackendDataType.DT_DateTime? "new Date(0)"  // Date type in frontend will be initialized as null, and set to actual date value when used, to avoid timezone issue.
+                       : BackendDataTypeId == BackendDataType.DT_DateTime? "new Date()"  // Date type in frontend will be initialized as null, and set to actual date value when used, to avoid timezone issue.
                        : "''";
         }
 

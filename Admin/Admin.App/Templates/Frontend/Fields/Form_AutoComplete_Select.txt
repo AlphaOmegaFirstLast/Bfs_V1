@@ -2,7 +2,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-12"  *ngIf="isVisible('[SmallFieldName]')">
                                                     <div class="position-relative"  (focusout)="[AutoCompleteSmall]Auto.hideOverlay()">
-                                                        <label class="form-label fs-6">Component</label>
+                                                        <label class="form-label fs-6">[DisplayName]</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
                                                                 [formControl]="[AutoCompleteSmall]Auto.control"

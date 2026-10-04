@@ -137,8 +137,16 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                 //Template_Start_FilterField_ValueString_1
                 if (!string.IsNullOrEmpty(filter.[FilterValueName]))
                 {
-                    sql.AppendLine("[DbParentTable].[CapitalFieldName] like '%'+@[FilterValueName]+'%' ");
-                    parameters.Add("@[FilterValueName]", filter.[FilterValueName]);
+                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                   {
+                      sql.AppendLine("[DbParentTable].[CapitalFieldName] like '%'+@[FilterValueName]+'%' ");
+                      parameters.Add("@[FilterValueName]", filter.[FilterValueName]);                    
+                   }
+                   else
+                   {
+                      sql.AppendLine("[DbParentTable].[CapitalFieldName] like '%'+@[FilterValueName]+'%' ");
+                      parameters.Add("@[FilterValueName]", filter.[FilterValueName]);
+                   }
                 }
                 //Template_End_FilterField_ValueString_1
                
