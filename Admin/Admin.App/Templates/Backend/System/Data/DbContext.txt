@@ -7,7 +7,8 @@ namespace Bfs.[SystemNameCapital].Data;
 public class [SystemNameCapital]DbContext : DbContext
 {
 //Template_Component_RegisterDbSet
-
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
     public [SystemNameCapital]DbContext(DbContextOptions<[SystemNameCapital]DbContext> options) : base(options)
     {
     }
@@ -31,5 +32,7 @@ public class [SystemNameCapital]DbContext : DbContext
 
         //Template_ConfigField_CustomFieldList
         //Template_ConfigField_Object
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     }
 }

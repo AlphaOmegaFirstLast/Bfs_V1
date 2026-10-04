@@ -9,12 +9,15 @@
   "Settings": {
     "AllowedOrigins": "*",
     "IsSecurityEnabled": "true",
+    "IsMigrationEnabled": "false",
+    "IsMasterSystem": "[IsMasterFlag]",
     "DbConnections": {
 	    "MasterConnection": "Server=tcp:[SqlServerName].database.windows.net,1433;Initial Catalog=[DatabaseName];Persist Security Info=False;User ID=[SqlServerName];Password=[SqlServerPassword];MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+        "MigrationConnection": "Server=tcp:Tenant__Migration.database.windows.net,1433;Initial Catalog=[DatabaseName];Persist Security Info=False;User ID=[SqlServerName];Password=[SqlServerPassword];MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
     },
     "ApiBaseUrls": {
       "AuthApi": "",
-      "StockExApi": ""
+      "IdentityWebApi": ""
     },
     "JwtSettings": {
       "Issuer": "Bfs",

@@ -17,7 +17,7 @@
     },
     "ApiBaseUrls": {
       "AuthApi": "https://localhost:6100",
-      "StockExApi": "https://localhost:7100"
+      "IdentityWebApi": "https://localhost:7100"
     },
     "JwtSettings": {
       "Issuer": "Bfs",
@@ -28,4 +28,3 @@
     }
   }
 }
-

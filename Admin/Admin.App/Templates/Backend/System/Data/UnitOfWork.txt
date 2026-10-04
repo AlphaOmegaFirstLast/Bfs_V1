@@ -3,35 +3,35 @@ using Bfs.[SystemNameCapital].Data.Interfaces;
 using Bfs.[SystemNameCapital].Data.Models;
 
 using Microsoft.EntityFrameworkCore;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.[SystemNameCapital].Data.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly [SystemNameCapital]DbContext _context;
+    public [SystemNameCapital]DbContext _context {get;}
 //Template_Field_ChildrenMatrix_AddDeclareEntry
+
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     public UnitOfWork([SystemNameCapital]DbContext dbContext, IScopeData scopeData
 //Template_Field_ChildrenMatrix_AddParameterEntry
 
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     )
     {
         _context = dbContext;
 //Template_Field_ChildrenMatrix_AddInitEntry
+
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
     }
 
  //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
 
-
-    //public async Task MergeStockShares(long stockShareId, int factor)
-    //{
-    //    var stockShareList = await _context.SspStocks.Where(x => x.StockShareId == stockShareId).ToListAsync();
-    //    stockShareList.ForEach(stockShare =>
-    //    {
-    //        stockShare.Quantity = stockShare.Quantity / factor;
-    //        stockShare.AverageCost = stockShare.Quantity * factor;
-    //    });
-
-    //    await _context.SaveChangesAsync();
-    //}
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 }

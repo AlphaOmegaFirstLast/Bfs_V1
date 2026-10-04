@@ -62,6 +62,7 @@
             txtMessage = new TextBox();
             label6 = new Label();
             panel1 = new Panel();
+            txtWarning = new Label();
             ckDisableSecurity = new CheckBox();
             ckKeepExistingCode = new CheckBox();
             btnApplyManualCode = new Button();
@@ -71,7 +72,6 @@
             btnGenerateSystem = new Button();
             label8 = new Label();
             btnRefreshDb = new Button();
-            txtWarning = new Label();
             tabInfo.SuspendLayout();
             tabTables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridTables).BeginInit();
@@ -431,6 +431,16 @@
             panel1.Size = new Size(1269, 183);
             panel1.TabIndex = 31;
             // 
+            // txtWarning
+            // 
+            txtWarning.AutoSize = true;
+            txtWarning.ForeColor = Color.Red;
+            txtWarning.Location = new Point(639, 130);
+            txtWarning.Name = "txtWarning";
+            txtWarning.Size = new Size(625, 25);
+            txtWarning.TabIndex = 39;
+            txtWarning.Text = "Change (when init_Angular)!!!  src/proxy.config.json => [Bfs.Identity.Web URL]";
+            // 
             // ckDisableSecurity
             // 
             ckDisableSecurity.AutoSize = true;
@@ -444,8 +454,6 @@
             // ckKeepExistingCode
             // 
             ckKeepExistingCode.AutoSize = true;
-            ckKeepExistingCode.Checked = true;
-            ckKeepExistingCode.CheckState = CheckState.Checked;
             ckKeepExistingCode.Location = new Point(674, 11);
             ckKeepExistingCode.Name = "ckKeepExistingCode";
             ckKeepExistingCode.Size = new Size(189, 29);
@@ -520,16 +528,6 @@
             btnRefreshDb.Text = "Refresh Database";
             btnRefreshDb.UseVisualStyleBackColor = true;
             btnRefreshDb.Click += btnRefreshDb_Click;
-            // 
-            // txtWarning
-            // 
-            txtWarning.AutoSize = true;
-            txtWarning.ForeColor = Color.Red;
-            txtWarning.Location = new Point(639, 130);
-            txtWarning.Name = "txtWarning";
-            txtWarning.Size = new Size(625, 25);
-            txtWarning.TabIndex = 39;
-            txtWarning.Text = "Change (when init_Angular)!!!  src/proxy.config.json => [Bfs.Identity.Web URL]";
             // 
             // FormGenerator
             // 

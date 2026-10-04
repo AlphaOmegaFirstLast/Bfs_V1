@@ -8,7 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.[SystemNameCapital].Contracts;
 using Bfs.[SystemNameCapital].Domain.Interfaces;
-
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 namespace Bfs.[SystemNameCapital].Api.Controllers;
 
 [Route("api/[controller]")]
@@ -18,12 +19,20 @@ namespace Bfs.[SystemNameCapital].Api.Controllers;
 public class ReportsController
 {
     private readonly IReportsService _reportsService;
-
-    public ReportsController(IReportsService reportsService)
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+    public ReportsController(IReportsService reportsService
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+)
     {
         _reportsService = reportsService;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
     }
 
 //Template_Component_AddControllerEntry
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 }
 
