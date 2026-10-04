@@ -6,6 +6,7 @@ namespace Bfs.StockEx.Contracts
     {      
         public DateTime AgreementDate { get; set; }
 public long Id { get; set; }
+public string Name { get; set; }
 public string Notes { get; set; }
 public long InvestorId { get; set; }
 public long BrokerId { get; set; }

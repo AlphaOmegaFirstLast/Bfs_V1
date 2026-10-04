@@ -3,6 +3,8 @@ using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Data.Interfaces;
 using Bfs.StockEx.Domain.Interfaces;
 using Bfs.StockEx.Domain.Mapper;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Domain.Services
 {
@@ -10,10 +12,22 @@ namespace Bfs.StockEx.Domain.Services
     {
         private readonly IOverdraftPortfolioRepository _repo;
         private readonly IOverdraftPortfolioList _list;
-        public OverdraftPortfolioService(IOverdraftPortfolioRepository repo, IOverdraftPortfolioList list)
+   //Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
+        public OverdraftPortfolioService(
+          IOverdraftPortfolioRepository repo
+        , IOverdraftPortfolioList list
+  //Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+        )
         {
             _repo = repo;
             _list = list;
+  //Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
         }
 
         public async Task<OverdraftPortfolio?> GetAsync(long id)
@@ -42,12 +56,6 @@ namespace Bfs.StockEx.Domain.Services
             var result = await GetAsync(newEntity.Id)
                 .ConfigureAwait(false);
 
-            //var message = new OverdraftPortfolioCreatedMessage
-            //{
-            //    Entity = PrepareForMessage(result),
-            //};
-            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
-
             return result;
         }
 
@@ -56,22 +64,10 @@ namespace Bfs.StockEx.Domain.Services
             //ToDo fluent validation, error or exception
 
             var existingEntity = await _repo.GetAsync(contract.Id).ConfigureAwait(false);
-
             var updatedEntity = contract.ToEntity(existingEntity);
-
-            //var message = new OverdraftPortfolioUpdatedMessage
-            //{
-            //    OldEntity = PrepareForMessage(existingContract),
-            //};
-
-            //  existingEntity?.ToEntity();
 
             await _repo.UpdateAsync(updatedEntity).ConfigureAwait(false);
             await _repo.SaveAsync().ConfigureAwait(false);
-
-            //message.NewEntity = PrepareForMessage(result);
-            //await _messagePublisher.PublishMessageAsync(message)
-            //    .ConfigureAwait(false);
 
             return updatedEntity?.ToContract();
         }
@@ -80,42 +76,21 @@ namespace Bfs.StockEx.Domain.Services
         {
             var existingEntity = await _repo.GetAsync(id).ConfigureAwait(false);
 
-            //   existingEntity.IsDeleted = true;
+            await _repo.DeleteAsync(existingEntity).ConfigureAwait(false);
 
-            await _repo.DeleteAsync(existingEntity)
-                .ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
-
-            //var message = new OverdraftPortfolioDeletedMessage
-            //{
-            //    Entity = PrepareForMessage(existingContract),
-            //    CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
-            //};
-
-            //await _messagePublisher.PublishMessageAsync(message)
-            //    .ConfigureAwait(false);
         }
 
         public async Task<OverdraftPortfolio> UploadAsync(OverdraftPortfolio contract)
         {
 
             var entity = contract.ToEntity();
-            var newEntity = await _repo.UploadAsync(entity)
-                .ConfigureAwait(false);
+            var newEntity = await _repo.UploadAsync(entity).ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
+            await _repo.SaveAsync().ConfigureAwait(false);
 
-            var result = await GetAsync(newEntity.Id)
-                .ConfigureAwait(false);
-
-            //var message = new OverdraftPortfolioCreatedMessage
-            //{
-            //    Entity = PrepareForMessage(result),
-            //};
-            //await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
+            var result = await GetAsync(newEntity.Id).ConfigureAwait(false);
 
             return result;
         }
@@ -130,8 +105,9 @@ namespace Bfs.StockEx.Domain.Services
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<OverdraftPortfolioListItem> { Items = new List<OverdraftPortfolioListItem>(), TotalItems = 0, TotalPages = 0 };
         }
 
-        //Template_Start_Code_DontOverwrite_1
-        //Template_End_Code_DontOverwrite_1
+  //Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
+
     }
 }
 

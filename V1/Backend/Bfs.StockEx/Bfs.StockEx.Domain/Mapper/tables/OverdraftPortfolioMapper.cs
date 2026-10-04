@@ -14,9 +14,11 @@ namespace Bfs.StockEx.Domain.Mapper
 Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
-OverdraftValue= entity.OverdraftValue,
+OverdraftPercent= entity.OverdraftPercent,
+OverdraftMax= entity.OverdraftMax,
 
                SsPortfolioId= entity.SsPortfolioId,
+BrokerAgreementId= entity.BrokerAgreementId,
 
             };
 
@@ -41,9 +43,11 @@ OverdraftValue= entity.OverdraftValue,
 OverdraftPortfolioEntity.Id= contract.Id;
 OverdraftPortfolioEntity.Name= contract.Name;
 OverdraftPortfolioEntity.Notes= contract.Notes;
-OverdraftPortfolioEntity.OverdraftValue= contract.OverdraftValue;
+OverdraftPortfolioEntity.OverdraftPercent= contract.OverdraftPercent;
+OverdraftPortfolioEntity.OverdraftMax= contract.OverdraftMax;
 
             OverdraftPortfolioEntity.SsPortfolioId= contract.SsPortfolioId;
+OverdraftPortfolioEntity.BrokerAgreementId= contract.BrokerAgreementId;
 
             return OverdraftPortfolioEntity;
         }     

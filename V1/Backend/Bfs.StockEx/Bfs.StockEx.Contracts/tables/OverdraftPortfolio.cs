@@ -23,14 +23,22 @@ namespace Bfs.StockEx.Contracts
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
 ///<Summary>
-        /// OverdraftPortfolio Overdraft Value.
+        /// OverdraftPortfolio Overdraft Percent.
         ///</Summary>
-        public decimal OverdraftValue {get; set;} = 0 ;
+        public decimal OverdraftPercent {get; set;} = 0 ;
+///<Summary>
+        /// OverdraftPortfolio Overdraft Max.
+        ///</Summary>
+        public decimal OverdraftMax {get; set;} = 0 ;
 
         ///<Summary>
         /// OverdraftPortfolio StockShare Portfolio.
         ///</Summary>
         public long SsPortfolioId {get; set;} = 0 ;
+///<Summary>
+        /// OverdraftPortfolio Broker Agreement.
+        ///</Summary>
+        public long BrokerAgreementId {get; set;} = 0 ;
 
     }
 }

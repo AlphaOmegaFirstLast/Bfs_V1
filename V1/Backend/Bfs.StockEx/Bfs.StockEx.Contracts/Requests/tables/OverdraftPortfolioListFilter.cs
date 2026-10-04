@@ -10,8 +10,10 @@ namespace Bfs.StockEx.Contracts
         public string? Name { get; set; }
 
         public long? SsPortfolioId { get; set; }
+public long? BrokerAgreementId { get; set; }
 
-        public NumericRange? OverdraftValue { get; set; }
+        public NumericRange? OverdraftPercent { get; set; }
+public NumericRange? OverdraftMax { get; set; }
 
     }
 }

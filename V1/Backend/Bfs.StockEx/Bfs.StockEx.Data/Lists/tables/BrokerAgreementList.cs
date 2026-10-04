@@ -70,6 +70,7 @@ namespace Bfs.StockEx.Data.Lists
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "AgreementDate", DbName = "stkxBrokerAgreement.AgreementDate", QueryName = "AgreementDate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Id", DbName = "stkxBrokerAgreement.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Notes", DbName = "stkxBrokerAgreement.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "InvestorId", DbName = "stkxBrokerAgreement.InvestorId", QueryName = "InvestorId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "BrokerId", DbName = "stkxBrokerAgreement.BrokerId", QueryName = "BrokerId", IsAggregare = false});

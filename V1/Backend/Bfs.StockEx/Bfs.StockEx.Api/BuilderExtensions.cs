@@ -200,6 +200,9 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IValidator<CouponType>, CouponTypeValidator>();
             builder.Services.AddScoped<IValidator<CustomReports>, CustomReportsValidator>();
             builder.Services.AddScoped<IValidator<StockEntityType>, StockEntityTypeValidator>();
+            builder.Services.AddScoped<IValidator<PaymentMode>, PaymentModeValidator>();
+            builder.Services.AddScoped<IValidator<CreditInterest>, CreditInterestValidator>();
+            builder.Services.AddScoped<IValidator<DebitInterest>, DebitInterestValidator>();
 //Template_Component_RegisterValidator
     }
 
@@ -233,6 +236,9 @@ public static class BuilderExtensions
             builder.Services.AddScoped<ISourceTypeRepository, SourceTypeRepository>();
             builder.Services.AddScoped<IStockFieldTypeRepository, StockFieldTypeRepository>();
             builder.Services.AddScoped<ICustomReportsRepository, CustomReportsRepository>();
+            builder.Services.AddScoped<IPaymentModeRepository, PaymentModeRepository>();
+            builder.Services.AddScoped<ICreditInterestRepository, CreditInterestRepository>();
+            builder.Services.AddScoped<IDebitInterestRepository, DebitInterestRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -267,6 +273,9 @@ public static class BuilderExtensions
             builder.Services.AddScoped<ISourceTypeService, SourceTypeService>();
             builder.Services.AddScoped<IStockFieldTypeService, StockFieldTypeService>();
             builder.Services.AddScoped<ICustomReportsService, CustomReportsService>();
+            builder.Services.AddScoped<IPaymentModeService, PaymentModeService>();
+            builder.Services.AddScoped<ICreditInterestService, CreditInterestService>();
+            builder.Services.AddScoped<IDebitInterestService, DebitInterestService>();
 //Template_Component_RegisterService
     }
 
@@ -428,6 +437,24 @@ public static class BuilderExtensions
             var resourceSecurity = sp.GetRequiredService<IResourceSecurity>();
             var config = sp.GetRequiredService<TenantSqlConfiguration>();
             return new CustomReportsList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IPaymentModeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PaymentModeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICreditInterestList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CreditInterestList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IDebitInterestList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new DebitInterestList(config.ConnectionString, resourceSecurity);
         });
 //Template_Component_RegisterList
     }

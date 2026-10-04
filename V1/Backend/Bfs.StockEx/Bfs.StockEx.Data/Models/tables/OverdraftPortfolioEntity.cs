@@ -14,9 +14,11 @@ namespace Bfs.StockEx.Data.Models
 public long Id {get; set;} = 0 ;
 public string Name {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
-public decimal OverdraftValue {get; set;} = 0 ;
+public decimal OverdraftPercent {get; set;} = 0 ;
+public decimal OverdraftMax {get; set;} = 0 ;
 
         public long SsPortfolioId {get; set;} = 0 ;
+public long BrokerAgreementId {get; set;} = 0 ;
 
     }
 }

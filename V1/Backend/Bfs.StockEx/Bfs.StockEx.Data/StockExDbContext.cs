@@ -34,6 +34,9 @@ public class StockExDbContext : DbContext
  public DbSet<StockFieldTypeEntity> StockFieldTypes { get; set; }
  public DbSet<CouponTypeEntity> CouponTypes { get; set; }
  public DbSet<CustomReportsEntity> CustomReportss { get; set; }
+ public DbSet<PaymentModeEntity> PaymentModes { get; set; }
+ public DbSet<CreditInterestEntity> CreditInterests { get; set; }
+ public DbSet<DebitInterestEntity> DebitInterests { get; set; }
 //Template_Component_RegisterDbSet
 
     public StockExDbContext(DbContextOptions<StockExDbContext> options) : base(options)
@@ -62,5 +65,4 @@ public class StockExDbContext : DbContext
         //Template_ConfigField_Object
     }
 }
-
 

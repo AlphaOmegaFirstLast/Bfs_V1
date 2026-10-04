@@ -1,6 +1,8 @@
 using FluentValidation;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Validators
 {
@@ -8,14 +10,9 @@ namespace Bfs.StockEx.Api.Validators
     {
         public OverdraftPortfolioValidator()
         {
-        RuleFor(x => x.Name)
-.NotEmpty().WithErrorCode(ErrorCodes.InvalidName)
-.MinimumLength(3)
-.MaximumLength(50)
-;
-RuleFor(x => x.Notes)
-.MaximumLength(1000)
-;
+
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
         }
     }

@@ -2,12 +2,16 @@ using Bfs.StockEx.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Data.Configuration
 {
     public class OverdraftPortfolioEntityConfiguration : IEntityTypeConfiguration<OverdraftPortfolioEntity>
     {
         public static readonly string TableNameCapital = "stkxOverdraftPortfolio";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
         public void Configure(EntityTypeBuilder<OverdraftPortfolioEntity> builder)
         {
@@ -21,7 +25,11 @@ namespace Bfs.StockEx.Data.Configuration
 //   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.OverdraftValue).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.OverdraftPercent).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.OverdraftMax).HasMaxLength([FieldLength]).IsRequired();
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
         }
     }

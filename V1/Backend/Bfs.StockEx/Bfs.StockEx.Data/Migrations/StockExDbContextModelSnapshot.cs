@@ -265,6 +265,39 @@ namespace Bfs.StockEx.Data.Migrations
                     b.ToTable("stkxCouponType", (string)null);
                 });
 
+            modelBuilder.Entity("Bfs.StockEx.Data.Models.CreditInterestEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BrokerAgreementId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("InterestPercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PaymentModeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stkxCreditInterest", (string)null);
+                });
+
             modelBuilder.Entity("Bfs.StockEx.Data.Models.CurrencyEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -359,6 +392,39 @@ namespace Bfs.StockEx.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("stkxCustomReports", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.StockEx.Data.Models.DebitInterestEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BrokerAgreementId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("InterestPercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PaymentModeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stkxDebitInterest", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.StockEx.Data.Models.EffectTypeEntity", b =>
@@ -482,6 +548,9 @@ namespace Bfs.StockEx.Data.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("BrokerAgreementId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -493,7 +562,10 @@ namespace Bfs.StockEx.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("OverdraftValue")
+                    b.Property<decimal>("OverdraftMax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OverdraftPercent")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("SsPortfolioId")
@@ -505,6 +577,30 @@ namespace Bfs.StockEx.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("stkxOverdraftPortfolio", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.StockEx.Data.Models.PaymentModeEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stkxPaymentMode", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.StockEx.Data.Models.SourceTypeEntity", b =>

@@ -50,7 +50,6 @@ public enum TransactionTypes
     Divident = 17,
 }
 
-
 public class UnitOfWork : IUnitOfWork
 {
     private readonly StockExDbContext _context;
@@ -235,9 +234,7 @@ public class UnitOfWork : IUnitOfWork
         return result;
     }
 
-
     //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
-
 
     //public async Task MergeStockShares(long stockShareId, int factor)
     //{

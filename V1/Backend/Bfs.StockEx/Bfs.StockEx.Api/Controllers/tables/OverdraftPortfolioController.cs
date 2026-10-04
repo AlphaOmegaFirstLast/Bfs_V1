@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +21,20 @@ public class OverdraftPortfolioController
 {
     private readonly IOverdraftPortfolioService _overdraftPortfolioService;
     private IValidator<OverdraftPortfolio> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-    public OverdraftPortfolioController(IOverdraftPortfolioService overdraftPortfolioService, IValidator<OverdraftPortfolio> validator)
+    public OverdraftPortfolioController(IOverdraftPortfolioService overdraftPortfolioService, IValidator<OverdraftPortfolio> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
     {
         _overdraftPortfolioService = overdraftPortfolioService;
         _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
     }
 
     [HttpGet]
@@ -36,10 +47,12 @@ public class OverdraftPortfolioController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.overdraftPortfolio")]
-    public async Task<OverdraftPortfolio?> Get(long id)
+    public async Task<OverdraftPortfolioListItem?> Get(long id)
     {
-        var result = await _overdraftPortfolioService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<OverdraftPortfolioListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _overdraftPortfolioService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]
@@ -164,8 +177,9 @@ public class OverdraftPortfolioController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 
 }
 
