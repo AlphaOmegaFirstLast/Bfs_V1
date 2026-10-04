@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IExpensesTypeFilter } from './expenses-type.shared';
@@ -11,8 +12,9 @@ import { IExpensesTypeFilter } from './expenses-type.shared';
 
 @Component({
     selector: 'app-expenses-type-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './expenses-type.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './expenses-type.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class ExpensesTypeFilterComponent implements OnInit {

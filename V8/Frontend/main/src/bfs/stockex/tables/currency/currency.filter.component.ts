@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ICurrencyFilter } from './currency.shared';
@@ -11,8 +12,9 @@ import { ICurrencyFilter } from './currency.shared';
 
 @Component({
     selector: 'app-currency-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './currency.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './currency.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class CurrencyFilterComponent implements OnInit {

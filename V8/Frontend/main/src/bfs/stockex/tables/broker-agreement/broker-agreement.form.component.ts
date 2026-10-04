@@ -20,9 +20,19 @@ import {isEnabled, isVisible, type IBrokerAgreement, initBrokerAgreement, broker
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
+import {OverdraftPortfolioListComponent} from "../overdraft-portfolio/overdraft-portfolio.list.component"
+import {IOverdraftPortfolioFilter, IOverdraftPortfolioRequest, initOverdraftPortfolioRequest} from "../overdraft-portfolio/overdraft-portfolio.shared"
+import {CreditInterestListComponent} from "../credit-interest/credit-interest.list.component"
+import {ICreditInterestFilter, ICreditInterestRequest, initCreditInterestRequest} from "../credit-interest/credit-interest.shared"
+import {DebitInterestListComponent} from "../debit-interest/debit-interest.list.component"
+import {IDebitInterestFilter, IDebitInterestRequest, initDebitInterestRequest} from "../debit-interest/debit-interest.shared"
+
 @Component({
     selector: 'broker-agreement-form',
     imports: [
+    OverdraftPortfolioListComponent,
+CreditInterestListComponent,
+DebitInterestListComponent,
 
     CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
@@ -36,6 +46,9 @@ export class BrokerAgreementFormComponent extends BaseFormComponent<IBrokerAgree
     override componentName: string = 'BrokerAgreement'.toLowerCase();  // used to grab its related custom field definitions
 
     // Children filters
+    presetOverdraftPortfolioFilter: IOverdraftPortfolioFilter | undefined;
+presetCreditInterestFilter: ICreditInterestFilter | undefined;
+presetDebitInterestFilter: IDebitInterestFilter | undefined;
 
     // Define look ups
     public InvestorOptions: any[] = [];
@@ -72,6 +85,21 @@ public BrokerOptions: any[] = [];
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
+        let presetOverdraftPortfolioRequest: IOverdraftPortfolioRequest = initOverdraftPortfolioRequest();
+        this.presetOverdraftPortfolioFilter = presetOverdraftPortfolioRequest.filter;
+        if (this.presetOverdraftPortfolioFilter) {
+            this.presetOverdraftPortfolioFilter.BrokerAgreementId = this.entity.id;
+        }
+let presetCreditInterestRequest: ICreditInterestRequest = initCreditInterestRequest();
+        this.presetCreditInterestFilter = presetCreditInterestRequest.filter;
+        if (this.presetCreditInterestFilter) {
+            this.presetCreditInterestFilter.BrokerAgreementId = this.entity.id;
+        }
+let presetDebitInterestRequest: IDebitInterestRequest = initDebitInterestRequest();
+        this.presetDebitInterestFilter = presetDebitInterestRequest.filter;
+        if (this.presetDebitInterestFilter) {
+            this.presetDebitInterestFilter.BrokerAgreementId = this.entity.id;
+        }
 
     }
     //---------------------------------------------------------

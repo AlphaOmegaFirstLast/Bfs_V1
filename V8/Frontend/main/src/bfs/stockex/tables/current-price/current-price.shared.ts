@@ -11,8 +11,8 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 export const CurrentPriceColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:false, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -34,7 +34,7 @@ export function initCurrentPrice(): ICurrentPrice {
 id: '0',
 name: '',
 notes: '',
-transactionDate: new Date(0),
+transactionDate: new Date(),
 price: 0,
 
         stockShareId: '0',
@@ -51,7 +51,7 @@ export function currentPriceUntypedFormGroup(formBuilder: FormBuilder): any {
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"0","MaxLength":"0","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"0","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-transactionDate: [new Date(0),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+transactionDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 price: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     stockShareId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],

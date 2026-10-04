@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ICurrentPriceFilter } from './current-price.shared';
@@ -11,8 +12,9 @@ import { ICurrentPriceFilter } from './current-price.shared';
 
 @Component({
     selector: 'app-current-price-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './current-price.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './current-price.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class CurrentPriceFilterComponent implements OnInit {

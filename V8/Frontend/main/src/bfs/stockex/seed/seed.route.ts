@@ -47,5 +47,10 @@ export const Seed_ROUTES: Routes = [
         loadChildren: () => import('./stock-field-type/stock-field-type.route').then((mod) => mod.StockFieldType_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./payment-mode/payment-mode.route').then((mod) => mod.PaymentMode_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]

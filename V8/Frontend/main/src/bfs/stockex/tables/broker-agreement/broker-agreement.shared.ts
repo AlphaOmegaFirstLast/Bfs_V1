@@ -11,6 +11,7 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 export const BrokerAgreementColumns = [
     { fieldName: 'agreementDate', displayName: 'Agreement Date', sortName: 'AgreementDate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'investorId', displayName: 'Investor', sortName: 'Investor_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'brokerId', displayName: 'Broker', sortName: 'Broker_Name', width: '50px', isVisible:true, columnOrder:1 },

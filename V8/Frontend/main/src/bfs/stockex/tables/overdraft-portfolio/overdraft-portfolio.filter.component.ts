@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IOverdraftPortfolioFilter } from './overdraft-portfolio.shared';
@@ -11,8 +12,9 @@ import { IOverdraftPortfolioFilter } from './overdraft-portfolio.shared';
 
 @Component({
     selector: 'app-overdraft-portfolio-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './overdraft-portfolio.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './overdraft-portfolio.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class OverdraftPortfolioFilterComponent implements OnInit {
@@ -21,12 +23,15 @@ export class OverdraftPortfolioFilterComponent implements OnInit {
 
     // Define look ups
     public SsPortfolioOptions:  any[] = [];
+public BrokerAgreementOptions:  any[] = [];
 
     // Define autocomplete fields
 
     // Define range filters
-    public OverdraftValueFrom: number | undefined;
-    public OverdraftValueTo: number | undefined;
+    public OverdraftPercentFrom: number | undefined;
+    public OverdraftPercentTo: number | undefined;
+public OverdraftMaxFrom: number | undefined;
+    public OverdraftMaxTo: number | undefined;
 
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
@@ -44,8 +49,10 @@ export class OverdraftPortfolioFilterComponent implements OnInit {
         await this.getLookups();
         await this.setAutoComplete();
         // Initialize range filters if not set
-        this.OverdraftValueFrom = this.result.OverdraftValue?.from;
-        this.OverdraftValueTo   = this.result.OverdraftValue?.to;
+        this.OverdraftPercentFrom = this.result.OverdraftPercent?.from;
+        this.OverdraftPercentTo   = this.result.OverdraftPercent?.to;
+this.OverdraftMaxFrom = this.result.OverdraftMax?.from;
+        this.OverdraftMaxTo   = this.result.OverdraftMax?.to;
 
     }
     //---------------------------------------------------------
@@ -59,6 +66,17 @@ export class OverdraftPortfolioFilterComponent implements OnInit {
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching StockShare Portfolio data.';
+                this.isLoading.list = false;
+            }
+        });
+target = "/BrokerAgreement/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.BrokerAgreementOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Broker Agreement data.';
                 this.isLoading.list = false;
             }
         });
@@ -78,7 +96,8 @@ export class OverdraftPortfolioFilterComponent implements OnInit {
     apply() {
         this.activeModal.close('Apply');
         // Apply range filters
-        this.result.OverdraftValue = { from: this.OverdraftValueFrom, to: this.OverdraftValueTo };
+        this.result.OverdraftPercent = { from: this.OverdraftPercentFrom, to: this.OverdraftPercentTo };
+this.result.OverdraftMax = { from: this.OverdraftMaxFrom, to: this.OverdraftMaxTo };
 
         this.parent.applyFilter(this.result);
     }

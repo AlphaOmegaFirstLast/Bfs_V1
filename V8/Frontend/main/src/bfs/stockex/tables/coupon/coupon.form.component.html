@@ -26,10 +26,10 @@
                                                 <div ngbDropdownMenu>
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
 
-                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                    <div *ngFor="let link of linkList">
                                                         <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
                                                     </div>
-                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                    <div *ngFor="let link of actionList">
                                                         <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
                                                     </div>
 
@@ -51,10 +51,10 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                     <div class="col-6">
-<div class="row mb-2"  *ngIf="isVisible('tradingRoomId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('tradingRoomId')">
         <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
-        <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId" [disabled]="isEnabled('tradingRoomId')"
+        <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId" 
             [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of TradingRoomOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -63,10 +63,10 @@
         <div class="invalid-feedback">Please select a valid Trading Room.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('stockShareId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('stockShareId')">
         <label for="stockShareId" class="form-label fs-6">Stock Share</label>
-        <select class="form-select" id="stockShareId" formControlName="stockShareId" [disabled]="isEnabled('stockShareId')"
+        <select class="form-select" id="stockShareId" formControlName="stockShareId" 
             [class]="submit && !form['stockShareId'].errors ? 'is-valid': submit && form['stockShareId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of StockShareOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -75,10 +75,10 @@
         <div class="invalid-feedback">Please select a valid Stock Share.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('couponTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('couponTypeId')">
         <label for="couponTypeId" class="form-label fs-6">Coupon Type</label>
-        <select class="form-select" id="couponTypeId" formControlName="couponTypeId" [disabled]="isEnabled('couponTypeId')"
+        <select class="form-select" id="couponTypeId" formControlName="couponTypeId" 
             [class]="submit && !form['couponTypeId'].errors ? 'is-valid': submit && form['couponTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of CouponTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -87,57 +87,57 @@
         <div class="invalid-feedback">Please select a valid Coupon Type.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('value')">
-    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6" *ngIf="isVisible('value')">
         <label for="value" class="form-label fs-6">Value</label>
-        <input class="form-control" type="text" id="value" formControlName="value"  [disabled]="isEnabled('value')"
+        <input class="form-control" type="text" id="value" formControlName="value"
             [class]="submit && !form['value'].errors ? 'is-valid': submit && form['value'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Value.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('couponPercent')">
-    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6" *ngIf="isVisible('couponPercent')">
         <label for="couponPercent" class="form-label fs-6">Percent</label>
-        <input class="form-control" type="text" id="couponPercent" formControlName="couponPercent"  [disabled]="isEnabled('couponPercent')"
+        <input class="form-control" type="text" id="couponPercent" formControlName="couponPercent"
             [class]="submit && !form['couponPercent'].errors ? 'is-valid': submit && form['couponPercent'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Percent.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('announceDate')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('announceDate')">
         <label for="announceDate" class="form-label fs-6">Announce Date</label>
-        <input class="form-control" type="date" id="announceDate" formControlName="announceDate" [disabled]="isEnabled('announceDate')"
+        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="announceDate" formControlName="announceDate"
             [class]="submit && !form['announceDate'].errors ? 'is-valid': submit && form['announceDate'].errors ? 'is-invalid' : ''" />
         <div class="invalid-feedback">Please select a valid Announce Date.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('valueDate')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('valueDate')">
         <label for="valueDate" class="form-label fs-6">Value Date</label>
-        <input class="form-control" type="date" id="valueDate" formControlName="valueDate" [disabled]="isEnabled('valueDate')"
+        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="valueDate" formControlName="valueDate"
             [class]="submit && !form['valueDate'].errors ? 'is-valid': submit && form['valueDate'].errors ? 'is-invalid' : ''" />
         <div class="invalid-feedback">Please select a valid Value Date.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('dueDate')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('dueDate')">
         <label for="dueDate" class="form-label fs-6">Due Date</label>
-        <input class="form-control" type="date" id="dueDate" formControlName="dueDate" [disabled]="isEnabled('dueDate')"
+        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="dueDate" formControlName="dueDate"
             [class]="submit && !form['dueDate'].errors ? 'is-valid': submit && form['dueDate'].errors ? 'is-invalid' : ''" />
         <div class="invalid-feedback">Please select a valid Due Date.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('couponStatusId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('couponStatusId')">
         <label for="couponStatusId" class="form-label fs-6">Coupon Status</label>
-        <select class="form-select" id="couponStatusId" formControlName="couponStatusId" [disabled]="isEnabled('couponStatusId')"
+        <select class="form-select" id="couponStatusId" formControlName="couponStatusId" 
             [class]="submit && !form['couponStatusId'].errors ? 'is-valid': submit && form['couponStatusId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of CouponStatusOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -146,12 +146,12 @@
         <div class="invalid-feedback">Please select a valid Coupon Status.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('notes')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('notes')">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="notes" formControlName="notes" [disabled]="isEnabled('notes')"
+        <input class="form-control" type="text" id="notes" formControlName="notes"
             [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Notes.</div>

@@ -51,6 +51,27 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                     <div class="col-6">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('name')">
+        <label for="name" class="form-label fs-6">Name</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <input class="form-control" type="text" id="name" formControlName="name"
+            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Name.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('agreementDate')">
+        <label for="agreementDate" class="form-label fs-6">Agreement Date</label>
+        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="agreementDate" formControlName="agreementDate"
+            [class]="submit && !form['agreementDate'].errors ? 'is-valid': submit && form['agreementDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Agreement Date.</div>
+    </div>
+</div>
+
 <div class="row mb-2">
     <div class="col-12"  *ngIf="isVisible('investorId')">
         <label for="investorId" class="form-label fs-6">Investor</label>
@@ -73,14 +94,6 @@
             </ng-container>
         </select>
         <div class="invalid-feedback">Please select a valid Broker.</div>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('agreementDate')">
-        <label for="agreementDate" class="form-label fs-6">Agreement Date</label>
-        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="agreementDate" formControlName="agreementDate"
-            [class]="submit && !form['agreementDate'].errors ? 'is-valid': submit && form['agreementDate'].errors ? 'is-invalid' : ''" />
-        <div class="invalid-feedback">Please select a valid Agreement Date.</div>
     </div>
 </div>
 
@@ -108,6 +121,39 @@
                 </li>
 
                 <!----------------------------------------------------- Tabs -------------------------------------->
+                <!----------------------------------------- Tab Contents OverdraftPortfolio -------------------------------------->
+
+<li [ngbNavItem]="2">
+    <a href="javascript:void(0)" ngbNavLink>
+        Overdraft Portfolio
+    </a>
+
+    <ng-template ngbNavContent>
+        <overdraft-portfolio-list [presetFilter]="presetOverdraftPortfolioFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents CreditInterest -------------------------------------->
+
+<li [ngbNavItem]="3">
+    <a href="javascript:void(0)" ngbNavLink>
+        Credit Interest
+    </a>
+
+    <ng-template ngbNavContent>
+        <credit-interest-list [presetFilter]="presetCreditInterestFilter"/>
+    </ng-template>
+</li>
+<!----------------------------------------- Tab Contents DebitInterest -------------------------------------->
+
+<li [ngbNavItem]="4">
+    <a href="javascript:void(0)" ngbNavLink>
+        Debit Interest
+    </a>
+
+    <ng-template ngbNavContent>
+        <debit-interest-list [presetFilter]="presetDebitInterestFilter"/>
+    </ng-template>
+</li>
 
             </ul>
 

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
@@ -12,8 +13,9 @@ import { ISsPortfolioFilter } from './ss-portfolio.shared';
 
 @Component({
     selector: 'app-ss-portfolio-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './ss-portfolio.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './ss-portfolio.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class SsPortfolioFilterComponent implements OnInit {

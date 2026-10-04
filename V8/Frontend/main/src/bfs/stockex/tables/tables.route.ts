@@ -87,5 +87,15 @@ export const TABLES_ROUTES: Routes = [
         loadChildren: () => import('./custom-reports/custom-reports.route').then((mod) => mod.CustomReports_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./credit-interest/credit-interest.route').then((mod) => mod.CreditInterest_ROUTES),
+    },
+
+    {
+        path: '',
+        loadChildren: () => import('./debit-interest/debit-interest.route').then((mod) => mod.DebitInterest_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]

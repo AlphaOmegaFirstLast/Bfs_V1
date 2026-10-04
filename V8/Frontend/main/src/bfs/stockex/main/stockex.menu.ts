@@ -1,5 +1,5 @@
 import { MenuItemType } from '@/app/types/layout';
-
+//Template_Start_Code_DontOverwrite_1
 //------------------------------------------------------------
 // Application specific menu items
 export const StockExMenuItems: MenuItemType[] = [
@@ -10,7 +10,6 @@ export const StockExMenuItems: MenuItemType[] = [
             role: ['admin']
         },
     },
-    //Template_Start_Code_DontOverwrite_1
     {
         label: 'Quick Access',
         icon: 'tablerMail',
@@ -54,7 +53,6 @@ export const StockExMenuItems: MenuItemType[] = [
             },
         ]
     },
-    //Template_End_Code_DontOverwrite_1
     {
         label: 'Basic',
         icon: 'tablerMail',
@@ -131,7 +129,6 @@ export const StockExMenuItems: MenuItemType[] = [
             //Template_Component_Menu_Basic
         ]
     },
-    //Template_Start_Code_DontOverwrite_2
     {
         label: 'Transactions',
         icon: 'tablerMail',
@@ -197,10 +194,25 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-            //Template_Component_Menu_Transactions
+                {
+        label: 'CreditI Interest',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/credit-interest/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+    {
+        label: 'Debit Interest',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/debit-interest/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+//Template_Component_Menu_Transactions
         ]
     },
-    //Template_End_Code_DontOverwrite_2
     {
         label: 'Reports',
         icon: 'tablerMail',
@@ -391,7 +403,16 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-            //Template_Component_Menu_Seed
+                {
+        label: 'Payment Mode',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/payment-mode/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+//Template_Component_Menu_Seed
         ]
     },
 ];
+//Template_End_Code_DontOverwrite_1

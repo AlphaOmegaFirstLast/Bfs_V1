@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IBrokerFilter } from './broker.shared';
@@ -11,8 +12,9 @@ import { IBrokerFilter } from './broker.shared';
 
 @Component({
     selector: 'app-broker-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './broker.filter.component.html'
+    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './broker.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class BrokerFilterComponent implements OnInit {
