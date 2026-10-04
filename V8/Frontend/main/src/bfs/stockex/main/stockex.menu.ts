@@ -111,7 +111,7 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'StockShare Portfolios',
+                label: 'Portfolios',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/ss-portfolio/list',
                 data: {

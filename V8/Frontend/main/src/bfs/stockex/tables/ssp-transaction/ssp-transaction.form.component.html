@@ -51,47 +51,37 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                         <div class="col-6">
+                                            <!-- SsPortfolioAutoComplete Start -->
                                             <div class="row mb-2">
-                                                <div class="col-12" *ngIf="isVisible('transactionTypeId')">
-                                                    <label for="transactionTypeId" class="form-label fs-6">Transaction Type</label>
-                                                    <select class="form-select" id="transactionTypeId" formControlName="transactionTypeId"
-                                                        [class]="submit && !form['transactionTypeId'].errors ? 'is-valid': submit && form['transactionTypeId'].errors ? 'is-invalid' : ''">
-                                                        <ng-container *ngFor="let option of TransactionTypeOptions">
-                                                            <option [value]="option['id']">{{ option['name'] }}</option>
-                                                        </ng-container>
-                                                    </select>
-                                                    <div class="invalid-feedback">Please select a valid Transaction Type.</div>
-                                                </div>
-                                            </div>
-                                            <!--
-                                             //Template_Start_Code_DontOverwrite_1
-                                            -->
+                                                <div class="col-12" *ngIf="isVisible('ssPortfolioId')">
+                                                    <div class="position-relative" (focusout)="ssPortfolioAuto.hideOverlay()">
+                                                        <label class="form-label fs-6">StockShare Portfolio</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                                [formControl]="ssPortfolioAuto.control"
 
-                                            <div class="row mb-2">
-                                                <div class="col-6" *ngIf="isVisible('ssPortfolioId')">
-                                                    <label for="ssPortfolioId" class="form-label fs-6">StockShare Portfolio</label>
-                                                    <select class="form-select" id="ssPortfolioId" formControlName="ssPortfolioId"
-                                                        [class]="submit && !form['ssPortfolioId'].errors ? 'is-valid': submit && form['ssPortfolioId'].errors ? 'is-invalid' : ''">
-                                                        <ng-container *ngFor="let option of SsPortfolioOptions">
-                                                            <option [value]="option['id']">{{ option['name'] }}</option>
-                                                        </ng-container>
-                                                    </select>
-                                                    <div class="invalid-feedback">Please select a valid StockShare Portfolio.</div>
-                                                </div>
-                                                <div class="col-6" *ngIf="isVisible('toPortfolioId')">
-                                                    <label for="toPortfolioId" class="form-label fs-6">To Portfolio</label>
-                                                    <select class="form-select" id="toPortfolioId" formControlName="toPortfolioId"
-                                                        [class]="submit && !form['toPortfolioId'].errors ? 'is-valid': submit && form['toPortfolioId'].errors ? 'is-invalid' : ''">
-                                                        <ng-container *ngFor="let option of ToPortfolioOptions">
-                                                            <option [value]="option['id']">{{ option['name'] }}</option>
-                                                        </ng-container>
-                                                    </select>
-                                                    <div class="invalid-feedback">Please select a valid To Portfolio.</div>
+                                                                (focus)="ssPortfolioAuto.onFocus()" [class]="ssPortfolioAuto.cssClass()" />
+
+                                                            <span class="input-group-text" *ngIf="ssPortfolioAuto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>
+                                                        </div>
+
+                                                        <ul *ngIf="ssPortfolioAuto.isShowList()" class="dropdown-menu show w-100 shadow-sm"
+                                                            style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
+                                                            <li *ngFor="let option of ssPortfolioAuto.optionList; let i = index">
+                                                                <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+                                                                    (mousedown)="$event.preventDefault(); ssPortfolioAuto.onSelect(option)">
+                                                                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+
+                                                        <ul class="dropdown-menu show w-100" *ngIf="ssPortfolioAuto.isError">
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!--
-                                             //Template_End_Code_DontOverwrite_1
-                                            -->
+                                            <!-- SsPortfolio AutoComplete End -->
                                             <div class="row mb-2">
                                                 <div class="col-12" *ngIf="isVisible('stockShareId')">
                                                     <label for="stockShareId" class="form-label fs-6">Stock Share</label>
@@ -104,10 +94,18 @@
                                                     <div class="invalid-feedback">Please select a valid Stock Share.</div>
                                                 </div>
                                             </div>
-
-                                            <!--
-                                             //Template_Start_Code_DontOverwrite_2
-                                            -->
+                                            <div class="row mb-2">
+                                                <div class="col-12" *ngIf="isVisible('transactionTypeId')">
+                                                    <label for="transactionTypeId" class="form-label fs-6">Transaction Type</label>
+                                                    <select class="form-select" id="transactionTypeId" formControlName="transactionTypeId"
+                                                        [class]="submit && !form['transactionTypeId'].errors ? 'is-valid': submit && form['transactionTypeId'].errors ? 'is-invalid' : ''">
+                                                        <ng-container *ngFor="let option of TransactionTypeOptions">
+                                                            <option [value]="option['id']">{{ option['name'] }}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a valid Transaction Type.</div>
+                                                </div>
+                                            </div>
                                             <div class="row mb-2">
                                                 <div class="col-6" *ngIf="isVisible('quantity')">
                                                     <label for="quantity" class="form-label fs-6">Quantity</label>
@@ -116,20 +114,8 @@
                                                     <div class="valid-feedback">Looks good!</div>
                                                     <div class="invalid-feedback">Invalid Quantity.</div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="col-6" *ngIf="isVisible('toQuantity')">
-                                                        <label for="toQuantity" class="form-label fs-6">To Quantity</label>
-                                                        <input class="form-control" type="text" id="toQuantity" formControlName="toQuantity"
-                                                            [class]="submit && !form['toQuantity'].errors ? 'is-valid': submit && form['toQuantity'].errors ? 'is-invalid' : ''" />
-                                                        <div class="valid-feedback">Looks good!</div>
-                                                        <div class="invalid-feedback">Invalid To Quantity.</div>
-                                                    </div>
-
-                                                </div>
                                             </div>
-                                            <!--
-                                             //Template_End_Code_DontOverwrite_2
-                                            -->
+
                                             <div class="row mb-2">
                                                 <div class="col-6" *ngIf="isVisible('price')">
                                                     <label for="price" class="form-label fs-6">Price</label>
@@ -207,6 +193,50 @@
                                             </div>
 
                                         </div>
+                                        <div class="col-6">
+                                            <!-- ToPortfolioAutoComplete Start -->
+                                            <div class="row mb-2">
+                                                <div class="col-12" *ngIf="isVisible('toPortfolioId')">
+                                                    <div class="position-relative" (focusout)="toPortfolioAuto.hideOverlay()">
+                                                        <label class="form-label fs-6">To Portfolio</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                                [formControl]="toPortfolioAuto.control"
+
+                                                                (focus)="toPortfolioAuto.onFocus()" [class]="toPortfolioAuto.cssClass()" />
+
+                                                            <span class="input-group-text" *ngIf="toPortfolioAuto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>
+                                                        </div>
+
+                                                        <ul *ngIf="toPortfolioAuto.isShowList()" class="dropdown-menu show w-100 shadow-sm"
+                                                            style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
+                                                            <li *ngFor="let option of toPortfolioAuto.optionList; let i = index">
+                                                                <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+                                                                    (mousedown)="$event.preventDefault(); toPortfolioAuto.onSelect(option)">
+                                                                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+
+                                                        <ul class="dropdown-menu show w-100" *ngIf="toPortfolioAuto.isError">
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ToPortfolio AutoComplete End -->
+                                            <div class="row mb-2">
+                                                <div class="col-6" *ngIf="isVisible('toQuantity')">
+                                                    <label for="toQuantity" class="form-label fs-6">To Quantity</label>
+                                                    <input class="form-control" type="text" id="toQuantity" formControlName="toQuantity"
+                                                        [class]="submit && !form['toQuantity'].errors ? 'is-valid': submit && form['toQuantity'].errors ? 'is-invalid' : ''" />
+                                                    <div class="valid-feedback">Looks good!</div>
+                                                    <div class="invalid-feedback">Invalid To Quantity.</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

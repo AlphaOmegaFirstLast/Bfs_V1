@@ -10,7 +10,7 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 // Output Columns of a Query  [used in entity Query]
 export const SspTransactionColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
@@ -20,8 +20,8 @@ export const SspTransactionColumns = [
 { fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'toQuantity', displayName: 'To Quantity', sortName: 'ToQuantity', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'toPortfolioId', displayName: 'To Portfolio', sortName: 'ToPortfolio_Name', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'toQuantity', displayName: 'To Quantity', sortName: 'ToQuantity', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'toPortfolioId', displayName: 'To Portfolio', sortName: 'ToPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
@@ -38,11 +38,14 @@ quantity?: number;
 price?: number;
 toQuantity?: number;
 
-    ssPortfolioId?: string;
-transactionTypeId?: number;
+    transactionTypeId?: number;
 stockShareId?: string;
-toPortfolioId?: string;
 currencyId?: string;
+
+    ssPortfolioId?: string;
+    ssPortfolioName?: string;
+toPortfolioId?: string;
+    toPortfolioName?: string;
 
 }
 //---------------------------------------------------------
@@ -59,11 +62,14 @@ quantity: 0,
 price: 0,
 toQuantity: 0,
 
-        ssPortfolioId: '0',
-transactionTypeId: 0,
+        transactionTypeId: 0,
 stockShareId: '0',
-toPortfolioId: '0',
 currencyId: '0',
+
+        ssPortfolioId: '0',
+        ssPortfolioName: '',
+toPortfolioId: '0',
+        toPortfolioName: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -75,7 +81,7 @@ export function sspTransactionUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
     isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+name: ['',getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 sourceDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 transactionDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
@@ -84,11 +90,14 @@ quantity: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"Max
 price: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 toQuantity: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-transactionTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    transactionTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 stockShareId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-toPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    ssPortfolioName: [''],
+toPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    toPortfolioName: [''],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -105,11 +114,14 @@ export interface ISspTransactionFilter {
 
     Name?: string;
 
-    SsPortfolioId?: string;
-TransactionTypeId?: number;
+    TransactionTypeId?: number;
 StockShareId?: string;
-ToPortfolioId?: string;
 CurrencyId?: string;
+
+    SsPortfolioId?: string;
+    SsPortfolioName?: string,
+ToPortfolioId?: string;
+    ToPortfolioName?: string,
 
     SourceDate?: { from?: Date | null ; to?: Date | null} ;
 TransactionDate?: { from?: Date | null ; to?: Date | null} ;
@@ -134,11 +146,14 @@ export function initSspTransactionRequest(): ISspTransactionRequest {
 
             Name: undefined ,
 
-            SsPortfolioId: undefined ,
-TransactionTypeId: undefined ,
+            TransactionTypeId: undefined ,
 StockShareId: undefined ,
-ToPortfolioId: undefined ,
 CurrencyId: undefined ,
+
+            SsPortfolioId: undefined ,
+            SsPortfolioName: undefined ,
+ToPortfolioId: undefined ,
+            ToPortfolioName: undefined ,
 
             SourceDate: { from: undefined , to: undefined} ,
 TransactionDate: { from: undefined , to: undefined} ,
@@ -155,16 +170,17 @@ ToQuantity: { from: undefined , to: undefined} ,
 export function renderSspTransaction(record: ISspTransaction, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof ISspTransaction];
         switch (column.fieldName) {
-            case 'ssPortfolioId':
-                return record['ssPortfolioName']?.toString();
-case 'transactionTypeId':
+            case 'transactionTypeId':
                 return record['transactionTypeName']?.toString();
 case 'stockShareId':
                 return record['stockShareName']?.toString();
-case 'toPortfolioId':
-                return record['toPortfolioName']?.toString();
 case 'currencyId':
                 return record['currencyName']?.toString();
+
+            case 'ssPortfolioId':
+                return record['ssPortfolioName']?.toString();
+case 'toPortfolioId':
+                return record['toPortfolioName']?.toString();
 
             default:
                 return value;
@@ -197,22 +213,12 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 }
 if (component.accessService.isActionAllowed('sspTransaction', ''))
 {links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['ssPortfolioId'], route:'/stkx/ss-portfolio/view', displayText:'Go to SsPortfolio'
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['transactionTypeId'], route:'/stkx/transaction-type/view', displayText:'Go to TransactionType'
 });
 }
 if (component.accessService.isActionAllowed('sspTransaction', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['stockShareId'], route:'/stkx/stock-share/view', displayText:'Go to StockShare'
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['toPortfolioId'], route:'/stkx/to-portfolio/view', displayText:'Go to ToPortfolio'
 });
 }
 if (component.accessService.isActionAllowed('sspTransaction', ''))
@@ -229,19 +235,20 @@ actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader
 
         return links;
     }
-//---------------------------------------------------------
 
 //Template_Start_Code_DontOverwrite_3
 export function isVisible(entity: ISspTransaction, validationForm: UntypedFormGroup, fieldName: string): boolean {
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
-    let control = validationForm.get('transactionTypeId');
-    let transactionTypeId = control?.value;
+    let transactionTypeId = validationForm.get('transactionTypeId')?.value;
+    let sspTransactionId = validationForm.get('sspTransactionId')?.value;
+
     switch (fieldName.toLocaleLowerCase()) {
         case 'toportfolioid':
             return (transactionTypeId == 9 || transactionTypeId == 10);
         case 'toquantity':
             return (transactionTypeId == 15 || transactionTypeId == 16) ? true : false;
+
     }
     return true;
 }

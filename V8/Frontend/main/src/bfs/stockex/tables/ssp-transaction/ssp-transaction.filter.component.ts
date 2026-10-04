@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 import { ISspTransactionFilter } from './ssp-transaction.shared';
 //Template_Start_Code_DontOverwrite_1
@@ -22,13 +23,13 @@ export class SspTransactionFilterComponent implements OnInit {
     public result = {} as ISspTransactionFilter;
 
     // Define look ups
-    public SsPortfolioOptions:  any[] = [];
-public TransactionTypeOptions:  any[] = [];
+    public TransactionTypeOptions:  any[] = [];
 public StockShareOptions:  any[] = [];
-public ToPortfolioOptions:  any[] = [];
 public CurrencyOptions:  any[] = [];
 
     // Define autocomplete fields
+    ssPortfolioAuto: AutoCompleteHelper;
+toPortfolioAuto: AutoCompleteHelper;
 
     // Define range filters
     public SourceDateFrom: Date | null | undefined;
@@ -50,6 +51,8 @@ public ToQuantityFrom: number | undefined;
     public parent: any;
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+    this.ssPortfolioAuto = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'SsPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+this.toPortfolioAuto = new AutoCompleteHelper({ queryUrl: "/ToPortfolio/list", fieldName: 'ToPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     }
 
@@ -73,18 +76,7 @@ this.ToQuantityFrom = this.result.ToQuantity?.from;
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
-        target = "/SsPortfolio/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.SsPortfolioOptions = response.items;
-                this.isLoading.list = false;
-            },
-                error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching StockShare Portfolio data.';
-                this.isLoading.list = false;
-            }
-        });
-target = "/TransactionType/list";
+        target = "/TransactionType/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.TransactionTypeOptions = response.items;
@@ -106,17 +98,6 @@ target = "/StockShare/list";
                 this.isLoading.list = false;
             }
         });
-target = "/ToPortfolio/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.ToPortfolioOptions = response.items;
-                this.isLoading.list = false;
-            },
-                error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching To Portfolio data.';
-                this.isLoading.list = false;
-            }
-        });
 target = "/Currency/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
@@ -132,6 +113,8 @@ target = "/Currency/list";
     }
     //---------------------------------------------------------
     async setAutoComplete() {
+    this.ssPortfolioAuto.setupFilter(this.parent.apiService, this.result);
+this.toPortfolioAuto.setupFilter(this.parent.apiService, this.result);
 
 }
 //---------------------------------------------------------

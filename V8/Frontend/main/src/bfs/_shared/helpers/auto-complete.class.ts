@@ -141,7 +141,7 @@ export class AutoCompleteHelper {
         this.isLoading = true;
         this.isError = false;
         try {
-            const request = { pageSize: 20, filter: { name: searchTerm } };
+            const request = { pageSize: 20, filter: {isAutoComplete: true, name: searchTerm } };
             const response: any = await this.apiService?.postAutoComplete(this.queryUrl, request);
             this.options = response?.items ?? [];
             this.isError = response?.items.length == 0;
