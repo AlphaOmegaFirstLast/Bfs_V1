@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.Text.Json;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Master.Api.Controllers;
 
@@ -20,13 +22,19 @@ namespace Bfs.Master.Api.Controllers;
 public class OperationsController
 {
     private readonly IOperationsService _operationsService;
-
-    public OperationsController(IOperationsService operationsService)
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
+    public OperationsController(IOperationsService operationsService
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3        
+        )
     {
         _operationsService = operationsService;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
-    //Template_Start_Code_DontOverwrite_1
+    //Template_Start_Code_DontOverwrite_5
 
     [HttpPost("BfsComponent/DuplicateTree")]
     [CustomAuthorize("method=o.DuplicateTree")]
@@ -97,7 +105,7 @@ public class OperationsController
         return TypedResults.Ok(result);
     }
 
-    //Template_End_Code_DontOverwrite_1
+    //Template_End_Code_DontOverwrite_5
 
     [HttpPut("BfsComponentSystemAction/matrix/{parentId}")]
     [CustomAuthorize("method=o.BfsComponentSystemAction")]

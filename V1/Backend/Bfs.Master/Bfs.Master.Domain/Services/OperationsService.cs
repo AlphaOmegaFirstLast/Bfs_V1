@@ -1,10 +1,12 @@
 using Bfs.Core.Helpers;
-using Bfs.Core.Services.Deployment;
 using Bfs.Master.Contracts;
 using Bfs.Master.Data.Interfaces;
 using Bfs.Master.Data.Repositories;
 using Bfs.Master.Domain.Interfaces;
 using Bfs.Master.Domain.Mapper;
+//Template_Start_Code_DontOverwrite_1
+using Bfs.Core.Services.Deployment;
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Master.Domain.Services;
 
@@ -12,26 +14,29 @@ public class OperationsService : IOperationsService
 {
     private readonly IUnitOfWork _unitOfwork;
 
-    //Template_Start_Code_DontOverwrite_1
+    //Template_Start_Code_DontOverwrite_2
     private readonly IBfsComponentRepository _componentRepo;
     private readonly IBfsFieldRepository _fieldRepo;
     private readonly IDeploymentAzureRepository _deploymentAzureRepo;
     private readonly IDeploymentLocalRepository _deploymentLocalRepo;
-    //Template_Start_Code_DontOverwrite_1
+    //Template_End_Code_DontOverwrite_2
 
-    public OperationsService(IUnitOfWork unitOfwork)
+    public OperationsService(IUnitOfWork unitOfwork
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3     
+        )
     {
         _unitOfwork = unitOfwork;
-        //Template_Start_Code_DontOverwrite_2
+        //Template_Start_Code_DontOverwrite_4
         _componentRepo = _unitOfwork.ComponentRepo;
         _fieldRepo = _unitOfwork.FieldRepo;
         _deploymentAzureRepo = _unitOfwork.DeploymentAzureRepo;
         _deploymentLocalRepo = _unitOfwork.DeploymentLocalRepo;
-        //Template_Start_Code_DontOverwrite_2
+        //Template_End_Code_DontOverwrite_4
 
     }
 
-    //Template_Start_Code_DontOverwrite_3
+    //Template_Start_Code_DontOverwrite_5
 
     public async Task<long> DuplicateComponentTreeAsync(long componentId)
     {
@@ -105,7 +110,8 @@ public class OperationsService : IOperationsService
             DeploymentManager.DeployToAzure(deploymentEntity);
         }
     }
-    //Template_End_Code_DontOverwrite_3
+    //Template_End_Code_DontOverwrite_5
+
     public async Task<List<BfsComponentSystemAction>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemAction> matrix)
     {
         var matrixEntity = matrix.ToEntity();

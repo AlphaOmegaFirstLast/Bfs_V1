@@ -1,6 +1,8 @@
 using Bfs.Core.Interfaces;
 using Bfs.Master.Data.Interfaces;
 using Bfs.Master.Data.Models;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 using Microsoft.EntityFrameworkCore;
 
@@ -8,15 +10,15 @@ namespace Bfs.Master.Data.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public MasterDbContext _context { get; set; }
+    public MasterDbContext _context { get; }
 
-    //Template_Start_Code_DontOverwrite_1
+    //Template_Start_Code_DontOverwrite_2
     public IBfsComponentRepository ComponentRepo { get; set; }
     public IBfsFieldRepository FieldRepo { get; set; }
     public IDeploymentAzureRepository DeploymentAzureRepo { get; set; }
     public IDeploymentLocalRepository DeploymentLocalRepo { get; set; }
 
-    //Template_End_Code_DontOverwrite_1
+    //Template_End_Code_DontOverwrite_2
 
     private readonly IBfsComponentSystemActionRepository _bfsComponentSystemActionRepo;
 
@@ -27,12 +29,12 @@ public class UnitOfWork : IUnitOfWork
     //Template_Field_ChildrenMatrix_AddDeclareEntry
 
     public UnitOfWork(MasterDbContext dbContext, IScopeData scopeData
-    //Template_Start_Code_DontOverwrite_2
+    //Template_Start_Code_DontOverwrite_3
         , IBfsComponentRepository componentRepo
         , IBfsFieldRepository fieldRepo
         , IDeploymentAzureRepository deploymentAzureRepo
         , IDeploymentLocalRepository deploymentLocalRepo
-    //Template_End_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_3
         , IBfsComponentSystemActionRepository bfsComponentSystemActionRepo
 
         , IBfsComponentBusinessActionRepository bfsComponentBusinessActionRepo
@@ -43,13 +45,13 @@ public class UnitOfWork : IUnitOfWork
 
     )
     {
-        //Template_Start_Code_DontOverwrite_3
+        //Template_Start_Code_DontOverwrite_4
         _context = dbContext;
         ComponentRepo = componentRepo;
         FieldRepo = fieldRepo;
         DeploymentAzureRepo = deploymentAzureRepo;
         DeploymentLocalRepo = deploymentLocalRepo;
-        //Template_End_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_4
 
         _bfsComponentSystemActionRepo = bfsComponentSystemActionRepo;
 

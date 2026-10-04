@@ -1,11 +1,12 @@
 using Bfs.Master.Contracts;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Master.Domain.Interfaces;
 
 public interface IOperationsService
 {
-    //Template_Start_Code_DontOverwrite_1
-
+    //Template_Start_Code_DontOverwrite_2
     Task<long> DuplicateComponentTreeAsync(long componentId);
     Task DeleteComponentTreeAsync(long componentId);
 
@@ -13,7 +14,7 @@ public interface IOperationsService
     Task DeployToAzure(long id);
     Task DeployToLocal(long id);
 
-    //Template_End_Code_DontOverwrite_1
+    //Template_End_Code_DontOverwrite_2
 
     Task<List<BfsComponentSystemAction>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemAction> matrix);
     Task<List<BfsComponentBusinessAction>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessAction> matrix);
