@@ -21,11 +21,12 @@ public decimal Quantity {get; set;} = 0 ;
 public decimal Price {get; set;} = 0 ;
 public decimal ToQuantity {get; set;} = 0 ;
 
-        public long SsPortfolioId {get; set;} = 0 ;
-public int TransactionTypeId {get; set;} = 0 ;
+        public int TransactionTypeId {get; set;} = 0 ;
 public long StockShareId {get; set;} = 0 ;
+public long CurrencyId {get; set;} = 0 ;
+
+        public long SsPortfolioId {get; set;} = 0 ;
 public long ToPortfolioId {get; set;} = 0 ;
 
     }
 }
-

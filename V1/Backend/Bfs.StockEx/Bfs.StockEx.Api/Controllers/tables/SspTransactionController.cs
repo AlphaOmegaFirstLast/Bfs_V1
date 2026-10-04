@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +21,20 @@ public class SspTransactionController
 {
     private readonly ISspTransactionService _sspTransactionService;
     private IValidator<SspTransaction> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-    public SspTransactionController(ISspTransactionService sspTransactionService, IValidator<SspTransaction> validator)
+    public SspTransactionController(ISspTransactionService sspTransactionService, IValidator<SspTransaction> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
     {
         _sspTransactionService = sspTransactionService;
         _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
     }
 
     [HttpGet]
@@ -36,10 +47,12 @@ public class SspTransactionController
 
     [HttpGet("{id}")]
     [CustomAuthorize("method=q.sspTransaction")]
-    public async Task<SspTransaction?> Get(long id)
+    public async Task<SspTransactionListItem?> Get(long id)
     {
-        var result = await _sspTransactionService.GetAsync(id).ConfigureAwait(false);
-        return result;
+        var listRequest = new QueryRequest<SspTransactionListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _sspTransactionService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
     }
 
     [HttpPost]
@@ -164,8 +177,9 @@ public class SspTransactionController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 
 }
 

@@ -21,9 +21,11 @@ Quantity= entity.Quantity,
 Price= entity.Price,
 ToQuantity= entity.ToQuantity,
 
-               SsPortfolioId= entity.SsPortfolioId,
-TransactionTypeId= entity.TransactionTypeId,
+               TransactionTypeId= entity.TransactionTypeId,
 StockShareId= entity.StockShareId,
+CurrencyId= entity.CurrencyId,
+
+               SsPortfolioId= entity.SsPortfolioId,
 ToPortfolioId= entity.ToPortfolioId,
 
             };
@@ -56,9 +58,11 @@ SspTransactionEntity.Quantity= contract.Quantity;
 SspTransactionEntity.Price= contract.Price;
 SspTransactionEntity.ToQuantity= contract.ToQuantity;
 
-            SspTransactionEntity.SsPortfolioId= contract.SsPortfolioId;
-SspTransactionEntity.TransactionTypeId= contract.TransactionTypeId;
+            SspTransactionEntity.TransactionTypeId= contract.TransactionTypeId;
 SspTransactionEntity.StockShareId= contract.StockShareId;
+SspTransactionEntity.CurrencyId= contract.CurrencyId;
+
+            SspTransactionEntity.SsPortfolioId= contract.SsPortfolioId;
 SspTransactionEntity.ToPortfolioId= contract.ToPortfolioId;
 
             return SspTransactionEntity;

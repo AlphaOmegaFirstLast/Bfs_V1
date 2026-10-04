@@ -8,17 +8,28 @@ using Microsoft.Data.SqlClient;
 using Bfs.StockEx.Data.Interfaces;
 using Bfs.StockEx.Data;
 using System.Text;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Data.Lists
 {
     public class SsPortfolioList: QueryBase<SsPortfolioListFilter>,  ISsPortfolioList
     {
         private readonly IResourceSecurity? _resourceSecurity;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
-        public SsPortfolioList(string connectionString, IResourceSecurity? resourceSecurity)
+        public SsPortfolioList(string connectionString, IResourceSecurity? resourceSecurity
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+        )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
         }
 
         private readonly string _connectionString;
@@ -58,11 +69,9 @@ namespace Bfs.StockEx.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Id", DbName = "stkxSsPortfolio.Id", QueryName = "Id", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Notes", DbName = "stkxSsPortfolio.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "BrokerId", DbName = "stkxSsPortfolio.BrokerId", QueryName = "BrokerId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "InvestorId", DbName = "stkxSsPortfolio.InvestorId", QueryName = "InvestorId", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Interest", DbName = "stkxSsPortfolio.Interest", QueryName = "Interest", IsAggregare = false});
 
             //object fields
 
@@ -72,7 +81,11 @@ _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Int
             _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", DbName = "stkxBroker.Name", QueryName = "BrokerName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Investor", FieldName = "Name", DbName = "stkxInvestor.Name", QueryName = "InvestorName", IsAggregare = false});
 
-           //Aggregates
+            //Aggregates
+
+            //Template_Start_Code_DontOverwrite_5
+            _fieldList.Add(new QueryField() { ComponentName = "SsPortfolio", FieldName = "Name", DbName = "('['+stkxSsPortfolio.Name +']    Investor: ' + stkxInvestor.Name +'      Broker: ' + stkxBroker.Name) ", QueryName = "Name", IsAggregare = false });
+            //Template_End_Code_DontOverwrite_5
 
         }
 
@@ -83,6 +96,9 @@ _fieldList.Add(new QueryField() {ComponentName = "Investor", FieldName = "Name",
 
            sql.AppendLine($"   Left Join stkxBroker on stkxSsPortfolio.BrokerId = stkxBroker.Id");
 sql.AppendLine($"   Left Join stkxInvestor on stkxSsPortfolio.InvestorId = stkxInvestor.Id");
+
+//Template_Start_Code_DontOverwrite_6
+//Template_End_Code_DontOverwrite_6
 
            return sql.ToString();
         }
@@ -103,8 +119,16 @@ sql.AppendLine($"   Left Join stkxInvestor on stkxSsPortfolio.InvestorId = stkxI
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {
-                    sql.AppendLine("stkxSsPortfolio.Name like '%'+@Name+'%' ");
-                    parameters.Add("@Name", filter.Name);
+                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                   {
+                      sql.AppendLine("stkxSsPortfolio.Name like '%'+@Name+'%' or stkxBroker.Name like '%'+@Name+'%' or stkxInvestor.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);                    
+                   }
+                   else
+                   {
+                      sql.AppendLine("stkxSsPortfolio.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);
+                   }
                 }
 
                 if (filter.BrokerId.HasValue)
@@ -117,17 +141,21 @@ if (filter.InvestorId.HasValue)
                     sql.AppendLine("stkxSsPortfolio.InvestorId = @InvestorId");
                     parameters.Add("@InvestorId", filter.InvestorId.Value);
                 }
-
-                if (filter.Interest?.From.HasValue == true)
+                //Template_Start_Code_DontOverwrite_7
+                if (!string.IsNullOrEmpty(filter.Name))
                 {
-                    sql.AppendLine("stkxSsPortfolio.Interest >= @InterestFrom");
-                    parameters.Add("@InterestFrom", filter.Interest.From.Value);
+                    if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                    {
+                        sql.AppendLine("(stkxSsPortfolio.Name like '%'+@Name+'%' or stkxBroker.Name like '%'+@Name+'%' or stkxInvestor.Name like '%'+@Name+'%') ");
+                        parameters.Add("@Name", filter.Name);
+                    }
+                    else
+                    {
+                        sql.AppendLine("stkxSsPortfolio.Name like '%'+@Name+'%' ");
+                        parameters.Add("@Name", filter.Name);
+                    }
                 }
-                if (filter.Interest?.To.HasValue == true)
-                {
-                    sql.AppendLine("stkxSsPortfolio.Interest <= @InterestTo");
-                    parameters.Add("@InterestTo", filter.Interest.To.Value);
-                }
+                //Template_End_Code_DontOverwrite_7
 
             }
             return string.Join(" And ", sql.ToString()
@@ -148,7 +176,9 @@ if (filter.InvestorId.HasValue)
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
-       }       
+       } 
+//Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8
+
     }
 }
-

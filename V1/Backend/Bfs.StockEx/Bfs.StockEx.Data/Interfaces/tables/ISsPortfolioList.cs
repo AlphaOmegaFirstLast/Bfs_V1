@@ -8,4 +8,3 @@ namespace Bfs.StockEx.Data.Interfaces
         Task<QueryResponse<SsPortfolioListItem>> GetAsync(QueryRequest<SsPortfolioListFilter> request);
     }
 }
-

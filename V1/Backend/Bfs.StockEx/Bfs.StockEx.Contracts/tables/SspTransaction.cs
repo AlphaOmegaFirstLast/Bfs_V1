@@ -48,10 +48,6 @@ namespace Bfs.StockEx.Contracts
         public decimal ToQuantity {get; set;} = 0 ;
 
         ///<Summary>
-        /// SspTransaction StockShare Portfolio.
-        ///</Summary>
-        public long SsPortfolioId {get; set;} = 0 ;
-///<Summary>
         /// SspTransaction Transaction Type.
         ///</Summary>
         public int TransactionTypeId {get; set;} = 0 ;
@@ -60,10 +56,18 @@ namespace Bfs.StockEx.Contracts
         ///</Summary>
         public long StockShareId {get; set;} = 0 ;
 ///<Summary>
+        /// SspTransaction Currency.
+        ///</Summary>
+        public long CurrencyId {get; set;} = 0 ;
+
+        ///<Summary>
+        /// SspTransaction StockShare Portfolio.
+        ///</Summary>
+        public long SsPortfolioId {get; set;} = 0 ;
+///<Summary>
         /// SspTransaction To Portfolio.
         ///</Summary>
         public long ToPortfolioId {get; set;} = 0 ;
 
     }
 }
-
