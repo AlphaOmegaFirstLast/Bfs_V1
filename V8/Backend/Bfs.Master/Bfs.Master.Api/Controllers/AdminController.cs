@@ -1,0 +1,42 @@
+using Bfs.Master.Data;
+using Bfs.Core.Config;
+using Bfs.Core.Middleware;
+using Bfs.Core.TenantManagement;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+namespace Bfs.Master.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
+
+public class AdminController
+{
+    private readonly BfsSettings _bfsSettings;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+    public AdminController(
+        IOptions<BfsSettings> bfsSettings
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+        )
+    {
+        _bfsSettings = bfsSettings.Value;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+    }
+
+    [HttpPost("Migrate")]
+    [CustomAuthorize("method=r.migrate")]
+    public async Task MigrateTenants()
+    {
+        var masterConnection = _bfsSettings.DbConnections.MasterConnection;
+        await TenantManager.ApplyMigrations< MasterDbContext >(masterConnection, "Master");
+    }
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
+}
+

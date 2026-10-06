@@ -6,9 +6,38 @@ namespace Bfs.StockEx.Data;
 
 public class StockExDbContext : DbContext
 {
+ public DbSet<TradingRoomEntity> TradingRooms { get; set; }
+ public DbSet<BrokerEntity> Brokers { get; set; }
+ public DbSet<InvestorEntity> Investors { get; set; }
+ public DbSet<BrokerAgreementEntity> BrokerAgreements { get; set; }
+ public DbSet<CashTransactionEntity> CashTransactions { get; set; }
+ public DbSet<CouponEntity> Coupons { get; set; }
+ public DbSet<CurrencyEntity> Currencys { get; set; }
+ public DbSet<CurrentPriceEntity> CurrentPrices { get; set; }
+ public DbSet<ExpensesTypeEntity> ExpensesTypes { get; set; }
+ public DbSet<InvestorBrokerFundEntity> InvestorBrokerFunds { get; set; }
+ public DbSet<OverdraftPortfolioEntity> OverdraftPortfolios { get; set; }
+ public DbSet<SsPortfolioEntity> SsPortfolios { get; set; }
+ public DbSet<SsPortfolioBalanceEntity> SsPortfolioBalances { get; set; }
+ public DbSet<SspStockEntity> SspStocks { get; set; }
+ public DbSet<SspTransactionEntity> SspTransactions { get; set; }
+ public DbSet<StockShareEntity> StockShares { get; set; }
+ public DbSet<CustomReportsEntity> CustomReportss { get; set; }
+ public DbSet<CreditInterestEntity> CreditInterests { get; set; }
+ public DbSet<DebitInterestEntity> DebitInterests { get; set; }
+ public DbSet<CouponStatusEntity> CouponStatuss { get; set; }
+ public DbSet<TransactionTypeEntity> TransactionTypes { get; set; }
+ public DbSet<TransferCostTypeEntity> TransferCostTypes { get; set; }
+ public DbSet<EffectTypeEntity> EffectTypes { get; set; }
+ public DbSet<StockEntityTypeEntity> StockEntityTypes { get; set; }
+ public DbSet<CalculationMethodEntity> CalculationMethods { get; set; }
+ public DbSet<SourceTypeEntity> SourceTypes { get; set; }
+ public DbSet<StockFieldTypeEntity> StockFieldTypes { get; set; }
+ public DbSet<PaymentModeEntity> PaymentModes { get; set; }
 //Template_Component_RegisterDbSet
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
+
     public StockExDbContext(DbContextOptions<StockExDbContext> options) : base(options)
     {
     }
@@ -34,5 +63,6 @@ public class StockExDbContext : DbContext
         //Template_ConfigField_Object
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
+
     }
 }

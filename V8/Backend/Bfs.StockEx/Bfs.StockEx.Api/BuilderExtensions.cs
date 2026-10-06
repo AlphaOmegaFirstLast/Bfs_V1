@@ -175,12 +175,68 @@ public static class BuilderExtensions
 
     public static void RegisterValidators(this WebApplicationBuilder builder)
     {
+            builder.Services.AddScoped<IValidator<TradingRoom>, TradingRoomValidator>();
+            builder.Services.AddScoped<IValidator<Broker>, BrokerValidator>();
+            builder.Services.AddScoped<IValidator<Investor>, InvestorValidator>();
+            builder.Services.AddScoped<IValidator<BrokerAgreement>, BrokerAgreementValidator>();
+            builder.Services.AddScoped<IValidator<CashTransaction>, CashTransactionValidator>();
+            builder.Services.AddScoped<IValidator<Coupon>, CouponValidator>();
+            builder.Services.AddScoped<IValidator<Currency>, CurrencyValidator>();
+            builder.Services.AddScoped<IValidator<CurrentPrice>, CurrentPriceValidator>();
+            builder.Services.AddScoped<IValidator<ExpensesType>, ExpensesTypeValidator>();
+            builder.Services.AddScoped<IValidator<InvestorBrokerFund>, InvestorBrokerFundValidator>();
+            builder.Services.AddScoped<IValidator<OverdraftPortfolio>, OverdraftPortfolioValidator>();
+            builder.Services.AddScoped<IValidator<SsPortfolio>, SsPortfolioValidator>();
+            builder.Services.AddScoped<IValidator<SsPortfolioBalance>, SsPortfolioBalanceValidator>();
+            builder.Services.AddScoped<IValidator<SspStock>, SspStockValidator>();
+            builder.Services.AddScoped<IValidator<SspTransaction>, SspTransactionValidator>();
+            builder.Services.AddScoped<IValidator<StockShare>, StockShareValidator>();
+            builder.Services.AddScoped<IValidator<CustomReports>, CustomReportsValidator>();
+            builder.Services.AddScoped<IValidator<CreditInterest>, CreditInterestValidator>();
+            builder.Services.AddScoped<IValidator<DebitInterest>, DebitInterestValidator>();
+            builder.Services.AddScoped<IValidator<CouponStatus>, CouponStatusValidator>();
+            builder.Services.AddScoped<IValidator<TransactionType>, TransactionTypeValidator>();
+            builder.Services.AddScoped<IValidator<TransferCostType>, TransferCostTypeValidator>();
+            builder.Services.AddScoped<IValidator<EffectType>, EffectTypeValidator>();
+            builder.Services.AddScoped<IValidator<StockEntityType>, StockEntityTypeValidator>();
+            builder.Services.AddScoped<IValidator<CalculationMethod>, CalculationMethodValidator>();
+            builder.Services.AddScoped<IValidator<SourceType>, SourceTypeValidator>();
+            builder.Services.AddScoped<IValidator<StockFieldType>, StockFieldTypeValidator>();
+            builder.Services.AddScoped<IValidator<PaymentMode>, PaymentModeValidator>();
 //Template_Component_RegisterValidator
     }
 
     public static void RegisterRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ITradingRoomRepository, TradingRoomRepository>();
+            builder.Services.AddScoped<IBrokerRepository, BrokerRepository>();
+            builder.Services.AddScoped<IInvestorRepository, InvestorRepository>();
+            builder.Services.AddScoped<IBrokerAgreementRepository, BrokerAgreementRepository>();
+            builder.Services.AddScoped<ICashTransactionRepository, CashTransactionRepository>();
+            builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+            builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            builder.Services.AddScoped<ICurrentPriceRepository, CurrentPriceRepository>();
+            builder.Services.AddScoped<IExpensesTypeRepository, ExpensesTypeRepository>();
+            builder.Services.AddScoped<IInvestorBrokerFundRepository, InvestorBrokerFundRepository>();
+            builder.Services.AddScoped<IOverdraftPortfolioRepository, OverdraftPortfolioRepository>();
+            builder.Services.AddScoped<ISsPortfolioRepository, SsPortfolioRepository>();
+            builder.Services.AddScoped<ISsPortfolioBalanceRepository, SsPortfolioBalanceRepository>();
+            builder.Services.AddScoped<ISspStockRepository, SspStockRepository>();
+            builder.Services.AddScoped<ISspTransactionRepository, SspTransactionRepository>();
+            builder.Services.AddScoped<IStockShareRepository, StockShareRepository>();
+            builder.Services.AddScoped<ICustomReportsRepository, CustomReportsRepository>();
+            builder.Services.AddScoped<ICreditInterestRepository, CreditInterestRepository>();
+            builder.Services.AddScoped<IDebitInterestRepository, DebitInterestRepository>();
+            builder.Services.AddScoped<ICouponStatusRepository, CouponStatusRepository>();
+            builder.Services.AddScoped<ITransactionTypeRepository, TransactionTypeRepository>();
+            builder.Services.AddScoped<ITransferCostTypeRepository, TransferCostTypeRepository>();
+            builder.Services.AddScoped<IEffectTypeRepository, EffectTypeRepository>();
+            builder.Services.AddScoped<IStockEntityTypeRepository, StockEntityTypeRepository>();
+            builder.Services.AddScoped<ICalculationMethodRepository, CalculationMethodRepository>();
+            builder.Services.AddScoped<ISourceTypeRepository, SourceTypeRepository>();
+            builder.Services.AddScoped<IStockFieldTypeRepository, StockFieldTypeRepository>();
+            builder.Services.AddScoped<IPaymentModeRepository, PaymentModeRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -188,16 +244,248 @@ public static class BuilderExtensions
     {
         builder.Services.AddScoped<IReportsService, ReportsService>();
         builder.Services.AddScoped<IOperationsService,OperationsService>();
+            builder.Services.AddScoped<ITradingRoomService, TradingRoomService>();
+            builder.Services.AddScoped<IBrokerService, BrokerService>();
+            builder.Services.AddScoped<IInvestorService, InvestorService>();
+            builder.Services.AddScoped<IBrokerAgreementService, BrokerAgreementService>();
+            builder.Services.AddScoped<ICashTransactionService, CashTransactionService>();
+            builder.Services.AddScoped<ICouponService, CouponService>();
+            builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+            builder.Services.AddScoped<ICurrentPriceService, CurrentPriceService>();
+            builder.Services.AddScoped<IExpensesTypeService, ExpensesTypeService>();
+            builder.Services.AddScoped<IInvestorBrokerFundService, InvestorBrokerFundService>();
+            builder.Services.AddScoped<IOverdraftPortfolioService, OverdraftPortfolioService>();
+            builder.Services.AddScoped<ISsPortfolioService, SsPortfolioService>();
+            builder.Services.AddScoped<ISsPortfolioBalanceService, SsPortfolioBalanceService>();
+            builder.Services.AddScoped<ISspStockService, SspStockService>();
+            builder.Services.AddScoped<ISspTransactionService, SspTransactionService>();
+            builder.Services.AddScoped<IStockShareService, StockShareService>();
+            builder.Services.AddScoped<ICustomReportsService, CustomReportsService>();
+            builder.Services.AddScoped<ICreditInterestService, CreditInterestService>();
+            builder.Services.AddScoped<IDebitInterestService, DebitInterestService>();
+            builder.Services.AddScoped<ICouponStatusService, CouponStatusService>();
+            builder.Services.AddScoped<ITransactionTypeService, TransactionTypeService>();
+            builder.Services.AddScoped<ITransferCostTypeService, TransferCostTypeService>();
+            builder.Services.AddScoped<IEffectTypeService, EffectTypeService>();
+            builder.Services.AddScoped<IStockEntityTypeService, StockEntityTypeService>();
+            builder.Services.AddScoped<ICalculationMethodService, CalculationMethodService>();
+            builder.Services.AddScoped<ISourceTypeService, SourceTypeService>();
+            builder.Services.AddScoped<IStockFieldTypeService, StockFieldTypeService>();
+            builder.Services.AddScoped<IPaymentModeService, PaymentModeService>();
 //Template_Component_RegisterService
     }
 
     public static void RegisterLists(this WebApplicationBuilder builder, BfsSettings? settings)
     {
+        builder.Services.AddScoped<ITradingRoomList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new TradingRoomList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IBrokerList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new BrokerList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IInvestorList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new InvestorList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IBrokerAgreementList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new BrokerAgreementList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICashTransactionList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CashTransactionList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICouponList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CouponList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICurrencyList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CurrencyList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICurrentPriceList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CurrentPriceList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IExpensesTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new ExpensesTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IInvestorBrokerFundList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new InvestorBrokerFundList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IOverdraftPortfolioList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new OverdraftPortfolioList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ISsPortfolioList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new SsPortfolioList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ISsPortfolioBalanceList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new SsPortfolioBalanceList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ISspStockList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new SspStockList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ISspTransactionList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new SspTransactionList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IStockShareList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new StockShareList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICustomReportsList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CustomReportsList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICreditInterestList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CreditInterestList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IDebitInterestList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new DebitInterestList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICouponStatusList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CouponStatusList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ITransactionTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new TransactionTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ITransferCostTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new TransferCostTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IEffectTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new EffectTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IStockEntityTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new StockEntityTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICalculationMethodList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CalculationMethodList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ISourceTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new SourceTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IStockFieldTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new StockFieldTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IPaymentModeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PaymentModeList(config.ConnectionString, resourceSecurity);
+        });
 //Template_Component_RegisterList
     }
 
     public static void RegisterReports(this WebApplicationBuilder builder, BfsSettings? settings)
     {
+        builder.Services.AddScoped<ITradingRoomRepCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new TradingRoomRepCompare(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IPortfolioStockShareTransactionCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PortfolioStockShareTransactionCompare(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IPortfolioAggregateCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PortfolioAggregateCompare(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IPortfolioCashTransactionCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PortfolioCashTransactionCompare(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IPortfolioCashTransactionAggregateCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PortfolioCashTransactionAggregateCompare(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<INavReportCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new NavReportCompare(config.ConnectionString, resourceSecurity);
+        });
 //Template_Component_RegisterReport
     }
 

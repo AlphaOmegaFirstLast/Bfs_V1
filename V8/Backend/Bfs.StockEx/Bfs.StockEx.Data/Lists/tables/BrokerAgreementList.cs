@@ -1,0 +1,177 @@
+using Bfs.Core.Data;
+using Bfs.Core.Helpers;
+using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
+
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Bfs.StockEx.Data.Interfaces;
+using Bfs.StockEx.Data;
+using System.Text;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
+namespace Bfs.StockEx.Data.Lists
+{
+    public class BrokerAgreementList: QueryBase<BrokerAgreementListFilter>,  IBrokerAgreementList
+    {
+        private readonly IResourceSecurity? _resourceSecurity;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
+        public BrokerAgreementList(string connectionString, IResourceSecurity? resourceSecurity
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+        )
+        {
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+        }
+
+        private readonly string _connectionString;
+
+        public async Task<QueryResponse<BrokerAgreementListItem>> GetAsync(QueryRequest<BrokerAgreementListFilter> request)
+        {
+            var response = new QueryResponse<BrokerAgreementListItem>();
+
+            await SetUp(request, _resourceSecurity);
+
+            using var db = new SqlConnection(_connectionString);
+            {
+                // Run Report
+                var mainQuery = GetMainSqlStatement();
+                var items = await db.QueryAsync<BrokerAgreementListItem>(mainQuery.sql, mainQuery.parameters);
+                response.Items = DoMapping(items);
+
+                // Run Count
+                var countQuery = GetCountSqlStatement();
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
+                response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
+            }
+
+            return response;
+        }
+
+        private List<BrokerAgreementListItem> DoMapping(IEnumerable<BrokerAgreementListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (BrokerAgreementListItem)record;
+
+                return item;
+            }).ToList();
+        }
+
+        protected override void SetupFields()
+        {
+            //base fields
+            _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "AgreementDate", DbName = "stkxBrokerAgreement.AgreementDate", QueryName = "AgreementDate", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Id", DbName = "stkxBrokerAgreement.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Notes", DbName = "stkxBrokerAgreement.Notes", QueryName = "Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "InvestorId", DbName = "stkxBrokerAgreement.InvestorId", QueryName = "InvestorId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "BrokerId", DbName = "stkxBrokerAgreement.BrokerId", QueryName = "BrokerId", IsAggregare = false});
+
+            //object fields
+
+            //lookups
+            _fieldList.Add(new QueryField() {ComponentName = "Investor", FieldName = "Name", DbName = "stkxInvestor.Name", QueryName = "InvestorName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", DbName = "stkxBroker.Name", QueryName = "BrokerName", IsAggregare = false});
+
+            //autoCompletes
+
+           //Aggregates
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
+        }
+
+        protected override string GetFromJoinStatement()
+        {
+           var sql = new StringBuilder();  
+           sql.AppendLine(" From stkxBrokerAgreement ");
+
+           sql.AppendLine($"   Left Join stkxInvestor on stkxBrokerAgreement.InvestorId = stkxInvestor.Id");
+sql.AppendLine($"   Left Join stkxBroker on stkxBrokerAgreement.BrokerId = stkxBroker.Id");
+
+//Template_Start_Code_DontOverwrite_6
+//Template_End_Code_DontOverwrite_6
+
+           return sql.ToString();
+        }
+
+        protected override string GetWhereConditions(QueryRequest<BrokerAgreementListFilter> request, DynamicParameters parameters)
+        {
+            var sql = new StringBuilder() ;
+            sql.AppendLine(" stkxBrokerAgreement.isDeleted=0 ");
+
+                         var filter = request.Filter;
+            if (filter != null)
+            {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("stkxBrokerAgreement.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
+
+                if (!string.IsNullOrEmpty(filter.Name))
+                {
+                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                   {
+                      sql.AppendLine("stkxBrokerAgreement.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);                    
+                   }
+                   else
+                   {
+                      sql.AppendLine("stkxBrokerAgreement.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);
+                   }
+                }
+
+                if (filter.InvestorId.HasValue)
+                {
+                    sql.AppendLine("stkxBrokerAgreement.InvestorId = @InvestorId");
+                    parameters.Add("@InvestorId", filter.InvestorId.Value);
+                }
+if (filter.BrokerId.HasValue)
+                {
+                    sql.AppendLine("stkxBrokerAgreement.BrokerId = @BrokerId");
+                    parameters.Add("@BrokerId", filter.BrokerId.Value);
+                }
+
+                if (filter.AgreementDate?.From.HasValue == true)
+                {
+                    sql.AppendLine("stkxBrokerAgreement.AgreementDate >= @AgreementDateFrom");
+                    parameters.Add("@AgreementDateFrom", filter.AgreementDate.From.Value);
+                }
+                if (filter.AgreementDate?.To.HasValue == true)
+                {
+                    sql.AppendLine("stkxBrokerAgreement.AgreementDate <= @AgreementDateTo");
+                    parameters.Add("@AgreementDateTo", filter.AgreementDate.To.Value);
+                }
+
+            }
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+        }
+
+        protected override string GetHavingConditions(QueryRequest<BrokerAgreementListFilter> request, DynamicParameters parameters)
+        {
+            var filter = request.Filter;
+            if (filter == null)
+            {
+                return "";
+            }
+
+            var sql = new StringBuilder();
+
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+       } 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1       
+    }
+}

@@ -1,0 +1,177 @@
+using Bfs.Core.Data;
+using Bfs.Core.Helpers;
+using Bfs.Core.ObjectFields;
+using Bfs.Core.Services.Security;
+
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Bfs.StockEx.Data.Interfaces;
+using Bfs.StockEx.Data;
+using System.Text;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
+namespace Bfs.StockEx.Data.Lists
+{
+    public class SsPortfolioBalanceList: QueryBase<SsPortfolioBalanceListFilter>,  ISsPortfolioBalanceList
+    {
+        private readonly IResourceSecurity? _resourceSecurity;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
+        public SsPortfolioBalanceList(string connectionString, IResourceSecurity? resourceSecurity
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+        )
+        {
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _resourceSecurity = resourceSecurity;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+        }
+
+        private readonly string _connectionString;
+
+        public async Task<QueryResponse<SsPortfolioBalanceListItem>> GetAsync(QueryRequest<SsPortfolioBalanceListFilter> request)
+        {
+            var response = new QueryResponse<SsPortfolioBalanceListItem>();
+
+            await SetUp(request, _resourceSecurity);
+
+            using var db = new SqlConnection(_connectionString);
+            {
+                // Run Report
+                var mainQuery = GetMainSqlStatement();
+                var items = await db.QueryAsync<SsPortfolioBalanceListItem>(mainQuery.sql, mainQuery.parameters);
+                response.Items = DoMapping(items);
+
+                // Run Count
+                var countQuery = GetCountSqlStatement();
+                response.TotalItems = await db.ExecuteScalarAsync<long>(countQuery.sql, countQuery.parameters);
+                response.TotalPages = (long)Math.Ceiling(((decimal)response.TotalItems) / (request.PageSize ?? 1));
+            }
+
+            return response;
+        }
+
+        private List<SsPortfolioBalanceListItem> DoMapping(IEnumerable<SsPortfolioBalanceListItem> RecordList)
+        {
+            return RecordList.Select(record =>
+            { var item = (SsPortfolioBalanceListItem)record;
+
+                return item;
+            }).ToList();
+        }
+
+        protected override void SetupFields()
+        {
+            //base fields
+            _fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "Id", DbName = "stkxSsPortfolioBalance.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "Name", DbName = "stkxSsPortfolioBalance.Name", QueryName = "Name", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "Notes", DbName = "stkxSsPortfolioBalance.Notes", QueryName = "Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "SsPortfolioId", DbName = "stkxSsPortfolioBalance.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "Balance", DbName = "stkxSsPortfolioBalance.Balance", QueryName = "Balance", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SsPortfolioBalance", FieldName = "CurrencyId", DbName = "stkxSsPortfolioBalance.CurrencyId", QueryName = "CurrencyId", IsAggregare = false});
+
+            //object fields
+
+            //lookups
+            _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
+
+            //autoCompletes
+
+           //Aggregates
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
+        }
+
+        protected override string GetFromJoinStatement()
+        {
+           var sql = new StringBuilder();  
+           sql.AppendLine(" From stkxSsPortfolioBalance ");
+
+           sql.AppendLine($"   Left Join stkxSsPortfolio on stkxSsPortfolioBalance.SsPortfolioId = stkxSsPortfolio.Id");
+sql.AppendLine($"   Left Join stkxCurrency on stkxSsPortfolioBalance.CurrencyId = stkxCurrency.Id");
+
+//Template_Start_Code_DontOverwrite_6
+//Template_End_Code_DontOverwrite_6
+
+           return sql.ToString();
+        }
+
+        protected override string GetWhereConditions(QueryRequest<SsPortfolioBalanceListFilter> request, DynamicParameters parameters)
+        {
+            var sql = new StringBuilder() ;
+            sql.AppendLine(" stkxSsPortfolioBalance.isDeleted=0 ");
+
+                         var filter = request.Filter;
+            if (filter != null)
+            {
+            if ((filter.Id.HasValue) && (filter.Id>0))
+                {
+                    sql.AppendLine("stkxSsPortfolioBalance.Id = @Id");
+                    parameters.Add("@Id", filter.Id);
+                }
+
+                if (!string.IsNullOrEmpty(filter.Name))
+                {
+                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                   {
+                      sql.AppendLine("stkxSsPortfolioBalance.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);                    
+                   }
+                   else
+                   {
+                      sql.AppendLine("stkxSsPortfolioBalance.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);
+                   }
+                }
+
+                if (filter.SsPortfolioId.HasValue)
+                {
+                    sql.AppendLine("stkxSsPortfolioBalance.SsPortfolioId = @SsPortfolioId");
+                    parameters.Add("@SsPortfolioId", filter.SsPortfolioId.Value);
+                }
+if (filter.CurrencyId.HasValue)
+                {
+                    sql.AppendLine("stkxSsPortfolioBalance.CurrencyId = @CurrencyId");
+                    parameters.Add("@CurrencyId", filter.CurrencyId.Value);
+                }
+
+                if (filter.Balance?.From.HasValue == true)
+                {
+                    sql.AppendLine("stkxSsPortfolioBalance.Balance >= @BalanceFrom");
+                    parameters.Add("@BalanceFrom", filter.Balance.From.Value);
+                }
+                if (filter.Balance?.To.HasValue == true)
+                {
+                    sql.AppendLine("stkxSsPortfolioBalance.Balance <= @BalanceTo");
+                    parameters.Add("@BalanceTo", filter.Balance.To.Value);
+                }
+
+            }
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+        }
+
+        protected override string GetHavingConditions(QueryRequest<SsPortfolioBalanceListFilter> request, DynamicParameters parameters)
+        {
+            var filter = request.Filter;
+            if (filter == null)
+            {
+                return "";
+            }
+
+            var sql = new StringBuilder();
+
+            return string.Join(" And ", sql.ToString()
+                                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(s => s.Trim()));        
+       } 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1       
+    }
+}
