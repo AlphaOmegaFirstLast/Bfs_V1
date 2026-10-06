@@ -26,7 +26,7 @@ export class SsPortfolioFilterComponent implements OnInit {
 
     // Define autocomplete fields
     brokerAuto: AutoCompleteHelper;
-investorAuto: AutoCompleteHelper;
+    investorAuto: AutoCompleteHelper;
 
     // Define range filters
 
@@ -38,8 +38,8 @@ investorAuto: AutoCompleteHelper;
     public parent: any;
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
-    this.brokerAuto = new AutoCompleteHelper({ queryUrl: "/Broker/list", fieldName: 'Broker', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
-this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldName: 'Investor', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+        this.brokerAuto = new AutoCompleteHelper({ queryUrl: "/Broker/list", fieldName: 'Broker', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+        this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldName: 'Investor', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     }
 
@@ -57,11 +57,11 @@ this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldNa
     }
     //---------------------------------------------------------
     async setAutoComplete() {
-    this.brokerAuto.setupFilter(this.parent.apiService, this.result);
-this.investorAuto.setupFilter(this.parent.apiService, this.result);
+        this.brokerAuto.setupFilter(this.parent.apiService, this.result);
+        this.investorAuto.setupFilter(this.parent.apiService, this.result);
 
-}
-//---------------------------------------------------------
+    }
+    //---------------------------------------------------------
 
     reset() {
         this.activeModal.close('Reset');
@@ -74,7 +74,7 @@ this.investorAuto.setupFilter(this.parent.apiService, this.result);
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
 }

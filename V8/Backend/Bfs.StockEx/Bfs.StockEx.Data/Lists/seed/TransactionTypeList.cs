@@ -84,14 +84,14 @@ _fieldList.Add(new QueryField() {ComponentName = "StockEntityType", FieldName = 
 _fieldList.Add(new QueryField() {ComponentName = "CalculationMethod", FieldName = "Name", DbName = "stkxCalculationMethod.Name", QueryName = "CalculationMethodName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SourceType", FieldName = "Name", DbName = "stkxSourceType.Name", QueryName = "SourceTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "StockFieldType", FieldName = "Name", DbName = "stkxStockFieldType.Name", QueryName = "StockFieldTypeName", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "NextTransactionType", FieldName = "Name", DbName = "stkxNextTransactionType.Name", QueryName = "NextTransactionTypeName", IsAggregare = false});
 
             //autoCompletes
 
-           //Aggregates
+            //Aggregates
 
-//Template_Start_Code_DontOverwrite_5
-//Template_End_Code_DontOverwrite_5
+            //Template_Start_Code_DontOverwrite_5
+            _fieldList.Add(new QueryField() { ComponentName = "asNextTransactionType", FieldName = "Name", DbName = "asNextTransactionType.Name", QueryName = "NextTransactionTypeName", IsAggregare = false });
+            //Template_End_Code_DontOverwrite_5
         }
 
         protected override string GetFromJoinStatement()
@@ -104,12 +104,12 @@ sql.AppendLine($"   Left Join stkxStockEntityType on stkxTransactionType.StockEn
 sql.AppendLine($"   Left Join stkxCalculationMethod on stkxTransactionType.CalculationMethodId = stkxCalculationMethod.Id");
 sql.AppendLine($"   Left Join stkxSourceType on stkxTransactionType.SourceTypeId = stkxSourceType.Id");
 sql.AppendLine($"   Left Join stkxStockFieldType on stkxTransactionType.StockFieldTypeId = stkxStockFieldType.Id");
-sql.AppendLine($"   Left Join stkxNextTransactionType on stkxTransactionType.NextTransactionTypeId = stkxNextTransactionType.Id");
 
-//Template_Start_Code_DontOverwrite_6
-//Template_End_Code_DontOverwrite_6
+            //Template_Start_Code_DontOverwrite_6
+            sql.AppendLine($"   Left Join stkxTransactionType  asNextTransactionType on stkxTransactionType.NextTransactionTypeId = asNextTransactionType.Id");
+            //Template_End_Code_DontOverwrite_6
 
-           return sql.ToString();
+            return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<TransactionTypeListFilter> request, DynamicParameters parameters)

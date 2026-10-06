@@ -235,20 +235,18 @@ actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader
 
         return links;
     }
-
+//---------------------------------------------------------
 //Template_Start_Code_DontOverwrite_3
 export function isVisible(entity: ISspTransaction, validationForm: UntypedFormGroup, fieldName: string): boolean {
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
-    let transactionTypeId = validationForm.get('transactionTypeId')?.value;
-    let sspTransactionId = validationForm.get('sspTransactionId')?.value;
-
+    let control = validationForm.get('transactionTypeId');
+    let transactionTypeId = control?.value;
     switch (fieldName.toLocaleLowerCase()) {
         case 'toportfolioid':
             return (transactionTypeId == 9 || transactionTypeId == 10);
         case 'toquantity':
             return (transactionTypeId == 15 || transactionTypeId == 16) ? true : false;
-
     }
     return true;
 }

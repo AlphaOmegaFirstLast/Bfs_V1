@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
@@ -17,7 +17,7 @@ import { StockExService } from '@bfs/stockex/main/stockex.service';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
-import {isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTransactionUntypedFormGroup, getSspTransactionActions} from './ssp-transaction.shared';
+import { isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTransactionUntypedFormGroup, getSspTransactionActions } from './ssp-transaction.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -25,14 +25,14 @@ import {isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTrans
     selector: 'ssp-transaction-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
+        CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule, RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './ssp-transaction.form.component.html',
     providers: [provideFlatpickrDefaults()],
 })
-export class SspTransactionFormComponent extends BaseFormComponent<ISspTransaction > implements OnInit {
+export class SspTransactionFormComponent extends BaseFormComponent<ISspTransaction> implements OnInit {
 
-    override apiUrl =  '/SspTransaction/';
+    override apiUrl = '/SspTransaction/';
     override apiService: StockExService = inject(StockExService);
     override componentName: string = 'SspTransaction'.toLowerCase();  // used to grab its related custom field definitions
 
@@ -40,21 +40,21 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
 
     // Define look ups
     public TransactionTypeOptions: any[] = [];
-public StockShareOptions: any[] = [];
-public CurrencyOptions: any[] = [];
+    public StockShareOptions: any[] = [];
+    public CurrencyOptions: any[] = [];
 
     // Define autocomplete
-    ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
-toPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/ToPortfolio/list", fieldName: 'toPortfolio', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    toPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'toPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-       super(activatedRoute);
-       this.validationForm = this.formBuilder.group(sspTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
-      this.ssPortfolioAuto.control = this.validationForm.get('ssPortfolioName');
-this.toPortfolioAuto.control = this.validationForm.get('toPortfolioName');
+        super(activatedRoute);
+        this.validationForm = this.formBuilder.group(sspTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+        this.ssPortfolioAuto.control = this.validationForm.get('ssPortfolioName');
+        this.toPortfolioAuto.control = this.validationForm.get('toPortfolioName');
 
     }
     //---------------------------------------------------------
@@ -70,27 +70,28 @@ this.toPortfolioAuto.control = this.validationForm.get('toPortfolioName');
         }
 
         this.linkList = this.getRecordLinks(this);
-        this.actionList = this.getRecordActions(this);    
+        this.actionList = this.getRecordActions(this);
     }
     //---------------------------------------------------------
-    override initEntity(): ISspTransaction  {
-        return initSspTransaction ();
+    override initEntity(): ISspTransaction {
+        return initSspTransaction();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
 
     }
     //---------------------------------------------------------
-    override async setAutoComplete() {   
-    await this.ssPortfolioAuto.setUpForm(this.apiService, this);
-await this.toPortfolioAuto.setUpForm(this.apiService, this);
+
+    override async setAutoComplete() {
+        await this.ssPortfolioAuto.setUpForm(this.apiService, this);
+        await this.toPortfolioAuto.setUpForm(this.apiService, this);
 
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
-    this.ssPortfolioAuto.setData(this.entity.ssPortfolioId,this.entity.ssPortfolioName);
-this.toPortfolioAuto.setData(this.entity.toPortfolioId,this.entity.toPortfolioName);
+        this.ssPortfolioAuto.setData(this.entity.ssPortfolioId, this.entity.ssPortfolioName);
+        this.toPortfolioAuto.setData(this.entity.toPortfolioId, this.entity.toPortfolioName);
 
     }
     //---------------------------------------------------------
@@ -99,20 +100,20 @@ this.toPortfolioAuto.setData(this.entity.toPortfolioId,this.entity.toPortfolioNa
         return getSspTransactionActions(this, record);
     }
 
-   //---------------------------------------------------------
+    //---------------------------------------------------------
     isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity,this.validationForm, fieldName);
+        return isVisible(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
     isEnabled(fieldName: string): boolean {
 
-        return isEnabled(this.entity,this.validationForm, fieldName);
+        return isEnabled(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
 
-//Template_Start_Code_DontOverwrite_2
-override async getLookups(): Promise<void> {
+    //Template_Start_Code_DontOverwrite_2
+    override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
         this.isLoading.lookups = true;
@@ -124,10 +125,8 @@ override async getLookups(): Promise<void> {
 
             ] = await Promise.all
                 ([
-                    this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
                     this.apiService.getItems<IQueryResponse>("/TransactionType/list", { "filter": { "stockEntityTypeId": 3, "sourceTypeId": 2 }, pageSize: 50 }),
                     this.apiService.getItems<IQueryResponse>("/StockShare/list", { pageSize: 30 }),
-                    this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
 
                 ]);
             this.TransactionTypeOptions = transactionTypeResponse.items;
@@ -155,6 +154,6 @@ override async getLookups(): Promise<void> {
                });
                */
     }
-//Template_End_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
 }

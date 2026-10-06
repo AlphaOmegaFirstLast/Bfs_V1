@@ -12,7 +12,8 @@ public long InvestorId { get; set; }
 
         public string? BrokerName { get; set; }
 public string? InvestorName { get; set; }
+        public string AutoCompleteName { get; set; }
 
-//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
-   }
+        //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
+    }
 }
