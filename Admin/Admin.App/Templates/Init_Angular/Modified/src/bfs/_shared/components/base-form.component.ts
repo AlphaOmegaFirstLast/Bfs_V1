@@ -46,6 +46,9 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     entity: Entity;
     me: any = this;
+
+    linkList: ViewLink[] = [];
+    actionList: ActionLink[] = [];
     //-----------------------Object Fields Lookups----------------------------------
     public ChartElementOptions: any[] = []; //{ id: number, name: string }[] = [];
     public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
@@ -194,6 +197,24 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     //     const request = { pageSize: 1, filter: { id: this.entity.id } };
 
     //     (await this.apiService.post(target , request)).subscribe({
+    protected patchFormValue(entity: Entity): void {
+        const formValue: Record<string, unknown> = { ...entity };
+
+        for (const [fieldName, value] of Object.entries(formValue)) {
+            if (!fieldName.toLowerCase().endsWith('date')) {
+                continue;
+            }
+
+            if (value instanceof Date && !Number.isNaN(value.getTime())) {
+                formValue[fieldName] = value.toISOString().slice(0, 10);
+            } else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}(?:$|T)/.test(value)) {
+                formValue[fieldName] = value.slice(0, 10);
+            }
+        }
+
+        this.validationForm.patchValue(formValue);
+    }
+    //---------------------------------------------------------
     //         next: (response: any) => {
     //             this.entity = response.items[0];
     //             this.validationForm.patchValue(this.entity);
@@ -215,7 +236,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         let actions = this.getActions(record);
         let links: ViewLink[] = actions.filter(action =>
             action.actionType == 'FrontendLink'
-            && action.actionLocation == 'ListRow'
+            && action.actionLocation == 'FormHeader'
         ).map(action => {
             return { recordId: action.recordId, route: action.route ?? '', displayText: action.displayText }
         });
@@ -227,7 +248,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         let actions = this.getActions(record);
         let links: ActionLink[] = actions.filter(action =>
             action.actionType == 'FrontendFunction'
-            && action.actionLocation == 'ListRow'
+            && action.actionLocation == 'FormHeader'
         ).map(action => {
             return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
         });
@@ -243,7 +264,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         (await this.apiService.get(target)).subscribe({
             next: (response: Entity) => {
                 this.entity = response;
-                this.validationForm.patchValue(this.entity);
+                this.patchFormValue(this.entity);
                 this.setDataAutoComplete();
                 this.isLoading.view = false;
             },
@@ -264,7 +285,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
             next: (response: Entity) => {
                 this.isLoading.save = false;
                 this.submit = false;
-                this.validationForm.patchValue(this.entity);
+                this.patchFormValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was added successfully`, msgType: "info" });
             },
             error: (err: any) => {
@@ -282,7 +303,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
             next: (response: Entity) => {
                 this.isLoading.save = false;
                 this.submit = false;
-                this.validationForm.patchValue(this.entity);
+                this.patchFormValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was updated successfully`, msgType: "info" });
 
             },
@@ -302,7 +323,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
                 this.isLoading.save = false;
                 this.submit = false;
                 this.entity = this.initEntity();
-                this.validationForm.patchValue(this.entity);
+                this.patchFormValue(this.entity);
                 this.messages.push({ text: `${this.entityDisplayName} was deleted successfully`, msgType: "info" });
             },
             error: (err: any) => {
@@ -314,14 +335,24 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     }
     //---------------------------------------------------------
     validSubmit() {
-        this.submit = true
-        if (this.validationForm.valid) {
-            // One-time sync to entity object
-            this.entity = this.validationForm.getRawValue();
-            // this.validationForm.disable();
-            this.messages = [];
+        if (this.currentOperation == 'delete') {
             if (!this.isLoading.save) {  // to prevent multiple requests
                 this.applyOperation();
+            }
+        }
+        else {
+            this.submit = true
+            if (this.validationForm.valid) {
+                // One-time sync to entity object
+                this.entity = this.validationForm.getRawValue();
+                // this.validationForm.disable();
+                this.messages = [];
+                if (!this.isLoading.save) {  // to prevent multiple requests
+                    this.applyOperation();
+                }
+            }
+            else {
+                this.messages.push({ text: "Invalid Fields Found", msgType: "danger" });
             }
         }
     }
@@ -358,10 +389,10 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     resetForm() {
         this.submit = false
         this.entity = this.initEntity();
-        this.validationForm.patchValue(this.entity);
+        this.patchFormValue(this.entity);
     }
     //---------------------------------------------------------
-    navigateBack(fallbackUrl?:string) {
+    navigateBack(fallbackUrl?: string) {
         this.navigationService.popUrl(fallbackUrl);
     }
     //---------------------------------------------------------

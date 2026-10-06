@@ -3,7 +3,10 @@
 namespace Bfs.[SystemNameCapital].Contracts
 {
     public class [ReportNameCapital]Item
-    {      
+    {              
+        public string AutoCompleteName { get; set; }
+        public string LookupName { get; set; }
+
         //Template_Start_ReportField_QueryColumn_1
         public [ReportBackendType] [ReportFieldNameCapital] { get; set; }
         //Template_End_ReportField_QueryColumn_1
@@ -22,7 +25,5 @@ namespace Bfs.[SystemNameCapital].Contracts
         //Template_Start_ReportField_Aggregate_1
         public string? [AggregateName] { get; set; }
         //Template_End_ReportField_Aggregate_1
-
-//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }
 }
