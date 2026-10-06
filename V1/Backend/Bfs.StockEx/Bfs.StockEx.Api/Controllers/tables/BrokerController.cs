@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +21,18 @@ public class BrokerController
 {
     private readonly IBrokerService _brokerService;
     private IValidator<Broker> _validator;
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
-    public BrokerController(IBrokerService brokerService, IValidator<Broker> validator)
+    public BrokerController(IBrokerService brokerService, IValidator<Broker> validator
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
+        )
     {
         _brokerService = brokerService;
         _validator = validator;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
     [HttpGet]
@@ -164,8 +173,8 @@ public class BrokerController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+    //Template_Start_Code_DontOverwrite_5
+    //Template_End_Code_DontOverwrite_5
 
 }
 

@@ -4,7 +4,11 @@ using Bfs.StockEx.Data.Models;
 
 using Microsoft.EntityFrameworkCore;
 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 namespace Bfs.StockEx.Data.Repositories;
+
+//Template_Start_Code_DontOverwrite_6
 
 public enum enumEffectTypes
 {
@@ -49,41 +53,57 @@ public enum TransactionTypes
     Split = 16,
     Divident = 17,
 }
+//Template_End_Code_DontOverwrite_6
 
 public class UnitOfWork : IUnitOfWork
 {
     private readonly StockExDbContext _context;
+
+
+    //Template_Field_ChildrenMatrix_AddDeclareEntry
+    //Template_Start_Code_DontOverwrite_2
     private readonly ISspTransactionRepository sspTransactionRepo;
     private readonly ICashTransactionRepository cashTransactionRepo;
     private readonly ISsPortfolioBalanceRepository ssPortfolioBalanceRepo;
     private readonly ISspStockRepository sspStockRepo;
+    public ISspTransactionRepository SspTransactionRepo => sspTransactionRepo;
+    public ICashTransactionRepository CashTransactionRepo => cashTransactionRepo;
 
-    //Template_Field_ChildrenMatrix_AddDeclareEntry
+    //Template_End_Code_DontOverwrite_2
 
     public UnitOfWork(StockExDbContext dbContext, IScopeData scopeData
+//Template_Field_ChildrenMatrix_AddParameterEntry
+//Template_Start_Code_DontOverwrite_3
 , ISspTransactionRepository sspTransactionRepo
 , ICashTransactionRepository cashTransactionRepo
 , ISsPortfolioBalanceRepository ssPortfolioBalanceRepo
 , ISspStockRepository sspStockRepo
-    //Template_Field_ChildrenMatrix_AddParameterEntry
+    
+    //Template_End_Code_DontOverwrite_3
     )
     {
         _context = dbContext;
+
+        //Template_Field_ChildrenMatrix_AddInitEntry
+
+        //Template_Start_Code_DontOverwrite_4
         this.sspTransactionRepo = sspTransactionRepo;
         this.cashTransactionRepo = cashTransactionRepo;
         this.ssPortfolioBalanceRepo = ssPortfolioBalanceRepo;
         this.sspStockRepo = sspStockRepo;
-        //Template_Field_ChildrenMatrix_AddInitEntry
+        //Template_End_Code_DontOverwrite_4
     }
 
-    public ISspTransactionRepository SspTransactionRepo => sspTransactionRepo;
-    public ICashTransactionRepository CashTransactionRepo => cashTransactionRepo;
 
+
+    //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
+
+    //Template_Start_Code_DontOverwrite_5
     public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEntity ssptEntity)
     {
         var transactionTypeList = await _context.TransactionTypes.ToListAsync();
         var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == ssptEntity.TransactionTypeId);
-        if (sspTransactionType!=null)
+        if (sspTransactionType != null)
         {
             // all in memory changes: assign value to ssp transaction.Id modify stock.balance
             var inMemorySspTransactionRecord = await RolloutSspTransactionAsync(sspTransactionType, ssptEntity);
@@ -167,10 +187,10 @@ public class UnitOfWork : IUnitOfWork
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
-                    portfolioBalance.Balance = portfolioBalance.Balance + resultAmount; 
+                    portfolioBalance.Balance = portfolioBalance.Balance + resultAmount;
                     break;
                 case (int)enumEffectTypes.Sub:
-                    portfolioBalance.Balance = portfolioBalance.Balance - resultAmount; 
+                    portfolioBalance.Balance = portfolioBalance.Balance - resultAmount;
                     break;
                 case (int)enumEffectTypes.Set:
                     portfolioBalance.Balance = resultAmount;
@@ -198,7 +218,7 @@ public class UnitOfWork : IUnitOfWork
         return stock;
     }
 
-    public async Task<SsPortfolioBalanceEntity> GetCashBalanceById(long ssPortfolioId,long currencyId)
+    public async Task<SsPortfolioBalanceEntity> GetCashBalanceById(long ssPortfolioId, long currencyId)
     {
         var balance = await _context.SsPortfolioBalances.FirstOrDefaultAsync(x => x.SsPortfolioId == ssPortfolioId && x.CurrencyId == currencyId);
         if (balance == null)
@@ -228,13 +248,14 @@ public class UnitOfWork : IUnitOfWork
                 result = (balance * toResult) / original;
                 break;
             case enumCalculationMethods.Divident:
-                result = (balance  / original ) * toResult;
+                result = (balance / original) * toResult;
                 break;
         }
         return result;
     }
 
-    //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
+    //Template_End_Code_DontOverwrite_5
+
 
     //public async Task MergeStockShares(long stockShareId, int factor)
     //{
@@ -247,4 +268,7 @@ public class UnitOfWork : IUnitOfWork
 
     //    await _context.SaveChangesAsync();
     //}
+
+    //Template_Start_Code_DontOverwrite_6
+    //Template_End_Code_DontOverwrite_6
 }

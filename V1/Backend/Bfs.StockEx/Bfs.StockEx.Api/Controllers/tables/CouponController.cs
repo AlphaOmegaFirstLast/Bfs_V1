@@ -8,6 +8,9 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +22,18 @@ public class CouponController
 {
     private readonly ICouponService _couponService;
     private IValidator<Coupon> _validator;
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
-    public CouponController(ICouponService couponService, IValidator<Coupon> validator)
+    public CouponController(ICouponService couponService, IValidator<Coupon> validator
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
+        )
     {
         _couponService = couponService;
         _validator = validator;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
     [HttpGet]
@@ -164,8 +174,8 @@ public class CouponController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5   
 
 }
 

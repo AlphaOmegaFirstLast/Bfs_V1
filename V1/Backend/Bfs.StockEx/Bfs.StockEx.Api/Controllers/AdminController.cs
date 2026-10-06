@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 namespace Bfs.StockEx.Api.Controllers;
 
 [Route("api/[controller]")]
@@ -15,11 +17,18 @@ namespace Bfs.StockEx.Api.Controllers;
 public class AdminController
 {
     private readonly BfsSettings _bfsSettings;
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
+
     public AdminController(
         IOptions<BfsSettings> bfsSettings
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
         )
     {
         _bfsSettings = bfsSettings.Value;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
     [HttpPost("Migrate")]
@@ -29,5 +38,7 @@ public class AdminController
         var masterConnection = _bfsSettings.DbConnections.MasterConnection;
         await TenantManager.ApplyMigrations< StockExDbContext >(masterConnection, "StockEx");
     }
+    //Template_Start_Code_DontOverwrite_5
+    //Template_End_Code_DontOverwrite_5
 }
 

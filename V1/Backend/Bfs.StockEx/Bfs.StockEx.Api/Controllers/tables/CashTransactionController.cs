@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +21,17 @@ public class CashTransactionController
 {
     private readonly ICashTransactionService _cashTransactionService;
     private IValidator<CashTransaction> _validator;
-
-    public CashTransactionController(ICashTransactionService cashTransactionService, IValidator<CashTransaction> validator)
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
+    public CashTransactionController(ICashTransactionService cashTransactionService, IValidator<CashTransaction> validator
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
+        )
     {
         _cashTransactionService = cashTransactionService;
         _validator = validator;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
     [HttpGet]
@@ -166,8 +174,8 @@ public class CashTransactionController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5   
 
 }
 

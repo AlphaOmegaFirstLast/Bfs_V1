@@ -8,6 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Api.Controllers;
 
@@ -19,11 +21,18 @@ public class ExpensesTypeController
 {
     private readonly IExpensesTypeService _expensesTypeService;
     private IValidator<ExpensesType> _validator;
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
-    public ExpensesTypeController(IExpensesTypeService expensesTypeService, IValidator<ExpensesType> validator)
+    public ExpensesTypeController(IExpensesTypeService expensesTypeService, IValidator<ExpensesType> validator
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
+        )
     {
         _expensesTypeService = expensesTypeService;
         _validator = validator;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
     [HttpGet]
@@ -164,8 +173,8 @@ public class ExpensesTypeController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5   
 
 }
 

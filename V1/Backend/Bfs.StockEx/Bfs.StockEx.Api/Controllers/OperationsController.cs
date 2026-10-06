@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.Text.Json;
 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
+
 namespace Bfs.StockEx.Api.Controllers;
 
 [Route("api/[controller]")]
@@ -21,16 +25,27 @@ namespace Bfs.StockEx.Api.Controllers;
 public class OperationsController
 {
     private readonly IOperationsService _operationsService;
+    //Template_Start_Code_DontOverwrite_2
     private IValidator<SspTransaction> _sspTransactionValidator;
     private IValidator<CashTransaction> _cashTransactionValidator;
+    //Template_End_Code_DontOverwrite_2
 
-    public OperationsController(IOperationsService operationsService, IValidator<SspTransaction> validator, IValidator<CashTransaction> cashValidator)
+
+    public OperationsController(IOperationsService operationsService
+        //Template_Start_Code_DontOverwrite_3
+        , IValidator<SspTransaction> validator
+        , IValidator<CashTransaction> cashValidator
+//Template_End_Code_DontOverwrite_3    
+)
     {
         _operationsService = operationsService;
+        //Template_Start_Code_DontOverwrite_4
         _sspTransactionValidator = validator;
         _cashTransactionValidator = cashValidator;
-    }
 
+        //Template_End_Code_DontOverwrite_4
+    }
+    //Template_Start_Code_DontOverwrite_5
     [HttpPost("SspTransaction/Rollout")]
     [CustomAuthorize("method=a.sspTransaction")]
     public async Task<Results<Ok<SspTransaction>, BadRequest<ProblemDetails>>> Post([FromBody] SspTransaction value)
@@ -74,6 +89,10 @@ public class OperationsController
         var createdSspTransaction = await _operationsService.RolloutTransactionAsync(value).ConfigureAwait(false);
         return TypedResults.Ok(createdSspTransaction);
     }
+    //Template_End_Code_DontOverwrite_5
+
+
+
 
     //Template_Field_ChildrenMatrix_AddControllerEntry
 }

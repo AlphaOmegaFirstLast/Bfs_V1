@@ -8,7 +8,8 @@ using Bfs.Core.Contracts;
 using Bfs.Core.Middleware;
 using Bfs.StockEx.Contracts;
 using Bfs.StockEx.Domain.Interfaces;
-
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 namespace Bfs.StockEx.Api.Controllers;
 
 [Route("api/[controller]")]
@@ -19,11 +20,18 @@ public class CustomReportsController
 {
     private readonly ICustomReportsService _customReportsService;
     private IValidator<CustomReports> _validator;
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
-    public CustomReportsController(ICustomReportsService customReportsService, IValidator<CustomReports> validator)
+    public CustomReportsController(ICustomReportsService customReportsService, IValidator<CustomReports> validator
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
+        )
     {
         _customReportsService = customReportsService;
         _validator = validator;
+        //Template_Start_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
     }
 
     [HttpGet]
@@ -164,8 +172,8 @@ public class CustomReportsController
             return TypedResults.BadRequest(problemDetails);
         }
     }
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1   
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5   
 
 }
 
