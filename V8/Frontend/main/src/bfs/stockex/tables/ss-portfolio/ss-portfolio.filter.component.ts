@@ -4,6 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+import {NgIcon} from '@ng-icons/core';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
@@ -13,7 +15,7 @@ import { ISsPortfolioFilter } from './ss-portfolio.shared';
 
 @Component({
     selector: 'app-ss-portfolio-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [NgIcon,FormsModule, CommonModule, FlatpickrDirective],
     templateUrl: './ss-portfolio.filter.component.html',
     providers: [provideFlatpickrDefaults()],
     //styles: ``
@@ -26,7 +28,7 @@ export class SsPortfolioFilterComponent implements OnInit {
 
     // Define autocomplete fields
     brokerAuto: AutoCompleteHelper;
-    investorAuto: AutoCompleteHelper;
+investorAuto: AutoCompleteHelper;
 
     // Define range filters
 
@@ -38,8 +40,8 @@ export class SsPortfolioFilterComponent implements OnInit {
     public parent: any;
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
-        this.brokerAuto = new AutoCompleteHelper({ queryUrl: "/Broker/list", fieldName: 'Broker', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
-        this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldName: 'Investor', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    this.brokerAuto = new AutoCompleteHelper({ queryUrl: "/Broker/list", fieldName: 'Broker', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldName: 'Investor', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     }
 
@@ -57,11 +59,11 @@ export class SsPortfolioFilterComponent implements OnInit {
     }
     //---------------------------------------------------------
     async setAutoComplete() {
-        this.brokerAuto.setupFilter(this.parent.apiService, this.result);
-        this.investorAuto.setupFilter(this.parent.apiService, this.result);
+    this.brokerAuto.setupFilter(this.parent.apiService, this.result);
+this.investorAuto.setupFilter(this.parent.apiService, this.result);
 
-    }
-    //---------------------------------------------------------
+}
+//---------------------------------------------------------
 
     reset() {
         this.activeModal.close('Reset');
@@ -74,7 +76,6 @@ export class SsPortfolioFilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
-    //Template_Start_Code_DontOverwrite_2
-    //Template_End_Code_DontOverwrite_2
-
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 }

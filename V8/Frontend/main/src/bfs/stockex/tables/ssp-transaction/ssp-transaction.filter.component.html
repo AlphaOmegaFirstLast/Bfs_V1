@@ -74,7 +74,9 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="ssPortfolioAuto.hideOverlay()">
-          <label class="form-label fs-6">Component</label>
+          <label class="form-label fs-6">StockShare Portfolio</label>        
+          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
+
           <div class="input-group">
             <input id="ssPortfolioControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
               [(ngModel)]="result.SsPortfolioName"
@@ -109,7 +111,9 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="toPortfolioAuto.hideOverlay()">
-          <label class="form-label fs-6">Component</label>
+          <label class="form-label fs-6">To Portfolio</label>        
+          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
+
           <div class="input-group">
             <input id="toPortfolioControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
               [(ngModel)]="result.ToPortfolioName"

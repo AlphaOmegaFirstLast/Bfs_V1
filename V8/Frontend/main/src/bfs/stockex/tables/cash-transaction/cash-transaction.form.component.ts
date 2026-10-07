@@ -14,6 +14,7 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { StockExService } from '@bfs/stockex/main/stockex.service';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
 import {isEnabled, isVisible, type ICashTransaction, initCashTransaction, cashTransactionUntypedFormGroup, getCashTransactionActions} from './cash-transaction.shared';
@@ -39,12 +40,12 @@ export class CashTransactionFormComponent extends BaseFormComponent<ICashTransac
 
     // Define look ups
     public SspTransactionOptions: any[] = [];
-public SsPortfolioOptions: any[] = [];
 public TransactionTypeOptions: any[] = [];
 public ExpensesTypeOptions: any[] = [];
 public CurrencyOptions: any[] = [];
 
     // Define autocomplete
+    ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     //---------------------------------------------------------
 
@@ -52,6 +53,7 @@ public CurrencyOptions: any[] = [];
 
        super(activatedRoute);
        this.validationForm = this.formBuilder.group(cashTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+      this.ssPortfolioAuto.control = this.validationForm.get('ssPortfolioName');
 
     }
     //---------------------------------------------------------
@@ -79,11 +81,13 @@ public CurrencyOptions: any[] = [];
     }
     //---------------------------------------------------------
     override async setAutoComplete() {   
+    await this.ssPortfolioAuto.setUpForm(this.apiService, this);
 
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
+    this.ssPortfolioAuto.setData(this.entity.ssPortfolioId,this.entity.ssPortfolioName);
 
     }
     //---------------------------------------------------------
@@ -113,26 +117,21 @@ override async getLookups(): Promise<void> {
         try {
             const [
                 sspTransactionResponse,
-                ssPortfolioResponse,
                 transactionTypeResponse,
                 expensesTypeResponse,
                 currencyResponse,
-
             ] = await Promise.all
                 ([
                     this.apiService.getItems<IQueryResponse>("/SspTransaction/list", { pageSize: 30 }),
-                    this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
                     this.apiService.getItems<IQueryResponse>("/TransactionType/list", { "filter": { "stockEntityTypeId": 2, "sourceTypeId": 2 }, pageSize: 50 }),
                     this.apiService.getItems<IQueryResponse>("/ExpensesType/list", { pageSize: 30 }),
                     this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
 
                 ]);
             this.SspTransactionOptions = sspTransactionResponse.items;
-            this.SsPortfolioOptions = ssPortfolioResponse.items;
             this.TransactionTypeOptions = transactionTypeResponse.items;
             this.ExpensesTypeOptions = expensesTypeResponse.items;
             this.CurrencyOptions = currencyResponse.items;
-
         } catch (err: any) {
             const msg = err?.message || "An error occurred while loading data.";
             this.messages.push({ text: msg, msgType: "danger" });

@@ -10,9 +10,9 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 // Output Columns of a Query  [used in entity Query]
 export const CashTransactionColumns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'sspTransactionId', displayName: 'StocksShare Transaction', sortName: 'SspTransaction_Name', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'sspTransactionId', displayName: 'StocksShare Transaction', sortName: 'SspTransaction_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
@@ -20,6 +20,7 @@ export const CashTransactionColumns = [
 { fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'expensesTypeId', displayName: 'Expenses Type', sortName: 'ExpensesType_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'ssPortfolioId', displayName: 'Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 //---------------------------------------------------------
@@ -34,10 +35,12 @@ transactionDate?: Date | null;
 value?: number;
 
     sspTransactionId?: string;
-ssPortfolioId?: string;
 transactionTypeId?: number;
 expensesTypeId?: string;
 currencyId?: string;
+
+    ssPortfolioId?: string;
+    ssPortfolioName?: string;
 
 }
 //---------------------------------------------------------
@@ -53,10 +56,12 @@ transactionDate: new Date(),
 value: 0,
 
         sspTransactionId: '0',
-ssPortfolioId: '0',
 transactionTypeId: 0,
 expensesTypeId: '0',
 currencyId: '0',
+
+        ssPortfolioId: '0',
+        ssPortfolioName: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -76,10 +81,12 @@ transactionDate: [new Date(),getFormControlValidation('{"IsRequired":true,"MinLe
 value: [0,getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"9999999999999.99","RegexPattern":"","AllowedValues":""}')],
 
     sspTransactionId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 transactionTypeId: [0,getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-expensesTypeId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+expensesTypeId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    ssPortfolioName: [''],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -97,10 +104,12 @@ export interface ICashTransactionFilter {
     Name?: string;
 
     SspTransactionId?: string;
-SsPortfolioId?: string;
 TransactionTypeId?: number;
 ExpensesTypeId?: string;
 CurrencyId?: string;
+
+    SsPortfolioId?: string;
+    SsPortfolioName?: string,
 
     SourceDate?: { from?: Date | null ; to?: Date | null} ;
 TransactionDate?: { from?: Date | null ; to?: Date | null} ;
@@ -124,10 +133,12 @@ export function initCashTransactionRequest(): ICashTransactionRequest {
             Name: undefined ,
 
             SspTransactionId: undefined ,
-SsPortfolioId: undefined ,
 TransactionTypeId: undefined ,
 ExpensesTypeId: undefined ,
 CurrencyId: undefined ,
+
+            SsPortfolioId: undefined ,
+            SsPortfolioName: undefined ,
 
             SourceDate: { from: undefined , to: undefined} ,
 TransactionDate: { from: undefined , to: undefined} ,
@@ -144,14 +155,15 @@ export function renderCashTransaction(record: ICashTransaction, column: IQueryCo
         switch (column.fieldName) {
             case 'sspTransactionId':
                 return record['sspTransactionName']?.toString();
-case 'ssPortfolioId':
-                return record['ssPortfolioName']?.toString();
 case 'transactionTypeId':
                 return record['transactionTypeName']?.toString();
 case 'expensesTypeId':
                 return record['expensesTypeName']?.toString();
 case 'currencyId':
                 return record['currencyName']?.toString();
+
+            case 'ssPortfolioId':
+                return record['ssPortfolioName']?.toString();
 
             default:
                 return value;
@@ -185,11 +197,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('cashTransaction', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['sspTransactionId'], route:'/stkx/ssp-transaction/view', displayText:'Go to SspTransaction'
-});
-}
-if (component.accessService.isActionAllowed('cashTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['ssPortfolioId'], route:'/stkx/ss-portfolio/view', displayText:'Go to SsPortfolio'
 });
 }
 if (component.accessService.isActionAllowed('cashTransaction', ''))

@@ -3,8 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 import { ICashTransactionFilter } from './cash-transaction.shared';
 //Template_Start_Code_DontOverwrite_1
@@ -12,7 +15,7 @@ import { ICashTransactionFilter } from './cash-transaction.shared';
 
 @Component({
     selector: 'app-cash-transaction-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
     templateUrl: './cash-transaction.filter.component.html',
     providers: [provideFlatpickrDefaults()],
     //styles: ``
@@ -23,12 +26,12 @@ export class CashTransactionFilterComponent implements OnInit {
 
     // Define look ups
     public SspTransactionOptions:  any[] = [];
-public SsPortfolioOptions:  any[] = [];
 public TransactionTypeOptions:  any[] = [];
 public ExpensesTypeOptions:  any[] = [];
 public CurrencyOptions:  any[] = [];
 
     // Define autocomplete fields
+    ssPortfolioAuto: AutoCompleteHelper;
 
     // Define range filters
     public SourceDateFrom: Date | null | undefined;
@@ -46,6 +49,7 @@ public ValueFrom: number | undefined;
     public parent: any;
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+    this.ssPortfolioAuto = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'SsPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     }
 
@@ -73,17 +77,6 @@ this.ValueFrom = this.result.Value?.from;
             },
                 error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching StocksShare Transaction data.';
-                this.isLoading.list = false;
-            }
-        });
-target = "/SsPortfolio/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.SsPortfolioOptions = response.items;
-                this.isLoading.list = false;
-            },
-                error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching StockShare Portfolio data.';
                 this.isLoading.list = false;
             }
         });
@@ -124,6 +117,7 @@ target = "/Currency/list";
     }
     //---------------------------------------------------------
     async setAutoComplete() {
+    this.ssPortfolioAuto.setupFilter(this.parent.apiService, this.result);
 
 }
 //---------------------------------------------------------
