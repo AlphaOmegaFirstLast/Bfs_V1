@@ -83,8 +83,8 @@ _fieldList.Add(new QueryField() {ComponentName = "ActionLocation", FieldName = "
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
-             _fieldList.Add(new QueryField() {ComponentName = "BfsComponentBusinessAction", FieldName = "Name", DbName = "BfsComponentBusinessAction.Name", QueryName = "AutoCompleteName", IsAggregare = false});
-             _fieldList.Add(new QueryField() {ComponentName = "BfsComponentBusinessAction", FieldName = "Name", DbName = "BfsComponentBusinessAction.Name", QueryName = "LookupName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "BfsComponentBusinessAction", FieldName = "Name", DbName = "BfsComponentBusinessAction.Id", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "BfsComponentBusinessAction", FieldName = "Name", DbName = "BfsComponentBusinessAction.Id", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 

@@ -8,7 +8,13 @@ namespace Bfs.Master.Data.Repositories;
 public interface IUnitOfWork
 {
     MasterDbContext _context { get;}
-    //Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
+    Task<List<BfsComponentSystemActionEntity>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemActionEntity> matrix);
+
+Task<List<BfsComponentBusinessActionEntity>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessActionEntity> matrix);
+
+Task<List<BfsTenantSystemEntity>> UpdateBfsTenantSystemMatrixAsync(long parentId, List<BfsTenantSystemEntity> matrix);
+
+//Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
 
 //Template_Start_Code_DontOverwrite_2
 IBfsComponentRepository ComponentRepo { get; set; }

@@ -36,6 +36,24 @@ _componentRepo = _unitOfwork.ComponentRepo;
 
     }
 
+    public async Task<List<BfsComponentSystemAction>> UpdateBfsComponentSystemActionMatrixAsync(long parentId, List<BfsComponentSystemAction> matrix)
+    {
+        var matrixEntity = matrix.ToEntity();
+        var entityList = await _unitOfwork.UpdateBfsComponentSystemActionMatrixAsync(parentId, matrixEntity);
+        return entityList.ToContract();
+    }
+    public async Task<List<BfsComponentBusinessAction>> UpdateBfsComponentBusinessActionMatrixAsync(long parentId, List<BfsComponentBusinessAction> matrix)
+    {
+        var matrixEntity = matrix.ToEntity();
+        var entityList = await _unitOfwork.UpdateBfsComponentBusinessActionMatrixAsync(parentId, matrixEntity);
+        return entityList.ToContract();
+    }
+    public async Task<List<BfsTenantSystem>> UpdateBfsTenantSystemMatrixAsync(long parentId, List<BfsTenantSystem> matrix)
+    {
+        var matrixEntity = matrix.ToEntity();
+        var entityList = await _unitOfwork.UpdateBfsTenantSystemMatrixAsync(parentId, matrixEntity);
+        return entityList.ToContract();
+    }
 //Template_Field_ChildrenMatrix_AddServiceEntry    
 //Template_Start_Code_DontOverwrite_5
 public async Task<long> DuplicateComponentTreeAsync(long componentId)
