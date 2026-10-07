@@ -3,7 +3,10 @@ using Bfs.Core.ObjectFields;
 namespace Bfs.Master.Data
 {
     public class BfsComponentListItem
-    {      
+    {              
+        public string AutoCompleteName { get; set; }
+        public string LookupName { get; set; }
+
         public long Id { get; set; }
 public long BfsSystemId { get; set; }
 public bool IsSoftDelete { get; set; }
@@ -19,6 +22,5 @@ public string InterfaceRequired { get; set; }
         public string? BfsSystemName { get; set; }
 public string? DataTypeName { get; set; }
 
-//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }
 }

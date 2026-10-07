@@ -3,7 +3,10 @@ using Bfs.Core.ObjectFields;
 namespace Bfs.Master.Contracts
 {
     public class DeploymentLocalListItem
-    {      
+    {              
+        public string AutoCompleteName { get; set; }
+        public string LookupName { get; set; }
+
         public long Id { get; set; }
 public string ScriptFile { get; set; }
 public long BfsSystemId { get; set; }
@@ -20,6 +23,5 @@ public bool IsHttpsRequired { get; set; }
 
         public string? BfsSystemName { get; set; }
 
-//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
    }
 }
