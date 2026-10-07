@@ -192,5 +192,4 @@ this.investorAuto.setData(this.entity.investorId,this.entity.investorName);
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
@@ -12,7 +14,7 @@ import { IInvestorFilter } from './investor.shared';
 
 @Component({
     selector: 'app-investor-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
     templateUrl: './investor.filter.component.html',
     providers: [provideFlatpickrDefaults()],
     //styles: ``

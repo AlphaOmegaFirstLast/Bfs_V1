@@ -52,6 +52,18 @@
                                     <div class="row">
                                     <div class="col-6">
 <div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('code')">
+        <label for="code" class="form-label fs-6">Code</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="Investor code in Stock market"  />
+
+        <input class="form-control" type="text" id="code" formControlName="code"
+            [class]="submit && !form['code'].errors ? 'is-valid': submit && form['code'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Code.</div>
+    </div>
+</div>
+
+<div class="row mb-2"> 
     <div class="col-12" *ngIf="isVisible('name')">
         <label for="name" class="form-label fs-6">Name</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
