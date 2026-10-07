@@ -1,0 +1,15 @@
+using Bfs.Core.Data;
+using Bfs.Core.ObjectFields;
+
+namespace Bfs.Auth.Data
+{
+    public class UserRequestStatusListFilter
+    {
+        public bool? IsAutoComplete { get; set; } = false ;
+
+        public long? Id { get; set; }
+
+        public string? Name { get; set; }
+
+    }
+}

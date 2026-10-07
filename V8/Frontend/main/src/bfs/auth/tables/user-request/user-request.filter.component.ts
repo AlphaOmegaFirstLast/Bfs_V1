@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IUserRequestFilter } from './user-request.shared';
@@ -11,8 +14,9 @@ import { IUserRequestFilter } from './user-request.shared';
 
 @Component({
     selector: 'app-user-request-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './user-request.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './user-request.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class UserRequestFilterComponent implements OnInit {
@@ -20,14 +24,14 @@ export class UserRequestFilterComponent implements OnInit {
     public result = {} as IUserRequestFilter;
 
     // Define look ups
-    public UserRequestStatusOptions: any[] = [];
+    public UserRequestStatusOptions:  any[] = [];
 
     // Define autocomplete fields
 
     // Define range filters
     public RequestDateFrom: Date | null | undefined;
     public RequestDateTo: Date | null | undefined;
-    public ResponseDateFrom: Date | null | undefined;
+public ResponseDateFrom: Date | null | undefined;
     public ResponseDateTo: Date | null | undefined;
 
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
@@ -47,21 +51,21 @@ export class UserRequestFilterComponent implements OnInit {
         await this.setAutoComplete();
         // Initialize range filters if not set
         this.RequestDateFrom = this.result.RequestDate?.from;
-        this.RequestDateTo = this.result.RequestDate?.to;
-        this.ResponseDateFrom = this.result.ResponseDate?.from;
-        this.ResponseDateTo = this.result.ResponseDate?.to;
+        this.RequestDateTo   = this.result.RequestDate?.to;
+this.ResponseDateFrom = this.result.ResponseDate?.from;
+        this.ResponseDateTo   = this.result.ResponseDate?.to;
 
     }
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
         target = "/UserRequestStatus/list";
-        (await this.parent.apiService.post(target, { pageSize: 50 })).subscribe({
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.UserRequestStatusOptions = response.items;
                 this.isLoading.list = false;
             },
-            error: (err: any) => {
+                error: (err: any) => {
                 this.errorMessage = err.message || 'An error occurred while fetching User Request Status data.';
                 this.isLoading.list = false;
             }
@@ -71,8 +75,8 @@ export class UserRequestFilterComponent implements OnInit {
     //---------------------------------------------------------
     async setAutoComplete() {
 
-    }
-    //---------------------------------------------------------
+}
+//---------------------------------------------------------
 
     reset() {
         this.activeModal.close('Reset');
@@ -83,11 +87,10 @@ export class UserRequestFilterComponent implements OnInit {
         this.activeModal.close('Apply');
         // Apply range filters
         this.result.RequestDate = { from: this.RequestDateFrom, to: this.RequestDateTo };
-        this.result.ResponseDate = { from: this.ResponseDateFrom, to: this.ResponseDateTo };
+this.result.ResponseDate = { from: this.ResponseDateFrom, to: this.ResponseDateTo };
 
         this.parent.applyFilter(this.result);
     }
-    //Template_Start_Code_DontOverwrite_2
-    //Template_End_Code_DontOverwrite_2
-
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 }

@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +24,10 @@ import {isEnabled, isVisible, type IUserRequestStatus, initUserRequestStatus, us
     selector: 'user-request-status-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './user-request-status.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class UserRequestStatusFormComponent extends BaseFormComponent<IUserRequestStatus > implements OnInit {
 
@@ -57,6 +60,9 @@ export class UserRequestStatusFormComponent extends BaseFormComponent<IUserReque
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): IUserRequestStatus  {
@@ -103,6 +109,15 @@ export class UserRequestStatusFormComponent extends BaseFormComponent<IUserReque
         */
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {   
+
+    }
+    //---------------------------------------------------------
+    // required to set the control with the entity initial values
+    override async setDataAutoComplete() {
+
+    }
+    //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
         return getUserRequestStatusActions(this, record);
@@ -122,5 +137,4 @@ export class UserRequestStatusFormComponent extends BaseFormComponent<IUserReque
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +24,10 @@ import {isEnabled, isVisible, type IRoleApp, initRoleApp, roleAppUntypedFormGrou
     selector: 'role-app-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './role-app.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class RoleAppFormComponent extends BaseFormComponent<IRoleApp > implements OnInit {
 
@@ -59,6 +62,9 @@ public AppOptions: any[] = [];
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): IRoleApp  {
@@ -111,6 +117,15 @@ this.AppOptions = appResponse.items;
         */
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {   
+
+    }
+    //---------------------------------------------------------
+    // required to set the control with the entity initial values
+    override async setDataAutoComplete() {
+
+    }
+    //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
         return getRoleAppActions(this, record);
@@ -130,5 +145,4 @@ this.AppOptions = appResponse.items;
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

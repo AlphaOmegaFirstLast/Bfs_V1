@@ -1,0 +1,184 @@
+using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
+using FluentValidation.Results;
+using Bfs.Core.Contracts;
+using Bfs.Core.Middleware;
+using Bfs.Auth.Contracts;
+using Bfs.Auth.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
+namespace Bfs.Auth.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
+
+public class UserRequestController
+{
+    private readonly IUserRequestService _userRequestService;
+    private IValidator<UserRequest> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
+    public UserRequestController(IUserRequestService userRequestService, IValidator<UserRequest> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
+    {
+        _userRequestService = userRequestService;
+        _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
+    }
+
+    [HttpGet]
+    [CustomAuthorize("role=bfs.admin")]
+    public async Task<List<UserRequest>> Get()
+    {
+        var result = await _userRequestService.GetAsync().ConfigureAwait(false);
+        return result;
+    }
+
+    [HttpGet("{id}")]
+    [CustomAuthorize("method=q.userRequest")]
+    public async Task<UserRequestListItem?> Get(long id)
+    {
+        var listRequest = new QueryRequest<UserRequestListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _userRequestService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
+    }
+
+    [HttpPost]
+    [CustomAuthorize("method=a.userRequest")]
+    public async Task<Results<Ok<UserRequest>, BadRequest<ProblemDetails>>> Post([FromBody] UserRequest value)
+    {
+        ValidationResult validResult = await _validator.ValidateAsync(value);
+
+        if (!validResult.IsValid)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Validation Failed",
+                Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage)),
+                Extensions = new Dictionary<string, object?>() { { "errors", validResult.Errors.Select(x => new { errorCode = x.ErrorCode, message = x.ErrorMessage }) } }
+
+            };
+            return TypedResults.BadRequest(problemDetails);
+        }
+
+        var createdUserRequest = await _userRequestService.CreateAsync(value).ConfigureAwait(false);
+        return TypedResults.Ok(createdUserRequest);
+    }
+
+    [HttpPut]
+    [CustomAuthorize("method=u.userRequest")]
+    public async Task<Results<Ok<UserRequest>, BadRequest<ProblemDetails>>> Put([FromBody] UserRequest value)
+    {
+        ValidationResult validResult = await _validator.ValidateAsync(value);
+
+        if (!validResult.IsValid)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Validation Failed",
+                Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage))
+            };
+            return TypedResults.BadRequest(problemDetails);
+        }
+
+        var updatedUserRequest = await _userRequestService.UpdateAsync(value).ConfigureAwait(false);
+        return TypedResults.Ok(updatedUserRequest);
+    }
+
+    [HttpDelete("{id}")]
+    [CustomAuthorize("method=d.userRequest")]
+    public async Task<Results<Ok, BadRequest<ProblemDetails>>> Delete(long id)
+    {
+        try
+        {
+            await _userRequestService.DeleteAsync(id).ConfigureAwait(false);
+            return TypedResults.Ok();
+        }
+        catch (Exception ex)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Error",
+                Detail = ex.Message
+            };
+            return TypedResults.BadRequest(problemDetails);
+        }
+    }
+
+    [HttpPost("List")]
+    [CustomAuthorize("method=q.userRequest")]
+    public async Task<Results<Ok<QueryResponse<UserRequestListItem>>, BadRequest<ProblemDetails>>> List([FromBody] QueryRequest<UserRequestListFilter> listRequest)
+    {
+        var result = await _userRequestService.ListAsync(listRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
+    [HttpPost("upload")]
+    [CustomAuthorize("role=bfs.admin")]
+    public async Task<Results<Ok, BadRequest<ProblemDetails>>> UploadJson(IFormFile file)
+    {
+        var problemDetails = new ProblemDetails();
+
+        if (file == null || file.Length == 0)
+        {
+            problemDetails.Title = "Upload Failed";
+            problemDetails.Detail = "No file uploaded.";
+            return TypedResults.BadRequest(problemDetails);
+        }
+
+        try
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            using var stream = file.OpenReadStream();
+            var recordList = await JsonSerializer.DeserializeAsync<List<UserRequest>>(stream, options);
+
+            if (recordList == null)
+            {
+                problemDetails.Title = "Deserialization Failed";
+                problemDetails.Detail = "The uploaded file could not be deserialized into a UserRequest list.";
+                return TypedResults.BadRequest(problemDetails);
+            }
+
+            foreach (var record in recordList)
+            {
+                ValidationResult validResult = await _validator.ValidateAsync(record);
+                if (!validResult.IsValid)
+                {
+                    problemDetails.Title = "Validation Failed";
+                    problemDetails.Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage));
+                    problemDetails.Extensions = new Dictionary<string, object?>() { { "errors", validResult.Errors.Select(x => new { errorCode = x.ErrorCode, message = x.ErrorMessage }) } };
+                    return TypedResults.BadRequest(problemDetails);
+                }
+                await _userRequestService.UploadAsync(record).ConfigureAwait(false);
+            }
+
+            return TypedResults.Ok();
+        }
+        catch (JsonException jsonEx)
+        {
+            problemDetails.Title = "Invalid JSON format";
+            problemDetails.Detail = jsonEx.Message;
+            return TypedResults.BadRequest(problemDetails);
+        }
+    }
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
+}
+

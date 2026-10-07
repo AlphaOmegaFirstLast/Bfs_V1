@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IRoleComponentSystemActionFilter } from './role-component-system-action.shared';
@@ -11,8 +14,9 @@ import { IRoleComponentSystemActionFilter } from './role-component-system-action
 
 @Component({
     selector: 'app-role-component-system-action-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './role-component-system-action.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './role-component-system-action.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class RoleComponentSystemActionFilterComponent implements OnInit {
@@ -103,5 +107,4 @@ target = "/Role/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

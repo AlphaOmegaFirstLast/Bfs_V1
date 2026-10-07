@@ -1,5 +1,5 @@
 import { MenuItemType } from '@/app/types/layout';
-
+//Template_Start_Code_DontOverwrite_1
 //------------------------------------------------------------
 // Application specific menu items
 export const AuthMenuItems: MenuItemType[] = [
@@ -167,3 +167,5 @@ export const AuthMenuItems: MenuItemType[] = [
         ]
     },
 ];
+//Template_End_Code_DontOverwrite_1
+

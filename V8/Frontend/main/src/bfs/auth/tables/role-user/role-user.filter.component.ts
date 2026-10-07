@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IRoleUserFilter } from './role-user.shared';
@@ -11,8 +14,9 @@ import { IRoleUserFilter } from './role-user.shared';
 
 @Component({
     selector: 'app-role-user-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './role-user.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './role-user.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class RoleUserFilterComponent implements OnInit {
@@ -91,5 +95,4 @@ target = "/User/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

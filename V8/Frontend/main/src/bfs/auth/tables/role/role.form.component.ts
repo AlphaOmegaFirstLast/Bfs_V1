@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -34,9 +36,10 @@ RoleUserListComponent,
 
     RoleComponentSystemActionMatrixComponent,
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './role.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class RoleFormComponent extends BaseFormComponent<IRole > implements OnInit {
 
@@ -73,6 +76,9 @@ presetRoleUserFilter: IRoleUserFilter | undefined;
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): IRole  {
@@ -135,6 +141,15 @@ let presetRoleUserRequest: IRoleUserRequest = initRoleUserRequest();
         */
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {   
+
+    }
+    //---------------------------------------------------------
+    // required to set the control with the entity initial values
+    override async setDataAutoComplete() {
+
+    }
+    //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
         return getRoleActions(this, record);
@@ -154,5 +169,4 @@ let presetRoleUserRequest: IRoleUserRequest = initRoleUserRequest();
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

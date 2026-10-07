@@ -26,10 +26,10 @@
                                                 <div ngbDropdownMenu>
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
 
-                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                    <div *ngFor="let link of linkList">
                                                         <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
                                                     </div>
-                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                    <div *ngFor="let link of actionList">
                                                         <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
                                                     </div>
 
@@ -51,32 +51,32 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                     <div class="col-6">
-<div class="row mb-2"  *ngIf="isVisible('id')">
-    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6" *ngIf="isVisible('id')">
         <label for="id" class="form-label fs-6">ID</label>
-        <input class="form-control" type="text" id="id" formControlName="id"  [disabled]="isEnabled('id')"
+        <input class="form-control" type="text" id="id" formControlName="id"
             [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid ID.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('name')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('name')">
         <label for="name" class="form-label fs-6">Name</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="name" formControlName="name" [disabled]="isEnabled('name')"
+        <input class="form-control" type="text" id="name" formControlName="name"
             [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Name.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('bfsSystemId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('bfsSystemId')">
         <label for="bfsSystemId" class="form-label fs-6">BestFit System</label>
-        <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId" [disabled]="isEnabled('bfsSystemId')"
+        <select class="form-select" id="bfsSystemId" formControlName="bfsSystemId" 
             [class]="submit && !form['bfsSystemId'].errors ? 'is-valid': submit && form['bfsSystemId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BfsSystemOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -85,24 +85,24 @@
         <div class="invalid-feedback">Please select a valid BestFit System.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('logo')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('logo')">
         <label for="logo" class="form-label fs-6">Logo</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="images names are case-sensitive"  />
 
-        <input class="form-control" type="text" id="logo" formControlName="logo" [disabled]="isEnabled('logo')"
+        <input class="form-control" type="text" id="logo" formControlName="logo"
             [class]="submit && !form['logo'].errors ? 'is-valid': submit && form['logo'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Logo.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('notes')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('notes')">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="notes" formControlName="notes" [disabled]="isEnabled('notes')"
+        <input class="form-control" type="text" id="notes" formControlName="notes"
             [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Notes.</div>

@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IAppFilter } from './app.shared';
@@ -11,8 +14,9 @@ import { IAppFilter } from './app.shared';
 
 @Component({
     selector: 'app-app-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './app.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './app.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class AppFilterComponent implements OnInit {
@@ -79,5 +83,4 @@ export class AppFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

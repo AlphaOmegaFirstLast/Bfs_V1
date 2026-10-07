@@ -81,8 +81,8 @@
         <label>Request Date</label>
       </div>
       <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="RequestDateFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="RequestDateTo">
+        <label class="me-2">from</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="RequestDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="RequestDateTo">
       </div>
     </div>
   </div>
@@ -92,8 +92,8 @@
         <label>Response Date</label>
       </div>
       <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="date"  [(ngModel)]="ResponseDateFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="date"  [(ngModel)]="ResponseDateTo">
+        <label class="me-2">from</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="ResponseDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="ResponseDateTo">
       </div>
     </div>
   </div>

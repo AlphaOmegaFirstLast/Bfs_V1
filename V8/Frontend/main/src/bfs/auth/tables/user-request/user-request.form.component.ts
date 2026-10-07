@@ -7,6 +7,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +24,10 @@ import {isEnabled, isVisible, type IUserRequest, initUserRequest, userRequestUnt
     selector: 'user-request-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
     standalone: true,
     templateUrl: './user-request.form.component.html',
+    providers: [provideFlatpickrDefaults()],
 })
 export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > implements OnInit {
 
@@ -58,6 +61,9 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): IUserRequest  {
@@ -135,5 +141,4 @@ export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > i
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }
