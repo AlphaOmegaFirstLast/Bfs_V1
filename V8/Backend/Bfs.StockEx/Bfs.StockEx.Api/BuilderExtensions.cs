@@ -203,6 +203,7 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IValidator<SourceType>, SourceTypeValidator>();
             builder.Services.AddScoped<IValidator<StockFieldType>, StockFieldTypeValidator>();
             builder.Services.AddScoped<IValidator<PaymentMode>, PaymentModeValidator>();
+            builder.Services.AddScoped<IValidator<CouponType>, CouponTypeValidator>();
 //Template_Component_RegisterValidator
     }
 
@@ -237,6 +238,7 @@ public static class BuilderExtensions
             builder.Services.AddScoped<ISourceTypeRepository, SourceTypeRepository>();
             builder.Services.AddScoped<IStockFieldTypeRepository, StockFieldTypeRepository>();
             builder.Services.AddScoped<IPaymentModeRepository, PaymentModeRepository>();
+            builder.Services.AddScoped<ICouponTypeRepository, CouponTypeRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -272,6 +274,7 @@ public static class BuilderExtensions
             builder.Services.AddScoped<ISourceTypeService, SourceTypeService>();
             builder.Services.AddScoped<IStockFieldTypeService, StockFieldTypeService>();
             builder.Services.AddScoped<IPaymentModeService, PaymentModeService>();
+            builder.Services.AddScoped<ICouponTypeService, CouponTypeService>();
 //Template_Component_RegisterService
     }
 
@@ -444,6 +447,12 @@ public static class BuilderExtensions
            var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
            var config = sp.GetRequiredService<TenantSqlConfiguration>();
            return new PaymentModeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICouponTypeList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CouponTypeList(config.ConnectionString, resourceSecurity);
         });
 //Template_Component_RegisterList
     }

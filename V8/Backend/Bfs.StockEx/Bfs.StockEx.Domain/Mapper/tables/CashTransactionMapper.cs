@@ -20,10 +20,11 @@ TransactionDate= entity.TransactionDate,
 Value= entity.Value,
 
                SspTransactionId= entity.SspTransactionId,
-SsPortfolioId= entity.SsPortfolioId,
 TransactionTypeId= entity.TransactionTypeId,
 ExpensesTypeId= entity.ExpensesTypeId,
 CurrencyId= entity.CurrencyId,
+
+               SsPortfolioId= entity.SsPortfolioId,
 
             };
 
@@ -54,10 +55,11 @@ CashTransactionEntity.TransactionDate= contract.TransactionDate;
 CashTransactionEntity.Value= contract.Value;
 
             CashTransactionEntity.SspTransactionId= contract.SspTransactionId;
-CashTransactionEntity.SsPortfolioId= contract.SsPortfolioId;
 CashTransactionEntity.TransactionTypeId= contract.TransactionTypeId;
 CashTransactionEntity.ExpensesTypeId= contract.ExpensesTypeId;
 CashTransactionEntity.CurrencyId= contract.CurrencyId;
+
+            CashTransactionEntity.SsPortfolioId= contract.SsPortfolioId;
 
             return CashTransactionEntity;
         }     

@@ -1,0 +1,184 @@
+using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
+using FluentValidation.Results;
+using Bfs.Core.Contracts;
+using Bfs.Core.Middleware;
+using Bfs.StockEx.Contracts;
+using Bfs.StockEx.Domain.Interfaces;
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
+
+namespace Bfs.StockEx.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
+
+public class CouponTypeController
+{
+    private readonly ICouponTypeService _couponTypeService;
+    private IValidator<CouponType> _validator;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
+    public CouponTypeController(ICouponTypeService couponTypeService, IValidator<CouponType> validator
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
+    )
+    {
+        _couponTypeService = couponTypeService;
+        _validator = validator;
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
+
+    }
+
+    [HttpGet]
+    [CustomAuthorize("role=bfs.admin")]
+    public async Task<List<CouponType>> Get()
+    {
+        var result = await _couponTypeService.GetAsync().ConfigureAwait(false);
+        return result;
+    }
+
+    [HttpGet("{id}")]
+    [CustomAuthorize("method=q.couponType")]
+    public async Task<CouponTypeListItem?> Get(long id)
+    {
+        var listRequest = new QueryRequest<CouponTypeListFilter>();
+        listRequest.Filter.Id = id;
+        var response = await _couponTypeService.ListAsync(listRequest).ConfigureAwait(false);
+        return response?.Items?.FirstOrDefault();
+    }
+
+    [HttpPost]
+    [CustomAuthorize("method=a.couponType")]
+    public async Task<Results<Ok<CouponType>, BadRequest<ProblemDetails>>> Post([FromBody] CouponType value)
+    {
+        ValidationResult validResult = await _validator.ValidateAsync(value);
+
+        if (!validResult.IsValid)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Validation Failed",
+                Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage)),
+                Extensions = new Dictionary<string, object?>() { { "errors", validResult.Errors.Select(x => new { errorCode = x.ErrorCode, message = x.ErrorMessage }) } }
+
+            };
+            return TypedResults.BadRequest(problemDetails);
+        }
+
+        var createdCouponType = await _couponTypeService.CreateAsync(value).ConfigureAwait(false);
+        return TypedResults.Ok(createdCouponType);
+    }
+
+    [HttpPut]
+    [CustomAuthorize("method=u.couponType")]
+    public async Task<Results<Ok<CouponType>, BadRequest<ProblemDetails>>> Put([FromBody] CouponType value)
+    {
+        ValidationResult validResult = await _validator.ValidateAsync(value);
+
+        if (!validResult.IsValid)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Validation Failed",
+                Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage))
+            };
+            return TypedResults.BadRequest(problemDetails);
+        }
+
+        var updatedCouponType = await _couponTypeService.UpdateAsync(value).ConfigureAwait(false);
+        return TypedResults.Ok(updatedCouponType);
+    }
+
+    [HttpDelete("{id}")]
+    [CustomAuthorize("method=d.couponType")]
+    public async Task<Results<Ok, BadRequest<ProblemDetails>>> Delete(long id)
+    {
+        try
+        {
+            await _couponTypeService.DeleteAsync(id).ConfigureAwait(false);
+            return TypedResults.Ok();
+        }
+        catch (Exception ex)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Error",
+                Detail = ex.Message
+            };
+            return TypedResults.BadRequest(problemDetails);
+        }
+    }
+
+    [HttpPost("List")]
+    [CustomAuthorize("method=q.couponType")]
+    public async Task<Results<Ok<QueryResponse<CouponTypeListItem>>, BadRequest<ProblemDetails>>> List([FromBody] QueryRequest<CouponTypeListFilter> listRequest)
+    {
+        var result = await _couponTypeService.ListAsync(listRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
+    [HttpPost("upload")]
+    [CustomAuthorize("role=bfs.admin")]
+    public async Task<Results<Ok, BadRequest<ProblemDetails>>> UploadJson(IFormFile file)
+    {
+        var problemDetails = new ProblemDetails();
+
+        if (file == null || file.Length == 0)
+        {
+            problemDetails.Title = "Upload Failed";
+            problemDetails.Detail = "No file uploaded.";
+            return TypedResults.BadRequest(problemDetails);
+        }
+
+        try
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            using var stream = file.OpenReadStream();
+            var recordList = await JsonSerializer.DeserializeAsync<List<CouponType>>(stream, options);
+
+            if (recordList == null)
+            {
+                problemDetails.Title = "Deserialization Failed";
+                problemDetails.Detail = "The uploaded file could not be deserialized into a CouponType list.";
+                return TypedResults.BadRequest(problemDetails);
+            }
+
+            foreach (var record in recordList)
+            {
+                ValidationResult validResult = await _validator.ValidateAsync(record);
+                if (!validResult.IsValid)
+                {
+                    problemDetails.Title = "Validation Failed";
+                    problemDetails.Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage));
+                    problemDetails.Extensions = new Dictionary<string, object?>() { { "errors", validResult.Errors.Select(x => new { errorCode = x.ErrorCode, message = x.ErrorMessage }) } };
+                    return TypedResults.BadRequest(problemDetails);
+                }
+                await _couponTypeService.UploadAsync(record).ConfigureAwait(false);
+            }
+
+            return TypedResults.Ok();
+        }
+        catch (JsonException jsonEx)
+        {
+            problemDetails.Title = "Invalid JSON format";
+            problemDetails.Detail = jsonEx.Message;
+            return TypedResults.BadRequest(problemDetails);
+        }
+    }
+
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
+}
+

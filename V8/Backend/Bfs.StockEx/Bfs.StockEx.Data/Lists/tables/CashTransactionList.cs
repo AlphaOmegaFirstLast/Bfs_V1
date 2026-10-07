@@ -70,7 +70,6 @@ namespace Bfs.StockEx.Data.Lists
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Name", DbName = "stkxCashTransaction.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Notes", DbName = "stkxCashTransaction.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "SspTransactionId", DbName = "stkxCashTransaction.SspTransactionId", QueryName = "SspTransactionId", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "SsPortfolioId", DbName = "stkxCashTransaction.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Source", DbName = "stkxCashTransaction.Source", QueryName = "Source", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "SourceDate", DbName = "stkxCashTransaction.SourceDate", QueryName = "SourceDate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "TransactionDate", DbName = "stkxCashTransaction.TransactionDate", QueryName = "TransactionDate", IsAggregare = false});
@@ -78,21 +77,24 @@ _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = 
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "TransactionTypeId", DbName = "stkxCashTransaction.TransactionTypeId", QueryName = "TransactionTypeId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "ExpensesTypeId", DbName = "stkxCashTransaction.ExpensesTypeId", QueryName = "ExpensesTypeId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "CurrencyId", DbName = "stkxCashTransaction.CurrencyId", QueryName = "CurrencyId", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "SsPortfolioId", DbName = "stkxCashTransaction.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false});
 
             //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Name", QueryName = "SspTransactionName", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "TransactionType", FieldName = "Name", DbName = "stkxTransactionType.Name", QueryName = "TransactionTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "ExpensesType", FieldName = "Name", DbName = "stkxExpensesType.Name", QueryName = "ExpensesTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
 
             //autoCompletes
+            _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
 
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxCashTransaction.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxCashTransaction.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -102,10 +104,11 @@ _fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name",
            sql.AppendLine(" From stkxCashTransaction ");
 
            sql.AppendLine($"   Left Join stkxSspTransaction on stkxCashTransaction.SspTransactionId = stkxSspTransaction.Id");
-sql.AppendLine($"   Left Join stkxSsPortfolio on stkxCashTransaction.SsPortfolioId = stkxSsPortfolio.Id");
 sql.AppendLine($"   Left Join stkxTransactionType on stkxCashTransaction.TransactionTypeId = stkxTransactionType.Id");
 sql.AppendLine($"   Left Join stkxExpensesType on stkxCashTransaction.ExpensesTypeId = stkxExpensesType.Id");
 sql.AppendLine($"   Left Join stkxCurrency on stkxCashTransaction.CurrencyId = stkxCurrency.Id");
+
+           sql.AppendLine($"   Left Join stkxSsPortfolio on stkxCashTransaction.SsPortfolioId = stkxSsPortfolio.Id");
 
 //Template_Start_Code_DontOverwrite_6
 //Template_End_Code_DontOverwrite_6
@@ -146,11 +149,6 @@ sql.AppendLine($"   Left Join stkxCurrency on stkxCashTransaction.CurrencyId = s
                     sql.AppendLine("stkxCashTransaction.SspTransactionId = @SspTransactionId");
                     parameters.Add("@SspTransactionId", filter.SspTransactionId.Value);
                 }
-if (filter.SsPortfolioId.HasValue)
-                {
-                    sql.AppendLine("stkxCashTransaction.SsPortfolioId = @SsPortfolioId");
-                    parameters.Add("@SsPortfolioId", filter.SsPortfolioId.Value);
-                }
 if (filter.TransactionTypeId.HasValue)
                 {
                     sql.AppendLine("stkxCashTransaction.TransactionTypeId = @TransactionTypeId");
@@ -165,6 +163,12 @@ if (filter.CurrencyId.HasValue)
                 {
                     sql.AppendLine("stkxCashTransaction.CurrencyId = @CurrencyId");
                     parameters.Add("@CurrencyId", filter.CurrencyId.Value);
+                }
+
+                if (filter.SsPortfolioId.HasValue)
+                {
+                    sql.AppendLine("stkxCashTransaction.SsPortfolioId = @SsPortfolioId");
+                    parameters.Add("@SsPortfolioId", filter.SsPortfolioId.Value);
                 }
 
                 if (filter.SourceDate?.From.HasValue == true)
@@ -198,6 +202,8 @@ if (filter.Value?.From.HasValue == true)
                     parameters.Add("@ValueTo", filter.Value.To.Value);
                 }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -218,7 +224,7 @@ if (filter.Value?.From.HasValue == true)
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8       
     }
 }

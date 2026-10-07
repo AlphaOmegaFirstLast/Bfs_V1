@@ -411,6 +411,14 @@ export const StockExMenuItems: MenuItemType[] = [
             role: ['admin', 'investor','broker']
         }
     },
+    {
+        label: 'Coupon Types',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/coupon-type/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
 //Template_Component_Menu_Seed
         ]
     },

@@ -12,10 +12,11 @@ namespace Bfs.StockEx.Data
         public string? Name { get; set; }
 
         public long? SspTransactionId { get; set; }
-public long? SsPortfolioId { get; set; }
 public int? TransactionTypeId { get; set; }
 public long? ExpensesTypeId { get; set; }
 public long? CurrencyId { get; set; }
+
+        public long? SsPortfolioId { get; set; }
 
         public DateRange? SourceDate { get; set; }
 public DateRange? TransactionDate { get; set; }

@@ -44,10 +44,6 @@ namespace Bfs.StockEx.Contracts
         ///</Summary>
         public long SspTransactionId {get; set;} = 0 ;
 ///<Summary>
-        /// CashTransaction StockShare Portfolio.
-        ///</Summary>
-        public long SsPortfolioId {get; set;} = 0 ;
-///<Summary>
         /// CashTransaction Transaction Type.
         ///</Summary>
         public int TransactionTypeId {get; set;} = 0 ;
@@ -59,6 +55,11 @@ namespace Bfs.StockEx.Contracts
         /// CashTransaction Currency.
         ///</Summary>
         public long CurrencyId {get; set;} = 0 ;
+
+        ///<Summary>
+        /// CashTransaction Portfolio.
+        ///</Summary>
+        public long SsPortfolioId {get; set;} = 0 ;
 
     }
 }

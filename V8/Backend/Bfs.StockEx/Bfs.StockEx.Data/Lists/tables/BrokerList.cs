@@ -83,6 +83,8 @@ _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "TradingR
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxBroker.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxBroker.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -133,6 +135,8 @@ _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "TradingR
                     parameters.Add("@TradingRoomId", filter.TradingRoomId.Value);
                 }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -153,7 +157,7 @@ _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "TradingR
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8       
     }
 }

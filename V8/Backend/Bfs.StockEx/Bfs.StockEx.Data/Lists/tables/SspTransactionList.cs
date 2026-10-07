@@ -97,8 +97,8 @@ namespace Bfs.StockEx.Data.Lists
 
             //Template_Start_Code_DontOverwrite_5
             _fieldList.Add(new QueryField() { ComponentName = "ToPortfolio", FieldName = "Name", DbName = "toPortfolio.Name", QueryName = "ToPortfolioName", IsAggregare = false });
-            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Name", QueryName = "AutoCompleteName", IsAggregare = false });
-            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Name", QueryName = "LookupName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + ']  Month: ['+ Month(stkxSspTransaction.Date)+ ']  year: ['+ (stkxSspTransaction.Date) + ']')", QueryName = "AutoCompleteName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + ']  Month: ['+ Month(stkxSspTransaction.Date)+ ']  year: ['+ (stkxSspTransaction.Date) + ']')", QueryName = "LookupName", IsAggregare = false });
             // _fieldList.Add(new QueryField() { ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false });
             // _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "CurrencyId", DbName = "stkxSspTransaction.CurrencyId", QueryName = "CurrencyId", IsAggregare = false });
             //Template_End_Code_DontOverwrite_5
