@@ -89,6 +89,8 @@ _fieldList.Add(new QueryField() {ComponentName = "DataType", FieldName = "Name",
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BfsComponent.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "BfsComponent", FieldName = "Name", DbName = "BfsComponent.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -158,6 +160,8 @@ if (filter.DataTypeId.HasValue)
                     parameters.Add("@DataTypeId", filter.DataTypeId.Value);
                 }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -178,7 +182,7 @@ if (filter.DataTypeId.HasValue)
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8       
     }
 }

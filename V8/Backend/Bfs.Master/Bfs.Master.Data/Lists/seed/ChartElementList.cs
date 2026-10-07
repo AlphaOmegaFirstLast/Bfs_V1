@@ -22,14 +22,12 @@ namespace Bfs.Master.Data.Lists
         public ChartElementList(string connectionString, IResourceSecurity? resourceSecurity
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3
-
         )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
 //Template_Start_Code_DontOverwrite_4
 //Template_End_Code_DontOverwrite_4
-
         }
 
         private readonly string _connectionString;
@@ -81,8 +79,9 @@ _fieldList.Add(new QueryField() {ComponentName = "ChartElement", FieldName = "No
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "ChartElement", FieldName = "Name", DbName = "ChartElement.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "ChartElement", FieldName = "Name", DbName = "ChartElement.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
-
         }
 
         protected override string GetFromJoinStatement()
@@ -124,6 +123,8 @@ _fieldList.Add(new QueryField() {ComponentName = "ChartElement", FieldName = "No
                    }
                 }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -144,8 +145,7 @@ _fieldList.Add(new QueryField() {ComponentName = "ChartElement", FieldName = "No
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1
-
+//Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8       
     }
 }
