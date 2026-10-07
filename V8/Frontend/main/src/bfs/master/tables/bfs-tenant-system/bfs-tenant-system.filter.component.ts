@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IBfsTenantSystemFilter } from './bfs-tenant-system.shared';
@@ -11,8 +14,9 @@ import { IBfsTenantSystemFilter } from './bfs-tenant-system.shared';
 
 @Component({
     selector: 'app-bfs-tenant-system-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './bfs-tenant-system.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './bfs-tenant-system.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class BfsTenantSystemFilterComponent implements OnInit {
@@ -91,5 +95,4 @@ target = "/BfsSystem/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

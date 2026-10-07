@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ICustomReportsFilter } from './custom-reports.shared';
@@ -11,8 +14,9 @@ import { ICustomReportsFilter } from './custom-reports.shared';
 
 @Component({
     selector: 'app-custom-reports-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './custom-reports.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './custom-reports.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class CustomReportsFilterComponent implements OnInit {
@@ -67,5 +71,4 @@ export class CustomReportsFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

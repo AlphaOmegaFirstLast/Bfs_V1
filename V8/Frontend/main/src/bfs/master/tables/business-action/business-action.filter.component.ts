@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IBusinessActionFilter } from './business-action.shared';
@@ -11,8 +14,9 @@ import { IBusinessActionFilter } from './business-action.shared';
 
 @Component({
     selector: 'app-business-action-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './business-action.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './business-action.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class BusinessActionFilterComponent implements OnInit {
@@ -91,5 +95,4 @@ target = "/WriterType/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

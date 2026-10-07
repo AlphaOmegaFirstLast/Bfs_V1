@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
@@ -12,8 +15,9 @@ import { IBfsFieldFilter } from './bfs-field.shared';
 
 @Component({
     selector: 'app-bfs-field-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './bfs-field.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './bfs-field.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class BfsFieldFilterComponent implements OnInit {
@@ -95,5 +99,4 @@ target = "/BackendDataType/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

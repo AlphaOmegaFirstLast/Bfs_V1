@@ -60,7 +60,9 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="bfsComponentAuto.hideOverlay()">
-          <label class="form-label fs-6">Component</label>
+          <label class="form-label fs-6">Component</label>        
+          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
+
           <div class="input-group">
             <input id="bfsComponentControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
               [(ngModel)]="result.BfsComponentName"

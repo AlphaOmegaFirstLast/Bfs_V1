@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IDeploymentAzureFilter } from './deployment-azure.shared';
@@ -11,8 +14,9 @@ import { IDeploymentAzureFilter } from './deployment-azure.shared';
 
 @Component({
     selector: 'app-deployment-azure-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './deployment-azure.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './deployment-azure.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class DeploymentAzureFilterComponent implements OnInit {
@@ -79,5 +83,4 @@ export class DeploymentAzureFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

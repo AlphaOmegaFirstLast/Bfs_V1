@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IDeploymentLocalFilter } from './deployment-local.shared';
@@ -11,8 +14,9 @@ import { IDeploymentLocalFilter } from './deployment-local.shared';
 
 @Component({
     selector: 'app-deployment-local-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './deployment-local.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './deployment-local.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class DeploymentLocalFilterComponent implements OnInit {
@@ -79,5 +83,4 @@ export class DeploymentLocalFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

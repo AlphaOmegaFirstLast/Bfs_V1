@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ISystemActionFilter } from './system-action.shared';
@@ -11,8 +14,9 @@ import { ISystemActionFilter } from './system-action.shared';
 
 @Component({
     selector: 'app-system-action-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './system-action.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './system-action.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class SystemActionFilterComponent implements OnInit {
@@ -91,5 +95,4 @@ target = "/WriterType/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

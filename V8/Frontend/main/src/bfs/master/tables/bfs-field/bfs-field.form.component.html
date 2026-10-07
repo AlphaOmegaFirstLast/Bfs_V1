@@ -26,10 +26,10 @@
                                                 <div ngbDropdownMenu>
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
 
-                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                    <div *ngFor="let link of linkList">
                                                         <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
                                                     </div>
-                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                    <div *ngFor="let link of actionList">
                                                         <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
                                                     </div>
 
@@ -51,10 +51,10 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                     <div class="col-6">
-<div class="row mb-2"  *ngIf="isVisible('id')">
-    <div class="col-6">
+<div class="row mb-2">
+    <div class="col-6" *ngIf="isVisible('id')">
         <label for="id" class="form-label fs-6">ID</label>
-        <input class="form-control" type="text" id="id" formControlName="id"  [disabled]="isEnabled('id')"
+        <input class="form-control" type="text" id="id" formControlName="id"
             [class]="submit && !form['id'].errors ? 'is-valid': submit && form['id'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid ID.</div>
@@ -62,14 +62,14 @@
 </div>
 
   <!-- BfsComponentAutoComplete Start -->
-                                            <div class="row mb-2"  *ngIf="isVisible('bfsComponentId')">
-                                                <div class="col-12">
+                                            <div class="row mb-2">
+                                                <div class="col-12"  *ngIf="isVisible('bfsComponentId')">
                                                     <div class="position-relative"  (focusout)="bfsComponentAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Component</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
                                                                 [formControl]="bfsComponentAuto.control"
-                                                                [disabled]="isEnabled('bfsComponentId')"
+
                                                                 (focus)="bfsComponentAuto.onFocus()"  [class]="bfsComponentAuto.cssClass()"  />
 
                                                             <span class="input-group-text"  *ngIf="bfsComponentAuto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>
@@ -92,34 +92,34 @@
                                                 </div>
                                             </div>
   <!-- BfsComponent AutoComplete End -->
-<div class="row mb-2"  *ngIf="isVisible('field')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('field')">
         <label for="field" class="form-label fs-6">Field</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="field" formControlName="field" [disabled]="isEnabled('field')"
+        <input class="form-control" type="text" id="field" formControlName="field"
             [class]="submit && !form['field'].errors ? 'is-valid': submit && form['field'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Field.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('displayName')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('displayName')">
         <label for="displayName" class="form-label fs-6">DisplayName</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="displayName" formControlName="displayName" [disabled]="isEnabled('displayName')"
+        <input class="form-control" type="text" id="displayName" formControlName="displayName"
             [class]="submit && !form['displayName'].errors ? 'is-valid': submit && form['displayName'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid DisplayName.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('filterTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('filterTypeId')">
         <label for="filterTypeId" class="form-label fs-6">Filter Type</label>
-        <select class="form-select" id="filterTypeId" formControlName="filterTypeId" [disabled]="isEnabled('filterTypeId')"
+        <select class="form-select" id="filterTypeId" formControlName="filterTypeId" 
             [class]="submit && !form['filterTypeId'].errors ? 'is-valid': submit && form['filterTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of FilterTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -128,10 +128,10 @@
         <div class="invalid-feedback">Please select a valid Filter Type.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('backendDataTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('backendDataTypeId')">
         <label for="backendDataTypeId" class="form-label fs-6">Backend Type</label>
-        <select class="form-select" id="backendDataTypeId" formControlName="backendDataTypeId" [disabled]="isEnabled('backendDataTypeId')"
+        <select class="form-select" id="backendDataTypeId" formControlName="backendDataTypeId" 
             [class]="submit && !form['backendDataTypeId'].errors ? 'is-valid': submit && form['backendDataTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BackendDataTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>

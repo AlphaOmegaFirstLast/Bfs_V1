@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IBfsComponentSystemActionFilter } from './bfs-component-system-action.shared';
@@ -11,8 +14,9 @@ import { IBfsComponentSystemActionFilter } from './bfs-component-system-action.s
 
 @Component({
     selector: 'app-bfs-component-system-action-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './bfs-component-system-action.filter.component.html'
+    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    templateUrl: './bfs-component-system-action.filter.component.html',
+    providers: [provideFlatpickrDefaults()],
     //styles: ``
 })
 export class BfsComponentSystemActionFilterComponent implements OnInit {
@@ -103,5 +107,4 @@ target = "/ActionLocation/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }
