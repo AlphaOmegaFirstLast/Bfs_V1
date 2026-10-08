@@ -1,3 +1,7 @@
+          zzzzzzzzzzzzzzz
+                                  <ng-icon name="tablerPhone" class="fs-2"/>
+                        <lucide-angular [img]="LucideCamera" class="fs-3"/>
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 <div class="modal-header">
   <h4 class="modal-title">Filter</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
@@ -33,6 +37,7 @@
         <div class="position-relative" (focusout)="brokerAuto.hideOverlay()">
           <label class="form-label fs-6">Broker</label>        
           <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is autocomplete"  />
 
           <div class="input-group">
             <input id="brokerControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
@@ -68,9 +73,13 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="investorAuto.hideOverlay()">
-          <label class="form-label fs-6">Investor</label>        
-          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
-
+          <label class="form-label fs-6">Investor</label> 
+          zzzzzzzzzzzzzzz
+                                  <ng-icon name="tablerPhone" class="fs-2"/>
+                        <lucide-angular [img]="LucideSearch" class="text-info fill-info fs-3"/>
+xxxxx       
+          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is autocomplete"  />
+yyyyy
           <div class="input-group">
             <input id="investorControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
               [(ngModel)]="result.InvestorName"

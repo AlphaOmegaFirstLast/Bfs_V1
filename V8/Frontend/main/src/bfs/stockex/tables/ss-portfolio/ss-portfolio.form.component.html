@@ -68,6 +68,8 @@
                                                 <div class="col-12"  *ngIf="isVisible('investorId')">
                                                     <div class="position-relative"  (focusout)="investorAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Investor</label>
+                                                        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="Enter at least 3 characters of Investor name to start selection"  />
+                                                     
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
                                                                 [formControl]="investorAuto.control"
@@ -99,6 +101,8 @@
                                                 <div class="col-12"  *ngIf="isVisible('brokerId')">
                                                     <div class="position-relative"  (focusout)="brokerAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Broker</label>
+                                                        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is autocomplete"  />
+                                                     
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
                                                                 [formControl]="brokerAuto.control"
