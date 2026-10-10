@@ -7,7 +7,11 @@ namespace Bfs.StockEx.Data
 
         public string? SsPortfolio_Name { get; set; }
 
-        public NumericRange? sumPrice { get; set; }
+        public long? SsPortfolio_InvestorId { get; set; }
+
+        public long? SsPortfolio_BrokerId { get; set; }
+
+        public NumericRange? sumValue { get; set; }
 public NumericRange? sumBalance { get; set; }
 public NumericRange? sumNav { get; set; }
 

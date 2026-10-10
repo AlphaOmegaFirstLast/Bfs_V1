@@ -17,14 +17,13 @@ export class NavReportCompareFilterComponent implements OnInit {
     public result = {} as INavReportCompareFilter;
 
     // Define look ups
+    public InvestorOptions: any[] = [];
+    public BrokerOptions: any[] = [];
+    public PortfolioOptions: any[] = [];
 
     // Define range filters
 
-    public sumPriceFrom: number | undefined;
-    public sumPriceTo: number | undefined;
-public sumBalanceFrom: number | undefined;
-    public sumBalanceTo: number | undefined;
-public sumNavFrom: number | undefined;
+    public sumNavFrom: number | undefined;
     public sumNavTo: number | undefined;
 
     isLoading: boolean = false;
@@ -41,15 +40,64 @@ public sumNavFrom: number | undefined;
         await this.getLookups();
         // Initialize range filters if not set
 
-
+        this.sumNavFrom = this.result.sumNav?.from;
+        this.sumNavTo = this.result.sumNav?.to;
 
     }
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
+        target = "/Investor/list";
+        (await this.parent.apiService.post(target, { pageSize: 50 })).subscribe({
+            next: (response: IQueryResponse) => {
+                this.InvestorOptions = response.items;
+                this.isLoading = false;
+            },
+            error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Investor data.';
+                this.isLoading = false;
+            }
+        });
+        target = "/Broker/list";
+        (await this.parent.apiService.post(target, { pageSize: 50 })).subscribe({
+            next: (response: IQueryResponse) => {
+                this.BrokerOptions = response.items;
+                this.isLoading = false;
+            },
+            error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Broker data.';
+                this.isLoading = false;
+            }
+        });
+        target = "/ssPortfolio/list";
+        (await this.parent.apiService.post(target, { pageSize: 50 })).subscribe({
+            next: (response: IQueryResponse) => {
+                this.PortfolioOptions = response.items;
+                this.isLoading = false;
+            },
+            error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Portfolio of Investor & Broker data.';
+                this.isLoading = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
+    async filterChange() {
+        let target = "/ssPortfolio/list";
+        (await this.parent.apiService.post(target, { filter: { investorId: this.result.SsPortfolio_InvestorId, brokerId: this.result.SsPortfolio_BrokerId }, pageSize: 50 })).subscribe({
+            next: (response: IQueryResponse) => {
+                this.PortfolioOptions = response.items;
+                this.isLoading = false;
+            },
+            error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Portfolio of Investor & Broker data.';
+                this.isLoading = false;
+            }
+        });
+    }
+    //---------------------------------------------------------
+
     reset() {
         this.activeModal.close('Reset');
         this.parent.applyFilter(null);
@@ -59,6 +107,7 @@ public sumNavFrom: number | undefined;
         this.activeModal.close('Apply');
         // Apply range filters
 
+        this.result.sumNav = { from: this.sumNavFrom, to: this.sumNavTo };
 
         this.parent.applyFilter(this.result);
     }

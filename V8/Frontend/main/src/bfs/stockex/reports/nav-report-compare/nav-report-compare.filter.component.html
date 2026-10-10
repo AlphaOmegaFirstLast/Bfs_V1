@@ -8,37 +8,47 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Portfolio</label>
+        <label>Investor</label>
       </div>
       <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.SsPortfolio_Name" value="{{result.SsPortfolio_Name}}" placeholder="Portfolio" #ctrl="ngModel"/>
+        <select class="form-select" [(ngModel)]="result.SsPortfolio_InvestorId" name="investorId" (change)="filterChange()">
+          <ng-container *ngFor="let option of InvestorOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Broker</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.SsPortfolio_BrokerId" name="brokerId" (change)="filterChange()">
+          <ng-container *ngFor="let option of BrokerOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Portfolio of Investor & Broker</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.SsPortfolio_PortfolioId" name="portfolioId" [disabled]="!(result.SsPortfolio_InvestorId) && !(result.SsPortfolio_BrokerId)">
+          <ng-container *ngFor="let option of PortfolioOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
       </div>
     </div>
   </div>
 
       <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>Stock Share Value</label>
-      </div>
-      <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="sumPriceFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="sumPriceTo">
-      </div>
-    </div>
-  </div>
-  <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>Cash</label>
-      </div>
-      <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="sumBalanceFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="sumBalanceTo">
-      </div>
-    </div>
-  </div>
-  <div class="form-control">
     <div class="row">
       <div class="col -4">
         <label>Nav</label>

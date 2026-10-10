@@ -25,6 +25,8 @@ import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
 import { type INavReportCompare, type INavReportCompareRequest, type INavReportCompareFilter, initNavReportCompareRequest, renderNavReportCompare, getNavReportCompareActions} from './nav-report-compare.shared';
 import { NavReportCompareFilterComponent } from './nav-report-compare.filter.component'; 
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 
 @Component({
     selector: 'nav-report-compare',     
@@ -42,6 +44,8 @@ export class NavReportCompareComponent
     override queryRequest = {} as INavReportCompareRequest;
     override exportRequest = {} as INavReportCompareRequest;
     override downloadFileName: string = "Nav Report";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -53,6 +57,9 @@ export class NavReportCompareComponent
 
         this.filterComponent = NavReportCompareFilterComponent;
         this.queryRequest = initNavReportCompareRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -65,5 +72,52 @@ export class NavReportCompareComponent
 
 //--------------------------------------------------------------
 
+override getChart(records: INavReportCompare[]): EChartsOption {
+        // return this.getDemoChart();
+        // reorder records in reverse order to show same order of table records.
+        let reversedRecords = records.reverse();
+        let baseChart = this.getBaseChart();
+        baseChart.yAxis = {
+        data: reversedRecords.map(x => x['ssPortfolio_Name' as keyof INavReportCompare] ?? "unknown"),
+
+            type: 'category',
+            axisLine: {
+                lineStyle: {
+                    type: 'dashed', color: getColor('light')
+                }
+            },
+            axisLabel: {
+                show: true, color: getColor('body-color')
+            },
+            splitLine: {
+                lineStyle: {
+                    color: "rgba(133, 141, 152, 0.1)", type: 'dashed'
+                }
+            }
+        };
+
+        baseChart.series = [     
+        {
+            name: 'Nav',
+
+            type: 'bar',
+            barWidth: "10px",
+            barGap: "0.25",
+            z: 10,
+            itemStyle: {
+                borderRadius: [4, 4, 0, 0], color: getColor('info')
+            },
+            data: reversedRecords.map(x => (x['sumNav'] as unknown as number) ?? 0),
+        }
+
+        ]
+        ;
+
+        return baseChart;
+    }
+
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
+
