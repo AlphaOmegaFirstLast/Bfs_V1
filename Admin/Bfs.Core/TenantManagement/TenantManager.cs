@@ -64,6 +64,7 @@ namespace Bfs.Core.TenantManagement
                 }
                 else
                 {
+                    //that means the cache key (CacheKeys.Tenants) not found.
                     throw new Exception($"Tenants data not found in cache");
                 }
             }

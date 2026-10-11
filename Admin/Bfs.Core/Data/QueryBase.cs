@@ -93,7 +93,7 @@ namespace Bfs.Core.Data
         public QueryParams GetCountSqlStatement()
         {
             // Build Count SQL Statement, before Pagination applied
-            var countSql = $"Select Count(*) From ({sqlStatement.ToString()} ) q ";
+            var countSql = $"Select Count(1) From ({sqlStatement.ToString()} ) q ";
 
             var countParameters = new DynamicParameters();
             countParameters.AddDynamicParams(sqlParameters);

@@ -37,8 +37,30 @@ public class ScopeData : IScopeData
 
         if ((!_settings.IsIdentityWeb) && (isHttpContext && !_settings.IsMigrationEnabled))  // if migration is enabled, we are in the middle of migrating and we might have some services running without HttpContext, so we should not throw an exception in that case.
         {
-            UserId = GetClaimAsLong("userId");
-            RoleId = 10;// GetClaimAsLong("roleId");
+            var userIdFound = false;
+            var roleIdFound = false;
+            try 
+            {
+                UserId = GetClaimAsLong("userId");
+                userIdFound = true;
+            }
+            catch (Exception e)  
+            { }
+            try
+            {
+                RoleId = GetClaimAsLong("roleId");
+                roleIdFound = true;
+            }
+            catch (Exception e)
+            { }
+
+            if (!userIdFound && !roleIdFound)
+            {
+                throw new InvalidOperationException("Claims 'userId' and 'roleId' are missing or not valid data types.");
+            }
+
+            var ok = userIdFound || (!userIdFound && roleIdFound && RoleId.ToString() == BfsDefault.IdentityRoleId); // the case when the user uses the Identity web application, which is a special case, we should not throw an exception, but rather set default values.
+       
             TenantId = GetClaimAsLong("tenantId");
             CorrelationToken = Guid.NewGuid().ToString();
         }
