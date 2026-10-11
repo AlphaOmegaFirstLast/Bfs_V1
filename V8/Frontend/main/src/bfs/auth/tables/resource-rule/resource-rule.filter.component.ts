@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {NgIcon} from '@ng-icons/core';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IResourceRuleFilter } from './resource-rule.shared';
@@ -14,14 +13,19 @@ import { IResourceRuleFilter } from './resource-rule.shared';
 
 @Component({
     selector: 'app-resource-rule-filter',
-    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
     templateUrl: './resource-rule.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class ResourceRuleFilterComponent implements OnInit {
 
     public result = {} as IResourceRuleFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public RoleOptions:  any[] = [];

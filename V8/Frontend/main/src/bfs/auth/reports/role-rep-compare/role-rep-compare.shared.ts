@@ -3,9 +3,9 @@ import * as operations from '@bfs/auth/main/auth.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const RoleRepCompareColumns = [
-    { fieldName: 'authRole_Id', displayName: 'ID', sortName: 'AuthRole_Id', width: '50px', isVisible:false },
-{ fieldName: 'authRole_Name', displayName: 'Name', sortName: 'AuthRole_Name', width: '50px', isVisible:true },
-{ fieldName: 'authRole_Notes', displayName: 'Notes', sortName: 'AuthRole_Notes', width: '50px', isVisible:false },
+    { fieldName: 'role_Id', displayName: 'ID', sortName: 'Role_Id', width: '50px', isVisible:false },
+{ fieldName: 'role_Name', displayName: 'Name', sortName: 'Role_Name', width: '50px', isVisible:true },
+{ fieldName: 'role_Notes', displayName: 'Notes', sortName: 'Role_Notes', width: '50px', isVisible:false },
 
 ];
 
@@ -13,17 +13,17 @@ export const RoleRepCompareColumns = [
 
 export interface IRoleRepCompare {
     [key: string]: any;
-    authRole_Id?: string;
-authRole_Name?: string;
-authRole_Notes?: string;
+    role_Id?: string;
+role_Name?: string;
+role_Notes?: string;
 
 }
 //---------------------------------------------------------
 export interface IRoleRepCompareFilter {
     [key: string]: any;
-    AuthRole_Id?: string;
+    Role_Id?: string;
 
-    AuthRole_Name?: string;
+    Role_Name?: string;
 
 }
 //---------------------------------------------------------
@@ -39,9 +39,9 @@ export function initRoleRepCompareRequest(): IRoleRepCompareRequest {
         group: '',
         sortOption: {},
         filter: {
-            AuthRole_Id: undefined ,
+            Role_Id: undefined ,
 
-            AuthRole_Name: undefined ,
+            Role_Name: undefined ,
 
             }
     };

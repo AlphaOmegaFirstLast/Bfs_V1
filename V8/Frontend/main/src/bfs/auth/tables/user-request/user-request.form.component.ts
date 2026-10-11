@@ -2,10 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
@@ -24,10 +21,17 @@ import {isEnabled, isVisible, type IUserRequest, initUserRequest, userRequestUnt
     selector: 'user-request-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+, FlatpickrDirective
+
+    ],
     standalone: true,
     templateUrl: './user-request.form.component.html',
-    providers: [provideFlatpickrDefaults()],
+    providers: [
+  provideFlatpickrDefaults()
+
+    ],
 })
 export class UserRequestFormComponent extends BaseFormComponent<IUserRequest > implements OnInit {
 
