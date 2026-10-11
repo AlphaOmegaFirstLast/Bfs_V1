@@ -1,6 +1,9 @@
 using Bfs.Core.Interfaces;
 using Bfs.Core.Contracts;
 using Bfs.Core.ObjectFields;
+//Template_Start_Code_DontOverwrite_1
+using Bfs.Core.Contracts.Auth;
+//Template_End_Code_DontOverwrite_1
 
 namespace Bfs.Auth.Contracts
 {

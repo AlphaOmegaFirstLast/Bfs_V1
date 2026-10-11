@@ -3,6 +3,7 @@ using Bfs.Core.Data;
 using Bfs.Core.ObjectFields;
 
 using System.Collections.Generic;
+using Bfs.Core.Contracts.Auth;
 
 namespace Bfs.Auth.Data.Models
 {

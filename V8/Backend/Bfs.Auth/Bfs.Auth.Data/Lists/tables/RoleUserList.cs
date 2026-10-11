@@ -81,8 +81,8 @@ _fieldList.Add(new QueryField() {ComponentName = "User", FieldName = "Name", DbN
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
-             _fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "Name", DbName = "athRoleUser.Name", QueryName = "AutoCompleteName", IsAggregare = false});
-             _fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "Name", DbName = "athRoleUser.Name", QueryName = "LookupName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "Name", DbName = "athRoleUser.Id", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "RoleUser", FieldName = "Name", DbName = "athRoleUser.Id", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 

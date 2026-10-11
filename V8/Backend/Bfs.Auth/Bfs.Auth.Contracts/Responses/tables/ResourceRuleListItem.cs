@@ -19,8 +19,7 @@ public string ParameterType { get; set; }
 public long BfsComponentId { get; set; }
 public string RoleName { get; set; }
 
-        public string? RoleName { get; set; }
-public string? BfsComponentName { get; set; }
+
 
    }
 }

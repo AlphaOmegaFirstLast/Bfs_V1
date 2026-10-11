@@ -56,9 +56,9 @@ namespace Bfs.Auth.Data.Reports
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() { DbName = "athAuthRole.Id", QueryName = "AuthRole_Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athAuthRole.Name", QueryName = "AuthRole_Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "AuthRole_Notes", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "athRole.Id", QueryName = "Role_Id", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athRole.Name", QueryName = "Role_Name", IsAggregare = false });
+_fieldList.Add(new QueryField() { DbName = "athRole.Notes", QueryName = "Role_Notes", IsAggregare = false });
 
             //lookups
 
@@ -73,7 +73,7 @@ _fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "Aut
         protected override string GetFromJoinStatement()
         {
            var sql = new StringBuilder();  
-           sql.AppendLine(" From athAuthRole ");
+           sql.AppendLine(" From athRole ");
 
 //Template_Start_Code_DontOverwrite_6
 //Template_End_Code_DontOverwrite_6
@@ -84,21 +84,21 @@ _fieldList.Add(new QueryField() { DbName = "athAuthRole.Notes", QueryName = "Aut
         protected override string GetWhereConditions(QueryRequest<RoleRepCompareFilter> request, DynamicParameters parameters)
         {
             var sql = new StringBuilder() ;
-            sql.AppendLine(" athAuthRole.isDeleted=0 ");
+            sql.AppendLine(" athRole.isDeleted=0 ");
 
                          var filter = request.Filter;
             if (filter != null)
             {
-            if ((filter.AuthRole_Id.HasValue) && (filter.AuthRole_Id>0))
+            if ((filter.Role_Id.HasValue) && (filter.Role_Id>0))
                 {
-                    sql.AppendLine(" AND athAuthRole.Id = @AuthRole_Id");
-                    parameters.Add("@AuthRole_Id", filter.AuthRole_Id);
+                    sql.AppendLine(" AND athRole.Id = @Role_Id");
+                    parameters.Add("@Role_Id", filter.Role_Id);
                 }
 
-                if (!string.IsNullOrEmpty(filter.AuthRole_Name))
+                if (!string.IsNullOrEmpty(filter.Role_Name))
                 {
-                    sql.AppendLine("athAuthRole.Name like '%'+@AuthRole_Name+'%' ");
-                    parameters.Add("@AuthRole_Name", filter.AuthRole_Name);
+                    sql.AppendLine("athRole.Name like '%'+@Role_Name+'%' ");
+                    parameters.Add("@Role_Name", filter.Role_Name);
                 }
 
             }
