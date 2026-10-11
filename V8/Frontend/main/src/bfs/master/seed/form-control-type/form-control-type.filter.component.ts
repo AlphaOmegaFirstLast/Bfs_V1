@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IFormControlTypeFilter } from './form-control-type.shared';
@@ -11,13 +13,19 @@ import { IFormControlTypeFilter } from './form-control-type.shared';
 
 @Component({
     selector: 'app-form-control-type-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './form-control-type.filter.component.html'
-    //styles: ``
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
+    templateUrl: './form-control-type.filter.component.html',
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class FormControlTypeFilterComponent implements OnInit {
 
     public result = {} as IFormControlTypeFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
@@ -67,5 +75,4 @@ export class FormControlTypeFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

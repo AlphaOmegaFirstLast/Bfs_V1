@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {NgIcon} from '@ng-icons/core';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IBfsComponentFilter } from './bfs-component.shared';
@@ -14,14 +13,19 @@ import { IBfsComponentFilter } from './bfs-component.shared';
 
 @Component({
     selector: 'app-bfs-component-filter',
-    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
     templateUrl: './bfs-component.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class BfsComponentFilterComponent implements OnInit {
 
     public result = {} as IBfsComponentFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public BfsSystemOptions:  any[] = [];

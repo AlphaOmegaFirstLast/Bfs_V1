@@ -2,11 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
@@ -22,9 +20,15 @@ import {isEnabled, isVisible, type IBackendDataType, initBackendDataType, backen
     selector: 'backend-data-type-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink],
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+
+    ],
     standalone: true,
     templateUrl: './backend-data-type.form.component.html',
+    providers: [
+
+    ],
 })
 export class BackendDataTypeFormComponent extends BaseFormComponent<IBackendDataType > implements OnInit {
 
@@ -57,6 +61,9 @@ export class BackendDataTypeFormComponent extends BaseFormComponent<IBackendData
         if (this.entity.id != '0') {
             this.view();
         }
+
+        this.linkList = this.getRecordLinks(this);
+        this.actionList = this.getRecordActions(this);    
     }
     //---------------------------------------------------------
     override initEntity(): IBackendDataType  {
@@ -103,6 +110,15 @@ export class BackendDataTypeFormComponent extends BaseFormComponent<IBackendData
         */
     }
     //---------------------------------------------------------
+    override async setAutoComplete() {   
+
+    }
+    //---------------------------------------------------------
+    // required to set the control with the entity initial values
+    override async setDataAutoComplete() {
+
+    }
+    //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
         return getBackendDataTypeActions(this, record);
@@ -122,5 +138,4 @@ export class BackendDataTypeFormComponent extends BaseFormComponent<IBackendData
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

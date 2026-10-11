@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IChartElementFilter } from './chart-element.shared';
@@ -11,13 +13,19 @@ import { IChartElementFilter } from './chart-element.shared';
 
 @Component({
     selector: 'app-chart-element-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './chart-element.filter.component.html'
-    //styles: ``
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
+    templateUrl: './chart-element.filter.component.html',
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class ChartElementFilterComponent implements OnInit {
 
     public result = {} as IChartElementFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
@@ -67,5 +75,4 @@ export class ChartElementFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }
