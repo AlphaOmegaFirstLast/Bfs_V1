@@ -1,8 +1,6 @@
-﻿using Bfs.Auth.Contracts;
+﻿//Template_Start_Code_DontOverwrite_1
+using Bfs.Auth.Contracts;
 using Bfs.Core.Config;
-using Bfs.Core.Contracts.Auth;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -31,3 +29,4 @@ namespace Bfs.Auth.Client
         }
     }
 }
+//Template_End_Code_DontOverwrite_1
