@@ -26,10 +26,10 @@
                                                 <div ngbDropdownMenu>
                                                     <a *ngIf="currentOperation=='add' || currentOperation=='edit'" ngbDropdownItem href="javascript:void(0)" (click)="resetForm()">Reset Form</a>
 
-                                                    <div *ngFor="let link of getRecordLinks(me)">
+                                                    <div *ngFor="let link of linkList">
                                                         <a *ngIf="isAccessible(link)" [routerLink]="[link.route, link.recordId]" ngbDropdownItem>{{link.displayText}}</a>
                                                     </div>
-                                                    <div *ngFor="let link of getRecordActions(me)">
+                                                    <div *ngFor="let link of actionList">
                                                         <a *ngIf="isAccessible(link)" ngbDropdownItem href="javascript:void(0)" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</a>
                                                     </div>
 
@@ -51,22 +51,22 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                     <div class="col-6">
-<div class="row mb-2"  *ngIf="isVisible('name')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('name')">
         <label for="name" class="form-label fs-6">Name</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="name" formControlName="name" [disabled]="isEnabled('name')"
+        <input class="form-control" type="text" id="name" formControlName="name"
             [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Name.</div>
     </div>
 </div>
 
-<div class="row mb-2"  *ngIf="isVisible('effectTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('effectTypeId')">
         <label for="effectTypeId" class="form-label fs-6">Effect Type</label>
-        <select class="form-select" id="effectTypeId" formControlName="effectTypeId" [disabled]="isEnabled('effectTypeId')"
+        <select class="form-select" id="effectTypeId" formControlName="effectTypeId" 
             [class]="submit && !form['effectTypeId'].errors ? 'is-valid': submit && form['effectTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of EffectTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -75,10 +75,10 @@
         <div class="invalid-feedback">Please select a valid Effect Type.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('nextTransactionTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('nextTransactionTypeId')">
         <label for="nextTransactionTypeId" class="form-label fs-6">Next Transaction Type</label>
-        <select class="form-select" id="nextTransactionTypeId" formControlName="nextTransactionTypeId" [disabled]="isEnabled('nextTransactionTypeId')"
+        <select class="form-select" id="nextTransactionTypeId" formControlName="nextTransactionTypeId" 
             [class]="submit && !form['nextTransactionTypeId'].errors ? 'is-valid': submit && form['nextTransactionTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of NextTransactionTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -87,10 +87,10 @@
         <div class="invalid-feedback">Please select a valid Next Transaction Type.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('calculationMethodId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('calculationMethodId')">
         <label for="calculationMethodId" class="form-label fs-6">Calculation Method</label>
-        <select class="form-select" id="calculationMethodId" formControlName="calculationMethodId" [disabled]="isEnabled('calculationMethodId')"
+        <select class="form-select" id="calculationMethodId" formControlName="calculationMethodId" 
             [class]="submit && !form['calculationMethodId'].errors ? 'is-valid': submit && form['calculationMethodId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of CalculationMethodOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -99,10 +99,10 @@
         <div class="invalid-feedback">Please select a valid Calculation Method.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('stockEntityTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('stockEntityTypeId')">
         <label for="stockEntityTypeId" class="form-label fs-6">Applicable To Entity</label>
-        <select class="form-select" id="stockEntityTypeId" formControlName="stockEntityTypeId" [disabled]="isEnabled('stockEntityTypeId')"
+        <select class="form-select" id="stockEntityTypeId" formControlName="stockEntityTypeId" 
             [class]="submit && !form['stockEntityTypeId'].errors ? 'is-valid': submit && form['stockEntityTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of StockEntityTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -111,10 +111,10 @@
         <div class="invalid-feedback">Please select a valid Applicable To Entity.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('stockFieldTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('stockFieldTypeId')">
         <label for="stockFieldTypeId" class="form-label fs-6">Applicable To Field</label>
-        <select class="form-select" id="stockFieldTypeId" formControlName="stockFieldTypeId" [disabled]="isEnabled('stockFieldTypeId')"
+        <select class="form-select" id="stockFieldTypeId" formControlName="stockFieldTypeId" 
             [class]="submit && !form['stockFieldTypeId'].errors ? 'is-valid': submit && form['stockFieldTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of StockFieldTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -123,10 +123,10 @@
         <div class="invalid-feedback">Please select a valid Applicable To Field.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('sourceTypeId')">
-    <div class="col-12">
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('sourceTypeId')">
         <label for="sourceTypeId" class="form-label fs-6">Source Type</label>
-        <select class="form-select" id="sourceTypeId" formControlName="sourceTypeId" [disabled]="isEnabled('sourceTypeId')"
+        <select class="form-select" id="sourceTypeId" formControlName="sourceTypeId" 
             [class]="submit && !form['sourceTypeId'].errors ? 'is-valid': submit && form['sourceTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of SourceTypeOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
@@ -135,12 +135,12 @@
         <div class="invalid-feedback">Please select a valid Source Type.</div>
     </div>
 </div>
-<div class="row mb-2"  *ngIf="isVisible('notes')">
-    <div class="col-12">
+<div class="row mb-2"> 
+    <div class="col-12" *ngIf="isVisible('notes')">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
-        <input class="form-control" type="text" id="notes" formControlName="notes" [disabled]="isEnabled('notes')"
+        <input class="form-control" type="text" id="notes" formControlName="notes"
             [class]="submit && !form['notes'].errors ? 'is-valid': submit && form['notes'].errors ? 'is-invalid' : ''" />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Invalid Notes.</div>

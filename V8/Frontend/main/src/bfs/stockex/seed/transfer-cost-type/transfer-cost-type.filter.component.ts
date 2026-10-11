@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ITransferCostTypeFilter } from './transfer-cost-type.shared';
@@ -11,13 +13,19 @@ import { ITransferCostTypeFilter } from './transfer-cost-type.shared';
 
 @Component({
     selector: 'app-transfer-cost-type-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './transfer-cost-type.filter.component.html'
-    //styles: ``
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
+    templateUrl: './transfer-cost-type.filter.component.html',
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class TransferCostTypeFilterComponent implements OnInit {
 
     public result = {} as ITransferCostTypeFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
@@ -67,5 +75,4 @@ export class TransferCostTypeFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

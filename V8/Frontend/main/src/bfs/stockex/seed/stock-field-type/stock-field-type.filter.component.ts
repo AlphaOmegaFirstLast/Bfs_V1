@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IStockFieldTypeFilter } from './stock-field-type.shared';
@@ -11,13 +13,19 @@ import { IStockFieldTypeFilter } from './stock-field-type.shared';
 
 @Component({
     selector: 'app-stock-field-type-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './stock-field-type.filter.component.html'
-    //styles: ``
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
+    templateUrl: './stock-field-type.filter.component.html',
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class StockFieldTypeFilterComponent implements OnInit {
 
     public result = {} as IStockFieldTypeFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
@@ -67,5 +75,4 @@ export class StockFieldTypeFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }
