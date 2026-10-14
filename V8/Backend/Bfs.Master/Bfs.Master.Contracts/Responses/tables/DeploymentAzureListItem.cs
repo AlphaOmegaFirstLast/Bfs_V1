@@ -19,6 +19,7 @@ public string TargetVirtualDir { get; set; }
 public string PublishProfilePath { get; set; }
 public string AppService { get; set; }
 public string ResourceGroup { get; set; }
+public string Name { get; set; }
 
         public string? BfsSystemName { get; set; }
 

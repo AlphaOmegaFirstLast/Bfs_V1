@@ -44,6 +44,8 @@ export class DeploymentLocalListComponent
     override queryRequest = {} as IDeploymentLocalRequest;
     override exportRequest = {} as IDeploymentLocalRequest;
     override downloadFileName: string = "Local Deployment";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class DeploymentLocalListComponent
 
         this.filterComponent = DeploymentLocalFilterComponent;
         this.queryRequest = initDeploymentLocalRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class DeploymentLocalListComponent
         return getDeploymentLocalActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

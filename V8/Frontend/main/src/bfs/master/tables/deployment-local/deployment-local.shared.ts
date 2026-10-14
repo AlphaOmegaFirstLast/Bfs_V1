@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master/main/master.operations';
@@ -8,7 +10,7 @@ import * as operations from '@bfs/master/main/master.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const DeploymentLocalColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'scriptFile', displayName: 'ScriptFile', sortName: 'ScriptFile', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'bfsSystemId', displayName: 'System Info', sortName: 'BfsSystem_Name', width: '50px', isVisible:true, columnOrder:1 },
@@ -22,8 +24,10 @@ export const DeploymentLocalColumns = [
 { fieldName: 'appPoolName', displayName: 'AppPoolName', sortName: 'AppPoolName', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'port', displayName: 'Port', sortName: 'Port', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'isHttpsRequired', displayName: 'IsHttpsRequired', sortName: 'IsHttpsRequired', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const DeploymentLocalColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface IDeploymentLocal extends IEntity{
     isDeleted?: boolean;
@@ -39,6 +43,7 @@ webSite?: string;
 appPoolName?: string;
 port?: string;
 isHttpsRequired?: boolean;
+name?: string;
 
     bfsSystemId?: string;
 
@@ -59,6 +64,7 @@ webSite: '',
 appPoolName: '',
 port: '',
 isHttpsRequired: false,
+name: '',
 
         bfsSystemId: '0',
 
@@ -83,6 +89,7 @@ webSite: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"Max
 appPoolName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 port: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 isHttpsRequired: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
@@ -98,6 +105,8 @@ export interface IDeploymentLocalRequest extends IEntityRequest<IDeploymentLocal
 export interface IDeploymentLocalFilter {
     [key: string]: any;
     Id?: string;
+
+    Name?: string;
 
     BfsSystemId?: string;
 
@@ -115,6 +124,8 @@ export function initDeploymentLocalRequest(): IDeploymentLocalRequest {
             },
         filter: {
             Id: undefined ,
+
+            Name: undefined ,
 
             BfsSystemId: undefined ,
 

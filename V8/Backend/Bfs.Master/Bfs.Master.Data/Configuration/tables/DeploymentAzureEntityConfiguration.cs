@@ -33,6 +33,7 @@ namespace Bfs.Master.Data.Configuration
 //   builder.Property(e => e.PublishProfilePath).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.AppService).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.ResourceGroup).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3

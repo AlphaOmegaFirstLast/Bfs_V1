@@ -58,6 +58,10 @@ namespace Bfs.Master.Contracts
         /// DeploymentLocal IsHttpsRequired.
         ///</Summary>
         public bool IsHttpsRequired {get; set;} = false ;
+///<Summary>
+        /// DeploymentLocal Name.
+        ///</Summary>
+        public string Name {get; set;} = string.Empty ;
 
         ///<Summary>
         /// DeploymentLocal System Info.

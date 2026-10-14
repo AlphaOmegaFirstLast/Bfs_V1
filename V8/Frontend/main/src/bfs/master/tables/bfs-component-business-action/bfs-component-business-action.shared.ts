@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master/main/master.operations';
@@ -8,21 +10,24 @@ import * as operations from '@bfs/master/main/master.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const BfsComponentBusinessActionColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'bfsComponentId', displayName: 'Component Name', sortName: 'BfsComponent_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'businessActionId', displayName: 'Business Action', sortName: 'BusinessAction_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'actionLocationId', displayName: 'Action Location', sortName: 'ActionLocation_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const BfsComponentBusinessActionColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface IBfsComponentBusinessAction extends IEntity{
     isDeleted?: boolean;
 id?: string;
 
-    bfsComponentId?: string;
-businessActionId?: string;
+    businessActionId?: string;
 actionLocationId?: number;
+
+    bfsComponentId?: string;
+    bfsComponentName?: string;
 
 }
 //---------------------------------------------------------
@@ -31,9 +36,11 @@ export function initBfsComponentBusinessAction(): IBfsComponentBusinessAction {
         isDeleted: false,
 id: '0',
 
-        bfsComponentId: '0',
-businessActionId: '0',
+        businessActionId: '0',
 actionLocationId: 0,
+
+        bfsComponentId: '0',
+        bfsComponentName: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -46,9 +53,11 @@ export function bfsComponentBusinessActionUntypedFormGroup(formBuilder: FormBuil
     isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    bfsComponentId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-businessActionId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    businessActionId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 actionLocationId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    bfsComponentId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    bfsComponentName: [''],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -63,9 +72,11 @@ export interface IBfsComponentBusinessActionFilter {
     [key: string]: any;
     Id?: string;
 
-    BfsComponentId?: string;
-BusinessActionId?: string;
+    BusinessActionId?: string;
 ActionLocationId?: number;
+
+    BfsComponentId?: string;
+    BfsComponentName?: string,
 
 }
 //---------------------------------------------------------
@@ -82,9 +93,11 @@ export function initBfsComponentBusinessActionRequest(): IBfsComponentBusinessAc
         filter: {
             Id: undefined ,
 
-            BfsComponentId: undefined ,
-BusinessActionId: undefined ,
+            BusinessActionId: undefined ,
 ActionLocationId: undefined ,
+
+            BfsComponentId: undefined ,
+            BfsComponentName: undefined ,
 
             }
     };
@@ -95,12 +108,13 @@ ActionLocationId: undefined ,
 export function renderBfsComponentBusinessAction(record: IBfsComponentBusinessAction, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IBfsComponentBusinessAction];
         switch (column.fieldName) {
-            case 'bfsComponentId':
-                return record['bfsComponentName']?.toString();
-case 'businessActionId':
+            case 'businessActionId':
                 return record['businessActionName']?.toString();
 case 'actionLocationId':
                 return record['actionLocationName']?.toString();
+
+            case 'bfsComponentId':
+                return record['bfsComponentName']?.toString();
 
             default:
                 return value;

@@ -41,6 +41,7 @@ export class SystemActionFormComponent extends BaseFormComponent<ISystemAction >
     // Define look ups
     public ActionTypeOptions: any[] = [];
 public WriterTypeOptions: any[] = [];
+public BfsSystemOptions: any[] = [];
 
     // Define autocomplete
 
@@ -66,6 +67,7 @@ public WriterTypeOptions: any[] = [];
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): ISystemAction  {
@@ -85,15 +87,18 @@ public WriterTypeOptions: any[] = [];
          const [
               actionTypeResponse,
 writerTypeResponse,
+bfsSystemResponse,
 
          ] = await Promise.all
          ([
         this.apiService.getItems<IQueryResponse>("/ActionType/list", { pageSize: 30 }),
 this.apiService.getItems<IQueryResponse>("/WriterType/list", { pageSize: 30 }),
+this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 30 }),
 
          ]);
         this.ActionTypeOptions = actionTypeResponse.items;
 this.WriterTypeOptions = writerTypeResponse.items;
+this.BfsSystemOptions = bfsSystemResponse.items;
 
  } catch (err: any) {
    const msg = err?.message || "An error occurred while loading data.";

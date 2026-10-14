@@ -66,8 +66,10 @@
                                                 <div class="col-12"  *ngIf="isVisible('bfsComponentId')">
                                                     <div class="position-relative"  (focusout)="bfsComponentAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Component</label>
+                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..."
                                                                 [formControl]="bfsComponentAuto.control"
 
                                                                 (focus)="bfsComponentAuto.onFocus()"  [class]="bfsComponentAuto.cssClass()"  />
@@ -86,7 +88,7 @@
                                                         </ul>
 
                                                         <ul class="dropdown-menu show w-100" *ngIf="bfsComponentAuto.isError">
-                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component .</span></li>
                                                         </ul>
                                                     </div>
                                                 </div>

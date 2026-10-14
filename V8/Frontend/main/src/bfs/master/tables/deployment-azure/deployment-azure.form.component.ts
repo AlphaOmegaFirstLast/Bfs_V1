@@ -65,6 +65,7 @@ export class DeploymentAzureFormComponent extends BaseFormComponent<IDeploymentA
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): IDeploymentAzure  {

@@ -44,6 +44,8 @@ export class BusinessActionListComponent
     override queryRequest = {} as IBusinessActionRequest;
     override exportRequest = {} as IBusinessActionRequest;
     override downloadFileName: string = "Business Actions";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class BusinessActionListComponent
 
         this.filterComponent = BusinessActionFilterComponent;
         this.queryRequest = initBusinessActionRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class BusinessActionListComponent
         return getBusinessActionActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

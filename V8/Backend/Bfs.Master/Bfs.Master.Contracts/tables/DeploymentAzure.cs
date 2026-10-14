@@ -54,6 +54,10 @@ namespace Bfs.Master.Contracts
         /// DeploymentAzure ResourceGroup.
         ///</Summary>
         public string ResourceGroup {get; set;} = string.Empty ;
+///<Summary>
+        /// DeploymentAzure Name.
+        ///</Summary>
+        public string Name {get; set;} = string.Empty ;
 
         ///<Summary>
         /// DeploymentAzure BestFit System.

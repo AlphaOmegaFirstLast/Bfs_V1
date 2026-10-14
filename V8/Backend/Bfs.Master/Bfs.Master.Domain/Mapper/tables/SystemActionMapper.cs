@@ -21,6 +21,7 @@ Notes= entity.Notes,
 
                ActionTypeId= entity.ActionTypeId,
 WriterTypeId= entity.WriterTypeId,
+BfsSystemId= entity.BfsSystemId,
 
             };
 
@@ -52,6 +53,7 @@ SystemActionEntity.Notes= contract.Notes;
 
             SystemActionEntity.ActionTypeId= contract.ActionTypeId;
 SystemActionEntity.WriterTypeId= contract.WriterTypeId;
+SystemActionEntity.BfsSystemId= contract.BfsSystemId;
 
             return SystemActionEntity;
         }     

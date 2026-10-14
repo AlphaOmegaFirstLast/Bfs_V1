@@ -23,6 +23,7 @@ public string WebSite {get; set;} = string.Empty ;
 public string AppPoolName {get; set;} = string.Empty ;
 public string Port {get; set;} = string.Empty ;
 public bool IsHttpsRequired {get; set;} = false ;
+public string Name {get; set;} = string.Empty ;
 
         public long BfsSystemId {get; set;} = 0 ;
 

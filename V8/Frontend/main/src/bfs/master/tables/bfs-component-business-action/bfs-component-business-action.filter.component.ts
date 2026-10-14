@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 import { IBfsComponentBusinessActionFilter } from './bfs-component-business-action.shared';
 //Template_Start_Code_DontOverwrite_1
@@ -28,11 +29,11 @@ export class BfsComponentBusinessActionFilterComponent implements OnInit {
     protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
-    public BfsComponentOptions:  any[] = [];
-public BusinessActionOptions:  any[] = [];
+    public BusinessActionOptions:  any[] = [];
 public ActionLocationOptions:  any[] = [];
 
     // Define autocomplete fields
+    bfsComponentAuto: AutoCompleteHelper;
 
     // Define range filters
 
@@ -42,8 +43,15 @@ public ActionLocationOptions:  any[] = [];
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+    this.bfsComponentAuto = new AutoCompleteHelper({ queryUrl: "/BfsComponent/list", fieldName: 'BfsComponent', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -57,18 +65,7 @@ public ActionLocationOptions:  any[] = [];
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
-        target = "/BfsComponent/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.BfsComponentOptions = response.items;
-                this.isLoading.list = false;
-            },
-                error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching Component Name data.';
-                this.isLoading.list = false;
-            }
-        });
-target = "/BusinessAction/list";
+        target = "/BusinessAction/list";
         (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
             next: (response: IQueryResponse) => {
                 this.BusinessActionOptions = response.items;
@@ -94,6 +91,7 @@ target = "/ActionLocation/list";
     }
     //---------------------------------------------------------
     async setAutoComplete() {
+    this.bfsComponentAuto.setupFilter(this.parent.apiService, this.result);
 
 }
 //---------------------------------------------------------
@@ -109,6 +107,6 @@ target = "/ActionLocation/list";
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

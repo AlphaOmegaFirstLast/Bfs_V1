@@ -47,6 +47,10 @@ namespace Bfs.Master.Contracts
         /// BusinessAction Writer Type.
         ///</Summary>
         public int WriterTypeId {get; set;} = 0 ;
+///<Summary>
+        /// BusinessAction BestFit System.
+        ///</Summary>
+        public long BfsSystemId {get; set;} = 0 ;
 
     }
 }

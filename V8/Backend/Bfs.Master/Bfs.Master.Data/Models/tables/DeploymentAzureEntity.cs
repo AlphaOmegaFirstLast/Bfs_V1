@@ -22,6 +22,7 @@ public string TargetVirtualDir {get; set;} = string.Empty ;
 public string PublishProfilePath {get; set;} = string.Empty ;
 public string AppService {get; set;} = string.Empty ;
 public string ResourceGroup {get; set;} = string.Empty ;
+public string Name {get; set;} = string.Empty ;
 
         public long BfsSystemId {get; set;} = 0 ;
 

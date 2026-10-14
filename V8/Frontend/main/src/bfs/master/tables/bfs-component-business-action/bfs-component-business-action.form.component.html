@@ -14,11 +14,14 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
+                                            <div *ngFor="let link of buttonList">
+                                               <button *ngIf="isAccessible(link)" type="submit" class="btn btn-sm btn-outline-primary me-2" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</button>
+                                            </div>                                           
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/mstr/bfs-component-business-action/list')">Back</button>
-                                             <a [routerLink]="['/mstr/bfs-component-business-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/mstr/bfs-component-business-action/list')">Back</button>
+                                            <a [routerLink]="['/mstr/bfs-component-business-action/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -61,18 +64,39 @@
     </div>
 </div>
 
-<div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('bfsComponentId')">
-        <label for="bfsComponentId" class="form-label fs-6">Component Name</label>
-        <select class="form-select" id="bfsComponentId" formControlName="bfsComponentId" 
-            [class]="submit && !form['bfsComponentId'].errors ? 'is-valid': submit && form['bfsComponentId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of BfsComponentOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-            </ng-container>
-        </select>
-        <div class="invalid-feedback">Please select a valid Component Name.</div>
-    </div>
-</div>
+  <!-- BfsComponentAutoComplete Start -->
+                                            <div class="row mb-2">
+                                                <div class="col-12"  *ngIf="isVisible('bfsComponentId')">
+                                                    <div class="position-relative"  (focusout)="bfsComponentAuto.hideOverlay()">
+                                                        <label class="form-label fs-6">Component Name</label>
+                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..."
+                                                                [formControl]="bfsComponentAuto.control"
+
+                                                                (focus)="bfsComponentAuto.onFocus()"  [class]="bfsComponentAuto.cssClass()"  />
+
+                                                            <span class="input-group-text"  *ngIf="bfsComponentAuto.isLoading"><span class="spinner-border spinner-border-sm"></span></span>
+                                                        </div>
+
+                                                        <ul *ngIf="bfsComponentAuto.isShowList()"  class="dropdown-menu show w-100 shadow-sm"
+                                                            style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
+                                                            <li *ngFor="let option of bfsComponentAuto.optionList; let i = index">
+                                                                <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+                                                                    (mousedown)="$event.preventDefault(); bfsComponentAuto.onSelect(option)">
+                                                                    <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+
+                                                        <ul class="dropdown-menu show w-100" *ngIf="bfsComponentAuto.isError">
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component Name .</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+  <!-- BfsComponent AutoComplete End -->
 <div class="row mb-2">
     <div class="col-12"  *ngIf="isVisible('businessActionId')">
         <label for="businessActionId" class="form-label fs-6">Business Action</label>

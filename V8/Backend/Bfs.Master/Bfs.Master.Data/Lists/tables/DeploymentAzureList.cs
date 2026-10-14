@@ -78,6 +78,7 @@ _fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = 
 _fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = "PublishProfilePath", DbName = "DeploymentAzure.PublishProfilePath", QueryName = "PublishProfilePath", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = "AppService", DbName = "DeploymentAzure.AppService", QueryName = "AppService", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = "ResourceGroup", DbName = "DeploymentAzure.ResourceGroup", QueryName = "ResourceGroup", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = "Name", DbName = "DeploymentAzure.Name", QueryName = "Name", IsAggregare = false});
 
             //object fields
 
@@ -121,6 +122,20 @@ _fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = 
                     parameters.Add("@Id", filter.Id);
                 }
 
+                if (!string.IsNullOrEmpty(filter.Name))
+                {
+                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                   {
+                      sql.AppendLine("DeploymentAzure.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);                    
+                   }
+                   else
+                   {
+                      sql.AppendLine("DeploymentAzure.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);
+                   }
+                }
+
                 if (filter.BfsSystemId.HasValue)
                 {
                     sql.AppendLine("DeploymentAzure.BfsSystemId = @BfsSystemId");
@@ -145,11 +160,13 @@ _fieldList.Add(new QueryField() {ComponentName = "DeploymentAzure", FieldName = 
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_8
-//Template_End_Code_DontOverwrite_8       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

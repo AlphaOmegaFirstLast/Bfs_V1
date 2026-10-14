@@ -65,6 +65,7 @@ export class DeploymentLocalFormComponent extends BaseFormComponent<IDeploymentL
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): IDeploymentLocal  {

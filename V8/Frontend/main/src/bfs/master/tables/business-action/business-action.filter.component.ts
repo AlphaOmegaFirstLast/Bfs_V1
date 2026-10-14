@@ -30,6 +30,7 @@ export class BusinessActionFilterComponent implements OnInit {
     // Define look ups
     public ActionTypeOptions:  any[] = [];
 public WriterTypeOptions:  any[] = [];
+public BfsSystemOptions:  any[] = [];
 
     // Define autocomplete fields
 
@@ -41,8 +42,14 @@ public WriterTypeOptions:  any[] = [];
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -78,6 +85,17 @@ target = "/WriterType/list";
                 this.isLoading.list = false;
             }
         });
+target = "/BfsSystem/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.BfsSystemOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching BestFit System data.';
+                this.isLoading.list = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
@@ -97,6 +115,6 @@ target = "/WriterType/list";
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

@@ -16,6 +16,7 @@ public string? Name { get; set; }
 
         public int? ActionTypeId { get; set; }
 public int? WriterTypeId { get; set; }
+public long? BfsSystemId { get; set; }
 
     }
 }

@@ -21,6 +21,7 @@ public string Notes {get; set;} = string.Empty ;
 
         public int ActionTypeId {get; set;} = 0 ;
 public int WriterTypeId {get; set;} = 0 ;
+public long BfsSystemId {get; set;} = 0 ;
 
     }
 }

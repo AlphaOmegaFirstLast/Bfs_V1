@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master/main/master.operations';
@@ -8,7 +10,7 @@ import * as operations from '@bfs/master/main/master.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const BusinessActionColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'shortName', displayName: 'Short Name', sortName: 'ShortName', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'actionTypeId', displayName: 'Action Type', sortName: 'ActionType_Name', width: '50px', isVisible:true, columnOrder:1 },
@@ -18,8 +20,10 @@ export const BusinessActionColumns = [
 { fieldName: 'actionTemplate', displayName: 'Action Template', sortName: 'ActionTemplate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const BusinessActionColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface IBusinessAction extends IEntity{
     isDeleted?: boolean;
@@ -33,6 +37,7 @@ notes?: string;
 
     actionTypeId?: number;
 writerTypeId?: number;
+bfsSystemId?: string;
 
 }
 //---------------------------------------------------------
@@ -49,6 +54,7 @@ notes: '',
 
         actionTypeId: 0,
 writerTypeId: 0,
+bfsSystemId: '0',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -69,6 +75,7 @@ notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLeng
 
     actionTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 writerTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -90,6 +97,7 @@ Name?: string;
 
     ActionTypeId?: number;
 WriterTypeId?: number;
+BfsSystemId?: string;
 
 }
 //---------------------------------------------------------
@@ -113,6 +121,7 @@ Name: undefined ,
 
             ActionTypeId: undefined ,
 WriterTypeId: undefined ,
+BfsSystemId: undefined ,
 
             }
     };
@@ -127,6 +136,8 @@ export function renderBusinessAction(record: IBusinessAction, column: IQueryColu
                 return record['actionTypeName']?.toString();
 case 'writerTypeId':
                 return record['writerTypeName']?.toString();
+case 'bfsSystemId':
+                return record['bfsSystemName']?.toString();
 
             default:
                 return value;
@@ -165,6 +176,11 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('businessAction', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['writerTypeId'], route:'/mstr/writer-type/view', displayText:'Go to WriterType'
+});
+}
+if (component.accessService.isActionAllowed('businessAction', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/mstr/bfs-system/view', displayText:'Go to BfsSystem'
 });
 }
 

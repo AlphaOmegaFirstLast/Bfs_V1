@@ -79,6 +79,7 @@ _fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = 
 _fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = "AppPoolName", DbName = "DeploymentLocal.AppPoolName", QueryName = "AppPoolName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = "Port", DbName = "DeploymentLocal.Port", QueryName = "Port", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = "IsHttpsRequired", DbName = "DeploymentLocal.IsHttpsRequired", QueryName = "IsHttpsRequired", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = "Name", DbName = "DeploymentLocal.Name", QueryName = "Name", IsAggregare = false});
 
             //object fields
 
@@ -122,6 +123,20 @@ _fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = 
                     parameters.Add("@Id", filter.Id);
                 }
 
+                if (!string.IsNullOrEmpty(filter.Name))
+                {
+                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                   {
+                      sql.AppendLine("DeploymentLocal.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);                    
+                   }
+                   else
+                   {
+                      sql.AppendLine("DeploymentLocal.Name like '%'+@Name+'%' ");
+                      parameters.Add("@Name", filter.Name);
+                   }
+                }
+
                 if (filter.BfsSystemId.HasValue)
                 {
                     sql.AppendLine("DeploymentLocal.BfsSystemId = @BfsSystemId");
@@ -146,11 +161,13 @@ _fieldList.Add(new QueryField() {ComponentName = "DeploymentLocal", FieldName = 
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_8
-//Template_End_Code_DontOverwrite_8       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

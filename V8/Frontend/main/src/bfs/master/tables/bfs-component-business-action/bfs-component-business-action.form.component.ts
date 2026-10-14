@@ -10,6 +10,7 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { MasterService } from '@bfs/master/main/master.service';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
 import {isEnabled, isVisible, type IBfsComponentBusinessAction, initBfsComponentBusinessAction, bfsComponentBusinessActionUntypedFormGroup, getBfsComponentBusinessActionActions} from './bfs-component-business-action.shared';
@@ -39,11 +40,11 @@ export class BfsComponentBusinessActionFormComponent extends BaseFormComponent<I
     // Children filters
 
     // Define look ups
-    public BfsComponentOptions: any[] = [];
-public BusinessActionOptions: any[] = [];
+    public BusinessActionOptions: any[] = [];
 override ActionLocationOptions: any[] = [];
 
     // Define autocomplete
+    bfsComponentAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/BfsComponent/list", fieldName: 'bfsComponent', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     //---------------------------------------------------------
 
@@ -51,6 +52,7 @@ override ActionLocationOptions: any[] = [];
 
        super(activatedRoute);
        this.validationForm = this.formBuilder.group(bfsComponentBusinessActionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+      this.bfsComponentAuto.control = this.validationForm.get('bfsComponentName');
 
     }
     //---------------------------------------------------------
@@ -67,6 +69,7 @@ override ActionLocationOptions: any[] = [];
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): IBfsComponentBusinessAction  {
@@ -84,19 +87,16 @@ override ActionLocationOptions: any[] = [];
 // Promise.all to improve performance. apply later
          try{
          const [
-              bfsComponentResponse,
-businessActionResponse,
+              businessActionResponse,
 actionLocationResponse,
 
          ] = await Promise.all
          ([
-        this.apiService.getItems<IQueryResponse>("/BfsComponent/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/BusinessAction/list", { pageSize: 30 }),
+        this.apiService.getItems<IQueryResponse>("/BusinessAction/list", { pageSize: 30 }),
 this.apiService.getItems<IQueryResponse>("/ActionLocation/list", { pageSize: 30 }),
 
          ]);
-        this.BfsComponentOptions = bfsComponentResponse.items;
-this.BusinessActionOptions = businessActionResponse.items;
+        this.BusinessActionOptions = businessActionResponse.items;
 this.ActionLocationOptions = actionLocationResponse.items;
 
  } catch (err: any) {
@@ -123,11 +123,13 @@ this.ActionLocationOptions = actionLocationResponse.items;
     }
     //---------------------------------------------------------
     override async setAutoComplete() {   
+    await this.bfsComponentAuto.setUpForm(this.apiService, this);
 
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
+    this.bfsComponentAuto.setData(this.entity.bfsComponentId,this.entity.bfsComponentName);
 
     }
     //---------------------------------------------------------

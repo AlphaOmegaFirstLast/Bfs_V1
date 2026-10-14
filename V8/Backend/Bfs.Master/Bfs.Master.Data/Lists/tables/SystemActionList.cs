@@ -75,12 +75,14 @@ _fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "Ma
 _fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "ActionTemplate", DbName = "SystemAction.ActionTemplate", QueryName = "ActionTemplate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "Name", DbName = "SystemAction.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "Notes", DbName = "SystemAction.Notes", QueryName = "Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "SystemAction", FieldName = "BfsSystemId", DbName = "SystemAction.BfsSystemId", QueryName = "BfsSystemId", IsAggregare = false});
 
             //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "ActionType", FieldName = "Name", DbName = "ActionType.Name", QueryName = "ActionTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "WriterType", FieldName = "Name", DbName = "WriterType.Name", QueryName = "WriterTypeName", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "BfsSystem", FieldName = "Name", DbName = "BfsSystem.Name", QueryName = "BfsSystemName", IsAggregare = false});
 
             //autoCompletes
 
@@ -99,6 +101,7 @@ _fieldList.Add(new QueryField() {ComponentName = "WriterType", FieldName = "Name
 
            sql.AppendLine($"   Left Join ActionType on SystemAction.ActionTypeId = ActionType.Id");
 sql.AppendLine($"   Left Join WriterType on SystemAction.WriterTypeId = WriterType.Id");
+sql.AppendLine($"   Left Join BfsSystem on SystemAction.BfsSystemId = BfsSystem.Id");
 
 //Template_Start_Code_DontOverwrite_6
 //Template_End_Code_DontOverwrite_6
@@ -183,6 +186,11 @@ if (filter.WriterTypeId.HasValue)
                     sql.AppendLine("SystemAction.WriterTypeId = @WriterTypeId");
                     parameters.Add("@WriterTypeId", filter.WriterTypeId.Value);
                 }
+if (filter.BfsSystemId.HasValue)
+                {
+                    sql.AppendLine("SystemAction.BfsSystemId = @BfsSystemId");
+                    parameters.Add("@BfsSystemId", filter.BfsSystemId.Value);
+                }
 
                 //Template_Start_Code_DontOverwrite_7
                 //Template_End_Code_DontOverwrite_7      
@@ -202,11 +210,13 @@ if (filter.WriterTypeId.HasValue)
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_8
-//Template_End_Code_DontOverwrite_8       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

@@ -9,6 +9,8 @@ namespace Bfs.Master.Data
 
         public long? Id { get; set; }
 
+        public string? Name { get; set; }
+
         public long? BfsSystemId { get; set; }
 
     }

@@ -44,6 +44,8 @@ export class DeploymentAzureListComponent
     override queryRequest = {} as IDeploymentAzureRequest;
     override exportRequest = {} as IDeploymentAzureRequest;
     override downloadFileName: string = "Azure Deployment";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class DeploymentAzureListComponent
 
         this.filterComponent = DeploymentAzureFilterComponent;
         this.queryRequest = initDeploymentAzureRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class DeploymentAzureListComponent
         return getDeploymentAzureActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

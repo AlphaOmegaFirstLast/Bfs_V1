@@ -34,6 +34,7 @@ namespace Bfs.Master.Data.Configuration
 //   builder.Property(e => e.AppPoolName).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Port).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.IsHttpsRequired).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3

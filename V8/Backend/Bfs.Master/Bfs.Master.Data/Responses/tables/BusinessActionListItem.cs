@@ -16,9 +16,11 @@ public string MatchValues { get; set; }
 public string ActionTemplate { get; set; }
 public string Name { get; set; }
 public string Notes { get; set; }
+public long BfsSystemId { get; set; }
 
         public string? ActionTypeName { get; set; }
 public string? WriterTypeName { get; set; }
+public string? BfsSystemName { get; set; }
 
    }
 }

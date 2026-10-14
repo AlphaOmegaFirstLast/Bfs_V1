@@ -20,6 +20,7 @@ public string WebSite { get; set; }
 public string AppPoolName { get; set; }
 public string Port { get; set; }
 public bool IsHttpsRequired { get; set; }
+public string Name { get; set; }
 
         public string? BfsSystemName { get; set; }
 

@@ -22,6 +22,7 @@ TargetVirtualDir= entity.TargetVirtualDir,
 PublishProfilePath= entity.PublishProfilePath,
 AppService= entity.AppService,
 ResourceGroup= entity.ResourceGroup,
+Name= entity.Name,
 
                BfsSystemId= entity.BfsSystemId,
 
@@ -56,6 +57,7 @@ DeploymentAzureEntity.TargetVirtualDir= contract.TargetVirtualDir;
 DeploymentAzureEntity.PublishProfilePath= contract.PublishProfilePath;
 DeploymentAzureEntity.AppService= contract.AppService;
 DeploymentAzureEntity.ResourceGroup= contract.ResourceGroup;
+DeploymentAzureEntity.Name= contract.Name;
 
             DeploymentAzureEntity.BfsSystemId= contract.BfsSystemId;
 

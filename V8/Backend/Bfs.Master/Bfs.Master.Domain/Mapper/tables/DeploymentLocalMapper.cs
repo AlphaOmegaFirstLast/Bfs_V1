@@ -23,6 +23,7 @@ WebSite= entity.WebSite,
 AppPoolName= entity.AppPoolName,
 Port= entity.Port,
 IsHttpsRequired= entity.IsHttpsRequired,
+Name= entity.Name,
 
                BfsSystemId= entity.BfsSystemId,
 
@@ -58,6 +59,7 @@ DeploymentLocalEntity.WebSite= contract.WebSite;
 DeploymentLocalEntity.AppPoolName= contract.AppPoolName;
 DeploymentLocalEntity.Port= contract.Port;
 DeploymentLocalEntity.IsHttpsRequired= contract.IsHttpsRequired;
+DeploymentLocalEntity.Name= contract.Name;
 
             DeploymentLocalEntity.BfsSystemId= contract.BfsSystemId;
 

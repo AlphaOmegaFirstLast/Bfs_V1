@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/master/main/master.operations';
@@ -8,7 +10,7 @@ import * as operations from '@bfs/master/main/master.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const DeploymentAzureColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'scriptFile', displayName: 'ScriptFile', sortName: 'ScriptFile', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:false, columnOrder:1 },
@@ -21,8 +23,10 @@ export const DeploymentAzureColumns = [
 { fieldName: 'publishProfilePath', displayName: 'PublishProfilePath', sortName: 'PublishProfilePath', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'appService', displayName: 'AppService', sortName: 'AppService', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'resourceGroup', displayName: 'ResourceGroup', sortName: 'ResourceGroup', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const DeploymentAzureColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface IDeploymentAzure extends IEntity{
     isDeleted?: boolean;
@@ -37,6 +41,7 @@ targetVirtualDir?: string;
 publishProfilePath?: string;
 appService?: string;
 resourceGroup?: string;
+name?: string;
 
     bfsSystemId?: string;
 
@@ -56,6 +61,7 @@ targetVirtualDir: '',
 publishProfilePath: '',
 appService: '',
 resourceGroup: '',
+name: '',
 
         bfsSystemId: '0',
 
@@ -79,6 +85,7 @@ targetVirtualDir: ['',getFormControlValidation('{"IsRequired":false,"MinLength":
 publishProfilePath: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 appService: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 resourceGroup: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
@@ -94,6 +101,8 @@ export interface IDeploymentAzureRequest extends IEntityRequest<IDeploymentAzure
 export interface IDeploymentAzureFilter {
     [key: string]: any;
     Id?: string;
+
+    Name?: string;
 
     BfsSystemId?: string;
 
@@ -111,6 +120,8 @@ export function initDeploymentAzureRequest(): IDeploymentAzureRequest {
             },
         filter: {
             Id: undefined ,
+
+            Name: undefined ,
 
             BfsSystemId: undefined ,
 

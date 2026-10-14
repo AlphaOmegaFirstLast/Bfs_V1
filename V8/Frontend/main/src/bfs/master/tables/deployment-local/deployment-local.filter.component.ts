@@ -40,8 +40,14 @@ export class DeploymentLocalFilterComponent implements OnInit {
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -85,6 +91,6 @@ export class DeploymentLocalFilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }
