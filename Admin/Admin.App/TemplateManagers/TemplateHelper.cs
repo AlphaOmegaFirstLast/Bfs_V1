@@ -20,9 +20,6 @@ namespace Admin.App
             Name = templateName;
         }
 
-        //Template_Start_Code_[DontOverwrite]_1
-        //Template_End_Code_[DontOverwrite]_1   
-
         public string GetPlaceHolder()
         {
             return $"//Template_{Name}";

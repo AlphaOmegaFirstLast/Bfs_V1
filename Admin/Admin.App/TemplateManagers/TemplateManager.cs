@@ -1,6 +1,7 @@
-﻿using Admin.App.Constants;
+﻿using Admin.App.CodeWriters;
+using Admin.App.Constants;
 using System.Text;
-using Admin.App.CodeWriters;
+using System.Text.RegularExpressions;
 
 namespace Admin.App
 {
@@ -156,6 +157,7 @@ namespace Admin.App
         {
             //Clear Replacable PlaceHolders
             input = ClearPlaceHolder(codeInfo, input, "[ComponentType]", Enum.GetNames(typeof(ComponentType)).ToList());
+            input = ClearPlaceHolder(codeInfo, input, "[HasDateFields]", new List<string>() { "DateFields" });
             input = ClearPlaceHolder(codeInfo, input, "[HasAutoComplete]", new List<string>() { "AutoComplete" });
             input = ClearPlaceHolder(codeInfo, input, "[HasMessaging]", new List<string>() { "Messaging" });
             input = ClearPlaceHolder(codeInfo, input, "[HasSoftDelete]", new List<string>() { "SoftDelete" });
@@ -257,13 +259,8 @@ namespace Admin.App
 
                 for (int i = 1; i <= templatesCount; i++)
                 {
-                    var startIndex = outputFilePath.LastIndexOf(@"\") + 1;
-                    var endIndex = outputFilePath.LastIndexOf(@".");
-                    var itemName = endIndex > startIndex ? outputFilePath.Substring(startIndex, endIndex - startIndex) : string.Empty;
-                    var SB = outputFilePath.LastIndexOf(@"Backend");
-                    var SF = outputFilePath.LastIndexOf(@"Frontend");
-                    var start = SB > 0 ? SB : SF;
-                    var filePath = outputFilePath.Substring(start);
+                    var itemName = GetManualItemName(outputFilePath);
+                    var filePath = GetManualFilePath(outputFilePath);
                     var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
                     if (!string.IsNullOrEmpty(existingSnippet))
                     {
@@ -281,7 +278,7 @@ namespace Admin.App
                         existingCodeList.Add(manualCode);
                     }
                 }
-
+                existingCodeList = SaveGeneratedIgnore(codeInfo, outputFilePath, input, existingCodeList);
                 await codeInfo.WriteDbManualCode(existingCodeList);
             }
         }
@@ -292,19 +289,18 @@ namespace Admin.App
             var outputCode = FileHelper.ReadFile(outputFilePath);
 
             var placeHolderName = "Code_DontOverwrite";
-            var existingCodeList = codeInfo.ManualCodeList.Where(x => outputFilePath.Contains(x.FileName));
+            var existingCodeList = codeInfo.ManualCodeList.Where(x => x.StartTemplate.Contains(placeHolderName) && outputFilePath.Contains(x.FileName));
 
             var placeHolder = codeInfo.FlatPlaceHolderList.FirstOrDefault(x => x.Name == placeHolderName);
             if (placeHolder != null)
             {
                 var templateHelper = new TemplateHelper(placeHolder, placeHolderName);
                 var templatesCount = templateHelper.GetTemplateCount(outputCode);
-
                 for (int i = 1; i <= templatesCount; i++)
                 {
                     var startTemplate = $@"//Template_Start_{placeHolderName}_{i}";
                     var endTemplate = $@"//Template_End_{placeHolderName}_{i}";
-                    var manualCodeRecord = existingCodeList.FirstOrDefault(x => x.StartTemplate == startTemplate  && x.EndTemplate == endTemplate);
+                    var manualCodeRecord = existingCodeList.FirstOrDefault(x => x.StartTemplate == startTemplate && x.EndTemplate == endTemplate);
 
                     var sbManual = new StringBuilder();
                     sbManual.AppendLine(startTemplate);
@@ -315,7 +311,7 @@ namespace Admin.App
                     }
                     sbManual.AppendLine(endTemplate);
 
-                    var manualSnippet = sbManual.ToString();    
+                    var manualSnippet = sbManual.ToString();
                     var snippetToReplace = templateHelper.GetTemplateIncludingTags(outputCode, i);
                     if (!string.IsNullOrEmpty(snippetToReplace))
                     {
@@ -323,11 +319,138 @@ namespace Admin.App
                     }
                 }
 
+                outputCode = ApplyGeneratedIgnore(codeInfo, outputFilePath, outputCode);
                 FileHelper.SaveFile(outputFilePath, outputCode);
             }
         }
+
+        public static List<IManualCodeEntity> SaveGeneratedIgnore(CodeGeneratorBase codeInfo, string outputFilePath, string input, List<IManualCodeEntity> existingCodeList)
+        {
+            var placeHolderName = "Generated_Ignored";
+            var templateHelper = new TemplateHelper(new PlaceHolderInfo() {Name = placeHolderName}, placeHolderName);
+            var templatesCount = templateHelper.GetTemplateCount(input);
+
+            for (int i = 1; i <= templatesCount; i++)
+            {
+                var itemName = GetManualItemName(outputFilePath);
+                var filePath = GetManualFilePath(outputFilePath);
+                var existingSnippet = templateHelper.ExtractEmbededTemplate(input, i);
+                if (!string.IsNullOrEmpty(existingSnippet))
+                {
+                    var manualCode = new BfsManualCodeEntity()
+                    {
+                        BfsSystemId = codeInfo.CurrentSystem?.Id ?? 0,
+                        BfsComponentId = codeInfo.CurrentComponent?.Id ?? 0,
+                        Name = itemName,
+                        FileName = filePath,
+                        StartTemplate = $@"//Template_Start_{placeHolderName}_{i}",
+                        EndTemplate = $@"//Template_End_{placeHolderName}_{i}",
+                        Code = TrimNonVisibleEdges(existingSnippet).Replace("/*", "").Replace("*/", "")  //needs to include leading\ending control characters.
+                    };
+
+                    existingCodeList.Add(manualCode);
+                }
+            }
+
+            return existingCodeList;
+        }
+
+        public static string ApplyGeneratedIgnore(CodeGeneratorBase codeInfo, string outputFilePath, string outputCode)
+        {
+            var placeHolderName = "Generated_Ignored";
+            var existingCodeList = codeInfo.ManualCodeList.Where(x => x.StartTemplate.Contains(placeHolderName));
+             existingCodeList = existingCodeList.Where(x=> outputFilePath.Contains(x.FileName));
+
+            var i = 0;
+            foreach (var codeRecord in existingCodeList)
+            {
+                i++;
+                var startTemplate = $@"//Template_Start_{placeHolderName}_{i}";
+                var endTemplate = $@"//Template_End_{placeHolderName}_{i}";
+                var codeToIgnore = codeRecord.Code.Trim();
+
+                codeToIgnore = codeToIgnore.Replace("/*", "");
+                codeToIgnore = codeToIgnore.Replace("*/", "");
+
+                var sbBefore = new StringBuilder();
+                sbBefore.AppendLine(startTemplate);
+                sbBefore.AppendLine("/*");
+                var before = sbBefore.ToString();
+
+                var sbAfter = new StringBuilder();
+                sbAfter.AppendLine("*/");
+                sbAfter.AppendLine(endTemplate);
+                var after = sbAfter.ToString();
+
+                var sbIgnore = new StringBuilder();
+                sbIgnore.AppendLine(before);
+                sbIgnore.AppendLine(codeToIgnore);
+                sbIgnore.AppendLine(after);
+
+                var newSnippet = sbIgnore.ToString();
+
+                // clean outputCode from previuos generated-ignored code
+                outputCode = outputCode.Replace(before, "");        // in case second time ApplyManual: //Template_Start_Generated_Ignored_2  /*
+                outputCode = outputCode.Replace(after, "");         // in case second time ApplyManual
+                outputCode = outputCode.Replace(startTemplate, ""); // in case first time ApplyManual   //Template_Start_Generated_Ignored_2 
+                outputCode = outputCode.Replace(endTemplate, "");   // in case first time ApplyManual
+
+                string pattern = Regex.Escape(codeToIgnore).Replace(@"\ ", @"\s*");
+                outputCode = Regex.Replace(outputCode, pattern, newSnippet);
+            }
+
+            return outputCode;
+        }
+
+        public static string TrimNonVisibleEdges(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            int start = 0;
+            // Find the first visible character from the start
+            while (start < input.Length && (char.IsWhiteSpace(input[start]) || char.IsControl(input[start])))
+            {
+                start++;
+            }
+
+            // If the string contains only non-visible characters
+            if (start == input.Length)
+            {
+                return string.Empty;
+            }
+
+            int end = input.Length - 1;
+            // Find the last visible character from the end
+            while (end >= start && (char.IsWhiteSpace(input[end]) || char.IsControl(input[end])))
+            {
+                end--;
+            }
+
+            return input.Substring(start, end - start + 1);
+        }
+
+        public static string GetManualItemName(string outputFilePath)
+        {
+            var startIndex = outputFilePath.LastIndexOf(@"\") + 1;
+            var endIndex = outputFilePath.LastIndexOf(@".");
+            var itemName = endIndex > startIndex ? outputFilePath.Substring(startIndex, endIndex - startIndex) : string.Empty;
+            return itemName;
+        }
+
+        public static string GetManualFilePath(string outputFilePath)
+        {
+            var SB = outputFilePath.LastIndexOf(@"Backend");
+            var SF = outputFilePath.LastIndexOf(@"Frontend");
+            var start = SB > 0 ? SB : SF;
+            var filePath = outputFilePath.Substring(start);
+            return filePath;
+        }
     }
 }
+
 
 
 /* Angular Validation Forms

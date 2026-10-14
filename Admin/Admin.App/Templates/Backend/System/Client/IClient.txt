@@ -1,0 +1,11 @@
+﻿//Template_Start_Code_DontOverwrite_1
+using Bfs.Core.Config;
+
+namespace Bfs.[SystemNameCapital].Client
+{
+    public interface I[SystemNameCapital]Client
+    {
+        Task<HttpResponseMessage> RequestName(string jwtToken, string data);
+    }
+}
+//Template_End_Code_DontOverwrite_1

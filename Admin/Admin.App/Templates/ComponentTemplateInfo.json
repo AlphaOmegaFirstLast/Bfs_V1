@@ -540,7 +540,12 @@
       {
         "Id": "1302",
         "TemplateFile": "Backend\\System\\Client\\Client.txt",
-        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Client\\[SystemNameCapital].Client.cs"
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Client\\[SystemNameCapital]Client.cs"
+      },
+      {
+        "Id": "1303",
+        "TemplateFile": "Backend\\System\\Client\\IClient.txt",
+        "OutputFile": "[SystemRootDir]\\Bfs.[SystemNameCapital].Client\\I[SystemNameCapital]Client.cs"
       }
     ],
     "ModifierTemplateList": []

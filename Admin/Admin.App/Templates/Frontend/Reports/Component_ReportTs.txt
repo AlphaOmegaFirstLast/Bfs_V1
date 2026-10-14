@@ -25,6 +25,8 @@ import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { [SystemNameCapital]Service } from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].service';
 import { type I[ReportNameCapital], type I[ReportNameCapital]Request, type I[ReportNameCapital]Filter, init[ReportNameCapital]Request, render[ReportNameCapital], get[ReportNameCapital]Actions} from './[ReportFileName].shared';
 import { [ReportNameCapital]FilterComponent } from './[ReportFileName].filter.component'; 
+//Template_Start_Code_DontOverwrite_1  
+//Template_End_Code_DontOverwrite_1  
 
 @Component({
     selector: '[ReportFileName]',     
@@ -42,6 +44,8 @@ export class [ReportNameCapital]Component
     override queryRequest = {} as I[ReportNameCapital]Request;
     override exportRequest = {} as I[ReportNameCapital]Request;
     override downloadFileName: string = "[ComponentMenuName]";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2 
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -62,6 +66,8 @@ export class [ReportNameCapital]Component
 
         this.filterComponent = [ReportNameCapital]FilterComponent;
         this.queryRequest = init[ReportNameCapital]Request();
+//Template_Start_Code_DontOverwrite_3 
+//Template_End_Code_DontOverwrite_3 
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -122,5 +128,8 @@ export class [ReportNameCapital]Component
         return baseChart;
     }
 //Template_End_Component_Report_2
+//Template_Start_Code_DontOverwrite_4 
+//Template_End_Code_DontOverwrite_4  
+
 }
 

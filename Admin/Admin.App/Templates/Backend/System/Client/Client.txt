@@ -1,39 +1,28 @@
-﻿using Bfs.Core.Contracts.Auth;
+﻿//Template_Start_Code_DontOverwrite_1
 using System.Net.Http.Json;
 
-namespace Bfs.Auth.Client
+namespace Bfs.[SystemNameCapital].Client
 {
-    public class AuthClient
+    public class [SystemNameCapital]Client
     {
         private readonly HttpClient _httpClient;
         private const string BaseAddress = "https://localhost:6100";
-        public AuthClient(HttpClient httpClient)
+        public [SystemNameCapital]Client(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
-        public async Task<TokenResponse?> RequestTokensAsync(long userId)
+        public async Task<HttpResponseMessage> RequestName(string jwtToken, string data)
         {
-            var response = await _httpClient.PostAsJsonAsync($@"{BaseAddress}/api/token/create", new
-            {
-                userId
-            });
+            // todo read token from ScopedData or pass token as parameter, currently pass token as parameter for simplicity. we can refactor it later to read from scopedData if needed.
+            var request = new HttpRequestMessage(HttpMethod.Post, $@"{_baseAddress}/api/[RequestPath]");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            
+            var request = new Request() { Data= data};
+            request.Content = JsonContent.Create(request);
 
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<TokenResponse>();
-        }
-
-        public async Task<TokenResponse?> RefreshTokensAsync(string? refreshToken)
-        {
-            if (string.IsNullOrEmpty(refreshToken))
-                return null;
-
-            var response = await _httpClient.PostAsJsonAsync($@"{BaseAddress}/api/token/refresh", new { refreshToken });
-
-            if (!response.IsSuccessStatusCode)
-                return null;
-
-            return await response.Content.ReadFromJsonAsync<TokenResponse>();
+            //ToDo return a type instead of HttpResponseMessage
+            return await _httpClient.SendAsync(request);        
         }
     }
 }
+//Template_End_Code_DontOverwrite_1

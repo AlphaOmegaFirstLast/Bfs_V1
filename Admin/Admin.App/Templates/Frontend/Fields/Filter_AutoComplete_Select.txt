@@ -2,11 +2,11 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="[AutoCompleteSmall]Auto.hideOverlay()">
-          <label class="form-label fs-6">[DisplayName]</label>        
-          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
-
+          <label class="d-flex align-items-center form-label fs-6">[DisplayName]       
+            <lucide-angular [img]="LucideSearch" class="text-info fs-5 m-1" />
+          </label> 
           <div class="input-group">
-            <input id="[AutoCompleteSmall]Control" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+            <input id="[AutoCompleteSmall]Control" type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..." 
               [(ngModel)]="result.[AutoCompleteCapital]Name"
               (ngModelChange)="[AutoCompleteSmall]Auto.onInputChange($event)" 
               (focus)="[AutoCompleteSmall]Auto.onFocus()" />
@@ -29,7 +29,7 @@
         </ul>
 
         <ul class="dropdown-menu show w-100" *ngIf="[AutoCompleteSmall]Auto.isError">
-          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+          <li><span class="dropdown-item-text text-muted">Please select a valid [DisplayName] .</span></li>
         </ul>
       </div>
     </div>

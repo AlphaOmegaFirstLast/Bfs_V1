@@ -44,6 +44,8 @@ export class [ReportNameCapital]Component
     override queryRequest = {} as I[ComponentNameCapital]Request;
     override exportRequest = {} as I[ComponentNameCapital]Request;
     override downloadFileName: string = "[ComponentMenuName]";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -64,6 +66,8 @@ export class [ReportNameCapital]Component
 
         this.filterComponent = [ComponentNameCapital]FilterComponent;
         this.queryRequest = init[ComponentNameCapital]Request();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -122,8 +126,8 @@ export class [ReportNameCapital]Component
         return baseChart;
     }
 //Template_End_Component_Report_2
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

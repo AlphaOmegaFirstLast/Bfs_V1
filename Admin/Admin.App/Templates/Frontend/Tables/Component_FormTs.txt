@@ -2,12 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+//Template_Start_Component_DateFields_1
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+//Template_End_Component_DateFields_1
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
@@ -40,10 +39,19 @@ import {I[MatrixNameCapital]Filter, I[MatrixNameCapital]Request, init[MatrixName
     //Template_Start_Field_ChildrenMatrix_2
     [MatrixNameCapital]MatrixComponent,
     //Template_End_Field_ChildrenMatrix_2
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+//Template_Start_Component_DateFields_2
+    , FlatpickrDirective
+//Template_End_Component_DateFields_2
+    ],
     standalone: true,
     templateUrl: './[ComponentFileName].form.component.html',
-    providers: [provideFlatpickrDefaults()],
+    providers: [
+  //Template_Start_Component_DateFields_3
+  provideFlatpickrDefaults()
+  //Template_End_Component_DateFields_3
+    ],
 })
 export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[ComponentNameCapital] > implements OnInit {
 
@@ -91,6 +99,7 @@ export class [ComponentNameCapital]FormComponent extends BaseFormComponent<I[Com
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): I[ComponentNameCapital]  {

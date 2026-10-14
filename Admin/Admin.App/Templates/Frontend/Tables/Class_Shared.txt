@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].operations';
@@ -15,7 +17,7 @@ import { ICustomField, initCustomFields } from "@bfs/_shared/customFields";
 //Template_End_Field_CustomFieldList_4
 
 // Output Columns of a Query  [used in entity Query]
-export const [ComponentNameCapital]Columns = [
+export const columns = [
     //Template_Start_ReportField_QueryColumn_1
     { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible], columnOrder:[ColumnOrder] },
     //Template_End_ReportField_QueryColumn_1
@@ -27,6 +29,7 @@ export const [ComponentNameCapital]Columns = [
     { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible],  columnOrder:[ColumnOrder] },
     //Template_End_ReportField_Aggregate_1
 ];
+export const [ComponentNameCapital]Columns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface I[ComponentNameCapital] extends IEntity{
     //Template_Start_Field_Primitive_1

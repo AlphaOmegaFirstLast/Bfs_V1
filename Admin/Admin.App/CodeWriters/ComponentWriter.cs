@@ -42,6 +42,7 @@ namespace Admin.App
 
         public string ReportFileName = string.Empty;
 
+        public string HasDateFields = string.Empty;  
         public string HasAutoComplete = string.Empty;  // either none or AutoComplete. based on the field definition, if any of the fields is AutoComplete then this will be set to AutoComplete.
         public string HasMessaging = string.Empty;     // "Messaging";     // either none or Messaging. based on System settings.
         public string HasSoftDelete = string.Empty;    // either none or SoftDelete. based on component settings.
@@ -112,6 +113,11 @@ namespace Admin.App
                 {
                     HasAutoComplete = "AutoComplete";
                 }
+
+                if (field.BackendDataTypeId == BackendDataType.DT_DateTime)
+                {
+                    HasDateFields = "DateFields";
+                }
             }
         }
 
@@ -136,6 +142,7 @@ namespace Admin.App
             outputContent = outputContent.Replace("[QueryBaseTable]", QueryBaseTable);
             outputContent = outputContent.Replace("[DbParentTable]", DbParentTable);
             outputContent = outputContent.Replace("[InterfaceRequired]", string.IsNullOrEmpty(InterfaceRequired)?"":$",{InterfaceRequired}" );
+            outputContent = outputContent.Replace("[HasDateFields]", HasDateFields.Trim());
             outputContent = outputContent.Replace("[HasAutoComplete]", HasAutoComplete.Trim());
             outputContent = outputContent.Replace("[HasMessaging]", HasMessaging.Trim());
             outputContent = outputContent.Replace("[HasSoftDelete]", HasSoftDelete.Trim());

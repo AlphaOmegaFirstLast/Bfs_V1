@@ -1,18 +1,18 @@
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
 import * as operations from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].operations';
 
 // Output Columns of a Query  [used in entity Query]
-export const [ReportNameCapital]Columns = [
+export const columns = [
     //Template_Start_ReportField_QueryColumn_1
-    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible] },
+    { fieldName: '[ReportFieldNameSmall]', displayName: '[DisplayName]', sortName: '[SortName]', width: '50px', isVisible:[IsColumnVisible], columnOrder:[ColumnOrder] },
     //Template_End_ReportField_QueryColumn_1
     //Template_Start_ReportField_Aggregate_1
-    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible] },
+    { fieldName: '[AggregateName]', displayName: '[DisplayName]', sortName: '[AggregateName]', width: '50px', isVisible:[IsColumnVisible],  columnOrder:[ColumnOrder] },
     //Template_End_ReportField_Aggregate_1
 ];
-
+export const [ReportNameCapital]Columns  = reOrderColumns(columns);
 //---------------------------------------------------------
-
 export interface I[ReportNameCapital] {
     [key: string]: any;
     //Template_Start_ReportField_QueryColumn_2

@@ -211,12 +211,14 @@ namespace Bfs.[SystemNameCapital].Data.Lists
                 parameters.Add("@[AggregateName]To", filter.[FilterRangeName].To.Value);
             }
             //Template_End_FilterField_AggregateRange_1
-            
+
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_8
-//Template_End_Code_DontOverwrite_8       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

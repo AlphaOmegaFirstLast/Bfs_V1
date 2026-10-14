@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+//Template_Start_Component_DateFields_1
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+//Template_End_Component_DateFields_1
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 //Template_Start_Component_AutoComplete_1
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
@@ -14,15 +18,24 @@ import { I[ComponentNameCapital]Filter } from './[ComponentFileName].shared';
 
 @Component({
     selector: 'app-[ComponentFileName]-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+//Template_Start_Component_DateFields_2
+    , FlatpickrDirective
+//Template_End_Component_DateFields_2
+    ],
     templateUrl: './[ComponentFileName].filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+  //Template_Start_Component_DateFields_3
+  provideFlatpickrDefaults()
+  //Template_End_Component_DateFields_3
+    ],
+  //styles: ``
 })
 export class [ComponentNameCapital]FilterComponent implements OnInit {
 
     public result = {} as I[ComponentNameCapital]Filter;
-    
+    protected readonly LucideSearch = LucideSearch;
+
     // Define look ups
     //Template_Start_Field_Lookup_1
     public [LookupNameCapital]Options:  any[] = [];
@@ -45,11 +58,17 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
     //Template_Start_Field_AutoComplete_2
         this.[AutoCompleteSmall]Auto = new AutoCompleteHelper({ queryUrl: "/[AutoCompleteCapital]/list", fieldName: '[AutoCompleteCapital]', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     //Template_End_Field_AutoComplete_2
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
     }
 
     async ngOnInit(): Promise<void> {
@@ -101,6 +120,6 @@ export class [ComponentNameCapital]FilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

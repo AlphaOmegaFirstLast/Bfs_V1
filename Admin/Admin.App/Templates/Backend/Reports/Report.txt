@@ -152,6 +152,9 @@ namespace Bfs.[SystemNameCapital].Data.Reports
                     parameters.Add("@[FilterRangeName]To", filter.[FilterRangeName].To.Value);
                 }
                 //Template_End_FilterField_Range_1
+
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -180,12 +183,14 @@ namespace Bfs.[SystemNameCapital].Data.Reports
                 parameters.Add("@[AggregateName]To", filter.[FilterRangeName].To.Value);
             }
             //Template_End_FilterField_AggregateRange_1
-            
+
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_5
-//Template_End_Code_DontOverwrite_5     
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

@@ -158,6 +158,15 @@
       },
       {
         "ParentId": [ "604", "606" ],
+        "Name": "Component_[HasDateFields]",
+        "TemplateFile": "",
+        "PlaceHolderType": "StartEnd",
+        "TemplateContentType": "Embedded",
+        "KeepPlaceHolder": false,
+        "Notes": "Add code required for Date fields functionality"
+      },
+      {
+        "ParentId": [ "604", "606" ],
         "Name": "Component_[HasAutoComplete]",
         "TemplateFile": "",
         "PlaceHolderType": "StartEnd",
