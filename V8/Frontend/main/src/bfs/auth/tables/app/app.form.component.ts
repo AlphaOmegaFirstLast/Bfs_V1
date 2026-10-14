@@ -86,7 +86,7 @@ export class AppFormComponent extends BaseFormComponent<IApp > implements OnInit
 
          ] = await Promise.all
          ([
-        this.apiService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 30 }),
+        this.masterService.getItems<IQueryResponse>("/BfsSystem/list", { pageSize: 30 }),
 
          ]);
         this.BfsSystemOptions = bfsSystemResponse.items;
