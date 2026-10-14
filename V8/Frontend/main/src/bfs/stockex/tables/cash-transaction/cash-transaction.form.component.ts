@@ -2,10 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
@@ -25,10 +22,17 @@ import {isEnabled, isVisible, type ICashTransaction, initCashTransaction, cashTr
     selector: 'cash-transaction-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+, FlatpickrDirective
+
+    ],
     standalone: true,
     templateUrl: './cash-transaction.form.component.html',
-    providers: [provideFlatpickrDefaults()],
+    providers: [
+  provideFlatpickrDefaults()
+
+    ],
 })
 export class CashTransactionFormComponent extends BaseFormComponent<ICashTransaction > implements OnInit {
 
@@ -70,6 +74,7 @@ public CurrencyOptions: any[] = [];
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): ICashTransaction  {
@@ -93,7 +98,13 @@ public CurrencyOptions: any[] = [];
     //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
-        return getCashTransactionActions(this, record);
+        let actions =  getCashTransactionActions(this, record);
+        actions = actions.filter(a => (
+            ((this.currentOperation=='add') && a.displayText.includes('Save'))
+          || ((this.currentOperation=='edit') && a.displayText.includes('Update'))
+          || ((this.currentOperation=='delete') && a.displayText.includes('Delete'))
+        ));
+        return actions;
     }
 
    //---------------------------------------------------------

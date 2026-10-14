@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/stockex/main/stockex.operations';
@@ -8,9 +10,8 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const OverdraftPortfolioColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'overdraftPercent', displayName: 'Overdraft Percent', sortName: 'OverdraftPercent', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'overdraftMax', displayName: 'Overdraft Max', sortName: 'OverdraftMax', width: '50px', isVisible:false, columnOrder:1 },
@@ -18,6 +19,7 @@ export const OverdraftPortfolioColumns = [
 { fieldName: 'brokerAgreementId', displayName: 'Broker Agreement', sortName: 'BrokerAgreement_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const OverdraftPortfolioColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface IOverdraftPortfolio extends IEntity{
     isDeleted?: boolean;
@@ -54,7 +56,7 @@ export function overdraftPortfolioUntypedFormGroup(formBuilder: FormBuilder): an
     return {
     isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-name: ['',getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 overdraftPercent: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 overdraftMax: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],

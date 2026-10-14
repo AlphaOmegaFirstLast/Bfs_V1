@@ -2,12 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
@@ -24,10 +20,15 @@ import {isEnabled, isVisible, type ICreditInterest, initCreditInterest, creditIn
     selector: 'credit-interest-form',
     imports: [
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+
+    ],
     standalone: true,
     templateUrl: './credit-interest.form.component.html',
-    providers: [provideFlatpickrDefaults()],
+    providers: [
+
+    ],
 })
 export class CreditInterestFormComponent extends BaseFormComponent<ICreditInterest > implements OnInit {
 
@@ -145,5 +146,4 @@ this.BrokerAgreementOptions = brokerAgreementResponse.items;
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

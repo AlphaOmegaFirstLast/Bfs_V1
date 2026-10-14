@@ -12,7 +12,6 @@ namespace Bfs.StockEx.Domain.Mapper
             {
                IsDeleted= entity.IsDeleted,
 Id= entity.Id,
-Name= entity.Name,
 Notes= entity.Notes,
 SourceDate= entity.SourceDate,
 TransactionDate= entity.TransactionDate,
@@ -24,6 +23,7 @@ ToQuantity= entity.ToQuantity,
                TransactionTypeId= entity.TransactionTypeId,
 StockShareId= entity.StockShareId,
 CurrencyId= entity.CurrencyId,
+ToSspTransactionId= entity.ToSspTransactionId,
 
                SsPortfolioId= entity.SsPortfolioId,
 ToPortfolioId= entity.ToPortfolioId,
@@ -49,7 +49,6 @@ ToPortfolioId= entity.ToPortfolioId,
 
             SspTransactionEntity.IsDeleted= contract.IsDeleted;
 SspTransactionEntity.Id= contract.Id;
-SspTransactionEntity.Name= contract.Name;
 SspTransactionEntity.Notes= contract.Notes;
 SspTransactionEntity.SourceDate= contract.SourceDate;
 SspTransactionEntity.TransactionDate= contract.TransactionDate;
@@ -61,6 +60,7 @@ SspTransactionEntity.ToQuantity= contract.ToQuantity;
             SspTransactionEntity.TransactionTypeId= contract.TransactionTypeId;
 SspTransactionEntity.StockShareId= contract.StockShareId;
 SspTransactionEntity.CurrencyId= contract.CurrencyId;
+SspTransactionEntity.ToSspTransactionId= contract.ToSspTransactionId;
 
             SspTransactionEntity.SsPortfolioId= contract.SsPortfolioId;
 SspTransactionEntity.ToPortfolioId= contract.ToPortfolioId;

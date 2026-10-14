@@ -15,10 +15,6 @@ namespace Bfs.StockEx.Contracts
         ///</Summary>
         public long Id {get; set;} = 0 ;
 ///<Summary>
-        /// CashTransaction Name.
-        ///</Summary>
-        public string Name {get; set;} = string.Empty ;
-///<Summary>
         /// CashTransaction Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;

@@ -23,7 +23,6 @@ namespace Bfs.StockEx.Data.Configuration
 
         	//   builder.Property(e => e.IsDeleted).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Source).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.SourceDate).HasMaxLength([FieldLength]).IsRequired();

@@ -39,7 +39,7 @@
         <label>Portfolio of Investor & Broker</label>
       </div>
       <div class="col -8">
-        <select class="form-select" [(ngModel)]="result.SsPortfolio_PortfolioId" name="portfolioId" [disabled]="!(result.SsPortfolio_InvestorId) && !(result.SsPortfolio_BrokerId)">
+        <select class="form-select" [(ngModel)]="result.SsPortfolio_SsPortfolioId" name="portfolioId" [disabled]="!(result.SsPortfolio_InvestorId) && !(result.SsPortfolio_BrokerId)">
           <ng-container *ngFor="let option of PortfolioOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>

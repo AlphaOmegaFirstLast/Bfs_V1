@@ -12,7 +12,6 @@ namespace Bfs.StockEx.Data.Models
 
         public bool IsDeleted {get; set;} = false ;
 public long Id {get; set;} = 0 ;
-public string Name {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
 public DateTime SourceDate {get; set;} = DateTime.MinValue ;
 public DateTime TransactionDate {get; set;} = DateTime.MinValue ;
@@ -24,6 +23,7 @@ public decimal ToQuantity {get; set;} = 0 ;
         public int TransactionTypeId {get; set;} = 0 ;
 public long StockShareId {get; set;} = 0 ;
 public long CurrencyId {get; set;} = 0 ;
+public long ToSspTransactionId {get; set;} = 0 ;
 
         public long SsPortfolioId {get; set;} = 0 ;
 public long ToPortfolioId {get; set;} = 0 ;

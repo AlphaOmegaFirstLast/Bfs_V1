@@ -12,7 +12,6 @@ namespace Bfs.StockEx.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 
 public class AdminController
 {
@@ -34,7 +33,7 @@ public class AdminController
     }
 
     [HttpPost("Migrate")]
-    [CustomAuthorize("method=r.migrate")]
+
     public async Task MigrateTenants()
     {
         var masterConnection = _bfsSettings.DbConnections.MasterConnection;

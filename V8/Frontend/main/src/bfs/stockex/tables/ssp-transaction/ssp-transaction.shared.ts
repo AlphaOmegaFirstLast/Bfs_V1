@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/stockex/main/stockex.operations';
@@ -8,9 +10,8 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const SspTransactionColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
@@ -20,16 +21,16 @@ export const SspTransactionColumns = [
 { fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'toQuantity', displayName: 'To Quantity', sortName: 'ToQuantity', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'toPortfolioId', displayName: 'To Portfolio', sortName: 'ToPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'toQuantity', displayName: 'To Quantity', sortName: 'ToQuantity', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'toPortfolioId', displayName: 'To Portfolio', sortName: 'ToPortfolio_Name', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const SspTransactionColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface ISspTransaction extends IEntity{
     isDeleted?: boolean;
 id?: string;
-name?: string;
 notes?: string;
 sourceDate?: Date | null;
 transactionDate?: Date | null;
@@ -53,7 +54,6 @@ export function initSspTransaction(): ISspTransaction {
     let entity: ISspTransaction = {
         isDeleted: false,
 id: '0',
-name: '',
 notes: '',
 sourceDate: new Date(),
 transactionDate: new Date(),
@@ -81,7 +81,6 @@ export function sspTransactionUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
     isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-name: ['',getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 sourceDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 transactionDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
@@ -112,8 +111,6 @@ export interface ISspTransactionFilter {
     [key: string]: any;
     Id?: string;
 
-    Name?: string;
-
     TransactionTypeId?: number;
 StockShareId?: string;
 CurrencyId?: string;
@@ -127,7 +124,6 @@ ToPortfolioId?: string;
 TransactionDate?: { from?: Date | null ; to?: Date | null} ;
 Quantity?: { from?: number ; to?: number} ;
 Price?: { from?: number ; to?: number} ;
-ToQuantity?: { from?: number ; to?: number} ;
 
 }
 //---------------------------------------------------------
@@ -144,8 +140,6 @@ export function initSspTransactionRequest(): ISspTransactionRequest {
         filter: {
             Id: undefined ,
 
-            Name: undefined ,
-
             TransactionTypeId: undefined ,
 StockShareId: undefined ,
 CurrencyId: undefined ,
@@ -159,7 +153,6 @@ ToPortfolioId: undefined ,
 TransactionDate: { from: undefined , to: undefined} ,
 Quantity: { from: undefined , to: undefined} ,
 Price: { from: undefined , to: undefined} ,
-ToQuantity: { from: undefined , to: undefined} ,
 
             }
     };
@@ -232,21 +225,27 @@ if (component.accessService.isActionAllowed('sspTransaction', ''))
 actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.sspTransactionRollout, displayText: 'Save and Rollout Transaction', data: { recordId: record['id'],  postUrl: '/Operations/SspTransaction/Rollout'}
 });
 }
+if (component.accessService.isActionAllowed('sspTransaction', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.sspTransactionRollback, displayText: 'Delete and Rollback Transaction', data: { recordId: record['id'],  deleteUrl: '/Operations/SspTransaction/Rollback'}
+});
+}
+if (component.accessService.isActionAllowed('sspTransaction', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.sspTransactionChange, displayText: 'Update and Rollout Changes', data: { recordId: record['id'],  putUrl: '/Operations/SspTransaction/Change'}
+});
+}
 
         return links;
     }
 //---------------------------------------------------------
-//Template_Start_Code_DontOverwrite_3
 export function isVisible(entity: ISspTransaction, validationForm: UntypedFormGroup, fieldName: string): boolean {
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
-    let control = validationForm.get('transactionTypeId');
-    let transactionTypeId = control?.value;
-    switch (fieldName.toLocaleLowerCase()) {
-        case 'toportfolioid':
-            return (transactionTypeId == 9 || transactionTypeId == 10);
-        case 'toquantity':
-            return (transactionTypeId == 15 || transactionTypeId == 16) ? true : false;
+    switch (fieldName) {
+        case 'exampleId':
+           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+           return true;
     }
     return true;
 }
@@ -256,10 +255,12 @@ export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fie
     // or this.entity[fieldName]
     switch (fieldName) {
         case 'exampleId':
-            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-            return true;
+           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+           return true;
     }
     return true;
 }
+
+//Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3
 

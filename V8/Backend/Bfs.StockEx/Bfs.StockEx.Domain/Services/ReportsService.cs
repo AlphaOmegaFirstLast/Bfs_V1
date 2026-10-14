@@ -23,6 +23,8 @@ namespace Bfs.StockEx.Domain.Services
 
         private readonly INavReportCompare _navReportCompare;
 
+        private readonly IOverdraftRepCompare _overdraftRepCompare;
+
 //Template_Component_AddDeclareEntry
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -39,6 +41,8 @@ namespace Bfs.StockEx.Domain.Services
               ,IPortfolioCashTransactionAggregateCompare portfolioCashTransactionAggregateCompare
 
               ,INavReportCompare navReportCompare
+
+              ,IOverdraftRepCompare overdraftRepCompare
 
 //Template_Component_AddParameterEntry
 //Template_Start_Code_DontOverwrite_3
@@ -57,6 +61,8 @@ namespace Bfs.StockEx.Domain.Services
               _portfolioCashTransactionAggregateCompare = portfolioCashTransactionAggregateCompare;
 
               _navReportCompare = navReportCompare;
+
+              _overdraftRepCompare = overdraftRepCompare;
 
 //Template_Component_AddInitEntry
 //Template_Start_Code_DontOverwrite_4
@@ -122,6 +128,16 @@ namespace Bfs.StockEx.Domain.Services
             var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.NavReportCompareItem>, Bfs.Core.Contracts.QueryResponse<NavReportCompareItem>>(entityResult);
 
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<NavReportCompareItem> { Items = new List<NavReportCompareItem>(), TotalItems = 0, TotalPages = 0 };
+        }
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<OverdraftRepCompareItem>> OverdraftRepCompareAsync(Bfs.Core.Contracts.QueryRequest<OverdraftRepCompareFilter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<OverdraftRepCompareFilter>, Bfs.Core.Data.QueryRequest<Data.OverdraftRepCompareFilter>>(contractRequest);
+
+            var entityResult = await _overdraftRepCompare.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.OverdraftRepCompareItem>, Bfs.Core.Contracts.QueryResponse<OverdraftRepCompareItem>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<OverdraftRepCompareItem> { Items = new List<OverdraftRepCompareItem>(), TotalItems = 0, TotalPages = 0 };
         }
 //Template_Component_AddServiceEntry
 //Template_Start_Code_DontOverwrite_5

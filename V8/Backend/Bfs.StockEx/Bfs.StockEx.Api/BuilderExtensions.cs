@@ -495,6 +495,12 @@ public static class BuilderExtensions
            var config = sp.GetRequiredService<TenantSqlConfiguration>();
            return new NavReportCompare(config.ConnectionString, resourceSecurity);
         });
+        builder.Services.AddScoped<IOverdraftRepCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new OverdraftRepCompare(config.ConnectionString, resourceSecurity);
+        });
 //Template_Component_RegisterReport
     }
 

@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ISsPortfolioBalanceFilter } from './ss-portfolio-balance.shared';
@@ -12,14 +13,19 @@ import { ISsPortfolioBalanceFilter } from './ss-portfolio-balance.shared';
 
 @Component({
     selector: 'app-ss-portfolio-balance-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
     templateUrl: './ss-portfolio-balance.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class SsPortfolioBalanceFilterComponent implements OnInit {
 
     public result = {} as ISsPortfolioBalanceFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public SsPortfolioOptions:  any[] = [];
@@ -98,5 +104,4 @@ target = "/Currency/list";
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

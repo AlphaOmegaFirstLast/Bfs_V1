@@ -44,6 +44,8 @@ export class SspTransactionListComponent
     override queryRequest = {} as ISspTransactionRequest;
     override exportRequest = {} as ISspTransactionRequest;
     override downloadFileName: string = "StockShare Portfolio Transactions";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,9 @@ export class SspTransactionListComponent
 
         this.filterComponent = SspTransactionFilterComponent;
         this.queryRequest = initSspTransactionRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
+
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +72,8 @@ export class SspTransactionListComponent
         return getSspTransactionActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

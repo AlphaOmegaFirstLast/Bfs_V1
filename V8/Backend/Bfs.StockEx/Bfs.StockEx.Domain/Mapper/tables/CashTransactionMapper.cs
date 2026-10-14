@@ -12,7 +12,6 @@ namespace Bfs.StockEx.Domain.Mapper
             {
                IsDeleted= entity.IsDeleted,
 Id= entity.Id,
-Name= entity.Name,
 Notes= entity.Notes,
 Source= entity.Source,
 SourceDate= entity.SourceDate,
@@ -47,7 +46,6 @@ CurrencyId= entity.CurrencyId,
 
             CashTransactionEntity.IsDeleted= contract.IsDeleted;
 CashTransactionEntity.Id= contract.Id;
-CashTransactionEntity.Name= contract.Name;
 CashTransactionEntity.Notes= contract.Notes;
 CashTransactionEntity.Source= contract.Source;
 CashTransactionEntity.SourceDate= contract.SourceDate;

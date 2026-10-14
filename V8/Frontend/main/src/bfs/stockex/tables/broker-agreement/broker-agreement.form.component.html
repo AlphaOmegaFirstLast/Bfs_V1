@@ -14,11 +14,14 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
+                                            <div *ngFor="let link of buttonList">
+                                               <button *ngIf="isAccessible(link)" type="submit" class="btn btn-sm btn-outline-primary me-2" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</button>
+                                            </div>                                           
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/broker-agreement/list')">Back</button>
-                                             <a [routerLink]="['/stkx/broker-agreement/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/broker-agreement/list')">Back</button>
+                                            <a [routerLink]="['/stkx/broker-agreement/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -51,18 +54,6 @@
                                     <!----------------------------------------- Form Controls -------------------------------------->
                                     <div class="row">
                                     <div class="col-6">
-<div class="row mb-2"> 
-    <div class="col-12" *ngIf="isVisible('name')">
-        <label for="name" class="form-label fs-6">Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="name" formControlName="name"
-            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Name.</div>
-    </div>
-</div>
-
 <div class="row mb-2">
     <div class="col-12"  *ngIf="isVisible('agreementDate')">
         <label for="agreementDate" class="form-label fs-6">Agreement Date</label>

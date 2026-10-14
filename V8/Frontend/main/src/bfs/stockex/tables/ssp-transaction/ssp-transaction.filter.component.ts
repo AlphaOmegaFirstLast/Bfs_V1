@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {NgIcon} from '@ng-icons/core';
-
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
@@ -15,14 +15,21 @@ import { ISspTransactionFilter } from './ssp-transaction.shared';
 
 @Component({
     selector: 'app-ssp-transaction-filter',
-    imports: [NgIcon,FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+, FlatpickrDirective
+
+    ],
     templateUrl: './ssp-transaction.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+  provideFlatpickrDefaults()
+
+    ],
+  //styles: ``
 })
 export class SspTransactionFilterComponent implements OnInit {
 
     public result = {} as ISspTransactionFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public TransactionTypeOptions:  any[] = [];
@@ -42,8 +49,6 @@ public QuantityFrom: number | undefined;
     public QuantityTo: number | undefined;
 public PriceFrom: number | undefined;
     public PriceTo: number | undefined;
-public ToQuantityFrom: number | undefined;
-    public ToQuantityTo: number | undefined;
 
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
@@ -51,10 +56,16 @@ public ToQuantityFrom: number | undefined;
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
     this.ssPortfolioAuto = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'SsPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 this.toPortfolioAuto = new AutoCompleteHelper({ queryUrl: "/ToPortfolio/list", fieldName: 'ToPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -71,8 +82,6 @@ this.QuantityFrom = this.result.Quantity?.from;
         this.QuantityTo   = this.result.Quantity?.to;
 this.PriceFrom = this.result.Price?.from;
         this.PriceTo   = this.result.Price?.to;
-this.ToQuantityFrom = this.result.ToQuantity?.from;
-        this.ToQuantityTo   = this.result.ToQuantity?.to;
 
     }
     //---------------------------------------------------------
@@ -133,10 +142,9 @@ this.toPortfolioAuto.setupFilter(this.parent.apiService, this.result);
 this.result.TransactionDate = { from: this.TransactionDateFrom, to: this.TransactionDateTo };
 this.result.Quantity = { from: this.QuantityFrom, to: this.QuantityTo };
 this.result.Price = { from: this.PriceFrom, to: this.PriceTo };
-this.result.ToQuantity = { from: this.ToQuantityFrom, to: this.ToQuantityTo };
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

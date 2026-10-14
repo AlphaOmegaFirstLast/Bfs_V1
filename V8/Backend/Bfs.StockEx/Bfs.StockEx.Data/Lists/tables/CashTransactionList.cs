@@ -22,12 +22,14 @@ namespace Bfs.StockEx.Data.Lists
         public CashTransactionList(string connectionString, IResourceSecurity? resourceSecurity
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3
+
         )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
 //Template_Start_Code_DontOverwrite_4
 //Template_End_Code_DontOverwrite_4
+
         }
 
         private readonly string _connectionString;
@@ -67,7 +69,6 @@ namespace Bfs.StockEx.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Id", DbName = "stkxCashTransaction.Id", QueryName = "Id", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Name", DbName = "stkxCashTransaction.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Notes", DbName = "stkxCashTransaction.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "SspTransactionId", DbName = "stkxCashTransaction.SspTransactionId", QueryName = "SspTransactionId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = "Source", DbName = "stkxCashTransaction.Source", QueryName = "Source", IsAggregare = false});
@@ -82,7 +83,6 @@ _fieldList.Add(new QueryField() {ComponentName = "CashTransaction", FieldName = 
             //object fields
 
             //lookups
-            _fieldList.Add(new QueryField() {ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Name", QueryName = "SspTransactionName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "TransactionType", FieldName = "Name", DbName = "stkxTransactionType.Name", QueryName = "TransactionTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "ExpensesType", FieldName = "Name", DbName = "stkxExpensesType.Name", QueryName = "ExpensesTypeName", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
@@ -90,12 +90,14 @@ _fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name",
             //autoCompletes
             _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
 
-           //Aggregates
+            //Aggregates
 
-//Template_Start_Code_DontOverwrite_5
-             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxCashTransaction.Name", QueryName = "AutoCompleteName", IsAggregare = false});
-             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxCashTransaction.Name", QueryName = "LookupName", IsAggregare = false});
+            //Template_Start_Code_DontOverwrite_5
+            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Id", QueryName = "SspTransactionName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxCashTransaction.Id", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "[ParentTable]", FieldName = "Name", DbName = "stkxCashTransaction.Id", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
+
         }
 
         protected override string GetFromJoinStatement()
@@ -128,20 +130,6 @@ sql.AppendLine($"   Left Join stkxCurrency on stkxCashTransaction.CurrencyId = s
                 {
                     sql.AppendLine("stkxCashTransaction.Id = @Id");
                     parameters.Add("@Id", filter.Id);
-                }
-
-                if (!string.IsNullOrEmpty(filter.Name))
-                {
-                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
-                   {
-                      sql.AppendLine("stkxCashTransaction.Name like '%'+@Name+'%' ");
-                      parameters.Add("@Name", filter.Name);                    
-                   }
-                   else
-                   {
-                      sql.AppendLine("stkxCashTransaction.Name like '%'+@Name+'%' ");
-                      parameters.Add("@Name", filter.Name);
-                   }
                 }
 
                 if (filter.SspTransactionId.HasValue)
@@ -203,7 +191,8 @@ if (filter.Value?.From.HasValue == true)
                 }
 
                 //Template_Start_Code_DontOverwrite_7
-                //Template_End_Code_DontOverwrite_7      
+//Template_End_Code_DontOverwrite_7
+
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -220,11 +209,15 @@ if (filter.Value?.From.HasValue == true)
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8
+
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_8
-//Template_End_Code_DontOverwrite_8       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9
+
     }
 }

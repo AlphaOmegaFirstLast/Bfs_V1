@@ -1,49 +1,38 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 import { ISsPortfolioFilter } from './ss-portfolio.shared';
-
-import {
-    LucideAngularModule, LucideCamera, LucideSearch } from 'lucide-angular';
-
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
 @Component({
     selector: 'app-ss-portfolio-filter',
-    imports: [
-        LucideAngularModule,
-        CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule,
-        FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
     ],
     templateUrl: './ss-portfolio.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class SsPortfolioFilterComponent implements OnInit {
 
     public result = {} as ISsPortfolioFilter;
-    protected readonly LucideCamera = LucideCamera;
     protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
     // Define autocomplete fields
     brokerAuto: AutoCompleteHelper;
-    investorAuto: AutoCompleteHelper;
+investorAuto: AutoCompleteHelper;
 
     // Define range filters
 
@@ -55,8 +44,8 @@ export class SsPortfolioFilterComponent implements OnInit {
     public parent: any;
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
-        this.brokerAuto = new AutoCompleteHelper({ queryUrl: "/Broker/list", fieldName: 'Broker', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
-        this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldName: 'Investor', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    this.brokerAuto = new AutoCompleteHelper({ queryUrl: "/Broker/list", fieldName: 'Broker', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+this.investorAuto = new AutoCompleteHelper({ queryUrl: "/Investor/list", fieldName: 'Investor', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     }
 
@@ -74,11 +63,11 @@ export class SsPortfolioFilterComponent implements OnInit {
     }
     //---------------------------------------------------------
     async setAutoComplete() {
-        this.brokerAuto.setupFilter(this.parent.apiService, this.result);
-        this.investorAuto.setupFilter(this.parent.apiService, this.result);
+    this.brokerAuto.setupFilter(this.parent.apiService, this.result);
+this.investorAuto.setupFilter(this.parent.apiService, this.result);
 
-    }
-    //---------------------------------------------------------
+}
+//---------------------------------------------------------
 
     reset() {
         this.activeModal.close('Reset');
@@ -91,6 +80,6 @@ export class SsPortfolioFilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
-    //Template_Start_Code_DontOverwrite_2
-    //Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 }

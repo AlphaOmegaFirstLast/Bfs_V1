@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { INavReportCompareFilter } from './nav-report-compare.shared';
-
+//Template_Start_Code_DontOverwrite_1
+//Template_End_Code_DontOverwrite_1
 @Component({
     selector: 'app-nav-report-compare-report-filter',
     imports: [FormsModule, CommonModule],
@@ -32,8 +33,14 @@ export class NavReportCompareFilterComponent implements OnInit {
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     //---------------------------------------------------------
-    constructor(public activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) {
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
+     }
+    //---------------------------------------------------------
 
     async ngOnInit(): Promise<void> {
         this.result = this.parent.queryRequest.filter || {};
@@ -42,7 +49,8 @@ export class NavReportCompareFilterComponent implements OnInit {
 
         this.sumNavFrom = this.result.sumNav?.from;
         this.sumNavTo = this.result.sumNav?.to;
-
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
@@ -83,20 +91,6 @@ export class NavReportCompareFilterComponent implements OnInit {
 
     }
     //---------------------------------------------------------
-    async filterChange() {
-        let target = "/ssPortfolio/list";
-        (await this.parent.apiService.post(target, { filter: { investorId: this.result.SsPortfolio_InvestorId, brokerId: this.result.SsPortfolio_BrokerId }, pageSize: 50 })).subscribe({
-            next: (response: IQueryResponse) => {
-                this.PortfolioOptions = response.items;
-                this.isLoading = false;
-            },
-            error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching Portfolio of Investor & Broker data.';
-                this.isLoading = false;
-            }
-        });
-    }
-    //---------------------------------------------------------
 
     reset() {
         this.activeModal.close('Reset');
@@ -111,4 +105,26 @@ export class NavReportCompareFilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
+        //---------------------------------------------------------
+//Template_Start_Code_DontOverwrite_4
+// this func. is called in html into theses 2 lines
+// <select class="form-select" [(ngModel)]="result.SsPortfolio_InvestorId" name="investorId" (change)="filterChange()">
+// <select class="form-select" [(ngModel)]="result.SsPortfolio_BrokerId" name="brokerId" (change)="filterChange()">
+// Also add the [disabled] attribute to this line
+// <select class="form-select" [(ngModel)]="result.SsPortfolio_PortfolioId" name="portfolioId" [disabled]="!(result.SsPortfolio_InvestorId) && !(result.SsPortfolio_BrokerId)">
+ 
+    async filterChange() {
+        let target = "/ssPortfolio/list";
+        (await this.parent.apiService.post(target, { filter: { investorId: this.result.SsPortfolio_InvestorId, brokerId: this.result.SsPortfolio_BrokerId }, pageSize: 50 })).subscribe({
+            next: (response: IQueryResponse) => {
+                this.PortfolioOptions = response.items;
+                this.isLoading = false;
+            },
+            error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Portfolio of Investor & Broker data.';
+                this.isLoading = false;
+            }
+        });
+    }
+//Template_End_Code_DontOverwrite_4
 }

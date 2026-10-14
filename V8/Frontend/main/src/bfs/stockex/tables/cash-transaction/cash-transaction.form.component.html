@@ -14,11 +14,11 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
-                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
-                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/cash-transaction/list')">Back</button>
-                                             <a [routerLink]="['/stkx/cash-transaction/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                            <div *ngFor="let link of buttonList">
+                                               <button *ngIf="isAccessible(link)" type="submit" class="btn btn-sm btn-outline-primary me-2" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</button>
+                                            </div>                                           
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/cash-transaction/list')">Back</button>
+                                            <a [routerLink]="['/stkx/cash-transaction/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -68,8 +68,10 @@
                                                 <div class="col-12"  *ngIf="isVisible('ssPortfolioId')">
                                                     <div class="position-relative"  (focusout)="ssPortfolioAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Portfolio</label>
+                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..."
                                                                 [formControl]="ssPortfolioAuto.control"
 
                                                                 (focus)="ssPortfolioAuto.onFocus()"  [class]="ssPortfolioAuto.cssClass()"  />
@@ -88,12 +90,55 @@
                                                         </ul>
 
                                                         <ul class="dropdown-menu show w-100" *ngIf="ssPortfolioAuto.isError">
-                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Portfolio .</span></li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
   <!-- SsPortfolio AutoComplete End -->
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('transactionDate')">
+        <label for="transactionDate" class="form-label fs-6">Transaction Date</label>
+        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="transactionDate" formControlName="transactionDate"
+            [class]="submit && !form['transactionDate'].errors ? 'is-valid': submit && form['transactionDate'].errors ? 'is-invalid' : ''" />
+        <div class="invalid-feedback">Please select a valid Transaction Date.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-6" *ngIf="isVisible('value')">
+        <label for="value" class="form-label fs-6">Value</label>
+        <input class="form-control" type="text" id="value" formControlName="value"
+            [class]="submit && !form['value'].errors ? 'is-valid': submit && form['value'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Value.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('currencyId')">
+        <label for="currencyId" class="form-label fs-6">Currency</label>
+        <select class="form-select" id="currencyId" formControlName="currencyId" 
+            [class]="submit && !form['currencyId'].errors ? 'is-valid': submit && form['currencyId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of CurrencyOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Currency.</div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="isVisible('expensesTypeId')">
+        <label for="expensesTypeId" class="form-label fs-6">Expenses Type</label>
+        <select class="form-select" id="expensesTypeId" formControlName="expensesTypeId" 
+            [class]="submit && !form['expensesTypeId'].errors ? 'is-valid': submit && form['expensesTypeId'].errors ? 'is-invalid' : ''">
+            <ng-container *ngFor="let option of ExpensesTypeOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+            </ng-container>
+        </select>
+        <div class="invalid-feedback">Please select a valid Expenses Type.</div>
+    </div>
+</div>
 <div class="row mb-2"> 
     <div class="col-12" *ngIf="isVisible('source')">
         <label for="source" class="form-label fs-6">Source</label>
@@ -115,61 +160,6 @@
     </div>
 </div>
 
-<div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('transactionDate')">
-        <label for="transactionDate" class="form-label fs-6">Transaction Date</label>
-        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="transactionDate" formControlName="transactionDate"
-            [class]="submit && !form['transactionDate'].errors ? 'is-valid': submit && form['transactionDate'].errors ? 'is-invalid' : ''" />
-        <div class="invalid-feedback">Please select a valid Transaction Date.</div>
-    </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-6" *ngIf="isVisible('value')">
-        <label for="value" class="form-label fs-6">Value</label>
-        <input class="form-control" type="text" id="value" formControlName="value"
-            [class]="submit && !form['value'].errors ? 'is-valid': submit && form['value'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Value.</div>
-    </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('expensesTypeId')">
-        <label for="expensesTypeId" class="form-label fs-6">Expenses Type</label>
-        <select class="form-select" id="expensesTypeId" formControlName="expensesTypeId" 
-            [class]="submit && !form['expensesTypeId'].errors ? 'is-valid': submit && form['expensesTypeId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of ExpensesTypeOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-            </ng-container>
-        </select>
-        <div class="invalid-feedback">Please select a valid Expenses Type.</div>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('currencyId')">
-        <label for="currencyId" class="form-label fs-6">Currency</label>
-        <select class="form-select" id="currencyId" formControlName="currencyId" 
-            [class]="submit && !form['currencyId'].errors ? 'is-valid': submit && form['currencyId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of CurrencyOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-            </ng-container>
-        </select>
-        <div class="invalid-feedback">Please select a valid Currency.</div>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('sspTransactionId')">
-        <label for="sspTransactionId" class="form-label fs-6">StocksShare Transaction</label>
-        <select class="form-select" id="sspTransactionId" formControlName="sspTransactionId" 
-            [class]="submit && !form['sspTransactionId'].errors ? 'is-valid': submit && form['sspTransactionId'].errors ? 'is-invalid' : ''">
-            <ng-container *ngFor="let option of SspTransactionOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-            </ng-container>
-        </select>
-        <div class="invalid-feedback">Please select a valid StocksShare Transaction.</div>
-    </div>
-</div>
 <div class="row mb-2"> 
     <div class="col-12" *ngIf="isVisible('notes')">
         <label for="notes" class="form-label fs-6">Notes</label>

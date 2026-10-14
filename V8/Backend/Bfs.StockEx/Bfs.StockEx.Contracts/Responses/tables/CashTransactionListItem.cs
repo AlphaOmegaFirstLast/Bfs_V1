@@ -8,7 +8,6 @@ namespace Bfs.StockEx.Contracts
         public string LookupName { get; set; }
 
         public long Id { get; set; }
-public string Name { get; set; }
 public string Notes { get; set; }
 public long SspTransactionId { get; set; }
 public string Source { get; set; }

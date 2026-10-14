@@ -44,6 +44,8 @@ export class BrokerAgreementListComponent
     override queryRequest = {} as IBrokerAgreementRequest;
     override exportRequest = {} as IBrokerAgreementRequest;
     override downloadFileName: string = "Broker Agreements";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class BrokerAgreementListComponent
 
         this.filterComponent = BrokerAgreementFilterComponent;
         this.queryRequest = initBrokerAgreementRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class BrokerAgreementListComponent
         return getBrokerAgreementActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

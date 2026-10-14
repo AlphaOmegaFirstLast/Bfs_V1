@@ -8,7 +8,6 @@ namespace Bfs.StockEx.Data
         public string LookupName { get; set; }
 
         public long Id { get; set; }
-public string Name { get; set; }
 public string Notes { get; set; }
 public DateTime SourceDate { get; set; }
 public DateTime TransactionDate { get; set; }
@@ -25,6 +24,7 @@ public long CurrencyId { get; set; }
         public string? TransactionTypeName { get; set; }
 public string? StockShareName { get; set; }
 public string? CurrencyName { get; set; }
+public string? ToSspTransactionName { get; set; }
 
         public string? SsPortfolioName { get; set; }
 public string? ToPortfolioName { get; set; }

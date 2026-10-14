@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IBrokerAgreementFilter } from './broker-agreement.shared';
@@ -12,14 +14,21 @@ import { IBrokerAgreementFilter } from './broker-agreement.shared';
 
 @Component({
     selector: 'app-broker-agreement-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+, FlatpickrDirective
+
+    ],
     templateUrl: './broker-agreement.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+  provideFlatpickrDefaults()
+
+    ],
+  //styles: ``
 })
 export class BrokerAgreementFilterComponent implements OnInit {
 
     public result = {} as IBrokerAgreementFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public InvestorOptions:  any[] = [];
@@ -37,8 +46,14 @@ public BrokerOptions:  any[] = [];
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -96,6 +111,6 @@ target = "/Broker/list";
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

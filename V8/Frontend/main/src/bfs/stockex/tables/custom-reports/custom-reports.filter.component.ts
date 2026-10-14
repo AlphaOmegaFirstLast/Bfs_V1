@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { ICustomReportsFilter } from './custom-reports.shared';
@@ -11,13 +13,19 @@ import { ICustomReportsFilter } from './custom-reports.shared';
 
 @Component({
     selector: 'app-custom-reports-filter',
-    imports: [FormsModule, CommonModule],
-    templateUrl: './custom-reports.filter.component.html'
-    //styles: ``
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
+    templateUrl: './custom-reports.filter.component.html',
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class CustomReportsFilterComponent implements OnInit {
 
     public result = {} as ICustomReportsFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
@@ -67,5 +75,4 @@ export class CustomReportsFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

@@ -1,8 +1,10 @@
+using Bfs.Core.Helpers;
 using Bfs.Core.Interfaces;
 using Bfs.StockEx.Data.Interfaces;
 using Bfs.StockEx.Data.Models;
 
 using Microsoft.EntityFrameworkCore;
+using static Dapper.SqlMapper;
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -10,17 +12,19 @@ namespace Bfs.StockEx.Data.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public StockExDbContext _context {get;}
-//Template_Field_ChildrenMatrix_AddDeclareEntry
+    public StockExDbContext _context { get; }
+    //Template_Field_ChildrenMatrix_AddDeclareEntry
 
-//Template_Start_Code_DontOverwrite_2
-private readonly ISspTransactionRepository sspTransactionRepo;
+    //Template_Start_Code_DontOverwrite_2
+    private readonly ISspTransactionRepository sspTransactionRepo;
     private readonly ICashTransactionRepository cashTransactionRepo;
     private readonly ISsPortfolioBalanceRepository ssPortfolioBalanceRepo;
     private readonly ISspStockRepository sspStockRepo;
+
+    // Properties to expose the repositories
     public ISspTransactionRepository SspTransactionRepo => sspTransactionRepo;
     public ICashTransactionRepository CashTransactionRepo => cashTransactionRepo;
-//Template_End_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
     public UnitOfWork(StockExDbContext dbContext, IScopeData scopeData
 //Template_Field_ChildrenMatrix_AddParameterEntry
@@ -30,110 +34,252 @@ private readonly ISspTransactionRepository sspTransactionRepo;
 , ICashTransactionRepository cashTransactionRepo
 , ISsPortfolioBalanceRepository ssPortfolioBalanceRepo
 , ISspStockRepository sspStockRepo
-//Template_End_Code_DontOverwrite_3
+    //Template_End_Code_DontOverwrite_3
 
     )
     {
         _context = dbContext;
-//Template_Field_ChildrenMatrix_AddInitEntry
+        //Template_Field_ChildrenMatrix_AddInitEntry
 
-//Template_Start_Code_DontOverwrite_4
-this.sspTransactionRepo = sspTransactionRepo;
+        //Template_Start_Code_DontOverwrite_4
+        this.sspTransactionRepo = sspTransactionRepo;
         this.cashTransactionRepo = cashTransactionRepo;
         this.ssPortfolioBalanceRepo = ssPortfolioBalanceRepo;
         this.sspStockRepo = sspStockRepo;
-//Template_End_Code_DontOverwrite_4
+        //Template_End_Code_DontOverwrite_4
 
     }
 
- //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
+    //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
 
-//Template_Start_Code_DontOverwrite_5
-public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEntity ssptEntity)
+    //Template_Start_Code_DontOverwrite_5
+    public async Task<SspTransactionEntity> RolloutSspTransactionAsync(SspTransactionEntity ssptEntity)
     {
         var transactionTypeList = await _context.TransactionTypes.ToListAsync();
         var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == ssptEntity.TransactionTypeId);
         if (sspTransactionType != null)
         {
-            // all in memory changes: assign value to ssp transaction.Id modify stock.balance
-            var inMemorySspTransactionRecord = await RolloutSspTransactionAsync(sspTransactionType, ssptEntity);
+            // all in memory changes: assign value to ssp transaction.Id modify stock.quantity
+            var inMemorySspTransactionEntity = await SspTransactionRepo.CreateAsync(ssptEntity);
+            await RolloutStockQuantity(sspTransactionType, ssptEntity);
 
             if (sspTransactionType.NextTransactionTypeId != (int)TransactionTypes.None)
             {
-                var cashTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == sspTransactionType.NextTransactionTypeId);
+                var nextTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == sspTransactionType.NextTransactionTypeId);
 
-                var cashEntity = new CashTransactionEntity()
+                if (nextTransactionType != null && nextTransactionType.StockEntityTypeId == (int)enumStockEntityType.Cash)
                 {
-                    Name = ssptEntity.Name,
-                    Notes = ssptEntity.Notes,
-                    SourceDate = ssptEntity.SourceDate,
-                    TransactionDate = ssptEntity.TransactionDate,
-                    Source = ssptEntity.Source,
-                    Value = (ssptEntity.Quantity * ssptEntity.Price),  // calculated value here?
-                    SsPortfolioId = ssptEntity.SsPortfolioId,
-                    SspTransactionId = ssptEntity.Id,
-                    TransactionTypeId = (int)cashTransactionType.Id  //new field need to be added to TransactionTable.
-                };
+                    var cashEntity = PopulateCashEntityFromSspTransaction(ssptEntity, (int)nextTransactionType.Id);
+                    var inMemoryCashEntity = await cashTransactionRepo.CreateAsync(cashEntity);
+                    await RolloutPortfolioBalance(nextTransactionType, inMemoryCashEntity);
+                }
 
-                // all in memory changes: assign value to cash transaction.Id modify cash.balance
-                var inMemoryCashTransactionRecord = await RolloutCashTransactionAsync(cashTransactionType, cashEntity);
+               if (nextTransactionType != null && nextTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
+                {
+                    var toSspEntity = PopulateSspEntityFromSspTransaction(ssptEntity, (int)nextTransactionType.Id);
+                    var inMemoryToSspTransactionEntity = await SspTransactionRepo.CreateAsync(toSspEntity);
+                    await RolloutStockQuantity(nextTransactionType, toSspEntity); 
+                }          
             }
+
+            await _context.SaveChangesAsync();
+            return inMemorySspTransactionEntity;
         }
-        _context.SaveChanges();
-        return ssptEntity;
+        else
+        {
+            throw new Exception("Transaction Type not found.");
+        }
     }
 
-    public async Task<CashTransactionEntity> RolloutTransactionAsync(CashTransactionEntity cashEntity)
+    public async Task RollbackSspTransactionAsync(long id)
+    {
+        var ssptEntity = await _context.SspTransactions.FirstOrDefaultAsync(x => x.Id == id);
+        if (ssptEntity != null)
+        {
+            var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+            var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == ssptEntity.TransactionTypeId);
+            if (sspTransactionType != null)
+            {
+                if (sspTransactionType.NextTransactionTypeId != (int)TransactionTypes.None)
+                {
+                    var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.SspTransactionId == ssptEntity.Id);
+                    var cashTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == sspTransactionType.NextTransactionTypeId);
+                    if (cashTransactionType != null && cashEntity != null)
+                    {
+                        await RollbackPortfolioBalance(cashTransactionType, cashEntity);
+                        _context.CashTransactions.Remove(cashEntity);
+                    }
+                }
+
+                await RollbackStockQuantity(sspTransactionType, ssptEntity);
+                _context.SspTransactions.Remove(ssptEntity);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Transaction Type not found.");
+            }
+        }
+    }
+
+    public async Task<SspTransactionEntity> ChangeSspTransactionAsync(SspTransactionEntity sspEntity)
+    {
+        var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+
+        var oldSspEntity = await _context.SspTransactions.FirstOrDefaultAsync(x => x.Id == sspEntity.Id);
+        if (oldSspEntity == null)
+        {
+            throw new Exception("Ssp Transaction not found.");
+        }
+
+        var oldTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == oldSspEntity.TransactionTypeId);
+        if (oldTransactionType != null)
+        {
+            await RollbackStockQuantity(oldTransactionType, oldSspEntity);
+        }
+
+        var currentTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == sspEntity.TransactionTypeId);
+        if (currentTransactionType != null)
+        {
+            await RolloutStockQuantity(currentTransactionType, sspEntity);
+        }
+
+        // Automatically copies all values from the incoming entity to the tracked database entity
+        _context.Entry(oldSspEntity).CurrentValues.SetValues(sspEntity);
+
+        // Use asynchronous SaveChanges to match your async method signature
+        await _context.SaveChangesAsync();
+
+        return oldSspEntity;
+    }
+
+    public async Task<CashTransactionEntity> RolloutCashTransactionAsync(CashTransactionEntity cashEntity)
     {
         var transactionTypeList = await _context.TransactionTypes.ToListAsync();
         var currentTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == cashEntity.TransactionTypeId);
         if (currentTransactionType != null)
         {
-            var y = await RolloutCashTransactionAsync(currentTransactionType, cashEntity);
+            var inMemoryCashEntity = await cashTransactionRepo.CreateAsync(cashEntity);
+            await RolloutPortfolioBalance(currentTransactionType, inMemoryCashEntity);
+
+            await _context.SaveChangesAsync();
+            return inMemoryCashEntity;
         }
-        _context.SaveChanges();
-        return cashEntity;
+        else
+        {
+            throw new Exception("Transaction Type not found.");
+        }
     }
 
-    public async Task<SspTransactionEntity> RolloutSspTransactionAsync(TransactionTypeEntity currentTransactionType, SspTransactionEntity ssptEntity)
+    public async Task RollbackCashTransactionAsync(long id)
     {
-        var newTransaction = await SspTransactionRepo.CreateAsync(ssptEntity);
-        var stock = await GetSspStockById(newTransaction.SsPortfolioId, newTransaction.StockShareId);
+        var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.Id== id);
+        if (cashEntity != null)
+        {
+            var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+            var currentTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == cashEntity.TransactionTypeId);
+            if (currentTransactionType != null)
+            {
+                await RollbackPortfolioBalance(currentTransactionType, cashEntity);
+                _context.CashTransactions.Remove(cashEntity);
+            }
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<CashTransactionEntity> ChangeCashTransactionAsync(CashTransactionEntity cashEntity)
+    {
+        var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+
+        var oldCashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.Id == cashEntity.Id);
+        if (oldCashEntity == null)
+        {
+            throw new Exception("Cash Transaction not found.");
+        }
+
+        var oldTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == oldCashEntity.TransactionTypeId);
+        if (oldTransactionType != null)
+        {
+            await RollbackPortfolioBalance(oldTransactionType, oldCashEntity);
+        }
+
+        var currentTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == cashEntity.TransactionTypeId);
+        if (currentTransactionType != null)
+        {
+            await RolloutPortfolioBalance(currentTransactionType, cashEntity);
+        }
+
+        // Automatically copies all values from the incoming entity to the tracked database entity
+        _context.Entry(oldCashEntity).CurrentValues.SetValues(cashEntity);
+
+        // Use asynchronous SaveChanges to match your async method signature
+        await _context.SaveChangesAsync();
+
+        return oldCashEntity;
+    }
+
+    private async Task RolloutStockQuantity(TransactionTypeEntity currentTransactionType, SspTransactionEntity ssptEntity)
+    {
+        var stock = await GetSspStockById(ssptEntity.SsPortfolioId, ssptEntity.StockShareId , ssptEntity.CurrencyId);
 
         decimal resultQuantity = 0;
         // ------------------------
 
         if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
         {
-            resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, newTransaction.Quantity, newTransaction.ToQuantity);
+            resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
-                    stock.Quantity = stock.Quantity + resultQuantity;
+                    stock.AverageCost = ((stock.Quantity * stock.AverageCost) + (resultQuantity * ssptEntity.Price)) /(stock.Quantity + resultQuantity);
+                    stock.Quantity = stock.Quantity + resultQuantity; 
                     break;
                 case (int)enumEffectTypes.Sub:
                     stock.Quantity = stock.Quantity - resultQuantity;
                     break;
                 case (int)enumEffectTypes.Set:
+                    stock.AverageCost = ssptEntity.Price;
                     stock.Quantity = resultQuantity;
                     break;
             }
         }
-
-        return newTransaction;
     }
 
-    public async Task<CashTransactionEntity> RolloutCashTransactionAsync(TransactionTypeEntity currentTransactionType, CashTransactionEntity cashEntity)
+    private async Task RollbackStockQuantity(TransactionTypeEntity currentTransactionType, SspTransactionEntity ssptEntity)
     {
-        var newTransaction = await cashTransactionRepo.CreateAsync(cashEntity);
-        var portfolioBalance = await GetCashBalanceById(newTransaction.SsPortfolioId, newTransaction.CurrencyId);
+        var stock = await GetSspStockById(ssptEntity.SsPortfolioId, ssptEntity.StockShareId, ssptEntity.CurrencyId);
+
+        decimal resultQuantity = 0;
+        // ------------------------
+
+        if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
+        {
+            resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
+            switch (currentTransactionType.EffectTypeId)
+            {
+                case (int)enumEffectTypes.Add:
+                    stock.Quantity = stock.Quantity - resultQuantity;
+                    break;
+                case (int)enumEffectTypes.Sub:
+                    stock.Quantity = stock.Quantity + resultQuantity;
+                    break;
+                case (int)enumEffectTypes.Set:
+                    new NotImplementedException("Rollback for is not allowed for Balance Set Transactions.");
+                    break;
+            }
+        }
+    }
+
+    private async Task RolloutPortfolioBalance(TransactionTypeEntity currentTransactionType, CashTransactionEntity cashEntity)
+    {
+        var portfolioBalance = await GetCashBalanceById(cashEntity.SsPortfolioId, cashEntity.CurrencyId);
 
         decimal resultAmount = 0;
         // ------------------------
 
         if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.Cash)
         {
-            resultAmount = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, portfolioBalance.Balance, newTransaction.Value, 0);
+            resultAmount = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, portfolioBalance.Balance, cashEntity.Value, 0);
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
@@ -147,19 +293,81 @@ public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEn
                     break;
             }
         }
-
-        return newTransaction;
     }
 
-    public async Task<SspStockEntity> GetSspStockById(long SsPortfolioId, long stockShareId)
+    private async Task RollbackPortfolioBalance(TransactionTypeEntity currentTransactionType, CashTransactionEntity cashEntity)
     {
-        var stock = await _context.SspStocks.FirstOrDefaultAsync(x => x.SsPortfolioId == SsPortfolioId && x.StockShareId == stockShareId);
+        var portfolioBalance = await GetCashBalanceById(cashEntity.SsPortfolioId, cashEntity.CurrencyId);
+
+        decimal resultAmount = 0;
+        // ------------------------
+
+        if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.Cash)
+        {
+            resultAmount = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, portfolioBalance.Balance, cashEntity.Value, 0);
+            switch (currentTransactionType.EffectTypeId)
+            {
+                case (int)enumEffectTypes.Add:
+                    portfolioBalance.Balance = portfolioBalance.Balance - resultAmount;
+                    break;
+                case (int)enumEffectTypes.Sub:
+                    portfolioBalance.Balance = portfolioBalance.Balance + resultAmount;
+                    break;
+                case (int)enumEffectTypes.Set:
+                    new NotImplementedException("Rollback for is not allowed for Balance Set Transactions.");
+                    break;
+            }
+        }
+    }
+
+    private CashTransactionEntity PopulateCashEntityFromSspTransaction(SspTransactionEntity ssptEntity, int cashTransactionTypeId)
+    {
+        var cashEntity = new CashTransactionEntity()
+        {
+            Notes = ssptEntity.Notes,
+            SourceDate = ssptEntity.SourceDate,
+            TransactionDate = ssptEntity.TransactionDate,
+            Source = ssptEntity.Source,
+            Value = (ssptEntity.Quantity * ssptEntity.Price),  // calculated value here?
+            SsPortfolioId = ssptEntity.SsPortfolioId,
+            SspTransactionId = ssptEntity.Id,
+            TransactionTypeId = (int)cashTransactionTypeId , //new field need to be added to TransactionTable.
+            CurrencyId = ssptEntity.CurrencyId 
+        };
+
+        return cashEntity;
+    }
+
+    private SspTransactionEntity PopulateSspEntityFromSspTransaction(SspTransactionEntity ssptEntity, int nextTransactionTypeId)
+    {
+        var ToSspEntity = new SspTransactionEntity()
+        {
+            Notes = ssptEntity.Notes,
+            SourceDate = ssptEntity.SourceDate,
+            TransactionDate = ssptEntity.TransactionDate,
+            Source = ssptEntity.Source,
+            Quantity = ssptEntity.Quantity,
+            Price = ssptEntity.Price,
+            SsPortfolioId = ssptEntity.ToPortfolioId,
+            ToSspTransactionId = ssptEntity.Id,
+            StockShareId = ssptEntity.StockShareId,
+            TransactionTypeId = (int)nextTransactionTypeId, //new field need to be added to TransactionTable.
+            CurrencyId = ssptEntity.CurrencyId
+        };
+
+        return ToSspEntity;
+    }
+
+    private async Task<SspStockEntity> GetSspStockById(long SsPortfolioId, long stockShareId , long currencyId)
+    {
+        var stock = await _context.SspStocks.FirstOrDefaultAsync(x => x.SsPortfolioId == SsPortfolioId && x.StockShareId == stockShareId && x.CurrencyId == currencyId);
         if (stock == null)
         {
             stock = await sspStockRepo.CreateAsync(new SspStockEntity()
             {
                 SsPortfolioId = SsPortfolioId,
                 StockShareId = stockShareId,
+                CurrencyId = currencyId,
                 Quantity = 0,
                 AverageCost = 0,
             });
@@ -168,7 +376,7 @@ public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEn
         return stock;
     }
 
-    public async Task<SsPortfolioBalanceEntity> GetCashBalanceById(long ssPortfolioId, long currencyId)
+    private async Task<SsPortfolioBalanceEntity> GetCashBalanceById(long ssPortfolioId, long currencyId)
     {
         var balance = await _context.SsPortfolioBalances.FirstOrDefaultAsync(x => x.SsPortfolioId == ssPortfolioId && x.CurrencyId == currencyId);
         if (balance == null)
@@ -176,6 +384,7 @@ public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEn
             balance = await ssPortfolioBalanceRepo.CreateAsync(new SsPortfolioBalanceEntity()
             {
                 SsPortfolioId = ssPortfolioId,
+                CurrencyId = currencyId,
                 Balance = 0
             });
         }
@@ -183,7 +392,7 @@ public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEn
         return balance;
     }
 
-    public decimal DoCalculations(enumCalculationMethods CalculationMethod, decimal balance, decimal original, decimal toResult)
+    private decimal DoCalculations(enumCalculationMethods CalculationMethod, decimal balance, decimal original, decimal toResult)
     {
         decimal result = 0;
         switch (CalculationMethod)
@@ -203,7 +412,7 @@ public async Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEn
         }
         return result;
     }
-//Template_End_Code_DontOverwrite_5
+    //Template_End_Code_DontOverwrite_5
 
 }
 

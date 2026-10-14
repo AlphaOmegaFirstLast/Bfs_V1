@@ -17,18 +17,18 @@ namespace Bfs.StockEx.Data.Lists
     {
         private readonly IResourceSecurity? _resourceSecurity;
         //Template_Start_Code_DontOverwrite_2
-        //Template_End_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
         public SspTransactionList(string connectionString, IResourceSecurity? resourceSecurity
         //Template_Start_Code_DontOverwrite_3
-        //Template_End_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
         )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
             //Template_Start_Code_DontOverwrite_4
-            //Template_End_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
         }
 
@@ -70,7 +70,6 @@ namespace Bfs.StockEx.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Id", DbName = "stkxSspTransaction.Id", QueryName = "Id", IsAggregare = false });
-            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "stkxSspTransaction.Name", QueryName = "Name", IsAggregare = false });
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Notes", DbName = "stkxSspTransaction.Notes", QueryName = "Notes", IsAggregare = false });
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "SourceDate", DbName = "stkxSspTransaction.SourceDate", QueryName = "SourceDate", IsAggregare = false });
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "TransactionDate", DbName = "stkxSspTransaction.TransactionDate", QueryName = "TransactionDate", IsAggregare = false });
@@ -82,26 +81,40 @@ namespace Bfs.StockEx.Data.Lists
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "StockShareId", DbName = "stkxSspTransaction.StockShareId", QueryName = "StockShareId", IsAggregare = false });
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "ToQuantity", DbName = "stkxSspTransaction.ToQuantity", QueryName = "ToQuantity", IsAggregare = false });
             _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "ToPortfolioId", DbName = "stkxSspTransaction.ToPortfolioId", QueryName = "ToPortfolioId", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "CurrencyId", DbName = "stkxSspTransaction.CurrencyId", QueryName = "CurrencyId", IsAggregare = false });
 
+            //object fields
 
             //lookups
             _fieldList.Add(new QueryField() { ComponentName = "TransactionType", FieldName = "Name", DbName = "stkxTransactionType.Name", QueryName = "TransactionTypeName", IsAggregare = false });
             _fieldList.Add(new QueryField() { ComponentName = "StockShare", FieldName = "Name", DbName = "stkxStockShare.Name", QueryName = "StockShareName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false });
 
+            //Template_Start_Generated_Ignored_1
+/*
+
+_fieldList.Add(new QueryField() { ComponentName = "ToSspTransaction", FieldName = "Name", DbName = "stkxToSspTransaction.Name", QueryName = "ToSspTransactionName", IsAggregare = false });
+*/
+//Template_End_Generated_Ignored_1
 
             //autoCompletes
             _fieldList.Add(new QueryField() { ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false });
 
+            //Template_Start_Generated_Ignored_2
+/*
+
+_fieldList.Add(new QueryField() { ComponentName = "ToPortfolio", FieldName = "Name", DbName = "stkxToPortfolio.Name", QueryName = "ToPortfolioName", IsAggregare = false });
+*/
+//Template_End_Generated_Ignored_2
 
             //Aggregates
 
             //Template_Start_Code_DontOverwrite_5
-            _fieldList.Add(new QueryField() { ComponentName = "ToPortfolio", FieldName = "Name", DbName = "toPortfolio.Name", QueryName = "ToPortfolioName", IsAggregare = false });
-            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + ']  Month: ['+ Month(stkxSspTransaction.Date)+ ']  year: ['+ (stkxSspTransaction.Date) + ']')", QueryName = "AutoCompleteName", IsAggregare = false });
-            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + ']  Month: ['+ Month(stkxSspTransaction.Date)+ ']  year: ['+ (stkxSspTransaction.Date) + ']')", QueryName = "LookupName", IsAggregare = false });
-            // _fieldList.Add(new QueryField() { ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false });
-            // _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "CurrencyId", DbName = "stkxSspTransaction.CurrencyId", QueryName = "CurrencyId", IsAggregare = false });
-            //Template_End_Code_DontOverwrite_5
+_fieldList.Add(new QueryField() { ComponentName = "ToPortfolio", FieldName = "Name", DbName = "toPortfolio.Name", QueryName = "ToPortfolioName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "ToSspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + '] '+ FORMAT(ToSspTransaction.TransactionDate, 'dd-MM-yyyy'))", QueryName = "ToSspTransactionName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + '] '+ FORMAT(stkxSspTransaction.TransactionDate, 'dd-MM-yyyy'))", QueryName = "AutoCompleteName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "SspTransaction", FieldName = "Name", DbName = "('['+ stkxTransactionType.Name + '] '+ FORMAT(stkxSspTransaction.TransactionDate, 'dd-MM-yyyy'))", QueryName = "LookupName", IsAggregare = false });
+//Template_End_Code_DontOverwrite_5
 
         }
 
@@ -112,15 +125,28 @@ namespace Bfs.StockEx.Data.Lists
 
             sql.AppendLine($"   Left Join stkxTransactionType on stkxSspTransaction.TransactionTypeId = stkxTransactionType.Id");
             sql.AppendLine($"   Left Join stkxStockShare on stkxSspTransaction.StockShareId = stkxStockShare.Id");
+            sql.AppendLine($"   Left Join stkxCurrency on stkxSspTransaction.CurrencyId = stkxCurrency.Id");
 
+            //Template_Start_Generated_Ignored_3
+/*
+
+sql.AppendLine($"   Left Join stkxToSspTransaction on stkxSspTransaction.ToSspTransactionId = stkxToSspTransaction.Id");
+*/
+//Template_End_Generated_Ignored_3
 
             sql.AppendLine($"   Left Join stkxSsPortfolio on stkxSspTransaction.SsPortfolioId = stkxSsPortfolio.Id");
 
+            //Template_Start_Generated_Ignored_4
+/*
+
+sql.AppendLine($"   Left Join stkxToPortfolio on stkxSspTransaction.ToPortfolioId = stkxToPortfolio.Id");
+*/
+//Template_End_Generated_Ignored_4
 
             //Template_Start_Code_DontOverwrite_6
-            sql.AppendLine($"   Left Join stkxSsPortfolio ToPortfolio on stkxSspTransaction.ToPortfolioId = ToPortfolio.Id");
-            //sql.AppendLine($"   Left Join stkxCurrency on stkxSspTransaction.CurrencyId = stkxCurrency.Id");
-            //Template_End_Code_DontOverwrite_6
+sql.AppendLine($"   Left Join stkxSsPortfolio ToPortfolio on stkxSspTransaction.ToPortfolioId = ToPortfolio.Id");
+            sql.AppendLine($"   Left Join stkxSspTransaction ToSspTransaction on stkxSspTransaction.ToSspTransactionId = ToSspTransaction.Id");
+//Template_End_Code_DontOverwrite_6
 
             return sql.ToString();
         }
@@ -139,20 +165,6 @@ namespace Bfs.StockEx.Data.Lists
                     parameters.Add("@Id", filter.Id);
                 }
 
-                if (!string.IsNullOrEmpty(filter.Name))
-                {
-                    if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
-                    {
-                        sql.AppendLine("stkxSspTransaction.Name like '%'+@Name+'%' ");
-                        parameters.Add("@Name", filter.Name);
-                    }
-                    else
-                    {
-                        sql.AppendLine("stkxSspTransaction.Name like '%'+@Name+'%' ");
-                        parameters.Add("@Name", filter.Name);
-                    }
-                }
-
                 if (filter.TransactionTypeId.HasValue)
                 {
                     sql.AppendLine("stkxSspTransaction.TransactionTypeId = @TransactionTypeId");
@@ -167,6 +179,11 @@ namespace Bfs.StockEx.Data.Lists
                 {
                     sql.AppendLine("stkxSspTransaction.CurrencyId = @CurrencyId");
                     parameters.Add("@CurrencyId", filter.CurrencyId.Value);
+                }
+                if (filter.ToSspTransactionId.HasValue)
+                {
+                    sql.AppendLine("stkxSspTransaction.ToSspTransactionId = @ToSspTransactionId");
+                    parameters.Add("@ToSspTransactionId", filter.ToSspTransactionId.Value);
                 }
 
                 if (filter.SsPortfolioId.HasValue)
@@ -220,19 +237,9 @@ namespace Bfs.StockEx.Data.Lists
                     sql.AppendLine("stkxSspTransaction.Price <= @PriceTo");
                     parameters.Add("@PriceTo", filter.Price.To.Value);
                 }
-                if (filter.ToQuantity?.From.HasValue == true)
-                {
-                    sql.AppendLine("stkxSspTransaction.ToQuantity >= @ToQuantityFrom");
-                    parameters.Add("@ToQuantityFrom", filter.ToQuantity.From.Value);
-                }
-                if (filter.ToQuantity?.To.HasValue == true)
-                {
-                    sql.AppendLine("stkxSspTransaction.ToQuantity <= @ToQuantityTo");
-                    parameters.Add("@ToQuantityTo", filter.ToQuantity.To.Value);
-                }
 
                 //Template_Start_Code_DontOverwrite_7
-                //Template_End_Code_DontOverwrite_7
+//Template_End_Code_DontOverwrite_7
 
             }
             return string.Join(" And ", sql.ToString()
@@ -250,12 +257,15 @@ namespace Bfs.StockEx.Data.Lists
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+//Template_End_Code_DontOverwrite_8
+
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));
         }
-        //Template_Start_Code_DontOverwrite_8
-        //Template_End_Code_DontOverwrite_8
+        //Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9
 
     }
 }

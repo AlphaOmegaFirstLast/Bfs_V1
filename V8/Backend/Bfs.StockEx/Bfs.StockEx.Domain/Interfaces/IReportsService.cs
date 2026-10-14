@@ -20,6 +20,8 @@ namespace Bfs.StockEx.Domain.Interfaces
 
         Task<QueryResponse<NavReportCompareItem>> NavReportCompareAsync(QueryRequest<NavReportCompareFilter> contractRequest);
 
+        Task<QueryResponse<OverdraftRepCompareItem>> OverdraftRepCompareAsync(QueryRequest<OverdraftRepCompareFilter> contractRequest);
+
 //Template_Component_AddIServiceEntry
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2

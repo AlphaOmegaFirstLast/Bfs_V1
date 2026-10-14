@@ -68,7 +68,6 @@ namespace Bfs.StockEx.Data.Lists
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "AgreementDate", DbName = "stkxBrokerAgreement.AgreementDate", QueryName = "AgreementDate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Id", DbName = "stkxBrokerAgreement.Id", QueryName = "Id", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Notes", DbName = "stkxBrokerAgreement.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "InvestorId", DbName = "stkxBrokerAgreement.InvestorId", QueryName = "InvestorId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "BrokerId", DbName = "stkxBrokerAgreement.BrokerId", QueryName = "BrokerId", IsAggregare = false});
@@ -84,6 +83,8 @@ _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", D
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -151,6 +152,8 @@ if (filter.BrokerId.HasValue)
                     parameters.Add("@AgreementDateTo", filter.AgreementDate.To.Value);
                 }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -167,11 +170,13 @@ if (filter.BrokerId.HasValue)
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

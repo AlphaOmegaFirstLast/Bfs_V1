@@ -12,7 +12,6 @@ namespace Bfs.StockEx.Data.Models
 
         public bool IsDeleted {get; set;} = false ;
 public long Id {get; set;} = 0 ;
-public string Name {get; set;} = string.Empty ;
 public string Notes {get; set;} = string.Empty ;
 public string Source {get; set;} = string.Empty ;
 public DateTime SourceDate {get; set;} = DateTime.MinValue ;

@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {NgIcon} from '@ng-icons/core';
-
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
@@ -15,14 +15,21 @@ import { ICashTransactionFilter } from './cash-transaction.shared';
 
 @Component({
     selector: 'app-cash-transaction-filter',
-    imports: [NgIcon, FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+, FlatpickrDirective
+
+    ],
     templateUrl: './cash-transaction.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+  provideFlatpickrDefaults()
+
+    ],
+  //styles: ``
 })
 export class CashTransactionFilterComponent implements OnInit {
 
     public result = {} as ICashTransactionFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public SspTransactionOptions:  any[] = [];
@@ -34,9 +41,7 @@ public CurrencyOptions:  any[] = [];
     ssPortfolioAuto: AutoCompleteHelper;
 
     // Define range filters
-    public SourceDateFrom: Date | null | undefined;
-    public SourceDateTo: Date | null | undefined;
-public TransactionDateFrom: Date | null | undefined;
+    public TransactionDateFrom: Date | null | undefined;
     public TransactionDateTo: Date | null | undefined;
 public ValueFrom: number | undefined;
     public ValueTo: number | undefined;
@@ -47,9 +52,15 @@ public ValueFrom: number | undefined;
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
     this.ssPortfolioAuto = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'SsPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -58,9 +69,7 @@ public ValueFrom: number | undefined;
         await this.getLookups();
         await this.setAutoComplete();
         // Initialize range filters if not set
-        this.SourceDateFrom = this.result.SourceDate?.from;
-        this.SourceDateTo   = this.result.SourceDate?.to;
-this.TransactionDateFrom = this.result.TransactionDate?.from;
+        this.TransactionDateFrom = this.result.TransactionDate?.from;
         this.TransactionDateTo   = this.result.TransactionDate?.to;
 this.ValueFrom = this.result.Value?.from;
         this.ValueTo   = this.result.Value?.to;
@@ -130,13 +139,11 @@ target = "/Currency/list";
     apply() {
         this.activeModal.close('Apply');
         // Apply range filters
-        this.result.SourceDate = { from: this.SourceDateFrom, to: this.SourceDateTo };
-this.result.TransactionDate = { from: this.TransactionDateFrom, to: this.TransactionDateTo };
+        this.result.TransactionDate = { from: this.TransactionDateFrom, to: this.TransactionDateTo };
 this.result.Value = { from: this.ValueFrom, to: this.ValueTo };
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
-
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

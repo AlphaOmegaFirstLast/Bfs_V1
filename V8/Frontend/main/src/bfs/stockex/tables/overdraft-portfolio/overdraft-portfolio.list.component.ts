@@ -44,6 +44,8 @@ export class OverdraftPortfolioListComponent
     override queryRequest = {} as IOverdraftPortfolioRequest;
     override exportRequest = {} as IOverdraftPortfolioRequest;
     override downloadFileName: string = "Overdraft Portfolios";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class OverdraftPortfolioListComponent
 
         this.filterComponent = OverdraftPortfolioFilterComponent;
         this.queryRequest = initOverdraftPortfolioRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class OverdraftPortfolioListComponent
         return getOverdraftPortfolioActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

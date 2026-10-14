@@ -23,7 +23,6 @@ namespace Bfs.StockEx.Data.Configuration
 
         	//   builder.Property(e => e.IsDeleted).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Id).HasMaxLength([FieldLength]).IsRequired();
-//   builder.Property(e => e.Name).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.Notes).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.SourceDate).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.TransactionDate).HasMaxLength([FieldLength]).IsRequired();
@@ -34,6 +33,7 @@ namespace Bfs.StockEx.Data.Configuration
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3
+
         }
     }
 }

@@ -6,10 +6,14 @@ namespace Bfs.StockEx.Domain.Interfaces;
 
 public interface IOperationsService
 {
-//Template_Field_ChildrenMatrix_AddIServiceEntry
-//Template_Start_Code_DontOverwrite_2
-Task<SspTransaction?> RolloutTransactionAsync(SspTransaction contract);
-    Task<CashTransaction?> RolloutTransactionAsync(CashTransaction contract);
-//Template_End_Code_DontOverwrite_2
+    //Template_Field_ChildrenMatrix_AddIServiceEntry
+    //Template_Start_Code_DontOverwrite_2
+    Task<SspTransaction?> RolloutSspTransactionAsync(SspTransaction contract);
+    Task<CashTransaction?> RolloutCashTransactionAsync(CashTransaction contract);
+    Task RollbackSspTransactionAsync(long id);
+    Task RollbackCashTransactionAsync(long id);
+    Task<SspTransaction?> ChangeSspTransactionAsync(SspTransaction contract);
+    Task<CashTransaction?> ChangeCashTransactionAsync(CashTransaction contract);
+    //Template_End_Code_DontOverwrite_2
 
 }

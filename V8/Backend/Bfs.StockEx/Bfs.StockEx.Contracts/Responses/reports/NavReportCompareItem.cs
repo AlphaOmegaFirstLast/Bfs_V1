@@ -6,8 +6,14 @@ namespace Bfs.StockEx.Contracts
     {
         public string? SsPortfolio_Name { get; set; }
 public string? Currency_Name { get; set; }
+public string? SsPortfolio_InvestorId { get; set; }
+public string? SsPortfolio_BrokerId { get; set; }
 
-        public string? sumPrice { get; set; }
+        public string? InvestorName { get; set; }
+
+        public string? BrokerName { get; set; }
+
+        public string? sumValue { get; set; }
 public string? sumBalance { get; set; }
 public string? sumNav { get; set; }
 

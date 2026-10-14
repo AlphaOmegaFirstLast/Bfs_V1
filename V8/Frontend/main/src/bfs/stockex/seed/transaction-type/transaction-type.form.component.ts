@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
@@ -12,7 +12,7 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import {isEnabled, isVisible, type ITransactionType, initTransactionType, transactionTypeUntypedFormGroup, getTransactionTypeActions} from './transaction-type.shared';
+import { isEnabled, isVisible, type ITransactionType, initTransactionType, transactionTypeUntypedFormGroup, getTransactionTypeActions } from './transaction-type.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -20,8 +20,8 @@ import {isEnabled, isVisible, type ITransactionType, initTransactionType, transa
     selector: 'transaction-type-form',
     imports: [
 
-    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
-    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+        CommonModule, FormsModule, ReactiveFormsModule, RouterLink,
+        NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
 
     ],
     standalone: true,
@@ -30,9 +30,9 @@ import {isEnabled, isVisible, type ITransactionType, initTransactionType, transa
 
     ],
 })
-export class TransactionTypeFormComponent extends BaseFormComponent<ITransactionType > implements OnInit {
+export class TransactionTypeFormComponent extends BaseFormComponent<ITransactionType> implements OnInit {
 
-    override apiUrl =  '/TransactionType/';
+    override apiUrl = '/TransactionType/';
     override apiService: StockExService = inject(StockExService);
     override componentName: string = 'TransactionType'.toLowerCase();  // used to grab its related custom field definitions
 
@@ -40,11 +40,11 @@ export class TransactionTypeFormComponent extends BaseFormComponent<ITransaction
 
     // Define look ups
     public EffectTypeOptions: any[] = [];
-public StockEntityTypeOptions: any[] = [];
-public CalculationMethodOptions: any[] = [];
-public SourceTypeOptions: any[] = [];
-public StockFieldTypeOptions: any[] = [];
-public NextTransactionTypeOptions: any[] = [];
+    public StockEntityTypeOptions: any[] = [];
+    public CalculationMethodOptions: any[] = [];
+    public SourceTypeOptions: any[] = [];
+    public StockFieldTypeOptions: any[] = [];
+    public NextTransactionTypeOptions: any[] = [];
 
     // Define autocomplete
 
@@ -52,8 +52,8 @@ public NextTransactionTypeOptions: any[] = [];
 
     constructor(activatedRoute: ActivatedRoute) {
 
-       super(activatedRoute);
-       this.validationForm = this.formBuilder.group(transactionTypeUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+        super(activatedRoute);
+        this.validationForm = this.formBuilder.group(transactionTypeUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
 
     }
     //---------------------------------------------------------
@@ -69,72 +69,19 @@ public NextTransactionTypeOptions: any[] = [];
         }
 
         this.linkList = this.getRecordLinks(this);
-        this.actionList = this.getRecordActions(this);    
+        this.actionList = this.getRecordActions(this);
     }
     //---------------------------------------------------------
-    override initEntity(): ITransactionType  {
-        return initTransactionType ();
+    override initEntity(): ITransactionType {
+        return initTransactionType();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
 
     }
+
     //---------------------------------------------------------
-    override async getLookups(): Promise<void> {
-        this.messages = [];
-        let target = '';
-        this.isLoading.lookups = true;
-// Promise.all to improve performance. apply later
-         try{
-         const [
-              effectTypeResponse,
-stockEntityTypeResponse,
-calculationMethodResponse,
-sourceTypeResponse,
-stockFieldTypeResponse,
-nextTransactionTypeResponse,
-
-         ] = await Promise.all
-         ([
-        this.apiService.getItems<IQueryResponse>("/EffectType/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/StockEntityType/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/CalculationMethod/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/SourceType/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/StockFieldType/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/NextTransactionType/list", { pageSize: 30 }),
-
-         ]);
-        this.EffectTypeOptions = effectTypeResponse.items;
-this.StockEntityTypeOptions = stockEntityTypeResponse.items;
-this.CalculationMethodOptions = calculationMethodResponse.items;
-this.SourceTypeOptions = sourceTypeResponse.items;
-this.StockFieldTypeOptions = stockFieldTypeResponse.items;
-this.NextTransactionTypeOptions = nextTransactionTypeResponse.items;
-
- } catch (err: any) {
-   const msg = err?.message || "An error occurred while loading data.";
-   this.messages.push({ text: msg, msgType: "danger" });
- } finally {
-   this.isLoading.lookups = false;
- }
- /*
-        this.isLoading.lookups = true;
-        target = "/[LookupNameCapital]/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.[LookupNameCapital]Options = response.items;
-                this.isLoading.lookups = false;
-            },
-                error: (err: any) => {
-                this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
-        */
-    }
-    //---------------------------------------------------------
-    override async setAutoComplete() {   
+    override async setAutoComplete() {
 
     }
     //---------------------------------------------------------
@@ -148,18 +95,72 @@ this.NextTransactionTypeOptions = nextTransactionTypeResponse.items;
         return getTransactionTypeActions(this, record);
     }
 
-   //---------------------------------------------------------
+    //---------------------------------------------------------
     isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity,this.validationForm, fieldName);
+        return isVisible(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
     isEnabled(fieldName: string): boolean {
 
-        return isEnabled(this.entity,this.validationForm, fieldName);
+        return isEnabled(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+    //Template_Start_Code_DontOverwrite_2
+        
+    override async getLookups(): Promise<void> {
+        this.messages = [];
+        let target = '';
+        this.isLoading.lookups = true;
+        // Promise.all to improve performance. apply later
+        try {
+            const [
+                effectTypeResponse,
+                stockEntityTypeResponse,
+                calculationMethodResponse,
+                sourceTypeResponse,
+                stockFieldTypeResponse,
+                nextTransactionTypeResponse,
+
+            ] = await Promise.all
+                ([
+                    this.apiService.getItems<IQueryResponse>("/EffectType/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/StockEntityType/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/CalculationMethod/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/SourceType/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/StockFieldType/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/TransactionType/list", { pageSize: 30 }),
+
+                ]);
+            this.EffectTypeOptions = effectTypeResponse.items;
+            this.StockEntityTypeOptions = stockEntityTypeResponse.items;
+            this.CalculationMethodOptions = calculationMethodResponse.items;
+            this.SourceTypeOptions = sourceTypeResponse.items;
+            this.StockFieldTypeOptions = stockFieldTypeResponse.items;
+            this.NextTransactionTypeOptions = nextTransactionTypeResponse.items;
+
+        } catch (err: any) {
+            const msg = err?.message || "An error occurred while loading data.";
+            this.messages.push({ text: msg, msgType: "danger" });
+        } finally {
+            this.isLoading.lookups = false;
+        }
+        /*
+               this.isLoading.lookups = true;
+               target = "/[LookupNameCapital]/list";
+               (await this.apiService.post(target,  {pageSize:50})).subscribe({
+                   next: (response: IQueryResponse) => {
+                       this.[LookupNameCapital]Options = response.items;
+                       this.isLoading.lookups = false;
+                   },
+                       error: (err: any) => {
+                       this.isLoading.lookups = false;
+                       var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
+                       this.messages.push({ text: msg, msgType: "danger" });
+                   }
+               });
+               */
+    }
+    //Template_End_Code_DontOverwrite_2
 }

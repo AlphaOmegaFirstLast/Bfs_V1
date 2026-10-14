@@ -7,14 +7,21 @@ namespace Bfs.StockEx.Data.Repositories;
 
 public interface IUnitOfWork
 {
-    StockExDbContext _context { get;}
+    StockExDbContext _context { get; }
     //Template_Field_ChildrenMatrix_AddIUnitOfWorkEntry
 
-//Template_Start_Code_DontOverwrite_2
-ISspTransactionRepository SspTransactionRepo { get; }
+    //Template_Start_Code_DontOverwrite_2
+    ISspTransactionRepository SspTransactionRepo { get; }
     ICashTransactionRepository CashTransactionRepo { get; }
-    Task<SspTransactionEntity> RolloutTransactionAsync(SspTransactionEntity entity);
-    Task<CashTransactionEntity> RolloutTransactionAsync(CashTransactionEntity entity);
-//Template_End_Code_DontOverwrite_2
+
+    Task<SspTransactionEntity> RolloutSspTransactionAsync(SspTransactionEntity entity);
+    Task<CashTransactionEntity> RolloutCashTransactionAsync(CashTransactionEntity entity);
+
+    Task RollbackSspTransactionAsync(long id);
+    Task RollbackCashTransactionAsync(long id);
+
+    Task<SspTransactionEntity> ChangeSspTransactionAsync(SspTransactionEntity entity);
+    Task<CashTransactionEntity> ChangeCashTransactionAsync(CashTransactionEntity entity);
+    //Template_End_Code_DontOverwrite_2
 
 }

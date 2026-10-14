@@ -19,17 +19,6 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
-        <label>Name</label>
-      </div>
-      <div class="col -8">
-      <input class="form-control" type="text" [(ngModel)]="result.Name" value="{{result.Name}}" placeholder="Name" #ctrl="ngModel"/>
-      </div>
-    </div>
-  </div>
-
-      <div class="form-control">
-    <div class="row">
-      <div class="col -4">
         <label>Transaction Type</label>
       </div>
       <div class="col -8">
@@ -74,11 +63,11 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="ssPortfolioAuto.hideOverlay()">
-          <label class="form-label fs-6">StockShare Portfolio</label>        
-          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
-
+          <label class="d-flex align-items-center form-label fs-6">StockShare Portfolio       
+            <lucide-angular [img]="LucideSearch" class="text-info fs-5 m-1" />
+          </label> 
           <div class="input-group">
-            <input id="ssPortfolioControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+            <input id="ssPortfolioControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..." 
               [(ngModel)]="result.SsPortfolioName"
               (ngModelChange)="ssPortfolioAuto.onInputChange($event)" 
               (focus)="ssPortfolioAuto.onFocus()" />
@@ -101,7 +90,7 @@
         </ul>
 
         <ul class="dropdown-menu show w-100" *ngIf="ssPortfolioAuto.isError">
-          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+          <li><span class="dropdown-item-text text-muted">Please select a valid StockShare Portfolio .</span></li>
         </ul>
       </div>
     </div>
@@ -111,11 +100,11 @@
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="toPortfolioAuto.hideOverlay()">
-          <label class="form-label fs-6">To Portfolio</label>        
-          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
-
+          <label class="d-flex align-items-center form-label fs-6">To Portfolio       
+            <lucide-angular [img]="LucideSearch" class="text-info fs-5 m-1" />
+          </label> 
           <div class="input-group">
-            <input id="toPortfolioControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+            <input id="toPortfolioControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..." 
               [(ngModel)]="result.ToPortfolioName"
               (ngModelChange)="toPortfolioAuto.onInputChange($event)" 
               (focus)="toPortfolioAuto.onFocus()" />
@@ -138,7 +127,7 @@
         </ul>
 
         <ul class="dropdown-menu show w-100" *ngIf="toPortfolioAuto.isError">
-          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+          <li><span class="dropdown-item-text text-muted">Please select a valid To Portfolio .</span></li>
         </ul>
       </div>
     </div>
@@ -186,17 +175,6 @@
       <div class="col -8">
         <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="PriceFrom">
         <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="PriceTo">
-      </div>
-    </div>
-  </div>
-  <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>To Quantity</label>
-      </div>
-      <div class="col -8">
-        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="ToQuantityFrom">
-        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="ToQuantityTo">
       </div>
     </div>
   </div>

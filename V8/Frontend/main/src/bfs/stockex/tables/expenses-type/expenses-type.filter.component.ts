@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IExpensesTypeFilter } from './expenses-type.shared';
@@ -12,14 +13,19 @@ import { IExpensesTypeFilter } from './expenses-type.shared';
 
 @Component({
     selector: 'app-expenses-type-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
     templateUrl: './expenses-type.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class ExpensesTypeFilterComponent implements OnInit {
 
     public result = {} as IExpensesTypeFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
 
@@ -69,5 +75,4 @@ export class ExpensesTypeFilterComponent implements OnInit {
     }
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
-
 }

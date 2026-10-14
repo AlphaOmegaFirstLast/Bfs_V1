@@ -15,10 +15,6 @@ namespace Bfs.StockEx.Contracts
         ///</Summary>
         public long Id {get; set;} = 0 ;
 ///<Summary>
-        /// SspTransaction Name.
-        ///</Summary>
-        public string Name {get; set;} = string.Empty ;
-///<Summary>
         /// SspTransaction Notes.
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
@@ -59,6 +55,10 @@ namespace Bfs.StockEx.Contracts
         /// SspTransaction Currency.
         ///</Summary>
         public long CurrencyId {get; set;} = 0 ;
+///<Summary>
+        /// SspTransaction To StocksShare Transaction.
+        ///</Summary>
+        public long ToSspTransactionId {get; set;} = 0 ;
 
         ///<Summary>
         /// SspTransaction StockShare Portfolio.

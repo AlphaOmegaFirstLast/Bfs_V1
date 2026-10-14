@@ -2,10 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
@@ -34,10 +31,17 @@ import {IDebitInterestFilter, IDebitInterestRequest, initDebitInterestRequest} f
 CreditInterestListComponent,
 DebitInterestListComponent,
 
-    CommonModule, NgIcon, NgbPopoverModule, NgbAlertModule, FormsModule, ReactiveFormsModule, NgbDropdownModule, NgbNavModule,RouterLink, FlatpickrDirective],
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+, FlatpickrDirective
+
+    ],
     standalone: true,
     templateUrl: './broker-agreement.form.component.html',
-    providers: [provideFlatpickrDefaults()],
+    providers: [
+  provideFlatpickrDefaults()
+
+    ],
 })
 export class BrokerAgreementFormComponent extends BaseFormComponent<IBrokerAgreement > implements OnInit {
 
@@ -78,6 +82,7 @@ public BrokerOptions: any[] = [];
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): IBrokerAgreement  {

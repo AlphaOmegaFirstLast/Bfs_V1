@@ -9,11 +9,10 @@ namespace Bfs.StockEx.Contracts
 
         public long? Id { get; set; }
 
-        public string? Name { get; set; }
-
         public int? TransactionTypeId { get; set; }
 public long? StockShareId { get; set; }
 public long? CurrencyId { get; set; }
+public long? ToSspTransactionId { get; set; }
 
         public long? SsPortfolioId { get; set; }
 public long? ToPortfolioId { get; set; }
@@ -22,7 +21,6 @@ public long? ToPortfolioId { get; set; }
 public DateRange? TransactionDate { get; set; }
 public NumericRange? Quantity { get; set; }
 public NumericRange? Price { get; set; }
-public NumericRange? ToQuantity { get; set; }
 
     }
 }

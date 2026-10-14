@@ -1,6 +1,8 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/stockex/main/stockex.operations';
@@ -8,26 +10,25 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 //Template_End_Code_DontOverwrite_1
 
 // Output Columns of a Query  [used in entity Query]
-export const CashTransactionColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'sspTransactionId', displayName: 'StocksShare Transaction', sortName: 'SspTransaction_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'value', displayName: 'Value', sortName: 'Value', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'expensesTypeId', displayName: 'Expenses Type', sortName: 'ExpensesType_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
+export const columns = [
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:10 },
+{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:10 },
+{ fieldName: 'sspTransactionId', displayName: 'StocksShare Transaction', sortName: 'SspTransaction_Name', width: '50px', isVisible:false, columnOrder:9 },
+{ fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible:false, columnOrder:10 },
+{ fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:10 },
+{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:2 },
+{ fieldName: 'value', displayName: 'Value', sortName: 'Value', width: '50px', isVisible:true, columnOrder:5 },
+{ fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true, columnOrder:3 },
+{ fieldName: 'expensesTypeId', displayName: 'Expenses Type', sortName: 'ExpensesType_Name', width: '50px', isVisible:true, columnOrder:4 },
+{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:6 },
 { fieldName: 'ssPortfolioId', displayName: 'Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const CashTransactionColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface ICashTransaction extends IEntity{
     isDeleted?: boolean;
 id?: string;
-name?: string;
 notes?: string;
 source?: string;
 sourceDate?: Date | null;
@@ -48,7 +49,6 @@ export function initCashTransaction(): ICashTransaction {
     let entity: ICashTransaction = {
         isDeleted: false,
 id: '0',
-name: '',
 notes: '',
 source: '',
 sourceDate: new Date(),
@@ -73,7 +73,6 @@ export function cashTransactionUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
     isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-name: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"0","MaxLength":"0","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 source: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 sourceDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
@@ -101,8 +100,6 @@ export interface ICashTransactionFilter {
     [key: string]: any;
     Id?: string;
 
-    Name?: string;
-
     SspTransactionId?: string;
 TransactionTypeId?: number;
 ExpensesTypeId?: string;
@@ -111,8 +108,7 @@ CurrencyId?: string;
     SsPortfolioId?: string;
     SsPortfolioName?: string,
 
-    SourceDate?: { from?: Date | null ; to?: Date | null} ;
-TransactionDate?: { from?: Date | null ; to?: Date | null} ;
+    TransactionDate?: { from?: Date | null ; to?: Date | null} ;
 Value?: { from?: number ; to?: number} ;
 
 }
@@ -130,8 +126,6 @@ export function initCashTransactionRequest(): ICashTransactionRequest {
         filter: {
             Id: undefined ,
 
-            Name: undefined ,
-
             SspTransactionId: undefined ,
 TransactionTypeId: undefined ,
 ExpensesTypeId: undefined ,
@@ -140,8 +134,7 @@ CurrencyId: undefined ,
             SsPortfolioId: undefined ,
             SsPortfolioName: undefined ,
 
-            SourceDate: { from: undefined , to: undefined} ,
-TransactionDate: { from: undefined , to: undefined} ,
+            TransactionDate: { from: undefined , to: undefined} ,
 Value: { from: undefined , to: undefined} ,
 
             }
@@ -218,6 +211,16 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('cashTransaction', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.cashTransactionRollout, displayText: 'Save and Rollout Transaction', data: { recordId: record['id'],  postUrl: '/Operations/CashTransaction/Rollout'}
+});
+}
+if (component.accessService.isActionAllowed('cashTransaction', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.cashTransactionRollback, displayText: 'Delete and Rollback Transaction', data: { recordId: record['id'],  deleteUrl: '/Operations/CashTransaction/Rollback'}
+});
+}
+if (component.accessService.isActionAllowed('cashTransaction', ''))
+{links.push({
+actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.cashTransactionChange, displayText: 'Update and Rollout Changes', data: { recordId: record['id'],  putUrl: '/Operations/CashTransaction/Change'}
 });
 }
 

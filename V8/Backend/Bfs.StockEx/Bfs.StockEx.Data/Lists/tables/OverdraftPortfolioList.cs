@@ -67,7 +67,6 @@ namespace Bfs.StockEx.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Id", DbName = "stkxOverdraftPortfolio.Id", QueryName = "Id", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Notes", DbName = "stkxOverdraftPortfolio.Notes", QueryName = "Notes", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "OverdraftPercent", DbName = "stkxOverdraftPortfolio.OverdraftPercent", QueryName = "OverdraftPercent", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "OverdraftMax", DbName = "stkxOverdraftPortfolio.OverdraftMax", QueryName = "OverdraftMax", IsAggregare = false});
@@ -85,6 +84,8 @@ _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = 
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -162,6 +163,8 @@ if (filter.OverdraftMax?.From.HasValue == true)
                     parameters.Add("@OverdraftMaxTo", filter.OverdraftMax.To.Value);
                 }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -178,11 +181,13 @@ if (filter.OverdraftMax?.From.HasValue == true)
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

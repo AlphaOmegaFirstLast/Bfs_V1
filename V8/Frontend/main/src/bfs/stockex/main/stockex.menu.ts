@@ -270,7 +270,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
-            //Template_Component_Menu_Reports
+                {
+        label: 'Overdraft Report',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/report/overdraft-rep-compare/0',
+        data: {
+            role: ['admin']
+        }
+    },
+//Template_Component_Menu_Reports
         ]
     },
     {

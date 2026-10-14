@@ -1,7 +1,3 @@
-          zzzzzzzzzzzzzzz
-                                  <ng-icon name="tablerPhone" class="fs-2"/>
-                        <lucide-angular [img]="LucideCamera" class="fs-3"/>
-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 <div class="modal-header">
   <h4 class="modal-title">Filter</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
@@ -35,12 +31,11 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxx
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="brokerAuto.hideOverlay()">
-          <label class="form-label fs-6">Broker</label>        
-          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="AutoComplete" />
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is autocomplete"  />
-
+          <label class="d-flex align-items-center form-label fs-6">Broker       
+            <lucide-angular [img]="LucideSearch" class="text-info fs-5 m-1" />
+          </label> 
           <div class="input-group">
-            <input id="brokerControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+            <input id="brokerControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..." 
               [(ngModel)]="result.BrokerName"
               (ngModelChange)="brokerAuto.onInputChange($event)" 
               (focus)="brokerAuto.onFocus()" />
@@ -63,7 +58,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxx
         </ul>
 
         <ul class="dropdown-menu show w-100" *ngIf="brokerAuto.isError">
-          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+          <li><span class="dropdown-item-text text-muted">Please select a valid Broker .</span></li>
         </ul>
       </div>
     </div>
@@ -73,15 +68,11 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxx
     <div class="row mb-2">
       <div class="col-12">
         <div class="position-relative" (focusout)="investorAuto.hideOverlay()">
-          <label class="form-label fs-6">Investor</label> 
-          zzzzzzzzzzzzzzz
-                                  <ng-icon name="tablerPhone" class="fs-2"/>
-                        <lucide-angular [img]="LucideSearch" class="text-info fill-info fs-3"/>
-xxxxx       
-          <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="This is autocomplete"  />
-yyyyy
+          <label class="d-flex align-items-center form-label fs-6">Investor       
+            <lucide-angular [img]="LucideSearch" class="text-info fs-5 m-1" />
+          </label> 
           <div class="input-group">
-            <input id="investorControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..." 
+            <input id="investorControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..." 
               [(ngModel)]="result.InvestorName"
               (ngModelChange)="investorAuto.onInputChange($event)" 
               (focus)="investorAuto.onFocus()" />
@@ -104,7 +95,7 @@ yyyyy
         </ul>
 
         <ul class="dropdown-menu show w-100" *ngIf="investorAuto.isError">
-          <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+          <li><span class="dropdown-item-text text-muted">Please select a valid Investor .</span></li>
         </ul>
       </div>
     </div>

@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+import { LucideAngularModule, LucideSearch } from 'lucide-angular';
+
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
 
 import { IOverdraftPortfolioFilter } from './overdraft-portfolio.shared';
@@ -12,14 +13,19 @@ import { IOverdraftPortfolioFilter } from './overdraft-portfolio.shared';
 
 @Component({
     selector: 'app-overdraft-portfolio-filter',
-    imports: [FormsModule, CommonModule, FlatpickrDirective],
+    imports: [LucideAngularModule, FormsModule, CommonModule
+
+    ],
     templateUrl: './overdraft-portfolio.filter.component.html',
-    providers: [provideFlatpickrDefaults()],
-    //styles: ``
+    providers: [
+
+    ],
+  //styles: ``
 })
 export class OverdraftPortfolioFilterComponent implements OnInit {
 
     public result = {} as IOverdraftPortfolioFilter;
+    protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
     public SsPortfolioOptions:  any[] = [];
@@ -39,8 +45,14 @@ public OverdraftMaxFrom: number | undefined;
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -101,7 +113,6 @@ this.result.OverdraftMax = { from: this.OverdraftMaxFrom, to: this.OverdraftMaxT
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
-
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

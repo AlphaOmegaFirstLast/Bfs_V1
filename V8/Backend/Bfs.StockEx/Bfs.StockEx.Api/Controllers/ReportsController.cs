@@ -83,6 +83,14 @@ public class ReportsController
         return TypedResults.Ok(result);
     }
 
+    [HttpPost("OverdraftRepCompare")]
+    [CustomAuthorize("method=q.overdraftRepCompare")]
+    public async Task<Results<Ok<QueryResponse<OverdraftRepCompareItem>>, BadRequest<ProblemDetails>>> OverdraftRepCompare([FromBody] QueryRequest<OverdraftRepCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.OverdraftRepCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
 //Template_Component_AddControllerEntry
 //Template_Start_Code_DontOverwrite_5
 //Template_End_Code_DontOverwrite_5

@@ -58,6 +58,7 @@ export class NavReportCompareComponent
         this.filterComponent = NavReportCompareFilterComponent;
         this.queryRequest = initNavReportCompareRequest();
 //Template_Start_Code_DontOverwrite_3
+this.openFilter();
 //Template_End_Code_DontOverwrite_3
 
     }

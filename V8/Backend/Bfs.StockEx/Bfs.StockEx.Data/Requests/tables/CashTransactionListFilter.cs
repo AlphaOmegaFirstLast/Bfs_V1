@@ -9,8 +9,6 @@ namespace Bfs.StockEx.Data
 
         public long? Id { get; set; }
 
-        public string? Name { get; set; }
-
         public long? SspTransactionId { get; set; }
 public int? TransactionTypeId { get; set; }
 public long? ExpensesTypeId { get; set; }

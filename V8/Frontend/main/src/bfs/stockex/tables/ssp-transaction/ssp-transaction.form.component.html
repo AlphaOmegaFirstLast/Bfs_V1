@@ -14,11 +14,11 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
-                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
-                                            <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/ssp-transaction/list')">Back</button>
-                                             <a [routerLink]="['/stkx/ssp-transaction/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                            <div *ngFor="let link of buttonList">
+                                               <button *ngIf="isAccessible(link)" type="submit" class="btn btn-sm btn-outline-primary me-2" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</button>
+                                            </div>                                           
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/ssp-transaction/list')">Back</button>
+                                            <a [routerLink]="['/stkx/ssp-transaction/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -56,8 +56,10 @@
                                                 <div class="col-12"  *ngIf="isVisible('ssPortfolioId')">
                                                     <div class="position-relative"  (focusout)="ssPortfolioAuto.hideOverlay()">
                                                         <label class="form-label fs-6">StockShare Portfolio</label>
+                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..."
                                                                 [formControl]="ssPortfolioAuto.control"
 
                                                                 (focus)="ssPortfolioAuto.onFocus()"  [class]="ssPortfolioAuto.cssClass()"  />
@@ -76,7 +78,7 @@
                                                         </ul>
 
                                                         <ul class="dropdown-menu show w-100" *ngIf="ssPortfolioAuto.isError">
-                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid StockShare Portfolio .</span></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -169,18 +171,6 @@
 </div>
 
 <div class="row mb-2"> 
-    <div class="col-12" *ngIf="isVisible('name')">
-        <label for="name" class="form-label fs-6">Name</label>
-        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
-
-        <input class="form-control" type="text" id="name" formControlName="name"
-            [class]="submit && !form['name'].errors ? 'is-valid': submit && form['name'].errors ? 'is-invalid' : ''" />
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Invalid Name.</div>
-    </div>
-</div>
-
-<div class="row mb-2"> 
     <div class="col-12" *ngIf="isVisible('notes')">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
@@ -199,8 +189,10 @@
                                                 <div class="col-12"  *ngIf="isVisible('toPortfolioId')">
                                                     <div class="position-relative"  (focusout)="toPortfolioAuto.hideOverlay()">
                                                         <label class="form-label fs-6">To Portfolio</label>
+                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 2 characters..."
+                                                            <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..."
                                                                 [formControl]="toPortfolioAuto.control"
 
                                                                 (focus)="toPortfolioAuto.onFocus()"  [class]="toPortfolioAuto.cssClass()"  />
@@ -219,7 +211,7 @@
                                                         </ul>
 
                                                         <ul class="dropdown-menu show w-100" *ngIf="toPortfolioAuto.isError">
-                                                            <li><span class="dropdown-item-text text-muted">Please select a valid Component.</span></li>
+                                                            <li><span class="dropdown-item-text text-muted">Please select a valid To Portfolio .</span></li>
                                                         </ul>
                                                     </div>
                                                 </div>
