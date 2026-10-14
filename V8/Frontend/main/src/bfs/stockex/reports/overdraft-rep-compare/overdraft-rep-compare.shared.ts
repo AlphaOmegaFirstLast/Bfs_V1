@@ -5,11 +5,15 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
     { fieldName: 'overdraftPortfolio_Id', displayName: 'ID', sortName: 'OverdraftPortfolio_Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftPortfolio_Notes', displayName: 'Notes', sortName: 'OverdraftPortfolio_Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftPortfolio_OverdraftPercent', displayName: 'Overdraft Percent', sortName: 'OverdraftPortfolio_OverdraftPercent', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftPortfolio_OverdraftMax', displayName: 'Overdraft Max', sortName: 'OverdraftPortfolio_OverdraftMax', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftPortfolio_SsPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'overdraftPortfolio_OverdraftMax', displayName: 'Overdraft Max', sortName: 'OverdraftPortfolio_OverdraftMax', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'brokerAgreement_SsPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'overdraftPortfolio_BrokerAgreementId', displayName: 'Broker Agreement', sortName: 'BrokerAgreement_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'brokerAgreement_BrokerId', displayName: 'Broker', sortName: 'Broker_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'brokerAgreement_InvestorId', displayName: 'Investor', sortName: 'Investor_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'overdraftPortfolio_Overdraft', displayName: 'Overdraft ', sortName: 'OverdraftPortfolio_Overdraft', width: '50px', isVisible:true, columnOrder:1 },
+
+    { fieldName: 'sumTotalCashDeposit', displayName: 'Total Cash Deposit', sortName: 'sumTotalCashDeposit', width: '50px', isVisible:true,  columnOrder:1 },
+{ fieldName: 'sumAvailableCredit', displayName: 'Available Credit', sortName: 'sumAvailableCredit', width: '50px', isVisible:true,  columnOrder:1 },
 
 ];
 export const OverdraftRepCompareColumns  = reOrderColumns(columns);
@@ -17,11 +21,12 @@ export const OverdraftRepCompareColumns  = reOrderColumns(columns);
 export interface IOverdraftRepCompare {
     [key: string]: any;
     overdraftPortfolio_Id?: string;
-overdraftPortfolio_Notes?: string;
-overdraftPortfolio_OverdraftPercent?: number;
 overdraftPortfolio_OverdraftMax?: number;
-overdraftPortfolio_SsPortfolioId?: string;
+brokerAgreement_SsPortfolioId?: string;
 overdraftPortfolio_BrokerAgreementId?: string;
+brokerAgreement_BrokerId?: string;
+brokerAgreement_InvestorId?: string;
+overdraftPortfolio_Overdraft?: number;
 
 }
 //---------------------------------------------------------
@@ -29,13 +34,16 @@ export interface IOverdraftRepCompareFilter {
     [key: string]: any;
     OverdraftPortfolio_Id?: string;
 
-    OverdraftPortfolio_Name?: string;
-
-    OverdraftPortfolio_SsPortfolioId?: string;
+    BrokerAgreement_SsPortfolioId?: string;
 OverdraftPortfolio_BrokerAgreementId?: string;
+BrokerAgreement_BrokerId?: string;
+BrokerAgreement_InvestorId?: string;
 
-    OverdraftPortfolio_OverdraftPercent?: { from?: number ; to?: number} ;
-OverdraftPortfolio_OverdraftMax?: { from?: number ; to?: number} ;
+    OverdraftPortfolio_OverdraftMax?: { from?: number ; to?: number} ;
+OverdraftPortfolio_Overdraft?: { from?: number ; to?: number} ;
+
+    sumTotalCashDeposit?: { from?: number ; to?: number} ;
+sumAvailableCredit?: { from?: number ; to?: number} ;
 
 }
 //---------------------------------------------------------
@@ -53,13 +61,16 @@ export function initOverdraftRepCompareRequest(): IOverdraftRepCompareRequest {
         filter: {
             OverdraftPortfolio_Id: undefined ,
 
-            OverdraftPortfolio_Name: undefined ,
-
-            OverdraftPortfolio_SsPortfolioId: undefined ,
+            BrokerAgreement_SsPortfolioId: undefined ,
 OverdraftPortfolio_BrokerAgreementId: undefined ,
+BrokerAgreement_BrokerId: undefined ,
+BrokerAgreement_InvestorId: undefined ,
 
-            OverdraftPortfolio_OverdraftPercent: { from: undefined , to: undefined} ,
-OverdraftPortfolio_OverdraftMax: { from: undefined , to: undefined} ,
+            OverdraftPortfolio_OverdraftMax: { from: undefined , to: undefined} ,
+OverdraftPortfolio_Overdraft: { from: undefined , to: undefined} ,
+
+            sumTotalCashDeposit: { from: undefined , to: undefined} ,
+sumAvailableCredit: { from: undefined , to: undefined} ,
 
             }
     };
@@ -69,10 +80,19 @@ OverdraftPortfolio_OverdraftMax: { from: undefined , to: undefined} ,
 export function renderOverdraftRepCompare(record: IEntity, column: IQueryColumn): any {
         const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
-            case 'overdraftPortfolio_SsPortfolioId':
+            case 'brokerAgreement_SsPortfolioId':
                 return record['ssPortfolioName']?.toString();
 case 'overdraftPortfolio_BrokerAgreementId':
                 return record['brokerAgreementName']?.toString();
+case 'brokerAgreement_BrokerId':
+                return record['brokerName']?.toString();
+case 'brokerAgreement_InvestorId':
+                return record['investorName']?.toString();
+
+            case 'sumTotalCashDeposit':
+                return record['sumTotalCashDeposit']?.toString();
+case 'sumAvailableCredit':
+                return record['sumAvailableCredit']?.toString();
 
             default:
                 return value;

@@ -19,12 +19,19 @@ export class OverdraftRepCompareFilterComponent implements OnInit {
     // Define look ups
     public SsPortfolioOptions:  any[] = [];
 public BrokerAgreementOptions:  any[] = [];
+public BrokerOptions:  any[] = [];
+public InvestorOptions:  any[] = [];
 
     // Define range filters
-    public OverdraftPortfolio_OverdraftPercentFrom: number | undefined;
-    public OverdraftPortfolio_OverdraftPercentTo: number | undefined;
-public OverdraftPortfolio_OverdraftMaxFrom: number | undefined;
+    public OverdraftPortfolio_OverdraftMaxFrom: number | undefined;
     public OverdraftPortfolio_OverdraftMaxTo: number | undefined;
+public OverdraftPortfolio_OverdraftFrom: number | undefined;
+    public OverdraftPortfolio_OverdraftTo: number | undefined;
+
+    public sumTotalCashDepositFrom: number | undefined;
+    public sumTotalCashDepositTo: number | undefined;
+public sumAvailableCreditFrom: number | undefined;
+    public sumAvailableCreditTo: number | undefined;
 
     isLoading: boolean = false;
     public submit: boolean = false;
@@ -39,10 +46,15 @@ public OverdraftPortfolio_OverdraftMaxFrom: number | undefined;
         this.result = this.parent.queryRequest.filter || {};
         await this.getLookups();
         // Initialize range filters if not set
-        this.OverdraftPortfolio_OverdraftPercentFrom = this.result.OverdraftPortfolio_OverdraftPercent?.from;
-        this.OverdraftPortfolio_OverdraftPercentTo   = this.result.OverdraftPortfolio_OverdraftPercent?.to;
-this.OverdraftPortfolio_OverdraftMaxFrom = this.result.OverdraftPortfolio_OverdraftMax?.from;
+        this.OverdraftPortfolio_OverdraftMaxFrom = this.result.OverdraftPortfolio_OverdraftMax?.from;
         this.OverdraftPortfolio_OverdraftMaxTo   = this.result.OverdraftPortfolio_OverdraftMax?.to;
+this.OverdraftPortfolio_OverdraftFrom = this.result.OverdraftPortfolio_Overdraft?.from;
+        this.OverdraftPortfolio_OverdraftTo   = this.result.OverdraftPortfolio_Overdraft?.to;
+
+        this.sumTotalCashDepositFrom = this.result.sumTotalCashDeposit?.from;
+        this.sumTotalCashDepositTo   = this.result.sumTotalCashDeposit?.to;
+this.sumAvailableCreditFrom = this.result.sumAvailableCredit?.from;
+        this.sumAvailableCreditTo   = this.result.sumAvailableCredit?.to;
 
     }
     //---------------------------------------------------------
@@ -70,6 +82,28 @@ target = "/BrokerAgreement/list";
                 this.isLoading = false;
             }
         });
+target = "/Broker/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.BrokerOptions = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Broker data.';
+                this.isLoading = false;
+            }
+        });
+target = "/Investor/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.InvestorOptions = response.items;
+                this.isLoading = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Investor data.';
+                this.isLoading = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
@@ -81,8 +115,11 @@ target = "/BrokerAgreement/list";
     apply() {
         this.activeModal.close('Apply');
         // Apply range filters
-        this.result.OverdraftPortfolio_OverdraftPercent = { from: this.OverdraftPortfolio_OverdraftPercentFrom, to: this.OverdraftPortfolio_OverdraftPercentTo };
-this.result.OverdraftPortfolio_OverdraftMax = { from: this.OverdraftPortfolio_OverdraftMaxFrom, to: this.OverdraftPortfolio_OverdraftMaxTo };
+        this.result.OverdraftPortfolio_OverdraftMax = { from: this.OverdraftPortfolio_OverdraftMaxFrom, to: this.OverdraftPortfolio_OverdraftMaxTo };
+this.result.OverdraftPortfolio_Overdraft = { from: this.OverdraftPortfolio_OverdraftFrom, to: this.OverdraftPortfolio_OverdraftTo };
+
+        this.result.sumTotalCashDeposit = { from: this.sumTotalCashDepositFrom, to: this.sumTotalCashDepositTo };
+this.result.sumAvailableCredit = { from: this.sumAvailableCreditFrom, to: this.sumAvailableCreditTo };
 
         this.parent.applyFilter(this.result);
     }

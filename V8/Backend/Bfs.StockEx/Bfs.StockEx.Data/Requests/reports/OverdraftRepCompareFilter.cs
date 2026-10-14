@@ -6,13 +6,16 @@ namespace Bfs.StockEx.Data
     {
         public long? OverdraftPortfolio_Id { get; set; }
 
-        public string? OverdraftPortfolio_Name { get; set; }
-
-        public long? OverdraftPortfolio_SsPortfolioId { get; set; }
+        public long? BrokerAgreement_SsPortfolioId { get; set; }
 public long? OverdraftPortfolio_BrokerAgreementId { get; set; }
+public long? BrokerAgreement_BrokerId { get; set; }
+public long? BrokerAgreement_InvestorId { get; set; }
 
-        public NumericRange? OverdraftPortfolio_OverdraftPercent { get; set; }
-public NumericRange? OverdraftPortfolio_OverdraftMax { get; set; }
+        public NumericRange? OverdraftPortfolio_OverdraftMax { get; set; }
+public NumericRange? OverdraftPortfolio_Overdraft { get; set; }
+
+        public NumericRange? sumTotalCashDeposit { get; set; }
+public NumericRange? sumAvailableCredit { get; set; }
 
     }
 }
