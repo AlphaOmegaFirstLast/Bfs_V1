@@ -2,6 +2,22 @@ import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationE
 import { DomSanitizer } from "@angular/platform-browser";
 import { IQueryResponse } from "./interfaces";
 
+//---------------------------------------------------------
+function normalizeObjectKeysToLowerFirstLetter<T extends object>(value: T): T {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        return value;
+    }
+
+    const result = {} as Record<string, unknown>;
+    Object.entries(value as Record<string, unknown>).forEach(([key, val]) => {
+        const normalizedKey = key.charAt(0).toLowerCase() + key.slice(1);
+        result[normalizedKey] = val;
+    });
+
+    return result as T;
+}
+//---------------------------------------------------------
+
 export interface IFieldValidation {
     isRequired: boolean;
     minLength: number;
@@ -110,20 +126,6 @@ export interface IReportInfo {
     aggregateTypeId: string,
     chartElementId: string,
     columnOrder: string
-}
-//---------------------------------------------------------
-function normalizeObjectKeysToLowerFirstLetter<T extends object>(value: T): T {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) {
-        return value;
-    }
-
-    const result = {} as Record<string, unknown>;
-    Object.entries(value as Record<string, unknown>).forEach(([key, val]) => {
-        const normalizedKey = key.charAt(0).toLowerCase() + key.slice(1);
-        result[normalizedKey] = val;
-    });
-
-    return result as T;
 }
 //---------------------------------------------------------
 // Fields of an Entity [used in Entity form]
@@ -332,3 +334,32 @@ export async function getFormInfoLookups(me: any): Promise<void> {
     });
 }
 //---------------------------------------------------------
+export function getFormInfoHeaders(this: any): string {
+    var result = `<table class="table table-bordered table-sm">
+    
+                <tr><th colspan="6" style="border: 1px solid lightblue;" class="text-center">Report Info</th></tr>
+                <tr>
+                    <th width="150px">Form Control Type</th>
+                    <th width="150px">Column</th>
+                    <th width="150px">Row</th>
+                </tr>
+                </table>`;
+    return result;
+}
+//-------------------------------------------------
+export function getFormInfoData(formInfo: IFormInfo): string {
+    if (!formInfo) return '';
+    try {
+        var result = `<table class="table table-bordered table-sm">
+                   <tr>    
+                        <td width="150px"> ${formInfo.formControlTypeId??''}</td>
+                        <td width="150px"> ${formInfo.column ?? ''}</td>
+                        <td width="150px"> ${formInfo.row ?? ''}</td>
+                    </tr>
+                </table>`;
+        return (result);
+    } catch (e) {
+        return '';
+    }
+}
+//------------------------------------------------

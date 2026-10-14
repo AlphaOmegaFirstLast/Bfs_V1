@@ -49,6 +49,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
 
     linkList: ViewLink[] = [];
     actionList: ActionLink[] = [];
+    buttonList: ActionLink[] = [];
     //-----------------------Object Fields Lookups----------------------------------
     public ChartElementOptions: any[] = []; //{ id: number, name: string }[] = [];
     public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
@@ -197,6 +198,19 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     //     const request = { pageSize: 1, filter: { id: this.entity.id } };
 
     //     (await this.apiService.post(target , request)).subscribe({
+    //         next: (response: any) => {
+    //             this.entity = response.items[0];
+    //             this.validationForm.patchValue(this.entity);
+    //             this.isLoading.save = false;
+    //         },
+    //         error: (err: any) => {
+    //             this.isLoading.save = false;
+    //             var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
+    //             this.messages.push({ text: msg, msgType: "danger" });
+    //         }
+    //     });
+    // }
+    //--------------------------------------------------------- 
     protected patchFormValue(entity: Entity): void {
         const formValue: Record<string, unknown> = { ...entity };
 
@@ -214,20 +228,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
 
         this.validationForm.patchValue(formValue);
     }
-    //---------------------------------------------------------
-    //         next: (response: any) => {
-    //             this.entity = response.items[0];
-    //             this.validationForm.patchValue(this.entity);
-    //             this.isLoading.save = false;
-    //         },
-    //         error: (err: any) => {
-    //             this.isLoading.save = false;
-    //             var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
-    //             this.messages.push({ text: msg, msgType: "danger" });
-    //         }
-    //     });
-    // }
-    //---------------------------------------------------------  
+    //--------------------------------------------------------- 
     getActions(record: IEntity): IAction[] {
         return [] as IAction[];
     }
@@ -245,6 +246,18 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     }
     //---------------------------------------------------------
     getRecordActions(record: IEntity): ActionLink[] {
+        let actions = this.getActions(record);
+        let links: ActionLink[] = actions.filter(action =>
+            action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'FormMenu'
+        ).map(action => {
+            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+        });
+
+        return links;
+    }
+    //---------------------------------------------------------
+    getRecordButtons(record: IEntity): ActionLink[] {
         let actions = this.getActions(record);
         let links: ActionLink[] = actions.filter(action =>
             action.actionType == 'FrontendFunction'

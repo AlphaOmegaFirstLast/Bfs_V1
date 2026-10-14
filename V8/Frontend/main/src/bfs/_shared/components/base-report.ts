@@ -30,7 +30,10 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 import { AccessService } from '@bfs/_shared/security/access.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
-import { getReportInfoData, getReportInfoHeaders, getFieldValidationData, getFieldValidationHeaders } from '../objectFields';
+import { getReportInfoData, getReportInfoHeaders
+       , getFormInfoData, getFormInfoHeaders 
+       , getFieldValidationData, getFieldValidationHeaders 
+       } from '../objectFields';
 import { NavigationService } from '../services/navigation.service';
 
 @Component({
@@ -78,7 +81,10 @@ export class BaseReportComponent<IFilter> {
     //------------------------------------------------------
     public me = this;
     private sanitizer: DomSanitizer = inject(DomSanitizer);
-
+    //ToDo create for each record, record.linkList & record.actionList to get rid od function getRecordActions calculations
+    // linkList: ViewLink[] = [];
+    // actionList: ActionLink[] = [];
+ 
     constructor(public modalService: NgbModal, public router: Router, public excelService: ExcelExportService, public activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
         this.readCustomReportIdParameter();
@@ -270,7 +276,7 @@ export class BaseReportComponent<IFilter> {
     //---------------------------------------------------------
     isObjectField(field: string): boolean {
         field = field.toLowerCase();
-        return field === 'fieldvalidation' || field === 'reportinfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
+        return field === 'fieldvalidation' || field === 'reportinfo' || field==='forminfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
     }
     //---------------------------------------------------------        
     objectFieldHeaders(field: string): SafeHtml {
@@ -278,6 +284,9 @@ export class BaseReportComponent<IFilter> {
         switch (field.toLowerCase()) {
             case 'reportinfo':
                 result = getReportInfoHeaders();
+                break;
+            case 'forminfo':
+                result = getFormInfoHeaders();
                 break;
             case 'fieldvalidation':
                 result = getFieldValidationHeaders();
@@ -297,6 +306,9 @@ export class BaseReportComponent<IFilter> {
         switch (field.toLowerCase()) {
             case 'reportinfo':
                 result = getReportInfoData(record[field]);
+                break;
+            case 'forminfo':
+                result = getFormInfoData(record[field]);
                 break;
             case 'fieldvalidation':
                 result = getFieldValidationData(record[field]);

@@ -6,16 +6,16 @@ type Range = { from?: Primitive; to?: Primitive };
 type FilterObject = Record<string, Primitive | Range | undefined>;
 //------------------------------------------------
 export interface TokenParsed {
-  userId: string;
-  exp: number; // e.g. offsetSeconds from Date.now()/1000
-  roleId: string[];
-  app: string[];
-  method: string[];
+    userId: string;
+    exp: number; // e.g. offsetSeconds from Date.now()/1000
+    roleId: string[];
+    app: string[];
+    method: string[];
 }
 //------------------------------------------------
 export interface TokenModel {
-  token: string | null;
-  tokenParsed: TokenParsed | null;
+    token: string | null;
+    tokenParsed: TokenParsed | null;
 }
 //------------------------------------------------
 export interface IUserInterface {
@@ -41,6 +41,10 @@ export interface IAction {
     actionType: string;
     actionLocation: string;
     actionSource: string;
+    btnType?: string | number;
+    btnText?: string;
+    btnClass?: string;
+    isVisible?: boolean;
 }
 //------------------------------------------------
 export interface ViewLink {
@@ -54,6 +58,13 @@ export interface ActionLink {
     displayText: string;
     action: any;
     data?: any;
+}
+//------------------------------------------------
+export interface ButtonLink {
+    btnType?: string | number;
+    btnText?: string;
+    btnClass?: string;
+    isVisible?: boolean;
 }
 //------------------------------------------------
 export interface IQueryColumn {
@@ -107,19 +118,18 @@ export interface IEntity {
 
 export interface ICustomReports {
     id?: string;
-name?: string;
-request?: string;
-baseReport?: string;
-isPrivate?: boolean;
-isDeleted?: boolean;
-createdBy?: string;
-url?: string;
+    name?: string;
+    request?: string;
+    baseReport?: string;
+    isPrivate?: boolean;
+    isDeleted?: boolean;
+    createdBy?: string;
+    url?: string;
 
 }
 //------------------------------------------------
 
-export interface ICustomFieldDefinitionRecord
-{
+export interface ICustomFieldDefinitionRecord {
     id?: string;
     name?: string;
     displayName?: string;
