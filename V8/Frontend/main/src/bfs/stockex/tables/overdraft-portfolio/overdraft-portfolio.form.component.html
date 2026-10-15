@@ -75,7 +75,7 @@
                                                             <li *ngFor="let option of brokerAgreementAuto.optionList; let i = index">
                                                                 <button type="button" 
                                                                     class="dropdown-item d-flex justify-content-between align-items-center" 
-                                                                    (mousedown)="$event.preventDefault(); brokerAgreementAuto.onSelect(option) ; BrokerAgreementChange()" 
+                                                                    (mousedown)="$event.preventDefault(); brokerAgreementAuto.onSelect(option) ; BrokerAgreementChange();" 
                                                                     
                                                                     >
                                                                     <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
@@ -95,6 +95,7 @@
         <label for="ssPortfolioId" class="form-label fs-6">StockShare Portfolio</label>
         <select class="form-select" id="ssPortfolioId" formControlName="ssPortfolioId"  
             [class]="submit && !form['ssPortfolioId'].errors ? 'is-valid': submit && form['ssPortfolioId'].errors ? 'is-invalid' : ''">
+            <option value="0" disabled>Select a StockShare Portfolio</option>
             <ng-container *ngFor="let option of SsPortfolioOptions">
             <option [value]="option['id']">{{ option['name'] }}</option>
             </ng-container>

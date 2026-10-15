@@ -79,7 +79,7 @@ _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName
             _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
 
             //autoCompletes
-            _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "BrokerAgreementName", IsAggregare = false});
+            _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "('['+FORMAT(stkxBrokerAgreement.AgreementDate, 'dd-MM-yyyy')+']    Investor: ' + stkxInvestor.Name +'      Broker: ' + stkxBroker.Name) ", QueryName = "BrokerAgreementName", IsAggregare = false});
 
            //Aggregates
 
@@ -98,10 +98,12 @@ _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName
 
            sql.AppendLine($"   Left Join stkxBrokerAgreement on stkxOverdraftPortfolio.BrokerAgreementId = stkxBrokerAgreement.Id");
 
-//Template_Start_Code_DontOverwrite_6
-//Template_End_Code_DontOverwrite_6
+            //Template_Start_Code_DontOverwrite_6
+            sql.AppendLine($"   Left Join stkxInvestor on stkxBrokerAgreement.InvestorId = stkxInvestor.Id");
+            sql.AppendLine($"   Left Join stkxBroker on stkxBrokerAgreement.BrokerId = stkxBroker.Id");
+            //Template_End_Code_DontOverwrite_6
 
-           return sql.ToString();
+            return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<OverdraftPortfolioListFilter> request, DynamicParameters parameters)

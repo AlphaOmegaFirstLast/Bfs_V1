@@ -51,6 +51,14 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
+            {
+                label: 'Overdraft Report',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/overdraft-rep-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
         ]
     },
     {
@@ -194,23 +202,23 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-                {
-        label: 'CreditI Interest',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/credit-interest/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Debit Interest',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/debit-interest/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-//Template_Component_Menu_Transactions
+            {
+                label: 'CreditI Interest',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/credit-interest/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Debit Interest',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/debit-interest/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Transactions
         ]
     },
     {
@@ -270,15 +278,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
-                {
-        label: 'Overdraft Report',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/overdraft-rep-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-//Template_Component_Menu_Reports
+            {
+                label: 'Overdraft Report',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/overdraft-rep-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            //Template_Component_Menu_Reports
         ]
     },
     {
@@ -411,23 +419,23 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-                {
-        label: 'Payment Mode',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/payment-mode/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-    {
-        label: 'Coupon Types',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/coupon-type/list',
-        data: {
-            role: ['admin', 'investor','broker']
-        }
-    },
-//Template_Component_Menu_Seed
+            {
+                label: 'Payment Mode',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/payment-mode/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Coupon Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/coupon-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Seed
         ]
     },
 ];
