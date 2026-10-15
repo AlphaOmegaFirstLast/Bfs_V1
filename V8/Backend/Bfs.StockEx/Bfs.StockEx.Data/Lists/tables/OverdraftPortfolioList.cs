@@ -77,9 +77,9 @@ _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "BrokerAgreementName", IsAggregare = false});
 
             //autoCompletes
+            _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "BrokerAgreementName", IsAggregare = false});
 
            //Aggregates
 
@@ -95,7 +95,8 @@ _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = 
            sql.AppendLine(" From stkxOverdraftPortfolio ");
 
            sql.AppendLine($"   Left Join stkxSsPortfolio on stkxOverdraftPortfolio.SsPortfolioId = stkxSsPortfolio.Id");
-sql.AppendLine($"   Left Join stkxBrokerAgreement on stkxOverdraftPortfolio.BrokerAgreementId = stkxBrokerAgreement.Id");
+
+           sql.AppendLine($"   Left Join stkxBrokerAgreement on stkxOverdraftPortfolio.BrokerAgreementId = stkxBrokerAgreement.Id");
 
 //Template_Start_Code_DontOverwrite_6
 //Template_End_Code_DontOverwrite_6
@@ -136,7 +137,8 @@ sql.AppendLine($"   Left Join stkxBrokerAgreement on stkxOverdraftPortfolio.Brok
                     sql.AppendLine("stkxOverdraftPortfolio.SsPortfolioId = @SsPortfolioId");
                     parameters.Add("@SsPortfolioId", filter.SsPortfolioId.Value);
                 }
-if (filter.BrokerAgreementId.HasValue)
+
+                if (filter.BrokerAgreementId.HasValue)
                 {
                     sql.AppendLine("stkxOverdraftPortfolio.BrokerAgreementId = @BrokerAgreementId");
                     parameters.Add("@BrokerAgreementId", filter.BrokerAgreementId.Value);

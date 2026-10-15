@@ -35,7 +35,8 @@ namespace Bfs.StockEx.Contracts
         /// OverdraftPortfolio StockShare Portfolio.
         ///</Summary>
         public long SsPortfolioId {get; set;} = 0 ;
-///<Summary>
+
+        ///<Summary>
         /// OverdraftPortfolio Broker Agreement.
         ///</Summary>
         public long BrokerAgreementId {get; set;} = 0 ;

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { LucideAngularModule, LucideSearch } from 'lucide-angular';
 
 import { IQueryResponse, ILookup } from '@bfs/_shared/interfaces';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 import { IOverdraftPortfolioFilter } from './overdraft-portfolio.shared';
 //Template_Start_Code_DontOverwrite_1
@@ -29,9 +30,9 @@ export class OverdraftPortfolioFilterComponent implements OnInit {
 
     // Define look ups
     public SsPortfolioOptions:  any[] = [];
-public BrokerAgreementOptions:  any[] = [];
 
     // Define autocomplete fields
+    brokerAgreementAuto: AutoCompleteHelper;
 
     // Define range filters
     public OverdraftPercentFrom: number | undefined;
@@ -50,6 +51,7 @@ public OverdraftMaxFrom: number | undefined;
 
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+    this.brokerAgreementAuto = new AutoCompleteHelper({ queryUrl: "/BrokerAgreement/list", fieldName: 'BrokerAgreement', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3
@@ -81,21 +83,11 @@ this.OverdraftMaxFrom = this.result.OverdraftMax?.from;
                 this.isLoading.list = false;
             }
         });
-target = "/BrokerAgreement/list";
-        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.BrokerAgreementOptions = response.items;
-                this.isLoading.list = false;
-            },
-                error: (err: any) => {
-                this.errorMessage = err.message || 'An error occurred while fetching Broker Agreement data.';
-                this.isLoading.list = false;
-            }
-        });
 
     }
     //---------------------------------------------------------
     async setAutoComplete() {
+    this.brokerAgreementAuto.setupFilter(this.parent.apiService, this.result);
 
 }
 //---------------------------------------------------------

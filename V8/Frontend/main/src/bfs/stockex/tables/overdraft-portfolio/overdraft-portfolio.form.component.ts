@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
@@ -10,9 +10,10 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 
 //----------------------- System Specific -------------------------- 
 import { StockExService } from '@bfs/stockex/main/stockex.service';
+import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
-import {isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio, overdraftPortfolioUntypedFormGroup, getOverdraftPortfolioActions} from './overdraft-portfolio.shared';
+import { isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio, overdraftPortfolioUntypedFormGroup, getOverdraftPortfolioActions } from './overdraft-portfolio.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -20,8 +21,8 @@ import {isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio, 
     selector: 'overdraft-portfolio-form',
     imports: [
 
-    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
-    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+        CommonModule, FormsModule, ReactiveFormsModule, RouterLink,
+        NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
 
     ],
     standalone: true,
@@ -30,9 +31,9 @@ import {isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio, 
 
     ],
 })
-export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraftPortfolio > implements OnInit {
+export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraftPortfolio> implements OnInit {
 
-    override apiUrl =  '/OverdraftPortfolio/';
+    override apiUrl = '/OverdraftPortfolio/';
     override apiService: StockExService = inject(StockExService);
     override componentName: string = 'OverdraftPortfolio'.toLowerCase();  // used to grab its related custom field definitions
 
@@ -40,16 +41,17 @@ export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraf
 
     // Define look ups
     public SsPortfolioOptions: any[] = [];
-public BrokerAgreementOptions: any[] = [];
 
     // Define autocomplete
+    brokerAgreementAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/BrokerAgreement/list", fieldName: 'brokerAgreement', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-       super(activatedRoute);
-       this.validationForm = this.formBuilder.group(overdraftPortfolioUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+        super(activatedRoute);
+        this.validationForm = this.formBuilder.group(overdraftPortfolioUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+        this.brokerAgreementAuto.control = this.validationForm.get('brokerAgreementName');
 
     }
     //---------------------------------------------------------
@@ -65,66 +67,53 @@ public BrokerAgreementOptions: any[] = [];
         }
 
         this.linkList = this.getRecordLinks(this);
-        this.actionList = this.getRecordActions(this);    
+        this.actionList = this.getRecordActions(this);
         this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
-    override initEntity(): IOverdraftPortfolio  {
-        return initOverdraftPortfolio ();
+    override initEntity(): IOverdraftPortfolio {
+        return initOverdraftPortfolio();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
 
     }
     //---------------------------------------------------------
+    /*
     override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
         this.isLoading.lookups = true;
-// Promise.all to improve performance. apply later
-         try{
-         const [
-              ssPortfolioResponse,
-brokerAgreementResponse,
+        // Promise.all to improve performance. apply later
+        try {
+            const [
+                ssPortfolioResponse,
 
-         ] = await Promise.all
-         ([
-        this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
-this.apiService.getItems<IQueryResponse>("/BrokerAgreement/list", { pageSize: 30 }),
+            ] = await Promise.all
+                ([
+                    this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { pageSize: 30 }),
 
-         ]);
-        this.SsPortfolioOptions = ssPortfolioResponse.items;
-this.BrokerAgreementOptions = brokerAgreementResponse.items;
+                ]);
+            this.SsPortfolioOptions = ssPortfolioResponse.items;
 
- } catch (err: any) {
-   const msg = err?.message || "An error occurred while loading data.";
-   this.messages.push({ text: msg, msgType: "danger" });
- } finally {
-   this.isLoading.lookups = false;
- }
- /*
-        this.isLoading.lookups = true;
-        target = "/[LookupNameCapital]/list";
-        (await this.apiService.post(target,  {pageSize:50})).subscribe({
-            next: (response: IQueryResponse) => {
-                this.[LookupNameCapital]Options = response.items;
-                this.isLoading.lookups = false;
-            },
-                error: (err: any) => {
-                this.isLoading.lookups = false;
-                var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
-                this.messages.push({ text: msg, msgType: "danger" });
-            }
-        });
-        */
+        } catch (err: any) {
+            const msg = err?.message || "An error occurred while loading data.";
+            this.messages.push({ text: msg, msgType: "danger" });
+        } finally {
+            this.isLoading.lookups = false;
+        }
+
     }
+    */
     //---------------------------------------------------------
-    override async setAutoComplete() {   
+    override async setAutoComplete() {
+        await this.brokerAgreementAuto.setUpForm(this.apiService, this);
 
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
+        this.brokerAgreementAuto.setData(this.entity.brokerAgreementId, this.entity.brokerAgreementName);
 
     }
     //---------------------------------------------------------
@@ -133,18 +122,45 @@ this.BrokerAgreementOptions = brokerAgreementResponse.items;
         return getOverdraftPortfolioActions(this, record);
     }
 
-   //---------------------------------------------------------
+    //---------------------------------------------------------
     isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity,this.validationForm, fieldName);
+        return isVisible(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
     isEnabled(fieldName: string): boolean {
 
-        return isEnabled(this.entity,this.validationForm, fieldName);
+        return isEnabled(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+    //Template_Start_Code_DontOverwrite_2
+    async BrokerAgreementChange() {
+        const brokerAgreementId = this.validationForm.get('brokerAgreementId')?.value;
+        var brokerAgreementRecord = this.brokerAgreementAuto.list.find(X => X.id == brokerAgreementId);
+        var brokerId = brokerAgreementRecord?.brokerId;
+        var investorId = brokerAgreementRecord?.investorId;
+
+        this.messages = [];
+        let target = '';
+        this.isLoading.lookups = true;
+
+        // Promise.all to improve performance. apply later
+        try {
+            const [
+                ssPortfolioResponse,
+            ] = await Promise.all
+                ([
+                    this.apiService.getItems<IQueryResponse>("/SsPortfolio/list", { filter: { BrokerId: brokerId, InvestorId: investorId }, pageSize: 30 }),
+                ]);
+            this.SsPortfolioOptions = ssPortfolioResponse.items;
+
+        } catch (err: any) {
+            const msg = err?.message || "An error occurred while loading data.";
+            this.messages.push({ text: msg, msgType: "danger" });
+        } finally {
+            this.isLoading.lookups = false;
+        }
+    }
+    //Template_End_Code_DontOverwrite_2
 }

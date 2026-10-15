@@ -30,7 +30,9 @@ overdraftPercent?: number;
 overdraftMax?: number;
 
     ssPortfolioId?: string;
-brokerAgreementId?: string;
+
+    brokerAgreementId?: string;
+    brokerAgreementName?: string;
 
 }
 //---------------------------------------------------------
@@ -44,7 +46,9 @@ overdraftPercent: 0,
 overdraftMax: 0,
 
         ssPortfolioId: '0',
-brokerAgreementId: '0',
+
+        brokerAgreementId: '0',
+        brokerAgreementName: '',
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -62,7 +66,9 @@ overdraftPercent: [0,getFormControlValidation('{"IsRequired":false,"MinLength":n
 overdraftMax: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-brokerAgreementId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+
+    brokerAgreementId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+    brokerAgreementName: [''],
 
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -80,7 +86,9 @@ export interface IOverdraftPortfolioFilter {
     Name?: string;
 
     SsPortfolioId?: string;
-BrokerAgreementId?: string;
+
+    BrokerAgreementId?: string;
+    BrokerAgreementName?: string,
 
     OverdraftPercent?: { from?: number ; to?: number} ;
 OverdraftMax?: { from?: number ; to?: number} ;
@@ -103,7 +111,9 @@ export function initOverdraftPortfolioRequest(): IOverdraftPortfolioRequest {
             Name: undefined ,
 
             SsPortfolioId: undefined ,
-BrokerAgreementId: undefined ,
+
+            BrokerAgreementId: undefined ,
+            BrokerAgreementName: undefined ,
 
             OverdraftPercent: { from: undefined , to: undefined} ,
 OverdraftMax: { from: undefined , to: undefined} ,
@@ -119,7 +129,8 @@ export function renderOverdraftPortfolio(record: IOverdraftPortfolio, column: IQ
         switch (column.fieldName) {
             case 'ssPortfolioId':
                 return record['ssPortfolioName']?.toString();
-case 'brokerAgreementId':
+
+            case 'brokerAgreementId':
                 return record['brokerAgreementName']?.toString();
 
             default:
@@ -154,11 +165,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
 if (component.accessService.isActionAllowed('overdraftPortfolio', ''))
 {links.push({
 actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['ssPortfolioId'], route:'/stkx/ss-portfolio/view', displayText:'Go to SsPortfolio'
-});
-}
-if (component.accessService.isActionAllowed('overdraftPortfolio', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['brokerAgreementId'], route:'/stkx/broker-agreement/view', displayText:'Go to BrokerAgreement'
 });
 }
 

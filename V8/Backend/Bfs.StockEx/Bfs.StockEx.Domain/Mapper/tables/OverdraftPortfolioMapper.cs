@@ -18,7 +18,8 @@ OverdraftPercent= entity.OverdraftPercent,
 OverdraftMax= entity.OverdraftMax,
 
                SsPortfolioId= entity.SsPortfolioId,
-BrokerAgreementId= entity.BrokerAgreementId,
+
+               BrokerAgreementId= entity.BrokerAgreementId,
 
             };
 
@@ -47,7 +48,8 @@ OverdraftPortfolioEntity.OverdraftPercent= contract.OverdraftPercent;
 OverdraftPortfolioEntity.OverdraftMax= contract.OverdraftMax;
 
             OverdraftPortfolioEntity.SsPortfolioId= contract.SsPortfolioId;
-OverdraftPortfolioEntity.BrokerAgreementId= contract.BrokerAgreementId;
+
+            OverdraftPortfolioEntity.BrokerAgreementId= contract.BrokerAgreementId;
 
             return OverdraftPortfolioEntity;
         }     

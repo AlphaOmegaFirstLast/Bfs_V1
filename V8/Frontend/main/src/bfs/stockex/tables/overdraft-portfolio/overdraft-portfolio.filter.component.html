@@ -41,20 +41,44 @@
       </div>
     </div>
   </div>
-  <div class="form-control">
-    <div class="row">
-      <div class="col -4">
-        <label>Broker Agreement</label>
-      </div>
-      <div class="col -8">
-        <select class="form-select" [(ngModel)]="result.BrokerAgreementId" name="brokerAgreementId">
-          <ng-container *ngFor="let option of BrokerAgreementOptions">
-            <option [value]="option['id']">{{ option['name'] }}</option>
-          </ng-container>
-        </select>
+
+      <!-- BrokerAgreementAutoComplete Start -->
+    <div class="row mb-2">
+      <div class="col-12">
+        <div class="position-relative" (focusout)="brokerAgreementAuto.hideOverlay()">
+          <label class="d-flex align-items-center form-label fs-6">Broker Agreement       
+            <lucide-angular [img]="LucideSearch" class="text-info fs-5 m-1" />
+          </label> 
+          <div class="input-group">
+            <input id="brokerAgreementControl" type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..." 
+              [(ngModel)]="result.BrokerAgreementName"
+              (ngModelChange)="brokerAgreementAuto.onInputChange($event)" 
+              (focus)="brokerAgreementAuto.onFocus()" />
+            <span class="input-group-text" *ngIf="brokerAgreementAuto.isLoading">
+              <span class="spinner-border spinner-border-sm"></span>
+            </span>
+          </div>
+          <span class="input-group-text" *ngIf="brokerAgreementAuto.isLoading"><span
+              class="spinner-border spinner-border-sm"></span></span>
+        </div>
+
+        <ul *ngIf="brokerAgreementAuto.isShowList()" class="dropdown-menu show w-100 shadow-sm"
+          style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; z-index: 1000;">
+          <li *ngFor="let option of brokerAgreementAuto.optionList; let i = index">
+            <button type="button" class="dropdown-item d-flex justify-content-between align-items-center"
+              (mousedown)="$event.preventDefault(); brokerAgreementAuto.onSelect(option)">
+              <span>{{ option.name }}</span> <small class="text-muted">ID: {{ option.id }}</small>
+            </button>
+          </li>
+        </ul>
+
+        <ul class="dropdown-menu show w-100" *ngIf="brokerAgreementAuto.isError">
+          <li><span class="dropdown-item-text text-muted">Please select a valid Broker Agreement .</span></li>
+        </ul>
       </div>
     </div>
   </div>
+  <!-- BrokerAgreement AutoComplete End -->
 
       <div class="form-control">
     <div class="row">

@@ -18,7 +18,8 @@ public decimal OverdraftPercent {get; set;} = 0 ;
 public decimal OverdraftMax {get; set;} = 0 ;
 
         public long SsPortfolioId {get; set;} = 0 ;
-public long BrokerAgreementId {get; set;} = 0 ;
+
+        public long BrokerAgreementId {get; set;} = 0 ;
 
     }
 }
