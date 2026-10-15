@@ -83,8 +83,8 @@ _fieldList.Add(new QueryField() {ComponentName = "Broker", FieldName = "Name", D
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
-             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "AutoCompleteName", IsAggregare = false});
-             _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "stkxBrokerAgreement.Name", QueryName = "LookupName", IsAggregare = false});
+            _fieldList.Add(new QueryField() { ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "('['+FORMAT(stkxBrokerAgreement.AgreementDate, 'dd-MM-yyyy')+']    Investor: ' + stkxInvestor.Name +'      Broker: ' + stkxBroker.Name) ", QueryName = "AutoCompleteName", IsAggregare = false });
+            _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "('['+FORMAT(stkxBrokerAgreement.AgreementDate, 'dd-MM-yyyy')+']    Investor: ' + stkxInvestor.Name +'      Broker: ' + stkxBroker.Name) ", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -116,6 +116,8 @@ sql.AppendLine($"   Left Join stkxBroker on stkxBrokerAgreement.BrokerId = stkxB
                     parameters.Add("@Id", filter.Id);
                 }
 
+                //Template_Start_Generated_Ignored_1
+                /*
                 if (!string.IsNullOrEmpty(filter.Name))
                 {
                    if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
@@ -129,6 +131,8 @@ sql.AppendLine($"   Left Join stkxBroker on stkxBrokerAgreement.BrokerId = stkxB
                       parameters.Add("@Name", filter.Name);
                    }
                 }
+                */
+                //Template_End_Generated_Ignored_1
 
                 if (filter.InvestorId.HasValue)
                 {
@@ -153,6 +157,14 @@ if (filter.BrokerId.HasValue)
                 }
 
                 //Template_Start_Code_DontOverwrite_7
+                if (!string.IsNullOrEmpty(filter.Name))
+                {
+                    if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                    {
+                        sql.AppendLine("( stkxBroker.Name like '%'+@Name+'%' or stkxInvestor.Name like '%'+@Name+'%') ");
+                        parameters.Add("@Name", filter.Name);
+                    }
+                }                
                 //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
