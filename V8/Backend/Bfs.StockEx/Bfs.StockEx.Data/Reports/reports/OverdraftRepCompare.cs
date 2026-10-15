@@ -89,6 +89,7 @@ namespace Bfs.StockEx.Data.Reports
             _fieldList.Add(new QueryField() { DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false });
             _fieldList.Add(new QueryField() { DbName = "stkxBroker.Name", QueryName = "BrokerName", IsAggregare = false });
             _fieldList.Add(new QueryField() { DbName = "stkxInvestor.Name", QueryName = "InvestorName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false });
 
             _fieldList.Add(new QueryField() { DbName = "stkxBrokerAgreement.AgreementDate", QueryName = "BrokerAgreement_AgreementDate", IsAggregare = false });
             _fieldList.Add(new QueryField() { DbName = "stkxBrokerAgreement.BrokerId", QueryName = "BrokerAgreement_BrokerId", IsAggregare = false });
@@ -97,22 +98,22 @@ namespace Bfs.StockEx.Data.Reports
 
             var sb1 = new StringBuilder();
             sb1.Append("  CASE WHEN ");
-            sb1.Append("       SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent > stkxOverdraftPortfolio.OverdraftMax ");
+            sb1.Append("       SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent/100 > stkxOverdraftPortfolio.OverdraftMax ");
             sb1.Append("  THEN stkxOverdraftPortfolio.OverdraftMax ");
-            sb1.Append("  ELSE SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent ");
+            sb1.Append("  ELSE SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent/100 ");
             sb1.Append("  END ");
 
-            _fieldList.Add(new QueryField() { DbName = sb1.ToString(), QueryName = "overDraft", IsAggregare = true }); 
+            _fieldList.Add(new QueryField() { DbName = sb1.ToString(), QueryName = "OverdraftPortfolio_Overdraft", IsAggregare = true }); 
         
             var sb2 = new StringBuilder();
             sb2.Append("  ((CASE WHEN ");
-            sb2.Append("       SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent > stkxOverdraftPortfolio.OverdraftMax  ");
+            sb2.Append("       SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent/100 > stkxOverdraftPortfolio.OverdraftMax  ");
             sb2.Append("  THEN stkxOverdraftPortfolio.OverdraftMax ");
-            sb2.Append("  ELSE SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent ");
+            sb2.Append("  ELSE SUM(stkxCashTransaction.value) * stkxOverdraftPortfolio.OverdraftPercent/100 ");
             sb2.Append("  END) ");
             sb2.Append("  + Balance) ");
 
-            _fieldList.Add(new QueryField() { DbName = sb2.ToString(), QueryName = "availableCredit", IsAggregare = true }); 
+            _fieldList.Add(new QueryField() { DbName = sb2.ToString(), QueryName = "sumAvailableCredit", IsAggregare = true }); 
             _fieldList.Add(new QueryField() { DbName = "Sum(stkxCashTransaction.value)", QueryName = "sumTotalCashDeposit", IsAggregare = true });
 
             //Template_End_Code_DontOverwrite_5
@@ -134,6 +135,7 @@ namespace Bfs.StockEx.Data.Reports
             //Template_Start_Code_DontOverwrite_6
             sql.AppendLine($"   Left Join  stkxSsPortfolio on stkxOverdraftPortfolio.SsPortfolioId = stkxSsPortfolio.Id");
             sql.AppendLine($"   Left Join  stkxSsPortfolioBalance on stkxSsPortfolio.id = stkxSsPortfolioBalance.SsPortfolioId ");
+            sql.AppendLine($"   Left Join  stkxCurrency on stkxSsPortfolioBalance.CurrencyId = stkxCurrency.Id ");
             sql.AppendLine($"   Left Join  stkxCashTransaction on stkxSsPortfolio.id = stkxCashTransaction.SsPortfolioId  and stkxCashTransaction.TransactionTypeId = 3");
 
             sql.AppendLine($"   Left Join  stkxBrokerAgreement on stkxOverdraftPortfolio.BrokerAgreementId = stkxBrokerAgreement.id");
@@ -156,12 +158,6 @@ namespace Bfs.StockEx.Data.Reports
                 {
                     sql.AppendLine(" AND stkxOverdraftPortfolio.Id = @OverdraftPortfolio_Id");
                     parameters.Add("@OverdraftPortfolio_Id", filter.OverdraftPortfolio_Id);
-                }
-
-                if (filter.BrokerAgreement_SsPortfolioId.HasValue)
-                {
-                    sql.AppendLine("stkxBrokerAgreement.SsPortfolioId = @BrokerAgreement_SsPortfolioId");
-                    parameters.Add("@BrokerAgreement_SsPortfolioId", filter.BrokerAgreement_SsPortfolioId.Value);
                 }
                 if (filter.OverdraftPortfolio_BrokerAgreementId.HasValue)
                 {
