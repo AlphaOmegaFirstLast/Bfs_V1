@@ -15,7 +15,8 @@ public long SsPortfolioId { get; set; }
 public long BrokerAgreementId { get; set; }
 
         public string? SsPortfolioName { get; set; }
-public string? BrokerAgreementName { get; set; }
+
+        public string? BrokerAgreementName { get; set; }
 
    }
 }
