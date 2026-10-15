@@ -32,6 +32,7 @@ export class AutoCompleteHelper {
     isInitial?: boolean = true;
     showDropDown: boolean = false;
     options: ILookup[] = [];
+    list: any[] = []; ;
     isLoading: boolean = false;
     fieldName: string = '';
     control: any = null;
@@ -143,6 +144,7 @@ export class AutoCompleteHelper {
         try {
             const request = { pageSize: 20, filter: {isAutoComplete: true, name: searchTerm } };
             const response: any = await this.apiService?.postAutoComplete(this.queryUrl, request);
+            this.list = response?.items ?? [];
             this.options = response?.items?.map((item: any) => ({ id: item.id, name: item.autoCompleteName })) ?? [];
             this.isError = response?.items.length == 0;
             this.setData(undefined, searchTerm);  //invalidate id, leave name as it is
