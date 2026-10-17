@@ -10,7 +10,8 @@ public DateTime TransactionDate { get; set; }
 public decimal Price { get; set; }
 
         public string? StockShareName { get; set; }
+        public string? CurrencyName { get; set; }
 
-//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
-   }
+        //manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
+    }
 }

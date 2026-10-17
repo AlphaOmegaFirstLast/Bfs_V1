@@ -11,6 +11,6 @@ public decimal Price { get; set; }
 
         public string? StockShareName { get; set; }
 
-//manual: Add list output field "Name" if there is none has been generated. for lookups & filter dropdowns
-   }
+        public string? CurrencyName { get; set; }
+    }
 }

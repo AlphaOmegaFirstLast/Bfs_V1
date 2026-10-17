@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
@@ -14,7 +14,7 @@ import { StockExService } from '@bfs/stockex/main/stockex.service';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
-import {isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTransactionUntypedFormGroup, getSspTransactionActions} from './ssp-transaction.shared';
+import { isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTransactionUntypedFormGroup, getSspTransactionActions } from './ssp-transaction.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -22,21 +22,21 @@ import {isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTrans
     selector: 'ssp-transaction-form',
     imports: [
 
-    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
-    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
-, FlatpickrDirective
+        CommonModule, FormsModule, ReactiveFormsModule, RouterLink,
+        NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+        , FlatpickrDirective
 
     ],
     standalone: true,
     templateUrl: './ssp-transaction.form.component.html',
     providers: [
-  provideFlatpickrDefaults()
+        provideFlatpickrDefaults()
 
     ],
 })
-export class SspTransactionFormComponent extends BaseFormComponent<ISspTransaction > implements OnInit {
+export class SspTransactionFormComponent extends BaseFormComponent<ISspTransaction> implements OnInit {
 
-    override apiUrl =  '/SspTransaction/';
+    override apiUrl = '/SspTransaction/';
     override apiService: StockExService = inject(StockExService);
     override componentName: string = 'SspTransaction'.toLowerCase();  // used to grab its related custom field definitions
 
@@ -44,21 +44,34 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
 
     // Define look ups
     public TransactionTypeOptions: any[] = [];
-public StockShareOptions: any[] = [];
-public CurrencyOptions: any[] = [];
-
+    public StockShareOptions: any[] = [];
+    public CurrencyOptions: any[] = [];
+    public fields: any = {
+        ssPortfolioId: { visible: true, enabled: true },
+        stockShareId: { visible: true, enabled: true },
+        transactionTypeId: { visible: true, enabled: true },
+        quantity: { visible: true, enabled: true },
+        transactionDate: { visible: true, enabled: true },
+        sourceDate: { visible: true, enabled: true },
+        source: { visible: true, enabled: true },
+        price: { visible: true, enabled: true },
+        currencyId: { visible: true, enabled: true },
+        notes: { visible: true, enabled: true },
+        toPortfolioId: { visible: false, enabled: true },
+        toQuantity: { visible: false, enabled: true }
+    };
     // Define autocomplete
-    ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
-toPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'toPortfolio', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    toPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'toPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
 
-       super(activatedRoute);
-       this.validationForm = this.formBuilder.group(sspTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
-      this.ssPortfolioAuto.control = this.validationForm.get('ssPortfolioName');
-this.toPortfolioAuto.control = this.validationForm.get('toPortfolioName');
+        super(activatedRoute);
+        this.validationForm = this.formBuilder.group(sspTransactionUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+        this.ssPortfolioAuto.control = this.validationForm.get('ssPortfolioName');
+        this.toPortfolioAuto.control = this.validationForm.get('toPortfolioName');
 
     }
     //---------------------------------------------------------
@@ -74,56 +87,62 @@ this.toPortfolioAuto.control = this.validationForm.get('toPortfolioName');
         }
 
         this.linkList = this.getRecordLinks(this);
-        this.actionList = this.getRecordActions(this);    
+        this.actionList = this.getRecordActions(this);
         this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
-    override initEntity(): ISspTransaction  {
-        return initSspTransaction ();
+    override initEntity(): ISspTransaction {
+        return initSspTransaction();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
 
     }
     //---------------------------------------------------------
-    override async setAutoComplete() {   
-    await this.ssPortfolioAuto.setUpForm(this.apiService, this);
-await this.toPortfolioAuto.setUpForm(this.apiService, this);
+    override async setAutoComplete() {
+        await this.ssPortfolioAuto.setUpForm(this.apiService, this);
+        await this.toPortfolioAuto.setUpForm(this.apiService, this);
 
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
-    this.ssPortfolioAuto.setData(this.entity.ssPortfolioId,this.entity.ssPortfolioName);
-this.toPortfolioAuto.setData(this.entity.toPortfolioId,this.entity.toPortfolioName);
+        this.ssPortfolioAuto.setData(this.entity.ssPortfolioId, this.entity.ssPortfolioName);
+        this.toPortfolioAuto.setData(this.entity.toPortfolioId, this.entity.toPortfolioName);
 
     }
     //---------------------------------------------------------
 
     override getActions(record: IEntity): IAction[] {
         let actions = getSspTransactionActions(this, record);
-                actions = actions.filter(a => (
-            ((this.currentOperation=='add') && a.displayText.includes('Save'))
-          || ((this.currentOperation=='edit') && a.displayText.includes('Update'))
-          || ((this.currentOperation=='delete') && a.displayText.includes('Delete'))
+        actions = actions.filter(a => (
+            ((this.currentOperation == 'add') && a.displayText.includes('Save'))
+            || ((this.currentOperation == 'edit') && a.displayText.includes('Update'))
+            || ((this.currentOperation == 'delete') && a.displayText.includes('Delete'))
         ));
         return actions;
     }
 
-   //---------------------------------------------------------
+    //---------------------------------------------------------
     isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity,this.validationForm, fieldName);
+        return isVisible(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
     isEnabled(fieldName: string): boolean {
 
-        return isEnabled(this.entity,this.validationForm, fieldName);
+        return isEnabled(this.entity, this.validationForm, fieldName);
     }
     //--------------------------------------------------------------
 
-//Template_Start_Code_DontOverwrite_2
-override async getLookups(): Promise<void> {
+    //Template_Start_Code_DontOverwrite_2
+    onTransactionTypeChange() {
+        const transactionTypeValue = this.validationForm.get("transactionTypeId")?.value || 0;
+        this.fields.toPortfolioId.visible = transactionTypeValue == 9 || transactionTypeValue == 10;
+        this.fields.toQuantity.visible = transactionTypeValue == 15 || transactionTypeValue == 16;
+    }
+    //--------------------------------------------------------------
+    override async getLookups(): Promise<void> {
         this.messages = [];
         let target = '';
         this.isLoading.lookups = true;
@@ -167,6 +186,6 @@ override async getLookups(): Promise<void> {
                });
                */
     }
-//Template_End_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
 }

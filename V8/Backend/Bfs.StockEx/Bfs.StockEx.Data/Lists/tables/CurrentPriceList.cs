@@ -69,12 +69,13 @@ namespace Bfs.StockEx.Data.Lists
             _fieldList.Add(new QueryField() {ComponentName = "CurrentPrice", FieldName = "Id", DbName = "stkxCurrentPrice.Id", QueryName = "Id", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CurrentPrice", FieldName = "StockShareId", DbName = "stkxCurrentPrice.StockShareId", QueryName = "StockShareId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "CurrentPrice", FieldName = "TransactionDate", DbName = "stkxCurrentPrice.TransactionDate", QueryName = "TransactionDate", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "CurrentPrice", FieldName = "Price", DbName = "stkxCurrentPrice.Price", QueryName = "Price", IsAggregare = false});
+            _fieldList.Add(new QueryField() { ComponentName = "CurrentPrice", FieldName = "Price", DbName = "stkxCurrentPrice.Price", QueryName = "Price", IsAggregare = false });
 
             //object fields
 
             //lookups
             _fieldList.Add(new QueryField() {ComponentName = "StockShare", FieldName = "Name", DbName = "stkxStockShare.Name", QueryName = "StockShareName", IsAggregare = false});
+            _fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Currency", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
 
             //autoCompletes
 
@@ -89,12 +90,13 @@ _fieldList.Add(new QueryField() {ComponentName = "CurrentPrice", FieldName = "Pr
            var sql = new StringBuilder();  
            sql.AppendLine(" From stkxCurrentPrice ");
 
-           sql.AppendLine($"   Left Join stkxStockShare on stkxCurrentPrice.StockShareId = stkxStockShare.Id");
+            sql.AppendLine($"   Left Join stkxStockShare on stkxCurrentPrice.StockShareId = stkxStockShare.Id");
+            sql.AppendLine($"   Left Join stkxCurrency on stkxStockShare.CurrencyId = stkxCurrency.Id");
 
-//Template_Start_Code_DontOverwrite_6
-//Template_End_Code_DontOverwrite_6
+            //Template_Start_Code_DontOverwrite_6
+            //Template_End_Code_DontOverwrite_6
 
-           return sql.ToString();
+            return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<CurrentPriceListFilter> request, DynamicParameters parameters)

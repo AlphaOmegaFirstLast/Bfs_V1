@@ -48,6 +48,7 @@ export class PortfolioCashTransactionCompareComponent
         // Initialize queryRequest with default values
         super(modalService, router, excelService, activatedRoute);
 
+        this.isButton.chart = false;
         this.isButton.addNew = false;
         this.getApiUrl = '/reports/PortfolioCashTransactionCompare';
 
