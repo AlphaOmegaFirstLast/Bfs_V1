@@ -8,6 +8,31 @@
       <div class="form-control">
     <div class="row">
       <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.OverdraftPortfolio_Id" value="{{result.OverdraftPortfolio_Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Broker Agreement ID</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.OverdraftPortfolio_BrokerAgreementId" name="brokerAgreementId">
+          <ng-container *ngFor="let option of BrokerAgreementOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
         <label>StockShare Portfolio</label>
       </div>
       <div class="col -8">
@@ -58,6 +83,74 @@
             <option [value]="option['id']">{{ option['name'] }}</option>
           </ng-container>
         </select>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Agreement Date</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="BrokerAgreement_AgreementDateFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" [(ngModel)]="BrokerAgreement_AgreementDateTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Overdraft </label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="OverdraftPortfolio_OverdraftFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="OverdraftPortfolio_OverdraftTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Overdraft Max</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="OverdraftPortfolio_OverdraftMaxFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="OverdraftPortfolio_OverdraftMaxTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Overdraft Percent</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="OverdraftPortfolio_OverdraftPercentFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="OverdraftPortfolio_OverdraftPercentTo">
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Total Cash Deposit</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="sumTotalCashDepositFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="sumTotalCashDepositTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Available Credit</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="sumAvailableCreditFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="sumAvailableCreditTo">
       </div>
     </div>
   </div>

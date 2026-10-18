@@ -103,22 +103,6 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'Currencies',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/currency/list',
-                data: {
-                    role: ['admin', 'investor', 'broker']
-                }
-            },
-            {
-                label: 'Expenses Types',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/expenses-type/list',
-                data: {
-                    role: ['admin', 'investor', 'broker']
-                }
-            },
-            {
                 label: 'Portfolios',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/ss-portfolio/list',
@@ -134,7 +118,23 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-            //Template_Component_Menu_Basic
+            {
+                label: 'Currencies',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/currency/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            {
+                label: 'Expenses Types',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/expenses-type/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+   //Template_Component_Menu_Basic
         ]
     },
     {
@@ -282,27 +282,6 @@ export const StockExMenuItems: MenuItemType[] = [
         ]
     },
     {
-        label: 'Custom',
-        icon: 'tablerMail',
-        isCollapsed: true,
-        data: {
-            app: ['b.ofc'],
-            role: ['admin']
-        },
-        children: [
-            {
-                label: 'Custom Reports',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/custom-reports/list',
-                data: {
-                    role: ['admin', 'investor', 'broker']
-                }
-            },
-            //Template_Component_Menu_Custom
-        ]
-    },
-
-    {
         label: 'Balances',
         icon: 'tablerMail',
         isCollapsed: true,
@@ -331,11 +310,33 @@ export const StockExMenuItems: MenuItemType[] = [
         ]
     },
     {
-        label: 'Seed Data',
+        label: 'Custom',
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
             app: ['b.ofc'],
+            role: ['admin']
+        },
+        children: [
+            {
+                label: 'Custom Reports',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/custom-reports/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Custom
+        ]
+    },
+
+
+    {
+        label: 'Seed Data',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['xxx'],
             role: ['admin']
         },
         children: [

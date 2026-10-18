@@ -2,32 +2,32 @@ using Bfs.Core.Data;
 using Bfs.Core.Helpers;
 using Bfs.Core.ObjectFields;
 using Bfs.Core.Services.Security;
-
-using Dapper;
-using Microsoft.Data.SqlClient;
-using Bfs.StockEx.Data.Interfaces;
 using Bfs.StockEx.Data;
+using Bfs.StockEx.Data.Interfaces;
+using Dapper;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using Microsoft.Data.SqlClient;
 using System.Text;
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
 namespace Bfs.StockEx.Data.Lists
 {
-    public class OverdraftPortfolioList: QueryBase<OverdraftPortfolioListFilter>,  IOverdraftPortfolioList
+    public class OverdraftPortfolioList : QueryBase<OverdraftPortfolioListFilter>, IOverdraftPortfolioList
     {
         private readonly IResourceSecurity? _resourceSecurity;
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+        //Template_Start_Code_DontOverwrite_2
+        //Template_End_Code_DontOverwrite_2
 
         public OverdraftPortfolioList(string connectionString, IResourceSecurity? resourceSecurity
-//Template_Start_Code_DontOverwrite_3
-//Template_End_Code_DontOverwrite_3
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
         )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
-//Template_Start_Code_DontOverwrite_4
-//Template_End_Code_DontOverwrite_4
+            //Template_Start_Code_DontOverwrite_4
+            //Template_End_Code_DontOverwrite_4
         }
 
         private readonly string _connectionString;
@@ -57,7 +57,8 @@ namespace Bfs.StockEx.Data.Lists
         private List<OverdraftPortfolioListItem> DoMapping(IEnumerable<OverdraftPortfolioListItem> RecordList)
         {
             return RecordList.Select(record =>
-            { var item = (OverdraftPortfolioListItem)record;
+            {
+                var item = (OverdraftPortfolioListItem)record;
 
                 return item;
             }).ToList();
@@ -66,41 +67,41 @@ namespace Bfs.StockEx.Data.Lists
         protected override void SetupFields()
         {
             //base fields
-            _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Id", DbName = "stkxOverdraftPortfolio.Id", QueryName = "Id", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Notes", DbName = "stkxOverdraftPortfolio.Notes", QueryName = "Notes", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "OverdraftPercent", DbName = "stkxOverdraftPortfolio.OverdraftPercent", QueryName = "OverdraftPercent", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "OverdraftMax", DbName = "stkxOverdraftPortfolio.OverdraftMax", QueryName = "OverdraftMax", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "SsPortfolioId", DbName = "stkxOverdraftPortfolio.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false});
-_fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "BrokerAgreementId", DbName = "stkxOverdraftPortfolio.BrokerAgreementId", QueryName = "BrokerAgreementId", IsAggregare = false});
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "Id", DbName = "stkxOverdraftPortfolio.Id", QueryName = "Id", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "Notes", DbName = "stkxOverdraftPortfolio.Notes", QueryName = "Notes", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "OverdraftPercent", DbName = "stkxOverdraftPortfolio.OverdraftPercent", QueryName = "OverdraftPercent", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "OverdraftMax", DbName = "stkxOverdraftPortfolio.OverdraftMax", QueryName = "OverdraftMax", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "SsPortfolioId", DbName = "stkxOverdraftPortfolio.SsPortfolioId", QueryName = "SsPortfolioId", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "BrokerAgreementId", DbName = "stkxOverdraftPortfolio.BrokerAgreementId", QueryName = "BrokerAgreementId", IsAggregare = false });
 
             //object fields
 
             //lookups
-            _fieldList.Add(new QueryField() {ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false});
+            _fieldList.Add(new QueryField() { ComponentName = "SsPortfolio", FieldName = "Name", DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false });
 
             //autoCompletes
-            _fieldList.Add(new QueryField() {ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "('['+FORMAT(stkxBrokerAgreement.AgreementDate, 'dd-MM-yyyy')+']    Investor: ' + stkxInvestor.Name +'      Broker: ' + stkxBroker.Name) ", QueryName = "BrokerAgreementName", IsAggregare = false});
+            _fieldList.Add(new QueryField() { ComponentName = "BrokerAgreement", FieldName = "Name", DbName = "('['+FORMAT(stkxBrokerAgreement.AgreementDate, 'dd-MM-yyyy')+']    Investor: ' + stkxInvestor.Name +'      Broker: ' + stkxBroker.Name) ", QueryName = "BrokerAgreementName", IsAggregare = false });
 
-           //Aggregates
+            //Aggregates
 
-//Template_Start_Code_DontOverwrite_5
-             _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "AutoCompleteName", IsAggregare = false});
-             _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "LookupName", IsAggregare = false});
-//Template_End_Code_DontOverwrite_5
+            //Template_Start_Code_DontOverwrite_5
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "AutoCompleteName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { ComponentName = "OverdraftPortfolio", FieldName = "Name", DbName = "stkxOverdraftPortfolio.Name", QueryName = "LookupName", IsAggregare = false });
+            //Template_End_Code_DontOverwrite_5
         }
 
         protected override string GetFromJoinStatement()
         {
-           var sql = new StringBuilder();  
-           sql.AppendLine(" From stkxOverdraftPortfolio ");
+            var sql = new StringBuilder();
+            sql.AppendLine(" From stkxOverdraftPortfolio ");
 
-           sql.AppendLine($"   Left Join stkxSsPortfolio on stkxOverdraftPortfolio.SsPortfolioId = stkxSsPortfolio.Id");
+            sql.AppendLine($"   Left Join stkxSsPortfolio on stkxOverdraftPortfolio.SsPortfolioId = stkxSsPortfolio.Id");
 
-           sql.AppendLine($"   Left Join stkxBrokerAgreement on stkxOverdraftPortfolio.BrokerAgreementId = stkxBrokerAgreement.Id");
+            sql.AppendLine($"   Left Join stkxBrokerAgreement on stkxOverdraftPortfolio.BrokerAgreementId = stkxBrokerAgreement.Id");
 
             //Template_Start_Code_DontOverwrite_6
-            sql.AppendLine($"   Left Join stkxInvestor on stkxBrokerAgreement.InvestorId = stkxInvestor.Id");
             sql.AppendLine($"   Left Join stkxBroker on stkxBrokerAgreement.BrokerId = stkxBroker.Id");
+            sql.AppendLine($"   Left Join stkxInvestor on stkxBrokerAgreement.InvestorId = stkxInvestor.Id");
             //Template_End_Code_DontOverwrite_6
 
             return sql.ToString();
@@ -108,13 +109,13 @@ _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName
 
         protected override string GetWhereConditions(QueryRequest<OverdraftPortfolioListFilter> request, DynamicParameters parameters)
         {
-            var sql = new StringBuilder() ;
+            var sql = new StringBuilder();
             sql.AppendLine(" stkxOverdraftPortfolio.isDeleted=0 ");
 
-                         var filter = request.Filter;
+            var filter = request.Filter;
             if (filter != null)
             {
-            if ((filter.Id.HasValue) && (filter.Id>0))
+                if ((filter.Id.HasValue) && (filter.Id > 0))
                 {
                     sql.AppendLine("stkxOverdraftPortfolio.Id = @Id");
                     parameters.Add("@Id", filter.Id);
@@ -122,16 +123,16 @@ _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName
 
                 if (!string.IsNullOrEmpty(filter.Name))
                 {
-                   if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
-                   {
-                      sql.AppendLine("stkxOverdraftPortfolio.Name like '%'+@Name+'%' ");
-                      parameters.Add("@Name", filter.Name);                    
-                   }
-                   else
-                   {
-                      sql.AppendLine("stkxOverdraftPortfolio.Name like '%'+@Name+'%' ");
-                      parameters.Add("@Name", filter.Name);
-                   }
+                    if (filter.IsAutoComplete.HasValue && filter.IsAutoComplete.Value)
+                    {
+                        sql.AppendLine("stkxOverdraftPortfolio.Name like '%'+@Name+'%' ");
+                        parameters.Add("@Name", filter.Name);
+                    }
+                    else
+                    {
+                        sql.AppendLine("stkxOverdraftPortfolio.Name like '%'+@Name+'%' ");
+                        parameters.Add("@Name", filter.Name);
+                    }
                 }
 
                 if (filter.SsPortfolioId.HasValue)
@@ -156,7 +157,7 @@ _fieldList.Add(new QueryField() {ComponentName = "OverdraftPortfolio", FieldName
                     sql.AppendLine("stkxOverdraftPortfolio.OverdraftPercent <= @OverdraftPercentTo");
                     parameters.Add("@OverdraftPercentTo", filter.OverdraftPercent.To.Value);
                 }
-if (filter.OverdraftMax?.From.HasValue == true)
+                if (filter.OverdraftMax?.From.HasValue == true)
                 {
                     sql.AppendLine("stkxOverdraftPortfolio.OverdraftMax >= @OverdraftMaxFrom");
                     parameters.Add("@OverdraftMaxFrom", filter.OverdraftMax.From.Value);
@@ -172,7 +173,7 @@ if (filter.OverdraftMax?.From.HasValue == true)
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));        
+                                 .Select(s => s.Trim()));
         }
 
         protected override string GetHavingConditions(QueryRequest<OverdraftPortfolioListFilter> request, DynamicParameters parameters)
@@ -189,9 +190,9 @@ if (filter.OverdraftMax?.From.HasValue == true)
             //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));        
-       } 
-//Template_Start_Code_DontOverwrite_9
-//Template_End_Code_DontOverwrite_9   
+                                 .Select(s => s.Trim()));
+        }
+        //Template_Start_Code_DontOverwrite_9
+        //Template_End_Code_DontOverwrite_9   
     }
 }

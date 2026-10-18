@@ -13,8 +13,8 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftPercent', displayName: 'Overdraft Percent', sortName: 'OverdraftPercent', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'overdraftMax', displayName: 'Overdraft Max', sortName: 'OverdraftMax', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'overdraftPercent', displayName: 'Overdraft Percent', sortName: 'OverdraftPercent', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'overdraftMax', displayName: 'Overdraft Max', sortName: 'OverdraftMax', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'brokerAgreementId', displayName: 'Broker Agreement', sortName: 'BrokerAgreement_Name', width: '50px', isVisible:true, columnOrder:1 },
 
