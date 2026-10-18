@@ -362,8 +362,8 @@ namespace Admin.App
             leftJoinName = joinName == QueryBaseTable? ParentTable : joinName;
 
             sortName = isAggregate ? aggregateName
-                        : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}_Name"
-                        : !string.IsNullOrEmpty(autoCompleteCapital) ? $"{autoCompleteCapital}_Name"
+                        : !string.IsNullOrEmpty(lookupNameCapital) ? $"{lookupNameCapital}Name"
+                        : !string.IsNullOrEmpty(autoCompleteCapital) ? $"{autoCompleteCapital}Name"
                         : reportFieldNameCapital;
 
             var chartElement = ReportInfo.ChartElementId == null ? ChartElement.None : (ChartElement)ReportInfo.ChartElementId;
