@@ -69,16 +69,20 @@ namespace Bfs.StockEx.Data.Lists
             _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Id", DbName = "stkxTradingRoom.Id", QueryName = "Id", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Name", DbName = "stkxTradingRoom.Name", QueryName = "Name", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Notes", DbName = "stkxTradingRoom.Notes", QueryName = "Notes", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "CurrencyId", DbName = "stkxTradingRoom.CurrencyId", QueryName = "CurrencyId", IsAggregare = false});
 
             //object fields
 
             //lookups
+            _fieldList.Add(new QueryField() {ComponentName = "Currency", FieldName = "Name", DbName = "stkxCurrency.Name", QueryName = "CurrencyName", IsAggregare = false});
 
             //autoCompletes
 
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Name", DbName = "stkxTradingRoom.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Name", DbName = "stkxTradingRoom.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -86,6 +90,8 @@ _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Not
         {
            var sql = new StringBuilder();  
            sql.AppendLine(" From stkxTradingRoom ");
+
+           sql.AppendLine($"   Left Join stkxCurrency on stkxTradingRoom.CurrencyId = stkxCurrency.Id");
 
 //Template_Start_Code_DontOverwrite_6
 //Template_End_Code_DontOverwrite_6
@@ -121,6 +127,14 @@ _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Not
                    }
                 }
 
+                if (filter.CurrencyId.HasValue)
+                {
+                    sql.AppendLine("stkxTradingRoom.CurrencyId = @CurrencyId");
+                    parameters.Add("@CurrencyId", filter.CurrencyId.Value);
+                }
+
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -137,11 +151,13 @@ _fieldList.Add(new QueryField() {ComponentName = "TradingRoom", FieldName = "Not
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

@@ -23,5 +23,10 @@ namespace Bfs.StockEx.Contracts
         ///</Summary>
         public string Notes {get; set;} = string.Empty ;
 
+        ///<Summary>
+        /// TradingRoom Currency.
+        ///</Summary>
+        public long CurrencyId {get; set;} = 0 ;
+
     }
 }

@@ -28,6 +28,7 @@ export class TradingRoomFilterComponent implements OnInit {
     protected readonly LucideSearch = LucideSearch;
 
     // Define look ups
+    public CurrencyOptions:  any[] = [];
 
     // Define autocomplete fields
 
@@ -39,8 +40,14 @@ export class TradingRoomFilterComponent implements OnInit {
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -54,6 +61,17 @@ export class TradingRoomFilterComponent implements OnInit {
     //---------------------------------------------------------
     async getLookups(): Promise<void> {
         let target = '';
+        target = "/Currency/list";
+        (await this.parent.apiService.post(target,  {pageSize:50})).subscribe({
+            next: (response: IQueryResponse) => {
+                this.CurrencyOptions = response.items;
+                this.isLoading.list = false;
+            },
+                error: (err: any) => {
+                this.errorMessage = err.message || 'An error occurred while fetching Currency data.';
+                this.isLoading.list = false;
+            }
+        });
 
     }
     //---------------------------------------------------------
@@ -73,6 +91,6 @@ export class TradingRoomFilterComponent implements OnInit {
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

@@ -15,6 +15,8 @@ Id= entity.Id,
 Name= entity.Name,
 Notes= entity.Notes,
 
+               CurrencyId= entity.CurrencyId,
+
             };
 
             return contract;
@@ -38,6 +40,8 @@ Notes= entity.Notes,
 TradingRoomEntity.Id= contract.Id;
 TradingRoomEntity.Name= contract.Name;
 TradingRoomEntity.Notes= contract.Notes;
+
+            TradingRoomEntity.CurrencyId= contract.CurrencyId;
 
             return TradingRoomEntity;
         }     

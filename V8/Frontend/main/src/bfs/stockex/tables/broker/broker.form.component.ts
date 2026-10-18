@@ -18,8 +18,6 @@ import {isEnabled, isVisible, type IBroker, initBroker, brokerUntypedFormGroup, 
 
 import {SsPortfolioListComponent} from "../ss-portfolio/ss-portfolio.list.component"
 import {ISsPortfolioFilter, ISsPortfolioRequest, initSsPortfolioRequest} from "../ss-portfolio/ss-portfolio.shared"
-import {InvestorBrokerFundListComponent} from "../investor-broker-fund/investor-broker-fund.list.component"
-import {IInvestorBrokerFundFilter, IInvestorBrokerFundRequest, initInvestorBrokerFundRequest} from "../investor-broker-fund/investor-broker-fund.shared"
 import {BrokerAgreementListComponent} from "../broker-agreement/broker-agreement.list.component"
 import {IBrokerAgreementFilter, IBrokerAgreementRequest, initBrokerAgreementRequest} from "../broker-agreement/broker-agreement.shared"
 
@@ -27,7 +25,6 @@ import {IBrokerAgreementFilter, IBrokerAgreementRequest, initBrokerAgreementRequ
     selector: 'broker-form',
     imports: [
     SsPortfolioListComponent,
-InvestorBrokerFundListComponent,
 BrokerAgreementListComponent,
 
     CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
@@ -48,7 +45,6 @@ export class BrokerFormComponent extends BaseFormComponent<IBroker > implements 
 
     // Children filters
     presetSsPortfolioFilter: ISsPortfolioFilter | undefined;
-presetInvestorBrokerFundFilter: IInvestorBrokerFundFilter | undefined;
 presetBrokerAgreementFilter: IBrokerAgreementFilter | undefined;
 
     // Define look ups
@@ -78,6 +74,7 @@ presetBrokerAgreementFilter: IBrokerAgreementFilter | undefined;
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): IBroker  {
@@ -89,11 +86,6 @@ presetBrokerAgreementFilter: IBrokerAgreementFilter | undefined;
         this.presetSsPortfolioFilter = presetSsPortfolioRequest.filter;
         if (this.presetSsPortfolioFilter) {
             this.presetSsPortfolioFilter.BrokerId = this.entity.id;
-        }
-let presetInvestorBrokerFundRequest: IInvestorBrokerFundRequest = initInvestorBrokerFundRequest();
-        this.presetInvestorBrokerFundFilter = presetInvestorBrokerFundRequest.filter;
-        if (this.presetInvestorBrokerFundFilter) {
-            this.presetInvestorBrokerFundFilter.BrokerId = this.entity.id;
         }
 let presetBrokerAgreementRequest: IBrokerAgreementRequest = initBrokerAgreementRequest();
         this.presetBrokerAgreementFilter = presetBrokerAgreementRequest.filter;

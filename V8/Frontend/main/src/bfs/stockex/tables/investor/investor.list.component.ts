@@ -44,6 +44,8 @@ export class InvestorListComponent
     override queryRequest = {} as IInvestorRequest;
     override exportRequest = {} as IInvestorRequest;
     override downloadFileName: string = "Investors";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class InvestorListComponent
 
         this.filterComponent = InvestorFilterComponent;
         this.queryRequest = initInvestorRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class InvestorListComponent
         return getInvestorActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 

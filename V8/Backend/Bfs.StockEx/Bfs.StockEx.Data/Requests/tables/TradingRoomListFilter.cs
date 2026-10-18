@@ -11,5 +11,7 @@ namespace Bfs.StockEx.Data
 
         public string? Name { get; set; }
 
+        public long? CurrencyId { get; set; }
+
     }
 }

@@ -14,11 +14,14 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
+                                            <div *ngFor="let link of buttonList">
+                                               <button *ngIf="isAccessible(link)" type="submit" class="btn btn-sm btn-outline-primary me-2" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</button>
+                                            </div>                                           
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/investor/list')">Back</button>
-                                             <a [routerLink]="['/stkx/investor/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/investor/list')">Back</button>
+                                            <a [routerLink]="['/stkx/investor/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -122,20 +125,9 @@
         <ss-portfolio-list [presetFilter]="presetSsPortfolioFilter"/>
     </ng-template>
 </li>
-<!----------------------------------------- Tab Contents InvestorBrokerFund -------------------------------------->
-
-<li [ngbNavItem]="3">
-    <a href="javascript:void(0)" ngbNavLink>
-        Investor Broker Fund
-    </a>
-
-    <ng-template ngbNavContent>
-        <investor-broker-fund-list [presetFilter]="presetInvestorBrokerFundFilter"/>
-    </ng-template>
-</li>
 <!----------------------------------------- Tab Contents BrokerAgreement -------------------------------------->
 
-<li [ngbNavItem]="4">
+<li [ngbNavItem]="3">
     <a href="javascript:void(0)" ngbNavLink>
         Broker Agreement
     </a>

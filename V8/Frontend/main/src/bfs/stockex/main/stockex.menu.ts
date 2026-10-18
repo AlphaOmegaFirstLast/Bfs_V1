@@ -171,14 +171,6 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'Investor Broker Funds',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/investor-broker-fund/list',
-                data: {
-                    role: ['admin', 'investor', 'broker']
-                }
-            },
-            {
                 label: 'Overdraft Portfolios',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/overdraft-portfolio/list',

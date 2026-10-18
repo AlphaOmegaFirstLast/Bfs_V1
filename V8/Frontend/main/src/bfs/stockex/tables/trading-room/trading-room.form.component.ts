@@ -48,6 +48,7 @@ export class TradingRoomFormComponent extends BaseFormComponent<ITradingRoom > i
 presetBrokerFilter: IBrokerFilter | undefined;
 
     // Define look ups
+    public CurrencyOptions: any[] = [];
 
     // Define autocomplete
 
@@ -73,6 +74,7 @@ presetBrokerFilter: IBrokerFilter | undefined;
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this);
     }
     //---------------------------------------------------------
     override initEntity(): ITradingRoom  {
@@ -100,11 +102,14 @@ let presetBrokerRequest: IBrokerRequest = initBrokerRequest();
 // Promise.all to improve performance. apply later
          try{
          const [
+              currencyResponse,
 
          ] = await Promise.all
          ([
+        this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
 
          ]);
+        this.CurrencyOptions = currencyResponse.items;
 
  } catch (err: any) {
    const msg = err?.message || "An error occurred while loading data.";

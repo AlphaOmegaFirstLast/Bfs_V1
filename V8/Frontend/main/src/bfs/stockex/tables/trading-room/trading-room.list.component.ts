@@ -44,6 +44,8 @@ export class TradingRoomListComponent
     override queryRequest = {} as ITradingRoomRequest;
     override exportRequest = {} as ITradingRoomRequest;
     override downloadFileName: string = "Trading Rooms";
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,6 +59,8 @@ export class TradingRoomListComponent
 
         this.filterComponent = TradingRoomFilterComponent;
         this.queryRequest = initTradingRoomRequest();
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
@@ -67,8 +71,8 @@ export class TradingRoomListComponent
         return getTradingRoomActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 
 }
 
