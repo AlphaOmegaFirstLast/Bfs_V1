@@ -30,10 +30,11 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 
 import { AccessService } from '@bfs/_shared/security/access.service';
 import { ExcelExportService } from '@bfs/_shared/services/excel-export.service';
-import { getReportInfoData, getReportInfoHeaders
-       , getFormInfoData, getFormInfoHeaders 
-       , getFieldValidationData, getFieldValidationHeaders 
-       } from '../objectFields';
+import {
+    getReportInfoData, getReportInfoHeaders
+    , getFormInfoData, getFormInfoHeaders
+    , getFieldValidationData, getFieldValidationHeaders
+} from '../objectFields';
 import { NavigationService } from '../services/navigation.service';
 
 @Component({
@@ -84,7 +85,7 @@ export class BaseReportComponent<IFilter> {
     //ToDo create for each record, record.linkList & record.actionList to get rid od function getRecordActions calculations
     // linkList: ViewLink[] = [];
     // actionList: ActionLink[] = [];
- 
+
     constructor(public modalService: NgbModal, public router: Router, public excelService: ExcelExportService, public activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
         this.readCustomReportIdParameter();
@@ -234,16 +235,17 @@ export class BaseReportComponent<IFilter> {
     getReportActions(): ActionLink[] {
 
         let actionLinks: ActionLink[] = [
-            { recordId: '', action: this.exportList, displayText: "Export data as Excel" },
+            { recordId: '', action: this.exportExcel, displayText: "Export data as Excel" },
             { recordId: '', action: this.exportJson, displayText: "Export data as Json" },
-            { recordId: '', action: this.importList, displayText: "Import data as Json" },
+            { recordId: '', action: this.importExcel, displayText: "Import data as Excel" },
+            { recordId: '', action: this.importJson, displayText: "Import data as Json" },
             { recordId: '', action: this.openSaveReport, displayText: "Save settings as Custom Report" }
         ];
 
         return actionLinks;
     }
     //---------------------------------------------------------
-    exportList(me: any) {
+    exportExcel(me: any) {
         (me.exportComponent as ExportComponent<IFilter>).export();
     }
     //---------------------------------------------------------
@@ -269,14 +271,21 @@ export class BaseReportComponent<IFilter> {
         }
     }
     //---------------------------------------------------------
-    importList(me: any) {
+    importJson(me: any) {
         const modalRef = me.modalService.open(UploadFileComponent, { 'backdrop': 'static' });
         modalRef.componentInstance.uploadUrl = me.apiService.origin + me.uploadApiUrl;
+        modalRef.componentInstance.inputFileType = modalRef.componentInstance.fileTypes[0];
+    }
+    //---------------------------------------------------------
+    importExcel(me: any) {
+        const modalRef = me.modalService.open(UploadFileComponent, { 'backdrop': 'static' });
+        modalRef.componentInstance.uploadUrl = me.apiService.origin + me.uploadApiUrl.trim() + "Excel";
+        modalRef.componentInstance.inputFileType = modalRef.componentInstance.fileTypes[1];
     }
     //---------------------------------------------------------
     isObjectField(field: string): boolean {
         field = field.toLowerCase();
-        return field === 'fieldvalidation' || field === 'reportinfo' || field==='forminfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
+        return field === 'fieldvalidation' || field === 'reportinfo' || field === 'forminfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
     }
     //---------------------------------------------------------        
     objectFieldHeaders(field: string): SafeHtml {

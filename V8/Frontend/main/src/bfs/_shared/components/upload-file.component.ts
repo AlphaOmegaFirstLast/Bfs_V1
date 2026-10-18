@@ -14,6 +14,11 @@ import { TokenService } from '@bfs/_shared/security/token.service';
 export class UploadFileComponent {
 
   public uploadUrl = ''; //'https://localhost:2100/api/ActionType/upload';
+  public fileTypes = [
+    { name: 'JSON', fileType: 'application/json' , extension: "json" },
+    { name: 'Excel', fileType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' , extension: "xlsx" },
+  ]; 
+  public inputFileType : any = this.fileTypes[0]; // Default to JSON
   public result :string = '';
   public parent: any;
   // Dependency Injection
@@ -51,7 +56,7 @@ export class UploadFileComponent {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       // Basic check to ensure it looks like a JSON file, as per the curl example
-      if (file.type === 'application/json' || file.name.toLowerCase().endsWith('.json')) {
+      if (file.type === this.inputFileType.fileType || file.name.toLowerCase().endsWith('.' + this.inputFileType.extension)) {
         this.selectedFile.set(file);
         // Reset status on new file selection
         this.uploadStatus.set(null);
@@ -60,7 +65,7 @@ export class UploadFileComponent {
       } else {
         this.selectedFile.set(null);
         this.uploadStatus.set('Error');
-        this.statusMessage.set('Please select a valid JSON file.');
+        this.statusMessage.set('Please select a valid ' + this.inputFileType.name + ' file.');
       }
     } else {
       this.selectedFile.set(null);

@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h4 class="modal-title">JSON File Uploader</h4>
+  <h4 class="modal-title">{{ inputFileType.name }} File Uploader</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
 
   <div class="row">
     <div class="col-12 pb-2">
-      <label>Select JSON File to Upload</label>
+      <label>Select {{ inputFileType.name }} File to Upload</label>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
       <input
         type="file"
         (change)="onFileSelected($event)"
-        accept=".json,application/json"
+        accept=".{{ inputFileType.extension }},{{ inputFileType.fileType }}"
         class="btn btn-outline-dark">
     </div>
   </div>
