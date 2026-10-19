@@ -9,52 +9,52 @@ import * as operations from '@bfs/master/main/master.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const BfsComponentColumns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'isSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDelete', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataType_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'interfaceRequired', displayName: 'Interface to Implement', sortName: 'InterfaceRequired', width: '50px', isVisible:false, columnOrder:1 },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'bfsSystemId', displayName: 'BestFit System', sortName: 'BfsSystem_Name', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'isSoftDelete', displayName: 'Is Soft Delete', sortName: 'IsSoftDelete', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'name', displayName: 'Name', sortName: 'Name', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'displayName', displayName: 'DisplayName', sortName: 'DisplayName', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'dataTypeId', displayName: 'Data Type', sortName: 'DataType_Name', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'menuName', displayName: 'MenuName', sortName: 'MenuName', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'menuPlaceHolder', displayName: 'MenuPlaceHolder', sortName: 'MenuPlaceHolder', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'queryBaseTable', displayName: 'QueryBaseTable', sortName: 'QueryBaseTable', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'interfaceRequired', displayName: 'Interface to Implement', sortName: 'InterfaceRequired', width: '50px', isVisible: false, columnOrder: 1 },
 
 ];
 //---------------------------------------------------------
-export interface IBfsComponent extends IEntity{
+export interface IBfsComponent extends IEntity {
     isDeleted?: boolean;
-id?: string;
-isSoftDelete?: boolean;
-name?: string;
-displayName?: string;
-menuName?: string;
-menuPlaceHolder?: string;
-queryBaseTable?: string;
-notes?: string;
-interfaceRequired?: string;
+    id?: string;
+    isSoftDelete?: boolean;
+    name?: string;
+    displayName?: string;
+    menuName?: string;
+    menuPlaceHolder?: string;
+    queryBaseTable?: string;
+    notes?: string;
+    interfaceRequired?: string;
 
     bfsSystemId?: string;
-dataTypeId?: number;
+    dataTypeId?: number;
 
 }
 //---------------------------------------------------------
 export function initBfsComponent(): IBfsComponent {
     let entity: IBfsComponent = {
         isDeleted: false,
-id: '0',
-isSoftDelete: false,
-name: '',
-displayName: '',
-menuName: '',
-menuPlaceHolder: '',
-queryBaseTable: '',
-notes: '',
-interfaceRequired: '',
+        id: '0',
+        isSoftDelete: false,
+        name: '',
+        displayName: '',
+        menuName: '',
+        menuPlaceHolder: '',
+        queryBaseTable: '',
+        notes: '',
+        interfaceRequired: '',
 
         bfsSystemId: '0',
-dataTypeId: 0,
+        dataTypeId: 0,
 
     };
     return JSON.parse(JSON.stringify(entity));
@@ -64,27 +64,27 @@ dataTypeId: 0,
 // Fields of an Entity [used in Entity form]
 export function bfsComponentUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-isSoftDelete: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-name: ['',getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-displayName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-menuName: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-menuPlaceHolder: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-queryBaseTable: ['',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"500","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-interfaceRequired: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"0","MaxLength":"100","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        isDeleted: [false, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        id: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        isSoftDelete: [false, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        name: ['', getFormControlValidation('{"IsRequired":true,"MinLength":"3","MaxLength":"50","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        displayName: ['', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        menuName: ['', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        menuPlaceHolder: ['', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        queryBaseTable: ['', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        notes: ['', getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"500","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        interfaceRequired: ['', getFormControlValidation('{"IsRequired":false,"MinLength":"0","MaxLength":"100","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    bfsSystemId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-dataTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        bfsSystemId: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        dataTypeId: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+        //Template_Start_Code_DontOverwrite_2
+        //Template_End_Code_DontOverwrite_2
 
     };
-} 
+}
 //---------------------------------------------------------
-export interface IBfsComponentRequest extends IEntityRequest<IBfsComponentFilter> {}
+export interface IBfsComponentRequest extends IEntityRequest<IBfsComponentFilter> { }
 
 //---------------------------------------------------------
 export interface IBfsComponentFilter {
@@ -92,10 +92,10 @@ export interface IBfsComponentFilter {
     Id?: string;
 
     Name?: string;
-InterfaceRequired?: string;
+    InterfaceRequired?: string;
 
     BfsSystemId?: string;
-DataTypeId?: number;
+    DataTypeId?: number;
 
 }
 //---------------------------------------------------------
@@ -108,111 +108,111 @@ export function initBfsComponentRequest(): IBfsComponentRequest {
         sortOption: {
             sortBy: 'id',
             direction: 'asc'
-            },
+        },
         filter: {
-            Id: undefined ,
+            Id: undefined,
 
-            Name: undefined ,
-InterfaceRequired: undefined ,
+            Name: undefined,
+            InterfaceRequired: undefined,
 
-            BfsSystemId: undefined ,
-DataTypeId: undefined ,
+            BfsSystemId: undefined,
+            DataTypeId: undefined,
 
-            }
+        }
     };
 
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
 export function renderBfsComponent(record: IBfsComponent, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IBfsComponent];
-        switch (column.fieldName) {
-            case 'bfsSystemId':
-                return record['bfsSystemName']?.toString();
-case 'dataTypeId':
-                return record['dataTypeName']?.toString();
+    const value = record[column.fieldName as keyof IBfsComponent];
+    switch (column.fieldName) {
+        case 'bfsSystemId':
+            return record['bfsSystemName']?.toString();
+        case 'dataTypeId':
+            return record['dataTypeName']?.toString();
 
-            default:
-                return value;
-        }
-        return value;
+        default:
+            return value;
     }
-    //---------------------------------------------------------
+    return value;
+}
+//---------------------------------------------------------
 export function getBfsComponentActions(component: any, record: IBfsComponent): IAction[] {
-        let links: IAction[] = [];
+    let links: IAction[] = [];
 
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/mstr/bfs-component/add', displayText: 'Add New record'
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/bfs-component/view', displayText: 'View...'
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/bfs-component/edit', displayText: 'Edit...' 
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/mstr/bfs-component/delete', displayText: 'Delete...' 
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['bfsSystemId'], route:'/mstr/bfs-system/view', displayText:'Go to BfsSystem'
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['dataTypeId'], route:'/mstr/data-type/view', displayText:'Go to DataType'
-});
-}
-
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateRecord, displayText: 'Duplicate Record', data: {recordId: record['id'], postUrl:'/BfsComponent', onSuccessMethodName: 'getReport' }
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' }
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], deleteUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.generateTestData, displayText: 'Generate Test Data', data: { recordId: record['id'], getUrl: '/Operations/bfsComponent/TestData' }
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'ListRow',recordId: record['id'], action: operations.setComponentDefaultActions, displayText: 'Set Component Default Actions', data: {}
-});
-}
-if (component.accessService.isActionAllowed('bfsComponent', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.setComponentDefaultActions, displayText: 'Set Component Default Actions', data: {}
-});
-}
-
-        return links;
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListHeader', recordId: 0, route: '/mstr/bfs-component/add', displayText: 'Add New record'
+        });
     }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/mstr/bfs-component/view', displayText: 'View...'
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/mstr/bfs-component/edit', displayText: 'Edit...'
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/mstr/bfs-component/delete', displayText: 'Delete...'
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['bfsSystemId'], route: '/mstr/bfs-system/view', displayText: 'Go to BfsSystem'
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['dataTypeId'], route: '/mstr/data-type/view', displayText: 'Go to DataType'
+        });
+    }
+
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'ListRow', recordId: record['id'], action: operations.duplicateRecord, displayText: 'Duplicate Record', data: { recordId: record['id'], postUrl: '/BfsComponent', onSuccessMethodName: 'getReport' }
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'ListRow', recordId: record['id'], action: operations.duplicateTree, displayText: 'Duplicate Tree', data: { recordId: record['id'], postUrl: '/Operations/BfsComponent/DuplicateTree', onSuccessMethodName: 'getReport' }
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'ListRow', recordId: record['id'], action: operations.deleteTree, displayText: 'Delete Tree', data: { recordId: record['id'], deleteUrl: '/Operations/BfsComponent/DeleteTree', onSuccessMethodName: 'getReport' }
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'FormHeader', recordId: record['id'], action: operations.generateTestData, displayText: 'Generate Test Data', data: { recordId: record['id'], getUrl: '/Operations/bfsComponent/TestData' }
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'ListRow', recordId: record['id'], action: operations.setComponentDefaultActions, displayText: 'Set Component Default Actions', data: {}
+        });
+    }
+    if (component.accessService.isActionAllowed('bfsComponent', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'FormHeader', recordId: record['id'], action: operations.setComponentDefaultActions, displayText: 'Set Component Default Actions', data: {}
+        });
+    }
+
+    return links;
+}
 //---------------------------------------------------------
 export function isVisible(entity: IBfsComponent, validationForm: UntypedFormGroup, fieldName: string): boolean {
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
     switch (fieldName) {
         case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
+            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+            return true;
     }
     return true;
 }
@@ -222,8 +222,8 @@ export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fie
     // or this.entity[fieldName]
     switch (fieldName) {
         case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
+            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+            return true;
     }
     return true;
 }

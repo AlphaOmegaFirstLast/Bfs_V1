@@ -100,7 +100,7 @@
                                                 <div class="col-12" *ngIf="fields.transactionTypeId.visible">
                                                     <label for="transactionTypeId" class="form-label fs-6">Transaction Type</label>
                                                     <select class="form-select" id="transactionTypeId" formControlName="transactionTypeId"
-                                                        (change)="$event.preventDefault(); onTransactionTypeChange();" 
+                                                        (change)="$event.preventDefault(); onTransactionTypeChange();"
 
                                                         [class]="submit && !form['transactionTypeId'].errors ? 'is-valid': submit && form['transactionTypeId'].errors ? 'is-invalid' : ''">
                                                         <ng-container *ngFor="let option of TransactionTypeOptions">
