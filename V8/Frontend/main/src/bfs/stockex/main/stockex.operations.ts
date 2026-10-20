@@ -9,10 +9,12 @@ import { ICashTransaction } from "../tables/cash-transaction/cash-transaction.sh
 //it is called as a business action.
 export async function sspTransactionRollout(me: SspTransactionFormComponent, record: IIdentifiable, data: any) {
     // implement me.validSubmit();
+
     me.submit = true
     if (me.validationForm.valid) {
         // One-time sync to entity object
         me.entity = me.validationForm.getRawValue();
+   
         me.messages = [];
         if (!me.isLoading.save) {  // to prevent multiple requests
 

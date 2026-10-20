@@ -74,12 +74,12 @@ public class UnitOfWork : IUnitOfWork
                     await RolloutPortfolioBalance(nextTransactionType, inMemoryCashEntity);
                 }
 
-               if (nextTransactionType != null && nextTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
+                if (nextTransactionType != null && nextTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
                 {
                     var toSspEntity = PopulateSspEntityFromSspTransaction(ssptEntity, (int)nextTransactionType.Id);
                     var inMemoryToSspTransactionEntity = await SspTransactionRepo.CreateAsync(toSspEntity);
-                    await RolloutStockQuantity(nextTransactionType, toSspEntity); 
-                }          
+                    await RolloutStockQuantity(nextTransactionType, toSspEntity);
+                }
             }
 
             await _context.SaveChangesAsync();
@@ -100,20 +100,29 @@ public class UnitOfWork : IUnitOfWork
             var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == ssptEntity.TransactionTypeId);
             if (sspTransactionType != null)
             {
-                if (sspTransactionType.NextTransactionTypeId != (int)TransactionTypes.None)
-                {
-                    var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.SspTransactionId == ssptEntity.Id);
-                    var cashTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == sspTransactionType.NextTransactionTypeId);
-                    if (cashTransactionType != null && cashEntity != null)
-                    {
-                        await RollbackPortfolioBalance(cashTransactionType, cashEntity);
-                        _context.CashTransactions.Remove(cashEntity);
-                    }
-                }
+                var isTransactionFoundAfterMyRecord = await _context.SspTransactions.AnyAsync(x => x.StockShareId == ssptEntity.StockShareId && x.SsPortfolioId == ssptEntity.SsPortfolioId && x.TransactionDate > ssptEntity.TransactionDate);
 
-                await RollbackStockQuantity(sspTransactionType, ssptEntity);
-                _context.SspTransactions.Remove(ssptEntity);
-                await _context.SaveChangesAsync();
+                if (!isTransactionFoundAfterMyRecord)
+                {
+                    if (sspTransactionType.NextTransactionTypeId != (int)TransactionTypes.None)
+                    {
+                        var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.SspTransactionId == ssptEntity.Id);
+                        var cashTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == sspTransactionType.NextTransactionTypeId);
+                        if (cashTransactionType != null && cashEntity != null)
+                        {
+                            await RollbackPortfolioBalance(cashTransactionType, cashEntity);
+                            _context.CashTransactions.Remove(cashEntity);
+                        }
+                    }
+
+                    await RollbackStockQuantity(sspTransactionType, ssptEntity);
+                    _context.SspTransactions.Remove(ssptEntity);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new ApplicationException("Rollback Transaction is not allowed since later transactions have been recorded.");
+                }
             }
             else
             {
@@ -173,7 +182,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task RollbackCashTransactionAsync(long id)
     {
-        var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.Id== id);
+        var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.Id == id);
         if (cashEntity != null)
         {
             var transactionTypeList = await _context.TransactionTypes.ToListAsync();
@@ -220,7 +229,7 @@ public class UnitOfWork : IUnitOfWork
 
     private async Task RolloutStockQuantity(TransactionTypeEntity currentTransactionType, SspTransactionEntity ssptEntity)
     {
-        var stock = await GetSspStockById(ssptEntity.SsPortfolioId, ssptEntity.StockShareId , ssptEntity.CurrencyId);
+        var stock = await GetSspStockById(ssptEntity.SsPortfolioId, ssptEntity.StockShareId, ssptEntity.CurrencyId);
 
         decimal resultQuantity = 0;
         // ------------------------
@@ -231,8 +240,8 @@ public class UnitOfWork : IUnitOfWork
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
-                    stock.AverageCost = ((stock.Quantity * stock.AverageCost) + (resultQuantity * ssptEntity.Price)) /(stock.Quantity + resultQuantity);
-                    stock.Quantity = stock.Quantity + resultQuantity; 
+                    stock.AverageCost = ((stock.Quantity * stock.AverageCost) + (resultQuantity * ssptEntity.Price)) / (stock.Quantity + resultQuantity);
+                    stock.Quantity = stock.Quantity + resultQuantity;
                     break;
                 case (int)enumEffectTypes.Sub:
                     stock.Quantity = stock.Quantity - resultQuantity;
@@ -254,7 +263,7 @@ public class UnitOfWork : IUnitOfWork
 
         if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
         {
-            resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
+            resultQuantity = DoRollBackCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
@@ -264,7 +273,7 @@ public class UnitOfWork : IUnitOfWork
                     stock.Quantity = stock.Quantity + resultQuantity;
                     break;
                 case (int)enumEffectTypes.Set:
-                    new NotImplementedException("Rollback for is not allowed for Balance Set Transactions.");
+                    stock.Quantity = resultQuantity;
                     break;
             }
         }
@@ -331,8 +340,8 @@ public class UnitOfWork : IUnitOfWork
             Value = (ssptEntity.Quantity * ssptEntity.Price),  // calculated value here?
             SsPortfolioId = ssptEntity.SsPortfolioId,
             SspTransactionId = ssptEntity.Id,
-            TransactionTypeId = (int)cashTransactionTypeId , //new field need to be added to TransactionTable.
-            CurrencyId = ssptEntity.CurrencyId 
+            TransactionTypeId = (int)cashTransactionTypeId, //new field need to be added to TransactionTable.
+            CurrencyId = ssptEntity.CurrencyId
         };
 
         return cashEntity;
@@ -358,7 +367,7 @@ public class UnitOfWork : IUnitOfWork
         return ToSspEntity;
     }
 
-    private async Task<SspStockEntity> GetSspStockById(long SsPortfolioId, long stockShareId , long currencyId)
+    private async Task<SspStockEntity> GetSspStockById(long SsPortfolioId, long stockShareId, long currencyId)
     {
         var stock = await _context.SspStocks.FirstOrDefaultAsync(x => x.SsPortfolioId == SsPortfolioId && x.StockShareId == stockShareId && x.CurrencyId == currencyId);
         if (stock == null)
@@ -407,11 +416,33 @@ public class UnitOfWork : IUnitOfWork
                 result = (balance * toResult) / original;
                 break;
             case enumCalculationMethods.Divident:
-                result = (balance / original) * toResult;
+                result = (balance * toResult) / original;
                 break;
         }
         return result;
     }
+
+    private decimal DoRollBackCalculations(enumCalculationMethods CalculationMethod, decimal balance, decimal original, decimal toResult)
+    {
+        decimal result = 0;
+        switch (CalculationMethod)
+        {
+            case enumCalculationMethods.None:
+                result = original;
+                break;
+            case enumCalculationMethods.Merge:
+                result = (balance * original) / toResult;
+                break;
+            case enumCalculationMethods.Split:
+                result = (balance * original) / toResult;
+                break;
+            case enumCalculationMethods.Divident:
+                result = (balance * original) / toResult;
+                break;
+        }
+        return result;
+    }
+
     //Template_End_Code_DontOverwrite_5
 
 }

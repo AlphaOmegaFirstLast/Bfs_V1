@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static Bfs.Core.Helpers.ExcelConverter;
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -99,95 +100,28 @@ public class OperationsService : IOperationsService
 
         try
         {
-            using var stream = excelFile.OpenReadStream();
-            await using var ms = new MemoryStream();
-            await stream.CopyToAsync(ms).ConfigureAwait(false);
-            var bytes = ms.ToArray();
             var filePath = $".\\Temp\\{DateTime.Today.Year}_{DateTime.Today.Month}_{DateTime.Today.Day}_CurrentPrice.xlsx";
-            await File.WriteAllBytesAsync(filePath, bytes).ConfigureAwait(false);
+            await ExcelConverter.SaveFileAsync(excelFile, filePath).ConfigureAwait(false);
 
             var json = ExcelConverter.ConvertExcelToJson(filePath);
+            json = ExcelConverter.MapHeadersToFieldNames(json);
 
-            json = json.Replace("اسم الشركة", "Name");
-            json = json.Replace("آخر سعر", "Price");
-            json = json.Replace("القطاع", "Sector");
-            json = json.Replace("الإقفال السابق", "PreviousClose");
-            json = json.Replace("سعر الفتح", "OpenPrice");
-            json = json.Replace("سعر الاغلاق", "ClosePrice");
-            json = json.Replace("نسبة التغير%", "ChangePercentage");
-            json = json.Replace("اعلى سعر", "HighestPrice");
-            json = json.Replace("اقل سعر", "LowestPrice");
-            json = json.Replace("القيمة (جنيه)", "Value");
-            json = json.Replace("الكمية", "Quantity");
-            json = json.Replace("عدد العمليات", "NumberOfTransactions");
-            json = json.Replace("رأس المال السوقى (مليون جنيه)", "MarketCapitalization");
-            json = json.Replace("\"Unknown\"", "null");
+            var recordList = ExcelConverter.ReadJsonAsRecordList(json);
+            var currentPriceList = PrepareCurrentPriceList(recordList);
 
-
-            var options = new JsonSerializerOptions
+            foreach (var record in currentPriceList)
             {
-                WriteIndented = true,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, // Keeps Arabic text readable
-                PropertyNameCaseInsensitive = true,
-                NumberHandling = JsonNumberHandling.AllowReadingFromString
-            };
+                var tradingRoomId = 10000000001;  // todo
+                var currencyId = 816930258453823;  // todo
 
-            //deserialize json as string to a list of recordJson objects
+                record.StockShareId = await _stockShareService.GetStockShareByName(record.Name, tradingRoomId, currencyId);
 
-            var recordList = JsonSerializer.Deserialize<List<recordJson>>(json, options);
-
-            if (recordList != null)
-            {
-                decimal? price = 0;
-                foreach (var record in recordList)
+                if (record.StockShareId != 0)
                 {
-                    if (record.Name == null)
-                    {
-                        price = record.Price;
-                    }
-                    else
-                    {
-                        record.Price = price;
-                    }
-                }
-
-
-                var currentPriceList = recordList?.Where(r => r.Name != null).Select(r => new CurrentPrice
-                {
-                    Name = r.Name ?? "Unknown",
-                    Price = r.Price ?? 0,
-                    TransactionDate = DateTime.Today,
-                }).ToList();
-
-                foreach (var record in currentPriceList)
-                {
-
-                    //ValidationResult validResult = await _validator.ValidateAsync(record);
-                    //if (!validResult.IsValid)
-                    //{
-                    //    problemDetails.Title = "Validation Failed";
-                    //    problemDetails.Detail = string.Join("; ", validResult.Errors.Select(e => e.ErrorMessage));
-                    //    problemDetails.Extensions = new Dictionary<string, object?>() { { "errors", validResult.Errors.Select(x => new { errorCode = x.ErrorCode, message = x.ErrorMessage }) } };
-                    //    return TypedResults.BadRequest(problemDetails);
-                    //}
-
-                    var result = await _unitOfwork._context.StockShares.FirstOrDefaultAsync(x => x.Name == record.Name);
-
-                    StockShare? newStockShare = null;
-                    if (result == null)
-                    {
-                        newStockShare = await _stockShareService.CreateAsync(new StockShare
-                        {
-                            Name = record.Name,
-                            Notes = "",
-                            TradingRoomId = 10000000001,  // todo
-                            CurrencyId = 878237827011761,
-                        });
-                    }
-                    record.StockShareId = result?.Id ?? newStockShare?.Id ?? 0;
                     await _currentPriceService.UploadAsync(record).ConfigureAwait(false);
                 }
             }
+
             return TypedResults.Ok();
         }
         catch (Exception ex)
@@ -197,7 +131,32 @@ public class OperationsService : IOperationsService
             return TypedResults.BadRequest(problemDetails);
         }
     }
-    //Template_End_Code_DontOverwrite_5
 
+    private static List<CurrentPrice>? PrepareCurrentPriceList(List<recordJson> recordList)
+    {
+
+        decimal? price = 0;
+        foreach (var record in recordList)
+        {
+            if (record.Name == null)
+            {
+                price = record.Price;
+            }
+            else
+            {
+                record.Price = price;
+            }
+        }
+
+        var currentPriceList = recordList?.Where(r => r.Name != null).Select(r => new CurrentPrice
+        {
+            Name = r.Name ?? "Unknown",
+            Price = r.Price ?? 0,
+            TransactionDate = DateTime.Today,
+        }).ToList();
+        return currentPriceList;
+    }
+
+    //Template_End_Code_DontOverwrite_5
 }
 

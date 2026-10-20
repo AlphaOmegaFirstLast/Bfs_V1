@@ -15,6 +15,7 @@ namespace Bfs.StockEx.Domain.Interfaces
 
         Task<QueryResponse<StockShareListItem>> ListAsync(QueryRequest<StockShareListFilter> contractRequest);
         Task<Results<Ok, BadRequest<ProblemDetails>>> UploadExcel(IFormFile excelFile);
+        Task<long> GetStockShareByName(string stockShareName, long tradingRoomId, long currencyId);
 
         //Template_Start_Code_DontOverwrite_2
         //Template_End_Code_DontOverwrite_2
