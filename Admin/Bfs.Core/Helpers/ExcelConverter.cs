@@ -1,10 +1,13 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace Bfs.Core.Helpers;
 
 public class ExcelConverter
@@ -68,4 +71,69 @@ public class ExcelConverter
         
         return JsonSerializer.Serialize(rowDataList, options);
     }
+
+    public static async Task SaveFileAsync(IFormFile excelFile, string filePath) 
+    {
+        using var stream = excelFile.OpenReadStream();
+        await using var ms = new MemoryStream();
+        await stream.CopyToAsync(ms).ConfigureAwait(false);
+        var bytes = ms.ToArray();
+        await File.WriteAllBytesAsync(filePath, bytes).ConfigureAwait(false);
+    }
+
+    public static List<recordJson>? ReadJsonAsRecordList(string json) 
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, // Keeps Arabic text readable
+            PropertyNameCaseInsensitive = true,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString
+        };
+
+        //deserialize json as string to a list of recordJson objects
+
+        var recordList = JsonSerializer.Deserialize<List<recordJson>>(json, options);
+
+        return recordList;
+    }
+
+    public static string MapHeadersToFieldNames(string input) 
+    {
+        input = input.Replace("اسم الشركة", "Name");
+        input = input.Replace("آخر سعر", "Price");
+
+        input = input.Replace("القطاع", "Sector");
+        input = input.Replace("الإقفال السابق", "PreviousClose");
+        input = input.Replace("سعر الفتح", "OpenPrice");
+        input = input.Replace("سعر الاغلاق", "ClosePrice");
+        input = input.Replace("نسبة التغير%", "ChangePercentage");
+        input = input.Replace("اعلى سعر", "HighestPrice");
+        input = input.Replace("اقل سعر", "LowestPrice");
+        input = input.Replace("القيمة (جنيه)", "Value");
+        input = input.Replace("الكمية", "Quantity");
+        input = input.Replace("عدد العمليات", "NumberOfTransactions");
+        input = input.Replace("رأس المال السوقى (مليون جنيه)", "MarketCapitalization");
+
+        input = input.Replace("\"Unknown\"", "null");
+        return input;
+    }
+
+    public class recordJson
+    {
+        public string? Name { get; set; }
+        public decimal? Price { get; set; }
+        public string? Sector { get; set; }
+        public decimal? PreviousClose { get; set; }
+        public decimal? OpenPrice { get; set; }
+        public decimal? ClosePrice { get; set; }
+        public string? ChangePercentage { get; set; }
+        public string? HighestPrice { get; set; }
+        public string? LowestPrice { get; set; }
+        public string? Value { get; set; }
+        public string? Quantity { get; set; }
+        public string? NumberOfTransactions { get; set; }
+        public string? MarketCapitalization { get; set; }
+    }
+
 }
