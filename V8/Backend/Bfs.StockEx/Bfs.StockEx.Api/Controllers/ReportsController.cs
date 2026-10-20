@@ -91,6 +91,14 @@ public class ReportsController
         return TypedResults.Ok(result);
     }
 
+    [HttpPost("StockshareBrokerRepCompare")]
+    [CustomAuthorize("method=q.stockshareBrokerRepCompare")]
+    public async Task<Results<Ok<QueryResponse<StockshareBrokerRepCompareItem>>, BadRequest<ProblemDetails>>> StockshareBrokerRepCompare([FromBody] QueryRequest<StockshareBrokerRepCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.StockshareBrokerRepCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
 //Template_Component_AddControllerEntry
 //Template_Start_Code_DontOverwrite_5
 //Template_End_Code_DontOverwrite_5

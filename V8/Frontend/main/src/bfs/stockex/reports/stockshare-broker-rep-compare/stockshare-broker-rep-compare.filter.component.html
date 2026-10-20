@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filter</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="form-control">
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>ID</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Stockshare_Id" value="{{result.Stockshare_Id}}" placeholder="ID" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Name</label>
+      </div>
+      <div class="col -8">
+      <input class="form-control" type="text" [(ngModel)]="result.Stockshare_Name" value="{{result.Stockshare_Name}}" placeholder="Name" #ctrl="ngModel"/>
+      </div>
+    </div>
+  </div>
+
+      <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>TradingRoomId</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.StockShare_TradingRoomId" name="tradingRoomId">
+          <ng-container *ngFor="let option of TradingRoomOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>BrokerId</label>
+      </div>
+      <div class="col -8">
+        <select class="form-select" [(ngModel)]="result.TradingRoom_BrokerId" name="brokerId">
+          <ng-container *ngFor="let option of BrokerOptions">
+            <option [value]="option['id']">{{ option['name'] }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>
+    <button type="button" class="btn btn-outline-dark" (click)="apply()">Apply</button>
+  </div>

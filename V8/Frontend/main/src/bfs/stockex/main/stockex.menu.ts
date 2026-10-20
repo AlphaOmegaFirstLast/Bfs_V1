@@ -278,7 +278,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
-            //Template_Component_Menu_Reports
+                {
+        label: 'Stockshare Broker Reports',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/report/stockshare-broker-rep-compare/0',
+        data: {
+            role: ['admin']
+        }
+    },
+//Template_Component_Menu_Reports
         ]
     },
     {
@@ -329,7 +337,6 @@ export const StockExMenuItems: MenuItemType[] = [
             //Template_Component_Menu_Custom
         ]
     },
-
 
     {
         label: 'Seed Data',

@@ -7,6 +7,7 @@ import { PortfolioCashTransactionCompareComponent } from './portfolio-cash-trans
 import { PortfolioCashTransactionAggregateCompareComponent } from './portfolio-cash-transaction-aggregate-compare/portfolio-cash-transaction-aggregate-compare.report.component';
 import { NavReportCompareComponent } from './nav-report-compare/nav-report-compare.report.component';
 import { OverdraftRepCompareComponent } from './overdraft-rep-compare/overdraft-rep-compare.report.component';
+import { StockshareBrokerRepCompareComponent } from './stockshare-broker-rep-compare/stockshare-broker-rep-compare.report.component';
 //Template_Component_AddDeclareEntry
 
 export const REPORTS_ROUTES: Routes = [
@@ -49,6 +50,12 @@ export const REPORTS_ROUTES: Routes = [
     {
         path: 'stkx/report/overdraft-rep-compare/:id',
         component: OverdraftRepCompareComponent,
+        canActivate: [RouteGuardService],
+        data: { role: ['admin'], api: ['stockex'], app: ['b.ofc'] } 
+    },
+    {
+        path: 'stkx/report/stockshare-broker-rep-compare/:id',
+        component: StockshareBrokerRepCompareComponent,
         canActivate: [RouteGuardService],
         data: { role: ['admin'], api: ['stockex'], app: ['b.ofc'] } 
     },

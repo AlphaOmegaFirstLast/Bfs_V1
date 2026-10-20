@@ -25,6 +25,8 @@ namespace Bfs.StockEx.Domain.Services
 
         private readonly IOverdraftRepCompare _overdraftRepCompare;
 
+        private readonly IStockshareBrokerRepCompare _stockshareBrokerRepCompare;
+
 //Template_Component_AddDeclareEntry
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -43,6 +45,8 @@ namespace Bfs.StockEx.Domain.Services
               ,INavReportCompare navReportCompare
 
               ,IOverdraftRepCompare overdraftRepCompare
+
+              ,IStockshareBrokerRepCompare stockshareBrokerRepCompare
 
 //Template_Component_AddParameterEntry
 //Template_Start_Code_DontOverwrite_3
@@ -63,6 +67,8 @@ namespace Bfs.StockEx.Domain.Services
               _navReportCompare = navReportCompare;
 
               _overdraftRepCompare = overdraftRepCompare;
+
+              _stockshareBrokerRepCompare = stockshareBrokerRepCompare;
 
 //Template_Component_AddInitEntry
 //Template_Start_Code_DontOverwrite_4
@@ -138,6 +144,16 @@ namespace Bfs.StockEx.Domain.Services
             var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.OverdraftRepCompareItem>, Bfs.Core.Contracts.QueryResponse<OverdraftRepCompareItem>>(entityResult);
 
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<OverdraftRepCompareItem> { Items = new List<OverdraftRepCompareItem>(), TotalItems = 0, TotalPages = 0 };
+        }
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<StockshareBrokerRepCompareItem>> StockshareBrokerRepCompareAsync(Bfs.Core.Contracts.QueryRequest<StockshareBrokerRepCompareFilter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<StockshareBrokerRepCompareFilter>, Bfs.Core.Data.QueryRequest<Data.StockshareBrokerRepCompareFilter>>(contractRequest);
+
+            var entityResult = await _stockshareBrokerRepCompare.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.StockshareBrokerRepCompareItem>, Bfs.Core.Contracts.QueryResponse<StockshareBrokerRepCompareItem>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StockshareBrokerRepCompareItem> { Items = new List<StockshareBrokerRepCompareItem>(), TotalItems = 0, TotalPages = 0 };
         }
 //Template_Component_AddServiceEntry
 //Template_Start_Code_DontOverwrite_5
