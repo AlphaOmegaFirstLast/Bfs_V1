@@ -11,41 +11,41 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
-    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'toQuantity', displayName: 'To Quantity', sortName: 'ToQuantity', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'toPortfolioId', displayName: 'To Portfolio', sortName: 'ToPortfolio_Name', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible:true, columnOrder:1 },
+    { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'sourceDate', displayName: 'Source Date', sortName: 'SourceDate', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'transactionDate', displayName: 'Transaction Date', sortName: 'TransactionDate', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'source', displayName: 'Source', sortName: 'Source', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'ssPortfolioId', displayName: 'StockShare Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'transactionTypeId', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'price', displayName: 'Price', sortName: 'Price', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible: true, columnOrder: 1 },
+    { fieldName: 'toQuantity', displayName: 'To Quantity', sortName: 'ToQuantity', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'toPortfolioId', displayName: 'To Portfolio', sortName: 'ToPortfolio_Name', width: '50px', isVisible: false, columnOrder: 1 },
+    { fieldName: 'currencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible: true, columnOrder: 1 },
 
 ];
-export const SspTransactionColumns  = reOrderColumns(columns);
+export const SspTransactionColumns = reOrderColumns(columns);
 //---------------------------------------------------------
-export interface ISspTransaction extends IEntity{
+export interface ISspTransaction extends IEntity {
     isDeleted?: boolean;
-id?: string;
-notes?: string;
-sourceDate?: Date | null;
-transactionDate?: Date | null;
-source?: string;
-quantity?: number;
-price?: number;
-toQuantity?: number;
+    id?: string;
+    notes?: string;
+    sourceDate?: Date | null;
+    transactionDate?: Date | null;
+    source?: string;
+    quantity?: number;
+    price?: number;
+    toQuantity?: number;
 
     transactionTypeId?: number;
-stockShareId?: string;
-currencyId?: string;
+    stockShareId?: string;
+    currencyId?: string;
 
     ssPortfolioId?: string;
     ssPortfolioName?: string;
-toPortfolioId?: string;
+    toPortfolioId?: string;
     toPortfolioName?: string;
 
 }
@@ -53,22 +53,22 @@ toPortfolioId?: string;
 export function initSspTransaction(): ISspTransaction {
     let entity: ISspTransaction = {
         isDeleted: false,
-id: '0',
-notes: '',
-sourceDate: new Date(),
-transactionDate: new Date(),
-source: '',
-quantity: 0,
-price: 0,
-toQuantity: 0,
+        id: '0',
+        notes: '',
+        sourceDate: new Date(),
+        transactionDate: new Date(),
+        source: '',
+        quantity: 0,
+        price: 0,
+        toQuantity: 0,
 
         transactionTypeId: 0,
-stockShareId: '0',
-currencyId: '0',
+        stockShareId: '0',
+        currencyId: '0',
 
         ssPortfolioId: '0',
         ssPortfolioName: '',
-toPortfolioId: '0',
+        toPortfolioId: '0',
         toPortfolioName: '',
 
     };
@@ -79,32 +79,32 @@ toPortfolioId: '0',
 // Fields of an Entity [used in Entity form]
 export function sspTransactionUntypedFormGroup(formBuilder: FormBuilder): any {
     return {
-    isDeleted: [false,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-id: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-notes: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-sourceDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-transactionDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-source: ['',getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-quantity: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-price: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-toQuantity: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        isDeleted: [false, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        id: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        notes: ['', getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        sourceDate: [new Date(), getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        transactionDate: [new Date(), getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        source: ['', getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"1000","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        quantity: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        price: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        toQuantity: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    transactionTypeId: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-stockShareId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-currencyId: ['0',getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        transactionTypeId: [0, getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        stockShareId: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        currencyId: ['0', getFormControlValidation('{"IsRequired":true,"MinLength":null,"MaxLength":null,"MinValue":"1","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
-    ssPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-    ssPortfolioName: [''],
-toPortfolioId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
-    toPortfolioName: [''],
+        ssPortfolioId: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        ssPortfolioName: [''],
+        toPortfolioId: ['0', getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+        toPortfolioName: [''],
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+        //Template_Start_Code_DontOverwrite_2
+        //Template_End_Code_DontOverwrite_2
 
     };
-} 
+}
 //---------------------------------------------------------
-export interface ISspTransactionRequest extends IEntityRequest<ISspTransactionFilter> {}
+export interface ISspTransactionRequest extends IEntityRequest<ISspTransactionFilter> { }
 
 //---------------------------------------------------------
 export interface ISspTransactionFilter {
@@ -112,18 +112,18 @@ export interface ISspTransactionFilter {
     Id?: string;
 
     TransactionTypeId?: number;
-StockShareId?: string;
-CurrencyId?: string;
+    StockShareId?: string;
+    CurrencyId?: string;
 
     SsPortfolioId?: string;
     SsPortfolioName?: string,
-ToPortfolioId?: string;
+    ToPortfolioId?: string;
     ToPortfolioName?: string,
 
-    SourceDate?: { from?: Date | null ; to?: Date | null} ;
-TransactionDate?: { from?: Date | null ; to?: Date | null} ;
-Quantity?: { from?: number ; to?: number} ;
-Price?: { from?: number ; to?: number} ;
+    SourceDate?: { from?: Date | null; to?: Date | null };
+    TransactionDate?: { from?: Date | null; to?: Date | null };
+    Quantity?: { from?: number; to?: number };
+    Price?: { from?: number; to?: number };
 
 }
 //---------------------------------------------------------
@@ -136,116 +136,116 @@ export function initSspTransactionRequest(): ISspTransactionRequest {
         sortOption: {
             sortBy: 'id',
             direction: 'asc'
-            },
+        },
         filter: {
-            Id: undefined ,
+            Id: undefined,
 
-            TransactionTypeId: undefined ,
-StockShareId: undefined ,
-CurrencyId: undefined ,
+            TransactionTypeId: undefined,
+            StockShareId: undefined,
+            CurrencyId: undefined,
 
-            SsPortfolioId: undefined ,
-            SsPortfolioName: undefined ,
-ToPortfolioId: undefined ,
-            ToPortfolioName: undefined ,
+            SsPortfolioId: undefined,
+            SsPortfolioName: undefined,
+            ToPortfolioId: undefined,
+            ToPortfolioName: undefined,
 
-            SourceDate: { from: undefined , to: undefined} ,
-TransactionDate: { from: undefined , to: undefined} ,
-Quantity: { from: undefined , to: undefined} ,
-Price: { from: undefined , to: undefined} ,
+            SourceDate: { from: undefined, to: undefined },
+            TransactionDate: { from: undefined, to: undefined },
+            Quantity: { from: undefined, to: undefined },
+            Price: { from: undefined, to: undefined },
 
-            }
+        }
     };
 
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
 export function renderSspTransaction(record: ISspTransaction, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof ISspTransaction];
-        switch (column.fieldName) {
-            case 'transactionTypeId':
-                return record['transactionTypeName']?.toString();
-case 'stockShareId':
-                return record['stockShareName']?.toString();
-case 'currencyId':
-                return record['currencyName']?.toString();
+    const value = record[column.fieldName as keyof ISspTransaction];
+    switch (column.fieldName) {
+        case 'transactionTypeId':
+            return record['transactionTypeName']?.toString();
+        case 'stockShareId':
+            return record['stockShareName']?.toString();
+        case 'currencyId':
+            return record['currencyName']?.toString();
 
-            case 'ssPortfolioId':
-                return record['ssPortfolioName']?.toString();
-case 'toPortfolioId':
-                return record['toPortfolioName']?.toString();
+        case 'ssPortfolioId':
+            return record['ssPortfolioName']?.toString();
+        case 'toPortfolioId':
+            return record['toPortfolioName']?.toString();
 
-            default:
-                return value;
-        }
-        return value;
+        default:
+            return value;
     }
-    //---------------------------------------------------------
+    return value;
+}
+//---------------------------------------------------------
 export function getSspTransactionActions(component: any, record: ISspTransaction): IAction[] {
-        let links: IAction[] = [];
+    let links: IAction[] = [];
 
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListHeader',recordId: 0, route:'/stkx/ssp-transaction/add', displayText: 'Add New record'
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/ssp-transaction/view', displayText: 'View...'
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/ssp-transaction/edit', displayText: 'Edit...' 
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['id'], route:'/stkx/ssp-transaction/delete', displayText: 'Delete...' 
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['transactionTypeId'], route:'/stkx/transaction-type/view', displayText:'Go to TransactionType'
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['stockShareId'], route:'/stkx/stock-share/view', displayText:'Go to StockShare'
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recordId: record['currencyId'], route:'/stkx/currency/view', displayText:'Go to Currency'
-});
-}
-
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.sspTransactionRollout, displayText: 'Save and Rollout Transaction', data: { recordId: record['id'],  postUrl: '/Operations/SspTransaction/Rollout'}
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.sspTransactionRollback, displayText: 'Delete and Rollback Transaction', data: { recordId: record['id'],  deleteUrl: '/Operations/SspTransaction/Rollback'}
-});
-}
-if (component.accessService.isActionAllowed('sspTransaction', ''))
-{links.push({
-actionSource:'System', actionType:'FrontendFunction', actionLocation:'FormHeader',recordId: record['id'], action: operations.sspTransactionChange, displayText: 'Update and Rollout Changes', data: { recordId: record['id'],  putUrl: '/Operations/SspTransaction/Change'}
-});
-}
-
-        return links;
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListHeader', recordId: 0, route: '/stkx/ssp-transaction/add', displayText: 'Add New record'
+        });
     }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/stkx/ssp-transaction/view', displayText: 'View...'
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/stkx/ssp-transaction/edit', displayText: 'Edit...'
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['id'], route: '/stkx/ssp-transaction/delete', displayText: 'Delete...'
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['transactionTypeId'], route: '/stkx/transaction-type/view', displayText: 'Go to TransactionType'
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['stockShareId'], route: '/stkx/stock-share/view', displayText: 'Go to StockShare'
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendLink', actionLocation: 'ListRow', recordId: record['currencyId'], route: '/stkx/currency/view', displayText: 'Go to Currency'
+        });
+    }
+
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'FormHeader', recordId: record['id'], action: operations.sspTransactionRollout, displayText: 'Save and Rollout Transaction', data: { recordId: record['id'], postUrl: '/Operations/SspTransaction/Rollout' }
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'FormHeader', recordId: record['id'], action: operations.sspTransactionRollback, displayText: 'Delete and Rollback Transaction', data: { recordId: record['id'], deleteUrl: '/Operations/SspTransaction/Rollback' }
+        });
+    }
+    if (component.accessService.isActionAllowed('sspTransaction', '')) {
+        links.push({
+            actionSource: 'System', actionType: 'FrontendFunction', actionLocation: 'FormHeader', recordId: record['id'], action: operations.sspTransactionChange, displayText: 'Update and Rollout Changes', data: { recordId: record['id'], putUrl: '/Operations/SspTransaction/Change' }
+        });
+    }
+
+    return links;
+}
 //---------------------------------------------------------
 export function isVisible(entity: ISspTransaction, validationForm: UntypedFormGroup, fieldName: string): boolean {
     //check using const control = this.validationForm.get(fieldName);
     // or this.entity[fieldName]
     switch (fieldName) {
         case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
+            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+            return true;
     }
     return true;
 }
@@ -255,8 +255,8 @@ export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fie
     // or this.entity[fieldName]
     switch (fieldName) {
         case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
+            //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
+            return true;
     }
     return true;
 }

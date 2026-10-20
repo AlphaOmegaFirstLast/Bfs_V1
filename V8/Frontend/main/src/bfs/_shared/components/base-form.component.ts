@@ -1,4 +1,6 @@
-import { Component, Directive, inject, OnInit } from '@angular/core';
+import { Component, Directive, inject, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 //import { CommonModule } from '@angular/common';
 //import { FormsModule, ReactiveFormsModule, FormBuilder, Validators,  ValidationErrors } from '@angular/forms';
@@ -21,7 +23,7 @@ export interface IBaseForm {
 }
 
 @Directive()
-export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnInit {
+export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnInit, OnDestroy {
 
     public apiUrl = '';
     public apiService!: any;
@@ -55,6 +57,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
     public FormControlTypeOptions: any[] = [];//{ id: number, name: string }[] = [];
     public ActionLocationOptions: any[] = [];
+    public destroy$ = new Subject<void>();
 
     constructor(public activatedRoute: ActivatedRoute) {
 
@@ -82,6 +85,12 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         if (this.entity.id != '0') {
             this.view();
         }
+
+    }
+    //---------------------------------------------------------
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
     //---------------------------------------------------------
     initEntity(): Entity {
@@ -191,25 +200,6 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
         this.clipboard.highlightElementText(el);
         this.clipboard.copyText(value)
     }
-    //---------------------------------------------------------
-    // it calls dapper query, requires all tables must have id filter, otherwise it will return all records from Api, the item[0] will be random.
-    // async view() {
-    //     const target = this.apiUrl + 'list' ;
-    //     const request = { pageSize: 1, filter: { id: this.entity.id } };
-
-    //     (await this.apiService.post(target , request)).subscribe({
-    //         next: (response: any) => {
-    //             this.entity = response.items[0];
-    //             this.validationForm.patchValue(this.entity);
-    //             this.isLoading.save = false;
-    //         },
-    //         error: (err: any) => {
-    //             this.isLoading.save = false;
-    //             var msg = err.message || `An error occurred while fetching ${this.entityDisplayName} data.`;
-    //             this.messages.push({ text: msg, msgType: "danger" });
-    //         }
-    //     });
-    // }
     //--------------------------------------------------------- 
     protected patchFormValue(entity: Entity): void {
         const formValue: Record<string, unknown> = { ...entity };
@@ -280,6 +270,10 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
                 this.patchFormValue(this.entity);
                 this.setDataAutoComplete();
                 this.isLoading.view = false;
+                if (this.currentOperation == 'view' || this.currentOperation == 'delete') {
+                    this.validationForm.disable();
+
+                }
             },
             error: (err: any) => {
                 this.isLoading.view = false;

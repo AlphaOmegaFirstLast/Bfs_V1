@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+
 import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
@@ -89,6 +91,14 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);
         this.buttonList = this.getRecordButtons(this);
+
+        this.validationForm.valueChanges
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(value => {
+                var transactionTypeValue = this.validationForm.get("transactionTypeId")?.value || 0;
+                this.fields.toPortfolioId.visible = transactionTypeValue == 9 || transactionTypeValue == 10;
+                this.fields.toQuantity.visible = transactionTypeValue == 15 || transactionTypeValue == 16;
+            });
     }
     //---------------------------------------------------------
     override initEntity(): ISspTransaction {
@@ -137,9 +147,7 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
 
     //Template_Start_Code_DontOverwrite_2
     onTransactionTypeChange() {
-        const transactionTypeValue = this.validationForm.get("transactionTypeId")?.value || 0;
-        this.fields.toPortfolioId.visible = transactionTypeValue == 9 || transactionTypeValue == 10;
-        this.fields.toQuantity.visible = transactionTypeValue == 15 || transactionTypeValue == 16;
+
     }
     //--------------------------------------------------------------
     override async getLookups(): Promise<void> {
