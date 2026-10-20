@@ -10,8 +10,8 @@ public string? SsPortfolio_InvestorId { get; set; }
 public string? SsPortfolio_BrokerId { get; set; }
 
         public string? InvestorName { get; set; }
-
-        public string? BrokerName { get; set; }
+public string? BrokerName { get; set; }
+public string? SsPortfolioName { get; set; }
 
         public string? sumValue { get; set; }
 public string? sumBalance { get; set; }
