@@ -3,7 +3,7 @@
     <div class="card fs-6">
         <div class="card-header justify-content-between align-items-center">
             <div class="btn-group btn-sm" [style.visibility]="isButton.addNew || isButton.chart? 'visible' : 'hidden'">
-                <a *ngIf="isButton.addNew" [routerLink]="[addNewRecordLink.route]" class="btn btn-sm btn-outline-primary me-2">{{addNewRecordLink.displayText}}</a>
+                <a *ngIf="isButton.addNew" [routerLink]="[addNewRecordLink.route]" [state]="{ parentFilter: parentFilter }" class="btn btn-sm btn-outline-primary me-2">{{addNewRecordLink.displayText}}</a>
                 <button *ngIf="isButton.chart" class="btn btn-sm btn-outline-primary me-2" (click)="viewChart()">Chart</button>
             </div>
             <div class="btn-group">

@@ -73,7 +73,6 @@ export function getFieldValidationHeaders(this: any): string {
 export function getFieldValidationData(fieldValidation: IFieldValidation): string {
     if (!fieldValidation) return '';
     try {
-      //  const fieldValidation: IFieldValidation = normalizeObjectKeysToLowerFirstLetter(JSON.parse(fieldValidationString) as IFieldValidation);
         var result = `<table class="table table-bordered table-sm">
                    <tr>    
                         <td width="150px"> ${fieldValidation.isRequired ? 'true' : 'false'}</td>
@@ -173,7 +172,6 @@ export function getReportInfoHeaders(this: any): string {
 export function getReportInfoData(reportInfo: IReportInfo): string {
     if (!reportInfo) return '';
     try {
- //       const reportInfo: IReportInfo = normalizeObjectKeysToLowerFirstLetter(JSON.parse(reportInfoString) as IReportInfo);
         var result = `<table class="table table-bordered table-sm">
                    <tr>    
                         <td width="150px"> ${reportInfo.parentTable??''}</td>

@@ -73,7 +73,7 @@ export class BaseReportComponent<IFilter> {
     //-------------------------------------------------------- Set visibility of buttons and sections ----------
     public isSection = { chart: false, table: true, description: false };
     public isButton: any = { addNew: true, chart: true, description: true, columns: true, filter: true, sort: true, group: false };
-
+    public parentFilter: any = {};
     //-------------------------------------------------------- Set accessibility of features ----------
     public isCustomReport: any = { view: true, save: true, restore: true };
     //------------------------------------------------------ Set pagination ----------
@@ -82,6 +82,7 @@ export class BaseReportComponent<IFilter> {
     //------------------------------------------------------
     public me = this;
     private sanitizer: DomSanitizer = inject(DomSanitizer);
+
     //ToDo create for each record, record.linkList & record.actionList to get rid od function getRecordActions calculations
     // linkList: ViewLink[] = [];
     // actionList: ActionLink[] = [];
@@ -97,7 +98,15 @@ export class BaseReportComponent<IFilter> {
     async ngOnInit(): Promise<void> {
         if (this.presetFilter) {
             this.queryRequest.filter = this.presetFilter;
+            for (const key in this.presetFilter) {
+                let value = this.presetFilter[key];
+                if (value !== undefined && value !== null && value !== '' && !(typeof value === 'object' && Object.keys(value).length === 0)) {
+                    let lowercaseKey = key.charAt(0).toLowerCase() + key.slice(1); // convert first letter to lowercase
+                    this.parentFilter[lowercaseKey] = Number(value) || value;  // parentFilter is passed to AddNew Record form to prefill the fields. It is used in the form component to set the default values of the fields
+                }
+            }
         }
+
         this.queryRequest.pageSize = this.pageSizes[0];
         // the call could be from a custom report, in that case restore it. or Directly from base report (List or report) 
         if (this.customReportInfo.id && this.customReportInfo.id != '0') {

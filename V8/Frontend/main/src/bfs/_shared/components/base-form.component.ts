@@ -1,7 +1,7 @@
 import { Component, Directive, inject, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute, RouterLink } from '@angular/router';
 //import { CommonModule } from '@angular/common';
 //import { FormsModule, ReactiveFormsModule, FormBuilder, Validators,  ValidationErrors } from '@angular/forms';
 
@@ -52,6 +52,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     linkList: ViewLink[] = [];
     actionList: ActionLink[] = [];
     buttonList: ActionLink[] = [];
+    parentFilter: any = null;
     //-----------------------Object Fields Lookups----------------------------------
     public ChartElementOptions: any[] = []; //{ id: number, name: string }[] = [];
     public AggregateTypeOptions: any[] = []; //{ id: number, name: string }[] = [];
@@ -74,6 +75,19 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
 
         this.entity = this.initEntity();
         this.entity.id = entityId ? entityId : '0';
+
+        // Get the current router state, which holds data object. the filter of the parent form in case of NewRecord of TabList
+        const router = inject(Router);
+        const routerNavigation = router.getCurrentNavigation(); 
+        const state = routerNavigation?.extras.state as { parentFilter: any };
+        if (state) {
+            this.parentFilter = state.parentFilter;
+            for (const key in this.parentFilter) {
+                if (this.parentFilter.hasOwnProperty(key) && this.entity.hasOwnProperty(key) && this.parentFilter[key] !== undefined && this.parentFilter[key] !== null) {
+                    (this.entity as any)[key] = this.parentFilter[key];
+                }
+            }
+        }
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {
@@ -272,7 +286,6 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
                 this.isLoading.view = false;
                 if (this.currentOperation == 'view' || this.currentOperation == 'delete') {
                     this.validationForm.disable();
-
                 }
             },
             error: (err: any) => {
