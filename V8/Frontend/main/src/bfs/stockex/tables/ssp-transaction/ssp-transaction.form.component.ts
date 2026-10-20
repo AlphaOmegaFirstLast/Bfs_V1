@@ -65,6 +65,8 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
     // Define autocomplete
     ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     toPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'toPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    brokerId = 0;
+    oldPortfolioId = 0;
 
     //---------------------------------------------------------
 
@@ -98,6 +100,14 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
                 var transactionTypeValue = this.validationForm.get("transactionTypeId")?.value || 0;
                 this.fields.toPortfolioId.visible = transactionTypeValue == 9 || transactionTypeValue == 10;
                 this.fields.toQuantity.visible = transactionTypeValue == 15 || transactionTypeValue == 16;
+                var ssPortfolioId = 0
+                ssPortfolioId = this.validationForm.get("ssPortfolioId")?.value || 0;
+                if (ssPortfolioId != this.oldPortfolioId) {
+                    this.oldPortfolioId = ssPortfolioId;
+                    this.brokerId = this.ssPortfolioAuto.record["brokerId"];
+                    this.getLookups();
+                }
+
             });
     }
     //---------------------------------------------------------
@@ -117,9 +127,9 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
+
         this.ssPortfolioAuto.setData(this.entity.ssPortfolioId, this.entity.ssPortfolioName);
         this.toPortfolioAuto.setData(this.entity.toPortfolioId, this.entity.toPortfolioName);
-
     }
     //---------------------------------------------------------
 
@@ -164,12 +174,12 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
             ] = await Promise.all
                 ([
                     this.apiService.getItems<IQueryResponse>("/TransactionType/list", { "filter": { "stockEntityTypeId": 3, "sourceTypeId": 2 }, pageSize: 50 }),
-                    this.apiService.getItems<IQueryResponse>("/StockShare/list", { pageSize: 30 }),
+                    this.apiService.getItems<IQueryResponse>("/reports/StockshareBrokerRepCompare", { "filter": { "TradingRoom_BrokerId": this.brokerId }, pageSize: 70 }),
                     this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
 
                 ]);
             this.TransactionTypeOptions = transactionTypeResponse.items;
-            this.StockShareOptions = stockShareResponse.items;
+            this.StockShareOptions = stockShareResponse.items.map(x => ({ id: x.stockshare_Id, name: x.stockshare_Name }));
             this.CurrencyOptions = currencyResponse.items;
 
         } catch (err: any) {
@@ -194,6 +204,11 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
                });
                */
     }
-    //Template_End_Code_DontOverwrite_2
 
+    async SsPortfolioChange() {
+        this.brokerId = this.ssPortfolioAuto.record["brokerId"];
+        await this.getLookups();
+    }
+    //Template_End_Code_DontOverwrite_2
 }
+
