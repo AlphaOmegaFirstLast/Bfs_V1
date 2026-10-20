@@ -13,7 +13,7 @@ export interface IAutoComplete {
     options: ILookup[],
     isLoading: boolean,
     fieldName: string,
-    control: any
+    control: any,
 }
 
 export class AutoCompleteHelper {
@@ -36,6 +36,7 @@ export class AutoCompleteHelper {
     isLoading: boolean = false;
     fieldName: string = '';
     control: any = null;
+    record: any = null;
 
     constructor(autoComplete: IAutoComplete) {
         this.queryUrl = autoComplete.queryUrl;
@@ -123,6 +124,7 @@ export class AutoCompleteHelper {
 
         this.init();
         this.setData(selectedOption.id.toString(), selectedOption.name);
+        this.record= this.list.find(x=> x.id == selectedOption.id );
     }
     //---------------------------------------------------------
 
