@@ -57,6 +57,8 @@
 <div class="row mb-2">
     <div class="col-12"  *ngIf="fields.tradingRoomId.visible">
         <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
         <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId" 
             [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of TradingRoomOptions">
@@ -69,6 +71,8 @@
 <div class="row mb-2">
     <div class="col-12"  *ngIf="fields.stockShareId.visible">
         <label for="stockShareId" class="form-label fs-6">Stock Share</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
         <select class="form-select" id="stockShareId" formControlName="stockShareId" 
             [class]="submit && !form['stockShareId'].errors ? 'is-valid': submit && form['stockShareId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of StockShareOptions">
@@ -81,6 +85,8 @@
 <div class="row mb-2">
     <div class="col-12"  *ngIf="fields.couponTypeId.visible">
         <label for="couponTypeId" class="form-label fs-6">Coupon Type</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="If Coupon Type selected is [Cash], then one of the fields [Value] or [Percent] is Required. If Coupon Type selected is  [Stock] , then both of fields [Quantity] and [Bonus Quantity]  are Required"  />
+
         <select class="form-select" id="couponTypeId" formControlName="couponTypeId" 
             [class]="submit && !form['couponTypeId'].errors ? 'is-valid': submit && form['couponTypeId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of CouponTypeOptions">
@@ -160,6 +166,8 @@
 <div class="row mb-2">
     <div class="col-12"  *ngIf="fields.couponStatusId.visible">
         <label for="couponStatusId" class="form-label fs-6">Coupon Status</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
         <select class="form-select" id="couponStatusId" formControlName="couponStatusId" 
             [class]="submit && !form['couponStatusId'].errors ? 'is-valid': submit && form['couponStatusId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of CouponStatusOptions">
