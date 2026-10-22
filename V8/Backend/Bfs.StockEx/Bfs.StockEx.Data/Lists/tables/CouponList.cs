@@ -67,13 +67,17 @@ namespace Bfs.StockEx.Data.Lists
         {
             //base fields
             _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "Id", DbName = "stkxCoupon.Id", QueryName = "Id", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "TradingRoomId", DbName = "stkxCoupon.TradingRoomId", QueryName = "TradingRoomId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "StockShareId", DbName = "stkxCoupon.StockShareId", QueryName = "StockShareId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "CouponTypeId", DbName = "stkxCoupon.CouponTypeId", QueryName = "CouponTypeId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "Value", DbName = "stkxCoupon.Value", QueryName = "Value", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "AnnounceDate", DbName = "stkxCoupon.AnnounceDate", QueryName = "AnnounceDate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "ValueDate", DbName = "stkxCoupon.ValueDate", QueryName = "ValueDate", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "DueDate", DbName = "stkxCoupon.DueDate", QueryName = "DueDate", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "CouponStatusId", DbName = "stkxCoupon.CouponStatusId", QueryName = "CouponStatusId", IsAggregare = false});
 _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "CouponPercent", DbName = "stkxCoupon.CouponPercent", QueryName = "CouponPercent", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "Quantity", DbName = "stkxCoupon.Quantity", QueryName = "Quantity", IsAggregare = false});
+_fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "BonusQuantity", DbName = "stkxCoupon.BonusQuantity", QueryName = "BonusQuantity", IsAggregare = false});
 
             //object fields
 
@@ -88,6 +92,8 @@ _fieldList.Add(new QueryField() {ComponentName = "CouponStatus", FieldName = "Na
            //Aggregates
 
 //Template_Start_Code_DontOverwrite_5
+             _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "Name", DbName = "stkxCoupon.Name", QueryName = "AutoCompleteName", IsAggregare = false});
+             _fieldList.Add(new QueryField() {ComponentName = "Coupon", FieldName = "Name", DbName = "stkxCoupon.Name", QueryName = "LookupName", IsAggregare = false});
 //Template_End_Code_DontOverwrite_5
         }
 
@@ -206,7 +212,29 @@ if (filter.CouponPercent?.From.HasValue == true)
                     sql.AppendLine("stkxCoupon.CouponPercent <= @CouponPercentTo");
                     parameters.Add("@CouponPercentTo", filter.CouponPercent.To.Value);
                 }
+if (filter.Quantity?.From.HasValue == true)
+                {
+                    sql.AppendLine("stkxCoupon.Quantity >= @QuantityFrom");
+                    parameters.Add("@QuantityFrom", filter.Quantity.From.Value);
+                }
+                if (filter.Quantity?.To.HasValue == true)
+                {
+                    sql.AppendLine("stkxCoupon.Quantity <= @QuantityTo");
+                    parameters.Add("@QuantityTo", filter.Quantity.To.Value);
+                }
+if (filter.BonusQuantity?.From.HasValue == true)
+                {
+                    sql.AppendLine("stkxCoupon.BonusQuantity >= @BonusQuantityFrom");
+                    parameters.Add("@BonusQuantityFrom", filter.BonusQuantity.From.Value);
+                }
+                if (filter.BonusQuantity?.To.HasValue == true)
+                {
+                    sql.AppendLine("stkxCoupon.BonusQuantity <= @BonusQuantityTo");
+                    parameters.Add("@BonusQuantityTo", filter.BonusQuantity.To.Value);
+                }
 
+                //Template_Start_Code_DontOverwrite_7
+                //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -223,11 +251,13 @@ if (filter.CouponPercent?.From.HasValue == true)
 
             var sql = new StringBuilder();
 
+            //Template_Start_Code_DontOverwrite_8
+            //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                                  .Select(s => s.Trim()));        
        } 
-//Template_Start_Code_DontOverwrite_1
-//Template_End_Code_DontOverwrite_1       
+//Template_Start_Code_DontOverwrite_9
+//Template_End_Code_DontOverwrite_9   
     }
 }

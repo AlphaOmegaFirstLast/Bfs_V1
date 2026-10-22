@@ -21,6 +21,8 @@ public DateRange? AnnounceDate { get; set; }
 public DateRange? ValueDate { get; set; }
 public DateRange? DueDate { get; set; }
 public NumericRange? CouponPercent { get; set; }
+public NumericRange? Quantity { get; set; }
+public NumericRange? BonusQuantity { get; set; }
 
     }
 }

@@ -19,6 +19,8 @@ public DateTime AnnounceDate {get; set;} = DateTime.MinValue ;
 public DateTime ValueDate {get; set;} = DateTime.MinValue ;
 public DateTime DueDate {get; set;} = DateTime.MinValue ;
 public decimal CouponPercent {get; set;} = 0 ;
+public decimal Quantity {get; set;} = 0 ;
+public decimal BonusQuantity {get; set;} = 0 ;
 
         public long TradingRoomId {get; set;} = 0 ;
 public long StockShareId {get; set;} = 0 ;

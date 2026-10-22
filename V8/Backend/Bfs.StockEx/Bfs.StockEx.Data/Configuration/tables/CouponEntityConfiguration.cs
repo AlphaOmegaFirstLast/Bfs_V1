@@ -30,6 +30,8 @@ namespace Bfs.StockEx.Data.Configuration
 //   builder.Property(e => e.ValueDate).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.DueDate).HasMaxLength([FieldLength]).IsRequired();
 //   builder.Property(e => e.CouponPercent).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.Quantity).HasMaxLength([FieldLength]).IsRequired();
+//   builder.Property(e => e.BonusQuantity).HasMaxLength([FieldLength]).IsRequired();
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3

@@ -19,6 +19,8 @@ AnnounceDate= entity.AnnounceDate,
 ValueDate= entity.ValueDate,
 DueDate= entity.DueDate,
 CouponPercent= entity.CouponPercent,
+Quantity= entity.Quantity,
+BonusQuantity= entity.BonusQuantity,
 
                TradingRoomId= entity.TradingRoomId,
 StockShareId= entity.StockShareId,
@@ -53,6 +55,8 @@ CouponEntity.AnnounceDate= contract.AnnounceDate;
 CouponEntity.ValueDate= contract.ValueDate;
 CouponEntity.DueDate= contract.DueDate;
 CouponEntity.CouponPercent= contract.CouponPercent;
+CouponEntity.Quantity= contract.Quantity;
+CouponEntity.BonusQuantity= contract.BonusQuantity;
 
             CouponEntity.TradingRoomId= contract.TradingRoomId;
 CouponEntity.StockShareId= contract.StockShareId;

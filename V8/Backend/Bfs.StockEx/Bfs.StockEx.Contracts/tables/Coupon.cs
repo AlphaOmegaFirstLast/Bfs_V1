@@ -42,6 +42,14 @@ namespace Bfs.StockEx.Contracts
         /// Coupon Percent.
         ///</Summary>
         public decimal CouponPercent {get; set;} = 0 ;
+///<Summary>
+        /// Coupon Quantity.
+        ///</Summary>
+        public decimal Quantity {get; set;} = 0 ;
+///<Summary>
+        /// Coupon Bonus Quantity.
+        ///</Summary>
+        public decimal BonusQuantity {get; set;} = 0 ;
 
         ///<Summary>
         /// Coupon Trading Room.

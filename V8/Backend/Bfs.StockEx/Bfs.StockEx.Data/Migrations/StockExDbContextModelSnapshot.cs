@@ -170,6 +170,9 @@ namespace Bfs.StockEx.Data.Migrations
                     b.Property<DateTime>("AnnounceDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("BonusQuantity")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("CouponPercent")
                         .HasColumnType("decimal(18,2)");
 
@@ -192,6 +195,9 @@ namespace Bfs.StockEx.Data.Migrations
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("StockShareId")
                         .HasColumnType("bigint");
