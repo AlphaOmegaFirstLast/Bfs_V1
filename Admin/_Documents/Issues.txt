@@ -1,15 +1,37 @@
 issues:
 BestFit_V5 should not be hardcoded
-Back Button.
-Master\Details tab should set the parentId
-FieldValidation column doesn't show in List.
-ReportInfo Column Shows incorrect data.
+
+**** Master\Details tab should set the parentId [ParentFilter]
+CustomFields.
+
 Record Validations.
 Table Validations.
-If no-Actions dont show the 3dots-button in the list
 
+If no-Actions dont show the 3dots-button in the list
+Filter 3-dots actions based on rules. (only Go To ssp-transaction if the cash transaction pointing to 1)
 
 in admin controller comment security
+
 update master database name in connection string
+
 Cache Warming :    throw new Exception($"Tenants data not found in cache");
 
+lookup & autocompletes
+
+- management of:
+	- seed 
+	- upload 
+    - route
+
+Repo & unit of Work => operation => save context
+	- target is: repo operation dont save until all changes done to all repos then save
+
+	
+**** Fix Report setup
+
+
+Fix error of delete ssp-transaction
+fix cash transaction when ssp-transaction
+Coupon processing
+
+if no chart Elements then hide chart button.
