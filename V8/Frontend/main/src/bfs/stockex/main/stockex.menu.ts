@@ -134,7 +134,7 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-   //Template_Component_Menu_Basic
+            //Template_Component_Menu_Basic
         ]
     },
     {
@@ -171,17 +171,17 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'Overdraft Portfolios',
+                label: 'Coupon Process',
                 icon: 'tablerLayoutSidebar',
-                url: '/stkx/overdraft-portfolio/list',
+                url: '/stkx/coupon/list',
                 data: {
                     role: ['admin', 'investor', 'broker']
                 }
             },
             {
-                label: 'Coupons',
+                label: 'Overdraft Portfolios',
                 icon: 'tablerLayoutSidebar',
-                url: '/stkx/coupon/list',
+                url: '/stkx/overdraft-portfolio/list',
                 data: {
                     role: ['admin', 'investor', 'broker']
                 }
@@ -270,15 +270,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
-                {
-        label: 'Stockshare Broker Reports',
-        icon: 'tablerLayoutSidebar',
-        url: '/stkx/report/stockshare-broker-rep-compare/0',
-        data: {
-            role: ['admin']
-        }
-    },
-//Template_Component_Menu_Reports
+            {
+                label: 'Stockshare Broker Reports',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/stockshare-broker-rep-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            //Template_Component_Menu_Reports
         ]
     },
     {
