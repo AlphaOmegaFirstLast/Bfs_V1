@@ -1,6 +1,6 @@
   <!-- [AutoCompleteCapital]AutoComplete Start -->
                                             <div class="row mb-2">
-                                                <div class="col-12"  *ngIf="isVisible('[SmallFieldName]')">
+                                                <div class="col-12"  *ngIf="fields.[SmallFieldName].visible">
                                                     <div class="position-relative"  (focusout)="[AutoCompleteSmall]Auto.hideOverlay()">
                                                         <label class="form-label fs-6">[DisplayName]</label>
                                                         <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="[ToolTip]" [isToolTipVisible] />

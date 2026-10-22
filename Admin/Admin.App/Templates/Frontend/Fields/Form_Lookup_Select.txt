@@ -1,6 +1,8 @@
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('[SmallFieldName]')">
+    <div class="col-12"  *ngIf="fields.[SmallFieldName].visible">
         <label for="[SmallFieldName]" class="form-label fs-6">[DisplayName]</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="[ToolTip]" [isToolTipVisible] />
+
         <select class="form-select" id="[SmallFieldName]" formControlName="[SmallFieldName]" 
             [class]="submit && !form['[SmallFieldName]'].errors ? 'is-valid': submit && form['[SmallFieldName]'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of [LookupNameCapital]Options">

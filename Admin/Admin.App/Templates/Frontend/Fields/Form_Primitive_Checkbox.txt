@@ -1,5 +1,5 @@
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('[SmallFieldName]')">
+    <div class="col-12"  *ngIf="fields.[SmallFieldName].visible">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="[SmallFieldName]" formControlName="[SmallFieldName]" />
             <label class="form-check-label" for="[SmallFieldName]">[DisplayName]</label>
