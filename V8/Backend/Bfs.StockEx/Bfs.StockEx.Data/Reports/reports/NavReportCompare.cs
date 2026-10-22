@@ -1,10 +1,10 @@
 using Bfs.Core.Data;
 using Bfs.Core.Services.Security;
-
-using Dapper;
-using Microsoft.Data.SqlClient;
 using Bfs.StockEx.Data;
 using Bfs.StockEx.Data.Interfaces;
+using Dapper;
+using DocumentFormat.OpenXml.Math;
+using Microsoft.Data.SqlClient;
 using System.Text;
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
@@ -80,9 +80,22 @@ _fieldList.Add(new QueryField() { DbName = "Sum(stkxSsPortfolioBalance.nav)", Qu
 //Template_End_Generated_Ignored_1
 
 //Template_Start_Code_DontOverwrite_5
-_fieldList.Add(new QueryField() { DbName = "Sum(isnull(CP.price,0) * isnull(stkxSspStock.Quantity,0))", QueryName = "sumValue", IsAggregare = true });
+var nav = new StringBuilder();
+            nav = nav.Append("SUM ( ");   // sum of
+            nav = nav.Append(" isnull(stkxSsPortfolioBalance.balance, 0)"); // balance
+            nav = nav.Append(" + ");
+            nav = nav.Append(" (isnull(CP.price, 0) * isnull(stkxSspStock.Quantity, 0))"); // stock * current-price
+            nav = nav.Append(" + ");
+            nav = nav.Append(" ( Case");
+            nav = nav.Append("      when cValue > 0 THEN (cValue * isnull(stkxSspStock.Quantity, 0))"); // stock * coupon-value
+            nav = nav.Append("      when cPercent > 0 THEN (cPercent * isnull(stkxSspStock.Quantity, 0) * isnull(CP.price, 0))"); // stock * coupon-percen * current-price
+            nav = nav.Append("      Else 0 ");
+            nav = nav.Append("  End) ");
+            nav = nav.Append(") ");
+
+            _fieldList.Add(new QueryField() { DbName = "Sum(isnull(CP.price,0) * isnull(stkxSspStock.Quantity,0))", QueryName = "sumValue", IsAggregare = true });
             _fieldList.Add(new QueryField() { DbName = "Sum(isnull(stkxSsPortfolioBalance.balance,0))", QueryName = "sumBalance", IsAggregare = true });
-            _fieldList.Add(new QueryField() { DbName = "Sum(isnull(stkxSsPortfolioBalance.balance,0)) + Sum(isnull(CP.price,0) * isnull(stkxSspStock.Quantity,0))", QueryName = "sumNav", IsAggregare = true });
+            _fieldList.Add(new QueryField() { DbName = nav.ToString() , QueryName = "sumNav", IsAggregare = true });
 //Template_End_Code_DontOverwrite_5
 
         }
@@ -108,9 +121,10 @@ sql.AppendLine($"  left join stkxSsPortfolioBalance on stkxSsPortfolio.Id = stkx
             sql.AppendLine($"  Left Join stkxStockShare S ON stkxSspStock.StockShareId = s.Id");
             sql.AppendLine($"  Left Join stkxCurrency  on stkxCurrency.Id = s.CurrencyId");
             sql.AppendLine($"  OUTER APPLY ( SELECT TOP 1 Price  FROM [stkxCurrentPrice] cp_sub  WHERE cp_sub.StockShareId = S.Id ORDER BY cp_sub.TransactionDate DESC) CP");
-//Template_End_Code_DontOverwrite_6
+            sql.AppendLine($"  OUTER APPLY ( SELECT SUM(ISNULL(Value, 0)) AS cValue, SUM(ISNULL(CouponPercent, 0)) AS cPercent FROM [stkxCoupon] c_sub WHERE c_sub.StockShareId = S.Id AND c_sub.CouponStatusId = 2) C"); // @CouponStatusId = 2 => Not-Yet
+            //Template_End_Code_DontOverwrite_6
 
-           return sql.ToString();
+            return sql.ToString();
         }
 
         protected override string GetWhereConditions(QueryRequest<NavReportCompareFilter> request, DynamicParameters parameters)

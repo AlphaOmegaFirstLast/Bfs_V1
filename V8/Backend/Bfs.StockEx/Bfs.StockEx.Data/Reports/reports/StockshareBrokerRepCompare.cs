@@ -11,22 +11,22 @@ using System.Text;
 
 namespace Bfs.StockEx.Data.Reports
 {
-    public class StockshareBrokerRepCompare :QueryBase<StockshareBrokerRepCompareFilter>,  IStockshareBrokerRepCompare
+    public class StockshareBrokerRepCompare : QueryBase<StockshareBrokerRepCompareFilter>, IStockshareBrokerRepCompare
     {
         private readonly IResourceSecurity _resourceSecurity;
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+        //Template_Start_Code_DontOverwrite_2
+        //Template_End_Code_DontOverwrite_2
 
         public StockshareBrokerRepCompare(string connectionString, IResourceSecurity resourceSecurity
-//Template_Start_Code_DontOverwrite_3
-//Template_End_Code_DontOverwrite_3
+        //Template_Start_Code_DontOverwrite_3
+        //Template_End_Code_DontOverwrite_3
 
         )
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             _resourceSecurity = resourceSecurity;
-//Template_Start_Code_DontOverwrite_4
-//Template_End_Code_DontOverwrite_4
+            //Template_Start_Code_DontOverwrite_4
+            //Template_End_Code_DontOverwrite_4
         }
 
         private readonly string _connectionString;
@@ -57,32 +57,35 @@ namespace Bfs.StockEx.Data.Reports
         {
             //base fields
             _fieldList.Add(new QueryField() { DbName = "stkxStockshare.Id", QueryName = "Stockshare_Id", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "stkxStockshare.Name", QueryName = "Stockshare_Name", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "stkxStockShare.TradingRoomId", QueryName = "StockShare_TradingRoomId", IsAggregare = false });
-//Template_Start_Generated_Ignored_1
-/*
-            _fieldList.Add(new QueryField() { DbName = "stkxTradingRoom.BrokerId", QueryName = "TradingRoom_BrokerId", IsAggregare = false });
-*/
+            _fieldList.Add(new QueryField() { DbName = "stkxStockshare.Name", QueryName = "Stockshare_Name", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "stkxStockShare.TradingRoomId", QueryName = "StockShare_TradingRoomId", IsAggregare = false });
+            //Template_Start_Generated_Ignored_1
+            /*
+                        _fieldList.Add(new QueryField() { DbName = "stkxTradingRoom.BrokerId", QueryName = "TradingRoom_BrokerId", IsAggregare = false });
+            */
             //Template_End_Generated_Ignored_1
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "stkxTradingRoom.Name", QueryName = "TradingRoomName", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "stkxBroker.Name", QueryName = "BrokerName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "stkxBroker.Name", QueryName = "BrokerName", IsAggregare = false });
 
             //autoComplete
 
-           //Aggregates
+            //Aggregates
 
-//Template_Start_Code_DontOverwrite_5
-//Template_End_Code_DontOverwrite_5
+            //Template_Start_Code_DontOverwrite_5
+            _fieldList.Add(new QueryField() { DbName = "stkxStockshare.Id", QueryName = "Id", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "stkxStockshare.Name", QueryName = "AutoCompleteName", IsAggregare = false });
+            _fieldList.Add(new QueryField() { DbName = "stkxStockshare.Name", QueryName = "LookupName", IsAggregare = false });
+            //Template_End_Code_DontOverwrite_5
         }
 
         protected override string GetFromJoinStatement()
         {
-           var sql = new StringBuilder();  
-           sql.AppendLine(" From stkxStockshare ");
+            var sql = new StringBuilder();
+            sql.AppendLine(" From stkxStockshare ");
 
-           sql.AppendLine($"   Left Join stkxTradingRoom on stkxStockShare.TradingRoomId = stkxTradingRoom.Id");
+            sql.AppendLine($"   Left Join stkxTradingRoom on stkxStockShare.TradingRoomId = stkxTradingRoom.Id");
 
             //Template_Start_Code_DontOverwrite_6
             sql.AppendLine($"   Left Join stkxBroker on stkxTradingRoom.Id = stkxBroker.TradingRoomId ");
@@ -94,13 +97,13 @@ _fieldList.Add(new QueryField() { DbName = "stkxBroker.Name", QueryName = "Broke
 
         protected override string GetWhereConditions(QueryRequest<StockshareBrokerRepCompareFilter> request, DynamicParameters parameters)
         {
-            var sql = new StringBuilder() ;
+            var sql = new StringBuilder();
             sql.AppendLine(" stkxStockshare.isDeleted=0 ");
 
-                         var filter = request.Filter;
+            var filter = request.Filter;
             if (filter != null)
             {
-            if ((filter.Stockshare_Id.HasValue) && (filter.Stockshare_Id>0))
+                if ((filter.Stockshare_Id.HasValue) && (filter.Stockshare_Id > 0))
                 {
                     sql.AppendLine(" AND stkxStockshare.Id = @Stockshare_Id");
                     parameters.Add("@Stockshare_Id", filter.Stockshare_Id);
@@ -129,7 +132,7 @@ _fieldList.Add(new QueryField() { DbName = "stkxBroker.Name", QueryName = "Broke
             }
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));        
+                                 .Select(s => s.Trim()));
         }
 
         protected override string GetHavingConditions(QueryRequest<StockshareBrokerRepCompareFilter> request, DynamicParameters parameters)
@@ -146,9 +149,9 @@ _fieldList.Add(new QueryField() { DbName = "stkxBroker.Name", QueryName = "Broke
             //Template_End_Code_DontOverwrite_8    
             return string.Join(" And ", sql.ToString()
                                  .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                                 .Select(s => s.Trim()));        
-       } 
-//Template_Start_Code_DontOverwrite_9
-//Template_End_Code_DontOverwrite_9   
+                                 .Select(s => s.Trim()));
+        }
+        //Template_Start_Code_DontOverwrite_9
+        //Template_End_Code_DontOverwrite_9   
     }
 }

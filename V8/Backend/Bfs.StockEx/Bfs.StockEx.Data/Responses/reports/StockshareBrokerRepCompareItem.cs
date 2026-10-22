@@ -4,6 +4,10 @@ namespace Bfs.StockEx.Data
 {
     public class StockshareBrokerRepCompareItem
     {
+        public string AutoCompleteName { get; set; }
+        public string LookupName { get; set; }
+        public string? Id { get; set; }
+
         public string? Stockshare_Id { get; set; }
 public string? Stockshare_Name { get; set; }
 public string? StockShare_TradingRoomId { get; set; }
