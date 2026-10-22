@@ -14,11 +14,14 @@
 
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
+                                            <div *ngFor="let link of buttonList">
+                                               <button *ngIf="isAccessible(link)" type="submit" class="btn btn-sm btn-outline-primary me-2" (click)="link.action(me, me.entity, link.data)">{{link.displayText}}</button>
+                                            </div>                                           
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='add'" >Add</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='edit'" >Update</button>
                                             <button type="submit" class="btn btn-sm btn-outline-primary me-2" *ngIf="currentOperation=='delete'" >Delete</button>
-                                             <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/coupon/list')">Back</button>
-                                             <a [routerLink]="['/stkx/coupon/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
+                                            <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="this.navigateBack('/stkx/coupon/list')">Back</button>
+                                            <a [routerLink]="['/stkx/coupon/list']" class="btn btn-sm btn-outline-primary" *ngIf="currentOperation!='view'" >Cancel</a>
                                         </div>
                                         <div class="btn-group">
                                             <div ngbDropdown>
@@ -52,7 +55,7 @@
                                     <div class="row">
                                     <div class="col-6">
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('tradingRoomId')">
+    <div class="col-12"  *ngIf="fields.tradingRoomId.visible">
         <label for="tradingRoomId" class="form-label fs-6">Trading Room</label>
         <select class="form-select" id="tradingRoomId" formControlName="tradingRoomId" 
             [class]="submit && !form['tradingRoomId'].errors ? 'is-valid': submit && form['tradingRoomId'].errors ? 'is-invalid' : ''">
@@ -64,7 +67,7 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('stockShareId')">
+    <div class="col-12"  *ngIf="fields.stockShareId.visible">
         <label for="stockShareId" class="form-label fs-6">Stock Share</label>
         <select class="form-select" id="stockShareId" formControlName="stockShareId" 
             [class]="submit && !form['stockShareId'].errors ? 'is-valid': submit && form['stockShareId'].errors ? 'is-invalid' : ''">
@@ -76,7 +79,7 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('couponTypeId')">
+    <div class="col-12"  *ngIf="fields.couponTypeId.visible">
         <label for="couponTypeId" class="form-label fs-6">Coupon Type</label>
         <select class="form-select" id="couponTypeId" formControlName="couponTypeId" 
             [class]="submit && !form['couponTypeId'].errors ? 'is-valid': submit && form['couponTypeId'].errors ? 'is-invalid' : ''">
@@ -88,7 +91,7 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-6" *ngIf="isVisible('value')">
+    <div class="col-6" *ngIf="fields.value.visible">
         <label for="value" class="form-label fs-6">Value</label>
         <input class="form-control" type="text" id="value" formControlName="value"
             [class]="submit && !form['value'].errors ? 'is-valid': submit && form['value'].errors ? 'is-invalid' : ''" />
@@ -98,7 +101,7 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-6" *ngIf="isVisible('couponPercent')">
+    <div class="col-6" *ngIf="fields.couponPercent.visible">
         <label for="couponPercent" class="form-label fs-6">Percent</label>
         <input class="form-control" type="text" id="couponPercent" formControlName="couponPercent"
             [class]="submit && !form['couponPercent'].errors ? 'is-valid': submit && form['couponPercent'].errors ? 'is-invalid' : ''" />
@@ -108,7 +111,27 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('announceDate')">
+    <div class="col-6" *ngIf="fields.quantity.visible">
+        <label for="quantity" class="form-label fs-6">Quantity</label>
+        <input class="form-control" type="text" id="quantity" formControlName="quantity"
+            [class]="submit && !form['quantity'].errors ? 'is-valid': submit && form['quantity'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Quantity.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-6" *ngIf="fields.bonusQuantity.visible">
+        <label for="bonusQuantity" class="form-label fs-6">Bonus Quantity</label>
+        <input class="form-control" type="text" id="bonusQuantity" formControlName="bonusQuantity"
+            [class]="submit && !form['bonusQuantity'].errors ? 'is-valid': submit && form['bonusQuantity'].errors ? 'is-invalid' : ''" />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Invalid Bonus Quantity.</div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12"  *ngIf="fields.announceDate.visible">
         <label for="announceDate" class="form-label fs-6">Announce Date</label>
         <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="announceDate" formControlName="announceDate"
             [class]="submit && !form['announceDate'].errors ? 'is-valid': submit && form['announceDate'].errors ? 'is-invalid' : ''" />
@@ -117,7 +140,7 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('valueDate')">
+    <div class="col-12"  *ngIf="fields.valueDate.visible">
         <label for="valueDate" class="form-label fs-6">Value Date</label>
         <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="valueDate" formControlName="valueDate"
             [class]="submit && !form['valueDate'].errors ? 'is-valid': submit && form['valueDate'].errors ? 'is-invalid' : ''" />
@@ -126,7 +149,7 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('dueDate')">
+    <div class="col-12"  *ngIf="fields.dueDate.visible">
         <label for="dueDate" class="form-label fs-6">Due Date</label>
         <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="dueDate" formControlName="dueDate"
             [class]="submit && !form['dueDate'].errors ? 'is-valid': submit && form['dueDate'].errors ? 'is-invalid' : ''" />
@@ -135,7 +158,7 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('couponStatusId')">
+    <div class="col-12"  *ngIf="fields.couponStatusId.visible">
         <label for="couponStatusId" class="form-label fs-6">Coupon Status</label>
         <select class="form-select" id="couponStatusId" formControlName="couponStatusId" 
             [class]="submit && !form['couponStatusId'].errors ? 'is-valid': submit && form['couponStatusId'].errors ? 'is-invalid' : ''">
@@ -147,7 +170,7 @@
     </div>
 </div>
 <div class="row mb-2"> 
-    <div class="col-12" *ngIf="isVisible('notes')">
+    <div class="col-12" *ngIf="fields.notes.visible">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 

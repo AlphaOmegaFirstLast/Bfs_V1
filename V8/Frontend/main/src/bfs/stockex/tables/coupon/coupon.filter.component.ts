@@ -49,6 +49,10 @@ public DueDateFrom: Date | null | undefined;
     public DueDateTo: Date | null | undefined;
 public CouponPercentFrom: number | undefined;
     public CouponPercentTo: number | undefined;
+public QuantityFrom: number | undefined;
+    public QuantityTo: number | undefined;
+public BonusQuantityFrom: number | undefined;
+    public BonusQuantityTo: number | undefined;
 
     public isLoading: any = { list: false, view: false, save: false, lookups: false, autoComplete: false };
     public submit: boolean = false;
@@ -56,8 +60,14 @@ public CouponPercentFrom: number | undefined;
     public infoMessage: string = '';
     public currentOperation: string = '';
     public parent: any;
+//Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
+
     //---------------------------------------------------------
     constructor(public activeModal: NgbActiveModal) {
+
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
     }
 
@@ -76,6 +86,10 @@ this.DueDateFrom = this.result.DueDate?.from;
         this.DueDateTo   = this.result.DueDate?.to;
 this.CouponPercentFrom = this.result.CouponPercent?.from;
         this.CouponPercentTo   = this.result.CouponPercent?.to;
+this.QuantityFrom = this.result.Quantity?.from;
+        this.QuantityTo   = this.result.Quantity?.to;
+this.BonusQuantityFrom = this.result.BonusQuantity?.from;
+        this.BonusQuantityTo   = this.result.BonusQuantity?.to;
 
     }
     //---------------------------------------------------------
@@ -146,9 +160,11 @@ this.result.AnnounceDate = { from: this.AnnounceDateFrom, to: this.AnnounceDateT
 this.result.ValueDate = { from: this.ValueDateFrom, to: this.ValueDateTo };
 this.result.DueDate = { from: this.DueDateFrom, to: this.DueDateTo };
 this.result.CouponPercent = { from: this.CouponPercentFrom, to: this.CouponPercentTo };
+this.result.Quantity = { from: this.QuantityFrom, to: this.QuantityTo };
+this.result.BonusQuantity = { from: this.BonusQuantityFrom, to: this.BonusQuantityTo };
 
         this.parent.applyFilter(this.result);
     }
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_4
+//Template_End_Code_DontOverwrite_4
 }

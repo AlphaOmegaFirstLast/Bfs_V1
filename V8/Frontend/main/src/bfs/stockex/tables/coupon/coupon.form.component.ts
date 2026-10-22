@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { takeUntil } from 'rxjs/operators';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
@@ -13,7 +14,7 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import {isEnabled, isVisible, type ICoupon, initCoupon, couponUntypedFormGroup, getCouponActions} from './coupon.shared';
+import {fields,type ICoupon, initCoupon, couponUntypedFormGroup, getCouponActions} from './coupon.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -49,6 +50,7 @@ public CouponStatusOptions: any[] = [];
 
     // Define autocomplete
 
+    fields:any=fields;
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
@@ -71,6 +73,64 @@ public CouponStatusOptions: any[] = [];
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this); 
+        //Template_Start_Code_DontOverwrite_2
+this.validationForm.valueChanges
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(formValue => {
+                // Read values safely
+                var couponTypeId = this.validationForm.get("couponTypeId")?.value || 0;
+                const couponPercentControl = this.validationForm.get('couponPercent');
+                const valueControl = this.validationForm.get('value'); // <-- Fixed typo here (was couponPercent)
+                const quantityControl = this.validationForm.get('quantity');
+                const bonusQuantityControl = this.validationForm.get('bonusQuantity'); // <-- Fixed typo here (was couponPercent)
+
+                if (couponTypeId ==1) {
+                    const value = this.validationForm.get("value")?.value || 0;
+                    const percent = this.validationForm.get("couponPercent")?.value || 0;
+
+                    // Correct mutually exclusive logic
+                    if (value > 0) {
+                        this.fields.value.enabled = true;
+                        this.fields.couponPercent.enabled = false;
+                    } else if (percent > 0) {
+                        this.fields.value.enabled = false;
+                        this.fields.couponPercent.enabled = true;
+                    } else {
+                        // If both are 0/empty, allow entering into either
+                        this.fields.value.enabled = true;
+                        this.fields.couponPercent.enabled = true;
+                    }
+
+                    // Apply state changes with { emitEvent: false } to prevent infinite loops
+                    if (this.fields.couponPercent.enabled) {
+                        couponPercentControl?.enable({ emitEvent: false });
+                    } else {
+                        couponPercentControl?.disable({ emitEvent: false });
+                    }
+
+                    if (this.fields.value.enabled) {
+                        valueControl?.enable({ emitEvent: false });
+                    } else {
+                        valueControl?.disable({ emitEvent: false });
+                    }
+                    quantityControl?.disable({ emitEvent: false });
+                    bonusQuantityControl?.disable({ emitEvent: false });
+                    quantityControl?.setValue(0,{ emitEvent: false });
+                    bonusQuantityControl?.setValue(0,{ emitEvent: false });
+                }
+
+                if (couponTypeId == 2) {
+                    quantityControl?.enable({ emitEvent: false });
+                    bonusQuantityControl?.enable({ emitEvent: false });
+                    valueControl?.disable({ emitEvent: false });
+                    couponPercentControl?.disable({ emitEvent: false });
+                    valueControl?.setValue(0,{ emitEvent: false });
+                    couponPercentControl?.setValue(0,{ emitEvent: false });
+                }
+            });
+//Template_End_Code_DontOverwrite_2
+
     }
     //---------------------------------------------------------
     override initEntity(): ICoupon  {
@@ -142,19 +202,9 @@ this.CouponStatusOptions = couponStatusResponse.items;
     override getActions(record: IEntity): IAction[] {
         return getCouponActions(this, record);
     }
-
    //---------------------------------------------------------
-    isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity,this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
-    isEnabled(fieldName: string): boolean {
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 
-        return isEnabled(this.entity,this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
-
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
 }

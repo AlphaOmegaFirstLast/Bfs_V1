@@ -17,6 +17,7 @@ import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-com
 
 //---------------------- Component Specific ------------------------
 import { isEnabled, isVisible, type ISspTransaction, initSspTransaction, sspTransactionUntypedFormGroup, getSspTransactionActions } from './ssp-transaction.shared';
+import { LookupHelper } from '@bfs/_shared/helpers/lookup.class';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -66,10 +67,12 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
     ssPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'ssPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     toPortfolioAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/SsPortfolio/list", fieldName: 'toPortfolio', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
     brokerId = 0;
-    oldPortfolioId = 0;
-
+    lookupTasks = [
+        new LookupHelper({ apiService: this.apiService, queryUrl: "/TransactionType/list", fieldName: 'transactionTypeId', filter: { "stockEntityTypeId": 3, "sourceTypeId": 2 }, options: this.TransactionTypeOptions }),
+        new LookupHelper({ apiService: this.apiService, queryUrl: "/reports/StockshareBrokerRepCompare", fieldName: 'stockShareId', filter: { "TradingRoom_BrokerId": this.brokerId }, options: this.StockShareOptions }),
+        new LookupHelper({ apiService: this.apiService, queryUrl: "/Currency/list", fieldName: 'currencyId', options: this.CurrencyOptions })
+    ];
     //---------------------------------------------------------
-
     constructor(activatedRoute: ActivatedRoute) {
 
         super(activatedRoute);
@@ -100,14 +103,6 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
                 var transactionTypeValue = this.validationForm.get("transactionTypeId")?.value || 0;
                 this.fields.toPortfolioId.visible = transactionTypeValue == 9 || transactionTypeValue == 10;
                 this.fields.toQuantity.visible = transactionTypeValue == 15 || transactionTypeValue == 16;
-                var ssPortfolioId = 0
-                ssPortfolioId = this.validationForm.get("ssPortfolioId")?.value || 0;
-                if (ssPortfolioId != this.oldPortfolioId) {
-                    this.oldPortfolioId = ssPortfolioId;
-                    this.brokerId = this.ssPortfolioAuto.record["brokerId"];
-                    this.getLookups();
-                }
-
             });
     }
     //---------------------------------------------------------
@@ -116,23 +111,28 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
-
     }
     //---------------------------------------------------------
     override async setAutoComplete() {
         await this.ssPortfolioAuto.setUpForm(this.apiService, this);
         await this.toPortfolioAuto.setUpForm(this.apiService, this);
-
     }
     //---------------------------------------------------------
     // required to set the control with the entity initial values
     override async setDataAutoComplete() {
-
         this.ssPortfolioAuto.setData(this.entity.ssPortfolioId, this.entity.ssPortfolioName);
         this.toPortfolioAuto.setData(this.entity.toPortfolioId, this.entity.toPortfolioName);
     }
     //---------------------------------------------------------
-
+    override setDataLookup() {
+        var lookupTask = this.lookupTasks.find(x => x.fieldName == "stockShareId");
+        if (lookupTask) {
+            lookupTask.setData(this.entity.stockShareId, this.entity['stockShareName']);
+            // var stockShareId = this.entity.stockShareId ? +this.entity.stockShareId : 0;
+            // this.StockShareOptions = [{ id: stockShareId, name: this.entity['stockShareName'] }]
+        }    
+    }
+    //---------------------------------------------------------
     override getActions(record: IEntity): IAction[] {
         let actions = getSspTransactionActions(this, record);
         actions = actions.filter(a => (
@@ -142,73 +142,31 @@ export class SspTransactionFormComponent extends BaseFormComponent<ISspTransacti
         ));
         return actions;
     }
-
     //---------------------------------------------------------
-    isVisible(fieldName: string): boolean {
-
-        return isVisible(this.entity, this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
-    isEnabled(fieldName: string): boolean {
-
-        return isEnabled(this.entity, this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
 
     //Template_Start_Code_DontOverwrite_2
-    onTransactionTypeChange() {
 
-    }
-    //--------------------------------------------------------------
     override async getLookups(): Promise<void> {
         this.messages = [];
-        let target = '';
         this.isLoading.lookups = true;
-        // Promise.all to improve performance. apply later
         try {
-            const [
-                transactionTypeResponse,
-                stockShareResponse,
-                currencyResponse,
-
-            ] = await Promise.all
-                ([
-                    this.apiService.getItems<IQueryResponse>("/TransactionType/list", { "filter": { "stockEntityTypeId": 3, "sourceTypeId": 2 }, pageSize: 50 }),
-                    this.apiService.getItems<IQueryResponse>("/reports/StockshareBrokerRepCompare", { "filter": { "TradingRoom_BrokerId": this.brokerId }, pageSize: 70 }),
-                    this.apiService.getItems<IQueryResponse>("/Currency/list", { pageSize: 30 }),
-
-                ]);
-            this.TransactionTypeOptions = transactionTypeResponse.items;
-            this.StockShareOptions = stockShareResponse.items.map(x => ({ id: x.stockshare_Id, name: x.stockshare_Name }));
-            this.CurrencyOptions = currencyResponse.items;
-
+            // Execute all fetch functions in parallel
+            const results = await Promise.all(this.lookupTasks.map(task => task.fetch()));
         } catch (err: any) {
             const msg = err?.message || "An error occurred while loading data.";
             this.messages.push({ text: msg, msgType: "danger" });
         } finally {
             this.isLoading.lookups = false;
         }
-        /*
-               this.isLoading.lookups = true;
-               target = "/[LookupNameCapital]/list";
-               (await this.apiService.post(target,  {pageSize:50})).subscribe({
-                   next: (response: IQueryResponse) => {
-                       this.[LookupNameCapital]Options = response.items;
-                       this.isLoading.lookups = false;
-                   },
-                       error: (err: any) => {
-                       this.isLoading.lookups = false;
-                       var msg = err.message || 'An error occurred while fetching [DisplayName] data.';
-                       this.messages.push({ text: msg, msgType: "danger" });
-                   }
-               });
-               */
     }
-
+    //--------------------------------------------------------------
     async SsPortfolioChange() {
         this.brokerId = this.ssPortfolioAuto.record["brokerId"];
-        await this.getLookups();
+        var lookupTask = this.lookupTasks.find(x => x.fieldName == "stockShareId");
+        if (lookupTask) {
+            lookupTask.filter = { "TradingRoom_BrokerId": this.brokerId };
+            await this.getLookups();
+        }
     }
     //Template_End_Code_DontOverwrite_2
 }
-

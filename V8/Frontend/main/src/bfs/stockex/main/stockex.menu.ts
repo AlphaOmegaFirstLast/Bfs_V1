@@ -179,14 +179,6 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'Current Prices',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/current-price/list',
-                data: {
-                    role: ['admin', 'investor', 'broker']
-                }
-            },
-            {
                 label: 'Coupons',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/coupon/list',
@@ -337,7 +329,26 @@ export const StockExMenuItems: MenuItemType[] = [
             //Template_Component_Menu_Custom
         ]
     },
-
+    {
+        label: 'Uploads',
+        icon: 'tablerMail',
+        isCollapsed: true,
+        data: {
+            app: ['b.ofc'],
+            role: ['admin']
+        },
+        children: [
+            {
+                label: 'Current Prices',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/current-price/list',
+                data: {
+                    role: ['admin', 'investor', 'broker']
+                }
+            },
+            //Template_Component_Menu_Uploads
+        ]
+    },
     {
         label: 'Seed Data',
         icon: 'tablerMail',

@@ -1,24 +1,51 @@
 import { UntypedFormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormBuilder } from "@angular/forms";
 
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+
 import { getFormControlValidation } from "@bfs/_shared/objectFields";
 //------------------------ Operation Business Specific ---------------------------------
 import * as operations from '@bfs/stockex/main/stockex.operations';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
+export const fields = {
+        isDeleted:  { visible: true, enabled: true },
+id:  { visible: true, enabled: true },
+name:  { visible: true, enabled: true },
+notes:  { visible: true, enabled: true },
+value:  { visible: true, enabled: true },
+announceDate:  { visible: true, enabled: true },
+valueDate:  { visible: true, enabled: true },
+dueDate:  { visible: true, enabled: true },
+couponPercent:  { visible: true, enabled: true },
+quantity:  { visible: true, enabled: true },
+bonusQuantity:  { visible: true, enabled: true },
+
+        tradingRoomId:  { visible: true, enabled: true },
+stockShareId:  { visible: true, enabled: true },
+couponTypeId:  { visible: true, enabled: true },
+couponStatusId:  { visible: true, enabled: true },
+
+};
+
 // Output Columns of a Query  [used in entity Query]
-export const CouponColumns = [
+export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'couponTypeId', displayName: 'Coupon Type', sortName: 'CouponType_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'tradingRoomId', displayName: 'Trading Room', sortName: 'TradingRoomName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'stockShareId', displayName: 'Stock Share', sortName: 'StockShareName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'couponTypeId', displayName: 'Coupon Type', sortName: 'CouponTypeName', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'value', displayName: 'Value', sortName: 'Value', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'announceDate', displayName: 'Announce Date', sortName: 'AnnounceDate', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'valueDate', displayName: 'Value Date', sortName: 'ValueDate', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'dueDate', displayName: 'Due Date', sortName: 'DueDate', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'couponStatusId', displayName: 'Coupon Status', sortName: 'CouponStatusName', width: '50px', isVisible:true, columnOrder:1 },
 { fieldName: 'couponPercent', displayName: 'Percent', sortName: 'CouponPercent', width: '50px', isVisible:false, columnOrder:1 },
+{ fieldName: 'quantity', displayName: 'Quantity', sortName: 'Quantity', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'bonusQuantity', displayName: 'Bonus Quantity', sortName: 'BonusQuantity', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
+export const CouponColumns  = reOrderColumns(columns);
 //---------------------------------------------------------
 export interface ICoupon extends IEntity{
     isDeleted?: boolean;
@@ -30,6 +57,8 @@ announceDate?: Date | null;
 valueDate?: Date | null;
 dueDate?: Date | null;
 couponPercent?: number;
+quantity?: number;
+bonusQuantity?: number;
 
     tradingRoomId?: string;
 stockShareId?: string;
@@ -49,6 +78,8 @@ announceDate: new Date(),
 valueDate: new Date(),
 dueDate: new Date(),
 couponPercent: 0,
+quantity: 0,
+bonusQuantity: 0,
 
         tradingRoomId: '0',
 stockShareId: '0',
@@ -72,6 +103,8 @@ announceDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLeng
 valueDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 dueDate: [new Date(),getFormControlValidation('{"IsRequired":false,"MinLength":"","MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 couponPercent: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+quantity: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
+bonusQuantity: [0,getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":"","MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 
     tradingRoomId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
 stockShareId: ['0',getFormControlValidation('{"IsRequired":false,"MinLength":null,"MaxLength":null,"MinValue":"","MaxValue":"","RegexPattern":"","AllowedValues":""}')],
@@ -103,6 +136,8 @@ AnnounceDate?: { from?: Date | null ; to?: Date | null} ;
 ValueDate?: { from?: Date | null ; to?: Date | null} ;
 DueDate?: { from?: Date | null ; to?: Date | null} ;
 CouponPercent?: { from?: number ; to?: number} ;
+Quantity?: { from?: number ; to?: number} ;
+BonusQuantity?: { from?: number ; to?: number} ;
 
 }
 //---------------------------------------------------------
@@ -131,6 +166,8 @@ AnnounceDate: { from: undefined , to: undefined} ,
 ValueDate: { from: undefined , to: undefined} ,
 DueDate: { from: undefined , to: undefined} ,
 CouponPercent: { from: undefined , to: undefined} ,
+Quantity: { from: undefined , to: undefined} ,
+BonusQuantity: { from: undefined , to: undefined} ,
 
             }
     };
@@ -203,27 +240,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
         return links;
     }
 //---------------------------------------------------------
-export function isVisible(entity: ICoupon, validationForm: UntypedFormGroup, fieldName: string): boolean {
-    //check using const control = this.validationForm.get(fieldName);
-    // or this.entity[fieldName]
-    switch (fieldName) {
-        case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
-    }
-    return true;
-}
-//---------------------------------------------------------
-export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
-    //check using const control = this.validationForm.get(fieldName);
-    // or this.entity[fieldName]
-    switch (fieldName) {
-        case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
-    }
-    return true;
-}
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3

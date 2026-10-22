@@ -126,6 +126,9 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
     setDataAutoComplete() {
     }
     //---------------------------------------------------------
+    setDataLookup(){
+    }
+    //---------------------------------------------------------
     async getObjectFieldLookups() {
         let currentSystem = sessionStorage.getItem('current-system') || '';
         // ToDo set a separate flag: "isMaster", so code is executed regardless of how system is named, currently it relies on system name contains "master"
@@ -283,6 +286,7 @@ export class BaseFormComponent<Entity extends IEntity> implements IBaseForm, OnI
                 this.entity = response;
                 this.patchFormValue(this.entity);
                 this.setDataAutoComplete();
+                this.setDataLookup();
                 this.isLoading.view = false;
                 if (this.currentOperation == 'view' || this.currentOperation == 'delete') {
                     this.validationForm.disable();

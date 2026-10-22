@@ -139,6 +139,28 @@
       </div>
     </div>
   </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Quantity</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="QuantityFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="QuantityTo">
+      </div>
+    </div>
+  </div>
+  <div class="form-control">
+    <div class="row">
+      <div class="col -4">
+        <label>Bonus Quantity</label>
+      </div>
+      <div class="col -8">
+        <label class="me-2">from</label><input class="form-control me-4" type="number"  [(ngModel)]="BonusQuantityFrom">
+        <label class="me-2">To</label><input class="form-control me-4" type="number"  [(ngModel)]="BonusQuantityTo">
+      </div>
+    </div>
+  </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="reset()">Reset</button>

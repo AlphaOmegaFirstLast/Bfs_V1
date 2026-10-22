@@ -6,7 +6,7 @@ export interface ILookupHelper {
     queryUrl: string,
     options?: ILookup[],
     fieldName?: string,
-    filter?: any; 
+    filter?: any;
     pageSize?: any
 }
 
@@ -33,13 +33,14 @@ export class LookupHelper {
 
         return this.apiService.getItems<IQueryResponse>(this.queryUrl, { "filter": this.filter, pageSize: this.pageSize })
             .then((response: IQueryResponse) => {
+                let items = response?.items?.map((item: any) => ({ id: item.id, name: item.lookupName || item.name })) ?? [];
 
                 if (this.options) {
                     // Mutate the array in-place so the component property updates by reference
                     this.options.length = 0;
-                    this.options.push(...response.items);
+                    this.options.push(...items);
                 } else {
-                    this.options = response.items;
+                    this.options = items;
                 }
 
                 return this.options;
@@ -49,4 +50,20 @@ export class LookupHelper {
                 throw error;
             });
     }
+    //---------------------------------------------------------  
+
+    setData(id?: string, optionName?: string) {
+
+        var optionId = id ? +id : 0;
+        optionName = optionName ?? '';
+        var items = [{ id: optionId, name: optionName }];
+        if (this.options) {
+            // Mutate the array in-place so the component property updates by reference
+            this.options.length = 0;
+            this.options.push(...items);
+        } else {
+            this.options = items;
+        }
+    }
+    //---------------------------------------------------------  
 }
