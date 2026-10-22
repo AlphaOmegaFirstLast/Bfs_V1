@@ -9,13 +9,25 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
+export const fields = {
+        agreementDate:  { visible: true, enabled: true },
+isDeleted:  { visible: true, enabled: true },
+id:  { visible: true, enabled: true },
+name:  { visible: true, enabled: true },
+notes:  { visible: true, enabled: true },
+
+        investorId:  { visible: true, enabled: true },
+brokerId:  { visible: true, enabled: true },
+
+};
+
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
     { fieldName: 'agreementDate', displayName: 'Agreement Date', sortName: 'AgreementDate', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
 { fieldName: 'notes', displayName: 'Notes', sortName: 'Notes', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'investorId', displayName: 'Investor', sortName: 'Investor_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'brokerId', displayName: 'Broker', sortName: 'Broker_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'investorId', displayName: 'Investor', sortName: 'InvestorName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'brokerId', displayName: 'Broker', sortName: 'BrokerName', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 export const BrokerAgreementColumns  = reOrderColumns(columns);
@@ -159,27 +171,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
         return links;
     }
 //---------------------------------------------------------
-export function isVisible(entity: IBrokerAgreement, validationForm: UntypedFormGroup, fieldName: string): boolean {
-    //check using const control = this.validationForm.get(fieldName);
-    // or this.entity[fieldName]
-    switch (fieldName) {
-        case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
-    }
-    return true;
-}
-//---------------------------------------------------------
-export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
-    //check using const control = this.validationForm.get(fieldName);
-    // or this.entity[fieldName]
-    switch (fieldName) {
-        case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
-    }
-    return true;
-}
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3

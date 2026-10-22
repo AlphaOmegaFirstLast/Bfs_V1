@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { takeUntil } from 'rxjs/operators';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
@@ -13,7 +14,7 @@ import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
 
 //---------------------- Component Specific ------------------------
-import {isEnabled, isVisible, type IBrokerAgreement, initBrokerAgreement, brokerAgreementUntypedFormGroup, getBrokerAgreementActions} from './broker-agreement.shared';
+import {fields,type IBrokerAgreement, initBrokerAgreement, brokerAgreementUntypedFormGroup, getBrokerAgreementActions} from './broker-agreement.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -60,6 +61,7 @@ public BrokerOptions: any[] = [];
 
     // Define autocomplete
 
+    fields:any=fields;
     //---------------------------------------------------------
 
     constructor(activatedRoute: ActivatedRoute) {
@@ -82,7 +84,9 @@ public BrokerOptions: any[] = [];
 
         this.linkList = this.getRecordLinks(this);
         this.actionList = this.getRecordActions(this);    
-        this.buttonList = this.getRecordButtons(this);
+        this.buttonList = this.getRecordButtons(this); 
+        //Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     }
     //---------------------------------------------------------
     override initEntity(): IBrokerAgreement  {
@@ -163,19 +167,8 @@ this.BrokerOptions = brokerResponse.items;
     override getActions(record: IEntity): IAction[] {
         return getBrokerAgreementActions(this, record);
     }
-
    //---------------------------------------------------------
-    isVisible(fieldName: string): boolean {
 
-        return isVisible(this.entity,this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
-    isEnabled(fieldName: string): boolean {
-
-        return isEnabled(this.entity,this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
-
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+//Template_Start_Code_DontOverwrite_3
+//Template_End_Code_DontOverwrite_3
 }

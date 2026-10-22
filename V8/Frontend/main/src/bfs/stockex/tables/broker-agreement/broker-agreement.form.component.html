@@ -55,7 +55,7 @@
                                     <div class="row">
                                     <div class="col-6">
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('agreementDate')">
+    <div class="col-12"  *ngIf="fields.agreementDate.visible">
         <label for="agreementDate" class="form-label fs-6">Agreement Date</label>
         <input class="form-control" type="text" mwlFlatpickr [altInput]="true" dateFormat="Y-m-d" altFormat="d/m/Y" id="agreementDate" formControlName="agreementDate"
             [class]="submit && !form['agreementDate'].errors ? 'is-valid': submit && form['agreementDate'].errors ? 'is-invalid' : ''" />
@@ -64,8 +64,10 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('investorId')">
+    <div class="col-12"  *ngIf="fields.investorId.visible">
         <label for="investorId" class="form-label fs-6">Investor</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
         <select class="form-select" id="investorId" formControlName="investorId" 
             [class]="submit && !form['investorId'].errors ? 'is-valid': submit && form['investorId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of InvestorOptions">
@@ -76,8 +78,10 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('brokerId')">
+    <div class="col-12"  *ngIf="fields.brokerId.visible">
         <label for="brokerId" class="form-label fs-6">Broker</label>
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
         <select class="form-select" id="brokerId" formControlName="brokerId" 
             [class]="submit && !form['brokerId'].errors ? 'is-valid': submit && form['brokerId'].errors ? 'is-invalid' : ''">
             <ng-container *ngFor="let option of BrokerOptions">
@@ -89,7 +93,7 @@
 </div>
 
 <div class="row mb-2"> 
-    <div class="col-12" *ngIf="isVisible('notes')">
+    <div class="col-12" *ngIf="fields.notes.visible">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 
