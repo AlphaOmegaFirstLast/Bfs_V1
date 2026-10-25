@@ -27,6 +27,8 @@ namespace Bfs.StockEx.Domain.Services
 
         private readonly IStockshareBrokerRepCompare _stockshareBrokerRepCompare;
 
+        private readonly IPortfolioProfitRepCompare _portfolioProfitRepCompare;
+
 //Template_Component_AddDeclareEntry
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2
@@ -47,6 +49,8 @@ namespace Bfs.StockEx.Domain.Services
               ,IOverdraftRepCompare overdraftRepCompare
 
               ,IStockshareBrokerRepCompare stockshareBrokerRepCompare
+
+              ,IPortfolioProfitRepCompare portfolioProfitRepCompare
 
 //Template_Component_AddParameterEntry
 //Template_Start_Code_DontOverwrite_3
@@ -69,6 +73,8 @@ namespace Bfs.StockEx.Domain.Services
               _overdraftRepCompare = overdraftRepCompare;
 
               _stockshareBrokerRepCompare = stockshareBrokerRepCompare;
+
+              _portfolioProfitRepCompare = portfolioProfitRepCompare;
 
 //Template_Component_AddInitEntry
 //Template_Start_Code_DontOverwrite_4
@@ -154,6 +160,16 @@ namespace Bfs.StockEx.Domain.Services
             var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.StockshareBrokerRepCompareItem>, Bfs.Core.Contracts.QueryResponse<StockshareBrokerRepCompareItem>>(entityResult);
 
             return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<StockshareBrokerRepCompareItem> { Items = new List<StockshareBrokerRepCompareItem>(), TotalItems = 0, TotalPages = 0 };
+        }
+
+        public async Task<Bfs.Core.Contracts.QueryResponse<PortfolioProfitRepCompareItem>> PortfolioProfitRepCompareAsync(Bfs.Core.Contracts.QueryRequest<PortfolioProfitRepCompareFilter> contractRequest)
+        {
+            var entityRequest = SerializationHelper.DoMapping<Bfs.Core.Contracts.QueryRequest<PortfolioProfitRepCompareFilter>, Bfs.Core.Data.QueryRequest<Data.PortfolioProfitRepCompareFilter>>(contractRequest);
+
+            var entityResult = await _portfolioProfitRepCompare.GetAsync(entityRequest).ConfigureAwait(false);
+            var mappedResult = SerializationHelper.DoMapping<Bfs.Core.Data.QueryResponse<Data.PortfolioProfitRepCompareItem>, Bfs.Core.Contracts.QueryResponse<PortfolioProfitRepCompareItem>>(entityResult);
+
+            return mappedResult ?? new Bfs.Core.Contracts.QueryResponse<PortfolioProfitRepCompareItem> { Items = new List<PortfolioProfitRepCompareItem>(), TotalItems = 0, TotalPages = 0 };
         }
 //Template_Component_AddServiceEntry
 //Template_Start_Code_DontOverwrite_5

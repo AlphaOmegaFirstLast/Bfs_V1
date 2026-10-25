@@ -56,10 +56,10 @@
                                     <div class="col-6">
   <!-- BrokerAgreementAutoComplete Start -->
                                             <div class="row mb-2">
-                                                <div class="col-12"  *ngIf="isVisible('brokerAgreementId')">
+                                                <div class="col-12"  *ngIf="fields.brokerAgreementId.visible">
                                                     <div class="position-relative"  (focusout)="brokerAgreementAuto.hideOverlay()">
                                                         <label class="form-label fs-6">Broker Agreement</label>
-                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+                                                        <ng-icon name="tablerSearch" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="Search by Investor name or Broker name. "  />
 
                                                         <div class="input-group">
                                                             <input type="text" class="form-control" autocomplete="off" placeholder="Type at least 3 characters..."
@@ -91,9 +91,11 @@
                                             </div>
   <!-- BrokerAgreement AutoComplete End -->
 <div class="row mb-2">
-    <div class="col-12"  *ngIf="isVisible('ssPortfolioId')">
+    <div class="col-12"  *ngIf="fields.ssPortfolioId.visible">
         <label for="ssPortfolioId" class="form-label fs-6">StockShare Portfolio</label>
-        <select class="form-select" id="ssPortfolioId" formControlName="ssPortfolioId"  
+        <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
+
+        <select class="form-select" id="ssPortfolioId" formControlName="ssPortfolioId" 
             [class]="submit && !form['ssPortfolioId'].errors ? 'is-valid': submit && form['ssPortfolioId'].errors ? 'is-invalid' : ''">
             <option value="0" disabled>Select a StockShare Portfolio</option>
             <ng-container *ngFor="let option of SsPortfolioOptions">
@@ -104,7 +106,7 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-6" *ngIf="isVisible('overdraftPercent')">
+    <div class="col-6" *ngIf="fields.overdraftPercent.visible">
         <label for="overdraftPercent" class="form-label fs-6">Overdraft Percent</label>
         <input class="form-control" type="text" id="overdraftPercent" formControlName="overdraftPercent"
             [class]="submit && !form['overdraftPercent'].errors ? 'is-valid': submit && form['overdraftPercent'].errors ? 'is-invalid' : ''" />
@@ -114,7 +116,7 @@
 </div>
 
 <div class="row mb-2">
-    <div class="col-6" *ngIf="isVisible('overdraftMax')">
+    <div class="col-6" *ngIf="fields.overdraftMax.visible">
         <label for="overdraftMax" class="form-label fs-6">Overdraft Max</label>
         <input class="form-control" type="text" id="overdraftMax" formControlName="overdraftMax"
             [class]="submit && !form['overdraftMax'].errors ? 'is-valid': submit && form['overdraftMax'].errors ? 'is-invalid' : ''" />
@@ -124,7 +126,7 @@
 </div>
 
 <div class="row mb-2"> 
-    <div class="col-12" *ngIf="isVisible('notes')">
+    <div class="col-12" *ngIf="fields.notes.visible">
         <label for="notes" class="form-label fs-6">Notes</label>
         <ng-icon name="tablerInfo-Circle" class="text-info fs-16" style="margin-left:2px"  popoverTitle="Info" ngbPopover="" style='display:none' />
 

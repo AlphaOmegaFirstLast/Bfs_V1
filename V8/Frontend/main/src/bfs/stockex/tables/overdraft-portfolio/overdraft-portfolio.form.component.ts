@@ -1,9 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgIcon } from '@ng-icons/core';
+import { takeUntil } from 'rxjs/operators';
 
 import { BaseFormComponent } from '@bfs/_shared/components/base-form.component';
 import { IEntity, IQueryResponse, IAction } from '@bfs/_shared/interfaces';
@@ -13,7 +14,7 @@ import { StockExService } from '@bfs/stockex/main/stockex.service';
 import { IAutoComplete, AutoCompleteHelper } from '@bfs/_shared/helpers/auto-complete.class';
 
 //---------------------- Component Specific ------------------------
-import { isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio, overdraftPortfolioUntypedFormGroup, getOverdraftPortfolioActions } from './overdraft-portfolio.shared';
+import {fields,type IOverdraftPortfolio, initOverdraftPortfolio, overdraftPortfolioUntypedFormGroup, getOverdraftPortfolioActions} from './overdraft-portfolio.shared';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -21,8 +22,8 @@ import { isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio,
     selector: 'overdraft-portfolio-form',
     imports: [
 
-        CommonModule, FormsModule, ReactiveFormsModule, RouterLink,
-        NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
+    CommonModule, FormsModule, ReactiveFormsModule,RouterLink, 
+    NgIcon, NgbNavModule, NgbPopoverModule, NgbAlertModule, NgbDropdownModule
 
     ],
     standalone: true,
@@ -31,9 +32,9 @@ import { isEnabled, isVisible, type IOverdraftPortfolio, initOverdraftPortfolio,
 
     ],
 })
-export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraftPortfolio> implements OnInit {
+export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraftPortfolio > implements OnInit {
 
-    override apiUrl = '/OverdraftPortfolio/';
+    override apiUrl =  '/OverdraftPortfolio/';
     override apiService: StockExService = inject(StockExService);
     override componentName: string = 'OverdraftPortfolio'.toLowerCase();  // used to grab its related custom field definitions
 
@@ -43,16 +44,17 @@ export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraf
     public SsPortfolioOptions: any[] = [];
 
     // Define autocomplete
-    brokerAgreementAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/BrokerAgreement/list", fieldName: 'brokerAgreement', control: null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
+    brokerAgreementAuto: AutoCompleteHelper = new AutoCompleteHelper({ queryUrl: "/BrokerAgreement/list", fieldName: 'brokerAgreement', control:null, id: '', name: '', showDropDown: false, options: [], isLoading: false, isInitial: true } as IAutoComplete);
 
+    fields:any=fields;
     //---------------------------------------------------------
     brokerId = 0;
     investorId = 0;
     constructor(activatedRoute: ActivatedRoute) {
 
-        super(activatedRoute);
-        this.validationForm = this.formBuilder.group(overdraftPortfolioUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
-        this.brokerAgreementAuto.control = this.validationForm.get('brokerAgreementName');
+       super(activatedRoute);
+       this.validationForm = this.formBuilder.group(overdraftPortfolioUntypedFormGroup(this.formBuilder)); // Use Angular Validation Controls
+      this.brokerAgreementAuto.control = this.validationForm.get('brokerAgreementName');
 
     }
     //---------------------------------------------------------
@@ -68,12 +70,14 @@ export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraf
         }
 
         this.linkList = this.getRecordLinks(this);
-        this.actionList = this.getRecordActions(this);
-        this.buttonList = this.getRecordButtons(this);
+        this.actionList = this.getRecordActions(this);    
+        this.buttonList = this.getRecordButtons(this); 
+        //Template_Start_Code_DontOverwrite_2
+//Template_End_Code_DontOverwrite_2
     }
     //---------------------------------------------------------
-    override initEntity(): IOverdraftPortfolio {
-        return initOverdraftPortfolio();
+    override initEntity(): IOverdraftPortfolio  {
+        return initOverdraftPortfolio ();
     }
     //---------------------------------------------------------
     override setChildrenRequests() {
@@ -143,18 +147,7 @@ export class OverdraftPortfolioFormComponent extends BaseFormComponent<IOverdraf
     override getActions(record: IEntity): IAction[] {
         return getOverdraftPortfolioActions(this, record);
     }
-
-    //---------------------------------------------------------
-    isVisible(fieldName: string): boolean {
-
-        return isVisible(this.entity, this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
-    isEnabled(fieldName: string): boolean {
-
-        return isEnabled(this.entity, this.validationForm, fieldName);
-    }
-    //--------------------------------------------------------------
+   //---------------------------------------------------------
 
     //Template_Start_Code_DontOverwrite_2
     async BrokerAgreementChange() {

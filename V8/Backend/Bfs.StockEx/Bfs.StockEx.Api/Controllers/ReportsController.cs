@@ -99,6 +99,14 @@ public class ReportsController
         return TypedResults.Ok(result);
     }
 
+    [HttpPost("PortfolioProfitRepCompare")]
+    [CustomAuthorize("method=q.portfolioProfitRepCompare")]
+    public async Task<Results<Ok<QueryResponse<PortfolioProfitRepCompareItem>>, BadRequest<ProblemDetails>>> PortfolioProfitRepCompare([FromBody] QueryRequest<PortfolioProfitRepCompareFilter> ReportRequest)
+    {
+        var result = await _reportsService.PortfolioProfitRepCompareAsync(ReportRequest).ConfigureAwait(false);
+        return TypedResults.Ok(result);
+    }
+
 //Template_Component_AddControllerEntry
 //Template_Start_Code_DontOverwrite_5
 //Template_End_Code_DontOverwrite_5

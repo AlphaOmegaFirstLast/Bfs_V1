@@ -9,6 +9,21 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
+export const fields = {
+        isDeleted:  { visible: true, enabled: true },
+id:  { visible: true, enabled: true },
+name:  { visible: true, enabled: true },
+notes:  { visible: true, enabled: true },
+overdraftPercent:  { visible: true, enabled: true },
+overdraftMax:  { visible: true, enabled: true },
+
+        ssPortfolioId:  { visible: true, enabled: true },
+
+        brokerAgreementId: { visible: true, enabled: true },
+        brokerAgreementName: '',
+
+};
+
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
     { fieldName: 'id', displayName: 'ID', sortName: 'Id', width: '50px', isVisible:false, columnOrder:1 },
@@ -171,27 +186,6 @@ actionSource:'System', actionType:'FrontendLink', actionLocation:'ListRow',recor
         return links;
     }
 //---------------------------------------------------------
-export function isVisible(entity: IOverdraftPortfolio, validationForm: UntypedFormGroup, fieldName: string): boolean {
-    //check using const control = this.validationForm.get(fieldName);
-    // or this.entity[fieldName]
-    switch (fieldName) {
-        case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
-    }
-    return true;
-}
-//---------------------------------------------------------
-export function isEnabled(entity: IEntity, validationForm: UntypedFormGroup, fieldName: string): boolean {
-    //check using const control = this.validationForm.get(fieldName);
-    // or this.entity[fieldName]
-    switch (fieldName) {
-        case 'exampleId':
-           //example=>  return (entity['transactionTypeId'] == 2 || entity['transactionTypeId'] == 3) ? true : false;
-           return true;
-    }
-    return true;
-}
 
 //Template_Start_Code_DontOverwrite_3
 //Template_End_Code_DontOverwrite_3

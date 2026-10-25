@@ -24,6 +24,8 @@ namespace Bfs.StockEx.Domain.Interfaces
 
         Task<QueryResponse<StockshareBrokerRepCompareItem>> StockshareBrokerRepCompareAsync(QueryRequest<StockshareBrokerRepCompareFilter> contractRequest);
 
+        Task<QueryResponse<PortfolioProfitRepCompareItem>> PortfolioProfitRepCompareAsync(QueryRequest<PortfolioProfitRepCompareFilter> contractRequest);
+
 //Template_Component_AddIServiceEntry
 //Template_Start_Code_DontOverwrite_2
 //Template_End_Code_DontOverwrite_2

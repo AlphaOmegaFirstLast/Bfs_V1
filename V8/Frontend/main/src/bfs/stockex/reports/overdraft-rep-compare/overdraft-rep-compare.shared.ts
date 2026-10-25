@@ -104,7 +104,7 @@ export function renderOverdraftRepCompare(record: IEntity, column: IQueryColumn)
             return record['currencyName']?.toString();
 
         case 'sumTotalCashDeposit':
-            return record['sumTotalCashDeposit']?.toString();
+            return  record['sumTotalCashDeposit']?.toString();
         case 'sumAvailableCredit':
             return record['sumAvailableCredit']?.toString();
 

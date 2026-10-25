@@ -59,6 +59,14 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin']
                 }
             },
+            {
+                label: 'Portfolio Profit',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/portfolio-profit-rep-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
         ]
     },
     {
@@ -274,6 +282,14 @@ export const StockExMenuItems: MenuItemType[] = [
                 label: 'Stockshare Broker Reports',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/report/stockshare-broker-rep-compare/0',
+                data: {
+                    role: ['admin']
+                }
+            },
+            {
+                label: 'Portfolio Profit',
+                icon: 'tablerLayoutSidebar',
+                url: '/stkx/report/portfolio-profit-rep-compare/0',
                 data: {
                     role: ['admin']
                 }

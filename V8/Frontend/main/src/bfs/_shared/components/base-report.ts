@@ -81,7 +81,7 @@ export class BaseReportComponent<IFilter> {
     public pagination: any = { currentPage: 1, pageSize: this.pageSizes[0], pageCount: 0, totalItems: 1, description: '' };
     //------------------------------------------------------
     public me = this;
-    private sanitizer: DomSanitizer = inject(DomSanitizer);
+    public sanitizer: DomSanitizer = inject(DomSanitizer);
 
     //ToDo create for each record, record.linkList & record.actionList to get rid od function getRecordActions calculations
     // linkList: ViewLink[] = [];

@@ -507,6 +507,12 @@ public static class BuilderExtensions
            var config = sp.GetRequiredService<TenantSqlConfiguration>();
            return new StockshareBrokerRepCompare(config.ConnectionString, resourceSecurity);
         });
+        builder.Services.AddScoped<IPortfolioProfitRepCompare>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new PortfolioProfitRepCompare(config.ConnectionString, resourceSecurity);
+        });
 //Template_Component_RegisterReport
     }
 
