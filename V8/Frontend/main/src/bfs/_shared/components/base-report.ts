@@ -292,12 +292,12 @@ export class BaseReportComponent<IFilter> {
         modalRef.componentInstance.inputFileType = modalRef.componentInstance.fileTypes[1];
     }
     //---------------------------------------------------------
-    isObjectField(field: string): boolean {
+    isSafeHtml(field: string): boolean {
         field = field.toLowerCase();
         return field === 'fieldvalidation' || field === 'reportinfo' || field === 'forminfo';//|| field==='matrixinfo' || field==='tooltipinfo' || field==='forminfo');
     }
     //---------------------------------------------------------        
-    objectFieldHeaders(field: string): SafeHtml {
+    safeHtmlHeaders(field: string): SafeHtml {
         var result = '';
         switch (field.toLowerCase()) {
             case 'reportinfo':
@@ -317,7 +317,7 @@ export class BaseReportComponent<IFilter> {
         return this.sanitizer.bypassSecurityTrustHtml(result) || '';
     }
     //---------------------------------------------------------
-    objectFieldData(record: any, field: string): SafeHtml {
+    safeHtmlData(record: any, field: string): SafeHtml {
         var result = '';
         let jsonField = 'json' + field;
 

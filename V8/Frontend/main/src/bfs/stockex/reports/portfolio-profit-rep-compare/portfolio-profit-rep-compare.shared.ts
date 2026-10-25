@@ -75,13 +75,20 @@ export function renderPortfolioProfitRepCompare(record: IEntity, column: IQueryC
         case 'currentPrice_Profit':
             let rawHtml = "";
             if (record['currentPrice_Profit'] >= 0) {
-                rawHtml = "<span style='font-size:large; font-weight:bold; color: rgba(10, 150, 82, 0.72);'>&uarr; " + record['currentPrice_Profit']?.toString() + "</span>";
+                var greenArrow = "<span style='font-size:large; font-weight:bold; color: rgba(10, 150, 82, 0.72);'> &uarr; </span>";
+                var greenDataStart = " <span style='font-size:16px; font-weight:bold; color: rgba(10, 150, 82, 0.72);'>";
+                var greenDataEnd = "</span>";
+                rawHtml = `${greenArrow}  ${greenDataStart}  ${record['currentPrice_Profit']?.toString()}  ${greenDataEnd}`;
 
             }
             else {
-                rawHtml = "<span style='font-size:12px; font-weight:bold; color: red;'>&darr; " + record['currentPrice_Profit']?.toString() + "</span>";
-            }           
-            return sanitizer? sanitizer.bypassSecurityTrustHtml(rawHtml) : record['currentPrice_Profit']?.toString() ;
+                var redArrow = "<span style='font-size:large; font-weight:bold; color: red;'> &darr; </span>";
+                var redDataStart = " <span style='font-size:16px; font-weight:bold; color: red;'>";
+                var redDataEnd = "</span>";
+
+                rawHtml =`${redArrow}  ${redDataStart}  ${record['currentPrice_Profit']?.toString()}  ${redDataEnd} `;
+            }
+            return sanitizer ? sanitizer.bypassSecurityTrustHtml(rawHtml) : record['currentPrice_Profit']?.toString();
         default:
             return value;
     }

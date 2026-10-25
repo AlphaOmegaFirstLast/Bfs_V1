@@ -119,16 +119,16 @@ override getChart(records: IPortfolioProfitRepCompare[]): EChartsOption {
 
 //Template_Start_Code_DontOverwrite_4 
     //---------------------------------------------------------
-    override isObjectField(field: string): boolean {
+    override isSafeHtml(field: string): boolean {
         return true;
     }
     //------------------------------------------------------
-    override objectFieldHeaders(field: string): SafeHtml {
+    override safeHtmlHeaders(field: string): SafeHtml {
         let column = this.queryRequest.columns.find(x=> x.fieldName == field) || {} as IQueryColumn ;
         return column.displayName;
     }
     //---------------------------------------------------------
-    override  objectFieldData(record: any, field: string): SafeHtml{
+    override  safeHtmlData(record: any, field: string): SafeHtml{
         let column = this.queryRequest.columns.find(x=> x.fieldName == field) || {} as IQueryColumn ;
         return renderPortfolioProfitRepCompare(record, column, this.sanitizer);
     }
