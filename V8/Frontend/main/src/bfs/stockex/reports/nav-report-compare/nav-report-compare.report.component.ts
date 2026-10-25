@@ -25,6 +25,7 @@ import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
 import { type INavReportCompare, type INavReportCompareRequest, type INavReportCompareFilter, initNavReportCompareRequest, renderNavReportCompare, getNavReportCompareActions} from './nav-report-compare.shared';
 import { NavReportCompareFilterComponent } from './nav-report-compare.filter.component'; 
+import { SafeHtml } from '@angular/platform-browser';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
@@ -45,6 +46,7 @@ export class NavReportCompareComponent
     override exportRequest = {} as INavReportCompareRequest;
     override downloadFileName: string = "Nav Report";
 //Template_Start_Code_DontOverwrite_2
+    override isShowActions = false;
 //Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
@@ -63,8 +65,17 @@ this.openFilter();
 
     }
     //---------------------------------------------------------
+    override safeHtmlHeaders(field: string): SafeHtml {
+        let column = this.queryRequest.columns.find(x => x.fieldName == field) || {} as IQueryColumn;
+        return column.displayName;
+    }
+    //---------------------------------------------------------
+    override safeHtmlData(record: any, field: string): SafeHtml {
+        let column = this.queryRequest.columns.find(x => x.fieldName == field) || {} as IQueryColumn;
+        return renderNavReportCompare(record, column, this.sanitizer);
+    }
     override render(record: IEntity, column: IQueryColumn): any {
-        return renderNavReportCompare(record, column);
+        return renderNavReportCompare(record, column,this.sanitizer);
     }
     //---------------------------------------------------------
     override getActions(record: IEntity): IAction[] {
@@ -118,6 +129,10 @@ override getChart(records: INavReportCompare[]): EChartsOption {
     }
 
 //Template_Start_Code_DontOverwrite_4
+   override isSafeHtml(field: string): boolean {
+        return true;
+    }
+ 
 //Template_End_Code_DontOverwrite_4
 
 }

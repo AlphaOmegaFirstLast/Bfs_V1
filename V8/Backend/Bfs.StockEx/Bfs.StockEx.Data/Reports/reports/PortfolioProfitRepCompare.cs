@@ -62,7 +62,6 @@ _fieldList.Add(new QueryField() { DbName = "stkxSspStock.StockShareId", QueryNam
 _fieldList.Add(new QueryField() { DbName = "stkxSspStock.AverageCost", QueryName = "SspStock_AverageCost", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "stkxSspStock.CurrencyId", QueryName = "SspStock_CurrencyId", IsAggregare = false });
 _fieldList.Add(new QueryField() { DbName = "stkxCurrentPrice.Price", QueryName = "CurrentPrice_Price", IsAggregare = false });
-_fieldList.Add(new QueryField() { DbName = "(stkxSspStock.Quantity * (stkxCurrentPrice.Price - stkxSspStock.AverageCost))", QueryName = "CurrentPrice_Profit", IsAggregare = false });
 
             //lookups
             _fieldList.Add(new QueryField() { DbName = "stkxSsPortfolio.Name", QueryName = "SsPortfolioName", IsAggregare = false });
@@ -74,8 +73,8 @@ _fieldList.Add(new QueryField() { DbName = "stkxCurrency.Name", QueryName = "Cur
             //Aggregates
 
             //Template_Start_Code_DontOverwrite_5
-            
-//Template_End_Code_DontOverwrite_5
+            _fieldList.Add(new QueryField() { DbName = "(stkxSspStock.Quantity * (stkxCurrentPrice.Price - stkxSspStock.AverageCost))", QueryName = "CurrentPrice_Profit", IsAggregare = false });
+            //Template_End_Code_DontOverwrite_5
         }
 
         protected override string GetFromJoinStatement()
@@ -118,7 +117,8 @@ if (filter.SspStock_CurrencyId.HasValue)
                     sql.AppendLine("stkxSspStock.CurrencyId = @SspStock_CurrencyId");
                     parameters.Add("@SspStock_CurrencyId", filter.SspStock_CurrencyId.Value);
                 }
-
+                //Template_Start_Generated_Ignored_1
+                /*
                 if (filter.CurrentPrice_Profit?.From.HasValue == true)
                 {
                     sql.AppendLine("stkxCurrentPrice.Profit >= @CurrentPrice_ProfitFrom");
@@ -129,8 +129,20 @@ if (filter.SspStock_CurrencyId.HasValue)
                     sql.AppendLine("stkxCurrentPrice.Profit <= @CurrentPrice_ProfitTo");
                     parameters.Add("@CurrentPrice_ProfitTo", filter.CurrentPrice_Profit.To.Value);
                 }
+                */
+                //Template_End_Generated_Ignored_1
 
                 //Template_Start_Code_DontOverwrite_7
+                if (filter.CurrentPrice_Profit?.From.HasValue == true)
+                {
+                    sql.AppendLine("(stkxSspStock.Quantity * (stkxCurrentPrice.Price - stkxSspStock.AverageCost)) >= @CurrentPrice_ProfitFrom");
+                    parameters.Add("@CurrentPrice_ProfitFrom", filter.CurrentPrice_Profit.From.Value);
+                }
+                if (filter.CurrentPrice_Profit?.To.HasValue == true)
+                {
+                    sql.AppendLine("(stkxSspStock.Quantity * (stkxCurrentPrice.Price - stkxSspStock.AverageCost)) <= @CurrentPrice_ProfitTo");
+                    parameters.Add("@CurrentPrice_ProfitTo", filter.CurrentPrice_Profit.To.Value);
+                }
                 //Template_End_Code_DontOverwrite_7      
             }
             return string.Join(" And ", sql.ToString()

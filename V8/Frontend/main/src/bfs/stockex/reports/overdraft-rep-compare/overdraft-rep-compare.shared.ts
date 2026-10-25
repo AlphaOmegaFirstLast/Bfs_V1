@@ -1,6 +1,8 @@
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
 import * as operations from '@bfs/stockex/main/stockex.operations';
+import { setArrowData } from "@bfs/_shared/helpers/html.helper";
 
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
@@ -11,7 +13,7 @@ export const columns = [
     { fieldName: 'brokerAgreement_BrokerId', displayName: 'Broker', sortName: 'Broker_Name', width: '50px', isVisible: true, columnOrder: 4 },
     { fieldName: 'ssPortfolioBalance_CurrencyId', displayName: 'Currency', sortName: 'Currency_Name', width: '50px', isVisible: true, columnOrder: 5 },
     { fieldName: 'ssPortfolioBalance_Balance', displayName: 'Balance', sortName: 'SsPortfolioBalance_Balance', width: '50px', isVisible: true, columnOrder: 6 },
-    { fieldName: 'overdraftPortfolio_Overdraft', displayName: 'Overdraft ', sortName: 'OverdraftPortfolio_Overdraft', width: '50px', isVisible: true, columnOrder: 17 },
+    { fieldName: 'overdraftPortfolio_Overdraft', displayName: 'Overdraft ', sortName: 'OverdraftPortfolio_Overdraft', width: '50px', isVisible: true, columnOrder: 21 },
     { fieldName: 'overdraftPortfolio_OverdraftMax', displayName: 'Overdraft Max', sortName: 'OverdraftPortfolio_OverdraftMax', width: '50px', isVisible: false, columnOrder: 19 },
     { fieldName: 'overdraftPortfolio_OverdraftPercent', displayName: 'Overdraft Percent', sortName: 'OverdraftPortfolio_OverdraftPercent', width: '50px', isVisible: false, columnOrder: 20 },
 
@@ -89,7 +91,7 @@ export function initOverdraftRepCompareRequest(): IOverdraftRepCompareRequest {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function renderOverdraftRepCompare(record: IEntity, column: IQueryColumn): any {
+export function renderOverdraftRepCompare(record: IEntity, column: IQueryColumn, sanitizer: DomSanitizer): SafeHtml {
     const value = record[column.fieldName as keyof IEntity];
     switch (column.fieldName) {
         case 'overdraftPortfolio_BrokerAgreementId':
@@ -102,6 +104,9 @@ export function renderOverdraftRepCompare(record: IEntity, column: IQueryColumn)
             return record['brokerName']?.toString();
         case 'ssPortfolioBalance_CurrencyId':
             return record['currencyName']?.toString();
+
+        case 'overdraftPortfolio_Overdraft':
+            return setArrowData(sanitizer,'blue', 'none' ,record['overdraftPortfolio_Overdraft']);
 
         case 'sumTotalCashDeposit':
             return  record['sumTotalCashDeposit']?.toString();

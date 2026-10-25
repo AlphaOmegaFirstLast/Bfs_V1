@@ -23,21 +23,21 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
-import { type ISsPortfolioBalance, type ISsPortfolioBalanceRequest, type ISsPortfolioBalanceFilter, initSsPortfolioBalanceRequest, renderSsPortfolioBalance, getSsPortfolioBalanceActions} from './ss-portfolio-balance.shared';
-import { SsPortfolioBalanceFilterComponent } from './ss-portfolio-balance.filter.component'; 
+import { type ISsPortfolioBalance, type ISsPortfolioBalanceRequest, type ISsPortfolioBalanceFilter, initSsPortfolioBalanceRequest, renderSsPortfolioBalance, getSsPortfolioBalanceActions } from './ss-portfolio-balance.shared';
+import { SsPortfolioBalanceFilterComponent } from './ss-portfolio-balance.filter.component';
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
 
 @Component({
-    selector: 'ss-portfolio-balance-list',     
-    imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
-               NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
-               NgxEchartsDirective],
+    selector: 'ss-portfolio-balance-list',
+    imports: [CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
+        NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
+        NgxEchartsDirective],
     providers: [provideEchartsCore({ echarts })],
     standalone: true,
     templateUrl: '../../../_shared/components/base-report.component.html',
 })
-export class SsPortfolioBalanceListComponent         
+export class SsPortfolioBalanceListComponent
 
     extends BaseReportComponent<ISsPortfolioBalanceFilter> {
     override apiService: StockExService = inject(StockExService);
@@ -51,6 +51,7 @@ export class SsPortfolioBalanceListComponent
         super(modalService, router, excelService, activatedRoute);
 
         this.isButton.chart = false;
+        this.isButton.addNew = false;
         this.addNewRecordLink = { route: "/stkx/ss-portfolio-balance/add/0", displayText: "Add New Portfolio Balances" };
         this.getApiUrl = '/SsPortfolioBalance/List';
         this.uploadApiUrl = '/SsPortfolioBalance/upload';
@@ -67,8 +68,8 @@ export class SsPortfolioBalanceListComponent
         return getSsPortfolioBalanceActions(this, record);
     }
 
-//Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2
+    //Template_Start_Code_DontOverwrite_2
+    //Template_End_Code_DontOverwrite_2
 
 }
 

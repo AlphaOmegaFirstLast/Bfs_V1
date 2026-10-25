@@ -70,19 +70,19 @@
             <div class="row" *ngIf="isSection.table">
 
                 <table class="table table-striped table-bordered table-hover">
-                    <tr>
+                    <tr height="58px">
                         <ng-container *ngFor="let column of queryRequest.columns">
                            <th width="{{ column.width }}" *ngIf="column.isVisible && isSafeHtml(column.fieldName)"><div [innerHTML]="safeHtmlHeaders(column.fieldName)"></div></th>
                            <th width="{{ column.width }}" *ngIf="column.isVisible && !isSafeHtml(column.fieldName)">{{column.displayName }}</th>
                         </ng-container>
-                        <th width="100px"></th>
+                        <th width="100px" *ngIf="isShowActions"></th>
                     </tr>
-                    <tr *ngFor="let record of list">
+                    <tr *ngFor="let record of list" height="50px">
                         <ng-container *ngFor="let column of queryRequest.columns">
                             <td *ngIf="column.isVisible && isSafeHtml(column.fieldName)"><div [innerHTML]="safeHtmlData(record, column.fieldName)"></div></td>
                             <td *ngIf="column.isVisible && !isSafeHtml(column.fieldName)"> {{ render(record, column) }} </td>
                         </ng-container>
-                        <td>
+                        <td *ngIf="isShowActions">
                             <div ngbDropdown class="flex-shrink-0 text-muted" style="text-align: right;">
                                 <a href="javascript:void(0)" ngbDropdownToggle class="drop-arrow-none fs-xxl link-reset p-0">
                                     <ng-icon name="tablerDotsVertical" />

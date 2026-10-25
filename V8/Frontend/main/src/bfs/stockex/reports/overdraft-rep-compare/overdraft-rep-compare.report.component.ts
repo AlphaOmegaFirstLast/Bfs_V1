@@ -23,21 +23,22 @@ import { ExportComponent } from '@bfs/_shared/components/export.component';
 //--------------- component specific ------------------------------
 import { BaseReportComponent } from '@bfs/_shared/components/base-report';
 import { StockExService } from '@bfs/stockex/main/stockex.service';
-import { type IOverdraftRepCompare, type IOverdraftRepCompareRequest, type IOverdraftRepCompareFilter, initOverdraftRepCompareRequest, renderOverdraftRepCompare, getOverdraftRepCompareActions} from './overdraft-rep-compare.shared';
-import { OverdraftRepCompareFilterComponent } from './overdraft-rep-compare.filter.component'; 
+import { type IOverdraftRepCompare, type IOverdraftRepCompareRequest, type IOverdraftRepCompareFilter, initOverdraftRepCompareRequest, renderOverdraftRepCompare, getOverdraftRepCompareActions } from './overdraft-rep-compare.shared';
+import { OverdraftRepCompareFilterComponent } from './overdraft-rep-compare.filter.component';
+import { SafeHtml } from '@angular/platform-browser';
 //Template_Start_Code_DontOverwrite_1  
 //Template_End_Code_DontOverwrite_1  
 
 @Component({
-    selector: 'overdraft-rep-compare',     
-    imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
-               NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
-               NgxEchartsDirective],
+    selector: 'overdraft-rep-compare',
+    imports: [CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
+        NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
+        NgxEchartsDirective],
     providers: [provideEchartsCore({ echarts })],
     standalone: true,
     templateUrl: '../../../_shared/components/base-report.component.html',
 })
-export class OverdraftRepCompareComponent         
+export class OverdraftRepCompareComponent
 
     extends BaseReportComponent<IOverdraftRepCompareFilter> {
     override apiService: StockExService = inject(StockExService);
@@ -45,7 +46,8 @@ export class OverdraftRepCompareComponent
     override exportRequest = {} as IOverdraftRepCompareRequest;
     override downloadFileName: string = "Overdraft Report";
 //Template_Start_Code_DontOverwrite_2
-//Template_End_Code_DontOverwrite_2 
+    override isShowActions = false;
+//Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
     constructor(modalService: NgbModal, router: Router, excelService: ExcelExportService, activatedRoute: ActivatedRoute) {
@@ -57,26 +59,37 @@ export class OverdraftRepCompareComponent
 
         this.filterComponent = OverdraftRepCompareFilterComponent;
         this.queryRequest = initOverdraftRepCompareRequest();
-//Template_Start_Code_DontOverwrite_3 
-//Template_End_Code_DontOverwrite_3 
+        //Template_Start_Code_DontOverwrite_3 
+        //Template_End_Code_DontOverwrite_3 
     }
     //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        return renderOverdraftRepCompare(record, column);
+        return renderOverdraftRepCompare(record, column, this.sanitizer);
+    }
+    //---------------------------------------------------------
+    override safeHtmlHeaders(field: string): SafeHtml {
+        let column = this.queryRequest.columns.find(x => x.fieldName == field) || {} as IQueryColumn;
+        return column.displayName;
+    }
+    //---------------------------------------------------------
+    override safeHtmlData(record: any, field: string): SafeHtml {
+        let column = this.queryRequest.columns.find(x => x.fieldName == field) || {} as IQueryColumn;
+        return renderOverdraftRepCompare(record, column, this.sanitizer);
     }
     //---------------------------------------------------------
     override getActions(record: IEntity): IAction[] {
         return getOverdraftRepCompareActions(this, record);
     }
 
-//--------------------------------------------------------------
+    //--------------------------------------------------------------
 
-override getChart(records: IOverdraftRepCompare[]): EChartsOption {
+    override getChart(records: IOverdraftRepCompare[]): EChartsOption {
         // return this.getDemoChart();
         // reorder records in reverse order to show same order of table records.
         let reversedRecords = records.reverse();
         let baseChart = this.getBaseChart();
         baseChart.yAxis = {
+            data: reversedRecords.map(x => x['ssPortfolioName' as keyof IOverdraftRepCompare] ?? "unknown"),
 
             type: 'category',
             axisLine: {
@@ -94,16 +107,31 @@ override getChart(records: IOverdraftRepCompare[]): EChartsOption {
             }
         };
 
-        baseChart.series = [     
+              baseChart.series = [
+            {
+                name: 'Overdraft',
 
+                type: 'bar',
+                barWidth: "10px",
+                barGap: "0.25",
+                z: 10,
+                itemStyle: {
+                    borderRadius: [4, 4, 0, 0], color: getColor('info')
+                },
+                data: reversedRecords.map(x => (x['overdraftPortfolio_Overdraft'] as unknown as number) ?? 0),
+            }
         ]
-        ;
+            ;
 
         return baseChart;
     }
 
-//Template_Start_Code_DontOverwrite_4 
-//Template_End_Code_DontOverwrite_4  
+    //Template_Start_Code_DontOverwrite_4 
+    override isSafeHtml(field: string): boolean {
+        return true;
+    }
+    //------------------------------------------------------
+    //Template_End_Code_DontOverwrite_4  
 
 }
 

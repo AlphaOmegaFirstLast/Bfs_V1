@@ -82,7 +82,8 @@ export class BaseReportComponent<IFilter> {
     //------------------------------------------------------
     public me = this;
     public sanitizer: DomSanitizer = inject(DomSanitizer);
-
+    public isShowActions = true ;
+    
     //ToDo create for each record, record.linkList & record.actionList to get rid od function getRecordActions calculations
     // linkList: ViewLink[] = [];
     // actionList: ActionLink[] = [];

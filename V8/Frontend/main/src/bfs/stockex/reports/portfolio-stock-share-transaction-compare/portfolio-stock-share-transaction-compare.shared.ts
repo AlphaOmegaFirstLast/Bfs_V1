@@ -1,16 +1,17 @@
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import * as operations from '@bfs/stockex/main/stockex.operations';
+import { DatePipe } from '@angular/common';
 
 // Output Columns of a Query  [used in entity Query]
 export const PortfolioStockShareTransactionCompareColumns = [
-    { fieldName: 'ssPortfolio_Name', displayName: 'Name', sortName: 'SsPortfolio_Name', width: '50px', isVisible:true },
-{ fieldName: 'broker_Name', displayName: 'Broker Name', sortName: 'Broker_Name', width: '50px', isVisible:true },
-{ fieldName: 'investor_Name', displayName: 'Investor Name', sortName: 'Investor_Name', width: '50px', isVisible:true },
-{ fieldName: 'sspTransaction_Quantity', displayName: 'Quantity', sortName: 'SspTransaction_Quantity', width: '50px', isVisible:true },
-{ fieldName: 'sspTransaction_Price', displayName: 'Price', sortName: 'SspTransaction_Price', width: '50px', isVisible:true },
-{ fieldName: 'sspTransaction_TransactionDate', displayName: 'Transaction Date', sortName: 'SspTransaction_TransactionDate', width: '50px', isVisible:true },
-{ fieldName: 'stockShare_Name', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible:true },
-{ fieldName: 'transactionType_Name', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible:true },
+    { fieldName: 'ssPortfolio_Name', displayName: 'Portfolio', sortName: 'SsPortfolio_Name', width: '50px', isVisible: true },
+    { fieldName: 'broker_Name', displayName: 'Broker', sortName: 'Broker_Name', width: '50px', isVisible: true },
+    { fieldName: 'investor_Name', displayName: 'Investor', sortName: 'Investor_Name', width: '50px', isVisible: true },
+    { fieldName: 'sspTransaction_Quantity', displayName: 'Quantity', sortName: 'SspTransaction_Quantity', width: '50px', isVisible: true },
+    { fieldName: 'sspTransaction_Price', displayName: 'Price', sortName: 'SspTransaction_Price', width: '50px', isVisible: true },
+    { fieldName: 'sspTransaction_TransactionDate', displayName: 'Transaction Date', sortName: 'SspTransaction_TransactionDate', width: '50px', isVisible: true },
+    { fieldName: 'stockShare_Name', displayName: 'Stock Share', sortName: 'StockShare_Name', width: '50px', isVisible: true },
+    { fieldName: 'transactionType_Name', displayName: 'Transaction Type', sortName: 'TransactionType_Name', width: '50px', isVisible: true },
 
 ];
 
@@ -19,13 +20,13 @@ export const PortfolioStockShareTransactionCompareColumns = [
 export interface IPortfolioStockShareTransactionCompare {
     [key: string]: any;
     ssPortfolio_Name?: string;
-broker_Name?: string;
-investor_Name?: string;
-sspTransaction_Quantity?: number;
-sspTransaction_Price?: number;
-sspTransaction_TransactionDate?: Date | null;
-stockShare_Name?: string;
-transactionType_Name?: string;
+    broker_Name?: string;
+    investor_Name?: string;
+    sspTransaction_Quantity?: number;
+    sspTransaction_Price?: number;
+    sspTransaction_TransactionDate?: Date | null;
+    stockShare_Name?: string;
+    transactionType_Name?: string;
 
 }
 //---------------------------------------------------------
@@ -33,16 +34,16 @@ export interface IPortfolioStockShareTransactionCompareFilter {
     [key: string]: any;
 
     SsPortfolio_Name?: string;
-StockShare_Name?: string;
+    StockShare_Name?: string;
 
-    SspTransaction_Quantity?: { from?: number ; to?: number} ;
-SspTransaction_Price?: { from?: number ; to?: number} ;
-SspTransaction_TransactionDate?: { from?: Date | null ; to?: Date | null} ;
+    SspTransaction_Quantity?: { from?: number; to?: number };
+    SspTransaction_Price?: { from?: number; to?: number };
+    SspTransaction_TransactionDate?: { from?: Date | null; to?: Date | null };
 
 }
 //---------------------------------------------------------
 
-export interface IPortfolioStockShareTransactionCompareRequest extends IEntityRequest<IPortfolioStockShareTransactionCompareFilter> {}
+export interface IPortfolioStockShareTransactionCompareRequest extends IEntityRequest<IPortfolioStockShareTransactionCompareFilter> { }
 
 //---------------------------------------------------------
 export function initPortfolioStockShareTransactionCompareRequest(): IPortfolioStockShareTransactionCompareRequest {
@@ -54,32 +55,34 @@ export function initPortfolioStockShareTransactionCompareRequest(): IPortfolioSt
         sortOption: {},
         filter: {
 
-            SsPortfolio_Name: undefined ,
-StockShare_Name: undefined ,
+            SsPortfolio_Name: undefined,
+            StockShare_Name: undefined,
 
-            SspTransaction_Quantity: { from: undefined , to: undefined} ,
-SspTransaction_Price: { from: undefined , to: undefined} ,
-SspTransaction_TransactionDate: { from: undefined , to: undefined} ,
+            SspTransaction_Quantity: { from: undefined, to: undefined },
+            SspTransaction_Price: { from: undefined, to: undefined },
+            SspTransaction_TransactionDate: { from: undefined, to: undefined },
 
-            }
+        }
     };
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function renderPortfolioStockShareTransactionCompare(record: IEntity, column: IQueryColumn): any {
-        const value = record[column.fieldName as keyof IEntity];
-        switch (column.fieldName) {
-
-            default:
-                return value;
-        }
-        return value;
+export function renderPortfolioStockShareTransactionCompare(record: IEntity, column: IQueryColumn, datePipe: DatePipe): any {
+    const value = record[column.fieldName as keyof IEntity];
+    switch (column.fieldName) {
+        case 'sspTransaction_TransactionDate':
+            return datePipe.transform(record['sspTransaction_TransactionDate'], 'dd-MM-yyyy HH:mm:ss');
+            break;
+        default:
+            return value;
     }
-    //---------------------------------------------------------
-export function getPortfolioStockShareTransactionCompareActions(component:any, record: IEntity): IAction[] {
-        let links: IAction[] = [];
+    return value;
+}
+//---------------------------------------------------------
+export function getPortfolioStockShareTransactionCompareActions(component: any, record: IEntity): IAction[] {
+    let links: IAction[] = [];
 
-        return links;
-    }
-    //---------------------------------------------------------
+    return links;
+}
+//---------------------------------------------------------
 

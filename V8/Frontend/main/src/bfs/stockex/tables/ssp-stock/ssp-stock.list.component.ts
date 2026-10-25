@@ -51,6 +51,7 @@ export class SspStockListComponent
         super(modalService, router, excelService, activatedRoute);
 
         this.isButton.chart = false;
+        this.isButton.addNew = false;
         this.addNewRecordLink = { route: "/stkx/ssp-stock/add/0", displayText: "Add New Stock Share Stocks" };
         this.getApiUrl = '/SspStock/List';
         this.uploadApiUrl = '/SspStock/upload';

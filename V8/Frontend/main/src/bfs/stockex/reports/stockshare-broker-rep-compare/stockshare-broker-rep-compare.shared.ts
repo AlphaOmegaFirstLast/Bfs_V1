@@ -5,9 +5,9 @@ import * as operations from '@bfs/stockex/main/stockex.operations';
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
     { fieldName: 'stockshare_Id', displayName: 'ID', sortName: 'Stockshare_Id', width: '50px', isVisible:false, columnOrder:1 },
-{ fieldName: 'stockshare_Name', displayName: 'Name', sortName: 'Stockshare_Name', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'stockShare_TradingRoomId', displayName: 'TradingRoomId', sortName: 'TradingRoomName', width: '50px', isVisible:true, columnOrder:1 },
-{ fieldName: 'tradingRoom_BrokerId', displayName: 'BrokerId', sortName: 'BrokerName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'stockshare_Name', displayName: 'Stock Share', sortName: 'Stockshare_Name', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'stockShare_TradingRoomId', displayName: 'Trading Room', sortName: 'TradingRoomName', width: '50px', isVisible:true, columnOrder:1 },
+{ fieldName: 'tradingRoom_BrokerId', displayName: 'Broker', sortName: 'BrokerName', width: '50px', isVisible:true, columnOrder:1 },
 
 ];
 export const StockshareBrokerRepCompareColumns  = reOrderColumns(columns);

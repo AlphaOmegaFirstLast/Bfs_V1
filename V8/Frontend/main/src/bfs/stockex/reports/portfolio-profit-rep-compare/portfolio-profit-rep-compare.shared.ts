@@ -2,6 +2,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
 import * as operations from '@bfs/stockex/main/stockex.operations';
+import { setArrowData } from '@bfs/_shared/helpers/html.helper';
 
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
@@ -63,7 +64,7 @@ export function initPortfolioProfitRepCompareRequest(): IPortfolioProfitRepCompa
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function renderPortfolioProfitRepCompare(record: IEntity, column: IQueryColumn, sanitizer?: DomSanitizer): SafeHtml {
+export function renderPortfolioProfitRepCompare(record: IEntity, column: IQueryColumn, sanitizer: DomSanitizer): SafeHtml {
     const value = record[column.fieldName as keyof IEntity];
     switch (column.fieldName) {
         case 'sspStock_SsPortfolioId':
@@ -75,20 +76,13 @@ export function renderPortfolioProfitRepCompare(record: IEntity, column: IQueryC
         case 'currentPrice_Profit':
             let rawHtml = "";
             if (record['currentPrice_Profit'] >= 0) {
-                var greenArrow = "<span style='font-size:large; font-weight:bold; color: rgba(10, 150, 82, 0.72);'> &uarr; </span>";
-                var greenDataStart = " <span style='font-size:16px; font-weight:bold; color: rgba(10, 150, 82, 0.72);'>";
-                var greenDataEnd = "</span>";
-                rawHtml = `${greenArrow}  ${greenDataStart}  ${record['currentPrice_Profit']?.toString()}  ${greenDataEnd}`;
-
+                rawHtml = setArrowData(sanitizer,'green', 'up' ,record['currentPrice_Profit']);
             }
             else {
-                var redArrow = "<span style='font-size:large; font-weight:bold; color: red;'> &darr; </span>";
-                var redDataStart = " <span style='font-size:16px; font-weight:bold; color: red;'>";
-                var redDataEnd = "</span>";
-
-                rawHtml =`${redArrow}  ${redDataStart}  ${record['currentPrice_Profit']?.toString()}  ${redDataEnd} `;
+                rawHtml = setArrowData(sanitizer,'red' , 'down' , record['currentPrice_Profit']);
             }
-            return sanitizer ? sanitizer.bypassSecurityTrustHtml(rawHtml) : record['currentPrice_Profit']?.toString();
+            return rawHtml ;
+      //      return sanitizer ? sanitizer.bypassSecurityTrustHtml(rawHtml) : record['currentPrice_Profit']?.toString();
         default:
             return value;
     }

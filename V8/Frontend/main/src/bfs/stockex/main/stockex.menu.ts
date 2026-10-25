@@ -223,15 +223,7 @@ export const StockExMenuItems: MenuItemType[] = [
         },
         children: [
             {
-                label: 'Trading Room Reports',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/report/trading-room-rep-compare/0',
-                data: {
-                    role: ['admin']
-                }
-            },
-            {
-                label: 'Portfolios Stock Share Transactions',
+                label: 'Stock Share Transactions',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/report/portfolio-stock-share-transaction-compare/0',
                 data: {
@@ -255,7 +247,7 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'Total Portfolio Cash Transaction Aggregate',
+                label: 'Aggregated Cash Transaction',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/report/portfolio-cash-transaction-aggregate-compare/0',
                 data: {
@@ -274,14 +266,6 @@ export const StockExMenuItems: MenuItemType[] = [
                 label: 'Overdraft Report',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/report/overdraft-rep-compare/0',
-                data: {
-                    role: ['admin']
-                }
-            },
-            {
-                label: 'Stockshare Broker Reports',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/report/stockshare-broker-rep-compare/0',
                 data: {
                     role: ['admin']
                 }

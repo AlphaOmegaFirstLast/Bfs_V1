@@ -1,6 +1,8 @@
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
 import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
 import * as operations from '@bfs/stockex/main/stockex.operations';
+import { setArrowData } from '@bfs/_shared/helpers/html.helper';
 
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
@@ -60,7 +62,7 @@ export function initNavReportCompareRequest(): INavReportCompareRequest {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function renderNavReportCompare(record: IEntity, column: IQueryColumn): any {
+export function renderNavReportCompare(record: IEntity, column: IQueryColumn, sanitizer: DomSanitizer): SafeHtml {
     const value = record[column.fieldName as keyof IEntity];
     switch (column.fieldName) {
         case 'ssPortfolio_InvestorId':
@@ -75,7 +77,7 @@ export function renderNavReportCompare(record: IEntity, column: IQueryColumn): a
         case 'sumBalance':
             return record['sumBalance']?.toString();
         case 'sumNav':
-            return record['sumNav']?.toString();
+            return setArrowData(sanitizer,'blue', 'none' ,record['sumNav']);
 
         default:
             return value;
