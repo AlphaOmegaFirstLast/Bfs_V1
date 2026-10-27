@@ -4,7 +4,33 @@ import { ISspTransaction } from "@bfs/stockex/tables/ssp-transaction/ssp-transac
 import { SspTransactionFormComponent } from "@bfs/stockex/tables/ssp-transaction/ssp-transaction.form.component";
 import { CashTransactionFormComponent } from "@bfs/stockex/tables/cash-transaction/cash-transaction.form.component";
 import { ICashTransaction } from "../tables/cash-transaction/cash-transaction.shared";
+import { CouponProcessListComponent } from "../tables/coupon-process/coupon-process.list.component";
 
+//---------------------------------------------------------
+export async function couponProcess(me: CouponProcessListComponent, record: IIdentifiable, data: any) {
+    // implement me.validSubmit();
+
+    me.messages = [];
+    if (!me.isLoading.save) {  // to prevent multiple requests
+        me.isLoading.save = true;
+        var target = data.postUrl;  // postUrl of sspTransactionRollout.
+        me.isLoading.save = true;
+//    const todayDate = new Date().toISOString().split('T')[0];
+
+        (await me.apiService.post(target, new Date())).subscribe({//me.queryRequest.filter?.ProcessDate?.to
+            next: (response: ISspTransaction) => {
+                me.isLoading.save = false;
+
+                me.messages.push({ text: 'Coupons have been Processed successfully', msgType: "info" });
+            },
+            error: (err: any) => {
+                me.isLoading.save = false;
+                var msg = err.message || 'An error occurred while Coupons are being Processed.';
+                me.messages.push({ text: msg, msgType: "danger" });
+            }
+        });
+    }
+}
 //---------------------------------------------------------
 //it is called as a business action.
 export async function sspTransactionRollout(me: SspTransactionFormComponent, record: IIdentifiable, data: any) {
@@ -14,7 +40,7 @@ export async function sspTransactionRollout(me: SspTransactionFormComponent, rec
     if (me.validationForm.valid) {
         // One-time sync to entity object
         me.entity = me.validationForm.getRawValue();
-   
+
         me.messages = [];
         if (!me.isLoading.save) {  // to prevent multiple requests
 
@@ -81,7 +107,7 @@ export async function sspTransactionRollback(me: SspTransactionFormComponent, re
         if (!me.isLoading.save) {  // to prevent multiple requests
 
             // implement me.applyOperation();
-            var target = data.deleteUrl+'/' + me.entity.id;  // deleteUrl of sspTransactionRollback.
+            var target = data.deleteUrl + '/' + me.entity.id;  // deleteUrl of sspTransactionRollback.
             me.isLoading.save = true;
 
             (await me.apiService.delete(target)).subscribe({
@@ -112,7 +138,7 @@ export async function cashTransactionRollback(me: CashTransactionFormComponent, 
         if (!me.isLoading.save) {  // to prevent multiple requests
 
             // implement me.applyOperation();
-            var target = data.deleteUrl+'/' + me.entity.id;  // deleteUrl of cashTransactionRollback.
+            var target = data.deleteUrl + '/' + me.entity.id;  // deleteUrl of cashTransactionRollback.
             me.isLoading.save = true;
 
             (await me.apiService.delete(target)).subscribe({

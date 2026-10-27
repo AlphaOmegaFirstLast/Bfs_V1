@@ -26,7 +26,7 @@ public class OperationsService : IOperationsService
 
     //Template_End_Code_DontOverwrite_2
     public OperationsService(IUnitOfWork unitOfwork
-//Template_Start_Code_DontOverwrite_3
+        //Template_Start_Code_DontOverwrite_3
         , IStockShareService stockShareService
         , ICurrentPriceService currentPriceService
 //Template_End_Code_DontOverwrite_3
@@ -39,6 +39,11 @@ public class OperationsService : IOperationsService
         _stockShareService = stockShareService;
         _currentPriceService = currentPriceService;
         //Template_End_Code_DontOverwrite_4
+    }
+
+    public async Task ProcessCoupon(DateTime processDate)
+    {
+        await _unitOfwork.ProcessCoupon(processDate);
     }
 
     //Template_Field_ChildrenMatrix_AddServiceEntry    

@@ -14,14 +14,14 @@ public interface IUnitOfWork
     ISspTransactionRepository SspTransactionRepo { get; }
     ICashTransactionRepository CashTransactionRepo { get; }
 
-    Task<SspTransactionEntity> RolloutSspTransactionAsync(SspTransactionEntity entity);
-    Task<CashTransactionEntity> RolloutCashTransactionAsync(CashTransactionEntity entity);
-
+    Task<SspTransactionEntity> RolloutSspTransactionAsync(SspTransactionEntity ssptEntity, bool isCommit = true);
     Task RollbackSspTransactionAsync(long id);
     Task RollbackCashTransactionAsync(long id);
 
     Task<SspTransactionEntity> ChangeSspTransactionAsync(SspTransactionEntity entity);
     Task<CashTransactionEntity> ChangeCashTransactionAsync(CashTransactionEntity entity);
-    //Template_End_Code_DontOverwrite_2
+    Task<CashTransactionEntity> RolloutCashTransactionAsync(CashTransactionEntity cashEntity, bool isCommit = true);
+    Task ProcessCoupon(DateTime processDate);
 
-}
+        //Template_End_Code_DontOverwrite_2
+ }

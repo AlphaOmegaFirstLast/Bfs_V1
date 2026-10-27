@@ -4,6 +4,10 @@ using Bfs.StockEx.Data.Interfaces;
 using Bfs.StockEx.Data.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Schema;
+using System.Collections;
+using System.Linq.Expressions;
+using System.Net.WebSockets;
 using static Dapper.SqlMapper;
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1
@@ -16,36 +20,54 @@ public class UnitOfWork : IUnitOfWork
     //Template_Field_ChildrenMatrix_AddDeclareEntry
 
     //Template_Start_Code_DontOverwrite_2
-    private readonly ISspTransactionRepository sspTransactionRepo;
-    private readonly ICashTransactionRepository cashTransactionRepo;
-    private readonly ISsPortfolioBalanceRepository ssPortfolioBalanceRepo;
-    private readonly ISspStockRepository sspStockRepo;
+    private readonly ISspTransactionRepository _sspTransactionRepo;
+    private readonly ICashTransactionRepository _cashTransactionRepo;
+    private readonly ISsPortfolioBalanceRepository _ssPortfolioBalanceRepo;
+    private readonly ISspStockRepository _sspStockRepo;
+    private readonly ICouponRepository _couponRepo;
+    private readonly ISsPortfolioRepository _portfolioRepo;
+    private readonly ITransactionTypeRepository _transactionTypeRepo;
+    private readonly ICurrentPriceRepository _currentPriceRepo;
+    private readonly IStockShareRepository _stockShareRepo;
+    private readonly ICouponProcessRepository _couponProcessRepo;
 
     // Properties to expose the repositories
-    public ISspTransactionRepository SspTransactionRepo => sspTransactionRepo;
-    public ICashTransactionRepository CashTransactionRepo => cashTransactionRepo;
+    public ISspTransactionRepository SspTransactionRepo => _sspTransactionRepo;
+    public ICashTransactionRepository CashTransactionRepo => _cashTransactionRepo;
     //Template_End_Code_DontOverwrite_2
 
     public UnitOfWork(StockExDbContext dbContext, IScopeData scopeData
-//Template_Field_ChildrenMatrix_AddParameterEntry
 
-//Template_Start_Code_DontOverwrite_3
-, ISspTransactionRepository sspTransactionRepo
-, ICashTransactionRepository cashTransactionRepo
-, ISsPortfolioBalanceRepository ssPortfolioBalanceRepo
-, ISspStockRepository sspStockRepo
+    //Template_Start_Code_DontOverwrite_3
+    , ISspTransactionRepository sspTransactionRepo
+    , ICashTransactionRepository cashTransactionRepo
+    , ISsPortfolioBalanceRepository ssPortfolioBalanceRepo
+    , ISspStockRepository sspStockRepo
+    , ICouponRepository couponRepo
+    , ISsPortfolioRepository portfolioRepo
+    , ITransactionTypeRepository transactionTypeRepo
+    , ICurrentPriceRepository currentPriceRepo
+    , ICouponProcessRepository couponProcessRepo
+, IStockShareRepository stockShareRepo
+
     //Template_End_Code_DontOverwrite_3
-
+    //Template_Field_ChildrenMatrix_AddParameterEntry
     )
     {
         _context = dbContext;
         //Template_Field_ChildrenMatrix_AddInitEntry
 
         //Template_Start_Code_DontOverwrite_4
-        this.sspTransactionRepo = sspTransactionRepo;
-        this.cashTransactionRepo = cashTransactionRepo;
-        this.ssPortfolioBalanceRepo = ssPortfolioBalanceRepo;
-        this.sspStockRepo = sspStockRepo;
+        _sspTransactionRepo = sspTransactionRepo;
+        _cashTransactionRepo = cashTransactionRepo;
+        _ssPortfolioBalanceRepo = ssPortfolioBalanceRepo;
+        _sspStockRepo = sspStockRepo;
+        _couponRepo = couponRepo;
+        _portfolioRepo = portfolioRepo;
+        _transactionTypeRepo = transactionTypeRepo;
+        _currentPriceRepo = currentPriceRepo;
+        _stockShareRepo = stockShareRepo;
+        _couponProcessRepo = couponProcessRepo;
         //Template_End_Code_DontOverwrite_4
 
     }
@@ -53,9 +75,129 @@ public class UnitOfWork : IUnitOfWork
     //Template_Field_ChildrenMatrix_AddUnitOfWorkEntry
 
     //Template_Start_Code_DontOverwrite_5
-    public async Task<SspTransactionEntity> RolloutSspTransactionAsync(SspTransactionEntity ssptEntity)
+    public async Task ProcessCoupon(DateTime processDate)
     {
-        var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+        var portfolioList = await _portfolioRepo.GetAsync();
+        var couponList = await _couponRepo.GetAsync(x => x.DueDate <= processDate && x.CouponStatusId == (int)enumCouponStatus.NotYet);
+
+        foreach (var coupon in couponList)
+        {
+            foreach (var portfolio in portfolioList)
+            {
+                var quantityStock = await StockAtDate(coupon.ValueDate, coupon.StockShareId, portfolio.Id);
+                var stockShareRecord = await _stockShareRepo.FirstOrDefaultAsync(x => x.Id == coupon.StockShareId) ;
+                if (quantityStock > 0)
+                {
+                    if (coupon.CouponTypeId == (int)enumCouponType.Cash)
+                    {
+                        await ProcessCouponCash(coupon, quantityStock, portfolio.Id, processDate,stockShareRecord.CurrencyId);
+                    }
+                    else if (coupon.CouponTypeId == (int)enumCouponType.StockShare)
+                    {
+                        await ProcessCouponStockShare(coupon, quantityStock, portfolio.Id, processDate, stockShareRecord.CurrencyId);
+                    }
+
+                }
+                coupon.CouponStatusId = (int)enumCouponStatus.Done;
+                await _couponRepo.UpdateAsync(coupon);
+                var couponProcessEntity = await _couponProcessRepo.CreateAsync(new CouponProcessEntity() {CouponId= coupon.Id, ProcessDate= processDate, ProcessStatusId=(int)enumProcessStatus.Sucess });
+            }
+        }
+        throw new Exception("Success");
+      //  await _context.SaveChangesAsync();
+    }
+
+    public async Task ProcessCouponCash(CouponEntity coupon, decimal quantityStock, long portfolioId, DateTime processDate,long currencyId)
+    {
+        decimal valueToAdd = 0;
+        if (coupon.Value > 0)
+        {
+            valueToAdd = quantityStock * coupon.Value;
+        }
+        else if (coupon.CouponPercent > 0)
+        {
+            var currentPriceRecord = await _currentPriceRepo.FirstOrDefaultAsync(x => x.StockShareId == coupon.StockShareId && x.TransactionDate <= processDate);
+            if (currentPriceRecord != null)
+            {
+                valueToAdd = quantityStock * currentPriceRecord.Price * (coupon.CouponPercent/100);
+            }
+        }
+        var cashEntity = new CashTransactionEntity()
+        {
+            SsPortfolioId = portfolioId,
+            Value = valueToAdd,
+            TransactionDate = processDate,
+            SourceDate = processDate,
+            Source = "from coupon Process",
+            Notes = "Coupon",
+            ExpensesTypeId = 1,
+            TransactionTypeId = (int)TransactionTypes.CouponCash,
+            SspTransactionId = 0,
+            CurrencyId = currencyId //to do get currency of stockshare 
+        };
+
+        await RolloutCashTransactionAsync(cashEntity, false);
+    }
+
+    public async Task ProcessCouponStockShare(CouponEntity coupon, decimal quantityStock, long portfolioId, DateTime processDate, long currencyId)
+    {
+        decimal quantityToAdd = 0;
+        var currentPriceRecord = await _currentPriceRepo.FirstOrDefaultAsync(x => x.StockShareId == coupon.StockShareId && x.TransactionDate <= processDate);
+        if (coupon.Quantity > 0)
+        {
+            quantityToAdd = ((quantityStock / coupon.Quantity ) * coupon.BonusQuantity ) ;
+        }
+        var sspEntity = new SspTransactionEntity()
+        {
+            SsPortfolioId = portfolioId,
+            Quantity = quantityToAdd,
+            TransactionDate = processDate,
+            SourceDate = processDate,
+            Source = "from coupon Process",
+            Notes = "Coupon",
+            TransactionTypeId = (int)TransactionTypes.CouponStockShare,
+            Price = currentPriceRecord != null? currentPriceRecord.Price:0 ,
+            ToQuantity = 0,
+            ToPortfolioId = 0,
+            ToSspTransactionId = 0,
+            CurrencyId = currencyId //to do get currency of stockshare 
+        };
+
+        await RolloutSspTransactionAsync(sspEntity, false);
+    }
+
+    public async Task<decimal> StockAtDate(DateTime valueDate, long stockShareId, long portfolioId)
+    {
+        decimal quantityStock = 0;
+        var startDate = DateTime.MinValue;
+        var transactionTypeList = await _transactionTypeRepo.GetAsync();
+        var startBalanceRecord = await _sspTransactionRepo.FirstOrDefaultAsync(x => x.StockShareId == stockShareId && x.SsPortfolioId == portfolioId && x.TransactionDate <= valueDate
+                                                                      && (x.TransactionTypeId == (int)TransactionTypes.StartingBalanceCash || x.TransactionTypeId == (int)TransactionTypes.StartingBalanceStockShare)
+                                                                      , q => q.OrderByDescending(x => x.TransactionDate));
+
+        if (startBalanceRecord != null)
+        {
+            startDate = startBalanceRecord.TransactionDate;
+            quantityStock = startBalanceRecord.Quantity;
+        }
+
+        var portfolioTransactionList = await _sspTransactionRepo.GetAsync(x => x.StockShareId == stockShareId && x.SsPortfolioId == portfolioId
+                                                                            && x.TransactionDate <= valueDate && x.TransactionDate > startDate
+                                                                            , q => q.OrderBy(x => x.TransactionDate));
+
+        var stock = new SspStockEntity() { StockShareId = stockShareId, SsPortfolioId = portfolioId, Quantity = quantityStock };  //in-memory stockEntity as base for replaying Transactions
+        foreach (var portfolioTransactionRecord in portfolioTransactionList)
+        {
+            var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == portfolioTransactionRecord.TransactionTypeId);
+            stock = await SetStockQuantity(stock, sspTransactionType, portfolioTransactionRecord);
+        }
+
+        return stock.Quantity;
+    }
+
+    public async Task<SspTransactionEntity> RolloutSspTransactionAsync(SspTransactionEntity ssptEntity, bool isCommit = true)
+    {
+        var transactionTypeList = await _transactionTypeRepo.GetAsync();
         var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == ssptEntity.TransactionTypeId);
         if (sspTransactionType != null)
         {
@@ -70,7 +212,7 @@ public class UnitOfWork : IUnitOfWork
                 if (nextTransactionType != null && nextTransactionType.StockEntityTypeId == (int)enumStockEntityType.Cash)
                 {
                     var cashEntity = PopulateCashEntityFromSspTransaction(ssptEntity, (int)nextTransactionType.Id);
-                    var inMemoryCashEntity = await cashTransactionRepo.CreateAsync(cashEntity);
+                    var inMemoryCashEntity = await _cashTransactionRepo.CreateAsync(cashEntity);
                     await RolloutPortfolioBalance(nextTransactionType, inMemoryCashEntity);
                 }
 
@@ -82,7 +224,11 @@ public class UnitOfWork : IUnitOfWork
                 }
             }
 
-            await _context.SaveChangesAsync();
+            if (isCommit)
+            {
+                await _context.SaveChangesAsync();
+            }
+
             return inMemorySspTransactionEntity;
         }
         else
@@ -96,7 +242,7 @@ public class UnitOfWork : IUnitOfWork
         var ssptEntity = await _context.SspTransactions.FirstOrDefaultAsync(x => x.Id == id);
         if (ssptEntity != null)
         {
-            var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+            var transactionTypeList = await _transactionTypeRepo.GetAsync();
             var sspTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == ssptEntity.TransactionTypeId);
             if (sspTransactionType != null)
             {
@@ -116,6 +262,7 @@ public class UnitOfWork : IUnitOfWork
                     }
 
                     await RollbackStockQuantity(sspTransactionType, ssptEntity);
+
                     _context.SspTransactions.Remove(ssptEntity);
                     await _context.SaveChangesAsync();
                 }
@@ -133,7 +280,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task<SspTransactionEntity> ChangeSspTransactionAsync(SspTransactionEntity sspEntity)
     {
-        var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+        var transactionTypeList = await _transactionTypeRepo.GetAsync();
 
         var oldSspEntity = await _context.SspTransactions.FirstOrDefaultAsync(x => x.Id == sspEntity.Id);
         if (oldSspEntity == null)
@@ -162,16 +309,19 @@ public class UnitOfWork : IUnitOfWork
         return oldSspEntity;
     }
 
-    public async Task<CashTransactionEntity> RolloutCashTransactionAsync(CashTransactionEntity cashEntity)
+    public async Task<CashTransactionEntity> RolloutCashTransactionAsync(CashTransactionEntity cashEntity, bool isCommit = true)
     {
-        var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+        var transactionTypeList = await _transactionTypeRepo.GetAsync();
         var currentTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == cashEntity.TransactionTypeId);
         if (currentTransactionType != null)
         {
-            var inMemoryCashEntity = await cashTransactionRepo.CreateAsync(cashEntity);
+            var inMemoryCashEntity = await _cashTransactionRepo.CreateAsync(cashEntity);
             await RolloutPortfolioBalance(currentTransactionType, inMemoryCashEntity);
+            if (isCommit)
+            {
+                await _context.SaveChangesAsync();
+            }
 
-            await _context.SaveChangesAsync();
             return inMemoryCashEntity;
         }
         else
@@ -185,7 +335,7 @@ public class UnitOfWork : IUnitOfWork
         var cashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.Id == id);
         if (cashEntity != null)
         {
-            var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+            var transactionTypeList = await _transactionTypeRepo.GetAsync();
             var currentTransactionType = transactionTypeList.FirstOrDefault(x => x.Id == cashEntity.TransactionTypeId);
             if (currentTransactionType != null)
             {
@@ -198,7 +348,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task<CashTransactionEntity> ChangeCashTransactionAsync(CashTransactionEntity cashEntity)
     {
-        var transactionTypeList = await _context.TransactionTypes.ToListAsync();
+        var transactionTypeList = await _transactionTypeRepo.GetAsync();
 
         var oldCashEntity = await _context.CashTransactions.FirstOrDefaultAsync(x => x.Id == cashEntity.Id);
         if (oldCashEntity == null)
@@ -231,27 +381,53 @@ public class UnitOfWork : IUnitOfWork
     {
         var stock = await GetSspStockById(ssptEntity.SsPortfolioId, ssptEntity.StockShareId, ssptEntity.CurrencyId);
 
-        decimal resultQuantity = 0;
         // ------------------------
 
         if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
         {
-            resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
+            //resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stock.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
+            //switch (currentTransactionType.EffectTypeId)
+            //{
+            //    case (int)enumEffectTypes.Add:
+            //        stock.AverageCost = ((stock.Quantity * stock.AverageCost) + (resultQuantity * ssptEntity.Price)) / (stock.Quantity + resultQuantity);
+            //        stock.Quantity = stock.Quantity + resultQuantity;
+            //        break;
+            //    case (int)enumEffectTypes.Sub:
+            //        stock.Quantity = stock.Quantity - resultQuantity;
+            //        break;
+            //    case (int)enumEffectTypes.Set:
+            //        stock.AverageCost = ssptEntity.Price;
+            //        stock.Quantity = resultQuantity;
+            //        break;
+            //}
+
+            stock = await SetStockQuantity(stock, currentTransactionType, ssptEntity);
+        }
+    }
+
+    private async Task<SspStockEntity> SetStockQuantity(SspStockEntity stockEntity, TransactionTypeEntity currentTransactionType, SspTransactionEntity ssptEntity)
+    {
+        decimal resultQuantity = 0;
+
+        if (currentTransactionType.StockEntityTypeId == (int)enumStockEntityType.StockShare)
+        {
+            resultQuantity = DoCalculations((enumCalculationMethods)currentTransactionType.CalculationMethodId, stockEntity.Quantity, ssptEntity.Quantity, ssptEntity.ToQuantity);
             switch (currentTransactionType.EffectTypeId)
             {
                 case (int)enumEffectTypes.Add:
-                    stock.AverageCost = ((stock.Quantity * stock.AverageCost) + (resultQuantity * ssptEntity.Price)) / (stock.Quantity + resultQuantity);
-                    stock.Quantity = stock.Quantity + resultQuantity;
+                    stockEntity.AverageCost = ((stockEntity.Quantity * stockEntity.AverageCost) + (resultQuantity * ssptEntity.Price)) / (stockEntity.Quantity + resultQuantity);
+                    stockEntity.Quantity = stockEntity.Quantity + resultQuantity;
                     break;
                 case (int)enumEffectTypes.Sub:
-                    stock.Quantity = stock.Quantity - resultQuantity;
+                    stockEntity.Quantity = stockEntity.Quantity - resultQuantity;
                     break;
                 case (int)enumEffectTypes.Set:
-                    stock.AverageCost = ssptEntity.Price;
-                    stock.Quantity = resultQuantity;
+                    stockEntity.AverageCost = ssptEntity.Price;
+                    stockEntity.Quantity = resultQuantity;
                     break;
             }
         }
+        return stockEntity;
     }
 
     private async Task RollbackStockQuantity(TransactionTypeEntity currentTransactionType, SspTransactionEntity ssptEntity)
@@ -372,7 +548,7 @@ public class UnitOfWork : IUnitOfWork
         var stock = await _context.SspStocks.FirstOrDefaultAsync(x => x.SsPortfolioId == SsPortfolioId && x.StockShareId == stockShareId && x.CurrencyId == currencyId);
         if (stock == null)
         {
-            stock = await sspStockRepo.CreateAsync(new SspStockEntity()
+            stock = await _sspStockRepo.CreateAsync(new SspStockEntity()
             {
                 SsPortfolioId = SsPortfolioId,
                 StockShareId = stockShareId,
@@ -390,7 +566,7 @@ public class UnitOfWork : IUnitOfWork
         var balance = await _context.SsPortfolioBalances.FirstOrDefaultAsync(x => x.SsPortfolioId == ssPortfolioId && x.CurrencyId == currencyId);
         if (balance == null)
         {
-            balance = await ssPortfolioBalanceRepo.CreateAsync(new SsPortfolioBalanceEntity()
+            balance = await _ssPortfolioBalanceRepo.CreateAsync(new SsPortfolioBalanceEntity()
             {
                 SsPortfolioId = ssPortfolioId,
                 CurrencyId = currencyId,
@@ -471,15 +647,33 @@ public enum enumStockEntityType
     StockShare = 3,
 }
 
+public enum enumCouponStatus
+{
+    Done = 1,
+    NotYet = 2,
+}
+
+public enum enumProcessStatus
+{
+    Sucess = 1,
+    Failure = 2,
+    PartialSuccess = 3,
+}
+
+public enum enumCouponType
+{
+    Cash = 1,
+    StockShare = 2,
+}
 public enum TransactionTypes
 {
     None = 1,
-    StartingBalance = 2,
+    StartingBalanceCash = 2,
     Deposite = 3,
     Withdrawel = 4,
     DebitInterest = 5,
     CreditInterest = 6,
-    Coupon = 7,
+    CouponCash = 7,
     Expenses = 8,
     TransferToAnotherPortfolio = 9,
     TransferFromAnotherPortfolio = 10,
@@ -489,6 +683,8 @@ public enum TransactionTypes
     BuyStockShareCash = 14,
     Merge = 15,
     Split = 16,
-    Divident = 17,
+    CouponStockShare = 17,
+    StartingBalanceStockShare =18,
+
 }
 //Template_End_Code_DontOverwrite_6

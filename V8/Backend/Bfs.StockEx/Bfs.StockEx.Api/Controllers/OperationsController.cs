@@ -148,6 +148,14 @@ public class OperationsController
         return TypedResults.Ok(createdSspTransaction);
     }
 
+    [HttpPost("Coupon/Process")]
+   // [CustomAuthorize("method=u.cashTransaction")]
+    public async Task<Results<Ok, BadRequest<ProblemDetails>>> CouponProcess([FromBody] DateTime processDate)
+    {
+        await _operationsService.ProcessCoupon(processDate).ConfigureAwait(false);
+        return TypedResults.Ok();
+    }
+
     //Template_End_Code_DontOverwrite_5
 }
 
