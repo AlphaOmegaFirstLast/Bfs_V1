@@ -204,6 +204,8 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IValidator<StockFieldType>, StockFieldTypeValidator>();
             builder.Services.AddScoped<IValidator<PaymentMode>, PaymentModeValidator>();
             builder.Services.AddScoped<IValidator<CouponType>, CouponTypeValidator>();
+            builder.Services.AddScoped<IValidator<CouponProcess>, CouponProcessValidator>();
+            builder.Services.AddScoped<IValidator<ProcessStatus>, ProcessStatusValidator>();
 //Template_Component_RegisterValidator
     }
 
@@ -239,6 +241,8 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IStockFieldTypeRepository, StockFieldTypeRepository>();
             builder.Services.AddScoped<IPaymentModeRepository, PaymentModeRepository>();
             builder.Services.AddScoped<ICouponTypeRepository, CouponTypeRepository>();
+            builder.Services.AddScoped<ICouponProcessRepository, CouponProcessRepository>();
+            builder.Services.AddScoped<IProcessStatusRepository, ProcessStatusRepository>();
 //Template_Component_RegisterRepository
     }
 
@@ -275,6 +279,8 @@ public static class BuilderExtensions
             builder.Services.AddScoped<IStockFieldTypeService, StockFieldTypeService>();
             builder.Services.AddScoped<IPaymentModeService, PaymentModeService>();
             builder.Services.AddScoped<ICouponTypeService, CouponTypeService>();
+            builder.Services.AddScoped<ICouponProcessService, CouponProcessService>();
+            builder.Services.AddScoped<IProcessStatusService, ProcessStatusService>();
 //Template_Component_RegisterService
     }
 
@@ -453,6 +459,18 @@ public static class BuilderExtensions
            var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
            var config = sp.GetRequiredService<TenantSqlConfiguration>();
            return new CouponTypeList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<ICouponProcessList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new CouponProcessList(config.ConnectionString, resourceSecurity);
+        });
+        builder.Services.AddScoped<IProcessStatusList>(sp =>
+        {
+           var resourceSecurity = settings.IsMasterSystem? null : sp.GetRequiredService<IResourceSecurity>();
+           var config = sp.GetRequiredService<TenantSqlConfiguration>();
+           return new ProcessStatusList(config.ConnectionString, resourceSecurity);
         });
 //Template_Component_RegisterList
     }

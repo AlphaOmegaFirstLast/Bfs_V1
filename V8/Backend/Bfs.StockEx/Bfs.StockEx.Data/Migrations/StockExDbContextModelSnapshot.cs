@@ -219,6 +219,35 @@ namespace Bfs.StockEx.Data.Migrations
                     b.ToTable("stkxCoupon", (string)null);
                 });
 
+            modelBuilder.Entity("Bfs.StockEx.Data.Models.CouponProcessEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CouponId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ProcessDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ProcessStatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stkxCouponProcess", (string)null);
+                });
+
             modelBuilder.Entity("Bfs.StockEx.Data.Models.CouponStatusEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -603,6 +632,30 @@ namespace Bfs.StockEx.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("stkxPaymentMode", (string)null);
+                });
+
+            modelBuilder.Entity("Bfs.StockEx.Data.Models.ProcessStatusEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TenantId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stkxProcessStatus", (string)null);
                 });
 
             modelBuilder.Entity("Bfs.StockEx.Data.Models.SourceTypeEntity", b =>

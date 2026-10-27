@@ -97,5 +97,10 @@ export const TABLES_ROUTES: Routes = [
         loadChildren: () => import('./debit-interest/debit-interest.route').then((mod) => mod.DebitInterest_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./coupon-process/coupon-process.route').then((mod) => mod.CouponProcess_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]

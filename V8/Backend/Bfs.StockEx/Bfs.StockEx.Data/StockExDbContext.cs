@@ -35,6 +35,8 @@ public class StockExDbContext : DbContext
  public DbSet<StockFieldTypeEntity> StockFieldTypes { get; set; }
  public DbSet<PaymentModeEntity> PaymentModes { get; set; }
  public DbSet<CouponTypeEntity> CouponTypes { get; set; }
+ public DbSet<CouponProcessEntity> CouponProcesss { get; set; }
+ public DbSet<ProcessStatusEntity> ProcessStatuss { get; set; }
 //Template_Component_RegisterDbSet
 //Template_Start_Code_DontOverwrite_1
 //Template_End_Code_DontOverwrite_1

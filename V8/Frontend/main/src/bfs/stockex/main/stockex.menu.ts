@@ -179,14 +179,6 @@ export const StockExMenuItems: MenuItemType[] = [
                 }
             },
             {
-                label: 'Coupon Process',
-                icon: 'tablerLayoutSidebar',
-                url: '/stkx/coupon/list',
-                data: {
-                    role: ['admin', 'investor', 'broker']
-                }
-            },
-            {
                 label: 'Overdraft Portfolios',
                 icon: 'tablerLayoutSidebar',
                 url: '/stkx/overdraft-portfolio/list',
@@ -210,7 +202,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-            //Template_Component_Menu_Transactions
+                {
+        label: 'Coupon Process',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/coupon-process/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+//Template_Component_Menu_Transactions
         ]
     },
     {
@@ -354,7 +354,7 @@ export const StockExMenuItems: MenuItemType[] = [
         icon: 'tablerMail',
         isCollapsed: true,
         data: {
-            app: ['xxx'],
+            app: ['b.ofc'],
             role: ['admin']
         },
         children: [
@@ -446,7 +446,15 @@ export const StockExMenuItems: MenuItemType[] = [
                     role: ['admin', 'investor', 'broker']
                 }
             },
-            //Template_Component_Menu_Seed
+                {
+        label: 'Process Status',
+        icon: 'tablerLayoutSidebar',
+        url: '/stkx/process-status/list',
+        data: {
+            role: ['admin', 'investor','broker']
+        }
+    },
+//Template_Component_Menu_Seed
         ]
     },
 ];

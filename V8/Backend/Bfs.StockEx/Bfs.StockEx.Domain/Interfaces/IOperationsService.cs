@@ -8,6 +8,7 @@ public interface IOperationsService
 {
     //Template_Field_ChildrenMatrix_AddIServiceEntry
     //Template_Start_Code_DontOverwrite_2
+    Task ProcessCoupon(DateTime processDate);
     Task<SspTransaction?> RolloutSspTransactionAsync(SspTransaction contract);
     Task<CashTransaction?> RolloutCashTransactionAsync(CashTransaction contract);
     Task RollbackSspTransactionAsync(long id);

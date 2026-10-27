@@ -52,5 +52,10 @@ export const Seed_ROUTES: Routes = [
         loadChildren: () => import('./payment-mode/payment-mode.route').then((mod) => mod.PaymentMode_ROUTES),
     },
 
+    {
+        path: '',
+        loadChildren: () => import('./process-status/process-status.route').then((mod) => mod.ProcessStatus_ROUTES),
+    },
+
 //Template_Component_RegisterRoute
 ]
