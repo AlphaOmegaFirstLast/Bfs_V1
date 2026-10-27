@@ -87,6 +87,7 @@ export class BaseReportComponent<IFilter> {
     //ToDo create for each record, record.linkList & record.actionList to get rid od function getRecordActions calculations
     // linkList: ViewLink[] = [];
     // actionList: ActionLink[] = [];
+       buttonList: ActionLink[] = [];
 
     constructor(public modalService: NgbModal, public router: Router, public excelService: ExcelExportService, public activatedRoute: ActivatedRoute) {
         // Initialize queryRequest with default values
@@ -97,6 +98,7 @@ export class BaseReportComponent<IFilter> {
     }
     //---------------------------------------------------------
     async ngOnInit(): Promise<void> {
+        this.buttonList = this.getListActions();
         if (this.presetFilter) {
             this.queryRequest.filter = this.presetFilter;
             for (const key in this.presetFilter) {
@@ -645,7 +647,18 @@ export class BaseReportComponent<IFilter> {
         return links;
     }
     //---------------------------------------------------------
+    getListActions(): ActionLink[] {
+        let actions = this.getActions({});
+        let links: ActionLink[] = actions.filter(action =>
+            action.actionType == 'FrontendFunction'
+            && action.actionLocation == 'ListHeader'
+        ).map(action => {
+            return { recordId: action.recordId, action: action.action ?? null, displayText: action.displayText, data: action.data }
+        });
 
+        return links;
+    }
+    //---------------------------------------------------------
     isAccessible(linkOrAction: ViewLink | ActionLink): boolean {
         return true;
     }
