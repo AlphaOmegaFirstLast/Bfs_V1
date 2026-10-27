@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
-using Bfs.Core.Interfaces;
+﻿using Bfs.Core.Interfaces;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Bfs.Core.Data;
 
@@ -110,6 +111,38 @@ public abstract class SqlRepository<TEntity, TDbContextBase> : IRepository<TEnti
             .ToListAsync()
             .ConfigureAwait(false);
         return result;
+    }
+
+    public virtual async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null)
+    {
+        IQueryable<TEntity> query = DbSet
+         .Where(x => x.TenantId == 1)
+         .Where(predicate);
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return await query
+            .FirstOrDefaultAsync()
+            .ConfigureAwait(false);
+    }
+
+    public virtual async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null)
+    {
+        IQueryable<TEntity> query = DbSet
+         .Where(x => x.TenantId == 1)
+         .Where(predicate);
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return await query
+            .ToListAsync()
+            .ConfigureAwait(false);
     }
 
     /// <inheritdoc />

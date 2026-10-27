@@ -88,4 +88,6 @@ public interface IRepository<TEntity> where TEntity : class, IIdentifiable, ITen
     /// <param name="filter">Filter conditions.</param>
     /// <returns>Number indicating the count results.</returns>
     Task<long> CountAsync(Expression<Func<TEntity, bool>> filter);
+    Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null);
+    Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null);
 }

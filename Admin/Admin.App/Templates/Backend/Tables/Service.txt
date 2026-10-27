@@ -40,92 +40,69 @@ namespace Bfs.[SystemNameCapital].Domain.Services
             return result?.ToContract();
         }
 
-        public async Task<[ComponentNameCapital]> CreateAsync([ComponentNameCapital] contract)
+
+        public async Task<[ComponentNameCapital]> CreateAsync([ComponentNameCapital] contract, bool isCommit=true)
 
         {
 
             var entity = contract.ToEntity();
-            var newEntity = await _repo.CreateAsync(entity)
-                .ConfigureAwait(false);
+            var newEntity = await _repo.CreateAsync(entity).ConfigureAwait(false);
 
-            await _repo.SaveAsync()
-                .ConfigureAwait(false);
+            if (isCommit)
+            {
+                await _repo.SaveAsync().ConfigureAwait(false);
 
-            var result = await GetAsync(newEntity.Id)
-                .ConfigureAwait(false);
-
-            //Template_Start_Component_Messaging_1
-            var message = new [ComponentNameCapital]CreatedMessage { Entity = PrepareForMessage(result) };
-            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
-            //Template_End_Component_Messaging_1
-
-            return result;
+                var result =  await GetAsync(newEntity.Id).ConfigureAwait(false);
+                return result;
+            }
+            else
+            {
+                return newEntity.ToContract();
+            }
         }
 
-        public async Task<[ComponentNameCapital]?> UpdateAsync([ComponentNameCapital] contract)
+        public async Task<[ComponentNameCapital]?> UpdateAsync([ComponentNameCapital] contract, bool isCommit = true)
         {
             //ToDo fluent validation, error or exception
 
             var existingEntity = await _repo.GetAsync(contract.Id).ConfigureAwait(false);
             var updatedEntity = contract.ToEntity(existingEntity);
 
-            //Template_Start_Component_Messaging_2
-            var message = new [ComponentNameCapital]UpdatedMessage { OldEntity = PrepareForMessage(existingEntity) };
-            //Template_End_Component_Messaging_2
-
             await _repo.UpdateAsync(updatedEntity).ConfigureAwait(false);
-            await _repo.SaveAsync().ConfigureAwait(false);
-
-            //Template_Start_Component_Messaging_3
-            message.NewEntity = PrepareForMessage(result);
-            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
-            //Template_End_Component_Messaging_3
+            if (isCommit)
+               await _repo.SaveAsync().ConfigureAwait(false);
 
             return updatedEntity?.ToContract();
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(long id, bool isCommit = true)
         {
             var existingEntity = await _repo.GetAsync(id).ConfigureAwait(false);
 
-            //Template_Start_Component_SoftDelete_1
-              existingEntity.IsDeleted = true;
-            //Template_End_Component_SoftDelete_1
-
             await _repo.DeleteAsync(existingEntity).ConfigureAwait(false);
 
-            await _repo.SaveAsync().ConfigureAwait(false);
+            if (isCommit)
+                await _repo.SaveAsync().ConfigureAwait(false);
 
-            //Template_Start_Component_Messaging_4
-            var message = new [ComponentNameCapital]DeletedMessage()
-            {
-                Entity = PrepareForMessage(existingContract),
-                CostCenterHierarchyIds = existingContract.CostCenter?.HierarchyIds
-            };
-
-            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
-            //Template_End_Component_Messaging_4
         }
 
-        public async Task<[ComponentNameCapital]> UploadAsync([ComponentNameCapital] contract)
+        public async Task<[ComponentNameCapital]> UploadAsync([ComponentNameCapital] contract, bool isCommit = true)
         {
 
             var entity = contract.ToEntity();
             var newEntity = await _repo.UploadAsync(entity).ConfigureAwait(false);
 
-            await _repo.SaveAsync().ConfigureAwait(false);
-
-            var result = await GetAsync(newEntity.Id).ConfigureAwait(false);
-
-            //Template_Start_Component_Messaging_5
-            var message = new [ComponentNameCapital]UploadMessage
+            if (isCommit)
             {
-                Entity = PrepareForMessage(result),
-            };
-            await _messagePublisher.PublishMessageAsync(message).ConfigureAwait(false);
-            //Template_End_Component_Messaging_5
+                await _repo.SaveAsync().ConfigureAwait(false);
 
-            return result;
+                var result = await GetAsync(newEntity.Id).ConfigureAwait(false);
+                return result;
+            }
+            else
+            {
+                return newEntity.ToContract();
+            }
         }
 
         public async Task<Bfs.Core.Contracts.QueryResponse<[ReportNameCapital]Item>> ListAsync(Bfs.Core.Contracts.QueryRequest<[ReportNameCapital]Filter> contractRequest)

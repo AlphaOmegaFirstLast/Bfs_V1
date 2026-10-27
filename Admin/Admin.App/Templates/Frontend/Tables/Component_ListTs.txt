@@ -2,6 +2,8 @@
 import { Component, inject, OnInit, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { SafeHtml } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
 //---------------- Ng Bootstrap ------------------------------
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -33,7 +35,7 @@ import { [ComponentNameCapital]FilterComponent } from './[ComponentFileName].fil
     imports: [ CommonModule, NgIcon, NgbDropdownModule, NgbPaginationModule,
                NgbAlertModule, NgbProgressbarModule, RouterLink, ExportComponent,
                NgxEchartsDirective],
-    providers: [provideEchartsCore({ echarts })],
+    providers: [provideEchartsCore({ echarts }), DatePipe],
     standalone: true,
     templateUrl: '../../../_shared/components/base-report.component.html',
 })
@@ -45,6 +47,7 @@ export class [ReportNameCapital]Component
     override exportRequest = {} as I[ComponentNameCapital]Request;
     override downloadFileName: string = "[ComponentMenuName]";
 //Template_Start_Code_DontOverwrite_2
+    private datePipe = inject(DatePipe);
 //Template_End_Code_DontOverwrite_2
 
     //------------------------------------------------------
@@ -70,8 +73,25 @@ export class [ReportNameCapital]Component
 //Template_End_Code_DontOverwrite_3
     }
     //---------------------------------------------------------
+//Template_Start_Code_DontOverwrite_4
+    override isSafeHtml(field: string): boolean {
+        return false;
+    } 
+//Template_End_Code_DontOverwrite_4
+   //---------------------------------------------------------
     override render(record: IEntity, column: IQueryColumn): any {
-        return render[ComponentNameCapital](record, column);
+        return render[ComponentNameCapital](record, column, this.datePipe);
+    }
+    //---------------------------------------------------------
+    override safeHtmlHeaders(field: string): SafeHtml {
+        let column = this.queryRequest.columns.find(x => x.fieldName == field) || {} as IQueryColumn;
+        return column.displayName;
+    }
+    //---------------------------------------------------------
+    override safeHtmlData(record: any, field: string): SafeHtml {
+        let column = this.queryRequest.columns.find(x => x.fieldName == field) || {} as IQueryColumn;
+        return render[ComponentNameCapital](record, column, this.datePipe, this.sanitizer);
+
     }
     //---------------------------------------------------------
     override getActions(record: IEntity): IAction[] {
@@ -126,8 +146,8 @@ export class [ReportNameCapital]Component
         return baseChart;
     }
 //Template_End_Component_Report_2
-//Template_Start_Code_DontOverwrite_4
-//Template_End_Code_DontOverwrite_4
+//Template_Start_Code_DontOverwrite_5
+//Template_End_Code_DontOverwrite_5
 
 }
 

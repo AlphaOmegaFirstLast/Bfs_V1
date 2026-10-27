@@ -1,6 +1,9 @@
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
 import { IEntityRequest, IEntity, IQueryColumn, IAction } from "@bfs/_shared/interfaces";
-import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
 import * as operations from '@bfs/[SystemNameSmall]/main/[SystemNameSmall].operations';
+import { reOrderColumns } from "@bfs/_shared/helpers/misc.helper"
+import { setArrowData } from '@bfs/_shared/helpers/html.helper';
 
 // Output Columns of a Query  [used in entity Query]
 export const columns = [
@@ -93,7 +96,10 @@ export function init[ReportNameCapital]Request(): I[ReportNameCapital]Request {
     return JSON.parse(JSON.stringify(request));
 }
 //---------------------------------------------------------
-export function render[ReportNameCapital](record: IEntity, column: IQueryColumn): any {
+export function render[ReportNameCapital](record: IEntity, column: IQueryColumn, datePipe?: DatePipe, sanitizer?: DomSanitizer): SafeHtml {
+        // setArrowData(sanitizer,'blue', 'none' ,record['overdraftPortfolio_Overdraft']);
+        // datePipe.transform(record['sspTransaction_TransactionDate'], 'dd-MM-yyyy HH:mm:ss');
+
         const value = record[column.fieldName as keyof IEntity];
         switch (column.fieldName) {
             //Template_Start_Field_Lookup_2
